@@ -40,7 +40,7 @@ test('input interaction follows the Figma compound module ring', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   assert.match(components, /box-shadow:0 0 0 2px var\(--module,#CFFF29\)/);
-  assert.match(components, /analysis\?'#CFFF29':'#FFE253'/);
+  assert.match(components, /moduleThemes=\{analysis:\{primary:'#CFFF29'[^}]*\},post:\{primary:'#FFE253'[^}]*\},engage:\{primary:'#FFE253'/);
   assert.match(components, /Hover \/ focus/);
   assert.match(styles, /box-shadow: 0 0 0 var\(--aisee-size-input-ring\) var\(--aisee-module-primary\)/);
   assert.match(portal, /1px black inner border plus a 2px module-color ring/);
@@ -64,6 +64,18 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(source, /Escape/);
   assert.match(portal, /dropdown menus keep an 8px gap below the trigger/);
   assert.match(portal, /5% black fill for hover, focus and selected items/);
+});
+
+test('component preview uses the AISEE banner shell and compact type hierarchy', async () => {
+  const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  assert.match(components, /class="component-banner"/);
+  assert.match(components, /src="\.\.\/assets\/aisee-logo-mark\.png"/);
+  assert.match(components, /\.component-banner h1\{[^}]*font-size:20px[^}]*font-weight:600/);
+  assert.match(components, /\.card h2\{[^}]*font-size:14px[^}]*font-weight:600/);
+  assert.match(components, /analysis:\{primary:'#CFFF29',banner:'#F5FFD4'/);
+  assert.match(components, /post:\{primary:'#FFE253',banner:'#FFFADD'/);
+  assert.match(components, /engage:\{primary:'#FFE253',banner:'#F3E7F4'/);
+  assert.doesNotMatch(components, /<header class="top">/);
 });
 
 test('danger button follows the Figma destructive action style', async () => {

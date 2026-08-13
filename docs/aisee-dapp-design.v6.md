@@ -744,6 +744,8 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 
 > 实现：`engage-banner.jsx → EngageBanner({ variant, title, subtitle, stats })`。在每个 Tab 内都渲染一次，宽度 = 内容区宽 - 48（左右各 24 内边距）。
 
+> **设计系统预览页应用规则（2026-08-13）**：组件与规范预览页的顶部说明区也使用 AISEE Banner 语言，不使用通用后台模板式的大标题栏。标题为 Karla 20 / 600，副标题 12 / 400，左侧使用 44–48px 白色 icon 容器，外层圆角 16px，并保留白色 4–5px 呼吸环。Analysis 使用 `#F5FFD4`，Post Agent 使用 `#FFFADD`，Engage 使用其身份色 `#F3E7F4`；组件卡标题统一 Karla 14 / 600，避免 Ant Design 式偏大、偏粗的展示层级。
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ ▢   Engage                              New  Keywords  X acc  sub  Sent │
