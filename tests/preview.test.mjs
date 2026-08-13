@@ -207,7 +207,7 @@ test('current PlanCard follows the latest Figma upgrade-plan pattern while legac
   assert.match(source, /export function PlanCard/);
   assert.match(styles, /\.aisee-plan-card \{[^}]*border-radius: 24px;/);
   assert.match(portal, /components\/PlanCardCurrent\/PlanCardCurrent\.html/);
-  assert.match(portal, /components\/PlanCard\/PlanCard\.html/);
+  assert.doesNotMatch(portal, /name: "PlanCard", path: "components\/PlanCard\/PlanCard\.html"/);
   assert.match(legacy, /Starter/);
   const scripts = [...current.matchAll(/<script>([\s\S]*?)<\/script>/g)];
   assert.equal(scripts.length, 1);
