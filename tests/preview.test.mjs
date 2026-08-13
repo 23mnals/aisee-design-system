@@ -120,6 +120,9 @@ test('confirmation dialog follows the Figma unsaved changes pattern', async () =
 
 test('portal uses the official AISEE logo mark', async () => {
   assert.match(portal, /src="\.\/assets\/aisee-logo-mark\.png"/);
+  assert.match(portal, /\.brand-mark \{[\s\S]*?width: 28px;[\s\S]*?height: 28px;/);
+  assert.match(portal, /\.brand-wordmark \{[^}]*font-family: "Karla", sans-serif;[^}]*font-size: 30px;[^}]*font-weight: 500;/);
+  assert.match(portal, /<strong class="brand-wordmark">aisee<\/strong>/);
   await access(new URL('../assets/aisee-logo-mark.png', import.meta.url));
 });
 

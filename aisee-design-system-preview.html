@@ -77,15 +77,16 @@
         padding: 0 18px;
       }
       .brand-mark {
-        width: 34px;
-        height: 34px;
+        width: 28px;
+        height: 28px;
         display: block;
         flex: 0 0 auto;
-        border-radius: 9px 9px 2px 2px;
+        border-radius: 7px 7px 1px 1px;
         object-fit: contain;
       }
-      .topbar-title { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
-      .topbar-title strong { white-space: nowrap; font-size: 17px; letter-spacing: -0.01em; }
+      .topbar-title { display: flex; align-items: baseline; gap: 9px; min-width: 0; }
+      .brand-wordmark { white-space: nowrap; font-family: "Karla", sans-serif; font-size: 30px; font-weight: 500; line-height: 1; letter-spacing: .035em; }
+      .system-label { color: var(--muted); font-size: 11px; font-weight: 500; line-height: 1; white-space: nowrap; }
       .page-count { color: var(--muted); font-size: 13px; white-space: nowrap; }
       .top-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
       .search {
@@ -377,7 +378,8 @@
       @media (max-width: 640px) {
         .topbar { padding: 0 10px; gap: 8px; }
         .brand-mark { display: none; }
-        .topbar-title strong { font-size: 15px; }
+        .brand-wordmark { font-size: 24px; }
+        .system-label { display: none; }
         .page-count { display: none; }
         .search { width: auto; flex: 1; }
         .search input { padding-right: 8px; }
@@ -412,7 +414,8 @@
       </button>
       <img class="brand-mark" src="./assets/aisee-logo-mark.png" alt="" aria-hidden="true" />
       <div class="topbar-title">
-        <strong>AISEE Design System</strong>
+        <strong class="brand-wordmark">aisee</strong>
+        <span class="system-label">Design System</span>
         <span class="page-count" id="pageCount">Loading…</span>
       </div>
       <div class="top-actions">
