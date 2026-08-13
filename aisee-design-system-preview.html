@@ -146,8 +146,12 @@
         padding: 0 12px;
         font-size: 14px;
         font-weight: 720;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .nav-home svg { width: 16px; height: 16px; }
+      .nav-home .nav-label { font-weight: 720; }
       .nav-home:hover, .nav-item:hover { background: var(--surface-subtle); }
       .nav-home.active, .nav-item.active { background: var(--accent-soft); color: #293000; }
       .nav-group { margin-top: 8px; }
@@ -162,10 +166,13 @@
         font-size: 14px;
         font-weight: 720;
         list-style: none;
+        white-space: nowrap;
+        overflow: hidden;
       }
       .nav-group summary::-webkit-details-marker { display: none; }
       .nav-group summary:hover { background: var(--surface-subtle); }
-      .group-count { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 500; }
+      .nav-group-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .group-count { margin-left: auto; flex: 0 0 auto; color: var(--muted); font-size: 12px; font-weight: 500; }
       .nav-list { display: grid; gap: 4px; padding: 3px 0 0 15px; }
       .nav-item { position: relative; display: flex; min-height: 32px; align-items: center; gap: 8px; padding: 0 72px 0 13px; color: #565960; font-size: 14px; line-height: 1.2; white-space: nowrap; }
       .nav-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -434,7 +441,7 @@
       <aside class="sidebar" id="sidebar" aria-label="Design system navigation">
         <button class="nav-home active" id="homeButton" type="button">
           <span class="nav-icon"><img src="assets/stemui/nav-overview.svg" alt="" aria-hidden="true"></span>
-          README
+          <span class="nav-label">README</span>
         </button>
         <nav id="navGroups"></nav>
       </aside>
@@ -759,7 +766,7 @@
               <span class="nav-label">${escapeHtml(item.name)}</span>
               <span class="item-tag ${item.status === "Current" ? "current" : ""}">${escapeHtml(item.status)}</span>
             </button>`).join("");
-          return `<details class="nav-group" open><summary><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span>${escapeHtml(groupLabels[group])}<span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
+          return `<details class="nav-group" open><summary><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span><span class="nav-group-label">${escapeHtml(groupLabels[group])}</span><span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
         }).join("") || `<p class="empty-search">No pages match “${escapeHtml(query)}”.</p>`;
 
         navGroups.querySelectorAll("[data-path]").forEach(button => {
