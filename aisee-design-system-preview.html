@@ -167,7 +167,8 @@
       .nav-group summary:hover { background: var(--surface-subtle); }
       .group-count { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 500; }
       .nav-list { display: grid; gap: 4px; padding: 3px 0 0 15px; }
-      .nav-item { position: relative; display: flex; min-height: 32px; align-items: center; gap: 8px; padding: 0 72px 0 13px; color: #565960; font-size: 14px; line-height: 1.2; }
+      .nav-item { position: relative; display: flex; min-height: 32px; align-items: center; gap: 8px; padding: 0 72px 0 13px; color: #565960; font-size: 14px; line-height: 1.2; white-space: nowrap; }
+      .nav-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .nav-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; color: currentColor; }
       .nav-icon img { width: 15px; height: 15px; object-fit: contain; }
       .nav-group-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; }
@@ -755,7 +756,7 @@
           const itemMarkup = groupItems.map(item => `
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
-              ${escapeHtml(item.name)}
+              <span class="nav-label">${escapeHtml(item.name)}</span>
               <span class="item-tag ${item.status === "Current" ? "current" : ""}">${escapeHtml(item.status)}</span>
             </button>`).join("");
           return `<details class="nav-group" open><summary><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span>${escapeHtml(groupLabels[group])}<span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
