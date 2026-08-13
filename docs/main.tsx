@@ -1,6 +1,6 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Button, Card, Dialog, Input, ModuleToggle, TabItem, Tabs, Tag, Toggle, type AiseeTheme } from '../src';
+import { Button, Card, Dialog, Dropdown, Input, ModuleToggle, TabItem, Tabs, Tag, Toggle, type AiseeTheme } from '../src';
 import './site.css';
 
 const tabItems: TabItem[] = [
@@ -19,6 +19,7 @@ function App() {
   const [tab, setTab] = useState('overview');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [enabled, setEnabled] = useState(true);
+  const [period, setPeriod] = useState('weekly');
   return <div className="aisee-root docs-shell" data-aisee-theme={theme}>
     <aside className="docs-sidebar">
       <img src="./assets/aisee-logo-wordmark.svg" alt="aisee" className="docs-logo" />
@@ -45,7 +46,7 @@ function App() {
       <section id="components" className="docs-section"><div className="docs-section-head"><div><p>03</p><h2>Components</h2></div><span>Accessible React + CSS</span></div>
         <div className="component-grid">
           <Card title="Buttons"><div className="component-row"><Button>Primary</Button><Button variant="secondary">Secondary</Button><Button variant="ghost">Ghost</Button><Button variant="danger">Danger</Button></div></Card>
-          <Card title="Form controls"><div className="form-stack"><Input label="Website URL" placeholder="Enter the website url" hint="We will analyze the public site." /><Toggle checked={enabled} onChange={(event) => setEnabled(event.target.checked)} label={enabled ? 'Monitoring on' : 'Monitoring off'} /></div></Card>
+          <Card title="Form controls"><div className="form-stack"><Input label="Website URL" placeholder="Enter the website url" hint="We will analyze the public site." /><Dropdown label="Reporting period" items={[{ id: 'daily', label: 'Daily' }, { id: 'weekly', label: 'Weekly' }, { id: 'monthly', label: 'Monthly' }]} value={period} onValueChange={setPeriod} /><Toggle checked={enabled} onChange={(event) => setEnabled(event.target.checked)} label={enabled ? 'Monitoring on' : 'Monitoring off'} /></div></Card>
           <Card title="Tags"><div className="component-row"><Tag variant="latest">Latest</Tag><Tag variant="baseline">Baseline</Tag><Tag variant="target">Target</Tag><Tag variant="help">Help-seeking</Tag><Tag variant="opinion">Hot take</Tag></div></Card>
           <Card title="Page tabs"><Tabs items={tabItems} value={tab} onValueChange={setTab} /><p className="tab-result">Current view: {tab}</p></Card>
         </div>
