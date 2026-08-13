@@ -61,6 +61,22 @@ test('sidebar uses compact 14px navigation typography', () => {
   assert.match(portal, /\.nav-item \{[^}]*font-size: 14px;/);
 });
 
+test('overview documents the current Figma and specification versions', () => {
+  assert.match(portal, /Figma Product Design 5\.6/);
+  assert.match(portal, /Design Specification v6/);
+  assert.match(portal, /Figma 5\.6[\s\S]*?Current/);
+  assert.match(portal, /Earlier Figma versions[\s\S]*?Planned/);
+});
+
+test('overview contains the complete documentation sections', () => {
+  for (const id of ['product-overview', 'sources', 'content', 'visual', 'interaction', 'assets', 'components-overview', 'versions']) {
+    assert.match(portal, new RegExp(`id="${id}"`));
+  }
+  assert.match(portal, /Homepage \/ Brand[\s\S]*?Karla \+ Gotu/);
+  assert.match(portal, /dApp \/ App \/ Webapp[\s\S]*?Karla only/);
+  assert.match(portal, /Never redraw the eye or wordmark with CSS/);
+});
+
 test('brand fonts are local and application typography remains Karla-only', async () => {
   const displayType = await readFile(new URL('../preview/type-display.html', import.meta.url), 'utf8');
   const logoPreview = await readFile(new URL('../preview/brand-logo.html', import.meta.url), 'utf8');

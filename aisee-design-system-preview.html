@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="AISEE Design System — shared foundations, components, and Webapp UI kits." />
     <title>AISEE Design System</title>
+    <link rel="icon" type="image/png" href="./assets/aisee-logo-mark.png" />
     <style>
       @font-face {
         font-family: "Karla";
@@ -252,6 +253,65 @@
       .rule h3 { margin: 0 0 10px; font-size: 18px; }
       .rule p { margin: 0; color: var(--muted); }
       .code-pill { display: inline-flex; margin-top: 16px; border-radius: 7px; background: #eef0f2; padding: 7px 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+      .overview-nav { position: sticky; top: calc(var(--topbar) + 8px); z-index: 5; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 34px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(12px); padding: 7px; }
+      .overview-nav a { min-height: 36px; display: inline-flex; align-items: center; border-radius: 7px; color: var(--muted); padding: 0 11px; font-size: 13px; font-weight: 600; text-decoration: none; }
+      .overview-nav a:hover { background: var(--surface-subtle); color: var(--ink); }
+      .overview-section { scroll-margin-top: calc(var(--topbar) + 74px); margin-top: 60px; border-top: 1px solid var(--line); padding-top: 34px; }
+      .overview-section h2 { margin: 0; font-size: 28px; letter-spacing: -.03em; }
+      .overview-section > p { max-width: 790px; margin: 10px 0 0; color: var(--muted); font-size: 16px; }
+      .subheading { margin: 30px 0 12px; font-size: 19px; letter-spacing: -.015em; }
+      .capability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+      .capability-card { min-height: 190px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; }
+      .capability-number { width: 28px; height: 28px; display: grid; place-items: center; margin-bottom: 26px; border-radius: 50%; background: var(--ink); color: white; font-size: 12px; font-weight: 700; }
+      .capability-card:nth-child(2) .capability-number { background: #8c7400; }
+      .capability-card:nth-child(3) .capability-number { background: #6d3c75; }
+      .capability-card h3 { margin: 0 0 8px; font-size: 18px; }
+      .capability-card p { margin: 0; color: var(--muted); font-size: 14px; }
+      .tagline { margin-top: 18px; border-left: 3px solid var(--accent); color: var(--muted); padding: 10px 0 10px 16px; font-size: 18px; font-style: italic; }
+      .table-wrap { margin-top: 16px; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+      .overview-table { width: 100%; min-width: 620px; border-collapse: collapse; }
+      .overview-table th, .overview-table td { border-bottom: 1px solid var(--line); padding: 12px 14px; text-align: left; vertical-align: top; }
+      .overview-table tr:last-child td { border-bottom: 0; }
+      .overview-table th { background: #f2f1ea; font-size: 13px; font-weight: 700; }
+      .overview-table td { color: var(--muted); font-size: 14px; }
+      .overview-table td:first-child { color: var(--ink); font-weight: 650; }
+      .source-panel { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; margin-top: 20px; }
+      .source-card { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 22px; }
+      .source-card.current { border-color: #b4d12c; background: linear-gradient(135deg, #fbffe9, #fff 64%); }
+      .source-label { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+      .source-card h3 { margin: 10px 0 6px; font-size: 20px; }
+      .source-card p { margin: 0; color: var(--muted); }
+      .source-meta { display: grid; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
+      .source-meta li { display: flex; justify-content: space-between; gap: 18px; border-top: 1px solid var(--line); padding-top: 8px; color: var(--muted); font-size: 13px; }
+      .source-meta strong { color: var(--ink); text-align: right; }
+      .priority-note { margin-top: 14px; border-left: 3px solid #111; background: var(--surface-subtle); color: var(--muted); padding: 12px 14px; font-size: 14px; }
+      .principles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
+      .principle { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 17px; }
+      .principle strong { display: block; margin-bottom: 4px; }
+      .principle p { margin: 0; color: var(--muted); font-size: 14px; }
+      .example-list, .spec-list { margin: 12px 0 0; color: var(--muted); padding-left: 20px; }
+      .example-list li, .spec-list li { margin: 7px 0; }
+      .token-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px; }
+      .token-card { overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+      .token-color { height: 64px; border-bottom: 1px solid rgba(0,0,0,.08); }
+      .token-meta { display: grid; gap: 1px; padding: 10px; }
+      .token-meta strong { font-size: 13px; }
+      .token-meta code { color: var(--muted); font-size: 11px; }
+      .spec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+      .spec-card { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 18px; }
+      .spec-card h3 { margin: 0 0 9px; font-size: 16px; }
+      .spec-card p { margin: 0; color: var(--muted); font-size: 14px; }
+      .asset-row { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 22px; }
+      .asset-row img:first-child { width: 44px; height: 44px; object-fit: contain; }
+      .asset-row img:nth-child(2) { width: 142px; height: 64px; object-fit: contain; }
+      .asset-copy { flex: 1 1 260px; }
+      .asset-copy strong { display: block; }
+      .asset-copy p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+      .component-map { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 18px; }
+      .component-map article { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 18px; }
+      .component-map h3 { margin: 0 0 8px; font-size: 16px; }
+      .component-map p { margin: 0; color: var(--muted); font-size: 14px; }
+      .version-badge { display: inline-flex; align-items: center; min-height: 26px; margin-left: 8px; border-radius: 999px; background: var(--accent); color: #222900; padding: 2px 9px; font-size: 11px; font-weight: 750; vertical-align: middle; }
 
       .preview { min-height: calc(100vh - var(--topbar)); display: grid; grid-template-rows: auto 1fr; }
       .preview[hidden], .home[hidden] { display: none; }
@@ -307,6 +367,9 @@
         .main { margin-left: 0; }
         .home { padding: 48px 28px 72px; }
         .architecture { grid-template-columns: repeat(2, 1fr); }
+        .capability-grid, .spec-grid { grid-template-columns: 1fr; }
+        .source-panel { grid-template-columns: 1fr; }
+        .token-grid { grid-template-columns: repeat(2, 1fr); }
       }
       @media (max-width: 640px) {
         .topbar { padding: 0 10px; gap: 8px; }
@@ -320,8 +383,10 @@
         .hero h1 { font-size: 45px; }
         .status-card { grid-template-columns: 1fr; padding: 18px; }
         .status-card .action-button { width: 100%; }
-        .quick-grid, .rules { grid-template-columns: 1fr; }
+        .quick-grid, .rules, .principles-grid, .component-map { grid-template-columns: 1fr; }
         .architecture { grid-template-columns: 1fr; }
+        .overview-nav { position: static; }
+        .token-grid { grid-template-columns: 1fr 1fr; }
         .section-heading { display: block; }
         .section-heading p { margin-top: 5px; }
         .preview-toolbar { padding: 10px; }
@@ -373,7 +438,7 @@
       <main class="main" id="main-content">
         <section class="home" id="homeView">
           <div class="hero">
-            <p class="eyebrow">Version 6 · Shared source of truth</p>
+            <p class="eyebrow">Figma 5.6 · Design Spec v6 · Shared source of truth</p>
             <h1>Build every AISEE experience from the same system.</h1>
             <p class="hero-copy">Foundations, reusable components and preserved product previews—updated from the latest dApp design specification while keeping unmatched legacy work available.</p>
           </div>
@@ -382,16 +447,154 @@
             <div class="status-copy">
               <span class="status-dot" aria-hidden="true"></span>
               <div>
-                <strong>Published locally · GitHub Pages ready</strong>
-                <p>Open this HTML directly, or publish the repository so the whole team can use one permanent URL.</p>
+                <strong>Current product source: Figma 5.6</strong>
+                <p>Implementation rules follow Design Specification v6 and the latest team decisions.</p>
               </div>
             </div>
             <button class="action-button primary" id="openFoundations" type="button">Use this system</button>
           </div>
 
+          <nav class="overview-nav" aria-label="Overview sections">
+            <a href="#product-overview">Product</a>
+            <a href="#sources">Sources</a>
+            <a href="#content">Content</a>
+            <a href="#visual">Visual</a>
+            <a href="#interaction">Interaction</a>
+            <a href="#assets">Assets</a>
+            <a href="#components-overview">Components</a>
+            <a href="#versions">Versions</a>
+          </nav>
+
+          <section class="overview-section" id="product-overview" aria-labelledby="product-title">
+            <h2 id="product-title">Product overview</h2>
+            <p>AISEE is an AI visibility and social engagement platform. The system supports three related product capabilities while keeping their navigation and module accents distinct.</p>
+            <div class="capability-grid">
+              <article class="capability-card"><span class="capability-number">01</span><h3>Analysis / GEO</h3><p>Measures AI visibility, citation performance, rankings and prompt coverage across generative search platforms.</p></article>
+              <article class="capability-card"><span class="capability-number">02</span><h3>Post Agent</h3><p>Plans, generates, schedules and publishes social content through connected channels and calendar workflows.</p></article>
+              <article class="capability-card"><span class="capability-number">03</span><h3>Engage</h3><p>Finds relevant conversations, manages keywords and accounts, drafts replies and tracks response outcomes.</p></article>
+            </div>
+            <blockquote class="tagline">“The future of discoverability.”</blockquote>
+
+            <h3 class="subheading">Products and surfaces</h3>
+            <div class="table-wrap">
+              <table class="overview-table">
+                <thead><tr><th>Surface</th><th>Purpose</th><th>Design baseline</th><th>Typography</th></tr></thead>
+                <tbody>
+                  <tr><td>Marketing homepage</td><td>Public brand story, product value, FAQ and pricing.</td><td>1440px desktop with responsive mobile states</td><td>Karla + Gotu</td></tr>
+                  <tr><td>dApp / Webapp</td><td>Analysis, Post Agent, Engage and account workflows.</td><td>1440px application shell; 224px sidebar; 70px header</td><td>Karla only</td></tr>
+                  <tr><td>Mobile references</td><td>Responsive and compact product flows where present in Figma.</td><td>Frame-specific; document each added version</td><td>Karla only</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="overview-section" id="sources" aria-labelledby="sources-title">
+            <h2 id="sources-title">Sources and authority</h2>
+            <p>Design files and written specifications serve different roles. The Figma file is the visual product source; the specification and team decisions make implementation rules explicit.</p>
+            <div class="source-panel">
+              <article class="source-card current">
+                <span class="source-label">Current visual source</span>
+                <h3>Figma Product Design 5.6 <span class="version-badge">Latest</span></h3>
+                <p><code>备份-官网+dapp主功能.fig</code> contains the homepage and main dApp flows. Earlier missing product versions will be added to this source over time.</p>
+                <ul class="source-meta"><li><span>Exported</span><strong>2026-08-13 12:20 +08:00</strong></li><li><span>Archive size</span><strong>275 MB</strong></li><li><span>Repository policy</span><strong>Reference only; not copied into Git</strong></li></ul>
+              </article>
+              <article class="source-card">
+                <span class="source-label">Current implementation source</span>
+                <h3>Design Specification v6</h3>
+                <p>Defines tokens, layout, components, motion and content behavior. Team Decisions overrides it when a later clarification exists.</p>
+                <ul class="source-meta"><li><span>Spec</span><strong>docs/aisee-dapp-design.v6.md</strong></li><li><span>Tokens</span><strong>73 generated variables</strong></li><li><span>Current package</span><strong>@aisee/design-system 1.0.0</strong></li></ul>
+              </article>
+            </div>
+            <div class="priority-note"><strong>Conflict priority:</strong> latest Team Decisions → current Design Spec v6 → Figma 5.6 visual source → preserved historical files. Old content remains available, but it does not override a newer confirmed rule.</div>
+          </section>
+
+          <section class="overview-section" id="content" aria-labelledby="content-title">
+            <h2 id="content-title">Content fundamentals</h2>
+            <p>AISEE copy should feel precise and helpful: technical enough to be trustworthy, but never dense or theatrical.</p>
+            <div class="principles-grid">
+              <article class="principle"><strong>Minimal and confident</strong><p>Use direct language, clear nouns and active verbs. Remove filler and unsupported claims.</p></article>
+              <article class="principle"><strong>Product first, user second</strong><p>Prefer “Create analysis”, “Your report” and “Connect channel” over abstract system language.</p></article>
+              <article class="principle"><strong>Lowercase brand name</strong><p>Write “aisee” in product copy. Use “AISEE” only where an all-caps system label is intentionally styled.</p></article>
+              <article class="principle"><strong>No emoji in UI</strong><p>Use text labels and SVG icons. Keep labels short, recognizable and sentence case.</p></article>
+              <article class="principle"><strong>Numbers stay readable</strong><p>Show data without decorative formatting; pair unfamiliar metrics with labels or tooltips.</p></article>
+              <article class="principle"><strong>Errors explain the fix</strong><p>State what happened and the next action. Avoid blame, jokes or generic “Something went wrong”.</p></article>
+            </div>
+            <h3 class="subheading">Examples</h3>
+            <ul class="example-list"><li>CTA: “Start Free”, “New analysis”, “Save changes”</li><li>Navigation: “Dashboard”, “Analysis”, “Post Agent”, “Engage”, “Replies”</li><li>Placeholder: “Enter the website URL” or “Start writing your post…”</li><li>Error: “Your post needs at least one character or one image.”</li></ul>
+          </section>
+
+          <section class="overview-section" id="visual" aria-labelledby="visual-title">
+            <h2 id="visual-title">Visual foundations</h2>
+            <p>Functional hierarchy comes first. Module color establishes location and action context; neutral surfaces carry the majority of the interface.</p>
+            <h3 class="subheading">Core and module colors</h3>
+            <div class="token-grid">
+              <article class="token-card"><div class="token-color" style="background:#111111"></div><div class="token-meta"><strong>Black</strong><code>#111111</code></div></article>
+              <article class="token-card"><div class="token-color" style="background:#FAFAFA"></div><div class="token-meta"><strong>Page</strong><code>#FAFAFA</code></div></article>
+              <article class="token-card"><div class="token-color" style="background:#CFFF29"></div><div class="token-meta"><strong>Analysis</strong><code>#CFFF29</code></div></article>
+              <article class="token-card"><div class="token-color" style="background:#FFE253"></div><div class="token-meta"><strong>Post Agent</strong><code>#FFE253</code></div></article>
+              <article class="token-card"><div class="token-color" style="background:#F3E7F4"></div><div class="token-meta"><strong>Engage banner</strong><code>#F3E7F4</code></div></article>
+              <article class="token-card"><div class="token-color" style="background:#F0FFBA"></div><div class="token-meta"><strong>Engage setup</strong><code>#F0FFBA</code></div></article>
+              <article class="token-card"><div class="token-color" style="background:#EC5212"></div><div class="token-meta"><strong>Alert</strong><code>#EC5212</code></div></article>
+              <article class="token-card"><div class="token-color" style="background:#FFD0D0"></div><div class="token-meta"><strong>Error surface</strong><code>#FFD0D0</code></div></article>
+            </div>
+
+            <h3 class="subheading">Typography</h3>
+            <div class="table-wrap"><table class="overview-table"><thead><tr><th>Surface</th><th>Family</th><th>Roles</th><th>Rule</th></tr></thead><tbody><tr><td>Homepage / Brand</td><td>Karla + Gotu</td><td>Gotu for selected display moments; Karla for UI and body</td><td>Self-host both fonts</td></tr><tr><td>dApp / App / Webapp</td><td>Karla only</td><td>Headings, body, tables, data, code hints and score gauges</td><td>No Gotu, JetBrains Mono or Digital Numbers</td></tr></tbody></table></div>
+
+            <h3 class="subheading">Layout, spacing and surfaces</h3>
+            <div class="spec-grid">
+              <article class="spec-card"><h3>Application shell</h3><p>70px fixed header, 224px sidebar and 24–32px main content padding.</p></article>
+              <article class="spec-card"><h3>Spacing</h3><p>4, 8, 12, 16, 24, 32, 48 and 64px scale. Prefer adjacent steps.</p></article>
+              <article class="spec-card"><h3>Radius</h3><p>8px controls, 12px cards, 16px large surfaces and dialogs, 9999px pills.</p></article>
+              <article class="spec-card"><h3>Borders</h3><p>Static UI uses 5% black; hover rises to 18%. Modal footer uses the documented 6% exception.</p></article>
+              <article class="spec-card"><h3>Shadows</h3><p>Cards remain subtle. Dropdown and modal layers use defined elevation tokens.</p></article>
+              <article class="spec-card"><h3>Backgrounds</h3><p>Page #FAFAFA, cards #FFFFFF, warm supporting surfaces only where specified.</p></article>
+            </div>
+          </section>
+
+          <section class="overview-section" id="interaction" aria-labelledby="interaction-title">
+            <h2 id="interaction-title">Interaction and feedback</h2>
+            <p>Motion clarifies hierarchy and state change. It should never distract from data or delay a primary task.</p>
+            <div class="spec-grid">
+              <article class="spec-card"><h3>Hover and active</h3><p>Use subtle fill or border changes. Module navigation uses its theme accent for active context.</p></article>
+              <article class="spec-card"><h3>Focus</h3><p>All keyboard targets require visible focus. Interactive targets remain at least 44×44px.</p></article>
+              <article class="spec-card"><h3>Motion</h3><p>120–300ms transitions with the shared easing curve. Respect reduced-motion preferences.</p></article>
+              <article class="spec-card"><h3>Loading</h3><p>Preserve layout with skeletons or stable placeholders; disable repeated submissions.</p></article>
+              <article class="spec-card"><h3>Empty states</h3><p>Explain what is missing, why it matters and the single next action.</p></article>
+              <article class="spec-card"><h3>Toast and tooltip</h3><p>Black surface, white text, short duration and no critical information hidden only on hover.</p></article>
+            </div>
+          </section>
+
+          <section class="overview-section" id="assets" aria-labelledby="assets-title">
+            <h2 id="assets-title">Imagery, logo and iconography</h2>
+            <p>Product UI stays data-led and clean. Brand pages can use geometric shapes, texture and the cyclops mascot, while product interfaces avoid decorative photography.</p>
+            <div class="asset-row"><img src="./assets/aisee-logo-mark.png" alt="AISEE cyclops logo mark"><img src="./assets/logo-wordmark.png" alt="AISEE wordmark"><div class="asset-copy"><strong>Use official logo assets</strong><p>Never redraw the eye or wordmark with CSS. Preserve proportions and keep a clear safety area. The mark can stand alone; the wordmark should use the supplied artwork.</p></div></div>
+            <h3 class="subheading">Icon rules</h3>
+            <ul class="spec-list"><li>Lucide-style line icons: 1.2–1.5px stroke, rounded caps and joins, 24×24 base grid.</li><li>Use 16×16px in standard controls and 24×24px for larger navigation or actions.</li><li>Custom AISEE icons use either the <code>line_</code> outline family or <code>fill_</code>/<code>flat_</code> solid family.</li><li>No icon fonts and no emoji UI icons; use SVG or React icon components.</li><li>Social platform marks keep their official form and brand color at small badge sizes.</li></ul>
+          </section>
+
+          <section class="overview-section" id="components-overview" aria-labelledby="components-title">
+            <h2 id="components-title">Components and patterns</h2>
+            <p>The system combines maintainable v6 foundations with retained historical product references. Current components take precedence when responsibilities overlap.</p>
+            <div class="component-map">
+              <article><h3>Global shell</h3><p>AppHeader, Sidebar, ModuleToggle, page title and route transition.</p></article>
+              <article><h3>Actions and input</h3><p>Button, Input, URL Input, Toggle, Checkbox, Dropdown and action chips.</p></article>
+              <article><h3>Content and status</h3><p>Cards, Stat Cards, Tags, Badges, StatusBadge, IntentTag and PlanCard.</p></article>
+              <article><h3>Data display</h3><p>Tables, charts, Score Gauge, KPI strips and comparison patterns.</p></article>
+              <article><h3>Overlays and feedback</h3><p>Dialog, modal footer, tooltip, toast, loading, empty and error states.</p></article>
+              <article><h3>Product patterns</h3><p>Post Editor, Signal Feed, Reply Panel, Review Queue and Keywords & Accounts.</p></article>
+            </div>
+          </section>
+
+          <section class="overview-section" id="versions" aria-labelledby="versions-title">
+            <h2 id="versions-title">Versions and maintenance</h2>
+            <p>Versions are recorded as they are added. Missing older Figma versions can be appended without replacing the current source or deleting preserved history.</p>
+            <div class="table-wrap"><table class="overview-table"><thead><tr><th>Version</th><th>Status</th><th>Scope</th><th>Maintenance rule</th></tr></thead><tbody><tr><td>Figma 5.6</td><td><span class="item-tag current">Current</span></td><td>Latest homepage and dApp product design source</td><td>Use for present visual structure and screen behavior</td></tr><tr><td>Design Spec v6</td><td><span class="item-tag current">Current</span></td><td>Tokens, components, interaction and implementation rules</td><td>Team Decisions overrides conflicts</td></tr><tr><td>Earlier Figma versions</td><td><span class="item-tag">Planned</span></td><td>Historical product evolution</td><td>Add to this table and retain; do not overwrite 5.6</td></tr><tr><td>Legacy HTML previews</td><td><span class="item-tag">Legacy</span></td><td>Unmatched components, flows, assets and experiments</td><td>Retain unless a separate deprecation review approves removal</td></tr></tbody></table></div>
+          </section>
+
           <section class="home-section" aria-labelledby="start-title">
             <div class="section-heading">
-              <h2 id="start-title">Start with v6</h2>
+              <h2 id="start-title">Start with Design Spec v6</h2>
               <p>Current product rules</p>
             </div>
             <div class="quick-grid">
