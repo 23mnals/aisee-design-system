@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Update Tutorial Preview" subtitle="328×160 looping animation: download new version → remove old → drag new package in." viewport="900x720" -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Update tutorial — preview</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  @font-face {
+    font-family: "Karla";
+    src: url("fonts/Karla-VariableFont_wght.ttf") format("truetype");
+    font-weight: 200 800; font-style: normal; font-display: swap;
+  }
+  :root { --font-karla: "Karla", system-ui, sans-serif; }
+  html, body { background: #FAFAFA; }
+  body { font-family: var(--font-karla); margin: 0; }
+</style>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      colors: {
+        primary: "#111111",
+        "yellow-ffe253": "#FFE253", "yellow-fff2b3": "#FFF2B3", "yellow-fffadd": "#FFFADD",
+        "yellow-fbfbf3": "#FBFBF3", "yellow-fceb63": "#FCEB63",
+        "gray-fafafa": "#FAFAFA", "gray-f5f5f5": "#F5F5F5",
+        "green-cfff29": "#CFFF29", "green-92bc01": "#92BC01",
+        "red-ec5212": "#EC5212", "blue-4398ff": "#4398FF",
+      },
+      fontFamily: { karla: ['Karla', 'system-ui', 'sans-serif'] },
+      keyframes: {
+        fadeInUp: { "0%": { transform: "translateY(4px)", opacity: "0" }, "100%": { transform: "translateY(0)", opacity: "1" } },
+        targetPulse: { "0%": { transform: "scale(1)" }, "30%": { transform: "scale(1.18)" }, "55%": { transform: "scale(0.88)" }, "100%": { transform: "scale(1)" } },
+      },
+      animation: {
+        "fade-in": "fadeInUp 320ms ease-out",
+        "target-pulse": "targetPulse 720ms cubic-bezier(0.34,1.56,0.64,1)",
+      },
+    } }
+  };
+</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <template id="__bundler_thumbnail" data-bg-color="#FFFADD">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#FFFADD"></rect>
+      <g transform="translate(440, 280)">
+        <rect x="0" y="0" width="320" height="240" rx="28" fill="#FFFFFF" stroke="#111" stroke-width="6"></rect>
+        <circle cx="160" cy="120" r="52" fill="none" stroke="#5a8b00" stroke-width="12"></circle>
+        <path d="M132 120l20 20 40-44" stroke="#5a8b00" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      </g>
+    </svg>
+  </template>
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/ui-shims.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/icons.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/update-tutorial.jsx"></script>
+
+  <script type="text/babel" data-presets="env,react">
+    const { UpdateTutorial } = window;
+    function App() {
+      return (
+        <div className="min-h-screen flex flex-col items-center justify-center gap-10 p-12 bg-gray-fafafa">
+          <div className="text-center">
+            <div className="text-[11px] uppercase tracking-[0.12em] text-primary/45 font-semibold">Update tutorial · 328 × 160 looping</div>
+            <div className="text-[24px] font-bold tracking-[-0.02em] mt-1.5">How to update the extension 🔄</div>
+          </div>
+
+          <div className="relative w-[360px] bg-white rounded-[16px] border border-primary/[0.05] p-3.5" style={{ boxShadow: "0 24px 60px -12px rgba(17,17,17,0.18), 0 4px 12px rgba(0,0,0,0.04)" }}>
+            <span className="absolute -top-1.5 right-7 w-3 h-3 bg-white border-l border-t border-primary/[0.05]" style={{ transform: "rotate(45deg)" }} />
+            <div className="flex items-start justify-between mb-2.5 px-0.5">
+              <div className="text-[14px] font-semibold inline-flex items-center gap-1.5">Update available <span aria-hidden>👋</span></div>
+              <button aria-label="Dismiss" className="w-5 h-5 inline-flex items-center justify-center rounded text-primary/40 hover:text-primary hover:bg-primary/[0.04] cursor-pointer">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              </button>
+            </div>
+            <div className="overflow-hidden rounded-[10px]"><UpdateTutorial /></div>
+            <p className="text-[11.5px] text-primary/65 leading-[1.55] mt-3 px-0.5">
+              Click <span className="font-semibold text-primary">Update extension</span> to download v2.4, open{" "}
+              <span className="font-mono text-[10.5px] text-primary/85 bg-gray-f5f5f5 px-1 py-px rounded">chrome://extensions/</span>,{" "}
+              remove the old aisee version, then drag the new file in.
+            </p>
+            <div className="flex justify-end mt-3 px-0.5">
+              <button className="px-3 h-[28px] rounded-lg bg-yellow-ffe253 text-primary text-[12px] font-semibold hover:bg-yellow-fceb63 transition-colors cursor-pointer">Got it</button>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center gap-2">
+            <div className="text-[10.5px] uppercase tracking-[0.12em] text-primary/40 font-semibold">Animation only · 328 × 160</div>
+            <div style={{ boxShadow: "0 12px 30px -8px rgba(17,17,17,0.14)" }}><UpdateTutorial /></div>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

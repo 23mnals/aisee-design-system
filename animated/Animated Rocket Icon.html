@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Animated Rocket Icon</title>
+<style>
+  :root {
+    --ink: #111111;
+    --muted: #6b6b6b;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --hair: rgba(0, 0, 0, 0.08);
+    --accent: #2A6FDB;
+  }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 64px 32px 96px; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lede { color: var(--muted); font-size: 14px; margin: 0 0 40px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+  .card {
+    background: var(--card); border: 1px solid var(--hair);
+    border-radius: 14px; padding: 28px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; }
+  .card-title { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+  .card-hint { font-size: 12px; color: var(--muted); }
+  .stage {
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px);
+    border-radius: 10px; padding: 36px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 200px;
+  }
+  .sizes { display: flex; align-items: flex-end; gap: 36px; }
+  .size-cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .size-cell .label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px; color: var(--muted);
+  }
+
+  /* ─────────────── Rocket icon ─────────────── */
+  .rocket { display: inline-block; color: var(--ink); cursor: pointer; padding: 6px; }
+  .rocket svg { display: block; overflow: visible; }
+
+  /* Flame scales along its own axis, rooted at the nozzle (top of its bbox). */
+  .rocket svg .r-flame {
+    transform-box: fill-box;
+    transform-origin: 50% 0%;
+    transform: scaleY(1);
+  }
+  .rocket svg .r-window { transform-box: fill-box; transform-origin: 50% 50%; }
+
+  /* Hover (self + host) */
+  .rocket:hover svg .r-flame,
+  .icon-btn:hover .rocket svg .r-flame,
+  .icon-only:hover .rocket svg .r-flame {
+    animation: rocket-flame 850ms cubic-bezier(.34,1.56,.64,1) infinite;
+  }
+  .rocket:hover svg .r-window,
+  .icon-btn:hover .rocket svg .r-window,
+  .icon-only:hover .rocket svg .r-window {
+    animation: rocket-window 850ms ease-in-out infinite;
+  }
+  .rocket:hover svg .r-speed-1,
+  .icon-btn:hover .rocket svg .r-speed-1,
+  .icon-only:hover .rocket svg .r-speed-1 {
+    animation: rocket-speed 950ms cubic-bezier(.45,0,.55,1) infinite;
+  }
+  .rocket:hover svg .r-speed-2,
+  .icon-btn:hover .rocket svg .r-speed-2,
+  .icon-only:hover .rocket svg .r-speed-2 {
+    animation: rocket-speed 950ms cubic-bezier(.45,0,.55,1) infinite;
+    animation-delay: -475ms;
+  }
+
+  /* Elastic flame: shoots out with overshoot, springs, then contracts. */
+  @keyframes rocket-flame {
+    0%   { transform: scaleY(0.45); }
+    22%  { transform: scaleY(1.28); }   /* fast burst out, overshoot */
+    40%  { transform: scaleY(0.82); }   /* spring back */
+    58%  { transform: scaleY(1.12); }   /* bounce */
+    74%  { transform: scaleY(0.94); }
+    88%  { transform: scaleY(1.02); }
+    100% { transform: scaleY(0.45); }   /* elastic contraction */
+  }
+  @keyframes rocket-window {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.2; }
+  }
+  /* Speed lines: stream backward along the 45° axis AND stretch/contract their
+     own length (stroke-dasharray) — short burst out → elongate → whip short again. */
+  @keyframes rocket-speed {
+    0%   { opacity: 0; transform: translate(40px, -40px); stroke-dasharray: 4 40; }   /* appears near the nose (front) */
+    15%  { opacity: 1; }
+    50%  { stroke-dasharray: 34 40; }                                                /* stretched, mid-sweep */
+    85%  { opacity: 1; }
+    100% { opacity: 0; transform: translate(-40px, 40px); stroke-dasharray: 5 40; }   /* vanishes alongside the flame, clear of the tail */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rocket svg * { animation: none !important; transform: none !important; }
+    .rocket svg .r-speed { opacity: 0; }
+  }
+
+  /* ─────────────── Inline buttons / rows ─────────────── */
+  .icon-btn {
+    appearance: none; background: transparent;
+    border: 1px solid var(--hair); border-radius: 8px;
+    padding: 8px 12px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font: inherit; font-size: 13px; color: var(--ink);
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+  .icon-btn:hover { background: #f3f3f3; border-color: rgba(0,0,0,0.14); }
+  .icon-btn.brand:hover {
+    background: rgba(42, 111, 219, 0.06);
+    border-color: rgba(42, 111, 219, 0.3);
+    color: var(--accent);
+  }
+  .icon-btn .rocket { padding: 0; }
+
+  .icon-only {
+    appearance: none; background: transparent; border: none;
+    padding: 6px; border-radius: 6px; color: var(--ink); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .icon-only:hover { background: rgba(42, 111, 219, 0.08); color: var(--accent); }
+  .icon-only .rocket { padding: 0; }
+
+  .row-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; border: 1px solid var(--hair);
+    border-radius: 8px; background: #fff;
+  }
+  .row-item .grow { flex: 1; font-size: 13px; }
+  .row-item .meta { font-size: 12px; color: var(--muted); }
+
+  .source {
+    margin-top: 8px;
+    background: #0f0f10; color: #e8e8e8;
+    border-radius: 12px; padding: 20px 22px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; line-height: 1.65; overflow: auto;
+  }
+  .source .c { color: #6b7a8a; }
+  .source .k { color: #c2a8ff; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Animated rocket icon</h1>
+  <p class="lede">Your original rocket shape, unchanged. The body holds still — the exhaust flame fires with an elastic in/out, the porthole flickers, and two speed lines stream past at 45°.</p>
+
+  <!-- Real geometry from rocket-plane.svg (Lottie export): flame + body + window, rotated 45°. -->
+  <template id="rocket-svg-tpl">
+    <svg viewBox="0 0 240 240" fill="none">
+      <!-- exhaust flame (nudged down-left along axis so its top sits flush with the body, not poking in) -->
+      <g transform="matrix(7.0710678,7.0710678,-7.0710678,7.0710678,68.4,171.6)">
+        <g class="r-flame">
+          <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            d="M0.008,2.992 C0.141,2.798 2,0.068 2,-0.997 C2,-2.102 1.105,-2.997 0,-2.997 C-1.105,-2.997 -2,-2.102 -2,-0.997 C-2,0.068 -0.141,2.798 -0.008,2.992 C-0.004,2.998 0.004,2.998 0.008,2.992z"></path>
+        </g>
+      </g>
+      <!-- rocket body -->
+      <g transform="matrix(7.0710678,7.0710678,-7.0710678,7.0710678,137.74130249023438,102.38597106933594)">
+        <g>
+          <path class="r-body" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            d="M6.943,5.5 C6.667,5 5.234,3.99 5.333,3.5 C6.943,-4.5 0.742,-8.5 0,-8.5 C-0.742,-8.5 -6.943,-4.5 -5.333,3.5 C-5.234,3.99 -6.667,5 -6.943,5.5 C-7.219,6 -6.257,8.5 -5.795,8.5 C-5.333,8.5 -1.992,6.5 0,6.5 C2.992,6.5 5.333,8.5 5.795,8.5 C6.257,8.5 7.219,6 6.943,5.5z"></path>
+        </g>
+      </g>
+      <!-- porthole window -->
+      <g transform="matrix(7.0710678,7.0710678,-7.0710678,7.0710678,141.19906616210938,98.80094146728516)">
+        <g class="r-window">
+          <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            d="M0,-1 C0.552,-1 1,-0.552 1,0 C1,0.552 0.552,1 0,1 C-0.552,1 -1,0.552 -1,0 C-1,-0.552 -0.552,-1 0,-1z"></path>
+        </g>
+      </g>
+      <!-- speed lines: one on each flank, parallel to the 45° flight axis -->
+      <g class="r-speed r-speed-1">  <!-- lower-right flank -->
+        <line x1="191" y1="177" x2="213" y2="155" pathLength="32" stroke="currentColor" stroke-width="15" stroke-linecap="round"></line>
+      </g>
+      <g class="r-speed r-speed-2">  <!-- upper-left flank -->
+        <line x1="62" y1="48" x2="84" y2="26" pathLength="32" stroke="currentColor" stroke-width="15" stroke-linecap="round"></line>
+      </g>
+    </svg>
+  </template>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Sizes</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage">
+        <div class="sizes">
+          <div class="size-cell"><span class="rocket" data-size="16"></span><span class="label">16</span></div>
+          <div class="size-cell"><span class="rocket" data-size="24"></span><span class="label">24</span></div>
+          <div class="size-cell"><span class="rocket" data-size="48"></span><span class="label">48</span></div>
+          <div class="size-cell"><span class="rocket" data-size="96"></span><span class="label">96</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Real placements</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage" style="flex-direction:column; align-items:stretch; gap:14px; padding:24px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="icon-btn brand" type="button">
+            <span class="rocket" data-size="16"></span>
+            Launch
+          </button>
+          <button class="icon-btn" type="button">
+            <span class="rocket" data-size="16"></span>
+            Upgrade plan
+          </button>
+        </div>
+
+        <div class="row-item">
+          <div class="grow">Boost performance</div>
+          <span class="meta">Pro</span>
+          <button class="icon-only" type="button" aria-label="Boost">
+            <span class="rocket" data-size="16"></span>
+          </button>
+        </div>
+        <div class="row-item">
+          <div class="grow">Ship new release</div>
+          <span class="meta">v2.4</span>
+          <button class="icon-only" type="button" aria-label="Ship">
+            <span class="rocket" data-size="16"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">How it works</div>
+      <div class="card-hint">body static · flame elastic</div>
+    </div>
+    <div class="source"><span class="c">/* Exhaust flame — elastic burst + contraction, rooted at the nozzle */</span>
+<span class="k">.r-flame</span> { transform-box: fill-box; transform-origin: 50% 0%; }
+
+<span class="k">@keyframes rocket-flame</span> {
+   0% { transform: scaleY(0.45); }
+  22% { transform: scaleY(1.28); }   <span class="c">/* fast burst, overshoot */</span>
+  40% { transform: scaleY(0.82); }   <span class="c">/* spring back */</span>
+  58% { transform: scaleY(1.12); }   <span class="c">/* bounce */</span>
+  74% { transform: scaleY(0.94); }
+  88% { transform: scaleY(1.02); }
+ 100% { transform: scaleY(0.45); }   <span class="c">/* elastic contraction */</span>
+}
+<span class="c">/* spring easing on the whole loop */</span>
+<span class="k">.rocket:hover .r-flame</span> { animation: rocket-flame 850ms cubic-bezier(.34,1.56,.64,1) infinite; }
+
+<span class="c">/* Porthole flicker */</span>
+<span class="k">@keyframes rocket-window</span> { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+<span class="c">/* Speed lines: translate backward + stretch their own length (dasharray) */</span>
+<span class="k">@keyframes rocket-speed</span> {
+    0% { opacity:0; transform:translate(40px,-40px); stroke-dasharray:4 40;  }   <span class="c">/* appears at nose */</span>
+   50% { stroke-dasharray:34 40; }                                              <span class="c">/* stretched mid-sweep */</span>
+  100% { opacity:0; transform:translate(-44px,44px); stroke-dasharray:5 40; }   <span class="c">/* vanishes by flame */</span>
+}</div>
+  </div>
+</div>
+
+<script>
+  const tpl = document.getElementById('rocket-svg-tpl');
+  document.querySelectorAll('.rocket').forEach(el => {
+    const size = el.dataset.size || 16;
+    const svg = tpl.content.firstElementChild.cloneNode(true);
+    svg.setAttribute('width', size);
+    svg.setAttribute('height', size);
+    el.appendChild(svg);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Animated Bell Icon</title>
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  :root {
+    --ink: #111111;
+    --muted: #6b6b6b;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --hair: rgba(0, 0, 0, 0.08);
+    --accent: #EC5212;
+  }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 64px 32px 96px; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lede { color: var(--muted); font-size: 14px; margin: 0 0 40px; max-width: 60ch; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+  .card {
+    background: var(--card); border: 1px solid var(--hair);
+    border-radius: 14px; padding: 28px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; }
+  .card-title { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+  .card-hint { font-size: 12px; color: var(--muted); }
+  .stage {
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px);
+    border-radius: 10px; padding: 36px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 200px;
+  }
+  .sizes { display: flex; align-items: flex-end; gap: 36px; }
+  .size-cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .size-cell .label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px; color: var(--muted);
+  }
+
+  /* ─────────────── Bell icon ─────────────── */
+  .bell { display: inline-block; color: var(--ink); cursor: pointer; padding: 6px; }
+  .bell svg { display: block; overflow: visible; }
+  .bell svg path { fill: none; stroke: currentColor; }
+
+  /* Body hangs from the top point (8,2); the clapper ALSO pivots from (8,2)
+     and adds its own offset rhythm on top — the fixed mouth-line clip hides
+     its connection points no matter how far it swings. */
+  .bell svg .swing,
+  .bell svg .clap { transform-box: view-box; transform-origin: 8px 2px; }
+
+  /* Hover (self + host) → ring. Faithful to the source Lottie:
+     43f @ 30fps ≈ 1.433s. swing = damped body oscillation,
+     bob = vertical bounce, clap = clapper on its own offset rhythm. */
+  .bell:hover svg .swing,
+  .bell-trigger:hover .bell svg .swing { animation: bell-swing 1.433s cubic-bezier(.26,0,.41,1) infinite; }
+  .bell:hover svg .bob,
+  .bell-trigger:hover .bell svg .bob { animation: bell-bob 1.433s cubic-bezier(.26,0,.41,1) infinite; }
+  .bell:hover svg .clap,
+  .bell-trigger:hover .bell svg .clap { animation: bell-clap 1.433s cubic-bezier(.26,0,.41,1) infinite; }
+
+  @keyframes bell-swing {
+    0%     { transform: rotate(0deg);       animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    18.6%  { transform: rotate(-3.845deg);  animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    27.9%  { transform: rotate(5.339deg);   animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    37.2%  { transform: rotate(-11.12deg);  animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    46.5%  { transform: rotate(5.339deg);   animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    58.1%  { transform: rotate(-6.386deg);  animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    72.1%  { transform: rotate(0deg); }
+    100%   { transform: rotate(0deg); }
+  }
+  @keyframes bell-bob {
+    0%   { transform: translateY(0); }
+    14%  { transform: translateY(0.6px); }
+    44%  { transform: translateY(-0.4px); }
+    65%  { transform: translateY(0.3px); }
+    79%  { transform: translateY(0); }
+    100% { transform: translateY(0); }
+  }
+  @keyframes bell-clap {
+    0%     { transform: rotate(0deg);       animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    14%    { transform: rotate(0deg);       animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    24.3%  { transform: rotate(4.809deg);   animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    32.6%  { transform: rotate(5.701deg);   animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    40.8%  { transform: rotate(-6.101deg);  animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    50.1%  { transform: rotate(8.45deg);    animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    61.7%  { transform: rotate(-5.545deg);  animation-timing-function: cubic-bezier(.26,0,.41,1); }
+    79%    { transform: rotate(1.197deg); }
+    93%    { transform: rotate(0deg); }
+    100%   { transform: rotate(0deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bell svg * { animation: none !important; transform: none !important; }
+  }
+
+  /* ─────────────── Inline buttons / rows ─────────────── */
+  .bell-btn {
+    appearance: none; background: transparent;
+    border: 1px solid var(--hair); border-radius: 8px;
+    padding: 8px 12px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font: inherit; font-size: 13px; color: var(--ink);
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+  .bell-btn:hover { background: #f3f3f3; border-color: rgba(0,0,0,0.14); }
+  .bell-btn.is-brand:hover {
+    background: rgba(236, 82, 18, 0.06);
+    border-color: rgba(236, 82, 18, 0.3);
+    color: var(--accent);
+  }
+  .bell-btn .bell { padding: 0; }
+  .bell-btn, .icon-only { flex: 0 0 auto; white-space: nowrap; }
+
+  .icon-only {
+    appearance: none; background: transparent; border: none;
+    padding: 6px; border-radius: 6px; color: var(--ink); cursor: pointer;
+    position: relative;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .icon-only:hover { background: rgba(236, 82, 18, 0.08); color: var(--accent); }
+  .icon-only .bell { padding: 0; }
+  .badge {
+    position: absolute; top: 4px; right: 4px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--card);
+  }
+
+  .row-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; border: 1px solid var(--hair);
+    border-radius: 8px; background: #fff;
+  }
+  .row-item .grow { flex: 1; font-size: 13px; }
+  .row-item .meta { font-size: 12px; color: var(--muted); }
+
+  .source {
+    margin-top: 8px;
+    background: #0f0f10; color: #e8e8e8;
+    border-radius: 12px; padding: 20px 22px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; line-height: 1.65; overflow: auto;
+  }
+  .source .c { color: #6b7a8a; }
+  .source .k { color: #c2a8ff; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <h1>Animated bell icon</h1>
+  <p class="lede">线框通知铃铛。hover 时以顶部悬挂点为支点做衰减式左右摇晃并轻微上下弹跳，内部铃锤以略微错开、幅度更大的节奏甩动——按上传的 Lottie（43 帧 / 30fps）精确复刻的"摇铃提醒"动效。</p>
+
+  <template id="bell-svg-tpl">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round">
+      <defs>
+        <clipPath class="bell-clip">
+          <!-- Only the area BELOW the mouth line, so the clapper's top endpoints
+               (both caps) stay tucked under the body's mouth stroke — no visible connection. -->
+          <path d="M2.62631 11.55L13.2929 11.55L13.2929 16L2.62631 16Z"></path>
+        </clipPath>
+      </defs>
+      <g class="bob">
+        <g class="swing">
+          <!-- Clapper drawn FIRST (behind) so the body's mouth stroke hides its connection points. -->
+          <g class="clip-host">
+            <g class="clap">
+              <path class="bell-clapper" d="M5.72018 11.269C5.68696 12.3731 6.55496 13.295 7.65913 13.3282C8.76329 13.3615 9.68515 12.4935 9.71837 11.3893"></path>
+            </g>
+          </g>
+          <path class="bell-body" d="M8 2.00002C5.79069 1.99045 3.99229 3.77335 3.98272 5.98266L3.97118 8.6493L2.62631 11.3102L13.2929 11.3564L11.9711 8.68394L11.9826 6.0173C11.9922 3.80799 10.2093 2.00958 8 2.00002Z"></path>
+        </g>
+      </g>
+    </svg>
+  </template>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Sizes</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage">
+        <div class="sizes">
+          <div class="size-cell"><span class="bell" data-size="16"></span><span class="label">16</span></div>
+          <div class="size-cell"><span class="bell" data-size="24"></span><span class="label">24</span></div>
+          <div class="size-cell"><span class="bell" data-size="48"></span><span class="label">48</span></div>
+          <div class="size-cell"><span class="bell" data-size="96"></span><span class="label">96</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Ring</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage">
+        <button class="icon-only" type="button" aria-label="Notifications">
+          <span class="bell" data-size="72"></span>
+          <span class="badge"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">Real placements</div>
+      <div class="card-hint">hover →</div>
+    </div>
+    <div class="stage" style="flex-direction:column; align-items:stretch; gap:14px; padding:24px;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <button class="bell-btn is-brand" type="button">
+          <span class="bell" data-size="16"></span>
+          Notify me
+        </button>
+        <button class="bell-btn" type="button">
+          <span class="bell" data-size="16"></span>
+          Subscribe
+        </button>
+        <button class="icon-only" type="button" aria-label="Notifications">
+          <span class="bell" data-size="20"></span>
+          <span class="badge"></span>
+        </button>
+      </div>
+
+      <div class="row-item">
+        <div class="grow">New comment on your report</div>
+        <span class="meta">2m</span>
+        <button class="icon-only" type="button" aria-label="Mute">
+          <span class="bell" data-size="16"></span>
+        </button>
+      </div>
+      <div class="row-item">
+        <div class="grow">Weekly digest is ready</div>
+        <span class="meta">1h</span>
+        <button class="icon-only" type="button" aria-label="Mute">
+          <span class="bell" data-size="16"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">How it works</div>
+      <div class="card-hint">top pivot · damped swing + offset clapper</div>
+    </div>
+    <div class="source"><span class="c">/* Pivot body + clapper at the top hanging point (8,2). */</span>
+<span class="k">.swing</span>, <span class="k">.clap</span> { transform-box: view-box; transform-origin: 8px 2px; }
+
+<span class="c">/* Body: damped oscillation — exact Lottie keyframes (43f @ 30fps). */</span>
+<span class="k">@keyframes bell-swing</span> {
+   0%   { transform: rotate(0deg);      }
+  18.6% { transform: rotate(-3.845deg); }
+  27.9% { transform: rotate(5.339deg);  }
+  37.2% { transform: rotate(-11.12deg); }   <span class="c">/* peak */</span>
+  46.5% { transform: rotate(5.339deg);  }
+  58.1% { transform: rotate(-6.386deg); }
+  72.1% { transform: rotate(0deg);      }   <span class="c">/* settle */</span>
+}
+
+<span class="c">/* Clapper: own offset rhythm, slightly larger amplitude. */</span>
+<span class="k">@keyframes bell-clap</span> {
+  14%   { transform: rotate(0deg);     }
+  32.6% { transform: rotate(5.701deg); }
+  50.1% { transform: rotate(8.45deg);  }
+  61.7% { transform: rotate(-5.545deg);}
+  93%   { transform: rotate(0deg);     }
+}
+<span class="k">.bell:hover .swing</span> { animation: bell-swing 1.433s infinite; }</div>
+  </div>
+</div>
+
+<script>
+  const tpl = document.getElementById('bell-svg-tpl');
+  document.querySelectorAll('.bell').forEach((el, i) => {
+    const size = el.dataset.size || 16;
+    const svg = tpl.content.firstElementChild.cloneNode(true);
+    svg.setAttribute('width', size);
+    svg.setAttribute('height', size);
+    // Clip the clapper to the bell silhouette so it never pokes out the sides
+    // during the swing. The clipPath must live INSIDE this same <svg> — a
+    // cross-SVG url(#id) reference silently fails to clip in Chrome.
+    const clipId = 'bellClip-' + i;
+    svg.querySelector('.bell-clip').id = clipId;
+    svg.querySelector('.clip-host').setAttribute('clip-path', 'url(#' + clipId + ')');
+    el.appendChild(svg);
+  });
+</script>
+</body>
+</html>

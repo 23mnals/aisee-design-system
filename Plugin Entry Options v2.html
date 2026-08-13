@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Plugin entry — design proposals</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<style>
+  @font-face {
+    font-family: "Karla";
+    src: url("fonts/Karla-VariableFont_wght.ttf") format("truetype");
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  :root {
+    --canvas: #f0eee9;
+    --grid: rgba(0,0,0,0.05);
+    --label: rgba(60,50,40,0.7);
+    --title: rgba(40,30,20,0.9);
+    --subtitle: rgba(60,50,40,0.6);
+    --postit: #FFF2B3;
+    --postit-text: #5a4a2a;
+    --primary: #111;
+    --y-ffe253: #FFE253;
+    --y-fff2b3: #FFF2B3;
+    --y-fffadd: #FFFADD;
+    --y-fbfbf3: #FBFBF3;
+    --green-cfff29: #CFFF29;
+    --green-92bc01: #92BC01;
+    --olive: rgba(144,120,0,1);
+  }
+  html,body { background: var(--canvas); margin: 0; }
+  body {
+    font-family: "Karla", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: var(--primary);
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    padding: 56px 56px 96px;
+  }
+  .canvas-title {
+    font-size: 28px; font-weight: 700; letter-spacing: -0.02em;
+    color: var(--title); margin: 0 0 6px;
+  }
+  .canvas-sub {
+    font-size: 14px; color: var(--subtitle); margin: 0 0 48px;
+  }
+  .section { margin-bottom: 80px; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--label);
+    background: rgba(255,255,255,0.55); border: 1px solid rgba(0,0,0,0.06);
+    padding: 5px 10px; border-radius: 999px; margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.015em;
+    color: var(--title); margin: 4px 0 4px;
+  }
+  .section-desc {
+    font-size: 13.5px; color: var(--subtitle); margin: 0 0 28px;
+    max-width: 720px; line-height: 1.55;
+  }
+  .row { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+  .frame {
+    background: #fff; border-radius: 14px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .frame-label {
+    font-size: 11.5px; color: var(--label);
+    font-weight: 600; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .frame-label .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(60,50,40,0.45);
+  }
+  .postit {
+    background: var(--postit); color: var(--postit-text);
+    padding: 12px 14px; border-radius: 10px;
+    font-size: 12.5px; line-height: 1.55; max-width: 260px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .postit b { color: #3a2f10; }
+  .postit + .postit { margin-top: 10px; }
+
+  /* ─── shared component primitives (matching dashboard vocab) ─── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 36px; padding: 0 14px; border-radius: 10px;
+    font-family: inherit; font-size: 13.5px; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--primary); color: #fff;
+  }
+  .btn-primary:hover { background: var(--y-ffe253); color: var(--primary); }
+  .btn-yellow {
+    background: var(--y-ffe253); color: var(--primary);
+  }
+  .btn-yellow:hover { background: var(--primary); color: #fff; }
+  .btn-soft {
+    background: var(--y-fffadd); color: var(--primary);
+  }
+  .btn-soft:hover { background: var(--y-fff2b3); }
+  .btn-text {
+    background: transparent; color: rgba(17,17,17,0.55);
+    padding: 0 8px;
+  }
+  .btn-text:hover { color: var(--primary); }
+  .btn-outlined {
+    background: #fff; color: var(--primary);
+    border: 1px solid rgba(17,17,17,0.12);
+  }
+  .btn-outlined:hover { background: var(--y-fffadd); border-color: var(--y-fff2b3); }
+
+  /* ─── mock browser chrome ─── */
+  .browser {
+    width: 1100px; border-radius: 14px; overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 24px 60px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .browser-bar {
+    height: 36px; background: #F5F3EF;
+    display: flex; align-items: center; gap: 8px; padding: 0 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .browser-bar .dots { display: flex; gap: 6px; }
+  .browser-bar .dots span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(0,0,0,0.12);
+  }
+  .browser-url {
+    flex: 1; height: 22px; background: #fff;
+    border-radius: 999px; margin: 0 12px; padding: 0 12px;
+    display: flex; align-items: center;
+    font-size: 11px; color: rgba(17,17,17,0.45);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+
+  /* ─── dashboard skeleton (for context) ─── */
+  .dash {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    height: 600px;
+    position: relative;
+  }
+  .dash-side {
+    background: #fff;
+    border-right: 1px solid rgba(17,17,17,0.04);
+    padding: 16px 12px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .dash-logo {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 6px 12px;
+  }
+  .dash-logo .lo {
+    width: 22px; height: 22px;
+    background: var(--green-cfff29); border-radius: 99px 99px 0 0;
+  }
+  .dash-logo span { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+  .dash-tab {
+    height: 28px; border-radius: 8px;
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 8px; font-size: 12.5px;
+    color: rgba(17,17,17,0.7);
+  }
+  .dash-tab.active {
+    background: var(--y-ffe253); color: var(--primary);
+    font-weight: 600;
+  }
+  .dash-tab .ic { width: 14px; height: 14px; background: currentColor; opacity: 0.55; mask-size: contain; }
+  .dash-main {
+    background: var(--y-fbfbf3);
+    padding: 18px 24px; position: relative;
+    overflow: hidden;
+  }
+  .dash-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .dash-h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+  .dash-actions { display: flex; gap: 8px; align-items: center; }
+  .icon-btn {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--y-fffadd); display: inline-flex;
+    align-items: center; justify-content: center;
+    color: var(--primary);
+  }
+  .dash-card {
+    background: #fff; border-radius: 12px;
+    padding: 14px; margin-bottom: 12px;
+    border: 1px solid rgba(17,17,17,0.04);
+  }
+  .skel { height: 10px; border-radius: 4px; background: rgba(17,17,17,0.06); }
+  .skel.sm { height: 8px; }
+  .skel.w-30 { width: 30%; }
+  .skel.w-50 { width: 50%; }
+  .skel.w-70 { width: 70%; }
+  .skel.w-90 { width: 90%; }
+  .skel + .skel { margin-top: 8px; }
+  .chart-fake {
+    height: 160px; border-radius: 10px;
+    background:
+      linear-gradient(180deg, transparent 60%, rgba(255,226,83,0.35) 100%),
+      repeating-linear-gradient(90deg, transparent 0 56px, rgba(0,0,0,0.04) 56px 57px);
+    position: relative; margin-top: 8px;
+  }
+  .chart-fake::after {
+    content: ""; position: absolute; inset: auto 0 0 0;
+    height: 60%;
+    background:
+      radial-gradient(60% 70% at 30% 100%, rgba(255,226,83,0.65), transparent 70%),
+      radial-gradient(40% 60% at 70% 100%, rgba(255,226,83,0.5), transparent 70%);
+    border-radius: 10px;
+  }
+
+  /* ───────── 1. NEW ONBOARDING CARD ───────── */
+  .onboard-card {
+    width: 360px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(17,17,17,0.06);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 20px 50px -8px rgba(20,20,20,0.18),
+      0 4px 12px rgba(20,20,20,0.06);
+    overflow: hidden;
+    position: relative;
+  }
+  /* triangle pointer */
+  .onboard-card .pointer {
+    position: absolute;
+    top: -8px; right: 28px;
+    width: 16px; height: 16px;
+    background: var(--y-fff2b3);
+    transform: rotate(45deg);
+    border-top: 1px solid rgba(17,17,17,0.06);
+    border-left: 1px solid rgba(17,17,17,0.06);
+  }
+  .onboard-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    background: rgba(17,17,17,0.04);
+    color: rgba(17,17,17,0.55);
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 2; border: none;
+  }
+  .onboard-close:hover { background: rgba(17,17,17,0.08); color: var(--primary); }
+  /* preview area */
+  .preview {
+    height: 188px;
+    background: var(--y-fff2b3);
+    background:
+      radial-gradient(120% 90% at 50% 0%, var(--y-fff2b3) 0%, var(--y-fffadd) 70%);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .preview .label-pill {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(17,17,17,0.7);
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 8px; border-radius: 99px;
+    border: 1px solid rgba(17,17,17,0.05);
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .preview .label-pill .blink {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #e14f12;
+    animation: blink 1.4s infinite;
+  }
+  @keyframes blink {
+    0%, 60%, 100% { opacity: 1; }
+    30% { opacity: 0.35; }
+  }
+  /* mini install flow (the static preview illustration) */
+  .mini-flow {
+    width: 304px; height: 140px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid rgba(17,17,17,0.05);
+    box-shadow: 0 6px 20px rgba(20,20,20,0.08);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  .mini-flow .mf-bar {
+    height: 22px;
+    background: #F5F3EF;
+    display: flex; align-items: center; gap: 6px;
+    padding: 0 8px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .mini-flow .mf-bar .mf-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(0,0,0,0.15);
+  }
+  .mini-flow .mf-bar .mf-url {
+    flex: 1; height: 12px;
+    background: #fff;
+    border-radius: 99px;
+    margin: 0 4px; padding: 0 8px;
+    display: flex; align-items: center;
+    font-size: 8.5px; color: rgba(0,0,0,0.45);
+    font-family: ui-monospace, monospace;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .mini-flow .mf-body {
+    flex: 1; padding: 14px;
+    display: flex; align-items: center; gap: 14px;
+    position: relative;
+  }
+  .mf-drop {
+    flex: 1; height: 76px;
+    border: 1.5px dashed rgba(144,120,0,0.4);
+    border-radius: 8px;
+    background: rgba(255,242,179,0.35);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 4px;
+    font-size: 9px; color: rgba(144,120,0,0.9);
+    font-weight: 600;
+  }
+  .mf-drop svg { width: 16px; height: 16px; }
+  .mf-zip {
+    position: absolute;
+    left: 18px; top: 38px;
+    width: 44px; height: 50px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 6px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    animation: float-zip 3.2s cubic-bezier(0.45,0,0.55,1) infinite;
+  }
+  .mf-zip::before {
+    content: ""; position: absolute;
+    top: 0; right: 0;
+    width: 10px; height: 10px;
+    background: rgba(144,120,0,0.2);
+    clip-path: polygon(100% 0, 100% 100%, 0 0);
+    border-top-right-radius: 6px;
+  }
+  .mf-zip .zip-logo {
+    width: 24px; height: 24px; background: var(--green-cfff29);
+    border-radius: 99px 99px 0 0;
+    margin-bottom: 2px;
+  }
+  .mf-zip .zip-text {
+    font-size: 6px; font-family: ui-monospace, monospace;
+    color: rgba(0,0,0,0.5); font-weight: 700; letter-spacing: 0.1em;
+  }
+  @keyframes float-zip {
+    0%, 100% { transform: translate(0, 0) rotate(-3deg); }
+    50%      { transform: translate(150px, -6px) rotate(3deg); }
+  }
+  /* card body */
+  .onboard-body {
+    padding: 20px 22px 18px;
+  }
+  .onboard-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700;
+    color: var(--olive); letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .onboard-eyebrow .sparkle {
+    width: 14px; height: 14px;
+  }
+  .onboard-title {
+    font-size: 18px; font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--primary);
+    line-height: 1.25;
+    margin: 0 0 6px;
+    text-wrap: pretty;
+  }
+  .onboard-sub {
+    font-size: 13px; line-height: 1.5;
+    color: rgba(17,17,17,0.65);
+    margin: 0 0 16px;
+    text-wrap: pretty;
+  }
+  .step-toggle {
+    width: 100%;
+    background: none; border: none;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    color: rgba(17,17,17,0.55);
+    padding: 8px 0;
+    cursor: pointer;
+    border-top: 1px dashed rgba(17,17,17,0.08);
+    margin-bottom: 4px;
+  }
+  .step-toggle:hover { color: var(--primary); }
+  .step-toggle .chev {
+    margin-left: auto;
+    transition: transform 0.2s;
+  }
+  .steps {
+    padding: 4px 0 14px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .step {
+    display: flex; gap: 10px;
+    font-size: 12.5px; line-height: 1.45;
+    color: rgba(17,17,17,0.75);
+  }
+  .step-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--y-fff2b3);
+    color: var(--primary);
+    font-size: 10.5px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step kbd {
+    font-family: ui-monospace, "SFMono-Regular", monospace;
+    background: rgba(17,17,17,0.06);
+    padding: 1px 6px; border-radius: 4px;
+    font-size: 11px; font-weight: 600;
+  }
+  .actions {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  /* ───────── 2. INSTALLED STATE ───────── */
+  .right-stage {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 18px 24px;
+    border: 1px solid rgba(17,17,17,0.06);
+    width: 440px;
+  }
+  .right-stage-frame {
+    background: var(--y-fbfbf3);
+    border-radius: 8px;
+    height: 88px;
+    display: flex; align-items: center;
+    justify-content: flex-end;
+    padding: 0 16px;
+    gap: 10px;
+    position: relative;
+    border: 1px solid rgba(17,17,17,0.04);
+  }
+  .right-stage-frame::before {
+    content: "navbar (right side)";
+    position: absolute; top: 8px; left: 12px;
+    font-size: 9.5px; color: rgba(17,17,17,0.35);
+    font-weight: 500; letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .ext-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 32px; padding: 0 12px 0 10px;
+    border-radius: 8px;
+    background: rgba(146,188,1,0.12);
+    color: #2f4a00;
+    font-size: 12.5px; font-weight: 600;
+    border: 1px solid rgba(146,188,1,0.35);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .ext-pill:hover {
+    background: rgba(146,188,1,0.2);
+    border-color: rgba(146,188,1,0.5);
+  }
+  .ext-pill .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green-92bc01);
+    box-shadow: 0 0 0 3px rgba(146,188,1,0.18);
+  }
+  .ext-icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--y-fffadd);
+    display: inline-flex; align-items: center; justify-content: center;
+    position: relative; cursor: pointer; border: none;
+  }
+  .ext-icon-btn .check {
+    position: absolute; bottom: 1px; right: 1px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--green-92bc01);
+    border: 1.5px solid #fff;
+  }
+  .ext-tooltip {
+    position: absolute; right: 16px; top: calc(100% + 8px);
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    z-index: 5;
+  }
+  .ext-tooltip::before {
+    content: ""; position: absolute;
+    top: -4px; right: 18px;
+    width: 8px; height: 8px;
+    background: var(--primary);
+    transform: rotate(45deg);
+  }
+  .ext-tooltip .v {
+    opacity: 0.7;
+    margin-left: 6px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* dropdown menu */
+  .ext-menu {
+    width: 260px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid rgba(17,17,17,0.06);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.7) inset,
+      0 20px 40px rgba(20,20,20,0.16);
+    overflow: hidden;
+  }
+  .ext-menu-head {
+    padding: 14px 16px 12px;
+    background: rgba(146,188,1,0.08);
+    border-bottom: 1px solid rgba(146,188,1,0.18);
+  }
+  .ext-menu-head .row1 {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 4px;
+  }
+  .ext-menu-head .status {
+    display: inline-flex; align-items: center; gap: 5px;
+    color: #2f4a00; font-size: 12px; font-weight: 600;
+  }
+  .ext-menu-head .status .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green-92bc01);
+    box-shadow: 0 0 0 3px rgba(146,188,1,0.2);
+  }
+  .ext-menu-head .ver {
+    margin-left: auto;
+    font-size: 11px; color: rgba(17,17,17,0.5);
+    font-variant-numeric: tabular-nums;
+    font-family: ui-monospace, monospace;
+  }
+  .ext-menu-head .name {
+    font-size: 13.5px; font-weight: 700;
+    color: var(--primary);
+  }
+  .ext-menu-head .sub {
+    font-size: 11px; color: rgba(17,17,17,0.55);
+    margin-top: 2px;
+  }
+  .ext-menu-section {
+    padding: 8px 8px;
+  }
+  .ext-menu-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    color: var(--primary);
+    cursor: pointer;
+  }
+  .ext-menu-item:hover { background: rgba(17,17,17,0.04); }
+  .ext-menu-item .ic {
+    width: 14px; height: 14px;
+    color: rgba(17,17,17,0.55);
+    flex-shrink: 0;
+  }
+  .ext-menu-item .meta {
+    margin-left: auto;
+    font-size: 11px;
+    color: rgba(17,17,17,0.45);
+  }
+  .ext-menu-divider {
+    height: 1px; background: rgba(17,17,17,0.06);
+    margin: 4px 8px;
+  }
+
+  /* ───────── 3. INLINE CONTEXTUAL TRIGGER ───────── */
+  .reply-card {
+    width: 460px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid rgba(17,17,17,0.06);
+    padding: 16px;
+  }
+  .reply-head {
+    display: flex; gap: 10px; align-items: center;
+    margin-bottom: 10px;
+  }
+  .reply-head .av {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #FFE253, #FFA940);
+    flex-shrink: 0;
+  }
+  .reply-head .meta { flex: 1; min-width: 0; }
+  .reply-head .meta .nm { font-size: 13px; font-weight: 700; }
+  .reply-head .meta .hd { font-size: 11px; color: rgba(17,17,17,0.5); }
+  .reply-head .plat {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #111; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 11px; font-weight: 700;
+  }
+  .reply-body {
+    font-size: 12.5px; line-height: 1.55;
+    color: rgba(17,17,17,0.78);
+    padding: 4px 0 10px;
+  }
+  .reply-actions {
+    display: flex; gap: 8px;
+    border-top: 1px solid rgba(17,17,17,0.06);
+    padding-top: 12px;
+  }
+  .reply-btn {
+    flex: 1;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--y-fffadd);
+    color: var(--primary);
+    font-size: 12.5px; font-weight: 600;
+    border: none; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+  .reply-btn:hover { background: var(--y-fff2b3); }
+  .reply-btn.primary {
+    background: var(--y-ffe253);
+  }
+  .reply-btn.primary:hover { background: var(--primary); color: #fff; }
+  .reply-btn.disabled {
+    background: rgba(17,17,17,0.04);
+    color: rgba(17,17,17,0.4);
+    cursor: not-allowed;
+    position: relative;
+  }
+  .reply-btn .lock {
+    width: 12px; height: 12px;
+  }
+
+  /* inline banner above reply (variant A) */
+  .inline-banner {
+    background: var(--y-fff2b3);
+    border: 1px solid rgba(144,120,0,0.18);
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .inline-banner .ic {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.7);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .inline-banner .txt { flex: 1; min-width: 0; }
+  .inline-banner .txt .t { font-size: 12px; font-weight: 600; color: var(--primary); }
+  .inline-banner .txt .s {
+    font-size: 11px; color: rgba(17,17,17,0.6);
+    margin-top: 1px;
+  }
+  .inline-banner .cta {
+    background: var(--primary);
+    color: #fff;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 11.5px; font-weight: 600;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .inline-banner .cta:hover { background: var(--y-ffe253); color: var(--primary); }
+  .inline-banner .close {
+    width: 22px; height: 22px; border-radius: 5px;
+    background: transparent; border: none; cursor: pointer;
+    color: rgba(17,17,17,0.45);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .inline-banner .close:hover { color: var(--primary); background: rgba(0,0,0,0.05); }
+
+  /* tooltip variant (variant B) */
+  .tooltip-stage {
+    position: relative;
+    padding-top: 60px;
+  }
+  .tt-pop {
+    position: absolute;
+    bottom: calc(100% - 56px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    width: 240px;
+    text-align: left;
+    z-index: 3;
+  }
+  .tt-pop::after {
+    content: ""; position: absolute;
+    bottom: -5px; left: 50%; transform: translateX(-50%) rotate(45deg);
+    width: 10px; height: 10px; background: var(--primary);
+  }
+  .tt-pop .tt-t { font-weight: 700; font-size: 12.5px; margin-bottom: 2px; }
+  .tt-pop .tt-link {
+    color: var(--y-ffe253);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(255,226,83,0.5);
+    cursor: pointer;
+    margin-top: 6px;
+    display: inline-block;
+    font-size: 11.5px;
+  }
+
+  /* footer notes */
+  .legend {
+    margin-top: 20px;
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+  .legend .item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11.5px; color: var(--subtitle);
+  }
+  .legend .item .sw {
+    width: 10px; height: 10px; border-radius: 3px;
+    background: var(--y-ffe253);
+  }
+
+</style>
+</head>
+<body>
+
+<h1 class="canvas-title">Plugin entry — 3 design proposals</h1>
+<p class="canvas-sub">First-time onboarding card · Installed-state indicator · Inline contextual triggers</p>
+
+<!-- ═════════════════════════════════════════════════════════════════════════
+     SECTION 1: NEW ONBOARDING CARD
+═════════════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <span class="section-label"><span class="sw" style="width:6px;height:6px;border-radius:50%;background:#FFE253;display:inline-block"></span>01 — first-time onboarding</span>
+  <h2 class="section-title">New onboarding card</h2>
+  <p class="section-desc">
+    Now leads with the <b>value</b>, not the how-to. Steps are collapsed by default — the looping mini-preview already shows the flow at a glance.
+    Clear primary CTA (yellow), demoted "Maybe later" as a text button.
+  </p>
+
+  <div class="row">
+    <!-- Isolated card -->
+    <div>
+      <div class="frame-label"><span class="dot"></span>Isolated · 360 × auto</div>
+      <div class="onboard-card">
+        <span class="pointer"></span>
+        <button class="onboard-close" aria-label="Close">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <div class="preview">
+          <span class="label-pill"><span class="blink"></span>Live preview</span>
+          <div class="mini-flow">
+            <div class="mf-bar">
+              <span class="mf-dot"></span><span class="mf-dot"></span><span class="mf-dot"></span>
+              <span class="mf-url">chrome://extensions</span>
+            </div>
+            <div class="mf-body">
+              <div class="mf-drop">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11V3"/><path d="M4.5 6.5 8 3l3.5 3.5"/><path d="M3 13h10"/></svg>
+                Drop here
+              </div>
+              <div class="mf-zip">
+                <div class="zip-logo"></div>
+                <div class="zip-text">ZIP</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="onboard-body">
+          <div class="onboard-eyebrow">
+            <svg class="sparkle" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1.5l1.3 3.7 3.7 1.3-3.7 1.3L8 11.5l-1.3-3.7L3 6.5l3.7-1.3L8 1.5z" fill="#907800"/>
+              <circle cx="13" cy="2" r="1" fill="#907800"/>
+              <circle cx="2.5" cy="12" r="0.8" fill="#907800"/>
+            </svg>
+            New · 1-click replies
+          </div>
+          <h3 class="onboard-title">Reply on X &amp; Reddit, without leaving the page</h3>
+          <p class="onboard-sub">
+            Install the aisee browser extension to reply to signals directly inside X and Reddit — no copy, no paste, no tab-hopping.
+          </p>
+
+          <button class="step-toggle" id="step-toggle">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.5 8h9M3.5 4h9M3.5 12h9"/>
+            </svg>
+            <span id="step-toggle-label">Show install steps</span>
+            <svg class="chev" id="step-chev" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6l4 4 4-4"/>
+            </svg>
+          </button>
+          <div class="steps" id="steps" style="display:none;">
+            <div class="step"><span class="step-num">1</span><span>Click <b>Get extension</b> to download the package.</span></div>
+            <div class="step"><span class="step-num">2</span><span>Open <kbd>chrome://extensions</kbd> and turn on <b>Developer mode</b>.</span></div>
+            <div class="step"><span class="step-num">3</span><span>Drag the downloaded file onto the page — installs automatically.</span></div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-text">Maybe later</button>
+            <button class="btn btn-yellow">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+                <path d="M11.8 13.6V9.79l.6.1c1.1.18 2.1-.66 2.1-1.77v-.25c0-1.1-1-1.95-2.1-1.77l-.6.1V2.4H8.21l.06.68c.1.96-.66 1.79-1.62 1.79-.96 0-1.71-.83-1.63-1.78l.06-.68H1.5v11.2h10.3z"/>
+              </svg>
+              Get extension
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:280px;margin-top:32px;">
+      <div class="postit">
+        <b>Headline shifts to value.</b> "Reply on X &amp; Reddit, without leaving the page" tells the user WHY before HOW.
+      </div>
+      <div class="postit">
+        <b>Preview area replaces the empty box.</b> A small looping mock of the install flow does more than 3 lines of steps. We already have this animation built (<code>install-tutorial.jsx</code>) — we can drop it straight in.
+      </div>
+      <div class="postit">
+        <b>Steps collapsed.</b> Tech-y bits (<code>chrome://extensions</code>, <i>Developer mode</i>) are intimidating. Hide behind "Show install steps" — power users can still get them.
+      </div>
+      <div class="postit">
+        <b>Button hierarchy fixed.</b> "Get extension" becomes the yellow primary CTA. "Maybe later" demotes to a text button so users don't accidentally close on the wrong action.
+      </div>
+    </div>
+  </div>
+
+  <!-- In context: dashboard with card pinned to top right -->
+  <div style="margin-top:48px;">
+    <div class="frame-label"><span class="dot"></span>In context · pinned to top-right nav</div>
+    <div class="browser">
+      <div class="browser-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">app.aisee.ai/engage</div>
+      </div>
+      <div class="dash">
+        <aside class="dash-side">
+          <div class="dash-logo">
+            <div class="lo"></div>
+            <span>aisee</span>
+          </div>
+          <div style="background:rgba(17,17,17,0.02);border-radius:8px;padding:3px;display:flex;gap:1px;margin-bottom:12px;">
+            <div style="flex:1;height:24px;border-radius:6px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.08);"></div>
+            <div style="flex:1;height:24px;"></div>
+            <div style="flex:1;height:24px;"></div>
+          </div>
+          <div class="dash-tab active">Dashboard</div>
+          <div class="dash-tab">Signal Feed</div>
+          <div class="dash-tab">Keywords &amp; Accounts</div>
+          <div class="dash-tab">Replies</div>
+        </aside>
+        <main class="dash-main">
+          <div class="dash-header">
+            <div class="dash-h1">Engage</div>
+            <div class="dash-actions">
+              <button class="btn btn-soft" style="height:32px;padding:0 10px;font-size:12.5px;">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+                  <path d="M11.8 13.6V9.79l.6.1c1.1.18 2.1-.66 2.1-1.77v-.25c0-1.1-1-1.95-2.1-1.77l-.6.1V2.4H8.21l.06.68c.1.96-.66 1.79-1.62 1.79-.96 0-1.71-.83-1.63-1.78l.06-.68H1.5v11.2h10.3z"/>
+                </svg>
+                Get extension
+              </button>
+              <span class="icon-btn">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14a1.5 1.5 0 0 0 1.5-1.5h-3A1.5 1.5 0 0 0 8 14zM3 12V8a5 5 0 0 1 10 0v4l1 2H2l1-2z"/></svg>
+              </span>
+              <span style="width:30px;height:30px;border-radius:50%;background:#E1E1E1;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">G</span>
+            </div>
+          </div>
+          <div class="dash-card">
+            <div class="skel w-30"></div>
+            <div class="chart-fake"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="dash-card"><div class="skel w-50"></div><div class="skel sm w-90" style="margin-top:14px;"></div><div class="skel sm w-70"></div></div>
+            <div class="dash-card"><div class="skel w-50"></div><div class="skel sm w-90" style="margin-top:14px;"></div><div class="skel sm w-70"></div></div>
+          </div>
+
+          <!-- The card -->
+          <div style="position:absolute;top:62px;right:24px;width:360px;">
+            <div class="onboard-card">
+              <span class="pointer"></span>
+              <button class="onboard-close" aria-label="Close">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <div class="preview">
+                <span class="label-pill"><span class="blink"></span>Live preview</span>
+                <div class="mini-flow">
+                  <div class="mf-bar">
+                    <span class="mf-dot"></span><span class="mf-dot"></span><span class="mf-dot"></span>
+                    <span class="mf-url">chrome://extensions</span>
+                  </div>
+                  <div class="mf-body">
+                    <div class="mf-drop">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11V3"/><path d="M4.5 6.5 8 3l3.5 3.5"/><path d="M3 13h10"/></svg>
+                      Drop here
+                    </div>
+                    <div class="mf-zip">
+                      <div class="zip-logo"></div>
+                      <div class="zip-text">ZIP</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="onboard-body">
+                <div class="onboard-eyebrow">
+                  <svg class="sparkle" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 1.5l1.3 3.7 3.7 1.3-3.7 1.3L8 11.5l-1.3-3.7L3 6.5l3.7-1.3L8 1.5z" fill="#907800"/>
+                  </svg>
+                  New · 1-click replies
+                </div>
+                <h3 class="onboard-title">Reply on X &amp; Reddit, without leaving the page</h3>
+                <p class="onboard-sub">Install the aisee browser extension to reply to signals directly inside X and Reddit — no copy, no paste, no tab-hopping.</p>
+                <div class="actions" style="margin-top:8px;">
+                  <button class="btn btn-text">Maybe later</button>
+                  <button class="btn btn-yellow">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+                      <path d="M11.8 13.6V9.79l.6.1c1.1.18 2.1-.66 2.1-1.77v-.25c0-1.1-1-1.95-2.1-1.77l-.6.1V2.4H8.21l.06.68c.1.96-.66 1.79-1.62 1.79-.96 0-1.71-.83-1.63-1.78l.06-.68H1.5v11.2h10.3z"/>
+                    </svg>
+                    Get extension
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═════════════════════════════════════════════════════════════════════════
+     SECTION 2: INSTALLED STATE
+═════════════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <span class="section-label"><span class="sw" style="width:6px;height:6px;border-radius:50%;background:#92BC01;display:inline-block"></span>02 — already installed</span>
+  <h2 class="section-title">Installed-state indicator</h2>
+  <p class="section-desc">
+    Three nested behaviors at the same spot. <b>Resting</b> shows a quiet green-tinted pill so the user can confirm the connection at a glance.
+    <b>Hover</b> reveals version + status. <b>Click</b> opens a manage menu.
+  </p>
+
+  <div class="row">
+    <!-- A: resting pill -->
+    <div>
+      <div class="frame-label"><span class="dot"></span>A · Resting</div>
+      <div class="right-stage">
+        <div class="right-stage-frame">
+          <button class="ext-pill">
+            <span class="dot"></span>
+            Extension connected
+          </button>
+          <span class="icon-btn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14a1.5 1.5 0 0 0 1.5-1.5h-3A1.5 1.5 0 0 0 8 14zM3 12V8a5 5 0 0 1 10 0v4l1 2H2l1-2z"/></svg>
+          </span>
+          <span style="width:30px;height:30px;border-radius:50%;background:#E1E1E1;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">G</span>
+        </div>
+        <div style="margin-top:14px;font-size:11.5px;color:rgba(17,17,17,0.55);line-height:1.5;">
+          Replaces the yellow "Get extension" CTA once detected. Calmer color (lime/olive) signals "everything is good" without screaming.
+        </div>
+      </div>
+    </div>
+
+    <!-- A2: alternative compact -->
+    <div>
+      <div class="frame-label"><span class="dot"></span>A2 · Compact alt</div>
+      <div class="right-stage">
+        <div class="right-stage-frame">
+          <button class="ext-icon-btn" title="Extension connected">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19.44 7.85c-.05.32.06.65.29.88l1.57 1.57c.47.47.7 1.09.7 1.7s-.23 1.23-.7 1.7l-1.61 1.61a.98.98 0 0 1-.84.28c-.47-.07-.8-.48-.97-.93a2.5 2.5 0 1 0-3.21 3.21c.45.17.86.5.93.97a.98.98 0 0 1-.28.84l-1.61 1.61a2.4 2.4 0 0 1-1.7.7 2.4 2.4 0 0 1-1.7-.7l-1.57-1.57a1.03 1.03 0 0 0-.88-.29c-.49.07-.84.5-1.02.97a2.5 2.5 0 1 1-3.24-3.24c.46-.18.89-.53.97-1.02a1.03 1.03 0 0 0-.29-.88l-1.57-1.57a2.4 2.4 0 0 1-.7-1.7c0-.62.24-1.24.7-1.7L4.23 8.77c.24-.24.58-.35.92-.3.52.08.88.53 1.07 1.01a2.5 2.5 0 1 0 3.26-3.26c-.48-.2-.93-.56-1.01-1.07-.05-.34.06-.68.3-.92l1.52-1.52A2.4 2.4 0 0 1 12 2c.62 0 1.24.24 1.7.71l1.57 1.57c.23.23.56.34.88.29.49-.07.84-.5 1.02-.97a2.5 2.5 0 1 1 3.24 3.24c-.46.18-.89.53-.97 1.02z"/>
+            </svg>
+            <span class="check"></span>
+          </button>
+          <span class="icon-btn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14a1.5 1.5 0 0 0 1.5-1.5h-3A1.5 1.5 0 0 0 8 14zM3 12V8a5 5 0 0 1 10 0v4l1 2H2l1-2z"/></svg>
+          </span>
+          <span style="width:30px;height:30px;border-radius:50%;background:#E1E1E1;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">G</span>
+        </div>
+        <div style="margin-top:14px;font-size:11.5px;color:rgba(17,17,17,0.55);line-height:1.5;">
+          Icon-only with a tiny status checkmark. Saves space; tooltip on hover.
+        </div>
+      </div>
+    </div>
+
+    <!-- B: hover tooltip -->
+    <div>
+      <div class="frame-label"><span class="dot"></span>B · Hover tooltip</div>
+      <div class="right-stage">
+        <div class="right-stage-frame">
+          <button class="ext-pill" style="background:rgba(146,188,1,0.2);border-color:rgba(146,188,1,0.5);">
+            <span class="dot"></span>
+            Extension connected
+          </button>
+          <span class="icon-btn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14a1.5 1.5 0 0 0 1.5-1.5h-3A1.5 1.5 0 0 0 8 14zM3 12V8a5 5 0 0 1 10 0v4l1 2H2l1-2z"/></svg>
+          </span>
+          <span style="width:30px;height:30px;border-radius:50%;background:#E1E1E1;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">G</span>
+
+          <div class="ext-tooltip" style="right:96px;top:calc(50% + 22px);">
+            Connected to Chrome <span class="v">v1.0.3</span>
+          </div>
+        </div>
+        <div style="margin-top:14px;font-size:11.5px;color:rgba(17,17,17,0.55);line-height:1.5;">
+          Quick confirmation. Shows version + browser, no commitment.
+        </div>
+      </div>
+    </div>
+
+    <!-- C: open dropdown -->
+    <div>
+      <div class="frame-label"><span class="dot"></span>C · Manage menu (on click)</div>
+      <div class="right-stage" style="width:480px;">
+        <div class="right-stage-frame" style="height:120px;align-items:flex-start;padding-top:12px;">
+          <button class="ext-pill" style="background:rgba(17,17,17,0.06);border-color:rgba(17,17,17,0.12);color:var(--primary);">
+            <span class="dot"></span>
+            Extension connected
+          </button>
+          <span class="icon-btn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14a1.5 1.5 0 0 0 1.5-1.5h-3A1.5 1.5 0 0 0 8 14zM3 12V8a5 5 0 0 1 10 0v4l1 2H2l1-2z"/></svg>
+          </span>
+          <span style="width:30px;height:30px;border-radius:50%;background:#E1E1E1;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;">G</span>
+        </div>
+
+        <div style="position:relative;margin-top:8px;display:flex;justify-content:flex-end;padding-right:62px;">
+          <div class="ext-menu">
+            <div class="ext-menu-head">
+              <div class="row1">
+                <span class="status">
+                  <span class="dot"></span>Connected
+                </span>
+                <span class="ver">v1.0.3</span>
+              </div>
+              <div class="name">aisee browser extension</div>
+              <div class="sub">Chrome · linked to @ccbakala</div>
+            </div>
+            <div class="ext-menu-section">
+              <div class="ext-menu-item">
+                <svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>
+                Check for updates
+                <span class="meta">Up to date</span>
+              </div>
+              <div class="ext-menu-item">
+                <svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="6" r="2.5"/><path d="M3 13c0-2.5 2.5-4 5-4s5 1.5 5 4"/></svg>
+                Linked accounts
+                <span class="meta">2</span>
+              </div>
+              <div class="ext-menu-item">
+                <svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h10M3 8h10M3 12h7"/></svg>
+                Keyboard shortcuts
+              </div>
+              <div class="ext-menu-divider"></div>
+              <div class="ext-menu-item" style="color:rgba(220,80,40,0.85);">
+                <svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" strokeLinejoin="round" style="color:rgba(220,80,40,0.7);"><path d="M3 5h10M6 5V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2M5 5l1 8a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1l1-8"/></svg>
+                Disconnect extension
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:24px;">
+    <div class="postit" style="max-width:340px;">
+      <b>Recommendation:</b> ship <b>A (resting pill)</b> as default, with <b>B</b> on hover and <b>C</b> on click. The pill earns its space because it doubles as a system-health indicator (shows red/yellow if disconnected, out of date, etc).
+    </div>
+    <div class="postit" style="max-width:340px;">
+      Use the <b>lime/olive</b> family for "good / connected" states — visually distinct from the brand yellow used for active CTAs, so users learn: yellow = action needed, green = all set.
+    </div>
+  </div>
+</section>
+
+
+<!-- ═════════════════════════════════════════════════════════════════════════
+     SECTION 3: INLINE CONTEXTUAL TRIGGER
+═════════════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <span class="section-label"><span class="sw" style="width:6px;height:6px;border-radius:50%;background:#907800;display:inline-block"></span>03 — situational re-entry</span>
+  <h2 class="section-title">Inline contextual trigger</h2>
+  <p class="section-desc">
+    If the user dismissed the onboarding card, surface the install offer at the exact moment they'd benefit from it — when they try to reply, post, or open a signal. Highest conversion because the motivation is concrete.
+  </p>
+
+  <div class="row">
+    <!-- Variant A: inline banner -->
+    <div>
+      <div class="frame-label"><span class="dot"></span>A · Inline banner above Reply card</div>
+      <div class="reply-card">
+        <div class="reply-head">
+          <div class="av"></div>
+          <div class="meta">
+            <div class="nm">@koraygubur</div>
+            <div class="hd">1h ago · X</div>
+          </div>
+          <div class="plat">𝕏</div>
+        </div>
+        <div class="reply-body">
+          This is one of the most common gaps we see — most brands score under 30 on AI presence even with solid content…
+        </div>
+
+        <div class="inline-banner">
+          <span class="ic">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#907800" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19.44 7.85c-.05.32.06.65.29.88l1.57 1.57c.47.47.7 1.09.7 1.7s-.23 1.23-.7 1.7l-1.61 1.61a.98.98 0 0 1-.84.28c-.47-.07-.8-.48-.97-.93a2.5 2.5 0 1 0-3.21 3.21c.45.17.86.5.93.97a.98.98 0 0 1-.28.84l-1.61 1.61a2.4 2.4 0 0 1-1.7.7 2.4 2.4 0 0 1-1.7-.7l-1.57-1.57a1.03 1.03 0 0 0-.88-.29c-.49.07-.84.5-1.02.97a2.5 2.5 0 1 1-3.24-3.24c.46-.18.89-.53.97-1.02a1.03 1.03 0 0 0-.29-.88l-1.57-1.57a2.4 2.4 0 0 1-.7-1.7c0-.62.24-1.24.7-1.7L4.23 8.77c.24-.24.58-.35.92-.3.52.08.88.53 1.07 1.01a2.5 2.5 0 1 0 3.26-3.26c-.48-.2-.93-.56-1.01-1.07-.05-.34.06-.68.3-.92l1.52-1.52A2.4 2.4 0 0 1 12 2c.62 0 1.24.24 1.7.71l1.57 1.57c.23.23.56.34.88.29.49-.07.84-.5 1.02-.97a2.5 2.5 0 1 1 3.24 3.24c-.46.18-.89.53-.97 1.02z"/>
+            </svg>
+          </span>
+          <div class="txt">
+            <div class="t">Reply 10× faster with the extension</div>
+            <div class="s">Post directly on X without leaving the page.</div>
+          </div>
+          <button class="cta">Install</button>
+          <button class="close" aria-label="Dismiss">
+            <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+
+        <div class="reply-actions">
+          <button class="reply-btn">Edit</button>
+          <button class="reply-btn primary">
+            Reply on X
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </button>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:11.5px;color:var(--subtitle);max-width:460px;line-height:1.55;">
+        Slides in just above the reply actions. Dismissible. Highest visibility — feels native to the reply flow.
+      </div>
+    </div>
+
+    <!-- Variant B: tooltip on disabled button -->
+    <div>
+      <div class="frame-label"><span class="dot"></span>B · Tooltip on a feature-gated button</div>
+      <div class="reply-card">
+        <div class="reply-head">
+          <div class="av"></div>
+          <div class="meta">
+            <div class="nm">@koraygubur</div>
+            <div class="hd">1h ago · X</div>
+          </div>
+          <div class="plat">𝕏</div>
+        </div>
+        <div class="reply-body">
+          This is one of the most common gaps we see — most brands score under 30 on AI presence even with solid content…
+        </div>
+        <div class="tooltip-stage">
+          <div class="tt-pop">
+            <div class="tt-t">Install the extension to reply</div>
+            Quick-replies post directly on X. No tab-hopping.
+            <br/>
+            <a class="tt-link">Get extension →</a>
+          </div>
+          <div class="reply-actions" style="border-top:1px solid rgba(17,17,17,0.06);padding-top:12px;">
+            <button class="reply-btn">Edit</button>
+            <button class="reply-btn disabled">
+              <svg class="lock" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3.5" y="7" width="9" height="6.5" rx="1.2"/>
+                <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/>
+              </svg>
+              Quick reply (extension)
+            </button>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:11.5px;color:var(--subtitle);max-width:460px;line-height:1.55;">
+        Feature-gated CTA: the button is visible but locked. The tooltip explains why and offers install in one click. Best for power features.
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:32px;">
+    <div class="postit" style="max-width:380px;">
+      <b>My pick:</b> A for the Reply flow (Reply is the #1 reason users want the extension). B works well for secondary plugin-only features like "auto-detect new signals" or "1-click upvote".
+    </div>
+    <div class="postit" style="max-width:380px;">
+      <b>Frequency cap:</b> after the user dismisses the banner once on a card, don't show it again for that session. Show again next day (or after 5 reply actions, whichever first). Avoid feeling naggy.
+    </div>
+    <div class="postit" style="max-width:380px;">
+      <b>Combine with section 02:</b> the resting "Extension connected" pill in the top-right is always the canonical entry point. Inline triggers are <b>opportunistic</b> — they boost discovery, not replace the navbar entry.
+    </div>
+  </div>
+</section>
+
+<script>
+  // Collapse / expand steps on the isolated card
+  const tg = document.getElementById('step-toggle');
+  const steps = document.getElementById('steps');
+  const label = document.getElementById('step-toggle-label');
+  const chev = document.getElementById('step-chev');
+  let open = false;
+  tg?.addEventListener('click', () => {
+    open = !open;
+    steps.style.display = open ? 'flex' : 'none';
+    label.textContent = open ? 'Hide install steps' : 'Show install steps';
+    chev.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+  });
+</script>
+
+</body>
+</html>

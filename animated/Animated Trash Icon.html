@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Animated Trash Icon</title>
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  :root {
+    --ink: #09244B;
+    --muted: #6b6b6b;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --hair: rgba(0, 0, 0, 0.08);
+    --danger: #d23535;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 64px 32px 96px; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lede { color: var(--muted); font-size: 14px; margin: 0 0 40px; }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--hair);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .card-hint { font-size: 12px; color: var(--muted); }
+  .stage {
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px);
+    border-radius: 10px;
+    padding: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+  }
+  .sizes { display: flex; align-items: flex-end; gap: 36px; }
+  .size-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .size-cell .label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ──────────────────────────────────────────────
+     The animated trash icon
+     ────────────────────────────────────────────── */
+  .trash {
+    display: inline-block;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 6px;
+  }
+  .trash svg { display: block; overflow: visible; }
+
+  .trash svg .trash-body {
+    transform-box: view-box;
+    transform-origin: 12px 7px;        /* top-center: body stretches DOWN */
+  }
+  .trash svg .trash-lid {
+    transform-box: view-box;
+    transform-origin: 21px 7px;        /* pivot at right end of the lid bar */
+  }
+  .trash svg .trash-speck {
+    transform-box: view-box;
+    transform-origin: 10px 11px;       /* top of LEFT line — scaleY/dash grow DOWN */
+    opacity: 0;
+    stroke-dasharray: 0.01 6;          /* default: tiny round-cap dot */
+  }
+
+  .trash:hover svg .trash-lid   { animation: trash-lid-flip     1300ms ease-in-out infinite; }
+  .trash:hover svg .trash-body  { animation: trash-body-stretch 1300ms ease-in-out infinite; }
+  .trash:hover svg .trash-speck { animation: trash-speck-fly    1300ms ease-in    infinite; }
+
+  @keyframes trash-lid-flip {
+    0%   { transform: rotate(0deg);  }
+    15%  { transform: rotate(0deg);  }
+    40%  { transform: rotate(28deg); }    /* left side lifts UP */
+    55%  { transform: rotate(28deg); }
+    75%  { transform: rotate(0deg);  }
+    100% { transform: rotate(0deg);  }
+  }
+  @keyframes trash-body-stretch {
+    0%, 15% { transform: scaleY(1);    }     /* rest */
+    40%     { transform: scaleY(1.10); }     /* stretched DOWN with lid open */
+    55%     { transform: scaleY(1.10); }     /* peak */
+    72%     { transform: scaleY(0.95); }     /* overshoot — pulled up too far */
+    85%     { transform: scaleY(1.03); }     /* bounce back */
+    94%     { transform: scaleY(0.99); }     /* settle */
+    100%    { transform: scaleY(1);    }
+  }
+  @keyframes trash-speck-fly {
+    0%, 20% { opacity: 0; transform: translate(-3px,-8px); stroke-dasharray: 0.01 6; }   /* parked: DOT outside lid corner */
+    28%     { opacity: 1; transform: translate(-3px,-8px); stroke-dasharray: 0.01 6; }   /* dot appears outside */
+    44%     { opacity: 1; transform: translate(-2px,-5px); stroke-dasharray: 0.01 6; }   /* DOT arcs toward TOP of left line */
+    60%     { opacity: 1; transform: translate(0,0);       stroke-dasharray: 0.01 6; }   /* DOT lands on TOP of left line */
+    78%     { opacity: 1; transform: translate(0,0);       stroke-dasharray: 6 0;    }   /* grows DOWNWARD → merged */
+    84%     { opacity: 1; transform: translate(0,0) scaleY(1.06); stroke-dasharray: 6 0; }   /* overshoot pulse */
+    90%     { opacity: 1; transform: translate(0,0); stroke-dasharray: 6 0; }              /* settled */
+    96%     { opacity: 0; transform: translate(0,0); stroke-dasharray: 6 0; }              /* hand off */
+    100%    { opacity: 0; transform: translate(-3px,-8px); stroke-dasharray: 0.01 6; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trash:hover svg * { animation: none; transform: none; }
+    .trash:hover svg .trash-speck { opacity: 0; }
+  }
+
+  /* ──────────────────────────────────────────────
+     Inline button placements (destructive context)
+     ────────────────────────────────────────────── */
+  .icon-btn {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--hair);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+  .icon-btn.destructive:hover {
+    background: rgba(210, 53, 53, 0.06);
+    border-color: rgba(210, 53, 53, 0.3);
+    color: var(--danger);
+  }
+  .icon-btn:hover {
+    background: #f3f3f3;
+    border-color: rgba(0, 0, 0, 0.14);
+  }
+  .icon-btn:hover .trash svg .trash-lid   { animation: trash-lid-flip     1300ms ease-in-out infinite; }
+  .icon-btn:hover .trash svg .trash-body  { animation: trash-body-stretch 1300ms ease-in-out infinite; }
+  .icon-btn:hover .trash svg .trash-speck { animation: trash-speck-fly    1300ms ease-in    infinite; }
+  .icon-btn .trash { padding: 0; }
+
+  .icon-only {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .icon-only:hover { background: rgba(210, 53, 53, 0.08); color: var(--danger); }
+  .icon-only:hover .trash svg .trash-lid   { animation: trash-lid-flip     1300ms ease-in-out infinite; }
+  .icon-only:hover .trash svg .trash-body  { animation: trash-body-stretch 1300ms ease-in-out infinite; }
+  .icon-only:hover .trash svg .trash-speck { animation: trash-speck-fly    1300ms ease-in    infinite; }
+  .icon-only .trash { padding: 0; }
+
+  /* fake row example */
+  .row-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--hair);
+    border-radius: 8px;
+    background: #fff;
+  }
+  .row-item .grow { flex: 1; font-size: 13px; }
+  .row-item .meta { font-size: 12px; color: var(--muted); }
+
+  .source {
+    margin-top: 8px;
+    background: #0f0f10;
+    color: #e8e8e8;
+    border-radius: 12px;
+    padding: 20px 22px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.65;
+    overflow: auto;
+  }
+  .source .c { color: #6b7a8a; }
+  .source .k { color: #c2a8ff; }
+  .source .s { color: #ffd28a; }
+  .source .a { color: #8ad3ff; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Animated delete / trash icon</h1>
+  <p class="lede">Hover any icon — the lid flips open around its right end, a small speck flies up-right and fades, then the lid snaps shut. Body, walls and the three inner lines stay still.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Sizes</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage">
+        <div class="sizes">
+          <!-- 16 -->
+          <div class="size-cell">
+            <span class="trash" aria-label="Delete" role="img">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <g class="trash-body">
+                  <path d="M5 7 L6 20 A2 2 0 0 0 8 22 H16 A2 2 0 0 0 18 20 L19 7"></path>
+                  <path d="M10 11 V17"></path>
+                  <path d="M14 11 V17"></path>
+                </g>
+                <g class="trash-lid">
+                  <path d="M3 7 H21"></path>
+                  <path d="M9 7 V5 A2 2 0 0 1 11 3 H13 A2 2 0 0 1 15 5 V7"></path>
+                </g>
+                <path class="trash-speck" d="M10 11 V17"></path>
+              </svg>
+            </span>
+            <span class="label">16</span>
+          </div>
+          <!-- 24 -->
+          <div class="size-cell">
+            <span class="trash" aria-label="Delete" role="img">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <g class="trash-body">
+                  <path d="M5 7 L6 20 A2 2 0 0 0 8 22 H16 A2 2 0 0 0 18 20 L19 7"></path>
+                  <path d="M10 11 V17"></path>
+                  <path d="M14 11 V17"></path>
+                </g>
+                <g class="trash-lid">
+                  <path d="M3 7 H21"></path>
+                  <path d="M9 7 V5 A2 2 0 0 1 11 3 H13 A2 2 0 0 1 15 5 V7"></path>
+                </g>
+                <path class="trash-speck" d="M10 11 V17"></path>
+              </svg>
+            </span>
+            <span class="label">24</span>
+          </div>
+          <!-- 48 -->
+          <div class="size-cell">
+            <span class="trash" aria-label="Delete" role="img">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <g class="trash-body">
+                  <path d="M5 7 L6 20 A2 2 0 0 0 8 22 H16 A2 2 0 0 0 18 20 L19 7"></path>
+                  <path d="M10 11 V17"></path>
+                  <path d="M14 11 V17"></path>
+                </g>
+                <g class="trash-lid">
+                  <path d="M3 7 H21"></path>
+                  <path d="M9 7 V5 A2 2 0 0 1 11 3 H13 A2 2 0 0 1 15 5 V7"></path>
+                </g>
+                <path class="trash-speck" d="M10 11 V17"></path>
+              </svg>
+            </span>
+            <span class="label">48</span>
+          </div>
+          <!-- 96 -->
+          <div class="size-cell">
+            <span class="trash" aria-label="Delete" role="img">
+              <svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <g class="trash-body">
+                  <path d="M5 7 L6 20 A2 2 0 0 0 8 22 H16 A2 2 0 0 0 18 20 L19 7"></path>
+                  <path d="M10 11 V17"></path>
+                  <path d="M14 11 V17"></path>
+                </g>
+                <g class="trash-lid">
+                  <path d="M3 7 H21"></path>
+                  <path d="M9 7 V5 A2 2 0 0 1 11 3 H13 A2 2 0 0 1 15 5 V7"></path>
+                </g>
+                <path class="trash-speck" d="M10 11 V17"></path>
+              </svg>
+            </span>
+            <span class="label">96</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Real placements</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage" style="flex-direction:column; align-items:stretch; gap:14px; padding:24px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="icon-btn destructive" type="button">
+            <span class="trash">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <g class="trash-body">
+                  <path d="M5 7 L6 20 A2 2 0 0 0 8 22 H16 A2 2 0 0 0 18 20 L19 7"></path>
+                  <path d="M10 11 V17"></path>
+                  <path d="M14 11 V17"></path>
+                </g>
+                <g class="trash-lid">
+                  <path d="M3 7 H21"></path>
+                  <path d="M9 7 V5 A2 2 0 0 1 11 3 H13 A2 2 0 0 1 15 5 V7"></path>
+                </g>
+                <path class="trash-speck" d="M10 11 V17"></path>
+              </svg>
+            </span>
+            Delete
+          </button>
+
+          <button class="icon-btn" type="button">
+            <span class="trash">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <g class="trash-body">
+                  <path d="M5 7 L6 20 A2 2 0 0 0 8 22 H16 A2 2 0 0 0 18 20 L19 7"></path>
+                  <path d="M10 11 V17"></path>
+                  <path d="M14 11 V17"></path>
+                </g>
+                <g class="trash-lid">
+                  <path d="M3 7 H21"></path>
+                  <path d="M9 7 V5 A2 2 0 0 1 11 3 H13 A2 2 0 0 1 15 5 V7"></path>
+                </g>
+                <path class="trash-speck" d="M10 11 V17"></path>
+              </svg>
+            </span>
+            Move to trash
+          </button>
+        </div>
+
+        <div class="row-item">
+          <div class="grow">Untitled draft</div>
+          <span class="meta">edited 3m ago</span>
+          <button class="icon-only" type="button" aria-label="Delete row">
+            <span class="trash">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <g class="trash-body">
+                  <path d="M5 7 L6 20 A2 2 0 0 0 8 22 H16 A2 2 0 0 0 18 20 L19 7"></path>
+                  <path d="M10 11 V17"></path>
+                  <path d="M14 11 V17"></path>
+                </g>
+                <g class="trash-lid">
+                  <path d="M3 7 H21"></path>
+                  <path d="M9 7 V5 A2 2 0 0 1 11 3 H13 A2 2 0 0 1 15 5 V7"></path>
+                </g>
+                <path class="trash-speck" d="M10 11 V17"></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <div class="row-item">
+          <div class="grow">Q3 plan.pdf</div>
+          <span class="meta">2.4 MB</span>
+          <button class="icon-only" type="button" aria-label="Delete row">
+            <span class="trash">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <g class="trash-body">
+                  <path d="M5 7 L6 20 A2 2 0 0 0 8 22 H16 A2 2 0 0 0 18 20 L19 7"></path>
+                  <path d="M10 11 V17"></path>
+                  <path d="M14 11 V17"></path>
+                </g>
+                <g class="trash-lid">
+                  <path d="M3 7 H21"></path>
+                  <path d="M9 7 V5 A2 2 0 0 1 11 3 H13 A2 2 0 0 1 15 5 V7"></path>
+                </g>
+                <path class="trash-speck" d="M10 11 V17"></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">How it works</div>
+      <div class="card-hint">three groups, one keyframes</div>
+    </div>
+    <div class="source"><span class="c">/* CSS */</span>
+<span class="k">.trash svg .trash-body</span>  { transform-box: view-box; transform-origin: 12px 7px; }
+<span class="k">.trash svg .trash-lid</span>   { transform-box: view-box; transform-origin: 21px 7px; }
+<span class="k">.trash svg .trash-speck</span> { transform-box: view-box; transform-origin: 10px 11px; opacity: 0; }
+
+<span class="k">.trash:hover svg .trash-lid</span>   { animation: trash-lid-flip     1.3s ease-in-out infinite; }
+<span class="k">.trash:hover svg .trash-body</span>  { animation: trash-body-stretch 1.3s ease-in-out infinite; }
+<span class="k">.trash:hover svg .trash-speck</span> { animation: trash-speck-fly    1.3s ease-in    infinite; }
+
+<span class="k">@keyframes trash-lid-flip</span> {
+   0% { transform: rotate(0);   }    <span class="c">/* rest */</span>
+  15% { transform: rotate(0);   }    <span class="c">/* hold */</span>
+  40% { transform: rotate(28deg);}   <span class="c">/* opens up-left */</span>
+  55% { transform: rotate(28deg);}
+  75% { transform: rotate(0);   }    <span class="c">/* snap shut */</span>
+ 100% { transform: rotate(0);   }
+}
+<span class="k">@keyframes trash-body-stretch</span> {
+   0%,15% { transform: scaleY(1);    }     <span class="c">/* rest */</span>
+  40%     { transform: scaleY(1.10); }     <span class="c">/* stretched DOWN */</span>
+  55%     { transform: scaleY(1.10); }
+  72%     { transform: scaleY(.95);  }     <span class="c">/* overshoot up */</span>
+  85%     { transform: scaleY(1.03); }     <span class="c">/* bounce */</span>
+  94%     { transform: scaleY(.99);  }
+ 100%     { transform: scaleY(1);    }
+}
+<span class="k">@keyframes trash-speck-fly</span> {
+   0%,18% { opacity:0; transform: translate(0,-9px) scaleY(.25); }  <span class="c">/* parked OUTSIDE above lid */</span>
+  25%     { opacity:1; transform: translate(0,-8px) scaleY(.25); }  <span class="c">/* appears OUTSIDE above lid */</span>
+  42%     { opacity:1; transform: translate(0,-6px) scaleY(.35); }  <span class="c">/* approaching opening */</span>
+  55%     { opacity:1; transform: translate(0,-3px) scaleY(.6);  }  <span class="c">/* descending INSIDE */</span>
+  66%     { opacity:1; transform: translate(0,0)    scaleY(1);   }  <span class="c">/* merged with left line */</span>
+  78%     { opacity:0; transform: translate(0,0)    scaleY(1);   }
+ 100%     { opacity:0; transform: translate(0,-9px) scaleY(.25); }
+}</div>
+  </div>
+</div>
+</body>
+</html>

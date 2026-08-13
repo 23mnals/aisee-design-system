@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Current Plan — Layout explorations</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="my-account.css">
+<link rel="stylesheet" href="my-account.main.css">
+<link rel="stylesheet" href="my-account.usage.css">
+<style>
+  body{background:#EFEEE6;padding:48px 32px 80px;font-family:'Karla',sans-serif;color:var(--black);}
+  .canvas{max-width:1480px;margin:0 auto;display:flex;flex-direction:column;gap:48px;}
+  .section{display:flex;flex-direction:column;gap:14px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;}
+  .sec-num{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;
+  }
+  .sec-title{font-family:'Karla',sans-serif;font-size:22px;margin:0;line-height:1;}
+  .sec-desc{font-size:13.5px;color:var(--muted);max-width:680px;line-height:1.5;margin:0;}
+  .frame{
+    background:#fff;border-radius:18px;
+    box-shadow:0 1px 0 rgba(17,17,17,0.04), 0 8px 24px -16px rgba(17,17,17,0.12);
+    padding:0;overflow:hidden;
+    width:720px;
+  }
+  .frame-tag{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;
+    padding:0 2px;
+  }
+
+  /* ════════════════════════════════════════════════════
+     A — Hero number + module quota tiles (3 columns)
+     ════════════════════════════════════════════════════ */
+  .opt-a{
+    padding:28px 30px;background:var(--lime-pale);
+  }
+  .opt-a-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;}
+  .opt-a-head .lbl{font-size:13px;color:var(--muted);}
+  .opt-a-head h3{font-family:'Karla',sans-serif;font-size:30px;line-height:1;margin:6px 0 4px;}
+  .opt-a-head .next{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+  .opt-a-head .btn{
+    background:#fff;border:1px solid var(--border-strong);
+    height:32px;padding:0 14px;border-radius:8px;font-size:12.5px;font-weight:500;
+    cursor:pointer;font-family:'Karla';color:var(--black);
+  }
+
+  .opt-a-credits{
+    display:flex;align-items:baseline;gap:8px;margin-bottom:6px;
+  }
+  .opt-a-credits .spark{width:26px;height:26px;color:var(--lime-bright);}
+  .opt-a-credits .num{font-family:'Karla',sans-serif;font-size:42px;line-height:1;}
+  .opt-a-credits .unit{font-size:13px;color:var(--muted);margin-left:4px;}
+  .opt-a-sub{font-size:12.5px;color:var(--muted);margin-bottom:20px;}
+
+  .quota-tiles{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  }
+  .qtile{
+    background:#fff;border:1px solid rgba(17,17,17,0.05);
+    border-radius:12px;padding:14px 16px;
+  }
+  .qtile .tile-head{
+    display:flex;align-items:center;gap:6px;
+    font-family:'Karla';font-size:11px;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.04em;
+    color:var(--muted);margin-bottom:12px;
+  }
+  .qtile .tile-head .dot{width:7px;height:7px;border-radius:50%;background:var(--c-analysis);}
+  .qtile.engage .tile-head .dot{background:var(--c-engage);}
+  .qtile.engage .tile-head{color:#7A3300;}
+  .qtile.post .tile-head .dot{background:var(--c-post);}
+  .qtile.post .tile-head{color:#3D1F8A;}
+  .qtile.analysis .tile-head{color:#3D5E00;}
+
+  .qline{
+    display:flex;align-items:baseline;justify-content:space-between;
+    padding:5px 0;font-size:13px;
+  }
+  .qline + .qline{border-top:1px dashed rgba(17,17,17,0.06);}
+  .qline .lbl{color:var(--muted);}
+  .qline .val{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;
+  }
+  .qline .val small{color:var(--muted);}
+
+  /* ════════════════════════════════════════════════════
+     B — Single column with progress bars per module
+     ════════════════════════════════════════════════════ */
+  .opt-b{padding:26px 28px;background:#fff;border:1px solid var(--border);}
+  .opt-b-top{
+    display:flex;align-items:flex-start;justify-content:space-between;
+    padding-bottom:18px;margin-bottom:18px;
+    border-bottom:1px solid var(--border);
+  }
+  .opt-b-top .left h3{font-family:'Karla',sans-serif;font-size:28px;line-height:1;margin:0 0 4px;}
+  .opt-b-top .left .next{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+  .opt-b-top .right{text-align:right;}
+  .opt-b-top .right .big{
+    font-family:'Karla',sans-serif;font-size:32px;line-height:1;
+    display:inline-flex;align-items:baseline;gap:4px;
+  }
+  .opt-b-top .right .big .spark{width:22px;height:22px;color:var(--lime-bright);align-self:center;}
+  .opt-b-top .right .big small{font-size:12px;color:var(--muted);font-family:'Karla';}
+  .opt-b-top .right .meta{font-size:11.5px;color:var(--muted);margin-top:4px;}
+
+  .opt-b-mod{display:flex;flex-direction:column;gap:14px;}
+  .mod-row{
+    display:grid;grid-template-columns:88px 1fr auto;
+    gap:14px;align-items:center;
+  }
+  .mod-row .name{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Karla';font-size:13px;font-weight:600;
+  }
+  .mod-row .name .swatch{width:9px;height:9px;border-radius:3px;}
+  .mod-row.engage .swatch{background:var(--c-engage);}
+  .mod-row.post .swatch{background:var(--c-post);}
+  .mod-row.analysis .swatch{background:var(--c-analysis);}
+
+  .mod-chips{
+    display:flex;flex-wrap:wrap;gap:6px;
+  }
+  .chip{
+    display:inline-flex;align-items:center;gap:5px;
+    background:rgba(17,17,17,0.03);
+    border:1px solid rgba(17,17,17,0.05);
+    padding:4px 9px;border-radius:999px;
+    font-size:12px;
+  }
+  .chip .ck{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;}
+  .chip .ck small{color:var(--muted);}
+  .chip.full{background:var(--orange-soft);border-color:transparent;}
+  .chip.full .ck{color:var(--orange);}
+
+  .mod-row .progress{
+    width:90px;height:6px;border-radius:3px;background:rgba(17,17,17,0.06);
+    overflow:hidden;
+  }
+  .mod-row .progress .fill{height:100%;}
+  .mod-row.engage .fill{background:var(--c-engage);}
+  .mod-row.post .fill{background:var(--c-post);}
+  .mod-row.analysis .fill{background:var(--c-analysis);}
+
+  /* ════════════════════════════════════════════════════
+     C — Expandable / tabbed by module
+     ════════════════════════════════════════════════════ */
+  .opt-c{background:#fff;border:1px solid var(--border);}
+  .opt-c-hero{
+    padding:26px 28px 22px;background:var(--lime-pale);
+    position:relative;
+  }
+  .opt-c-hero .row1{display:flex;align-items:center;justify-content:space-between;}
+  .opt-c-hero .lbl{font-size:13px;color:var(--muted);}
+  .opt-c-hero .plan{
+    display:flex;align-items:baseline;gap:10px;margin:8px 0 4px;
+  }
+  .opt-c-hero .plan h3{font-family:'Karla',sans-serif;font-size:28px;line-height:1;margin:0;}
+  .opt-c-hero .plan .pill{
+    background:rgba(17,17,17,0.06);font-family:'JetBrains Mono',monospace;
+    font-size:11px;padding:3px 8px;border-radius:6px;color:var(--muted);
+  }
+  .opt-c-hero .credits-line{
+    margin-top:16px;display:flex;align-items:baseline;gap:6px;
+  }
+  .opt-c-hero .credits-line .spark{width:20px;height:20px;color:var(--lime-bright);align-self:center;}
+  .opt-c-hero .credits-line .n{font-family:'Karla',sans-serif;font-size:34px;line-height:1;}
+  .opt-c-hero .credits-line .u{font-size:12.5px;color:var(--muted);}
+  .opt-c-hero .btn{
+    background:#fff;border:1px solid var(--border-strong);
+    height:32px;padding:0 14px;border-radius:8px;font-size:12.5px;font-weight:500;
+    font-family:'Karla';cursor:pointer;color:var(--black);
+  }
+
+  .opt-c-tabs{
+    display:flex;border-bottom:1px solid var(--border);
+    padding:0 14px;
+  }
+  .opt-c-tabs .tab{
+    padding:14px 16px;font-size:13px;font-weight:500;
+    color:var(--muted);position:relative;cursor:pointer;
+    background:none;border:0;font-family:'Karla';
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .opt-c-tabs .tab .swatch{width:8px;height:8px;border-radius:50%;background:rgba(17,17,17,0.2);}
+  .opt-c-tabs .tab.active{color:var(--black);font-weight:600;}
+  .opt-c-tabs .tab.active::after{
+    content:"";position:absolute;left:16px;right:16px;bottom:-1px;height:2px;
+    background:var(--black);border-radius:1px;
+  }
+  .opt-c-tabs .tab.engage .swatch{background:var(--c-engage);}
+  .opt-c-tabs .tab.post .swatch{background:var(--c-post);}
+  .opt-c-tabs .tab.analysis .swatch{background:var(--c-analysis);}
+  .opt-c-tabs .tab .cnt{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    background:rgba(17,17,17,0.05);color:var(--muted);
+    padding:1px 6px;border-radius:999px;
+  }
+
+  .opt-c-body{padding:18px 22px 22px;}
+  .opt-c-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .stat{
+    display:flex;flex-direction:column;gap:4px;
+    padding:12px 14px;background:#FAFAFA;border-radius:10px;
+  }
+  .stat .k{font-size:11px;color:var(--muted);font-family:'Karla';}
+  .stat .v{
+    font-family:'Karla',sans-serif;font-size:20px;line-height:1;
+  }
+  .stat .v small{font-size:12px;color:var(--muted);font-family:'Karla';font-weight:400;}
+  .stat .bar{height:4px;border-radius:2px;background:rgba(17,17,17,0.06);margin-top:6px;overflow:hidden;}
+  .stat .bar .fill{height:100%;background:var(--c-engage);}
+
+  /* ════════════════════════════════════════════════════
+     D — Two-column split (plan / quotas table)
+     ════════════════════════════════════════════════════ */
+  .opt-d{display:grid;grid-template-columns:240px 1fr;background:#fff;border:1px solid var(--border);}
+  .opt-d-left{
+    background:var(--lime-pale);padding:24px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    border-right:1px solid rgba(17,17,17,0.05);
+  }
+  .opt-d-left .lbl{font-size:12px;color:var(--muted);}
+  .opt-d-left h3{font-family:'Karla',sans-serif;font-size:30px;line-height:1;margin:6px 0;}
+  .opt-d-left .credits{
+    display:flex;align-items:baseline;gap:4px;margin-top:14px;
+  }
+  .opt-d-left .credits .spark{width:18px;height:18px;color:var(--lime-bright);align-self:center;}
+  .opt-d-left .credits .n{font-family:'Karla',sans-serif;font-size:24px;line-height:1;}
+  .opt-d-left .credits .u{font-size:11px;color:var(--muted);}
+  .opt-d-left .next{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:auto;padding-top:14px;}
+  .opt-d-left .btn{
+    margin-top:10px;background:var(--black);color:#fff;
+    height:32px;padding:0 14px;border-radius:8px;font-size:12px;font-weight:500;
+    border:0;cursor:pointer;font-family:'Karla';
+  }
+  .opt-d-right{padding:18px 22px;}
+  .opt-d-group{margin-bottom:14px;}
+  .opt-d-group:last-child{margin-bottom:0;}
+  .opt-d-group .gh{
+    display:flex;align-items:center;gap:6px;
+    font-family:'Karla';font-size:10.5px;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.06em;
+    color:var(--muted);margin-bottom:8px;
+  }
+  .opt-d-group .gh .swatch{width:8px;height:8px;border-radius:50%;}
+  .opt-d-group.engage .swatch{background:var(--c-engage);}
+  .opt-d-group.post .swatch{background:var(--c-post);}
+  .opt-d-group.analysis .swatch{background:var(--c-analysis);}
+  .opt-d-rows{display:flex;flex-direction:column;}
+  .opt-d-rows .qr{
+    display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;
+    padding:7px 0;font-size:13px;
+    border-bottom:1px solid var(--border);
+  }
+  .opt-d-rows .qr:last-child{border-bottom:0;}
+  .opt-d-rows .qr .lbl{color:var(--black);}
+  .opt-d-rows .qr .val{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);
+    min-width:50px;text-align:right;
+  }
+  .opt-d-rows .qr .pbar{width:60px;height:5px;border-radius:3px;background:rgba(17,17,17,0.06);overflow:hidden;}
+  .opt-d-rows .qr .pbar .fill{height:100%;background:var(--c-engage);}
+  .opt-d-rows .qr.post .fill{background:var(--c-post);}
+  .opt-d-rows .qr.analysis .fill{background:var(--c-analysis);}
+
+  /* layout grid for canvas */
+  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+</style>
+</head>
+<body>
+
+<div class="canvas">
+
+  <header style="text-align:center;max-width:780px;margin:0 auto 8px;">
+    <div class="sec-num" style="margin-bottom:6px;">Exploration · current plan card</div>
+    <h1 style="font-family:'Karla',sans-serif;font-size:38px;line-height:1.1;margin:0 0 8px;">Less crowded ways to show the current plan</h1>
+    <p class="sec-desc" style="margin:0 auto;">Same data (plan name, monthly credits, per-module quotas) — four layouts that read more clearly than the single dense row in the Figma draft.</p>
+  </header>
+
+  <!-- Original (for comparison) -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">00</span>
+      <h2 class="sec-title">Now — single row</h2>
+    </div>
+    <p class="sec-desc">Replies, Keywords, Accounts, Subreddit, Free Post & Subscription all crammed into one row with mixed icon styles.</p>
+    <div class="frame" style="width:920px;">
+      <div style="background:#fff;padding:20px 24px;border-radius:18px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <span style="font-size:13px;color:var(--muted);">Current Plan</span>
+          <button style="background:transparent;border:1px solid var(--border-strong);height:30px;padding:0 12px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Karla';">Manage Plan</button>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:14px;">
+          <span style="font-family:'Karla',sans-serif;font-size:24px;">Starter</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);">Next Session: 2025-11-17 15:18:46</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:13px;">
+          <span style="width:14px;height:14px;background:var(--lime-bright);border-radius:3px;display:inline-block;"></span>
+          Subscription Credits: <span style="font-weight:600;">✦ 1000</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:13px;">
+          <span style="width:14px;height:14px;background:var(--lime-bright);border-radius:3px;display:inline-block;"></span>
+          Free Post: <strong>0/10</strong>
+        </div>
+        <div style="display:flex;gap:18px;font-size:12.5px;color:var(--muted);">
+          <span>💬 Replies: <strong style="color:var(--black);">10/mo</strong></span>
+          <span>🏷 Keywords: <strong style="color:var(--black);">3/3</strong></span>
+          <span>👤 Account: <strong style="color:var(--black);">0/0</strong></span>
+          <span>📰 Subreddit: <strong style="color:var(--black);">0/1</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="row-2">
+    <!-- ─── A ─── -->
+    <section class="section">
+      <div class="sec-head">
+        <span class="sec-num">A</span>
+        <h2 class="sec-title">Hero credits + module tiles</h2>
+      </div>
+      <p class="sec-desc">Headline number (subscription credits) gets the focus. Quotas group into three tiles by module — Engage / Post Agent / Analysis — so the user immediately knows where each limit applies.</p>
+      <div class="frame">
+        <div class="opt-a">
+          <div class="opt-a-head">
+            <div>
+              <div class="lbl">Current plan</div>
+              <h3>Starter</h3>
+              <div class="next">Next billing · Jun 26, 2026</div>
+            </div>
+            <button class="btn">Manage plan</button>
+          </div>
+          <div class="opt-a-credits">
+            <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
+            <span class="num">1,000</span>
+            <span class="unit">credits / month</span>
+          </div>
+          <div class="opt-a-sub">Pooled across Analysis · Engage · Post Agent</div>
+
+          <div class="quota-tiles">
+            <div class="qtile engage">
+              <div class="tile-head"><span class="dot"></span>Engage</div>
+              <div class="qline"><span class="lbl">Keywords</span><span class="val">3<small>/3</small></span></div>
+              <div class="qline"><span class="lbl">Accounts</span><span class="val">0<small>/0</small></span></div>
+              <div class="qline"><span class="lbl">Subreddits</span><span class="val">0<small>/1</small></span></div>
+            </div>
+            <div class="qtile post">
+              <div class="tile-head"><span class="dot"></span>Post Agent</div>
+              <div class="qline"><span class="lbl">Free posts</span><span class="val">0<small>/10</small></span></div>
+              <div class="qline"><span class="lbl">AI replies</span><span class="val">10<small>/mo</small></span></div>
+              <div class="qline"><span class="lbl">Channels</span><span class="val">2<small>/3</small></span></div>
+            </div>
+            <div class="qtile analysis">
+              <div class="tile-head"><span class="dot"></span>Analysis</div>
+              <div class="qline"><span class="lbl">Brand reports</span><span class="val">1<small>/2</small></span></div>
+              <div class="qline"><span class="lbl">Competitors</span><span class="val">2<small>/3</small></span></div>
+              <div class="qline"><span class="lbl">Models</span><span class="val">Core</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── B ─── -->
+    <section class="section">
+      <div class="sec-head">
+        <span class="sec-num">B</span>
+        <h2 class="sec-title">Module rows + chip quotas</h2>
+      </div>
+      <p class="sec-desc">One row per module. Quotas become small pill chips that turn orange when full. A tiny progress bar on the right shows how much of that module's allocation is used.</p>
+      <div class="frame">
+        <div class="opt-b">
+          <div class="opt-b-top">
+            <div class="left">
+              <h3>Starter</h3>
+              <div class="next">Next billing · Jun 26, 2026</div>
+            </div>
+            <div class="right">
+              <div class="big">
+                <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
+                1,000 <small>cr / mo</small>
+              </div>
+              <div class="meta">pooled across all modules</div>
+            </div>
+          </div>
+
+          <div class="opt-b-mod">
+            <div class="mod-row engage">
+              <span class="name"><span class="swatch"></span>Engage</span>
+              <div class="mod-chips">
+                <span class="chip full"><span class="ck">3<small>/3</small></span> Keywords</span>
+                <span class="chip"><span class="ck">0<small>/0</small></span> Accounts</span>
+                <span class="chip"><span class="ck">0<small>/1</small></span> Subreddits</span>
+              </div>
+              <div class="progress"><span class="fill" style="width:60%"></span></div>
+            </div>
+            <div class="mod-row post">
+              <span class="name"><span class="swatch"></span>Post Agent</span>
+              <div class="mod-chips">
+                <span class="chip"><span class="ck">0<small>/10</small></span> Free posts</span>
+                <span class="chip"><span class="ck">10<small>/mo</small></span> AI replies</span>
+                <span class="chip"><span class="ck">2<small>/3</small></span> Channels</span>
+              </div>
+              <div class="progress"><span class="fill" style="width:35%"></span></div>
+            </div>
+            <div class="mod-row analysis">
+              <span class="name"><span class="swatch"></span>Analysis</span>
+              <div class="mod-chips">
+                <span class="chip"><span class="ck">1<small>/2</small></span> Brand reports</span>
+                <span class="chip"><span class="ck">Core</span> Models</span>
+              </div>
+              <div class="progress"><span class="fill" style="width:50%"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="row-2">
+    <!-- ─── C ─── -->
+    <section class="section">
+      <div class="sec-head">
+        <span class="sec-num">C</span>
+        <h2 class="sec-title">Hero + tabbed by module</h2>
+      </div>
+      <p class="sec-desc">Hero summarizes plan + monthly credits, then a tabbed sub-section lets users drill into one module at a time. Best when each module has 4+ quotas you don't want to show simultaneously.</p>
+      <div class="frame">
+        <div class="opt-c">
+          <div class="opt-c-hero">
+            <div class="row1">
+              <span class="lbl">Current plan · Next billing Jun 26</span>
+              <button class="btn">Manage plan</button>
+            </div>
+            <div class="plan">
+              <h3>Starter</h3>
+              <span class="pill">For individuals</span>
+            </div>
+            <div class="credits-line">
+              <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
+              <span class="n">1,000</span>
+              <span class="u">credits / month · pooled</span>
+            </div>
+          </div>
+          <div class="opt-c-tabs" id="opt-c-tabs">
+            <button class="tab engage active"><span class="swatch"></span>Engage<span class="cnt">3</span></button>
+            <button class="tab post"><span class="swatch"></span>Post Agent<span class="cnt">3</span></button>
+            <button class="tab analysis"><span class="swatch"></span>Analysis<span class="cnt">3</span></button>
+          </div>
+          <div class="opt-c-body">
+            <div class="opt-c-grid">
+              <div class="stat">
+                <span class="k">Keywords</span>
+                <span class="v">3<small>/3</small></span>
+                <div class="bar"><span class="fill" style="width:100%"></span></div>
+              </div>
+              <div class="stat">
+                <span class="k">Priority accounts</span>
+                <span class="v">0<small>/0</small></span>
+                <div class="bar"><span class="fill" style="width:0%"></span></div>
+              </div>
+              <div class="stat">
+                <span class="k">Subreddits</span>
+                <span class="v">0<small>/1</small></span>
+                <div class="bar"><span class="fill" style="width:0%"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── D ─── -->
+    <section class="section">
+      <div class="sec-head">
+        <span class="sec-num">D</span>
+        <h2 class="sec-title">Plan rail + quota table</h2>
+      </div>
+      <p class="sec-desc">Plan info pinned to a left rail; all quotas live in a scannable table on the right, grouped by module. Most information-dense — works when there are many quotas to show.</p>
+      <div class="frame">
+        <div class="opt-d">
+          <div class="opt-d-left">
+            <div>
+              <div class="lbl">Current plan</div>
+              <h3>Starter</h3>
+              <div class="credits">
+                <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
+                <span class="n">1,000</span>
+                <span class="u">cr / mo</span>
+              </div>
+            </div>
+            <div>
+              <div class="next">Next billing · Jun 26, 2026 · 09:50</div>
+              <button class="btn">Manage plan →</button>
+            </div>
+          </div>
+          <div class="opt-d-right">
+            <div class="opt-d-group engage">
+              <div class="gh"><span class="swatch"></span>Engage</div>
+              <div class="opt-d-rows">
+                <div class="qr"><span class="lbl">Keywords</span><div class="pbar"><span class="fill" style="width:100%"></span></div><span class="val">3/3</span></div>
+                <div class="qr"><span class="lbl">Priority accounts</span><div class="pbar"><span class="fill" style="width:0%"></span></div><span class="val">0/0</span></div>
+                <div class="qr"><span class="lbl">Subreddits</span><div class="pbar"><span class="fill" style="width:0%"></span></div><span class="val">0/1</span></div>
+              </div>
+            </div>
+            <div class="opt-d-group post">
+              <div class="gh"><span class="swatch"></span>Post Agent</div>
+              <div class="opt-d-rows">
+                <div class="qr post"><span class="lbl">Free posts</span><div class="pbar"><span class="fill" style="width:0%"></span></div><span class="val">0/10</span></div>
+                <div class="qr post"><span class="lbl">AI replies / mo</span><div class="pbar"><span class="fill" style="width:33%"></span></div><span class="val">10/30</span></div>
+              </div>
+            </div>
+            <div class="opt-d-group analysis">
+              <div class="gh"><span class="swatch"></span>Analysis</div>
+              <div class="opt-d-rows">
+                <div class="qr analysis"><span class="lbl">Brand reports</span><div class="pbar"><span class="fill" style="width:50%"></span></div><span class="val">1/2</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer style="text-align:center;font-size:13px;color:var(--muted);margin-top:24px;font-family:'JetBrains Mono',monospace;">
+    My pick · <b style="color:var(--black);font-family:'Karla';font-size:14px;">A</b> for first-load clarity, <b style="color:var(--black);font-family:'Karla';font-size:14px;">D</b> if there are 8+ quotas to show.
+  </footer>
+
+</div>
+
+<script>
+  // Light tab toggle for option C
+  document.querySelectorAll('#opt-c-tabs .tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('#opt-c-tabs .tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+  }));
+</script>
+</body>
+</html>

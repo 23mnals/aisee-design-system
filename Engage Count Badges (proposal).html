@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>Engage — Count badges (before / after)</title>
+<style>
+  @font-face {
+    font-family: 'Karla';
+    src: url('fonts/Karla-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  :root {
+    --primary: #FFE253;
+    --primary-pale: #FFFADD;
+    --black: #111111;
+    --white: #FFFFFF;
+    --bg-page: #FAFAFA;
+    --border: rgba(17,17,17,0.06);
+    --border-hover: rgba(17,17,17,0.18);
+    --muted: rgba(17,17,17,0.6);
+    --faint: rgba(17,17,17,0.4);
+    --orange: #FF7A45;
+    --green:  #16A34A;
+    --lavender: #EFEAFD;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Karla', system-ui, sans-serif;
+    background: var(--bg-page);
+    color: var(--black);
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 48px 80px;
+  }
+
+  /* ── Page heading ─────────────────────────── */
+  .doc-head { max-width: 1280px; margin: 0 auto 24px; }
+  .doc-eyebrow {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; margin-bottom: 8px;
+  }
+  .doc-title {
+    font-size: 26px; font-weight: 700; margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .doc-sub {
+    font-size: 14px; color: var(--muted); max-width: 720px; line-height: 1.55;
+  }
+
+  /* ── Layout ───────────────────────────────── */
+  .grid {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr; gap: 28px;
+  }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .card-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pill-tag {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 999px;
+  }
+  .pill-tag.bad { background: #FEE4E4; color: #B42318; }
+  .pill-tag.good { background: #E6F4EA; color: #166534; }
+  .card-title { font-weight: 600; font-size: 14px; }
+  .card-note { margin-left: auto; font-size: 12px; color: var(--muted); }
+
+  /* ── Engage demo strip (shared) ──────────── */
+  .strip { padding: 22px 24px 26px; }
+
+  .banner {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--lavender);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+  }
+  .banner .icon-bubble {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--white);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .banner .titles h2 {
+    margin: 0; font-size: 17px; font-weight: 700;
+  }
+  .banner .titles p {
+    margin: 2px 0 0; font-size: 12px; color: var(--muted);
+  }
+  .banner .banner-stats { display: flex; gap: 22px; margin-left: auto; }
+  .banner-stat { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+  .banner-stat .lbl { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .banner-stat .num { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+
+  /* page tabs */
+  .page-tabs {
+    display: flex; gap: 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 14px;
+  }
+  .page-tab {
+    appearance: none; border: 0; background: transparent;
+    font-family: inherit;
+    font-size: 14px; font-weight: 500; color: var(--muted);
+    padding: 10px 2px 12px;
+    display: inline-flex; align-items: center; gap: 8px;
+    position: relative;
+    cursor: pointer;
+  }
+  .page-tab.on { color: var(--black); font-weight: 600; }
+  .page-tab.on::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -1px;
+    height: 2px; background: var(--black); border-radius: 2px 2px 0 0;
+  }
+  .count {
+    min-width: 22px; height: 18px; padding: 0 6px;
+    border-radius: 999px;
+    background: rgba(17,17,17,0.06); color: var(--muted);
+    font-size: 11px; font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .page-tab.on .count { background: var(--black); color: var(--primary); }
+  /* "new since last visit" pill — green dot + small number */
+  .new-pill {
+    min-width: 22px; height: 18px; padding: 0 6px;
+    border-radius: 999px;
+    background: var(--green); color: var(--white);
+    font-size: 10px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .new-pill::before {
+    content: ""; width: 5px; height: 5px; border-radius: 999px;
+    background: rgba(255,255,255,0.85);
+  }
+
+  /* filter row */
+  .filter-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 0 14px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    appearance: none; border: 1px solid var(--border);
+    background: var(--white);
+    border-radius: 8px; height: 30px; padding: 0 10px;
+    font-family: inherit;
+    font-size: 12px; font-weight: 500; color: var(--black);
+    display: inline-flex; align-items: center; gap: 6px;
+    cursor: pointer;
+  }
+  .chip:hover { border-color: var(--border-hover); }
+  .chip.on { background: var(--black); color: var(--white); border-color: var(--black); }
+  .chip-badge {
+    background: rgba(17,17,17,0.06);
+    border-radius: 999px;
+    padding: 0 6px; height: 16px;
+    font-size: 10px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--black);
+    font-variant-numeric: tabular-nums;
+  }
+  .chip.on .chip-badge { background: rgba(255,255,255,0.15); color: var(--white); }
+
+  /* inline count (variant B style — no pill, just dimmed text) */
+  .chip.ghost-count .chip-badge {
+    background: transparent; padding: 0; color: var(--faint); font-weight: 600;
+    border-left: 1px solid var(--border); padding-left: 8px; margin-left: 2px;
+    border-radius: 0;
+  }
+  .chip.on.ghost-count .chip-badge { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.18); }
+
+  .chip svg { display: block; }
+
+  /* meta row */
+  .meta-row {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; color: var(--muted);
+    padding: 6px 0 0;
+  }
+  .meta-row b { color: var(--black); font-weight: 600; }
+  .meta-dot {
+    width: 6px; height: 6px; border-radius: 999px; background: var(--green);
+  }
+  .meta-pill {
+    background: #E6F4EA; color: #166534;
+    border-radius: 999px; padding: 1px 8px;
+    font-size: 11px; font-weight: 600;
+  }
+  .meta-spacer { flex: 1; }
+
+  /* call-out for what changed */
+  .annot {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    padding: 16px 20px 20px;
+    border-top: 1px dashed var(--border);
+    background: #FCFCFA;
+  }
+  .annot .item {
+    font-size: 12px; line-height: 1.55;
+  }
+  .annot .item b {
+    display: block; font-weight: 700; margin-bottom: 4px; font-size: 12px;
+    color: var(--black);
+  }
+  .annot .item span { color: var(--muted); }
+  .annot .item .arrow { color: var(--faint); margin: 0 4px; }
+  .annot .item .was { text-decoration: line-through; color: var(--faint); }
+  .annot .item .now { color: var(--black); font-weight: 600; }
+
+  /* variant switch within "after" */
+  .variant-head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 24px 0;
+    font-size: 12px; color: var(--muted);
+  }
+  .variant-head b { color: var(--black); font-weight: 700; font-size: 12px; }
+
+  hr.split {
+    border: 0; border-top: 1px dashed var(--border); margin: 4px 24px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-head">
+  <div class="doc-eyebrow">Engage · Header & filter bar</div>
+  <h1 class="doc-title">99+ 全屏出现的问题 — 修复提案</h1>
+  <p class="doc-sub">
+    现在 Tab 和平台 chip 都用同样的 <code>99+</code> badge 在表达"总量"，结果四个位置全顶格，badge 失去信息量。
+    把"提醒类" badge（新增/未读）和"信息类"计数（总量）拆开，并对总量用缩写数字（K/M），就不会再出现 99+。
+  </p>
+</div>
+
+<div class="grid">
+
+  <!-- ╔══════════════════ BEFORE ══════════════════╗ -->
+  <section class="card">
+    <header class="card-head">
+      <span class="pill-tag bad">Before</span>
+      <span class="card-title">现状</span>
+      <span class="card-note">同一个数字以 5 种方式出现，全是 99+ → 无效</span>
+    </header>
+
+    <div class="strip">
+      <div class="banner">
+        <div class="icon-bubble">🐙</div>
+        <div class="titles">
+          <h2>Engage</h2>
+          <p>Monitor and reply to relevant conversations across X and Reddit.</p>
+        </div>
+        <div class="banner-stats">
+          <div class="banner-stat"><span class="lbl">Keywords</span><span class="num">7</span></div>
+          <div class="banner-stat"><span class="lbl">X accounts</span><span class="num">3</span></div>
+          <div class="banner-stat"><span class="lbl">Subreddit</span><span class="num">3</span></div>
+          <div class="banner-stat"><span class="lbl">New</span><span class="num">3330</span></div>
+          <div class="banner-stat"><span class="lbl">Sent</span><span class="num">8</span></div>
+        </div>
+      </div>
+
+      <div class="page-tabs">
+        <button class="page-tab on">Signal Feed <span class="count">99+</span></button>
+        <button class="page-tab">Keywords &amp; Accounts</button>
+        <button class="page-tab">Sent <span class="count">8</span></button>
+      </div>
+
+      <div class="filter-row">
+        <button class="chip on">All <span class="chip-badge">99+</span></button>
+        <button class="chip">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          X <span class="chip-badge">99+</span>
+        </button>
+        <button class="chip">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="#FF4500"><circle cx="12" cy="12" r="12"/><path d="M18 11c0-1.1-.9-2-2-2-.5 0-1 .2-1.3.5-1.1-.7-2.6-1.2-4.2-1.3l.7-3.2 2.3.5c0 .6.5 1 1 1s1-.4 1-1-.4-1-1-1c-.4 0-.7.2-.9.5l-2.5-.5c-.1 0-.2 0-.3.1 0 0-.1.1-.1.2L9.9 8.2c-1.7.1-3.2.5-4.3 1.3-.4-.4-.9-.5-1.4-.5-1.1 0-2 .9-2 2 0 .8.5 1.5 1.2 1.8 0 .1 0 .2 0 .4 0 2.2 2.6 4 5.7 4s5.7-1.8 5.7-4c0-.1 0-.2 0-.4.7-.3 1.2-1 1.2-1.8z" fill="#fff" transform="translate(2 0)"/></svg>
+          Reddit <span class="chip-badge">99+</span>
+        </button>
+        <span style="flex:1"></span>
+        <button class="chip">All scores ▾</button>
+        <button class="chip">All keywords ▾</button>
+        <button class="chip">Status ▾</button>
+      </div>
+
+      <div class="meta-row">
+        <span class="meta-dot"></span>
+        <span><b>3330</b> feeds</span>
+        <span>·</span>
+        <span>Last sync <b>1h ago</b></span>
+        <span>·</span>
+        <span>Next in <b>11m</b></span>
+      </div>
+    </div>
+
+    <div class="annot">
+      <div class="item">
+        <b>Tab badges</b>
+        <span>用同一种 pill 表达"总数 3330"，但容量是 99 → 永远顶格 → 失去提醒意义。</span>
+      </div>
+      <div class="item">
+        <b>Chip badges</b>
+        <span>All / X / Reddit 三个 chip 也全是 99+，无法对比平台之间的真实量级。</span>
+      </div>
+      <div class="item">
+        <b>Meta 行</b>
+        <span>下方又写了 <code>3330 feeds</code>，与上方 badge 信息重复。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════ AFTER — A ══════════════════╗ -->
+  <section class="card">
+    <header class="card-head">
+      <span class="pill-tag good">After · A</span>
+      <span class="card-title">语义分层：badge 只管"新增"，chip 显示真实总数</span>
+      <span class="card-note">推荐方案</span>
+    </header>
+
+    <div class="strip">
+      <div class="banner">
+        <div class="icon-bubble">🐙</div>
+        <div class="titles">
+          <h2>Engage</h2>
+          <p>Monitor and reply to relevant conversations across X and Reddit.</p>
+        </div>
+        <div class="banner-stats">
+          <div class="banner-stat"><span class="lbl">Keywords</span><span class="num">7</span></div>
+          <div class="banner-stat"><span class="lbl">X accounts</span><span class="num">3</span></div>
+          <div class="banner-stat"><span class="lbl">Subreddit</span><span class="num">3</span></div>
+          <div class="banner-stat"><span class="lbl">Sent</span><span class="num">8</span></div>
+        </div>
+      </div>
+
+      <div class="page-tabs">
+        <button class="page-tab on">
+          Signal Feed
+          <span class="new-pill" title="自上次查看以来的新增">+24</span>
+        </button>
+        <button class="page-tab">Keywords &amp; Accounts</button>
+        <button class="page-tab">
+          Sent
+          <span class="new-pill">+2</span>
+        </button>
+      </div>
+
+      <div class="filter-row">
+        <button class="chip on">All <span class="chip-badge">3.3K</span></button>
+        <button class="chip">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          X <span class="chip-badge">1.2K</span>
+        </button>
+        <button class="chip">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="#FF4500"><circle cx="12" cy="12" r="12"/><path d="M18 11c0-1.1-.9-2-2-2-.5 0-1 .2-1.3.5-1.1-.7-2.6-1.2-4.2-1.3l.7-3.2 2.3.5c0 .6.5 1 1 1s1-.4 1-1-.4-1-1-1c-.4 0-.7.2-.9.5l-2.5-.5c-.1 0-.2 0-.3.1 0 0-.1.1-.1.2L9.9 8.2c-1.7.1-3.2.5-4.3 1.3-.4-.4-.9-.5-1.4-.5-1.1 0-2 .9-2 2 0 .8.5 1.5 1.2 1.8 0 .1 0 .2 0 .4 0 2.2 2.6 4 5.7 4s5.7-1.8 5.7-4c0-.1 0-.2 0-.4.7-.3 1.2-1 1.2-1.8z" fill="#fff" transform="translate(2 0)"/></svg>
+          Reddit <span class="chip-badge">2.1K</span>
+        </button>
+        <span style="flex:1"></span>
+        <button class="chip">All scores ▾</button>
+        <button class="chip">All keywords ▾</button>
+        <button class="chip">Status ▾</button>
+      </div>
+
+      <div class="meta-row">
+        <span class="meta-dot"></span>
+        <span><b>3,330</b> feeds total</span>
+        <span class="meta-pill">+24 new since last visit</span>
+        <span class="meta-spacer"></span>
+        <span>Last sync <b>1h ago</b> · Next in <b>11m</b></span>
+      </div>
+    </div>
+
+    <div class="annot">
+      <div class="item">
+        <b>Tab badge = 提醒</b>
+        <span class="was">99+</span><span class="arrow">→</span><span class="now">+24</span>
+        <br><span>绿色 dot pill，只显示"自上次查看以来的新增"，<b>没有新增就不显示</b>。</span>
+      </div>
+      <div class="item">
+        <b>Chip badge = 总数（缩写）</b>
+        <span class="was">99+</span><span class="arrow">→</span><span class="now">3.3K / 1.2K / 2.1K</span>
+        <br><span>真实数据用 K/M 缩写，再多也不会顶格。用户能直接比较平台量级。</span>
+      </div>
+      <div class="item">
+        <b>Meta 行</b>
+        <span>合并"总数 + 新增"，把所有计数信息收敛到一行，banner 区不再重复出现 "New 3330"。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════ AFTER — B ══════════════════╗ -->
+  <section class="card">
+    <header class="card-head">
+      <span class="pill-tag good">After · B</span>
+      <span class="card-title">更克制版：chip 不再带 pill 数字，只用次要文本</span>
+      <span class="card-note">最低噪音 — 适合不依赖 badge 提醒的用户</span>
+    </header>
+
+    <div class="strip">
+      <div class="banner">
+        <div class="icon-bubble">🐙</div>
+        <div class="titles">
+          <h2>Engage</h2>
+          <p>Monitor and reply to relevant conversations across X and Reddit.</p>
+        </div>
+        <div class="banner-stats">
+          <div class="banner-stat"><span class="lbl">Keywords</span><span class="num">7</span></div>
+          <div class="banner-stat"><span class="lbl">X accounts</span><span class="num">3</span></div>
+          <div class="banner-stat"><span class="lbl">Subreddit</span><span class="num">3</span></div>
+          <div class="banner-stat"><span class="lbl">Sent</span><span class="num">8</span></div>
+        </div>
+      </div>
+
+      <div class="page-tabs">
+        <button class="page-tab on">
+          Signal Feed
+          <span class="new-pill">+24</span>
+        </button>
+        <button class="page-tab">Keywords &amp; Accounts</button>
+        <button class="page-tab">
+          Sent
+          <span class="new-pill">+2</span>
+        </button>
+      </div>
+
+      <div class="filter-row">
+        <button class="chip on ghost-count">All <span class="chip-badge">3.3K</span></button>
+        <button class="chip ghost-count">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          X <span class="chip-badge">1.2K</span>
+        </button>
+        <button class="chip ghost-count">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="#FF4500"><circle cx="12" cy="12" r="12"/><path d="M18 11c0-1.1-.9-2-2-2-.5 0-1 .2-1.3.5-1.1-.7-2.6-1.2-4.2-1.3l.7-3.2 2.3.5c0 .6.5 1 1 1s1-.4 1-1-.4-1-1-1c-.4 0-.7.2-.9.5l-2.5-.5c-.1 0-.2 0-.3.1 0 0-.1.1-.1.2L9.9 8.2c-1.7.1-3.2.5-4.3 1.3-.4-.4-.9-.5-1.4-.5-1.1 0-2 .9-2 2 0 .8.5 1.5 1.2 1.8 0 .1 0 .2 0 .4 0 2.2 2.6 4 5.7 4s5.7-1.8 5.7-4c0-.1 0-.2 0-.4.7-.3 1.2-1 1.2-1.8z" fill="#fff" transform="translate(2 0)"/></svg>
+          Reddit <span class="chip-badge">2.1K</span>
+        </button>
+        <span style="flex:1"></span>
+        <button class="chip">All scores ▾</button>
+        <button class="chip">All keywords ▾</button>
+        <button class="chip">Status ▾</button>
+      </div>
+
+      <div class="meta-row">
+        <span class="meta-dot"></span>
+        <span><b>3,330</b> feeds total</span>
+        <span class="meta-pill">+24 new since last visit</span>
+        <span class="meta-spacer"></span>
+        <span>Last sync <b>1h ago</b> · Next in <b>11m</b></span>
+      </div>
+    </div>
+
+    <div class="annot">
+      <div class="item">
+        <b>Chip 无 pill 背景</b>
+        <span>数字用次要色 + 竖线分隔。视觉重量比 A 案再轻一档，整条 filter row 更安静。</span>
+      </div>
+      <div class="item">
+        <b>仍保留新增提醒</b>
+        <span>Tab 上的 <span class="new-pill" style="margin: 0 2px">+24</span> 不动 —— 它承担"有新东西"的提醒任务。</span>
+      </div>
+      <div class="item">
+        <b>适用场景</b>
+        <span>当 Engage 的 feed 总量在数千以上是常态时，B 案不会让 chip 区被数字主导，焦点回到内容卡片。</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

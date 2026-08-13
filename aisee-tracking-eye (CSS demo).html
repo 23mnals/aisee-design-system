@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aisee tracking eye — CSS demo</title>
+<link rel="stylesheet" href="aisee-tracking-eye.css" />
+<style>
+  body {
+    margin: 0; min-height: 100vh;
+    display: grid; place-items: center; gap: 32px;
+    grid-auto-flow: row;
+    background: #F7F8F7;
+    font-family: system-ui, sans-serif;
+    color: #111;
+  }
+  .row { display: flex; align-items: center; gap: 32px; }
+  .label { font: 11px/1 ui-monospace, monospace; color: #888; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <span class="aisee-eye" role="img" aria-label="Tracking">
+      <svg viewBox="0 0 80 56" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="outerClip"><ellipse cx="39.76" cy="28" rx="39.76" ry="28"/></clipPath>
+          <clipPath id="eyeRectClip"><rect x="27.0015" y="18.5996" width="26.2682" height="11.6658"/></clipPath>
+          <clipPath id="eyeAlmondClip"><path d="M27.0015 24.4125 C35.7612 16.662 44.5209 16.662 53.2806 24.4125 C44.5209 32.163 35.7612 32.163 27.0015 24.4125 Z"/></clipPath>
+          <clipPath id="domeClip"><path d="M17.0737 32.0633 C17.0737 19.3258 27.3995 9 40.137 9 C52.8745 9 63.2003 19.3258 63.2003 32.0633 V57 H17.0737 Z"/></clipPath>
+        </defs>
+        <ellipse cx="39.76" cy="28" rx="39.76" ry="28" fill="#111111"/>
+        <g clip-path="url(#outerClip)">
+          <path d="M17.0737 32.0633 C17.0737 19.3258 27.3995 9 40.137 9 C52.8745 9 63.2003 19.3258 63.2003 32.0633 V57 H17.0737 Z" fill="#FFE253"/>
+          <g clip-path="url(#eyeRectClip)">
+            <g clip-path="url(#eyeAlmondClip)">
+              <rect x="27.0015" y="18.5996" width="26.2682" height="11.6658" fill="#FFFFFF"/>
+              <rect class="pupil" x="34.3008" y="14.6548" width="11.7675" height="11.6658" rx="5.83288" fill="#111111"/>
+            </g>
+          </g>
+          <g clip-path="url(#domeClip)"><rect class="lid" x="27" y="16" width="26.27" height="15" fill="#FFE253"/></g>
+        </g>
+      </svg>
+    </span>
+    <span class="label">80×56 (default)</span>
+  </div>
+
+  <div class="row">
+    <span class="aisee-eye" style="width:160px;height:112px;" role="img" aria-label="Tracking">
+      <svg viewBox="0 0 80 56" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="outerClip2"><ellipse cx="39.76" cy="28" rx="39.76" ry="28"/></clipPath>
+          <clipPath id="eyeRectClip2"><rect x="27.0015" y="18.5996" width="26.2682" height="11.6658"/></clipPath>
+          <clipPath id="eyeAlmondClip2"><path d="M27.0015 24.4125 C35.7612 16.662 44.5209 16.662 53.2806 24.4125 C44.5209 32.163 35.7612 32.163 27.0015 24.4125 Z"/></clipPath>
+          <clipPath id="domeClip2"><path d="M17.0737 32.0633 C17.0737 19.3258 27.3995 9 40.137 9 C52.8745 9 63.2003 19.3258 63.2003 32.0633 V57 H17.0737 Z"/></clipPath>
+        </defs>
+        <ellipse cx="39.76" cy="28" rx="39.76" ry="28" fill="#111111"/>
+        <g clip-path="url(#outerClip2)">
+          <path d="M17.0737 32.0633 C17.0737 19.3258 27.3995 9 40.137 9 C52.8745 9 63.2003 19.3258 63.2003 32.0633 V57 H17.0737 Z" fill="#FFE253"/>
+          <g clip-path="url(#eyeRectClip2)">
+            <g clip-path="url(#eyeAlmondClip2)">
+              <rect x="27.0015" y="18.5996" width="26.2682" height="11.6658" fill="#FFFFFF"/>
+              <rect class="pupil" x="34.3008" y="14.6548" width="11.7675" height="11.6658" rx="5.83288" fill="#111111"/>
+            </g>
+          </g>
+          <g clip-path="url(#domeClip2)"><rect class="lid" x="27" y="16" width="26.27" height="15" fill="#FFE253"/></g>
+        </g>
+      </svg>
+    </span>
+    <span class="label">160×112</span>
+  </div>
+</body>
+</html>

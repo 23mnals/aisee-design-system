@@ -1,0 +1,24 @@
+name: Visual or component bug
+description: 令牌、样式、交互或无障碍问题
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际表现
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期表现与规范来源
+    validations:
+      required: true
+  - type: input
+    id: reproduction
+    attributes:
+      label: 最小复现
+      placeholder: "文档站链接、代码或仓库"
+    validations:
+      required: true

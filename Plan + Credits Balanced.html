@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Plan + Credits — Balanced layouts</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="my-account.css">
+<link rel="stylesheet" href="my-account.main.css">
+<link rel="stylesheet" href="my-account.usage.css">
+<style>
+  body{background:#EFEEE6;padding:48px 32px 80px;font-family:'Karla',sans-serif;color:var(--black);}
+  .canvas{max-width:1480px;margin:0 auto;display:flex;flex-direction:column;gap:56px;}
+  .section{display:flex;flex-direction:column;gap:14px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;}
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+  .sec-title{font-family:'Karla',sans-serif;font-size:22px;margin:0;line-height:1;}
+  .sec-desc{font-size:13.5px;color:var(--muted);max-width:760px;line-height:1.5;margin:0;}
+  .frame{
+    background:#fff;border-radius:18px;
+    box-shadow:0 1px 0 rgba(17,17,17,0.04), 0 8px 24px -16px rgba(17,17,17,0.12);
+    overflow:hidden;
+  }
+  .spark{color:var(--lime-bright);}
+
+  /* ════════════════════════════════════════════════════
+     E — Single unified card, two columns inside
+     Plan info + module quotas (LEFT) | Credits + history (RIGHT)
+     Height naturally balances because both columns get content
+     ════════════════════════════════════════════════════ */
+  .opt-e{display:grid;grid-template-columns:1.1fr 1fr;}
+  .opt-e .col-left{padding:24px 28px;background:var(--lime-pale);}
+  .opt-e .col-right{padding:24px 28px;background:#fff;border-left:1px solid rgba(17,17,17,0.05);}
+
+  .lbl-sm{font-family:'Karla';font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
+  .row-between{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
+  .btn-pill{
+    background:#fff;border:1px solid var(--border-strong);
+    height:30px;padding:0 12px;border-radius:8px;font-size:12px;font-weight:500;
+    font-family:'Karla';cursor:pointer;color:var(--black);
+  }
+  .btn-pill.dark{background:var(--black);color:#fff;border-color:var(--black);}
+  .btn-pill.dark:hover{background:#000;}
+
+  .opt-e .plan-name{
+    font-family:'Karla',sans-serif;font-size:28px;line-height:1;margin:6px 0 4px;
+  }
+  .opt-e .next-line{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+  .opt-e .plan-includes{
+    margin:2px 0 2px;font-size:13px;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .opt-e .plan-includes b{
+    font-family:'JetBrains Mono',monospace;font-weight:700;
+  }
+  .info-dot{
+    width:14px;height:14px;border-radius:50%;
+    background:rgba(17,17,17,0.08);color:var(--muted);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:9px;font-weight:700;
+  }
+
+  .opt-e .quota-stack{
+    margin-top:18px;display:flex;flex-direction:column;gap:8px;
+  }
+  .qpill{
+    display:grid;grid-template-columns:88px 1fr auto;gap:14px;align-items:center;
+    background:#fff;border:1px solid rgba(17,17,17,0.05);
+    border-radius:10px;padding:10px 14px;
+  }
+  .qpill .mod{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Karla';font-size:12px;font-weight:600;
+  }
+  .qpill .mod .swatch{width:8px;height:8px;border-radius:50%;}
+  .qpill.engage .swatch{background:var(--c-engage);}
+  .qpill.post .swatch{background:var(--c-post);}
+  .qpill.analysis .swatch{background:var(--c-analysis);}
+  .qpill .chips{display:flex;flex-wrap:wrap;gap:5px;}
+  .qpill .chip2{
+    font-size:11.5px;background:rgba(17,17,17,0.04);
+    padding:3px 8px;border-radius:999px;
+    font-family:'Karla';color:var(--muted);
+  }
+  .qpill .chip2 b{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--black);margin-right:4px;}
+  .qpill .chip2.full{background:var(--orange-soft);color:var(--orange);}
+  .qpill .chip2.full b{color:var(--orange);}
+  .qpill .pbar{width:54px;height:5px;border-radius:3px;background:rgba(17,17,17,0.06);overflow:hidden;}
+  .qpill.engage .pbar .fill{background:var(--c-engage);}
+  .qpill.post .pbar .fill{background:var(--c-post);}
+  .qpill.analysis .pbar .fill{background:var(--c-analysis);}
+  .qpill .fill{height:100%;}
+
+  /* right column of E */
+  .opt-e .big-credits{
+    display:flex;align-items:baseline;gap:6px;margin:14px 0 4px;
+  }
+  .opt-e .big-credits .spark{width:26px;height:26px;align-self:center;}
+  .opt-e .big-credits .n{font-family:'Karla',sans-serif;font-size:42px;line-height:1;}
+  .opt-e .big-credits .u{font-size:13px;color:var(--muted);margin-left:4px;}
+  .opt-e .credits-meta{font-size:12.5px;color:var(--muted);margin-bottom:18px;}
+
+  .stack-bar{height:10px;border-radius:5px;background:rgba(17,17,17,0.06);overflow:hidden;display:flex;margin-bottom:8px;}
+  .stack-bar .seg{height:100%;}
+  .stack-bar .seg.sub{background:var(--lime-bright);}
+  .stack-bar .seg.top{background:var(--purple);}
+  .stack-legend{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);}
+  .stack-legend .item{display:inline-flex;align-items:center;gap:6px;}
+  .stack-legend .dot{width:8px;height:8px;border-radius:3px;}
+  .stack-legend .dot.sub{background:var(--lime-bright);}
+  .stack-legend .dot.top{background:var(--purple);}
+
+  .mini-section-title{
+    font-family:'Karla';font-size:11px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:0.06em;
+    margin:22px 0 10px;
+  }
+  .topup-history{display:flex;flex-direction:column;gap:8px;}
+  .topup-history .h-row{
+    display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;
+    padding:8px 0;border-top:1px solid var(--border);font-size:12.5px;
+  }
+  .topup-history .h-row:first-child{border-top:0;padding-top:0;}
+  .topup-history .h-row .date{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);}
+  .topup-history .h-row .desc{font-family:'Karla';}
+  .topup-history .h-row .amt{font-family:'JetBrains Mono',monospace;font-size:12px;color:#3D5E00;font-weight:600;}
+  .topup-history .h-row .amt.neg{color:var(--orange);font-weight:500;}
+
+  /* ════════════════════════════════════════════════════
+     F — Compact horizontal: plan + credits side-by-side hero,
+     then a wide module quota row below (one row, full width)
+     ════════════════════════════════════════════════════ */
+  .opt-f{padding:0;}
+  .opt-f-hero{
+    display:grid;grid-template-columns:1fr 1fr;
+    background:var(--lime-pale);
+  }
+  .opt-f-hero .cell{padding:22px 28px;position:relative;}
+  .opt-f-hero .cell + .cell{border-left:1px solid rgba(17,17,17,0.06);background:#fff;}
+  .opt-f-hero .cell-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .opt-f-hero .pname{font-family:'Karla',sans-serif;font-size:26px;line-height:1;margin:0;}
+  .opt-f-hero .sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;}
+  .opt-f-hero .num-block{display:flex;align-items:baseline;gap:6px;}
+  .opt-f-hero .num-block .spark{width:24px;height:24px;align-self:center;}
+  .opt-f-hero .num-block .n{font-family:'Karla',sans-serif;font-size:32px;line-height:1;}
+  .opt-f-hero .num-block .u{font-size:12px;color:var(--muted);}
+
+  .opt-f-quotas{
+    background:#FAFAFA;border-top:1px solid var(--border);
+    display:grid;grid-template-columns:repeat(3,1fr);
+  }
+  .opt-f-quotas .qcell{
+    padding:18px 24px;border-right:1px solid var(--border);
+  }
+  .opt-f-quotas .qcell:last-child{border-right:0;}
+  .opt-f-quotas .qcell .qh{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:14px;
+  }
+  .opt-f-quotas .qcell .qh .mod{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Karla';font-size:12px;font-weight:600;
+  }
+  .opt-f-quotas .qcell .qh .mod .swatch{width:8px;height:8px;border-radius:50%;}
+  .opt-f-quotas .qcell.engage .swatch{background:var(--c-engage);}
+  .opt-f-quotas .qcell.post .swatch{background:var(--c-post);}
+  .opt-f-quotas .qcell.analysis .swatch{background:var(--c-analysis);}
+  .opt-f-quotas .qcell .qh .usage{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  }
+  .opt-f-quotas .qlist{display:flex;flex-direction:column;gap:8px;}
+  .opt-f-quotas .qrow{
+    display:flex;align-items:baseline;justify-content:space-between;
+    font-size:12.5px;
+  }
+  .opt-f-quotas .qrow .k{color:var(--muted);}
+  .opt-f-quotas .qrow .v{font-family:'JetBrains Mono',monospace;font-size:12px;}
+  .opt-f-quotas .qrow .v small{color:var(--muted);}
+
+  /* ════════════════════════════════════════════════════
+     G — Stack vertical: one hero (credits dominant) + 
+     compact module row + collapsed credit bar.
+     Short total height — sits in first screen comfortably.
+     ════════════════════════════════════════════════════ */
+  .opt-g{padding:24px 28px;}
+  .opt-g-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:18px;}
+  .opt-g-top .left{display:flex;align-items:center;gap:18px;}
+  .opt-g-top .left .pill{
+    background:var(--lime-pale);border-radius:12px;padding:10px 14px;
+    display:inline-flex;flex-direction:column;gap:2px;
+  }
+  .opt-g-top .left .pill .pname{font-family:'Karla',sans-serif;font-size:22px;line-height:1;}
+  .opt-g-top .left .pill .pn{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);}
+  .opt-g-top .left .credits{display:flex;align-items:baseline;gap:6px;}
+  .opt-g-top .left .credits .spark{width:24px;height:24px;align-self:center;}
+  .opt-g-top .left .credits .n{font-family:'Karla',sans-serif;font-size:36px;line-height:1;}
+  .opt-g-top .left .credits .u{font-size:12px;color:var(--muted);margin-left:4px;}
+  .opt-g-top .left .credits .sub{display:block;font-size:11px;color:var(--muted);margin-top:2px;}
+  .opt-g-top .right{display:flex;gap:8px;}
+
+  .opt-g .stack-bar{margin-bottom:18px;}
+
+  .opt-g .module-row{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    padding-top:18px;border-top:1px solid var(--border);
+  }
+  .opt-g .mcell{display:flex;flex-direction:column;gap:8px;}
+  .opt-g .mcell .mh{
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .opt-g .mcell .mh .mod{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Karla';font-size:12px;font-weight:600;
+  }
+  .opt-g .mcell .mh .mod .swatch{width:8px;height:8px;border-radius:50%;}
+  .opt-g .mcell.engage .swatch{background:var(--c-engage);}
+  .opt-g .mcell.post .swatch{background:var(--c-post);}
+  .opt-g .mcell.analysis .swatch{background:var(--c-analysis);}
+  .opt-g .mcell .mh .mu{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+  .opt-g .chips-row{display:flex;flex-wrap:wrap;gap:5px;}
+  .opt-g .chip3{
+    font-size:11.5px;font-family:'Karla';
+    background:rgba(17,17,17,0.04);padding:3px 8px;border-radius:999px;
+    color:var(--muted);
+  }
+  .opt-g .chip3 b{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--black);margin-right:3px;}
+  .opt-g .chip3.full{background:var(--orange-soft);color:var(--orange);}
+  .opt-g .chip3.full b{color:var(--orange);}
+
+  /* ════════════════════════════════════════════════════
+     Headers
+     ════════════════════════════════════════════════════ */
+  header.canvas-head{text-align:center;max-width:780px;margin:0 auto 8px;}
+  header.canvas-head h1{font-family:'Karla',sans-serif;font-size:38px;line-height:1.1;margin:0 0 8px;}
+</style>
+</head>
+<body>
+
+<div class="canvas">
+
+  <header class="canvas-head">
+    <div class="sec-num" style="margin-bottom:6px;">Exploration · plan + credits row</div>
+    <h1>Balanced layouts for the whole first-screen row</h1>
+    <p class="sec-desc" style="margin:0 auto;">Instead of two cards side-by-side where one grows tall and the other stays empty — these treat the entire "plan + credits" area as one unit, so both sides earn their height.</p>
+  </header>
+
+  <!-- ───────── E ───────── -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">E</span>
+      <h2 class="sec-title">Unified two-column card</h2>
+    </div>
+    <p class="sec-desc">One card, internal split: <b>left</b> holds plan + module quotas, <b>right</b> holds the credits headline + breakdown bar + top-up history. Both columns get rich content so neither feels empty. Replaces the two-card row entirely.</p>
+    <div class="frame">
+      <div class="opt-e">
+        <!-- Left -->
+        <div class="col-left">
+          <div class="row-between">
+            <div>
+              <div class="lbl-sm">Current plan</div>
+              <div class="plan-name">Starter</div>
+              <div class="plan-includes">Includes <b>1,000</b> credits / month <span class="info-dot">i</span></div>
+              <div class="next-line">Next billing · Jun 26, 2026</div>
+            </div>
+            <button class="btn-pill">Manage plan →</button>
+          </div>
+          <div class="quota-stack">
+            <div class="qpill engage">
+              <span class="mod"><span class="swatch"></span>Engage</span>
+              <div class="chips">
+                <span class="chip2 full"><b>3/3</b>Keywords</span>
+                <span class="chip2"><b>0/0</b>Accounts</span>
+                <span class="chip2"><b>0/1</b>Subreddits</span>
+              </div>
+              <div class="pbar"><span class="fill" style="width:60%"></span></div>
+            </div>
+            <div class="qpill post">
+              <span class="mod"><span class="swatch"></span>Post Agent</span>
+              <div class="chips">
+                <span class="chip2"><b>0/10</b>Free posts</span>
+                <span class="chip2"><b>10/mo</b>AI replies</span>
+                <span class="chip2"><b>2/3</b>Channels</span>
+              </div>
+              <div class="pbar"><span class="fill" style="width:35%"></span></div>
+            </div>
+            <div class="qpill analysis">
+              <span class="mod"><span class="swatch"></span>Analysis</span>
+              <div class="chips">
+                <span class="chip2"><b>1/2</b>Reports</span>
+                <span class="chip2"><b>Core</b>Models</span>
+              </div>
+              <div class="pbar"><span class="fill" style="width:50%"></span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Right -->
+        <div class="col-right">
+          <div class="row-between">
+            <div class="lbl-sm">Remaining credits</div>
+            <button class="btn-pill dark">Buy more →</button>
+          </div>
+          <div class="big-credits">
+            <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
+            <span class="n">6,614</span>
+            <span class="u">credits</span>
+          </div>
+          <div class="credits-meta">~32 days of usage at current burn rate</div>
+          <div class="stack-bar">
+            <span class="seg sub" style="width:13%"></span>
+            <span class="seg top" style="width:73%"></span>
+          </div>
+          <div class="stack-legend">
+            <span class="item"><span class="dot sub"></span>Subscription 960 / 1,000</span>
+            <span class="item"><span class="dot top"></span>Top-up 5,654</span>
+          </div>
+
+          <div class="mini-section-title">Recent</div>
+          <div class="topup-history">
+            <div class="h-row"><span class="desc">Top-up · Growth pack</span><span class="amt">+5,000</span><span class="date">Jun 02</span></div>
+            <div class="h-row"><span class="desc">Subscription refill</span><span class="amt">+1,000</span><span class="date">Jun 01</span></div>
+            <div class="h-row"><span class="desc">Brand report · framer</span><span class="amt neg">−552</span><span class="date">May 28</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── F ───────── -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">F</span>
+      <h2 class="sec-title">Two-row layout: hero + module strip</h2>
+    </div>
+    <p class="sec-desc">Plan and credits sit side-by-side on a short hero strip (≈ 130px). Module quotas live in a second wide row underneath (3 cells). Whole thing is wide & short — fits the first screen and the two halves have matching height by construction.</p>
+    <div class="frame">
+      <div class="opt-f">
+        <!-- Hero -->
+        <div class="opt-f-hero">
+          <div class="cell">
+            <div class="cell-head">
+              <span class="lbl-sm">Current plan</span>
+              <button class="btn-pill">Manage plan →</button>
+            </div>
+            <h3 class="pname">Starter</h3>
+            <div class="sub">Includes <b style="color:var(--black);font-family:'JetBrains Mono',monospace;">1,000</b> credits / month · next billing Jun 26</div>
+          </div>
+          <div class="cell">
+            <div class="cell-head">
+              <span class="lbl-sm">Remaining credits</span>
+              <button class="btn-pill dark">Buy more →</button>
+            </div>
+            <div class="num-block">
+              <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
+              <span class="n">6,614</span>
+              <span class="u">credits · ~32d left</span>
+            </div>
+            <div class="stack-bar" style="margin-top:10px;margin-bottom:6px;">
+              <span class="seg sub" style="width:13%"></span>
+              <span class="seg top" style="width:73%"></span>
+            </div>
+            <div class="stack-legend" style="font-size:11px;">
+              <span class="item"><span class="dot sub"></span>Sub 960/1,000</span>
+              <span class="item"><span class="dot top"></span>Top-up 5,654</span>
+            </div>
+          </div>
+        </div>
+        <!-- Quotas -->
+        <div class="opt-f-quotas">
+          <div class="qcell engage">
+            <div class="qh">
+              <span class="mod"><span class="swatch"></span>Engage</span>
+              <span class="usage">60% used</span>
+            </div>
+            <div class="qlist">
+              <div class="qrow"><span class="k">Keywords</span><span class="v">3<small>/3</small></span></div>
+              <div class="qrow"><span class="k">Priority accounts</span><span class="v">0<small>/0</small></span></div>
+              <div class="qrow"><span class="k">Subreddits</span><span class="v">0<small>/1</small></span></div>
+            </div>
+          </div>
+          <div class="qcell post">
+            <div class="qh">
+              <span class="mod"><span class="swatch"></span>Post Agent</span>
+              <span class="usage">35% used</span>
+            </div>
+            <div class="qlist">
+              <div class="qrow"><span class="k">Free posts</span><span class="v">0<small>/10</small></span></div>
+              <div class="qrow"><span class="k">AI replies / mo</span><span class="v">10<small>/30</small></span></div>
+              <div class="qrow"><span class="k">Channels</span><span class="v">2<small>/3</small></span></div>
+            </div>
+          </div>
+          <div class="qcell analysis">
+            <div class="qh">
+              <span class="mod"><span class="swatch"></span>Analysis</span>
+              <span class="usage">50% used</span>
+            </div>
+            <div class="qlist">
+              <div class="qrow"><span class="k">Brand reports</span><span class="v">1<small>/2</small></span></div>
+              <div class="qrow"><span class="k">Competitors</span><span class="v">2<small>/3</small></span></div>
+              <div class="qrow"><span class="k">Models</span><span class="v">Core</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── G ───────── -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">G</span>
+      <h2 class="sec-title">Single short card · plan pill + credits hero + module strip</h2>
+    </div>
+    <p class="sec-desc">The most compact option. Plan name lives in a small pill next to the big credits number; underneath, a 3-column module strip with chip quotas. Whole thing is one card, shortest total height — leaves room for usage + activity below the fold.</p>
+    <div class="frame">
+      <div class="opt-g">
+        <div class="opt-g-top">
+          <div class="left">
+            <div class="pill">
+              <span class="pname">Starter</span>
+              <span class="pn"><b style="color:var(--black);font-family:'JetBrains Mono',monospace;font-weight:700;">1,000</b> cr / mo · next Jun 26</span>
+            </div>
+            <div>
+              <div class="credits">
+                <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
+                <span class="n">6,614</span>
+                <span class="u">credits remaining</span>
+              </div>
+              <span class="credits sub" style="display:block;font-size:11.5px;color:var(--muted);margin-top:2px;">Subscription 960/1,000 · Top-up 5,654 · ~32 days left</span>
+            </div>
+          </div>
+          <div class="right">
+            <button class="btn-pill">Manage plan</button>
+            <button class="btn-pill dark">Buy credits →</button>
+          </div>
+        </div>
+
+        <div class="stack-bar">
+          <span class="seg sub" style="width:13%"></span>
+          <span class="seg top" style="width:73%"></span>
+        </div>
+
+        <div class="module-row">
+          <div class="mcell engage">
+            <div class="mh"><span class="mod"><span class="swatch"></span>Engage</span><span class="mu">60% used</span></div>
+            <div class="chips-row">
+              <span class="chip3 full"><b>3/3</b>Keywords</span>
+              <span class="chip3"><b>0/0</b>Accounts</span>
+              <span class="chip3"><b>0/1</b>Subreddits</span>
+            </div>
+          </div>
+          <div class="mcell post">
+            <div class="mh"><span class="mod"><span class="swatch"></span>Post Agent</span><span class="mu">35% used</span></div>
+            <div class="chips-row">
+              <span class="chip3"><b>0/10</b>Free posts</span>
+              <span class="chip3"><b>10/30</b>AI replies</span>
+              <span class="chip3"><b>2/3</b>Channels</span>
+            </div>
+          </div>
+          <div class="mcell analysis">
+            <div class="mh"><span class="mod"><span class="swatch"></span>Analysis</span><span class="mu">50% used</span></div>
+            <div class="chips-row">
+              <span class="chip3"><b>1/2</b>Reports</span>
+              <span class="chip3"><b>Core</b>Models</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="text-align:center;font-size:13px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono',monospace;line-height:1.6;">
+    <b style="color:var(--black);font-family:'Karla';font-size:14px;">E</b> — both halves earn their height; richest information<br>
+    <b style="color:var(--black);font-family:'Karla';font-size:14px;">F</b> — clean grid, two clear rows, no imbalance possible<br>
+    <b style="color:var(--black);font-family:'Karla';font-size:14px;">G</b> — shortest first-screen footprint, best if you have a lot below
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1066 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Module Comparison v3" subtitle="By Module 对比 — 第三版（inline 模块切换 + delta 提示）" viewport="1440x1024" -->
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<title>Module Comparison · 版本三</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  :root{
+    --panel-radius: 16px;
+    --inner-radius: 10px;
+    --chip-radius: 6px;
+  }
+  html,body{height:100%;}
+  body{
+    background: var(--color-bg-page);
+    font-family:'Karla',sans-serif;
+    color: var(--fg-primary);
+    margin:0;
+    min-height:100vh;
+    padding:48px 32px 64px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 28px;
+  }
+
+  /* page header / scaffolding labels (so design context is obvious) */
+  .frame-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color: var(--color-muted);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    align-self:flex-start;
+    margin-left: max(0px, calc(50% - 595px));
+  }
+
+  .stage{
+    display:flex;
+    gap: 24px;
+    align-items:flex-start;
+  }
+
+  /* ─── shared panel chrome ─── */
+  .panel{
+    background: #fff;
+    border-radius: var(--panel-radius);
+    box-shadow:
+      0px 8px 8px rgba(0,0,0,0.04),
+      0px 20px 24px rgba(0,0,0,0.08);
+    border:1px solid rgba(17,17,17,0.06);
+    overflow:hidden;
+  }
+  .panel-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+    padding: 22px 24px 16px;
+  }
+  .panel-title{
+    font-family:'Karla',sans-serif;
+    font-size: 22px;
+    line-height: 1.15;
+    color: var(--fg-primary);
+    letter-spacing:-0.005em;
+    margin: 0 0 6px;
+  }
+  .panel-sub{
+    font-size:13px;
+    color: var(--fg-secondary);
+    line-height: 1.5;
+    max-width: 360px;
+    margin: 0;
+  }
+  .iconbtn{
+    border:none;
+    background: transparent;
+    width:28px;height:28px;
+    border-radius: 8px;
+    display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    color: var(--fg-primary);
+    flex-shrink:0;
+  }
+  .iconbtn:hover{ background: var(--color-subtle); }
+
+  /* ───────── LEFT (picker) ───────── */
+  .picker{
+    width: 444px;
+    display:flex;
+    flex-direction:column;
+    min-height: 760px;
+  }
+  .picker-body{
+    padding: 4px 24px 0;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap: 16px;
+  }
+
+  /* tab strip: Full Report / By Module */
+  .tabstrip{
+    display:inline-flex;
+    background: var(--color-gray-100);
+    padding: 4px;
+    border-radius: 8px;
+    align-self:flex-start;
+    gap: 2px;
+  }
+  .tabstrip button{
+    border:none;
+    background:transparent;
+    font-family:'Karla',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color: var(--color-muted);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor:pointer;
+    letter-spacing:.01em;
+  }
+  .tabstrip button.is-active{
+    background:#fff;
+    color: var(--fg-primary);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 0 0 1px rgba(17,17,17,0.06);
+  }
+
+  /* NEW: module segmented switcher with delta hints */
+  .module-switcher{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .mod-pill{
+    text-align:left;
+    background: var(--color-bg-card);
+    border:1px solid rgba(17,17,17,0.06);
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    transition: background .12s ease, border-color .12s ease, transform .12s ease;
+    font-family:'Karla', sans-serif;
+  }
+  .mod-pill:hover{ background:#fff; border-color: rgba(17,17,17,0.18); }
+  .mod-pill.is-active{
+    background: var(--color-lime);
+    border-color: var(--color-black);
+    box-shadow: 0 1px 0 var(--color-black);
+  }
+  .mod-pill .mod-name{
+    font-size:12px;
+    font-weight:600;
+    color: var(--fg-primary);
+    line-height:1.25;
+    letter-spacing:-0.005em;
+  }
+  .mod-pill .mod-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:6px;
+  }
+  .mod-pill .mod-delta{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color: var(--fg-primary);
+    font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    gap:2px;
+  }
+  .mod-pill.is-down .mod-delta{ color: var(--color-orange); }
+  .mod-pill .mod-spark{
+    flex:1;
+    height:14px;
+  }
+
+  /* version list */
+  .vers-list{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    margin-top: 2px;
+    padding-bottom: 8px;
+  }
+  .vers-row{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    padding: 12px 14px;
+    border:1px solid rgba(17,17,17,0.08);
+    border-radius: 12px;
+    background:#fff;
+    cursor:pointer;
+    transition: background .12s ease, border-color .12s ease;
+  }
+  .vers-row:hover{ border-color: rgba(17,17,17,0.18); }
+  .vers-row.is-selected{
+    background: rgba(207, 242, 41, 0.22);
+    border-color: rgba(17,17,17,0.18);
+  }
+  .vers-row.is-baseline{
+    background: rgba(207, 242, 41, 0.22);
+    border-color: rgba(17,17,17,0.18);
+  }
+
+  .checkbox{
+    width:18px;height:18px;
+    border-radius:5px;
+    border:1.4px solid rgba(17,17,17,0.35);
+    background:#fff;
+    display:inline-flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .vers-row.is-selected .checkbox,
+  .vers-row.is-baseline .checkbox{
+    background: var(--color-black);
+    border-color: var(--color-black);
+    color:#fff;
+  }
+  .checkbox svg{ width:11px; height:11px; }
+
+  .vers-meta{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    min-width:0;
+  }
+  .vers-name{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    font-weight:500;
+    color: var(--fg-primary);
+    letter-spacing:-0.01em;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .badge{
+    font-family:'Karla',sans-serif;
+    font-size:10px;
+    font-weight:600;
+    text-transform:none;
+    padding: 2px 8px;
+    border-radius:999px;
+    background: var(--color-lime);
+    color: var(--color-black);
+    letter-spacing:.02em;
+  }
+  .badge.baseline{
+    background: transparent;
+    color: var(--fg-secondary);
+    border:1px solid rgba(17,17,17,0.18);
+    padding: 1px 7px;
+  }
+  .vers-sub{
+    font-size:11.5px;
+    color: var(--fg-secondary);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .vers-sub .dot{
+    width:3px;height:3px;border-radius:50%;
+    background: rgba(17,17,17,0.3);
+    display:inline-block;
+  }
+
+  .score-chip{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:2px;
+    padding-left: 8px;
+  }
+  .score-chip .num{
+    font-family:'Karla',sans-serif;
+    font-size: 24px;
+    line-height:1;
+    letter-spacing:-0.01em;
+    color: var(--fg-primary);
+  }
+  .score-chip .delta{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    color: var(--fg-secondary);
+    display:inline-flex;align-items:center;gap:4px;
+  }
+  .score-chip .delta.up{ color: #4f8a00; }
+  .score-chip .delta.down{ color: var(--color-orange); }
+  .score-chip .delta .ref{ color: var(--fg-secondary); }
+
+  /* picker footer */
+  .picker-foot{
+    border-top: 1px solid var(--color-gray-200);
+    padding: 14px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    background:#fff;
+    margin-top: auto;
+  }
+  .sel-summary{
+    font-size:12.5px;
+    color: var(--fg-primary);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .sel-summary .arrow{
+    font-family:'JetBrains Mono', monospace;
+    color: var(--fg-secondary);
+  }
+  .btn{
+    font-family:'Karla',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    padding: 9px 16px;
+    border-radius: 8px;
+    border:none;
+    cursor:pointer;
+    letter-spacing:.005em;
+  }
+  .btn-ghost{
+    background:transparent;
+    color: var(--fg-primary);
+  }
+  .btn-ghost:hover{ background: var(--color-subtle); }
+  .btn-primary{
+    background: var(--color-lime);
+    color: var(--color-black);
+    box-shadow: 0 1px 0 rgba(17,17,17,0.15);
+  }
+  .btn-primary:hover{ background: var(--color-lime-bright); }
+
+  /* ───────── RIGHT (report) ───────── */
+  .report{
+    width: 760px;
+  }
+  .report-body{
+    padding: 0 24px 24px;
+    display:flex;
+    flex-direction:column;
+    gap: 18px;
+  }
+
+  /* comparing strip */
+  .compare-strip{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    padding: 12px 14px;
+    background: var(--color-bg-card);
+    border-radius: 10px;
+    border:1px solid rgba(17,17,17,0.05);
+  }
+  .compare-strip .lbl{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing:.1em;
+    color: var(--fg-secondary);
+    text-transform:uppercase;
+    margin-right: 4px;
+  }
+  .vchip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding: 5px 9px 5px 10px;
+    background:#fff;
+    border:1px solid rgba(17,17,17,0.12);
+    border-radius: 7px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color: var(--fg-primary);
+  }
+  .vchip .tag{
+    font-family:'Karla',sans-serif;
+    font-size:10px;
+    font-weight:600;
+    padding: 1px 7px;
+    border-radius: 999px;
+    color: var(--fg-primary);
+    background: var(--color-subtle);
+  }
+  .vchip .tag.baseline{ background: var(--color-lime); }
+  .vchip .tag.target{
+    background: transparent;
+    color: var(--fg-secondary);
+    border:1px solid rgba(17,17,17,0.16);
+    padding: 0 6px;
+  }
+  .vchip .date{
+    color: var(--fg-secondary);
+    font-size:11px;
+  }
+  .vchip .x{
+    color: var(--fg-secondary);
+    cursor:pointer;
+    padding: 0 2px;
+  }
+  .add-version{
+    margin-left:auto;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    font-weight:500;
+    color: var(--fg-primary);
+    padding: 6px 10px;
+    border-radius: 7px;
+    border:1px dashed rgba(17,17,17,0.25);
+    background:transparent;
+    cursor:pointer;
+  }
+  .add-version:hover{ background: var(--color-subtle); }
+
+  /* score row */
+  .score-row{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .score-card{
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--color-bg-card);
+    border:1px solid rgba(17,17,17,0.05);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    position:relative;
+  }
+  .score-card .vlabel{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color: var(--fg-secondary);
+    letter-spacing:.04em;
+  }
+  .score-card .num{
+    font-family:'Karla',sans-serif;
+    font-size: 40px;
+    line-height:1;
+    letter-spacing:-0.015em;
+    color: var(--fg-primary);
+  }
+  .score-card .num sup{
+    font-size:14px;
+    color: var(--fg-secondary);
+    margin-left: 2px;
+    font-family:'Karla',sans-serif;
+    vertical-align: top;
+    line-height: 1.5;
+    position: relative;
+    top: 2px;
+  }
+  .score-card .delta{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color: var(--fg-secondary);
+    display:inline-flex;align-items:center;gap:5px;
+  }
+  .score-card .delta .v{ color: #4f8a00; font-weight:700; }
+  .score-card.baseline{ background: rgba(207, 242, 41, 0.22); }
+  .score-card.baseline .vlabel{ color: var(--fg-primary); }
+
+  /* chart */
+  .card{
+    border-radius: 12px;
+    background:#fff;
+    border:1px solid rgba(17,17,17,0.06);
+    padding: 18px 18px 12px;
+  }
+  .card-head{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom: 6px;
+  }
+  .card-title{
+    font-family:'Karla',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color: var(--fg-primary);
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+  }
+  .card-title .pill-tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    padding: 2px 7px;
+    border-radius:999px;
+    background: var(--color-lime);
+    color: var(--color-black);
+    font-weight:600;
+  }
+  .card-title .pill-tag.module{
+    background: rgba(207, 242, 41, 0.5);
+  }
+
+  .chart-current{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap: 16px;
+    padding-top: 6px;
+  }
+  .chart-current .num-block{
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+    padding-bottom: 6px;
+  }
+  .chart-current .num-block .big{
+    font-family:'Karla',sans-serif;
+    font-size: 60px;
+    line-height: .95;
+    letter-spacing:-0.02em;
+    color: var(--fg-primary);
+    display:flex;
+    align-items:baseline;
+    gap: 8px;
+  }
+  .chart-current .num-block .big small{
+    font-family:'Karla',sans-serif;
+    font-size:12px;
+    font-weight:500;
+    color: var(--fg-secondary);
+    letter-spacing:.04em;
+  }
+  .chart-current .num-block .since{
+    font-size:12px;
+    color: var(--fg-secondary);
+  }
+  .chart-current .num-block .since strong{
+    color: #4f8a00;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+  }
+
+  .chart-svg{
+    flex: 1;
+    max-width: 420px;
+    height: 120px;
+  }
+
+  /* platform breakdown */
+  .platform-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .plat-card{
+    background:#fff;
+    border:1px solid rgba(17,17,17,0.06);
+    border-radius: 12px;
+    padding: 14px 14px 12px;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+  .plat-head{
+    display:flex;align-items:center;gap:8px;
+  }
+  .plat-icon{
+    width: 22px;height:22px;
+    border-radius:6px;
+    background: var(--color-subtle);
+    display:inline-flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    color: var(--fg-primary);
+  }
+  .plat-icon.openai{ background: #10a37f; color:#fff; }
+  .plat-icon.claude{ background: #d97757; color:#fff; }
+  .plat-icon.pplx{ background: #1e4d52; color:#fff; }
+  .plat-icon.gemini{ background: #4285f4; color:#fff; }
+  .plat-name{
+    font-size:13px;
+    font-weight:600;
+    color: var(--fg-primary);
+  }
+
+  .bars{
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+  }
+  .bar-row{
+    display:grid;
+    grid-template-columns: 32px 1fr 26px;
+    align-items:center;
+    gap: 8px;
+  }
+  .bar-row .vl{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--fg-secondary);
+    display:flex;align-items:center;gap:5px;
+  }
+  .bar-row .vl::before{
+    content:'';
+    width:6px;height:6px;border-radius:50%;
+    background: var(--color-lime);
+    display:inline-block;
+    flex-shrink:0;
+  }
+  .bar-row .vl.zero::before{ background: rgba(17,17,17,0.25); }
+  .bar-track{
+    height: 6px;
+    background: var(--color-gray-100);
+    border-radius:999px;
+    overflow:hidden;
+    position:relative;
+  }
+  .bar-fill{
+    height:100%;
+    background: var(--color-lime);
+    border-radius:999px;
+    transition: width .3s ease;
+  }
+  .bar-fill.bright{ background: var(--color-lime-bright); }
+  .bar-row .vn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color: var(--fg-primary);
+    text-align:right;
+    font-weight:500;
+  }
+  .bar-row .vn.zero{ color: var(--color-orange); }
+
+  .plat-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-top: 1px dashed rgba(17,17,17,0.1);
+    padding-top: 8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    color: var(--fg-secondary);
+  }
+  .plat-foot .latest{
+    color: var(--fg-primary);
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .plat-foot .latest .pos{ color: #4f8a00; font-weight:700; }
+  .plat-foot .latest .neg{ color: var(--color-orange); font-weight:700; }
+
+</style>
+</head>
+<body>
+
+<div class="frame-label">v5.2 · analysis · 模块对比弹窗 · 版本三</div>
+
+<div class="stage">
+
+  <!-- ────────────── LEFT: Version Picker ────────────── -->
+  <section class="panel picker" aria-label="Pick versions to compare">
+    <header class="panel-head">
+      <div>
+        <h2 class="panel-title">Pick versions to compare</h2>
+        <p class="panel-sub">Pick a module first, then 2–4 scans. The earliest becomes your baseline.</p>
+      </div>
+      <button class="iconbtn" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6 L18 18 M18 6 L6 18"/></svg>
+      </button>
+    </header>
+
+    <div class="picker-body">
+
+      <!-- tab toggle: Full Report / By Module -->
+      <div class="tabstrip" role="tablist">
+        <button role="tab">Full Report</button>
+        <button role="tab" class="is-active" aria-selected="true">By Module</button>
+      </div>
+
+      <!-- NEW: module segmented switcher with delta hints -->
+      <div class="module-switcher" role="tablist" aria-label="Module">
+
+        <button class="mod-pill is-active" aria-selected="true">
+          <span class="mod-name">AI Presence</span>
+          <span class="mod-foot">
+            <svg class="mod-spark" viewBox="0 0 60 14" preserveAspectRatio="none">
+              <polyline points="2,11 14,10 28,9 42,5 58,2" fill="none" stroke="#111" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="mod-delta">↑ 53.7</span>
+          </span>
+        </button>
+
+        <button class="mod-pill">
+          <span class="mod-name">Competitor</span>
+          <span class="mod-foot">
+            <svg class="mod-spark" viewBox="0 0 60 14" preserveAspectRatio="none">
+              <polyline points="2,9 18,8 32,8 46,6 58,4" fill="none" stroke="rgba(17,17,17,.55)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="mod-delta">↑ 18.2</span>
+          </span>
+        </button>
+
+        <button class="mod-pill is-down">
+          <span class="mod-name">Strategy Review</span>
+          <span class="mod-foot">
+            <svg class="mod-spark" viewBox="0 0 60 14" preserveAspectRatio="none">
+              <polyline points="2,4 16,5 30,7 44,9 58,11" fill="none" stroke="rgba(17,17,17,.55)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="mod-delta">↓ 4.1</span>
+          </span>
+        </button>
+
+      </div>
+
+      <!-- version list (scores reflect active module: AI Presence) -->
+      <div class="vers-list">
+
+        <div class="vers-row is-selected">
+          <span class="checkbox">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5,6.5 5,9 9.5,3.5"/></svg>
+          </span>
+          <span class="vers-meta">
+            <span class="vers-name">V4.1__AI&nbsp;Presence__05/08/2026 <span class="badge">Latest</span></span>
+            <span class="vers-sub">Module score · AI Presence <span class="dot"></span> 24 prompts</span>
+          </span>
+          <span class="score-chip">
+            <span class="num">78</span>
+            <span class="delta up">↑&nbsp;53.7 <span class="ref">vs V1.0</span></span>
+          </span>
+        </div>
+
+        <div class="vers-row">
+          <span class="checkbox"></span>
+          <span class="vers-meta">
+            <span class="vers-name">V3.1__AI&nbsp;Presence__05/07/2026</span>
+            <span class="vers-sub">Module score · AI Presence <span class="dot"></span> 24 prompts</span>
+          </span>
+          <span class="score-chip">
+            <span class="num">72.8</span>
+            <span class="delta up">↑&nbsp;48.5 <span class="ref">vs V1.0</span></span>
+          </span>
+        </div>
+
+        <div class="vers-row is-selected">
+          <span class="checkbox">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5,6.5 5,9 9.5,3.5"/></svg>
+          </span>
+          <span class="vers-meta">
+            <span class="vers-name">V2.1__AI&nbsp;Presence__05/07/2026</span>
+            <span class="vers-sub">Module score · AI Presence <span class="dot"></span> 24 prompts</span>
+          </span>
+          <span class="score-chip">
+            <span class="num">37.9</span>
+            <span class="delta up">↑&nbsp;13.6 <span class="ref">vs V1.0</span></span>
+          </span>
+        </div>
+
+        <div class="vers-row is-baseline">
+          <span class="checkbox">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5,6.5 5,9 9.5,3.5"/></svg>
+          </span>
+          <span class="vers-meta">
+            <span class="vers-name">V1.1__AI&nbsp;Presence__05/07/2026 <span class="badge baseline">— baseline</span></span>
+            <span class="vers-sub">Module score · AI Presence <span class="dot"></span> 24 prompts</span>
+          </span>
+          <span class="score-chip">
+            <span class="num">24.3</span>
+            <span class="delta"><span class="ref">starting point</span></span>
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <footer class="picker-foot">
+      <span class="sel-summary">
+        <strong style="font-weight:600">3 selected</strong>
+        <span class="arrow">V1.1 → V2.1 → V4.1</span>
+      </span>
+      <span style="display:flex;gap:8px;">
+        <button class="btn btn-ghost">Cancel</button>
+        <button class="btn btn-primary">Compare</button>
+      </span>
+    </footer>
+  </section>
+
+  <!-- ────────────── RIGHT: Report Comparison ────────────── -->
+  <section class="panel report" aria-label="Report comparison">
+    <header class="panel-head">
+      <div>
+        <h2 class="panel-title">Report comparison</h2>
+        <p class="panel-sub">aicell · 3 versions · Module
+          <span style="display:inline-flex;align-items:center;gap:4px;padding:1px 8px;border-radius:999px;background:var(--color-lime);color:var(--color-black);font-family:'Karla',sans-serif;font-size:11px;font-weight:600;margin-left:2px;">AI Presence</span>
+        </p>
+      </div>
+      <button class="iconbtn" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6 L18 18 M18 6 L6 18"/></svg>
+      </button>
+    </header>
+
+    <div class="report-body">
+
+      <!-- comparing strip -->
+      <div class="compare-strip">
+        <span class="lbl">Comparing</span>
+        <span class="vchip">
+          V1.1
+          <span class="tag baseline">— baseline</span>
+          <span class="date">05/07</span>
+          <span class="x">×</span>
+        </span>
+        <span class="vchip">
+          V2.1
+          <span class="tag target">target</span>
+          <span class="date">05/07</span>
+          <span class="x">×</span>
+        </span>
+        <span class="vchip">
+          V4.1
+          <span class="tag target">target</span>
+          <span class="date">05/08</span>
+          <span class="x">×</span>
+        </span>
+        <button class="add-version">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 2v8 M2 6h8"/></svg>
+          Add version
+        </button>
+      </div>
+
+      <!-- three score cards (scoped to AI Presence) -->
+      <div class="score-row">
+        <div class="score-card baseline">
+          <span class="vlabel">V1.1 · 05/07</span>
+          <span class="num">24.3</span>
+          <span class="delta">baseline</span>
+        </div>
+        <div class="score-card">
+          <span class="vlabel">V2.1 · 05/07</span>
+          <span class="num">37.9</span>
+          <span class="delta"><span class="v">↑ 13.6</span> vs V1.1</span>
+        </div>
+        <div class="score-card">
+          <span class="vlabel">V4.1 · 05/08</span>
+          <span class="num">78<sup>Latest</sup></span>
+          <span class="delta"><span class="v">↑ 53.7</span> vs V1.1</span>
+        </div>
+      </div>
+
+      <!-- current score chart -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">
+            Current score
+            <span class="pill-tag module">AI Presence</span>
+          </span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-secondary);">3 scans · 05/07 – 05/08</span>
+        </div>
+        <div class="chart-current">
+          <div class="num-block">
+            <span class="big">88.2 <small>V4.1</small></span>
+            <span class="since">↑ <strong>65.9</strong> from V1.1 baseline</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 420 120" preserveAspectRatio="none">
+            <!-- grid -->
+            <g stroke="#eee" stroke-width="1">
+              <line x1="0" y1="20" x2="420" y2="20"/>
+              <line x1="0" y1="55" x2="420" y2="55"/>
+              <line x1="0" y1="90" x2="420" y2="90"/>
+            </g>
+            <!-- area fill -->
+            <defs>
+              <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#CFF229" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#CFF229" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M 20 88 L 210 60 L 400 15 L 400 110 L 20 110 Z" fill="url(#g1)"/>
+            <!-- line -->
+            <path d="M 20 88 L 210 60 L 400 15" fill="none" stroke="#A5D500" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- nodes -->
+            <g fill="#111">
+              <circle cx="20" cy="88" r="3.4"/>
+              <circle cx="210" cy="60" r="3.4"/>
+              <circle cx="400" cy="15" r="3.8"/>
+            </g>
+            <!-- labels -->
+            <g font-family="JetBrains Mono, monospace" font-size="10" fill="#777">
+              <text x="20" y="106" text-anchor="middle">V1.1</text>
+              <text x="210" y="106" text-anchor="middle">V2.1</text>
+              <text x="400" y="106" text-anchor="end">V4.1</text>
+            </g>
+            <g font-family="JetBrains Mono, monospace" font-size="10" fill="#111" font-weight="600">
+              <text x="20" y="82" text-anchor="middle">22.3</text>
+              <text x="210" y="54" text-anchor="middle">44.2</text>
+              <text x="400" y="10" text-anchor="end">88.2</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- platform breakdown -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 10px;">
+          <span class="card-title">
+            Platform breakdown
+            <span class="pill-tag">4 platforms</span>
+          </span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-secondary);">score 0–100</span>
+        </div>
+        <div class="platform-grid">
+
+          <div class="plat-card">
+            <div class="plat-head">
+              <span class="plat-icon openai">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M21.55 10.04a5.4 5.4 0 0 0-.46-4.43 5.46 5.46 0 0 0-5.88-2.62A5.45 5.45 0 0 0 6.74 4.45a5.4 5.4 0 0 0-3.6 2.62 5.46 5.46 0 0 0 .67 6.4 5.4 5.4 0 0 0 .46 4.43 5.46 5.46 0 0 0 5.88 2.62 5.4 5.4 0 0 0 4.07 1.82 5.46 5.46 0 0 0 5.21-3.78 5.4 5.4 0 0 0 3.6-2.62 5.46 5.46 0 0 0-.67-6.4z"/></svg>
+              </span>
+              <span class="plat-name">ChatGPT</span>
+            </div>
+            <div class="bars">
+              <div class="bar-row">
+                <span class="vl">V1.1</span>
+                <span class="bar-track"><span class="bar-fill" style="width:6%"></span></span>
+                <span class="vn">3</span>
+              </div>
+              <div class="bar-row">
+                <span class="vl">V2.1</span>
+                <span class="bar-track"><span class="bar-fill" style="width:79%"></span></span>
+                <span class="vn">79.1</span>
+              </div>
+              <div class="bar-row">
+                <span class="vl">V4.1</span>
+                <span class="bar-track"><span class="bar-fill bright" style="width:86%"></span></span>
+                <span class="vn">86.9</span>
+              </div>
+            </div>
+            <div class="plat-foot">
+              <span>V4.1 vs V1.1</span>
+              <span class="latest"><span class="pos">↑ 83.9</span></span>
+            </div>
+          </div>
+
+          <div class="plat-card">
+            <div class="plat-head">
+              <span class="plat-icon claude">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+              </span>
+              <span class="plat-name">Claude</span>
+            </div>
+            <div class="bars">
+              <div class="bar-row">
+                <span class="vl">V1.1</span>
+                <span class="bar-track"><span class="bar-fill" style="width:6%"></span></span>
+                <span class="vn">3</span>
+              </div>
+              <div class="bar-row">
+                <span class="vl">V2.1</span>
+                <span class="bar-track"><span class="bar-fill" style="width:79%"></span></span>
+                <span class="vn">79.1</span>
+              </div>
+              <div class="bar-row">
+                <span class="vl">V4.1</span>
+                <span class="bar-track"><span class="bar-fill bright" style="width:86%"></span></span>
+                <span class="vn">86.9</span>
+              </div>
+            </div>
+            <div class="plat-foot">
+              <span>V4.1 vs V1.1</span>
+              <span class="latest"><span class="pos">↑ 83.9</span></span>
+            </div>
+          </div>
+
+          <div class="plat-card">
+            <div class="plat-head">
+              <span class="plat-icon pplx">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+              </span>
+              <span class="plat-name">Perplexity (Sonar)</span>
+            </div>
+            <div class="bars">
+              <div class="bar-row">
+                <span class="vl">V1.1</span>
+                <span class="bar-track"><span class="bar-fill" style="width:6%"></span></span>
+                <span class="vn">3</span>
+              </div>
+              <div class="bar-row">
+                <span class="vl">V2.1</span>
+                <span class="bar-track"><span class="bar-fill" style="width:79%"></span></span>
+                <span class="vn">79.1</span>
+              </div>
+              <div class="bar-row">
+                <span class="vl">V4.1</span>
+                <span class="bar-track"><span class="bar-fill bright" style="width:86%"></span></span>
+                <span class="vn">86.9</span>
+              </div>
+            </div>
+            <div class="plat-foot">
+              <span>V4.1 vs V1.1</span>
+              <span class="latest"><span class="pos">↑ 83.9</span></span>
+            </div>
+          </div>
+
+          <div class="plat-card">
+            <div class="plat-head">
+              <span class="plat-icon gemini">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10Z"/></svg>
+              </span>
+              <span class="plat-name">Gemini</span>
+            </div>
+            <div class="bars">
+              <div class="bar-row">
+                <span class="vl zero">V1.1</span>
+                <span class="bar-track"></span>
+                <span class="vn zero">0</span>
+              </div>
+              <div class="bar-row">
+                <span class="vl zero">V2.1</span>
+                <span class="bar-track"></span>
+                <span class="vn zero">0</span>
+              </div>
+              <div class="bar-row">
+                <span class="vl zero">V4.1</span>
+                <span class="bar-track"></span>
+                <span class="vn zero">0</span>
+              </div>
+            </div>
+            <div class="plat-foot">
+              <span>V4.1 vs V1.1</span>
+              <span class="latest" style="color:var(--color-orange);">no change</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // module switcher: just visual toggling for demo
+  document.querySelectorAll('.module-switcher .mod-pill').forEach(p=>{
+    p.addEventListener('click', ()=>{
+      document.querySelectorAll('.module-switcher .mod-pill').forEach(x=>x.classList.remove('is-active'));
+      p.classList.add('is-active');
+    });
+  });
+  // tab toggle
+  document.querySelectorAll('.tabstrip button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('is-active'));
+      b.classList.add('is-active');
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1755 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Comparison Modal" subtitle="Analysis · Full Report / By Module 双视图 · 1080px" viewport="1440x900" -->
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<title>Comparison · aisee dApp</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  /* ─────────────────────────────────────────────────────────────
+     Comparison Modal — Analysis 模块（lime 主色）
+     按 dapp-design.md v3.0 严格执行
+     ───────────────────────────────────────────────────────────── */
+
+  :root{
+    --module-primary:        #CFFF29;
+    --module-primary-hover:  #BFEE19;
+    --module-primary-bg:     rgba(207,255,41,0.18);
+    --module-primary-pale:   #F5FFD4;
+
+    --bg-page:        #FAFAFA;
+    --bg-card:        #FFFFFF;
+    --cream:          #F7F6E9;
+
+    --fg:             #111111;
+    --fg-muted:       rgba(17,17,17,0.6);
+    --fg-faint:       rgba(17,17,17,0.4);
+
+    --line-soft:      rgba(17,17,17,0.05);
+    --line:           rgba(17,17,17,0.05);
+    --line-medium:    rgba(17,17,17,0.05);
+    --line-strong:    rgba(17,17,17,0.15);
+    --line-hover:     rgba(17,17,17,0.18);
+    --hover:          rgba(17,17,17,0.05);
+
+    --green:          #A5D500;
+    --green-text:     #4f8a00;
+    --orange:         #EC5212;
+    --red-light:      #FFD0D0;
+
+    --ease:           cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+
+    --shadow-card:     0 1px 3px rgba(0,0,0,0.06);
+    --shadow-modal:    0 8px 8px rgba(0,0,0,0.04), 0 20px 24px rgba(0,0,0,0.1);
+    --shadow-tooltip:  0 10px 12px rgba(0,0,0,0.12);
+  }
+
+  html,body{height:100%;margin:0;}
+  body{
+    font-family:'Karla', sans-serif;
+    font-size:14px;
+    color: var(--fg);
+    background: var(--bg-page);
+    overflow:hidden;
+  }
+
+  /* ──────────────────────────────────────────────
+     Faux app surface (gives context for the modal)
+     ────────────────────────────────────────────── */
+  .app{
+    position:absolute; inset:0;
+    display:flex;
+  }
+  .app-sidebar{
+    width:211px;
+    background:#fff;
+    border-right:1px solid var(--line);
+    padding:14px 12px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .logo-row{
+    display:flex;align-items:center;gap:8px;
+    padding: 6px 8px;
+  }
+  .logo-mark{
+    width:25px;height:26px;
+    background: var(--module-primary);
+    border-radius: 320px 320px 0 0;
+    position:relative;
+  }
+  .logo-mark::after{
+    content:'';
+    position:absolute; top:8px; left:50%;
+    width:4px;height:4px;border-radius:50%;
+    background:#111;
+    transform: translateX(-50%);
+  }
+  .logo-word{font-weight:500; letter-spacing:-0.005em;}
+
+  .tab-toggle{
+    display:flex;
+    background: rgba(17,17,17,0.02);
+    border-radius:8px;
+    padding:3px;
+    margin: 8px 0 4px;
+  }
+  .tab-toggle button{
+    flex:1; border:none; background:transparent;
+    font-family:'Karla', sans-serif; font-size:13px; font-weight:500;
+    padding:6px 8px; border-radius:6px; cursor:pointer; color: var(--fg-muted);
+  }
+  .tab-toggle button.on{
+    background: var(--module-primary-pale);
+    color: var(--fg);
+    border:1px solid var(--line-soft);
+  }
+
+  .side-cta{
+    display:flex; align-items:center; gap:6px;
+    background: var(--module-primary);
+    border:none; border-radius:8px;
+    padding: 8px 10px;
+    font-family:'Karla',sans-serif; font-size:13px; font-weight:500;
+    cursor:pointer;
+    color: var(--fg);
+  }
+
+  .side-section{
+    margin-top:6px;
+    font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color: var(--fg-muted);
+    padding: 8px 8px 4px;
+  }
+  .nav-item{
+    display:flex; align-items:center; gap:8px;
+    padding:7px 10px;
+    border-radius:8px;
+    font-size:13px;
+    color: var(--fg);
+    cursor:pointer;
+  }
+  .nav-item.active{
+    background: var(--module-primary);
+    font-weight:500;
+  }
+  .nav-item .favicon{
+    width:14px;height:14px;border-radius:50%; background:#E1E1E1; flex-shrink:0;
+  }
+
+  .app-main{
+    flex:1; padding: 24px 32px;
+    overflow:hidden;
+  }
+  .app-header{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom: 20px;
+  }
+  .breadcrumb{
+    display:flex; align-items:center; gap:8px;
+    font-size:13px; color: var(--fg-muted);
+  }
+  .breadcrumb strong{ color: var(--fg); font-weight:500;}
+  .ghost-content{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:16px;
+  }
+  .ghost-card{
+    background:#fff; border-radius:12px; height:96px;
+    border:1px solid var(--line-soft);
+  }
+
+  /* ──────────────────────────────────────────────
+     Backdrop + Modal
+     ────────────────────────────────────────────── */
+  .backdrop{
+    position:fixed; inset:0;
+    background: rgba(17,17,17,0.4);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    display:flex; align-items:center; justify-content:center;
+    z-index:100;
+    animation: backdrop-in .2s var(--ease);
+  }
+  @keyframes backdrop-in { from { opacity:0; } to { opacity:1; }}
+  @keyframes modal-in {
+    from { opacity:0; transform: translateY(8px) scale(.98);}
+    to   { opacity:1; transform: translateY(0)    scale(1);}
+  }
+
+  .modal{
+    width: 1080px;
+    max-height: calc(100vh - 64px);
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow-modal);
+    padding: 24px 0 12px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    animation: modal-in .25s var(--ease-out);
+  }
+
+  /* Header */
+  .m-head{
+    padding: 0 28px 18px;
+    display:flex; align-items:flex-start; justify-content:space-between; gap:16px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .m-title{
+    font-family:'Karla', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--fg);
+    margin:0;
+    display:flex; align-items:center; gap:10px;
+  }
+  .m-title .proj-chip{
+    display:inline-flex; align-items:center; gap:6px;
+    font-weight:500; font-size:13px; line-height:1;
+    background: var(--module-primary-pale);
+    color: var(--fg);
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-soft);
+  }
+  .m-title .proj-chip .favicon{
+    width:12px;height:12px;border-radius:50%;
+    background: linear-gradient(135deg, #10a37f, #0d8067);
+  }
+  .m-sub{
+    margin: 6px 0 0;
+    font-size:13px;
+    color: var(--fg-muted);
+  }
+  .m-head-right{
+    display:flex; align-items:center; gap:6px;
+  }
+  .iconbtn{
+    width:30px;height:30px;
+    border:none; background:transparent;
+    border-radius:8px;
+    display:inline-flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    color: var(--fg);
+    transition: background .15s var(--ease);
+  }
+  .iconbtn:hover{ background: var(--hover); }
+
+  /* Tabs (top-level, currently unused but kept for compatibility) */
+  .m-tabs{
+    display:flex;
+    padding: 0 28px;
+    border-bottom: 1px solid var(--line);
+    gap: 24px;
+    position:relative;
+  }
+  .m-tabs button{
+    border:none; background:transparent;
+    font-family:'Karla',sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg-muted);
+    padding: 14px 0 13px;
+    cursor:pointer;
+    position:relative;
+    transition: color .15s var(--ease);
+  }
+  .m-tabs button.on{ color: var(--fg); }
+  .m-tabs .indicator{
+    position:absolute;
+    left: 0;
+    bottom:-1px;
+    height: 2px;
+    background: var(--fg);
+    transition: transform .25s var(--ease), width .25s var(--ease);
+    pointer-events:none;
+  }
+
+  /* Inner module tabs (under score cards) */
+  .mod-tabs{
+    display:flex;
+    border-bottom: 1px solid var(--line);
+    gap: 28px;
+    padding: 0 2px;
+    position: relative;
+    margin: 4px 0 6px;
+  }
+  .mod-tabs button{
+    border:none; background:transparent;
+    font-family:'Karla', sans-serif;
+    font-size:14px; font-weight:500;
+    color: var(--fg-muted);
+    padding: 12px 0 11px;
+    cursor:pointer;
+    position: relative;
+    transition: color .15s var(--ease);
+  }
+  .mod-tabs button.on{ color: var(--fg); font-weight:600; }
+  .mod-tabs .indicator{
+    position:absolute;
+    left:0;
+    bottom:-1px;
+    height: 2px;
+    background: var(--fg);
+    transition: transform .25s var(--ease), width .25s var(--ease);
+    pointer-events:none;
+  }
+
+  /* Body */
+  .m-body{
+    flex:1;
+    display:grid;
+    grid-template-columns: 360px 1fr;
+    min-height: 0;
+    overflow:hidden;
+  }
+
+  /* ─── LEFT picker ─── */
+  .picker{
+    border-right: 1px solid var(--line-soft);
+    padding: 20px 24px;
+    display:flex; flex-direction:column;
+    gap: 14px;
+    min-height:0;
+    overflow:hidden;
+  }
+  .picker-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+  }
+  .picker-head h3{
+    font-family:'Karla',sans-serif;
+    font-size: 14px; font-weight: 600;
+    margin:0;
+    color: var(--fg);
+  }
+  .picker-head .count{
+    font-size:12px; color: var(--fg-muted);
+  }
+  .picker-head .count strong{
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  /* module pills (only visible in By Module mode) */
+  .module-pills{
+    display:none;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+  .by-module .module-pills{ display:grid; }
+  .by-module .picker-list-meta{ display:none; }
+
+  .mod-pill{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:8px;
+    padding: 8px 10px;
+    text-align:left;
+    cursor:pointer;
+    display:flex; flex-direction:column; gap:4px;
+    transition: border-color .15s var(--ease), background .15s var(--ease);
+    font-family:'Karla',sans-serif;
+  }
+  .mod-pill:hover{ border-color: var(--line-hover); }
+  .mod-pill.on{
+    background: var(--module-primary);
+    border-color: var(--fg);
+  }
+  .mod-pill .label{
+    font-size: 12px; font-weight: 500;
+    line-height:1.25;
+    color: var(--fg);
+  }
+  .mod-pill .delta{
+    font-family:'Karla', sans-serif;
+    font-size:11px;
+    color: var(--green-text);
+    font-weight:600;
+  }
+  .mod-pill.down .delta{ color: var(--orange); }
+
+  /* search */
+  .picker-search{
+    position:relative;
+  }
+  .picker-search input{
+    width:100%;
+    height:36px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:#fff;
+    padding: 0 12px 0 34px;
+    font-family:'Karla',sans-serif;
+    font-size:13px;
+    color: var(--fg);
+    outline:none;
+    transition: border-color .15s var(--ease);
+  }
+  .picker-search input:focus{ border-color: var(--fg); }
+  .picker-search .ico{
+    position:absolute; left:11px; top:50%; transform:translateY(-50%);
+    color: var(--fg-muted);
+  }
+
+  /* list */
+  .picker-list{
+    flex:1;
+    overflow-y:auto;
+    margin: 0 -8px;
+    padding: 0 8px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .picker-list::-webkit-scrollbar{ width:6px; }
+  .picker-list::-webkit-scrollbar-thumb{ background: var(--line); border-radius:3px;}
+
+  .v-row{
+    display:flex; align-items:center; gap:10px;
+    padding: 10px 12px;
+    border-radius:10px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition: background .15s var(--ease), border-color .15s var(--ease);
+  }
+  .v-row:hover{ background: var(--hover); }
+  .v-row.sel{
+    background: var(--module-primary-bg);
+    border-color: var(--fg);
+  }
+  .v-row.disabled{
+    opacity:.5; cursor: not-allowed;
+  }
+  .v-row.disabled:hover{ background: transparent; }
+
+  .ckbox{
+    width:18px;height:18px;
+    border-radius:4px;
+    border:1px solid var(--fg);
+    background:#fff;
+    flex-shrink:0;
+    display:inline-flex;align-items:center;justify-content:center;
+    transition: background .15s, border-color .15s;
+  }
+  .v-row:hover .ckbox{ background: var(--module-primary); }
+  .v-row.sel .ckbox{
+    background: var(--module-primary);
+    border-color: var(--fg);
+    color: var(--fg);
+  }
+  .ckbox svg{ width:11px;height:11px; display:none; }
+  .v-row.sel .ckbox svg{ display:block; }
+
+  .v-meta{
+    flex:1; min-width:0;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .v-name{
+    font-family:'Karla', sans-serif;
+    font-size: 13px;
+    font-weight:600;
+    color: var(--fg);
+    letter-spacing:-0.005em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .v-name .tag{
+    font-family:'Karla',sans-serif;
+    font-size:10px; font-weight:500;
+    line-height:1;
+    padding: 3px 7px;
+    border-radius:999px;
+    background: var(--module-primary);
+    color: var(--fg);
+  }
+  .v-name .tag.baseline{
+    background: var(--fg); color:#fff;
+  }
+  .v-sub{
+    font-size:11.5px; color: var(--fg-muted);
+    display:flex; align-items:center; gap:8px;
+  }
+  .v-sub .dot{
+    width:3px;height:3px;border-radius:50%;background: rgba(17,17,17,0.3);
+  }
+  .v-score{
+    font-family:'Karla', sans-serif;
+    font-size: 14px; font-weight:600;
+    color: var(--fg);
+    padding-left: 8px;
+    text-align:right;
+  }
+  .v-score .δ{
+    display:block;
+    font-size:10px; font-weight:500;
+    color: var(--green-text);
+    text-align:right;
+    margin-top:1px;
+  }
+  .v-score .δ.down{ color: var(--orange); }
+
+  /* ─── RIGHT preview ─── */
+  .preview{
+    padding: 20px 28px;
+    overflow-y:auto;
+    display:flex; flex-direction:column; gap: 18px;
+    min-height:0;
+  }
+  .preview::-webkit-scrollbar{ width:6px; }
+  .preview::-webkit-scrollbar-thumb{ background: var(--line); border-radius:3px;}
+
+  /* comparing chip strip */
+  .comparing{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  }
+  .comparing .lbl{
+    font-family:'Karla', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color: var(--fg-muted);
+    margin-right:2px;
+  }
+  .vchip{
+    display:inline-flex; align-items:center; gap:7px;
+    height: 28px;
+    padding: 0 4px 0 10px;
+    background:#fff;
+    border:1px solid var(--line-medium);
+    border-radius: 8px;
+    font-family:'Karla', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color: var(--fg);
+  }
+  .vchip .role{
+    font-family:'Karla',sans-serif;
+    font-size:10px; font-weight:500;
+    line-height:1;
+    padding: 3px 7px;
+    border-radius:999px;
+  }
+  .vchip.baseline { border-color: var(--fg); }
+  .vchip.baseline .role { background: var(--fg); color:#fff; }
+  .vchip.target .role { background: var(--module-primary-bg); color: var(--fg); }
+  .vchip.latest .role { background: var(--module-primary); color: var(--fg); }
+
+  /* non-baseline chips: clickable, tooltip via JS-managed fixed element */
+  .vchip:not(.baseline){
+    position: relative;
+    cursor: pointer;
+  }
+  .vchip:not(.baseline):hover{ border-color: var(--fg); }
+
+  /* JS-positioned chip tooltip (escapes modal overflow:hidden) */
+  .chip-tooltip{
+    position: fixed;
+    top: 0; left: 0;
+    background: var(--fg);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family:'Karla', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 10px));
+    transition: opacity .15s var(--ease), transform .15s var(--ease);
+    box-shadow: var(--shadow-tooltip);
+    z-index: 9999;
+  }
+  .chip-tooltip.on{ opacity: 1; transform: translate(-50%, calc(-100% - 6px)); }
+  .chip-tooltip::after{
+    content:'';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--fg);
+  }
+  .vchip .x{
+    width: 20px; height:20px; border-radius:6px;
+    background: transparent;
+    border:none;
+    display:inline-flex; align-items:center; justify-content:center;
+    cursor:pointer; color: var(--fg-muted);
+    transition: background .15s var(--ease);
+  }
+  .vchip .x:hover{ background: var(--hover); color: var(--fg); }
+
+  .module-active{
+    margin-left:auto;
+    display:none;
+    align-items:center; gap:6px;
+    font-size:12px; color: var(--fg-muted);
+  }
+  .by-module .module-active{ display:inline-flex; }
+  .module-active strong{
+    background: var(--module-primary);
+    color: var(--fg);
+    padding: 2px 9px;
+    border-radius:999px;
+    font-family:'Karla',sans-serif;
+    font-weight:500;
+    font-size:11px;
+  }
+
+  /* score row */
+  .scores{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .score-card{
+    background: rgba(17,17,17,0.02);
+    border-radius:12px;
+    border:1px solid var(--line-soft);
+    padding: 14px 16px 12px;
+    display:flex; flex-direction:column; gap:6px;
+    position: relative;
+    overflow:hidden;
+  }
+  .score-card.latest{
+    border-color: var(--module-primary);
+  }
+  .score-card .label{
+    font-family:'Karla', sans-serif;
+    font-size:12px;
+    font-weight:500;
+    color: var(--fg-muted);
+    display:flex; align-items:center; gap:6px;
+  }
+  .score-card .label .tag{
+    font-family:'Karla',sans-serif;
+    font-size:9.5px; font-weight:600;
+    text-transform:none;
+    letter-spacing:0;
+    padding: 1px 6px; border-radius:999px;
+    background: var(--fg); color:#fff;
+  }
+  .score-card.latest .label .tag{
+    background: var(--module-primary); color: var(--fg);
+  }
+  .score-card .num{
+    font-family:'Karla',sans-serif;
+    font-size: 36px;
+    font-weight:600;
+    line-height:1;
+    letter-spacing:-0.015em;
+    color: var(--fg);
+    display:flex; align-items:baseline; gap:4px;
+  }
+  .score-card .num small{
+    font-size:13px; font-weight:500; color: var(--fg-muted);
+  }
+  .score-card .delta{
+    font-family:'Karla', sans-serif;
+    font-size:12px;
+    color: var(--fg-muted);
+    display:flex; align-items:center; gap:6px;
+  }
+
+  /* Up / Down delta pill — used in score cards + platform jumps */
+  .delta-pill{
+    display:inline-flex; align-items:center; gap:3px;
+    height: 20px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-family:'Karla', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1;
+  }
+  .delta-pill.up { background: rgba(195, 240, 41, 0.50); }   /* #C3F029 @ 50% */
+  .delta-pill.dn { background: rgba(236, 82, 18, 0.44); }    /* #EC5212 @ 44% */
+  .delta-pill.zero { background: rgba(17,17,17,0.05); color: var(--fg-muted); }
+
+  /* charts/cards header */
+  .card{
+    background:#fff;
+    border-radius:12px;
+    border:1px solid var(--line-soft);
+    padding: 16px 18px;
+  }
+  .card-head{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom: 10px;
+  }
+  .card-head h4{
+    font-family:'Karla',sans-serif;
+    font-size:14px; font-weight:600;
+    margin:0;
+    color: var(--fg);
+    display:flex; align-items:center; gap:8px;
+  }
+  .card-head .meta{
+    font-family:'Karla', sans-serif;
+    font-size:12px;
+    font-weight:400;
+    color: var(--fg-muted);
+  }
+  .card-head .legend{
+    display:flex; align-items:center; gap:10px;
+  }
+  .leg{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:11px; color: var(--fg-muted);
+    font-family:'Karla',sans-serif;
+  }
+  .leg::before{
+    content:''; display:inline-block;
+    width:9px;height:9px;border-radius:50%;
+    background: #92BC01;
+    box-shadow: inset 0 0 0 1px var(--fg);
+    flex-shrink:0;
+  }
+  .leg.mid::before{ background: #A5D500; }
+  .leg.now::before{ background: #CFFF29; }
+
+  /* trend chart */
+  .trend-card{
+    position: relative;
+    transition: background-color .25s var(--ease);
+  }
+  /* module-themed trend bg (active inner tab) */
+  .trend-card.theme-ai    { background: rgba(195, 240, 41, 0.06); }
+  .trend-card.theme-comp  { background: rgba(255, 226, 83, 0.10); }
+  .trend-card.theme-strat { background: rgba(236, 82, 18, 0.05); }
+
+  .trend{
+    display:grid;
+    grid-template-columns: 180px 1fr;
+    gap: 20px;
+    align-items:center;
+  }
+  .trend .big{
+    font-family:'Karla',sans-serif;
+    font-size: 48px;
+    font-weight:600;
+    line-height: .95;
+    color: var(--fg);
+    letter-spacing:-0.02em;
+    display:flex; align-items:baseline; gap: 6px;
+  }
+  .trend .big small{
+    font-family:'Karla',sans-serif;
+    font-size:12px; font-weight:500; color: var(--fg-muted);
+    letter-spacing:0;
+  }
+  .trend .sub-delta{
+    margin-top: 6px;
+    font-size:12px; color: var(--fg-muted);
+  }
+  .trend .sub-delta strong{
+    color: var(--green-text);
+    font-family:'Karla', sans-serif;
+    font-weight:700;
+  }
+  .trend .sub-delta.down strong{ color: var(--orange); }
+
+  /* trend chart: drop the stretched viewBox — use actual rendered width to keep circles round */
+  .trend-svg{ width:100%; height:130px; display:block; }
+
+  /* platform bars */
+  .platforms{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* (Add-version button removed — picker on left already handles version selection) */
+
+  /* MODULES pill on platform breakdown header */
+  .modules-pill{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family:'Karla', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 3px 9px 3px 7px;
+    border-radius: 999px;
+    background: var(--fg);
+    color: #fff;
+    margin-left: 6px;
+  }
+  .modules-pill::before{
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--module-primary);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.6);
+  }
+  .plat{
+    background:#fff;
+    border-radius:12px;
+    border:1px solid var(--line-soft);
+    padding: 14px 16px 12px;
+  }
+  .plat-head{
+    display:flex; align-items:center; gap:8px;
+    margin-bottom: 10px;
+  }
+  .plat-foot{
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--line);
+    font-family:'Karla', sans-serif;
+    font-size: 12px;
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .plat-foot .plat-jump{
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .plat-ico{
+    width:20px;height:20px; border-radius:6px;
+    display:inline-flex; align-items:center;justify-content:center;
+    color:#fff; flex-shrink:0;
+  }
+  .plat-ico.openai{ background:#10a37f;}
+  .plat-ico.claude{ background:#d97757;}
+  .plat-ico.pplx{ background:#1e4d52;}
+  .plat-ico.gemini{ background:#4285f4;}
+  /* Strategy Review dimensions — neutral dark backgrounds */
+  .plat-ico.ans,
+  .plat-ico.web,
+  .plat-ico.struct,
+  .plat-ico.crawl{ background: var(--fg); color: var(--module-primary); }
+  .plat-name{
+    font-size:13px; font-weight:600; color: var(--fg);
+    flex:1;
+  }
+  .plat-jump{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Karla', sans-serif;
+    font-size:12px;
+    color: var(--fg-muted);
+    font-weight:500;
+  }
+
+  .bar-row{
+    display:grid;
+    grid-template-columns: 40px 1fr 36px;
+    align-items:center; gap:10px;
+    padding: 4px 0;
+  }
+  .bar-row .lbl{
+    font-family:'Karla', sans-serif;
+    font-size:11.5px;
+    font-weight:500;
+    color: var(--fg-muted);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  /* version indicator dot — explicit fill from green palette + #111 stroke (always) */
+  .bar-row .lbl::before{
+    content:'';
+    width:7px; height:7px; border-radius:50%;
+    background: #92BC01;
+    box-shadow: inset 0 0 0 1px var(--fg);
+    flex-shrink:0;
+  }
+  .bar-row.v1 .lbl::before{ background: #92BC01; }
+  .bar-row.v2 .lbl::before{ background: #A5D500; }
+  .bar-row.v3 .lbl::before{ background: #CFFF29; }
+  .bar-track{
+    height: 7px;
+    background: rgba(17,17,17,0.05);
+    border-radius:4px;
+    overflow:hidden;
+    position:relative;
+  }
+  .bar-fill{
+    display: block;
+    height:100%;
+    background: var(--module-primary);
+    border-radius:4px;
+    width:0;
+    transition: width .6s var(--ease-out);
+  }
+  /* bar fills — explicit colors per row (match dot color) */
+  .bar-row.v1 .bar-fill{ background: #92BC01; opacity:1; }
+  .bar-row.v2 .bar-fill{ background: #A5D500; opacity:1; }
+  .bar-row.v3 .bar-fill{ background: #CFFF29; opacity:1; }
+  .bar-row .val{
+    font-family:'Karla', sans-serif;
+    font-size:12px; font-weight:600; color: var(--fg);
+    text-align:right;
+  }
+  .bar-row .val.zero{ color: var(--orange); }
+
+  /* what changed */
+  .changed-card{
+    background: var(--cream);
+    border-radius:12px;
+    border:1px solid var(--line-soft);
+    padding: 16px 18px;
+  }
+  .changed-card .card-head h4 svg{ color: var(--fg); }
+  .changed-list{
+    display:flex; flex-direction:column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .changed-item{
+    display:flex; align-items:flex-start; gap:10px;
+    font-size: 13px;
+    color: var(--fg);
+    line-height: 1.5;
+  }
+  .changed-item .mark{
+    flex-shrink:0;
+    margin-top: 5px;
+    width:6px;height:6px;border-radius:50%;
+    background: var(--green);
+  }
+  .changed-item.down .mark{ background: var(--orange); }
+  .changed-item b{
+    font-weight:600;
+  }
+  .changed-item .pill{
+    display:inline-block;
+    margin-left: 4px;
+    padding: 0 6px;
+    background: rgba(17,17,17,0.05);
+    border-radius:4px;
+    font-family:'Karla', sans-serif;
+    font-size:11.5px;
+    font-weight:600;
+    color: var(--fg);
+  }
+  .changed-item .pill.up{ background: var(--module-primary); }
+  .changed-item .pill.dn{ background: var(--red-light); }
+
+  /* Footer */
+  .m-foot{
+    border-top: 1px solid var(--line-soft);
+    padding: 14px 28px 8px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap: 12px;
+  }
+  .foot-hint{
+    font-size: 12px; color: var(--fg-muted);
+    display:flex; align-items:center; gap:8px;
+  }
+  .foot-hint kbd{
+    display:inline-flex; align-items:center;
+    height:18px; padding: 0 5px;
+    border:1px solid var(--line-medium);
+    background:#fff;
+    border-radius:4px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    color: var(--fg);
+  }
+  .foot-actions{ display:flex; gap:8px; }
+  .btn{
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 8px;
+    font-family:'Karla',sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor:pointer;
+    border:none;
+    display:inline-flex; align-items:center; gap:6px;
+    transition: background .15s var(--ease), border-color .15s var(--ease), transform .12s var(--ease);
+  }
+  .btn:active{ transform: scale(.98); }
+  .btn-secondary{
+    background:#fff;
+    color: var(--fg);
+    border:1px solid var(--line);
+  }
+  .btn-secondary:hover{ background: rgba(17,17,17,0.04); border-color: var(--line-hover); }
+  .btn-primary{
+    background: var(--module-primary);
+    color: var(--fg);
+  }
+  .btn-primary:hover{ background: var(--module-primary-hover); }
+  .btn-ghost{
+    background:transparent; color: var(--fg);
+  }
+  .btn-ghost:hover{ background: var(--hover); }
+
+  /* Toast notification (bottom-center) */
+  .toast{
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translate(-50%, 16px);
+    background: var(--fg);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-family:'Karla', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    box-shadow: var(--shadow-tooltip);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s var(--ease), transform .25s var(--ease-out);
+    z-index: 10000;
+  }
+  .toast.on{ opacity: 1; transform: translate(-50%, 0); }
+  .toast svg{ flex-shrink: 0; }
+  .toast .toast-dot{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--module-primary);
+  }
+
+  /* Tooltip (data point hover) */
+  .pt-tip{
+    position:absolute;
+    transform: translate(-50%, calc(-100% - 8px));
+    background: var(--fg);
+    color:#fff;
+    padding: 8px 12px;
+    border-radius:8px;
+    font-size: 13px;
+    line-height:1.3;
+    box-shadow: var(--shadow-tooltip);
+    pointer-events:none;
+    opacity:0;
+    transition: opacity .15s var(--ease);
+    white-space: nowrap;
+  }
+  .pt-tip.on{ opacity:1; }
+  .pt-tip .v{
+    font-family:'Karla', sans-serif;
+    font-weight: 700;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Faux dApp background to contextualize the modal -->
+<div class="app" aria-hidden="true">
+  <aside class="app-sidebar">
+    <div class="logo-row">
+      <span class="logo-mark"></span>
+      <span class="logo-word">aisee</span>
+    </div>
+    <div class="tab-toggle">
+      <button class="on">Analysis</button>
+      <button>Post Agent</button>
+    </div>
+    <button class="side-cta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      New Analysis
+    </button>
+    <div class="side-section">Projects</div>
+    <div class="nav-item active"><span class="favicon" style="background:#10a37f;"></span>aicell.io</div>
+    <div class="nav-item"><span class="favicon" style="background:#d97757;"></span>opensea.app</div>
+    <div class="nav-item"><span class="favicon" style="background:#1e4d52;"></span>linear.app</div>
+    <div class="nav-item"><span class="favicon" style="background:#4285f4;"></span>vercel.com</div>
+  </aside>
+  <main class="app-main">
+    <div class="app-header">
+      <div class="breadcrumb">Projects · <strong>aicell.io</strong> · Past Reports</div>
+    </div>
+    <div class="ghost-content">
+      <div class="ghost-card"></div>
+      <div class="ghost-card"></div>
+      <div class="ghost-card"></div>
+      <div class="ghost-card"></div>
+      <div class="ghost-card"></div>
+      <div class="ghost-card"></div>
+    </div>
+  </main>
+</div>
+
+<!-- ─────────── BACKDROP + MODAL ─────────── -->
+<div class="backdrop" id="backdrop">
+  <section class="modal full-report" role="dialog" aria-labelledby="dialog-title" id="modal">
+
+    <!-- HEADER -->
+    <header class="m-head" style="padding: 0px 24px 16px 28px">
+      <div>
+        <h2 class="m-title" id="dialog-title">
+          Report comparison
+        </h2>
+        <p class="m-sub" id="dialog-sub">aicell · <strong id="sub-count">3</strong> versions · <strong id="sub-module">Full Report</strong></p>
+      </div>
+      <div class="m-head-right">
+        <button class="iconbtn" aria-label="Close" id="btn-close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6 L18 18 M18 6 L6 18"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- BODY -->
+    <div class="m-body">
+
+      <!-- LEFT picker -->
+      <aside class="picker">
+        <div class="picker-head">
+          <h3>Scans</h3>
+          <span class="count"><strong id="sel-count">3</strong>/4 selected</span>
+        </div>
+
+        <div class="picker-search">
+          <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="text" placeholder="Search scans by version or date" />
+        </div>
+
+        <div class="picker-list" id="picker-list">
+          <!-- rows generated by JS -->
+        </div>
+
+        <div class="picker-list-meta" style="font-size:11.5px; color: var(--fg-muted); padding-top:4px; border-top: 1px dashed var(--line);">
+          Showing 7 scans from the past 30 days.
+        </div>
+      </aside>
+
+      <!-- RIGHT preview -->
+      <div class="preview" id="preview">
+
+        <!-- comparing chips -->
+        <div class="comparing" id="comparing-row">
+          <span class="lbl">Comparing</span>
+          <!-- chips populated by JS -->
+        </div>
+
+        <!-- score row -->
+        <div class="scores" id="scores"></div>
+
+        <!-- inner module tabs (AI Presence / Competitor Landscape / Strategy Review) -->
+        <div class="mod-tabs" role="tablist" id="mod-tabs">
+          <button role="tab" class="on" data-mod="ai">AI Presence</button>
+          <button role="tab" data-mod="comp">Competitor Landscape</button>
+          <button role="tab" data-mod="strat">Strategy Review</button>
+          <span class="indicator" id="mod-tab-indicator"></span>
+        </div>
+
+        <!-- score trend chart (theme bg per module) -->
+        <div class="card trend-card theme-ai" id="trend-card">
+          <div class="card-head">
+            <h4>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+              Current score — <span id="trend-module-label">AI Presence</span>
+              <span class="meta" id="trend-meta">3 scans · 05/07 – 05/15</span>
+            </h4>
+            <div class="legend">
+              <span class="leg">Baseline</span>
+              <span class="leg mid">Target</span>
+              <span class="leg now">Latest</span>
+            </div>
+          </div>
+          <div class="trend">
+            <div>
+              <div class="big" id="trend-big">88.2 <small>V4.1</small></div>
+              <div class="sub-delta" id="trend-sub"><span>↑ <strong>65.9</strong> from V1.1 baseline</span></div>
+            </div>
+            <svg class="trend-svg" viewBox="0 0 600 130" preserveAspectRatio="none" id="trend-svg"></svg>
+          </div>
+          <div class="pt-tip" id="pt-tip"></div>
+        </div>
+
+        <!-- platforms -->
+        <div>
+          <div class="card-head" style="margin-bottom:8px; padding: 0 2px;">
+            <h4>Platform breakdown <span class="modules-pill" id="modules-pill-tag">Modules</span></h4>
+            <div class="legend">
+              <span class="leg" id="leg-v1">V1.1</span>
+              <span class="leg mid" id="leg-v2">V2.1</span>
+              <span class="leg now" id="leg-v3">V4.1</span>
+            </div>
+          </div>
+          <div class="platforms" id="platforms"></div>
+        </div>
+
+        <!-- what changed -->
+        <div class="changed-card">
+          <div class="card-head">
+            <h4>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 1-4.5 4.4 1 6.6L12 17l-5.5 3 1-6.6L3 9l6-1z"/></svg>
+              What changed
+              <span class="meta">auto-summary · V1.1 → V4.1</span>
+            </h4>
+          </div>
+          <div class="changed-list" id="changed-list"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="m-foot">
+      <button class="btn btn-ghost" id="btn-reset">Reset</button>
+      <div class="foot-actions">
+        <button class="btn btn-secondary" id="btn-cancel">Close</button>
+        <button class="btn btn-primary" id="btn-export">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export PDF
+        </button>
+      </div>
+    </footer>
+
+  </section>
+</div>
+
+<!-- JS-managed tooltip for chip hover (escapes modal overflow:hidden) -->
+<div class="chip-tooltip" id="chip-tooltip" role="tooltip">Set as baseline</div>
+
+<!-- Toast notification (export feedback etc.) -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-dot"></span>
+  <span id="toast-text">Saved</span>
+</div>
+
+<script>
+// ───────────────────────── DATA ─────────────────────────
+
+const SCANS = [
+  { id:'v40', name:'V4.0', date:'05/08/2026', prompts:24, latest:true,
+    scores:{ full:88.2, ai:78.0, comp:77.3, strat:45 } },
+  { id:'v30', name:'V3.0', date:'05/08/2026', prompts:24,
+    scores:{ full:72.8, ai:71.2, comp:64.0, strat:38.5 } },
+  { id:'v20', name:'V2.0', date:'05/07/2026', prompts:24,
+    scores:{ full:44.2, ai:37.9, comp:44.2, strat:32.7 } },
+  { id:'v15', name:'V1.5', date:'05/08/2026', prompts:18,
+    scores:{ full:32.0, ai:31.1, comp:33.6, strat:28.2 } },
+  { id:'v12', name:'V1.2', date:'05/07/2026', prompts:18,
+    scores:{ full:25.0, ai:25.6, comp:25.4, strat:24.9 } },
+  { id:'v10', name:'V1.0', date:'05/07/2026', prompts:18,
+    scores:{ full:22.3, ai:24.3, comp:22.3, strat:22.3 } },
+  { id:'v05', name:'V0.5', date:'05/06/2026', prompts:18,
+    scores:{ full:18.8, ai:20.0, comp:18.0, strat:16.2 } },
+];
+
+const MODULES = {
+  ai:    { label:'AI Presence',          tone:'#CFFF29', toneSoft:'rgba(195,240,41,0.45)', themeClass:'theme-ai' },
+  comp:  { label:'Competitor Landscape', tone:'#FFE253', toneSoft:'rgba(255,226,83,0.55)', themeClass:'theme-comp' },
+  strat: { label:'Strategy Review',      tone:'#EC5212', toneSoft:'rgba(236,82,18,0.30)',  themeClass:'theme-strat' },
+};
+
+// Platforms per module — AI/Comp share the 4 AI providers, Strategy uses 4 evaluation dimensions
+const PLATFORMS_BY_MODULE = {
+  ai: [
+    { id:'openai', name:'ChatGPT',           factor:1.08 },
+    { id:'claude', name:'Claude',            factor:1.12 },
+    { id:'pplx',   name:'Perplexity (Sonar)', factor:0.95 },
+    { id:'gemini', name:'Gemini',            factor:0 },
+  ],
+  comp: [
+    { id:'openai', name:'ChatGPT',           factor:1.00 },
+    { id:'claude', name:'Claude',            factor:1.05 },
+    { id:'pplx',   name:'Perplexity (Sonar)', factor:0.92 },
+    { id:'gemini', name:'Gemini',            factor:0 },
+  ],
+  strat: [
+    { id:'ans',    name:'Answerability',     factor:1.05 },
+    { id:'web',    name:'Web Presence',      factor:0.98 },
+    { id:'struct', name:'Structured Data',   factor:1.02 },
+    { id:'crawl',  name:'AI Crawler Access', factor:0.85 },
+  ],
+};
+
+const CHANGED = [
+  { dir:'up',   text:'<b>+13 new citations</b> from ChatGPT after publishing the API reference page.', pill:'+13', pillCls:'up' },
+  { dir:'up',   text:'AI Presence score climbed from <b>24.3 → 78.0</b> across V1.1 → V4.1.',           pill:'+53.7', pillCls:'up' },
+  { dir:'down', text:'Gemini platform still returns <b>0 mentions</b>. Consider adding structured FAQ schema.', pill:'0', pillCls:'dn' },
+  { dir:'up',   text:'3 of 5 competitor prompts moved aicell.io into top-3 ranking.', pill:'top-3', pillCls:'up' },
+];
+
+// ───────────────────────── STATE ─────────────────────────
+
+let state = {
+  module: 'ai',
+  selected: ['v10', 'v20', 'v40'],
+  baselineId: null,
+};
+
+function activeMetricKey(){ return state.module; }
+function getSelectedSorted(){
+  return state.selected
+    .map(id => SCANS.find(s => s.id === id))
+    .sort((a,b) => SCANS.indexOf(b) - SCANS.indexOf(a));
+}
+function getBaselineId(){
+  if (state.baselineId && state.selected.includes(state.baselineId)) {
+    return state.baselineId;
+  }
+  return getSelectedSorted()[0]?.id;
+}
+function getBaselineScan(){
+  return SCANS.find(s => s.id === getBaselineId());
+}
+
+// ───────────────────────── RENDER: picker list ─────────────────────────
+
+function renderPickerList(){
+  const list = document.getElementById('picker-list');
+  const metric = activeMetricKey();
+  const baselineId = getBaselineId();
+  const baseScore = getBaselineScan()?.scores[metric];
+
+  list.innerHTML = SCANS.map(s => {
+    const sel = state.selected.includes(s.id);
+    const score = s.scores[metric];
+    const isBaseline = sel && s.id === baselineId;
+
+    // delta vs explicit baseline
+    let deltaHtml = '';
+    if(sel && !isBaseline){
+      const d = score - baseScore;
+      deltaHtml = `<span class="δ ${d<0?'down':''}">${d>0?'↑':'↓'} ${Math.abs(d).toFixed(1)}</span>`;
+    } else if(isBaseline){
+      deltaHtml = `<span class="δ" style="color:var(--fg-muted);font-weight:500;">baseline</span>`;
+    }
+
+    return `
+      <div class="v-row ${sel?'sel':''}" data-id="${s.id}" tabindex="0">
+        <span class="ckbox">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5,6.5 5,9 9.5,3.5"/></svg>
+        </span>
+        <span class="v-meta">
+          <span class="v-name">
+            ${s.name}
+            ${s.latest ? '<span class="tag">Latest</span>' : ''}
+            ${isBaseline ? '<span class="tag baseline">Baseline</span>' : ''}
+          </span>
+          <span class="v-sub">${s.date} <span class="dot"></span> ${s.prompts} prompts</span>
+        </span>
+        <span class="v-score">
+          ${score.toFixed(1)}
+          ${deltaHtml}
+        </span>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('sel-count').textContent = state.selected.length;
+
+  list.querySelectorAll('.v-row').forEach(row=>{
+    row.addEventListener('click', ()=>{
+      const id = row.dataset.id;
+      if(state.selected.includes(id)){
+        if(state.selected.length <= 2) return; // min 2
+        state.selected = state.selected.filter(x => x !== id);
+        // if we just removed the explicit baseline, reset to auto
+        if(state.baselineId === id) state.baselineId = null;
+      } else {
+        if(state.selected.length >= 4) return; // max 4
+        state.selected.push(id);
+      }
+      renderAll();
+    });
+  });
+}
+
+// ───────────────────────── RENDER: comparing chips ─────────────────────────
+
+function renderComparing(){
+  const row = document.getElementById('comparing-row');
+  const sorted = getSelectedSorted();
+  const baselineId = getBaselineId();
+
+  // remove old chips
+  [...row.querySelectorAll('.vchip')].forEach(c => c.remove());
+
+  sorted.forEach((s) => {
+    const isBase = s.id === baselineId;
+    const isLatest = s.latest;
+    const cls = isBase ? 'baseline' : (isLatest ? 'latest' : 'target');
+    const roleLabel = isBase ? '— baseline' : (isLatest ? 'latest' : 'target');
+
+    const chip = document.createElement('span');
+    chip.className = 'vchip ' + cls;
+    chip.dataset.id = s.id;
+    chip.innerHTML = `
+      ${s.name}
+      <span class="role">${roleLabel}</span>
+      <span class="date-mini" style="color:var(--fg-muted);font-size:11px;font-weight:500;margin-right:2px;">${s.date.slice(0,5)}</span>
+      <button class="x" data-id="${s.id}" aria-label="Remove ${s.name}">
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3l6 6M9 3l-6 6"/></svg>
+      </button>
+    `;
+
+    if (!isBase) {
+      chip.addEventListener('click', e => {
+        if (e.target.closest('.x')) return;
+        state.baselineId = s.id;
+        renderAll();
+      });
+    }
+
+    row.appendChild(chip);
+  });
+
+  row.querySelectorAll('.x').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      const id = btn.dataset.id;
+      if(state.selected.length <= 2) return;
+      state.selected = state.selected.filter(x => x !== id);
+      if(state.baselineId === id) state.baselineId = null;
+      renderAll();
+    });
+  });
+
+  document.getElementById('sub-count').textContent = state.selected.length;
+  document.getElementById('sub-module').textContent = 'Full Report';
+}
+
+// ───────────────────────── RENDER: score cards ─────────────────────────
+
+function renderScores(){
+  const el = document.getElementById('scores');
+  const sorted = getSelectedSorted();
+  // Score cards always show Full Report totals (module tabs only affect the chart + platforms below)
+  const metric = 'full';
+  const baselineScan = getBaselineScan();
+  const baselineId = baselineScan?.id;
+  const baseScore = baselineScan?.scores[metric];
+
+  const cards = sorted.slice(0,3).map((s) => {
+    const sc = s.scores[metric];
+    const isBase = s.id === baselineId;
+    const cls = s.latest && !isBase ? 'latest' : (isBase ? 'baseline' : '');
+    const delta = sc - baseScore;
+    const deltaHtml = isBase
+      ? `<div class="delta">baseline</div>`
+      : `<div class="delta"><span class="delta-pill ${delta>=0?'up':'dn'}">${delta>=0?'↑':'↓'} ${Math.abs(delta).toFixed(1)}</span> vs ${baselineScan.name}</div>`;
+
+    return `
+      <div class="score-card ${cls}">
+        <div class="label">${s.name} · ${s.date.slice(0,5)}</div>
+        <div class="num">${sc.toFixed(1)}</div>
+        ${deltaHtml}
+      </div>
+    `;
+  });
+
+  // pad with placeholder slots so layout stays 3-up when only 2 selected
+  while(cards.length < 3){
+    cards.push(`
+      <div class="score-card" style="background:transparent;border:1px dashed var(--line-medium);">
+        <div class="label" style="color:var(--fg-faint)">add another scan</div>
+        <div class="num" style="color:var(--fg-faint);font-size:28px;">—</div>
+        <div class="delta">&nbsp;</div>
+      </div>
+    `);
+  }
+  el.innerHTML = cards.join('');
+}
+
+// ───────────────────────── RENDER: trend chart ─────────────────────────
+
+function renderTrend(){
+  const sorted = getSelectedSorted();
+  const metric = activeMetricKey();
+  const mod = MODULES[state.module];
+  const svg = document.getElementById('trend-svg');
+
+  // apply module theme bg on the card
+  const card = document.getElementById('trend-card');
+  card.classList.remove('theme-ai', 'theme-comp', 'theme-strat');
+  card.classList.add(mod.themeClass);
+
+  // module label
+  document.getElementById('trend-module-label').textContent = mod.label;
+
+  // Measure actual rendered width to set viewBox — prevents circle deformation.
+  const measuredW = Math.max(320, svg.clientWidth || svg.parentElement.clientWidth || 600);
+  const W = measuredW, H = 130;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+  const PAD_L = 30, PAD_R = 30, PAD_T = 14, PAD_B = 28;
+  const innerW = W - PAD_L - PAD_R;
+  const innerH = H - PAD_T - PAD_B;
+
+  const values = sorted.map(s => s.scores[metric]);
+  const max = 100, min = 0;
+
+  const xs = sorted.map((_,i) => sorted.length===1 ? PAD_L + innerW/2 : PAD_L + (i/(sorted.length-1))*innerW);
+  const ys = values.map(v => PAD_T + (1 - (v-min)/(max-min)) * innerH);
+
+  let gridSvg = '';
+  [0, 50, 100].forEach(v => {
+    const y = PAD_T + (1 - v/100) * innerH;
+    gridSvg += `<line x1="${PAD_L}" y1="${y}" x2="${W-PAD_R}" y2="${y}" stroke="#ECECEC" stroke-width="1"/>`;
+    gridSvg += `<text x="${PAD_L-8}" y="${y+3}" text-anchor="end" font-family="Karla, sans-serif" font-size="10" fill="rgba(17,17,17,0.45)">${v}</text>`;
+  });
+
+  const linePath = xs.map((x,i) => (i===0?'M':'L') + x + ' ' + ys[i]).join(' ');
+  const areaPath = linePath + ` L ${xs[xs.length-1]} ${PAD_T+innerH} L ${xs[0]} ${PAD_T+innerH} Z`;
+
+  const labels = sorted.map((s,i) => `
+    <g>
+      <text x="${xs[i]}" y="${H-10}" text-anchor="middle" font-family="Karla, sans-serif" font-size="11" font-weight="500" fill="rgba(17,17,17,0.55)">${s.name}</text>
+      <text x="${xs[i]}" y="${ys[i]-10}" text-anchor="middle" font-family="Karla, sans-serif" font-size="11" font-weight="700" fill="#111">${values[i].toFixed(1)}</text>
+    </g>
+  `).join('');
+
+  const pts = sorted.map((s,i)=>{
+    const isLast = i===sorted.length-1;
+    return `<circle class="trend-pt" data-i="${i}" cx="${xs[i]}" cy="${ys[i]}" r="${isLast?5.5:4.5}" fill="${mod.tone}" stroke="#111" stroke-width="1.5" style="cursor:pointer; transition: r .15s var(--ease);"/>`;
+  }).join('');
+
+  const gradId = 'g-area-' + state.module;
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="${gradId}" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="${mod.tone}" stop-opacity="0.45"/>
+        <stop offset="100%" stop-color="${mod.tone}" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    ${gridSvg}
+    <path d="${areaPath}" fill="url(#${gradId})"/>
+    <path d="${linePath}" fill="none" stroke="${mod.tone}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+          stroke-dasharray="2000" stroke-dashoffset="2000">
+      <animate attributeName="stroke-dashoffset" from="2000" to="0" dur="0.9s" fill="freeze"/>
+    </path>
+    ${labels}
+    ${pts}
+  `;
+
+  const latest = sorted[sorted.length-1];
+  const baseline = getBaselineScan();
+  const d = latest.scores[metric] - baseline.scores[metric];
+  document.getElementById('trend-big').innerHTML = `${latest.scores[metric].toFixed(1)} <small>${latest.name}</small>`;
+  const subEl = document.getElementById('trend-sub');
+  subEl.classList.toggle('down', d < 0);
+  subEl.innerHTML = `<span>${d>=0?'↑':'↓'} <strong>${Math.abs(d).toFixed(1)}</strong> from ${baseline.name} baseline</span>`;
+  document.getElementById('trend-meta').textContent = `${sorted.length} scans · ${sorted[0].date.slice(0,5)} – ${latest.date.slice(0,5)}`;
+
+  // legend version labels (dynamic per selected scans)
+  const legV1 = document.getElementById('leg-v1');
+  const legV2 = document.getElementById('leg-v2');
+  const legV3 = document.getElementById('leg-v3');
+  if(legV1) legV1.childNodes[0].nodeValue = sorted[0]?.name || '';
+  if(legV2) legV2.childNodes[0].nodeValue = sorted[1]?.name || '';
+  if(legV3) legV3.childNodes[0].nodeValue = sorted[2]?.name || '';
+
+  // tooltip
+  const tip = document.getElementById('pt-tip');
+  svg.querySelectorAll('.trend-pt').forEach(pt=>{
+    pt.addEventListener('mouseenter', ()=>{
+      const i = +pt.dataset.i;
+      const s = sorted[i];
+      const r = svg.getBoundingClientRect();
+      const parentR = svg.parentElement.getBoundingClientRect();
+      const sx = +pt.getAttribute('cx') / W * r.width + r.left - parentR.left;
+      const sy = +pt.getAttribute('cy') / H * r.height + r.top - parentR.top;
+      tip.style.left = sx + 'px';
+      tip.style.top = sy + 'px';
+      tip.innerHTML = `<div>${s.name} · ${s.date}</div><div class="v">${s.scores[metric].toFixed(1)} / 100</div>`;
+      tip.classList.add('on');
+      pt.setAttribute('r', '7');
+    });
+    pt.addEventListener('mouseleave', ()=>{
+      tip.classList.remove('on');
+      pt.setAttribute('r', pt.dataset.i==sorted.length-1 ? '5.5' : '4.5');
+    });
+  });
+}
+
+// ───────────────────────── RENDER: platform bars ─────────────────────────
+
+function renderPlatforms(){
+  const el = document.getElementById('platforms');
+  const sorted = getSelectedSorted();
+  const metric = activeMetricKey();
+  const platforms = PLATFORMS_BY_MODULE[state.module];
+
+  el.innerHTML = platforms.map(p => {
+    const rows = sorted.map((s, i) => {
+      const base = s.scores[metric];
+      const v = Math.max(0, Math.min(100, +(base * p.factor).toFixed(1)));
+      return { name: s.name, v, isLast: i === sorted.length-1, i };
+    });
+    const baseVal = rows[0].v;
+    const lastVal = rows[rows.length-1].v;
+    const jump = lastVal - baseVal;
+    const lastName = rows[rows.length-1].name;
+    const baseName = rows[0].name;
+    const jumpHtml = (lastVal === 0 && baseVal === 0)
+      ? `<span class="plat-jump">${lastName} <span class="delta-pill zero">no change</span> <span style="color:var(--fg-muted)">vs ${baseName}</span></span>`
+      : `<span class="plat-jump">${lastName} <span class="delta-pill ${jump<0?'dn':'up'}">${jump>=0?'↑':'↓'} ${Math.abs(jump).toFixed(1)}</span> <span style="color:var(--fg-muted)">vs ${baseName}</span></span>`;
+
+    return `
+      <div class="plat">
+        <div class="plat-head">
+          <span class="plat-ico ${p.id}">${platformGlyph(p.id)}</span>
+          <span class="plat-name">${p.name}</span>
+        </div>
+        ${rows.map((r, i) => `
+          <div class="bar-row v${Math.min(i+1, 3)}">
+            <span class="lbl">${r.name}</span>
+            <span class="bar-track">
+              <span class="bar-fill" style="width:${r.v}%"></span>
+            </span>
+            <span class="val ${r.v===0?'zero':''}">${r.v.toFixed(1)}</span>
+          </div>
+        `).join('')}
+        <div class="plat-foot">${jumpHtml}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function platformGlyph(id){
+  switch(id){
+    // AI provider logos — simplified single-color glyphs
+    case 'openai': return `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.91 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.407-.667zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08L8.704 5.46a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z"/></svg>`;
+    case 'claude': return `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.328h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.139.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z"/></svg>`;
+    case 'pplx':   return `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M22.3977 7.0896h-2.3106V.7838l-7.5094 6.3058h6.7041v6.0729l-7.0339-6.5239-7.0301 6.5239V7.0896h6.7Q3.498 7.0973 3.498 7.0896H1.1873v10.4753H3.498v6.6488l7.0301-6.5238v6.4691h2.085v-6.4691l7.0339 6.5238v-6.6488h2.3106V7.0896zM12.6661 8.2698l4.853 4.504v8.6168l-4.853-4.5081V8.2696zm-2.085 8.6168l-4.8569 4.508V12.7738l4.8569-4.504v8.6168z"/></svg>`;
+    case 'gemini': return `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 24A14.304 14.304 0 0 0 0 12 14.304 14.304 0 0 0 12 0a14.305 14.305 0 0 0 12 12 14.305 14.305 0 0 0-12 12"/></svg>`;
+    // Strategy Review dimensions — simple geometric glyphs
+    case 'ans':    return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`;
+    case 'web':    return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20 M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+    case 'struct': return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="5" rx="1"/><rect x="3" y="11" width="18" height="5" rx="1"/><path d="M3 18h12"/></svg>`;
+    case 'crawl':  return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M4 6l4 4 M20 6l-4 4 M4 18l4-4 M20 18l-4-4"/></svg>`;
+  }
+  return '';
+}
+
+// ───────────────────────── RENDER: what changed ─────────────────────────
+
+function renderChanged(){
+  const el = document.getElementById('changed-list');
+  el.innerHTML = CHANGED.map(c => `
+    <div class="changed-item ${c.dir==='down'?'down':''}">
+      <span class="mark"></span>
+      <span>${c.text} <span class="pill ${c.pillCls}">${c.pill}</span></span>
+    </div>
+  `).join('');
+}
+
+// also re-render the trend chart on resize so the viewBox stays in sync with rendered width
+let trendResizeRaf = null;
+window.addEventListener('resize', ()=>{
+  if (trendResizeRaf) cancelAnimationFrame(trendResizeRaf);
+  trendResizeRaf = requestAnimationFrame(renderTrend);
+});
+
+// ───────────────────────── MODULE TABS ─────────────────────────
+
+function setModule(mod){
+  state.module = mod;
+  document.querySelectorAll('#mod-tabs button').forEach(b=>{
+    b.classList.toggle('on', b.dataset.mod === mod);
+  });
+  moveModTabIndicator();
+  renderAll();
+}
+
+function moveModTabIndicator(){
+  const tabs = document.getElementById('mod-tabs');
+  const active = tabs.querySelector('button.on');
+  const ind = document.getElementById('mod-tab-indicator');
+  if(!active){ ind.style.width = '0'; return; }
+  const r = active.getBoundingClientRect();
+  const pr = tabs.getBoundingClientRect();
+  ind.style.width = r.width + 'px';
+  ind.style.transform = `translateX(${r.left - pr.left}px)`;
+}
+
+// ───────────────────────── CHIP TOOLTIP ─────────────────────────
+
+function setupChipTooltip(){
+  const tip = document.getElementById('chip-tooltip');
+  document.addEventListener('mouseover', e => {
+    const chip = e.target.closest('.vchip');
+    if (!chip || chip.classList.contains('baseline')) return;
+    if (e.target.closest('.x')) { tip.classList.remove('on'); return; }
+    const r = chip.getBoundingClientRect();
+    tip.style.left = (r.left + r.width / 2) + 'px';
+    tip.style.top = r.top + 'px';
+    tip.classList.add('on');
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest && e.target.closest('.vchip')) {
+      tip.classList.remove('on');
+    }
+  });
+  // also hide on scroll within the modal preview
+  document.querySelectorAll('.preview, .m-body').forEach(el=>{
+    el.addEventListener('scroll', ()=> tip.classList.remove('on'));
+  });
+}
+
+// ───────────────────────── ORCHESTRATE ─────────────────────────
+
+function renderAll(){
+  renderPickerList();
+  renderComparing();
+  renderScores();
+  renderTrend();
+  renderPlatforms();
+  renderChanged();
+}
+
+document.getElementById('mod-tabs').addEventListener('click', e=>{
+  const btn = e.target.closest('button[data-mod]');
+  if (btn) setModule(btn.dataset.mod);
+});
+
+// keyboard
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){
+    // demo: just flash close button
+    const btn = document.getElementById('btn-close');
+    btn.style.background = 'var(--hover)';
+    setTimeout(()=> btn.style.background='', 200);
+  }
+});
+document.getElementById('btn-close').addEventListener('click', ()=>{
+  document.getElementById('backdrop').style.opacity = '0';
+  setTimeout(()=> document.getElementById('backdrop').style.opacity='1', 600);
+});
+document.getElementById('btn-cancel').addEventListener('click', ()=>{
+  document.getElementById('btn-close').click();
+});
+
+// Export PDF (demo — wires up a toast confirming the export)
+function showToast(text){
+  const t = document.getElementById('toast');
+  document.getElementById('toast-text').textContent = text;
+  t.classList.add('on');
+  clearTimeout(showToast._tid);
+  showToast._tid = setTimeout(()=> t.classList.remove('on'), 2400);
+}
+document.getElementById('btn-export').addEventListener('click', ()=>{
+  const sorted = getSelectedSorted();
+  const names = sorted.map(s => s.name).join(' → ');
+  showToast(`Exported · ${names}`);
+});
+document.getElementById('btn-reset').addEventListener('click', ()=>{
+  state.selected = ['v10', 'v20', 'v40'];
+  state.module = 'ai';
+  state.baselineId = null;
+  setModule('ai');
+});
+
+setupChipTooltip();
+moveModTabIndicator();
+requestAnimationFrame(moveModTabIndicator);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => requestAnimationFrame(moveModTabIndicator));
+}
+window.addEventListener('resize', moveModTabIndicator);
+renderAll();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Animated Bookmark Icon 2</title>
+<style>
+  :root {
+    --ink: #1e1e1e;
+    --muted: #6b6b6b;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --hair: rgba(0, 0, 0, 0.08);
+    --accent: #2A6FDB;
+  }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 64px 32px 96px; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lede { color: var(--muted); font-size: 14px; margin: 0 0 40px; max-width: 62ch; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+  .card {
+    background: var(--card); border: 1px solid var(--hair);
+    border-radius: 14px; padding: 28px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; }
+  .card-title { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+  .card-hint { font-size: 12px; color: var(--muted); }
+  .stage {
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px);
+    border-radius: 10px; padding: 36px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 200px;
+  }
+  .sizes { display: flex; align-items: flex-end; gap: 36px; }
+  .size-cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .size-cell .label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px; color: var(--muted);
+  }
+
+  /* ─────────────── Bookmark icon (Lottie path-morph) ─────────────── */
+  .bm { display: inline-block; color: var(--ink); cursor: pointer; padding: 6px; }
+  .bm svg { display: block; overflow: visible; }
+
+  /*
+    Faithful to the supplied Lottie ("01_Bookmark 2", 30fps, 31 frames):
+    a single closed stroked path whose BOTTOM edge swings — top two corners
+    stay fixed while the side legs flex like rubber. The shape morphs
+    left → right → left → home as a damped elastic sway. Driven by animating
+    the SVG `d` property between the exact Lottie keyframes, with the Lottie's
+    own per-segment bezier easings.
+  */
+  .bm svg .bm-shape {
+    d: path("M 142.05 145.10 C 142.03 95.94 142.04 87.75 142.04 47.27 C 110.19 47.12 93.25 47.26 57.89 47.40 C 58.00 66.75 58.03 102.88 58.07 145.13 C 74.53 131.74 80.66 127.94 100.06 112.60 C 113.78 123.56 124.32 130.53 142.05 145.10 Z");
+  }
+
+  .bm:hover svg .bm-shape,
+  .icon-btn:hover .bm svg .bm-shape,
+  .icon-only:hover .bm svg .bm-shape {
+    animation: bm-morph 1000ms linear infinite;
+  }
+
+  @keyframes bm-morph {
+    0% {
+      d: path("M 142.05 145.10 C 142.03 95.94 142.04 87.75 142.04 47.27 C 110.19 47.12 93.25 47.26 57.89 47.40 C 58.00 66.75 58.03 102.88 58.07 145.13 C 74.53 131.74 80.66 127.94 100.06 112.60 C 113.78 123.56 124.32 130.53 142.05 145.10 Z");
+      animation-timing-function: cubic-bezier(.167, 0, .59, 1);
+    }
+    20.69% {
+      d: path("M 127.98 157.44 C 139.24 111.75 142.04 87.75 142.04 47.27 C 110.19 47.12 93.25 47.26 57.89 47.40 C 58.00 66.75 56.24 98.50 45.62 136.43 C 64.66 127.07 72.34 123.14 94.69 112.54 C 108.24 125.75 116.99 138.50 127.98 157.44 Z");
+      animation-timing-function: cubic-bezier(.434, 0, .764, 1);
+    }
+    44.83% {
+      d: path("M 151.73 139.63 C 143.99 100.50 142.50 74.00 143.54 47.27 C 111.69 47.12 93.25 47.26 57.89 47.40 C 58.00 66.75 59.82 111.65 66.75 153.33 C 80.49 135.25 88.49 128.25 103.80 111.93 C 119.35 120.47 131.57 128.20 151.73 139.63 Z");
+      animation-timing-function: cubic-bezier(.414, 0, .527, 1);
+    }
+    72.41% {
+      d: path("M 138.97 149.20 C 142.85 100.19 142.04 87.75 142.04 47.27 C 110.19 47.12 93.25 47.26 57.89 47.40 C 58.00 66.75 57.48 100.37 54.17 142.49 C 71.86 130.47 78.47 125.55 99.28 111.82 C 112.26 123.84 122.22 133.25 138.97 149.20 Z");
+      animation-timing-function: cubic-bezier(.309, 0, .6, 1);
+    }
+    100% {
+      d: path("M 142.05 145.16 C 142.03 96.00 142.04 87.75 142.04 47.27 C 110.19 47.12 93.25 47.26 57.89 47.40 C 58.00 66.75 58.03 102.94 58.07 145.19 C 74.53 131.80 80.66 127.88 100.06 112.54 C 113.78 123.50 124.32 130.60 142.05 145.16 Z");
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bm svg .bm-shape { animation: none !important; }
+  }
+
+  /* ─────────────── Inline buttons / rows ─────────────── */
+  .icon-btn {
+    appearance: none; background: transparent;
+    border: 1px solid var(--hair); border-radius: 8px;
+    padding: 8px 12px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font: inherit; font-size: 13px; color: var(--ink);
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+  .icon-btn:hover { background: #f3f3f3; border-color: rgba(0,0,0,0.14); }
+  .icon-btn.brand:hover {
+    background: rgba(42, 111, 219, 0.06);
+    border-color: rgba(42, 111, 219, 0.3);
+    color: var(--accent);
+  }
+  .icon-btn .bm { padding: 0; }
+
+  .icon-only {
+    appearance: none; background: transparent; border: none;
+    padding: 6px; border-radius: 6px; color: var(--ink); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .icon-only:hover { background: rgba(42, 111, 219, 0.08); color: var(--accent); }
+  .icon-only .bm { padding: 0; }
+
+  .row-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; border: 1px solid var(--hair);
+    border-radius: 8px; background: #fff;
+  }
+  .row-item .grow { flex: 1; font-size: 13px; }
+  .row-item .meta { font-size: 12px; color: var(--muted); }
+
+  .source {
+    margin-top: 8px;
+    background: #0f0f10; color: #e8e8e8;
+    border-radius: 12px; padding: 20px 22px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; line-height: 1.65; overflow: auto;
+  }
+  .source .c { color: #6b7a8a; }
+  .source .k { color: #c2a8ff; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Animated bookmark icon 2 · elastic sway</h1>
+  <p class="lede">按你给的 Lottie 精确复刻：单条描边路径在形变——顶部两角固定，底部边缘像橡皮一样左右弹性甩动（左→右→左→回位的阻尼摆动），侧边随之弯曲，所以灵活、有生命力。用动画 SVG 的 <code>d</code> 在 Lottie 原始关键帧之间插值，并沿用其逐段贝塞尔缓动。</p>
+
+  <template id="bm-svg-tpl">
+    <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="15" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4">
+      <path class="bm-shape" d="M 142.05 145.10 C 142.03 95.94 142.04 87.75 142.04 47.27 C 110.19 47.12 93.25 47.26 57.89 47.40 C 58.00 66.75 58.03 102.88 58.07 145.13 C 74.53 131.74 80.66 127.94 100.06 112.60 C 113.78 123.56 124.32 130.53 142.05 145.10 Z"></path>
+    </svg>
+  </template>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Sizes</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage">
+        <div class="sizes">
+          <div class="size-cell"><span class="bm" data-size="16"></span><span class="label">16</span></div>
+          <div class="size-cell"><span class="bm" data-size="24"></span><span class="label">24</span></div>
+          <div class="size-cell"><span class="bm" data-size="48"></span><span class="label">48</span></div>
+          <div class="size-cell"><span class="bm" data-size="96"></span><span class="label">96</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Sway</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage">
+        <button class="icon-only" type="button" aria-label="Save">
+          <span class="bm" data-size="72"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">Real placements</div>
+      <div class="card-hint">hover →</div>
+    </div>
+    <div class="stage" style="flex-direction:column; align-items:stretch; gap:14px; padding:24px;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="icon-btn brand" type="button">
+          <span class="bm" data-size="16"></span>
+          Save
+        </button>
+        <button class="icon-btn" type="button">
+          <span class="bm" data-size="16"></span>
+          Add to collection
+        </button>
+      </div>
+
+      <div class="row-item">
+        <div class="grow">Designing motion systems</div>
+        <span class="meta">Article</span>
+        <button class="icon-only" type="button" aria-label="Save">
+          <span class="bm" data-size="16"></span>
+        </button>
+      </div>
+      <div class="row-item">
+        <div class="grow">Animated icon guidelines</div>
+        <span class="meta">Doc</span>
+        <button class="icon-only" type="button" aria-label="Save">
+          <span class="bm" data-size="16"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">How it works</div>
+      <div class="card-hint">path morph · Lottie keyframes</div>
+    </div>
+    <div class="source"><span class="c">/* Single closed stroked path; animate the `d` property between the */</span>
+<span class="c">/* exact Lottie keyframes (t=1,7,14,22,30 @30fps). Top corners stay  */</span>
+<span class="c">/* fixed; the bottom edge flexes left → right → left → home.         */</span>
+<span class="k">@keyframes bm-morph</span> {
+     0%    { d: path("…rest…");        animation-timing-function: cubic-bezier(.167,0,.59,1);  }
+    20.69% { d: path("…swing left…");  animation-timing-function: cubic-bezier(.434,0,.764,1); }
+    44.83% { d: path("…swing right…"); animation-timing-function: cubic-bezier(.414,0,.527,1); }
+    72.41% { d: path("…swing left…");  animation-timing-function: cubic-bezier(.309,0,.6,1);   }
+   100%    { d: path("…rest…"); }
+}
+<span class="k">.bm:hover .bm-shape</span> { animation: bm-morph 1000ms linear infinite; }</div>
+  </div>
+</div>
+
+<script>
+  const tpl = document.getElementById('bm-svg-tpl');
+  document.querySelectorAll('.bm').forEach(el => {
+    const size = el.dataset.size || 16;
+    const svg = tpl.content.firstElementChild.cloneNode(true);
+    svg.setAttribute('width', size);
+    svg.setAttribute('height', size);
+    el.appendChild(svg);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Upgrade page — review of your Figma draft</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  body{margin:0;background:#F2F1E8;font-family:'Karla',sans-serif;color:#111;padding:48px 32px 80px;}
+  .wrap{max-width:1480px;margin:0 auto;}
+  header{text-align:center;max-width:780px;margin:0 auto 36px;}
+  header .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:rgba(17,17,17,0.6);letter-spacing:0.08em;text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  header h1{
+    font-family:'Karla',sans-serif;font-size:38px;line-height:1.1;margin:0 0 12px;
+  }
+  header p{
+    font-size:14px;color:rgba(17,17,17,0.6);line-height:1.6;margin:0;
+  }
+
+  /* Annotated mockup */
+  .mock-frame{
+    position:relative;width:1080px;margin:0 auto 60px;
+    background:#fff;border-radius:18px;overflow:hidden;
+    box-shadow:0 1px 0 rgba(17,17,17,0.04), 0 16px 40px -24px rgba(17,17,17,0.2);
+  }
+  .mock-frame img{display:block;width:100%;}
+  .pin{
+    position:absolute;width:32px;height:32px;border-radius:50%;
+    background:#EC5212;color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+    box-shadow:0 4px 12px rgba(236,82,18,0.35), 0 0 0 4px rgba(255,255,255,0.9);
+    transform:translate(-50%,-50%);
+    cursor:pointer;
+  }
+  .pin.green{background:#3D5E00;box-shadow:0 4px 12px rgba(61,94,0,0.35), 0 0 0 4px rgba(255,255,255,0.9);}
+  .pin.purple{background:#7C3AED;box-shadow:0 4px 12px rgba(124,58,237,0.35), 0 0 0 4px rgba(255,255,255,0.9);}
+
+  /* Issue list */
+  .issues{
+    display:grid;grid-template-columns:1fr 1fr;gap:18px;
+    max-width:1320px;margin:0 auto;
+  }
+  .issue{
+    background:#fff;border-radius:14px;padding:22px 24px;
+    border:1px solid rgba(17,17,17,0.06);
+    display:flex;flex-direction:column;gap:8px;position:relative;
+  }
+  .issue .num{
+    position:absolute;top:-12px;left:24px;
+    width:28px;height:28px;border-radius:50%;
+    background:#EC5212;color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    box-shadow:0 2px 6px rgba(236,82,18,0.3);
+  }
+  .issue.severe .num{background:#EC5212;}
+  .issue.medium .num{background:#7C3AED;}
+  .issue.low .num{background:#3D5E00;}
+
+  .issue .tag{
+    display:inline-flex;align-items:center;gap:6px;width:fit-content;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    text-transform:uppercase;letter-spacing:0.06em;
+    padding:3px 9px;border-radius:999px;
+    margin-top:4px;
+  }
+  .issue.severe .tag{background:#FFE5DD;color:#C04010;}
+  .issue.medium .tag{background:#EDE3FF;color:#7C3AED;}
+  .issue.low .tag{background:#E8F8A3;color:#3D5E00;}
+
+  .issue h3{
+    font-family:'Karla',sans-serif;font-size:18px;line-height:1.25;margin:8px 0 0;
+  }
+  .issue .problem{
+    font-size:13.5px;line-height:1.55;color:rgba(17,17,17,0.85);
+    margin:0;
+  }
+  .issue .problem b{color:#C04010;font-weight:600;}
+  .issue .fix{
+    background:#FAFAFA;border-radius:10px;padding:10px 12px;
+    font-size:13px;line-height:1.55;color:rgba(17,17,17,0.75);
+    border-left:2px solid var(--lime,#CFF229);
+  }
+  .issue .fix b{color:#111;font-weight:600;}
+  .issue .fix-label{
+    display:inline-block;font-family:'Karla';font-size:10.5px;
+    color:rgba(17,17,17,0.5);text-transform:uppercase;letter-spacing:0.06em;
+    margin-bottom:4px;font-weight:600;
+  }
+
+  .legend{
+    display:flex;gap:18px;justify-content:center;margin-bottom:32px;
+    font-size:12.5px;color:rgba(17,17,17,0.65);
+  }
+  .legend .item{display:inline-flex;align-items:center;gap:6px;}
+  .legend .dot{width:10px;height:10px;border-radius:50%;}
+  .legend .severe{background:#EC5212;}
+  .legend .medium{background:#7C3AED;}
+  .legend .low{background:#3D5E00;}
+
+  .summary{
+    max-width:760px;margin:48px auto 0;text-align:center;
+    background:#fff;border-radius:16px;padding:24px 32px;
+    border:1px solid rgba(17,17,17,0.06);
+  }
+  .summary h2{
+    font-family:'Karla',sans-serif;font-size:22px;margin:0 0 12px;
+  }
+  .summary p{
+    font-size:14px;line-height:1.7;color:rgba(17,17,17,0.7);margin:0;
+  }
+
+  @media (max-width:1100px){
+    .issues{grid-template-columns:1fr;}
+    .mock-frame{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Review · v5.5 Upgrade plan draft</div>
+    <h1>What's working, and what to reconsider</h1>
+    <p>You've correctly grouped account summary (plan + credits + usage) with the upgrade path on one page. The issues below are mostly about <b>information clarity, internal consistency, and what's missing</b> — not the layout itself.</p>
+  </header>
+
+  <div class="legend">
+    <span class="item"><span class="dot severe"></span>Severe — confuses users / breaks trust</span>
+    <span class="item"><span class="dot medium"></span>Medium — missing info or weak hierarchy</span>
+    <span class="item"><span class="dot low"></span>Low — polish opportunity</span>
+  </div>
+
+  <!-- Annotated mockup -->
+  <div class="mock-frame">
+    <img src="uploads/pasted-1781680967874-0.png" alt="Your Figma draft" style="object-fit:cover;object-position:46% 25%;height:760px;">
+    <!-- Pins are positioned approximately over the corresponding card areas -->
+    <div class="pin" style="left:18%;top:24%;">1</div>
+    <div class="pin" style="left:64%;top:22%;">2</div>
+    <div class="pin purple" style="left:33%;top:34%;">3</div>
+    <div class="pin" style="left:80%;top:33%;">4</div>
+    <div class="pin" style="left:20%;top:46%;">5</div>
+    <div class="pin green" style="left:55%;top:48%;">6</div>
+    <div class="pin purple" style="left:88%;top:53%;">7</div>
+    <div class="pin purple" style="left:8%;top:60%;">8</div>
+    <div class="pin green" style="left:30%;top:78%;">9</div>
+    <div class="pin" style="left:18%;top:90%;">10</div>
+  </div>
+
+  <!-- Issues -->
+  <div class="issues">
+
+    <div class="issue severe">
+      <div class="num">1</div>
+      <span class="tag">Data consistency · severe</span>
+      <h3>"Monthly credits 1000" 和 "Subscription 1000" 同一个数字出现两次</h3>
+      <p class="problem">Current Plan 卡上写"Monthly credits ✦ <b>1000</b>"，紧挨着的 Remaining Credits 卡上又写"Subscription <b>1000</b>"。它们是同一笔吗？如果是，重复展示让人困惑；如果不是（比如订阅刚续费、本月一次未消耗），用户也无从判断。</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        统一两边的语义。把"Monthly credits"改成 <b>"Plan allowance: 1,000 / mo"</b>（套餐每月配额），右侧改成 <b>"From subscription: 1,000"</b>（来自订阅的余额），并显示已用比例：<b>"used 200 of 1,000 this cycle"</b>。
+      </div>
+    </div>
+
+    <div class="issue severe">
+      <div class="num">2</div>
+      <span class="tag">Missing info · severe</span>
+      <h3>看不到当前 cycle 的起止日期</h3>
+      <p class="problem">"This cycle's usage" 标题但 cycle 是哪一段没说。"Next billing 2025-11-17"只告诉了结束，开始时间需要用户自己算。这对判断"用多了/用少了"非常关键。</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        在 "This cycle's usage" 旁边写 <b>"Oct 17 – Nov 17, 2025 · 12 days left"</b>。或者放进 Current Plan 卡上："Cycle: Oct 17 → Nov 17"。
+      </div>
+    </div>
+
+    <div class="issue severe">
+      <div class="num">3</div>
+      <span class="tag">Logic mixed · severe</span>
+      <h3>每个 module 里"配额限制"和"credit 消耗"混在一起</h3>
+      <p class="problem">Analysis tile 里同时有 "Brand reports <b>1/2</b>"（功能配额——本月只能跑 2 份）和 "Models 🟢🔵"（账户能用哪些模型——这其实是 plan 等级，不是用量）。Engage 里 "Keywords 1/3" 也是配置类。这些都是 plan 的 <b>能力/容量</b>，不是 credit 的 <b>消耗</b>。一张卡里混着两种数据，用户很难解读。</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        分两层：tile 顶部一行只显示 <b>本 cycle 该模块的 credits 消耗 + 占比</b>（e.g. Analysis 120 cr · 60% of usage），下面用一个"View plan limits"折叠区显示配额。或者把配额完全挪到 plan 卡那一行，跟"This cycle's usage"分开。
+      </div>
+    </div>
+
+    <div class="issue severe">
+      <div class="num">4</div>
+      <span class="tag">Affordance · severe</span>
+      <h3>"Redeem" 按钮含义不明</h3>
+      <p class="problem">放在"Purchase"旁边，没有任何上下文。是兑换 promo code？激活礼品卡？兑换积分换商品？用户无法判断。</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        换成明确文案 <b>"Redeem code"</b>，并带一个 ticket / gift 图标。如果只是促销码入口，弱化为文字链接 "Have a code? Redeem"，不要跟主操作 Purchase 平级。
+      </div>
+    </div>
+
+    <div class="issue severe">
+      <div class="num">5</div>
+      <span class="tag">Empty space · severe</span>
+      <h3>Current Plan 卡空间利用率低，跟右卡不平衡</h3>
+      <p class="problem">右边 Remaining Credits 信息密度高（数字 + 堆叠条 + 三段图例），左边 Current Plan 只有 plan 名 + 一行 monthly credits + cube 装饰，<b>视觉等高但内容不等量</b>，cube 像填空用的。</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        给 Current Plan 加：<br>· <b>套餐价格</b> ($9/mo)<br>· <b>Auto-renew 状态</b>（toggle 或 chip "Auto-renew on"）<br>· <b>Cycle 进度条</b>（已过 18/30 天）<br>· <b>"Compare plans"</b> 次要链接<br>cube 缩小或换成 plan tier 的 visual。
+      </div>
+    </div>
+
+    <div class="issue medium low">
+      <div class="num">6</div>
+      <span class="tag">Missing context · medium</span>
+      <h3>没有"按这速度还能用多久"的判断</h3>
+      <p class="problem">用户看到"used 200 of 1000"会算一下：还剩 800。但更有用的是 <b>burn rate projection</b>：按当前速度本月会用多少？会不会超？</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        在 cycle usage 的总数旁加一行小字：<b>"At this rate, ~500 cr by month end · well within plan"</b>，或绿/橙 chip 状态指示。
+      </div>
+    </div>
+
+    <div class="issue medium">
+      <div class="num">7</div>
+      <span class="tag">Information gap · medium</span>
+      <h3>Bonus credits 来源和有效期没说</h3>
+      <p class="problem">"Bonus 25" 出现在堆叠条里，但用户不知道<b>从哪儿来</b>（推荐？注册？促销？），<b>会不会过期</b>。25 是个很小的数，但如果是有效期 30 天的活动 credits，用户应该知道优先消耗。</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        鼠标悬停 Bonus dot 显示来源："2 referrals · expires Nov 30"。或在 Credits 卡下面增加一个 "Credit sources & expiry" 折叠区。
+      </div>
+    </div>
+
+    <div class="issue medium">
+      <div class="num">8</div>
+      <span class="tag">Hierarchy · medium</span>
+      <h3>三个 module tile 信息密度不对等</h3>
+      <p class="problem">Analysis 列了 3 行（Brand reports / Competitors / Models），Engage 列了 3 行，但 Post agent 只列了 1 行（Free posts 0/10）。<b>视觉上失衡</b>，也让用户怀疑 Post agent 是不是缺信息。</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        统一每 tile 列固定 2-3 行同类信息：<br>· <b>本 cycle credits 用了多少</b><br>· <b>主要配额完成情况</b>（关键的一项）<br>· <b>本 cycle 触发的次数</b>（e.g. "scheduled 4 posts"）<br>不要让某个 tile 故意比别的多。
+      </div>
+    </div>
+
+    <div class="issue low">
+      <div class="num">9</div>
+      <span class="tag">Active state · low</span>
+      <h3>Pricing cards 当前 plan 视觉标识弱</h3>
+      <p class="problem">Starter 卡按钮写"Current Plan"是正确的，但卡片本身没有任何 active state，跟其他两张卡一模一样。用户视线扫过价格区时无法一眼锁定"我在哪儿"。</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        给当前 plan 卡加 lime 边框 + 角标 chip "Your plan"，并把"Current Plan"按钮改成弱化的灰色 disabled 风格。让"Upgrade Plan →"按钮对比更强。
+      </div>
+    </div>
+
+    <div class="issue low">
+      <div class="num">10</div>
+      <span class="tag">Findability · low</span>
+      <h3>Plans / Credits tab 位置容易被忽略</h3>
+      <p class="problem">用户从顶部往下看：账户信息 → 用量 → 一个细细的 "Plans | Credits" tab → "Upgrade your plan" 大标题。tab 夹在两块大内容之间，<b>视觉权重低</b>，用户可能直接跳过它，以为下面就是全部。</p>
+      <div class="fix">
+        <span class="fix-label">Fix</span>
+        把 tab 做成 segmented control（两个 pill 并排），放在 "Upgrade your plan" 标题<b>上方</b>而不是下方；或者直接合并成两个 anchor 锚点 (Plans / Credits) 的 sticky 子导航，跟随滚动。
+      </div>
+    </div>
+
+  </div>
+
+  <div class="summary">
+    <h2>建议优先级</h2>
+    <p>先解决 <b>#1 / #2 / #3</b> — 它们是<b>语义和数据一致性</b>问题，会直接让用户读不懂这个页面。<br>
+    然后 <b>#5 / #8</b> — 视觉平衡和信息密度，让页面看起来"做完了"。<br>
+    最后 <b>#6 / #7 / #9 / #10</b> 是锦上添花。</p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+/* ═══════════════════════════════════════════════════════════════
+   My Account — usage / activity / nudge sections
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Module color tokens — used across bars, dots, tags, tables */
+:root{
+  --c-analysis:#CFF229;       /* lime */
+  --c-engage:#FFB37A;         /* warm orange */
+  --c-engage-strong:#EC5212;
+  --c-post:#A78BFA;           /* purple */
+  --c-unused:rgba(17,17,17,0.08);
+}
+
+/* ── Section: This cycle's usage ───────────────────────────── */
+.usage-section{
+  background:#fff;border:1px solid var(--border);
+  border-radius:16px;padding:28px 30px;
+  margin-bottom:24px;
+}
+.usage-head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:24px;margin-bottom:22px;
+}
+.usage-head h2{
+  font-family:'Karla',sans-serif;font-size:24px;line-height:1;margin:0 0 6px;
+}
+.usage-head .cycle{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);
+}
+.usage-head-actions{display:flex;align-items:center;gap:10px;}
+.btn-ghost{
+  background:transparent;border:1px solid var(--border-strong);
+  height:34px;padding:0 14px;border-radius:8px;
+  font-size:13px;font-weight:500;color:var(--black);
+  font-family:'Karla';
+}
+.btn-ghost:hover{background:var(--yellow-pale);}
+.btn-upgrade-link{
+  display:inline-flex;align-items:center;
+  background:var(--black);color:#fff;
+  height:34px;padding:0 16px;border-radius:8px;
+  font-size:13px;font-weight:600;
+  font-family:'Karla';
+}
+.btn-upgrade-link:hover{background:#000;}
+
+/* Stacked usage bar */
+.usage-bar-wrap{margin-bottom:22px;}
+.usage-bar{
+  height:14px;border-radius:8px;
+  background:rgba(17,17,17,0.04);
+  overflow:hidden;display:flex;
+  margin-bottom:14px;
+}
+.usage-bar .seg{height:100%;transition:width .3s;}
+.usage-bar .seg.analysis{background:var(--c-analysis);}
+.usage-bar .seg.engage{background:var(--c-engage);}
+.usage-bar .seg.post{background:var(--c-post);}
+.usage-bar .seg.unused{background:transparent;}
+
+.usage-legend{
+  display:flex;gap:24px;flex-wrap:wrap;
+  font-size:13px;
+}
+.usage-legend .item{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--black);
+}
+.usage-legend .item.muted{color:var(--muted);}
+.usage-legend .dot{
+  width:10px;height:10px;border-radius:3px;
+}
+.usage-legend .dot.analysis{background:var(--c-analysis);}
+.usage-legend .dot.engage{background:var(--c-engage);}
+.usage-legend .dot.post{background:var(--c-post);}
+.usage-legend .dot.unused{background:rgba(17,17,17,0.12);}
+.usage-legend b{
+  font-family:'JetBrains Mono',monospace;font-weight:600;
+  margin-left:6px;
+}
+
+/* Per-module cards */
+.usage-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+}
+.usage-card{
+  background:var(--warm);border:1px solid var(--border);
+  border-radius:12px;padding:18px 20px;
+}
+.u-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:14px;
+}
+.u-cost{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+}
+.u-tag{
+  display:inline-flex;align-items:center;
+  padding:3px 10px;border-radius:6px;
+  font-family:'Karla';font-size:11.5px;font-weight:600;
+  letter-spacing:0.02em;
+}
+.u-tag.analysis{background:var(--c-analysis);color:var(--black);}
+.u-tag.engage{background:#FFE3CC;color:#7A3300;}
+.u-tag.post{background:#E9E0FF;color:#3D1F8A;}
+.u-tag.plus{background:var(--lime-soft);color:#3D5E00;}
+.u-tag.sm{font-size:10.5px;padding:2px 7px;border-radius:5px;}
+
+.u-val{
+  font-family:'Karla',sans-serif;font-size:30px;line-height:1;
+  margin-bottom:10px;
+}
+.u-val small{
+  font-family:'Karla';font-size:12px;color:var(--muted);
+  font-weight:400;margin-left:4px;
+}
+
+/* per-card progress */
+.u-progress{
+  display:flex;align-items:center;gap:10px;margin-bottom:8px;
+}
+.u-progress-bar{
+  flex:1;height:6px;border-radius:4px;
+  background:rgba(17,17,17,0.06);overflow:hidden;
+}
+.u-progress-fill{height:100%;border-radius:4px;}
+.u-progress-fill.analysis{background:var(--c-analysis);}
+.u-progress-fill.engage{background:var(--c-engage);}
+.u-progress-fill.post{background:var(--c-post);}
+.u-progress-pct{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  font-weight:600;
+}
+.u-progress-pct small{font-size:9px;}
+.u-meta{font-size:12px;color:var(--muted);}
+
+/* ── Section: Recent activity ───────────────────────────────── */
+.activity-section{
+  background:#fff;border:1px solid var(--border);
+  border-radius:16px;padding:24px 30px 12px;
+  margin-bottom:24px;
+}
+.activity-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:14px;
+}
+.activity-head h2{
+  font-family:'Karla',sans-serif;font-size:24px;line-height:1;margin:0;
+}
+.activity-table{
+  display:flex;flex-direction:column;
+}
+.act-row{
+  display:grid;
+  grid-template-columns:140px 130px 1fr 110px 110px;
+  gap:16px;align-items:center;
+  padding:14px 4px;
+  border-top:1px solid var(--border);
+  font-size:13.5px;
+}
+.act-row.head{
+  border-top:0;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;
+  color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;
+  padding:8px 4px;
+}
+.act-row em{font-style:normal;}
+.act-row .r{text-align:right;}
+.act-row .mono{font-family:'JetBrains Mono',monospace;font-size:13px;}
+.act-row .mono.neg{color:var(--orange);}
+.act-row .mono.pos{color:#3D5E00;font-weight:600;}
+
+/* ── Nudge / top-up CTA ─────────────────────────────────────── */
+.nudge{
+  background:linear-gradient(180deg,var(--lime-pale) 0%,#F1FCD8 100%);
+  border:1px solid rgba(207,242,41,0.5);
+  border-radius:16px;padding:22px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:24px;
+}
+.nudge-left h3{
+  font-family:'Karla',sans-serif;font-size:22px;line-height:1.15;
+  margin:0 0 4px;
+}
+.nudge-left p{
+  font-size:13.5px;color:var(--muted);margin:0;
+}
+.btn-nudge{
+  background:var(--black);color:#fff;
+  height:42px;padding:0 22px;border-radius:10px;
+  font-size:14px;font-weight:600;
+  display:inline-flex;align-items:center;flex-shrink:0;
+}
+.btn-nudge:hover{background:#000;}
+
+/* Make the existing .btn-credit-details work as an <a> */
+.account-head .btn-credit-details{
+  display:inline-flex;align-items:center;
+}
+
+@media (max-width:1100px){
+  .usage-grid{grid-template-columns:1fr;}
+  .act-row{grid-template-columns:110px 110px 1fr 90px;}
+  .act-row > :nth-child(5){display:none;}
+}

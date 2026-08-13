@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Display Type — Gotu" subtitle="Gotu display scale: hero to body" viewport="700x200" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face { font-family: 'Karla'; src: url('../fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; padding: 24px 28px; font-family: 'Karla', sans-serif; }
+.row { display: flex; flex-direction: column; gap: 12px; }
+.item { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+.item:last-child { border-bottom: none; }
+.label { font-size: 10px; color: #aaa; width: 110px; flex-shrink: 0; font-family: monospace; }
+.sample { color: #111; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="item">
+    <span class="label">display-hero / 86px</span>
+    <span class="sample" style="font-family:'Gotu',serif;font-size:42px;line-height:1;">aisee</span>
+  </div>
+  <div class="item">
+    <span class="label">display-xl / 48px</span>
+    <span class="sample" style="font-family:'Gotu',serif;font-size:36px;line-height:1.1;">The future of discoverability.</span>
+  </div>
+  <div class="item">
+    <span class="label">display-lg / 32px</span>
+    <span class="sample" style="font-family:'Gotu',serif;font-size:26px;line-height:1.25;">Generative Engine Optimization</span>
+  </div>
+  <div class="item">
+    <span class="label">display-md / 24px</span>
+    <span class="sample" style="font-family:'Gotu',serif;font-size:22px;">What exactly does aisee do?</span>
+  </div>
+  <div class="item">
+    <span class="label">display-sm / 18px</span>
+    <span class="sample" style="font-family:'Gotu',serif;font-size:18px;">GEO is the evolution of SEO for the AI-first era.</span>
+  </div>
+</div>
+</body>
+</html>

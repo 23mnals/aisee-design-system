@@ -1,0 +1,33 @@
+name: Component proposal
+description: 新组件或组件变体提案
+title: "[Component]: "
+labels: [component]
+body:
+  - type: input
+    id: spec
+    attributes:
+      label: 规范 / Figma 来源
+      placeholder: "Design spec §6.4 or Figma node URL"
+    validations:
+      required: true
+  - type: textarea
+    id: need
+    attributes:
+      label: 使用场景
+      description: 描述用户任务、模块和为什么现有组件不足。
+    validations:
+      required: true
+  - type: dropdown
+    id: module
+    attributes:
+      label: 模块
+      options: [Shared, Analysis, Post Agent, Engage]
+    validations:
+      required: true
+  - type: textarea
+    id: states
+    attributes:
+      label: 必要状态
+      placeholder: "default, hover, focus, active, disabled, loading, error"
+    validations:
+      required: true

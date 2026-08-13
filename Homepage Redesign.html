@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="aisee Homepage Redesign" subtitle="duck.school风格 · 动画入场 · ticker · mascot" viewport="1440x900" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aisee — The future of discoverability</title>
+<style>
+@font-face { font-family:'Karla'; src:url('fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight:100 900; font-display:swap; }
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --black:#111; --white:#fff; --lime:#CFF229; --lime2:#C9FE12;
+  --yellow:#FFE253; --yellow-lt:#FFF2B3; --orange:#EC5212;
+  --green:#A5D500; --cream:#F7F6E9; --bg:#F7F8F7;
+  --ease-out: cubic-bezier(0.16,1,0.3,1);
+}
+html { scroll-behavior:smooth; }
+body { font-family:'Karla',sans-serif; background:var(--white); color:var(--black); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+
+/* ── cursor ─────────────────────────────────────────────────── */
+.cursor { position:fixed; top:0;left:0; width:20px;height:20px; border:1.5px solid var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .2s var(--ease-out), height .2s var(--ease-out), background .2s, border-color .2s; mix-blend-mode:difference; }
+.cursor.big { width:56px;height:56px; }
+body:not(:hover) .cursor { opacity:0; }
+
+/* ── NAV ────────────────────────────────────────────────────── */
+nav {
+  position:fixed; top:0;left:0;right:0; z-index:100;
+  height:70px; display:flex; align-items:center; padding:0 48px; gap:40px;
+  background:rgba(255,255,255,0.9); backdrop-filter:blur(12px);
+  border-bottom:1.5px solid var(--black);
+  transform:translateY(-100%);
+  animation:navIn .6s var(--ease-out) .1s forwards;
+}
+@keyframes navIn { to { transform:translateY(0); } }
+
+.nav-logo { display:flex; align-items:center; text-decoration:none; flex-shrink:0; }
+.nav-logo img { height:32px; }
+.nav-links { display:flex; align-items:center; gap:4px; margin-left:auto; }
+
+.nav-link {
+  font-family:'Gotu',serif; font-size:14px; color:var(--black); text-decoration:none;
+  padding:6px 14px; border-radius:999px; position:relative; overflow:hidden;
+  transition:color .2s;
+}
+.nav-link::after { content:''; position:absolute; inset:0; border-radius:999px; background:rgba(17,17,17,.06); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease-out); }
+.nav-link:hover::after { transform:scaleX(1); }
+
+.nav-cta {
+  font-family:'Gotu',serif; font-size:14px; color:var(--black);
+  background:var(--white); border:1.5px solid var(--black); border-radius:999px;
+  padding:8px 20px; cursor:pointer; text-decoration:none; margin-left:12px;
+  display:flex; gap:12px; overflow:hidden; transition:background .25s;
+}
+.nav-cta:hover { background:var(--lime); }
+
+/* ── HERO ───────────────────────────────────────────────────── */
+.hero {
+  min-height:100vh; padding-top:70px;
+  display:flex; flex-direction:column; border-bottom:1.5px solid var(--black);
+  overflow:hidden; position:relative;
+}
+
+/* Deco shapes layer — behind everything, pointer-events:none */
+.hero-deco { position:absolute; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.deco { position:absolute; }
+.deco-circle-yellow { width:280px;height:280px;border-radius:50%;background:var(--yellow);
+  top:12%;right:5%; opacity:0; animation:decoIn .9s var(--ease-out) 1.2s forwards; }
+.deco-rect-pink { width:220px;height:100px;background:#FFD3E2;
+  bottom:25%;left:2%; transform:rotate(-2deg);
+  opacity:0; animation:decoIn .9s var(--ease-out) 1.4s forwards; }
+.deco-circle-blue { width:80px;height:80px;border-radius:50%;background:#3C61E5;
+  bottom:32%;right:22%; opacity:0; animation:decoIn .7s var(--ease-out) 1.6s forwards; }
+.deco-dot-purple { width:48px;height:48px;border-radius:50%;background:#E7E1F8;
+  top:55%;left:18%; opacity:0; animation:decoIn .7s var(--ease-out) 1.5s forwards; }
+.deco-tri-orange {
+  width:0;height:0;
+  border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:52px solid var(--orange);
+  top:28%;left:8%; opacity:0; animation:decoIn .7s var(--ease-out) 1.7s forwards;
+}
+.deco-dot-lime { width:18px;height:18px;border-radius:50%;background:var(--lime);
+  top:40%;right:36%; opacity:0; animation:decoIn .5s var(--ease-out) 1.8s forwards; }
+@keyframes decoIn { to { opacity:1; } }
+
+/* Slow drift on shapes */
+.deco-circle-yellow { animation:decoIn .9s var(--ease-out) 1.2s forwards, drift1 8s ease-in-out 2s infinite; }
+.deco-rect-pink     { animation:decoIn .9s var(--ease-out) 1.4s forwards, drift2 9s ease-in-out 2s infinite; }
+.deco-circle-blue   { animation:decoIn .7s var(--ease-out) 1.6s forwards, drift1 7s ease-in-out 2.5s infinite; }
+.deco-dot-purple    { animation:decoIn .7s var(--ease-out) 1.5s forwards, drift2 10s ease-in-out 2s infinite; }
+@keyframes drift1 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-16px) rotate(4deg)} }
+@keyframes drift2 { 0%,100%{transform:rotate(-2deg) translateY(0)} 50%{transform:rotate(2deg) translateY(12px)} }
+
+.hero-body {
+  flex:1; display:grid; grid-template-columns:1fr 420px;
+  padding:72px 48px 0; gap:48px; position:relative; z-index:1;
+  align-items:center;
+}
+
+/* ── Word-by-word headline reveal ── */
+.hero-eyebrow {
+  font-family:'Karla',sans-serif; font-size:12px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:rgba(17,17,17,.5);
+  display:flex; align-items:center; gap:10px; margin-bottom:28px;
+  opacity:0; transform:translateY(16px);
+  animation:fadeUp .7s var(--ease-out) .4s forwards;
+}
+.hero-eyebrow::before { content:''; width:28px;height:1.5px;background:rgba(17,17,17,.4);flex-shrink:0; }
+
+.hero-headline { margin-bottom:28px; }
+.hl-line { overflow:hidden; display:block; line-height:1.0; }
+.hl-inner {
+  display:block;
+  font-family:'Gotu',serif;
+  font-size:clamp(60px, 6.8vw, 100px);
+  letter-spacing:-.03em; color:var(--black);
+  transform:translateY(110%);
+  animation:wordUp .8s var(--ease-out) forwards;
+}
+.hl-line:nth-child(1) .hl-inner { animation-delay:.5s; }
+.hl-line:nth-child(2) .hl-inner { animation-delay:.65s; }
+.hl-line:nth-child(3) .hl-inner { animation-delay:.8s; }
+
+.lime-bg { background:var(--lime); padding:0 8px; border-radius:8px; }
+
+@keyframes wordUp { to { transform:translateY(0); } }
+@keyframes fadeUp { to { opacity:1; transform:none; } }
+
+.hero-sub {
+  font-family:'Gotu',serif; font-size:17px; color:rgba(17,17,17,.65);
+  line-height:1.7; max-width:500px; margin-bottom:40px;
+  opacity:0; animation:fadeUp .7s var(--ease-out) 1.05s forwards;
+}
+
+.hero-actions {
+  display:flex; align-items:center; gap:12px;
+  opacity:0; animation:fadeUp .7s var(--ease-out) 1.2s forwards;
+}
+
+.btn-primary {
+  font-family:'Gotu',serif; font-size:16px; color:var(--white);
+  background:var(--black); border:1.5px solid var(--black); border-radius:999px;
+  padding:14px 32px; cursor:pointer; text-decoration:none;
+  display:flex; gap:14px; transition:background .2s, color .2s;
+  position:relative; overflow:hidden;
+}
+.btn-primary::after { content:''; position:absolute; inset:0; background:var(--lime); transform:scaleX(0); transform-origin:left; transition:transform .35s var(--ease-out); z-index:0; }
+.btn-primary span { position:relative; z-index:1; transition:color .35s; }
+.btn-primary:hover::after { transform:scaleX(1); }
+.btn-primary:hover span { color:var(--black); }
+
+.btn-ghost {
+  font-family:'Gotu',serif; font-size:16px; color:var(--black);
+  background:transparent; border:1.5px solid var(--black); border-radius:999px;
+  padding:14px 32px; cursor:pointer; text-decoration:none;
+  transition:background .2s;
+}
+.btn-ghost:hover { background:rgba(17,17,17,.05); }
+
+/* ── Mascot ── */
+.hero-mascot {
+  display:flex; flex-direction:column; align-items:center; position:relative;
+  opacity:0; animation:mascotIn .9s var(--ease-out) .7s forwards;
+}
+@keyframes mascotIn { from{opacity:0;transform:translateY(40px) scale(.95)} to{opacity:1;transform:none} }
+
+.mascot-wrap {
+  animation:float 5s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+
+.mascot-svg .eye-lid {
+  transform-origin:140px 108px;
+  animation:blink 5s ease-in-out 2s infinite;
+}
+@keyframes blink {
+  0%,88%,100% { transform:scaleY(1); }
+  92% { transform:scaleY(0.04); }
+  96% { transform:scaleY(1); }
+}
+
+/* Keyword tags around mascot */
+.ktag {
+  position:absolute;
+  font-family:'Gotu',serif; font-size:12px;
+  padding:5px 12px; border-radius:999px; border:1.5px solid var(--black);
+  background:var(--white); white-space:nowrap;
+  opacity:0; animation:fadeUp .6s var(--ease-out) forwards;
+  animation-fill-mode:both;
+}
+.ktag:nth-child(1) { top:5%;  left:-30px;  background:var(--lime);   animation-delay:1.2s; }
+.ktag:nth-child(2) { top:20%; right:-40px; background:var(--yellow); animation-delay:1.4s; }
+.ktag:nth-child(3) { top:50%; left:-50px;  background:var(--cream);  animation-delay:1.6s; }
+.ktag:nth-child(4) { top:65%; right:-30px; background:var(--lime);   animation-delay:1.8s; }
+.ktag:nth-child(5) { bottom:8%;left:10%;   background:var(--yellow-lt);animation-delay:2s; }
+
+/* ── Stats bar ── */
+.hero-stats {
+  display:flex; border-top:1.5px solid var(--black); margin-top:64px;
+  opacity:0; animation:fadeUp .7s var(--ease-out) 1.3s forwards;
+}
+.hero-stat { flex:1; padding:22px 48px; border-right:1.5px solid var(--black); }
+.hero-stat:last-child { border-right:none; }
+.stat-val { font-family:'Gotu',serif; font-size:42px; line-height:1; margin-bottom:3px; }
+.stat-lbl { font-size:12px; color:rgba(17,17,17,.5); }
+
+/* ── TICKER ─────────────────────────────────────────────────── */
+.ticker-wrap { background:var(--lime); border-top:1.5px solid var(--black); border-bottom:1.5px solid var(--black); overflow:hidden; padding:13px 0; white-space:nowrap; }
+.ticker-track { display:inline-flex; animation:ticker 22s linear infinite; }
+.ticker-track span { font-family:'Gotu',serif; font-size:14px; padding:0 24px; }
+.ticker-sep { color:rgba(17,17,17,.3); font-size:10px; }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── SHARED SECTION ─────────────────────────────────────────── */
+section { border-bottom:1.5px solid var(--black); }
+
+.sec-head {
+  padding:64px 48px 0;
+  display:flex; align-items:flex-end; justify-content:space-between; gap:48px;
+  margin-bottom:48px;
+}
+.sec-eye {
+  font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(17,17,17,.4); display:flex; align-items:center; gap:8px; margin-bottom:12px;
+}
+.sec-eye::before { content:''; width:18px;height:1.5px;background:rgba(17,17,17,.4);flex-shrink:0; }
+.sec-title { font-family:'Gotu',serif; font-size:clamp(38px,4vw,62px); line-height:1.0; letter-spacing:-.025em; }
+
+/* ── Scroll reveal base ── */
+.reveal { opacity:0; transform:translateY(32px); transition:opacity .75s var(--ease-out), transform .75s var(--ease-out); }
+.reveal.visible { opacity:1; transform:none; }
+.reveal-left { opacity:0; transform:translateX(-32px); transition:opacity .75s var(--ease-out), transform .75s var(--ease-out); }
+.reveal-left.visible { opacity:1; transform:none; }
+
+/* ── FEATURES ───────────────────────────────────────────────── */
+.features-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  border-top:1.5px solid var(--black);
+}
+.feat {
+  padding:40px 36px 48px; border-right:1.5px solid var(--black);
+  position:relative; overflow:hidden; cursor:default;
+  transition:background .25s; background:var(--white);
+  opacity:0; transform:translateY(40px);
+  transition:opacity .6s var(--ease-out), transform .6s var(--ease-out), background .25s;
+}
+.feat.visible { opacity:1; transform:none; }
+.feat:last-child { border-right:none; }
+.feat:hover { background:var(--bg); transform:translateY(-4px); }
+.feat-num { font-family:'Gotu',serif; font-size:88px; color:rgba(17,17,17,.05); position:absolute; top:16px;right:24px; line-height:1; }
+.feat-icon { width:46px;height:46px;border-radius:10px;border:1.5px solid var(--black);display:flex;align-items:center;justify-content:center;margin-bottom:20px; background:var(--white); }
+.feat-name { font-family:'Gotu',serif; font-size:22px; margin-bottom:12px; line-height:1.2; }
+.feat-desc { font-size:14px; color:rgba(17,17,17,.6); line-height:1.7; }
+.feat-tags { display:flex;flex-wrap:wrap;gap:6px;margin-top:20px; }
+.ftag { font-size:11px;font-weight:500;padding:4px 10px;border-radius:999px;border:1.5px solid rgba(17,17,17,.15);color:rgba(17,17,17,.7); }
+
+/* ── HOW IT WORKS ───────────────────────────────────────────── */
+.how { background:var(--black); }
+.how .sec-eye { color:rgba(255,255,255,.35); }
+.how .sec-eye::before { background:rgba(255,255,255,.35); }
+.how .sec-title { color:var(--white); }
+.steps { display:grid; grid-template-columns:repeat(4,1fr); border-top:1.5px solid rgba(255,255,255,.12); }
+.step { padding:40px 30px 48px; border-right:1.5px solid rgba(255,255,255,.1); }
+.step:last-child { border-right:none; }
+.step-num { font-family:'Gotu',serif; font-size:52px; color:var(--lime); line-height:1; margin-bottom:18px; }
+.step-title { font-family:'Gotu',serif; font-size:18px; color:var(--white); margin-bottom:8px; }
+.step-desc { font-size:13px; color:rgba(255,255,255,.5); line-height:1.65; }
+
+/* Step connector line */
+.step { position:relative; }
+.step::after { content:'→'; position:absolute; top:40px; right:-14px; font-size:18px; color:rgba(255,255,255,.2); z-index:1; }
+.step:last-child::after { content:''; }
+
+/* ── PLATFORMS ──────────────────────────────────────────────── */
+.platforms { background:var(--cream); }
+.plat-row { display:flex; flex-wrap:wrap; gap:10px; padding:0 48px 64px; }
+.plat-pill {
+  display:flex; align-items:center; gap:10px;
+  padding:12px 20px; border-radius:999px; border:1.5px solid var(--black);
+  background:var(--white); font-family:'Gotu',serif; font-size:14px; cursor:pointer;
+  transition:background .2s, transform .2s var(--ease-out);
+}
+.plat-pill:hover { background:var(--lime); transform:scale(1.04); }
+.pdot { width:18px;height:18px;border-radius:50%;flex-shrink:0; }
+
+/* ── TESTIMONIALS ───────────────────────────────────────────── */
+.testimonials { background:var(--white); }
+.test-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1.5px solid var(--black); }
+.tcard { padding:36px; border-right:1.5px solid var(--black); position:relative; transition:background .2s; }
+.tcard:last-child { border-right:none; }
+.tcard:hover { background:var(--bg); }
+.tcard-tag { position:absolute; top:32px;right:32px; font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;border:1.5px solid var(--black); }
+.tcard-quote { font-family:'Gotu',serif; font-size:15px; line-height:1.75; margin:0 0 24px; color:var(--black); }
+.tcard-author { display:flex; align-items:center; gap:10px; }
+.tcard-avatar { width:36px;height:36px;border-radius:50%;border:1.5px solid var(--black);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0; }
+.tcard-name { font-size:13px;font-weight:600; }
+.tcard-role { font-size:11px;color:rgba(17,17,17,.5); }
+
+/* ── ILLUSTRATION SECTION ───────────────────────────────────── */
+.illus-section { background:var(--bg); overflow:hidden; }
+.illus-inner { padding:64px 48px; display:flex; align-items:center; gap:80px; }
+.illus-text { flex:1; }
+.illus-text h2 { font-family:'Gotu',serif; font-size:clamp(36px,4vw,56px); line-height:1.05; letter-spacing:-.025em; margin-bottom:20px; }
+.illus-text p { font-family:'Gotu',serif; font-size:17px; color:rgba(17,17,17,.65); line-height:1.7; max-width:440px; }
+.illus-graphic { flex-shrink:0; width:360px; height:320px; position:relative; }
+
+/* ── FAQ ────────────────────────────────────────────────────── */
+.faq { background:var(--bg); }
+.faq-list { padding:0 48px 64px; }
+.faq-item { border-top:1.5px solid var(--black); }
+.faq-item:last-child { border-bottom:1.5px solid var(--black); }
+.faq-q { padding:22px 0; display:flex; align-items:center; justify-content:space-between; gap:24px; cursor:pointer; user-select:none; }
+.faq-q-text { font-family:'Gotu',serif; font-size:20px; line-height:1.3; }
+.faq-toggle { width:36px;height:36px;border-radius:50%;border:1.5px solid var(--black);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;transition:background .2s, transform .3s; }
+.faq-item.open .faq-toggle { background:var(--lime); transform:rotate(45deg); }
+.faq-a { font-family:'Gotu',serif; font-size:15px; color:rgba(17,17,17,.6); line-height:1.8; max-height:0; overflow:hidden; transition:max-height .4s var(--ease-out), padding .3s; padding-right:80px; }
+.faq-item.open .faq-a { max-height:200px; padding-bottom:28px; }
+
+/* ── CTA ────────────────────────────────────────────────────── */
+.cta-section {
+  background:var(--lime); padding:96px 48px; border-bottom:none;
+  display:flex; align-items:center; justify-content:space-between; gap:48px;
+}
+.cta-hl { font-family:'Gotu',serif; font-size:clamp(48px,6vw,90px); line-height:0.97; letter-spacing:-.03em; }
+.cta-right { display:flex; flex-direction:column; gap:12px; flex-shrink:0; }
+.btn-cta { font-family:'Gotu',serif; font-size:18px; background:var(--black); color:var(--white); border:none; border-radius:999px; padding:18px 40px; cursor:pointer; text-decoration:none; display:flex; gap:18px; white-space:nowrap; transition:opacity .2s; }
+.btn-cta:hover { opacity:.82; }
+.cta-note { font-size:13px; color:rgba(17,17,17,.55); text-align:center; }
+
+/* ── FOOTER ─────────────────────────────────────────────────── */
+footer { background:var(--white); border-top:1.5px solid var(--black); padding:36px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
+.foot-links { display:flex; gap:20px; }
+.foot-link { font-family:'Gotu',serif; font-size:13px; color:rgba(17,17,17,.5); text-decoration:none; transition:color .2s; }
+.foot-link:hover { color:var(--black); }
+.foot-copy { font-size:12px; color:rgba(17,17,17,.35); }
+
+/* ── TWEAKS ─────────────────────────────────────────────────── */
+.tweaks-panel { display:none; position:fixed; bottom:24px;right:24px; z-index:999; background:var(--white); border:1.5px solid var(--black); border-radius:14px; padding:18px; width:220px; box-shadow:4px 4px 0 var(--black); }
+.tweaks-panel.show { display:block; }
+.tw-title { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px; }
+.tw-row { display:flex;align-items:center;justify-content:space-between;margin-bottom:9px; }
+.tw-lbl { font-size:12px;color:rgba(17,17,17,.6); }
+.tw-tog { width:30px;height:17px;border-radius:999px;background:rgba(17,17,17,.12);position:relative;cursor:pointer;transition:background .15s; }
+.tw-tog.on { background:var(--lime); }
+.tw-knob { position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:var(--white);box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .15s; }
+.tw-tog.on .tw-knob { left:15px; }
+</style>
+</head>
+<body>
+
+<!-- custom cursor -->
+<div class="cursor" id="cursor"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+    <img src="assets/logo.svg" style="height:32px;" alt="aisee">
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#features">Features</a>
+    <a class="nav-link" href="#how">How it works</a>
+    <a class="nav-link" href="#faq">FAQ</a>
+    <a class="nav-link" href="#pricing">Pricing</a>
+    <a class="nav-cta" href="#cta"><span>Start Free</span><span>Start Free</span></a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <!-- background deco shapes -->
+  <div class="hero-deco">
+    <div class="deco deco-circle-yellow"></div>
+    <div class="deco deco-rect-pink"></div>
+    <div class="deco deco-circle-blue"></div>
+    <div class="deco deco-dot-purple"></div>
+    <div class="deco deco-tri-orange"></div>
+    <div class="deco deco-dot-lime"></div>
+  </div>
+
+  <div class="hero-body">
+    <!-- left: text -->
+    <div>
+      <div class="hero-eyebrow">Generative Engine Optimization</div>
+      <h1 class="hero-headline">
+        <span class="hl-line"><span class="hl-inner">The future</span></span>
+        <span class="hl-line"><span class="hl-inner">of <span class="lime-bg">discoverability</span></span></span>
+        <span class="hl-line"><span class="hl-inner">starts here.</span></span>
+      </h1>
+      <p class="hero-sub">aisee optimizes your brand for the AI era — where ChatGPT, Perplexity, and Gemini decide what people find. Track AI visibility, grow citation scores, and publish content that compounds.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#cta"><span>Start for free</span><span>→</span></a>
+        <a class="btn-ghost" href="#how">See how it works</a>
+      </div>
+    </div>
+
+    <!-- right: mascot + keyword tags -->
+    <div class="hero-mascot">
+      <div class="ktag">LLM Search</div>
+      <div class="ktag">AI Visibility</div>
+      <div class="ktag">GEO Diagnostic</div>
+      <div class="ktag">Citation Score</div>
+      <div class="ktag">Post Agent</div>
+
+      <div class="mascot-wrap">
+        <svg class="mascot-svg" width="320" height="360" viewBox="0 0 320 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Lime body / arch -->
+          <path d="M160 10 C 72 10 10 72 10 160 L 10 370 L 310 370 L 310 160 C 310 72 248 10 160 10 Z" fill="#CFF229"/>
+          <!-- Inner dark head circle -->
+          <circle cx="160" cy="148" r="110" fill="#111111"/>
+          <!-- White eye -->
+          <ellipse class="eye-lid" cx="160" cy="138" rx="50" ry="44" fill="white"/>
+          <!-- Pupil -->
+          <circle cx="160" cy="138" r="26" fill="#111111"/>
+          <!-- Pupil shine -->
+          <circle cx="172" cy="126" r="10" fill="white"/>
+          <!-- Small secondary shine -->
+          <circle cx="148" cy="148" r="5" fill="white" opacity="0.5"/>
+          <!-- Subtle smile -->
+          <path d="M 130 200 Q 160 220 190 200" stroke="#111" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.2"/>
+          <!-- Left arm -->
+          <path d="M 10 240 Q -30 230 -40 200" stroke="#CFF229" stroke-width="18" stroke-linecap="round" fill="none"/>
+          <!-- Right arm -->
+          <path d="M 310 240 Q 350 230 360 200" stroke="#CFF229" stroke-width="18" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- stats bar -->
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="stat-val" data-count="5">0</div>
+      <div class="stat-lbl">AI platforms monitored</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-val">3×</div>
+      <div class="stat-lbl">More AI citations on average</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-val">24/7</div>
+      <div class="stat-lbl">Automated post scheduling</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-val" data-count="50">0</div>
+      <div class="stat-lbl">Brands tracking AI visibility</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TICKER ═══ -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>AI Visibility</span><span class="ticker-sep">·</span>
+    <span>Citation Score</span><span class="ticker-sep">·</span>
+    <span>LLM Search</span><span class="ticker-sep">·</span>
+    <span>Prompt Strategy</span><span class="ticker-sep">·</span>
+    <span>GEO Diagnostic</span><span class="ticker-sep">·</span>
+    <span>AI Rankings</span><span class="ticker-sep">·</span>
+    <span>Post Agent</span><span class="ticker-sep">·</span>
+    <span>Brand Presence</span><span class="ticker-sep">·</span>
+    <span>Social Scheduling</span><span class="ticker-sep">·</span>
+    <span>Generative Engine Optimization</span><span class="ticker-sep">·</span>
+    <span>AI Visibility</span><span class="ticker-sep">·</span>
+    <span>Citation Score</span><span class="ticker-sep">·</span>
+    <span>LLM Search</span><span class="ticker-sep">·</span>
+    <span>Prompt Strategy</span><span class="ticker-sep">·</span>
+    <span>GEO Diagnostic</span><span class="ticker-sep">·</span>
+    <span>AI Rankings</span><span class="ticker-sep">·</span>
+    <span>Post Agent</span><span class="ticker-sep">·</span>
+    <span>Brand Presence</span><span class="ticker-sep">·</span>
+    <span>Social Scheduling</span><span class="ticker-sep">·</span>
+    <span>Generative Engine Optimization</span><span class="ticker-sep">·</span>
+  </div>
+</div>
+
+<!-- ═══ FEATURES ═══ -->
+<section id="features">
+  <div class="sec-head">
+    <div class="reveal-left">
+      <div class="sec-eye">What we do</div>
+      <h2 class="sec-title">Two engines.<br>One unfair<br>advantage.</h2>
+    </div>
+    <p class="reveal" style="font-family:'Gotu',serif;font-size:17px;color:rgba(17,17,17,.6);max-width:380px;line-height:1.7;">GEO makes you visible to AI. The Post Agent keeps you top of mind. Together, they compound your brand's presence across every channel that matters.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feat" style="transition-delay:.0s">
+      <div class="feat-num">01</div>
+      <div class="feat-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="feat-name">GEO Analysis</div>
+      <div class="feat-desc">Track exactly how your brand appears inside ChatGPT, Perplexity, Gemini, and Claude. Monitor citation scores, AI rankings, and prompt-level visibility in real time.</div>
+      <div class="feat-tags">
+        <span class="ftag">AI Rankings</span>
+        <span class="ftag">Citation Score</span>
+        <span class="ftag">LLM Search</span>
+      </div>
+    </div>
+    <div class="feat" style="background:var(--lime);transition-delay:.12s">
+      <div class="feat-num" style="color:rgba(17,17,17,.08)">02</div>
+      <div class="feat-icon" style="background:var(--lime);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="feat-name">Post Agent</div>
+      <div class="feat-desc">An AI that knows your brand, voice, and audience. It generates, schedules, and publishes posts across X, LinkedIn, TikTok, Reddit, and YouTube — automatically.</div>
+      <div class="feat-tags">
+        <span class="ftag" style="border-color:rgba(17,17,17,.25)">Auto-schedule</span>
+        <span class="ftag" style="border-color:rgba(17,17,17,.25)">Multi-platform</span>
+        <span class="ftag" style="border-color:rgba(17,17,17,.25)">AI-generated</span>
+      </div>
+    </div>
+    <div class="feat" style="transition-delay:.24s">
+      <div class="feat-num">03</div>
+      <div class="feat-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <div class="feat-name">Progress Tracking</div>
+      <div class="feat-desc">See the compounding effect of your GEO and content efforts. Weekly AI visibility reports, platform analytics, and credit usage — all in one clean dashboard.</div>
+      <div class="feat-tags">
+        <span class="ftag">Weekly Reports</span>
+        <span class="ftag">Trend Analysis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="how" id="how">
+  <div class="sec-head">
+    <div class="reveal-left">
+      <div class="sec-eye">How it works</div>
+      <h2 class="sec-title">Four steps<br>to AI dominance.</h2>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step reveal" style="transition-delay:.0s">
+      <div class="step-num">01</div>
+      <div class="step-title">Connect</div>
+      <div class="step-desc">Link your social channels — X, LinkedIn, Reddit, TikTok, YouTube. Takes under 2 minutes.</div>
+    </div>
+    <div class="step reveal" style="transition-delay:.1s">
+      <div class="step-num">02</div>
+      <div class="step-title">Diagnose</div>
+      <div class="step-desc">Run a GEO scan. See your current AI visibility score, citation rate, and where you rank across LLMs.</div>
+    </div>
+    <div class="step reveal" style="transition-delay:.2s">
+      <div class="step-num">03</div>
+      <div class="step-title">Optimize</div>
+      <div class="step-desc">The Post Agent generates content tuned for AI citation. Schedule posts that compound your brand presence.</div>
+    </div>
+    <div class="step reveal" style="transition-delay:.3s">
+      <div class="step-num">04</div>
+      <div class="step-title">Compound</div>
+      <div class="step-desc">Watch your AI ranking climb week over week. Track citations, mentions, and reach across every platform.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ILLUSTRATION + COPY ═══ -->
+<section class="illus-section">
+  <div class="illus-inner">
+    <div class="illus-text reveal-left">
+      <div class="sec-eye" style="margin-bottom:12px;">The AI era</div>
+      <h2>GEO is the new SEO.</h2>
+      <p style="margin-top:16px;">When someone asks ChatGPT for a recommendation in your industry, is your brand in the answer? aisee finds the gap — and closes it.</p>
+    </div>
+    <!-- Geometric illustration -->
+    <div class="illus-graphic reveal">
+      <svg width="360" height="320" viewBox="0 0 360 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background circle -->
+        <circle cx="180" cy="160" r="140" fill="#F7F8F7" stroke="#111" stroke-width="1.5"/>
+        <!-- Yellow circle orbit -->
+        <circle cx="180" cy="160" r="100" fill="none" stroke="#E1E1E1" stroke-width="1" stroke-dasharray="4 6"/>
+        <!-- Platform dots on orbit -->
+        <circle cx="280" cy="160" r="18" fill="#111"/>
+        <text x="280" y="165" text-anchor="middle" fill="white" font-size="10" font-family="Karla">GPT</text>
+        <circle cx="180" cy="60" r="18" fill="#20B2AA"/>
+        <text x="180" y="65" text-anchor="middle" fill="white" font-size="9" font-family="Karla">PPL</text>
+        <circle cx="80" cy="160" r="18" fill="#4285F4"/>
+        <text x="80" y="165" text-anchor="middle" fill="white" font-size="9" font-family="Karla">GEM</text>
+        <circle cx="180" cy="260" r="18" fill="#CC785C"/>
+        <text x="180" y="265" text-anchor="middle" fill="white" font-size="9" font-family="Karla">CLD</text>
+        <!-- Center brand blob -->
+        <ellipse cx="180" cy="155" rx="52" ry="58" fill="#CFF229" stroke="#111" stroke-width="1.5"/>
+        <!-- Mini cyclops in center -->
+        <ellipse cx="180" cy="148" rx="32" ry="30" fill="#111"/>
+        <ellipse cx="180" cy="143" rx="14" ry="12" fill="white"/>
+        <circle cx="180" cy="143" r="7" fill="#111"/>
+        <circle cx="184" cy="139" r="3" fill="white"/>
+        <!-- Label -->
+        <text x="180" y="185" text-anchor="middle" fill="#111" font-size="11" font-family="Karla" font-weight="600">your brand</text>
+        <!-- Connection lines -->
+        <line x1="230" y1="160" x2="262" y2="160" stroke="#CFF229" stroke-width="2"/>
+        <line x1="180" y1="96" x2="180" y2="78" stroke="#CFF229" stroke-width="2"/>
+        <line x1="130" y1="160" x2="98" y2="160" stroke="#CFF229" stroke-width="2"/>
+        <line x1="180" y1="213" x2="180" y2="242" stroke="#CFF229" stroke-width="2"/>
+        <!-- Citation score badge -->
+        <rect x="270" y="60" width="80" height="36" rx="8" fill="#FFE253" stroke="#111" stroke-width="1.5"/>
+        <text x="310" y="74" text-anchor="middle" fill="#111" font-size="9" font-family="Karla" font-weight="600">Citation</text>
+        <text x="310" y="87" text-anchor="middle" fill="#111" font-size="13" font-family="Karla" font-weight="700">9.4%</text>
+        <!-- Arrow to badge -->
+        <line x1="280" y1="150" x2="300" y2="96" stroke="#111" stroke-width="1" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PLATFORMS ═══ -->
+<section class="platforms" style="background:var(--cream);" id="pricing">
+  <div class="sec-head">
+    <div class="reveal-left">
+      <div class="sec-eye">Platforms</div>
+      <h2 class="sec-title">Everywhere<br>that matters.</h2>
+    </div>
+  </div>
+  <div class="plat-row">
+    <div class="plat-pill reveal" style="transition-delay:.0s"><div class="pdot" style="background:#111"></div>X / Twitter</div>
+    <div class="plat-pill reveal" style="transition-delay:.06s"><div class="pdot" style="background:#0A66C2"></div>LinkedIn</div>
+    <div class="plat-pill reveal" style="transition-delay:.12s"><div class="pdot" style="background:#FF4500"></div>Reddit</div>
+    <div class="plat-pill reveal" style="transition-delay:.18s"><div class="pdot" style="background:#111"></div>TikTok</div>
+    <div class="plat-pill reveal" style="transition-delay:.24s"><div class="pdot" style="background:#FF0000"></div>YouTube</div>
+    <div class="plat-pill reveal" style="transition-delay:.30s"><div class="pdot" style="background:#10A37F"></div>ChatGPT</div>
+    <div class="plat-pill reveal" style="transition-delay:.36s"><div class="pdot" style="background:#20B2AA"></div>Perplexity</div>
+    <div class="plat-pill reveal" style="transition-delay:.42s"><div class="pdot" style="background:#4285F4"></div>Gemini</div>
+    <div class="plat-pill reveal" style="transition-delay:.48s"><div class="pdot" style="background:#CC785C"></div>Claude</div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="testimonials">
+  <div class="sec-head">
+    <div class="reveal-left">
+      <div class="sec-eye">What people say</div>
+      <h2 class="sec-title">Real results.<br>Real brands.</h2>
+    </div>
+  </div>
+  <div class="test-grid">
+    <div class="tcard reveal" style="transition-delay:.0s">
+      <span class="tcard-tag" style="background:var(--lime)">GEO</span>
+      <p class="tcard-quote">"Within 3 weeks, our brand started appearing in ChatGPT answers for our core keywords. Citation score went from 2% to 11%. Nothing else moved that needle."</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar" style="background:var(--lime)">S</div>
+        <div><div class="tcard-name">Sarah K.</div><div class="tcard-role">Head of Growth, SaaS</div></div>
+      </div>
+    </div>
+    <div class="tcard reveal" style="transition-delay:.1s">
+      <span class="tcard-tag" style="background:var(--yellow)">Post Agent</span>
+      <p class="tcard-quote">"The Post Agent saves me 4 hours a week. It knows our brand voice better than most of our team. Consistent posting, consistent growth — zero effort."</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar" style="background:var(--yellow)">M</div>
+        <div><div class="tcard-name">Marcus T.</div><div class="tcard-role">Founder, DTC brand</div></div>
+      </div>
+    </div>
+    <div class="tcard reveal" style="transition-delay:.2s">
+      <span class="tcard-tag">Analytics</span>
+      <p class="tcard-quote">"The weekly GEO report is the first thing I open on Mondays. Watching AI Rankings trend up week-over-week is genuinely addictive. This is the future."</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar" style="background:var(--cream)">L</div>
+        <div><div class="tcard-name">Lena R.</div><div class="tcard-role">CMO, B2B software</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq" id="faq">
+  <div class="sec-head">
+    <div class="reveal-left">
+      <div class="sec-eye">FAQ</div>
+      <h2 class="sec-title">Questions?<br>Answers.</h2>
+    </div>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item open reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What exactly does aisee do?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">GEO is the evolution of SEO for the AI-first era. Instead of optimizing for keywords in search results, GEO optimizes your brand for AI-generated answers — where decisions are increasingly made. aisee tracks your visibility inside LLMs, helps you improve it, and uses an AI Post Agent to keep your social presence compounding.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Who is aisee designed for?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">aisee is built for founders, marketers, and growth teams who understand that the next wave of discovery happens inside AI assistants. If your customers ask ChatGPT or Perplexity for recommendations, you need aisee.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How is aisee different from traditional SEO tools?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">Traditional SEO optimizes for Google's blue links. aisee optimizes for AI-generated answers. LLMs pull from fundamentally different signals than search algorithms. aisee is purpose-built for the GEO era, not retrofitted from old SEO playbooks.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What platforms does the Post Agent support?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">X (Twitter), LinkedIn, Reddit, TikTok, and YouTube. You connect your accounts once — the Post Agent handles scheduling, formatting, and publishing with full preview before anything goes live.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How quickly will I see results?</span>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">GEO is a compounding strategy. Most brands see measurable citation score improvements within 3–6 weeks of consistent posting and optimization. The dashboard tracks week-over-week changes so you can watch the momentum build.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section" id="cta">
+  <h2 class="cta-hl reveal-left">Get discovered.<br>By the AIs<br>people trust.</h2>
+  <div class="cta-right reveal">
+    <a class="btn-cta" href="#"><span>Start Free</span><span>→</span></a>
+    <div class="cta-note">No credit card required</div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <a href="#" style="text-decoration:none;"><img src="assets/logo.svg" style="height:26px;" alt="aisee"></a>
+  <div class="foot-links">
+    <a class="foot-link" href="#">About</a>
+    <a class="foot-link" href="#">Blog</a>
+    <a class="foot-link" href="#">Pricing</a>
+    <a class="foot-link" href="#">FAQ</a>
+    <a class="foot-link" href="#">Docs</a>
+  </div>
+  <span class="foot-copy">© 2026 aisee. The future of discoverability.</span>
+</footer>
+
+<!-- TWEAKS -->
+<div class="tweaks-panel" id="tweaksPanel">
+  <div class="tw-title">Tweaks</div>
+  <div class="tw-row">
+    <span class="tw-lbl">Floating tags</span>
+    <div class="tw-tog on" id="tTags" onclick="toggleTw('tags')"><div class="tw-knob"></div></div>
+  </div>
+  <div class="tw-row">
+    <span class="tw-lbl">Deco shapes</span>
+    <div class="tw-tog on" id="tDeco" onclick="toggleTw('deco')"><div class="tw-knob"></div></div>
+  </div>
+  <div class="tw-row">
+    <span class="tw-lbl">Custom cursor</span>
+    <div class="tw-tog on" id="tCursor" onclick="toggleTw('cursor')"><div class="tw-knob"></div></div>
+  </div>
+</div>
+
+<script>
+// ── Cursor ──────────────────────────────────────────────────────
+const cur = document.getElementById('cursor');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function loop(){
+  cx += (mx-cx)*0.12; cy += (my-cy)*0.12;
+  cur.style.left = cx+'px'; cur.style.top = cy+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.feat,.tcard,.plat-pill,.faq-q').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+
+// ── Scroll reveal ──────────────────────────────────────────────
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold:0.12 });
+
+document.querySelectorAll('.reveal,.reveal-left,.feat').forEach(el => obs.observe(el));
+
+// ── Parallax on deco shapes ─────────────────────────────────────
+window.addEventListener('scroll', ()=>{
+  const sy = window.scrollY * 0.3;
+  document.querySelector('.deco-circle-yellow').style.transform = `translateY(${-sy*0.4}px)`;
+  document.querySelector('.deco-rect-pink').style.transform = `rotate(-2deg) translateY(${sy*0.2}px)`;
+  document.querySelector('.deco-circle-blue').style.transform = `translateY(${-sy*0.15}px)`;
+});
+
+// ── Countup ─────────────────────────────────────────────────────
+function countUp(el, target, suffix='') {
+  let start=0; const dur=1600; const t0=performance.now();
+  (function step(now){
+    const p=Math.min((now-t0)/dur,1);
+    const ease=1-Math.pow(1-p,4);
+    el.textContent=Math.floor(ease*target)+suffix;
+    if(p<1) requestAnimationFrame(step);
+  })(performance.now());
+}
+const countObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const t=parseInt(e.target.dataset.count);
+      const suffix=e.target.dataset.suffix||'+';
+      countUp(e.target,t,suffix);
+      countObs.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>countObs.observe(el));
+
+// ── FAQ ─────────────────────────────────────────────────────────
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// ── Tweaks ──────────────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "tags": true,
+  "deco": true,
+  "cursor": true
+}/*EDITMODE-END*/;
+const tw = {...TWEAK_DEFAULTS};
+
+window.addEventListener('message', e=>{
+  if(e.data?.type==='__activate_edit_mode')   document.getElementById('tweaksPanel').classList.add('show');
+  if(e.data?.type==='__deactivate_edit_mode') document.getElementById('tweaksPanel').classList.remove('show');
+});
+window.parent.postMessage({type:'__edit_mode_available'},'*');
+
+function toggleTw(key){
+  tw[key]=!tw[key];
+  const el=document.getElementById('t'+key.charAt(0).toUpperCase()+key.slice(1));
+  if(el) el.classList.toggle('on',tw[key]);
+  applyTw();
+  window.parent.postMessage({type:'__edit_mode_set_keys',edits:{[key]:tw[key]}},'*');
+}
+function applyTw(){
+  document.querySelectorAll('.ktag').forEach(t=>t.style.opacity=tw.tags?'':'0');
+  document.querySelectorAll('.deco').forEach(d=>d.style.opacity=tw.deco?'':'0');
+  cur.style.display=tw.cursor?'':'none';
+}
+applyTw();
+
+// ── Scroll persistence ──────────────────────────────────────────
+window.addEventListener('scroll',()=>localStorage.setItem('hp_scroll',window.scrollY));
+const s=localStorage.getItem('hp_scroll');
+if(s) window.scrollTo(0,parseInt(s));
+</script>
+</body>
+</html>

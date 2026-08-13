@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Animated Process List Icon — Scroll</title>
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  :root {
+    --ink: #09244B;
+    --muted: #6b6b6b;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --hair: rgba(0, 0, 0, 0.08);
+    --accent: #2f6df6;
+  }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 64px 32px 96px; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lede { color: var(--muted); font-size: 14px; margin: 0 0 16px; max-width: 62ch; line-height: 1.6; }
+  .switch { font-size: 13px; margin: 0 0 40px; }
+  .switch a { color: var(--accent); text-decoration: none; }
+  .switch a:hover { text-decoration: underline; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+  .card { background: var(--card); border: 1px solid var(--hair); border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; }
+  .card-title { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+  .card-hint { font-size: 12px; color: var(--muted); }
+  .stage {
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px);
+    border-radius: 10px; padding: 36px; display: flex; align-items: center; justify-content: center; min-height: 180px;
+  }
+  .sizes { display: flex; align-items: flex-end; gap: 36px; }
+  .size-cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .size-cell .label { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: var(--muted); }
+
+  /* ──────────────────────────────────────────────
+     Process-list icon — SCROLL / conveyor
+     A row completes (check ticks, line strikes across), then the whole list
+     slides up one row and the finished row fades out the top; a fresh blank
+     row arrives at the bottom. One belt, stepped up three times, then loops.
+     ────────────────────────────────────────────── */
+  .plc { display: inline-block; color: var(--ink); cursor: pointer; padding: 6px; }
+  .plc svg { display: block; overflow: hidden; }          /* clip the belt to the icon box */
+  .plc .plc-line  { stroke-dasharray: 100; }
+  .plc .plc-check { transform-box: fill-box; transform-origin: center; }
+  .plc .plc-belt  { transform-box: view-box; }
+
+  .plc:hover .plc-belt { animation: plc-belt var(--plc-d,2800ms) cubic-bezier(0.66,0,0.34,1) infinite; }
+  .plc:hover .plc-r2-line  { animation: plc-line-2 var(--plc-d,2800ms) cubic-bezier(0.4,0,0.2,1) infinite; }
+  .plc:hover .plc-r2-check { animation: plc-check-2 var(--plc-d,2800ms) ease-out infinite; }
+  .plc:hover .plc-r3-line  { animation: plc-line-3 var(--plc-d,2800ms) cubic-bezier(0.4,0,0.2,1) infinite; }
+  .plc:hover .plc-r3-check { animation: plc-check-3 var(--plc-d,2800ms) ease-out infinite; }
+  .plc:hover .plc-r4-line  { animation: plc-line-4 var(--plc-d,2800ms) cubic-bezier(0.4,0,0.2,1) infinite; }
+  .plc:hover .plc-r4-check { animation: plc-check-4 var(--plc-d,2800ms) ease-out infinite; }
+  .plc:hover .plc-r5-line, .plc:hover .plc-r6-line  { stroke-dashoffset: 100; }
+  .plc:hover .plc-r5-check, .plc:hover .plc-r6-check { opacity: 0; }
+
+  /* Belt: hold (row completes) → smooth slide up one row → hold → … then reseats. */
+  @keyframes plc-belt {
+    0%, 22%   { transform: translateY(0); }
+    31%, 56%  { transform: translateY(-4.421px); }
+    65%, 90%  { transform: translateY(-8.842px); }
+    99%, 100% { transform: translateY(-13.264px); }
+  }
+  /* Each row: LINE strikes across first, THEN the check ticks on. */
+  @keyframes plc-line-2 {
+    0%, 1%  { stroke-dashoffset: 100; }
+    14%     { stroke-dashoffset: 0;   }
+    100%    { stroke-dashoffset: 0;   }
+  }
+  @keyframes plc-check-2 {
+    0%, 15% { opacity: 0; transform: scale(0.4);  }
+    19%     { opacity: 1; transform: scale(1.2);  }
+    22%     { opacity: 1; transform: scale(1);    }
+    100%    { opacity: 1; transform: scale(1);    }
+  }
+  @keyframes plc-line-3 {
+    0%, 32% { stroke-dashoffset: 100; }
+    45%     { stroke-dashoffset: 0;   }
+    100%    { stroke-dashoffset: 0;   }
+  }
+  @keyframes plc-check-3 {
+    0%, 46% { opacity: 0; transform: scale(0.4);  }
+    50%     { opacity: 1; transform: scale(1.2);  }
+    53%     { opacity: 1; transform: scale(1);    }
+    100%    { opacity: 1; transform: scale(1);    }
+  }
+  @keyframes plc-line-4 {
+    0%, 66% { stroke-dashoffset: 100; }
+    79%     { stroke-dashoffset: 0;   }
+    100%    { stroke-dashoffset: 0;   }
+  }
+  @keyframes plc-check-4 {
+    0%, 80% { opacity: 0; transform: scale(0.4);  }
+    84%     { opacity: 1; transform: scale(1.2);  }
+    87%     { opacity: 1; transform: scale(1);    }
+    100%    { opacity: 1; transform: scale(1);    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .plc:hover .plc-belt, .plc:hover * { animation: none; }
+    .plc:hover .plc-line { stroke-dashoffset: 0; }
+    .plc:hover .plc-check { opacity: 1; transform: none; }
+  }
+
+  /* placements */
+  .icon-btn {
+    appearance: none; background: transparent; border: 1px solid var(--hair); border-radius: 8px;
+    padding: 8px 12px; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px;
+    color: var(--ink); cursor: pointer; transition: background 160ms ease, border-color 160ms ease;
+  }
+  .icon-btn:hover { background: #f3f3f3; border-color: rgba(0,0,0,0.14); }
+  .icon-btn .plc { padding: 0; }
+  .nav-row {
+    display: flex; align-items: center; gap: 12px; padding: 11px 14px; border: 1px solid var(--hair);
+    border-radius: 10px; background: #fff; cursor: pointer; transition: background 160ms ease, border-color 160ms ease;
+  }
+  .nav-row:hover { background: #f6f8ff; border-color: rgba(47,109,246,0.25); }
+  .nav-row .grow { flex: 1; font-size: 13px; font-weight: 500; }
+  .nav-row .meta { font-size: 12px; color: var(--muted); }
+  .nav-row .plc { padding: 0; color: var(--accent); }
+
+  .source { margin-top: 8px; background: #0f0f10; color: #e8e8e8; border-radius: 12px; padding: 20px 22px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.65; overflow: auto; }
+  .source .c { color: #6b7a8a; }
+  .source .k { color: #c2a8ff; }
+</style>
+</head>
+<body>
+<!-- shared fade mask: rows dissolve at the top & bottom edges of the icon box -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="plc-fadeGrad" x1="0" y1="0" x2="0" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0"    stop-color="#000"></stop>
+      <stop offset="0.05" stop-color="#000"></stop>
+      <stop offset="0.19" stop-color="#fff"></stop>
+      <stop offset="0.85" stop-color="#fff"></stop>
+      <stop offset="1"    stop-color="#000"></stop>
+    </linearGradient>
+    <mask id="plc-fade" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+      <rect x="0" y="0" width="16" height="16" fill="url(#plc-fadeGrad)"></rect>
+    </mask>
+  </defs>
+</svg>
+
+<div class="page">
+  <h1>Animated process-list icon — scroll</h1>
+  <p class="lede">Hover any icon — a row completes (its check ticks on, its line strikes across), then the whole list slides up one row, the finished row fades out the top, and a fresh blank row arrives at the bottom to complete next. Endless self-clearing checklist.</p>
+  <p class="switch">Other version: <a href="Animated Process List Icon.html">batch / fill-in-place →</a></p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head"><div class="card-title">Sizes</div><div class="card-hint">hover →</div></div>
+      <div class="stage">
+        <div class="sizes">
+          <div class="size-cell"><span class="plc" aria-label="Process list" role="img"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+      <g mask="url(#plc-fade)">
+        <g class="plc-belt">
+        <path class="plc-check plc-r0-check" d="M2.32 3.947L3.267 4.895L5.162 3"></path>
+        <path class="plc-line plc-r0-line" pathLength="100" d="M7.373 3.947H14.32"></path>
+        <path class="plc-check plc-r1-check" d="M2.32 8.369L3.267 9.316L5.162 7.421"></path>
+        <path class="plc-line plc-r1-line" pathLength="100" d="M7.373 8.369H14.32"></path>
+        <path class="plc-check plc-r2-check" d="M2.32 12.79L3.267 13.737L5.162 11.842"></path>
+        <path class="plc-line plc-r2-line" pathLength="100" d="M7.373 12.79H14.32"></path>
+        <path class="plc-check plc-r3-check" d="M2.32 17.211L3.267 18.158L5.162 16.264"></path>
+        <path class="plc-line plc-r3-line" pathLength="100" d="M7.373 17.211H14.32"></path>
+        <path class="plc-check plc-r4-check" d="M2.32 21.632L3.267 22.58L5.162 20.685"></path>
+        <path class="plc-line plc-r4-line" pathLength="100" d="M7.373 21.632H14.32"></path>
+        <path class="plc-check plc-r5-check" d="M2.32 26.054L3.267 27.001L5.162 25.106"></path>
+        <path class="plc-line plc-r5-line" pathLength="100" d="M7.373 26.054H14.32"></path>
+        <path class="plc-check plc-r6-check" d="M2.32 30.475L3.267 31.422L5.162 29.527"></path>
+        <path class="plc-line plc-r6-line" pathLength="100" d="M7.373 30.475H14.32"></path>
+        </g>
+      </g>
+    </svg></span><span class="label">16</span></div>
+          <div class="size-cell"><span class="plc" aria-label="Process list" role="img"><svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+      <g mask="url(#plc-fade)">
+        <g class="plc-belt">
+        <path class="plc-check plc-r0-check" d="M2.32 3.947L3.267 4.895L5.162 3"></path>
+        <path class="plc-line plc-r0-line" pathLength="100" d="M7.373 3.947H14.32"></path>
+        <path class="plc-check plc-r1-check" d="M2.32 8.369L3.267 9.316L5.162 7.421"></path>
+        <path class="plc-line plc-r1-line" pathLength="100" d="M7.373 8.369H14.32"></path>
+        <path class="plc-check plc-r2-check" d="M2.32 12.79L3.267 13.737L5.162 11.842"></path>
+        <path class="plc-line plc-r2-line" pathLength="100" d="M7.373 12.79H14.32"></path>
+        <path class="plc-check plc-r3-check" d="M2.32 17.211L3.267 18.158L5.162 16.264"></path>
+        <path class="plc-line plc-r3-line" pathLength="100" d="M7.373 17.211H14.32"></path>
+        <path class="plc-check plc-r4-check" d="M2.32 21.632L3.267 22.58L5.162 20.685"></path>
+        <path class="plc-line plc-r4-line" pathLength="100" d="M7.373 21.632H14.32"></path>
+        <path class="plc-check plc-r5-check" d="M2.32 26.054L3.267 27.001L5.162 25.106"></path>
+        <path class="plc-line plc-r5-line" pathLength="100" d="M7.373 26.054H14.32"></path>
+        <path class="plc-check plc-r6-check" d="M2.32 30.475L3.267 31.422L5.162 29.527"></path>
+        <path class="plc-line plc-r6-line" pathLength="100" d="M7.373 30.475H14.32"></path>
+        </g>
+      </g>
+    </svg></span><span class="label">24</span></div>
+          <div class="size-cell"><span class="plc" aria-label="Process list" role="img"><svg width="48" height="48" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+      <g mask="url(#plc-fade)">
+        <g class="plc-belt">
+        <path class="plc-check plc-r0-check" d="M2.32 3.947L3.267 4.895L5.162 3"></path>
+        <path class="plc-line plc-r0-line" pathLength="100" d="M7.373 3.947H14.32"></path>
+        <path class="plc-check plc-r1-check" d="M2.32 8.369L3.267 9.316L5.162 7.421"></path>
+        <path class="plc-line plc-r1-line" pathLength="100" d="M7.373 8.369H14.32"></path>
+        <path class="plc-check plc-r2-check" d="M2.32 12.79L3.267 13.737L5.162 11.842"></path>
+        <path class="plc-line plc-r2-line" pathLength="100" d="M7.373 12.79H14.32"></path>
+        <path class="plc-check plc-r3-check" d="M2.32 17.211L3.267 18.158L5.162 16.264"></path>
+        <path class="plc-line plc-r3-line" pathLength="100" d="M7.373 17.211H14.32"></path>
+        <path class="plc-check plc-r4-check" d="M2.32 21.632L3.267 22.58L5.162 20.685"></path>
+        <path class="plc-line plc-r4-line" pathLength="100" d="M7.373 21.632H14.32"></path>
+        <path class="plc-check plc-r5-check" d="M2.32 26.054L3.267 27.001L5.162 25.106"></path>
+        <path class="plc-line plc-r5-line" pathLength="100" d="M7.373 26.054H14.32"></path>
+        <path class="plc-check plc-r6-check" d="M2.32 30.475L3.267 31.422L5.162 29.527"></path>
+        <path class="plc-line plc-r6-line" pathLength="100" d="M7.373 30.475H14.32"></path>
+        </g>
+      </g>
+    </svg></span><span class="label">48</span></div>
+          <div class="size-cell"><span class="plc" aria-label="Process list" role="img"><svg width="96" height="96" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+      <g mask="url(#plc-fade)">
+        <g class="plc-belt">
+        <path class="plc-check plc-r0-check" d="M2.32 3.947L3.267 4.895L5.162 3"></path>
+        <path class="plc-line plc-r0-line" pathLength="100" d="M7.373 3.947H14.32"></path>
+        <path class="plc-check plc-r1-check" d="M2.32 8.369L3.267 9.316L5.162 7.421"></path>
+        <path class="plc-line plc-r1-line" pathLength="100" d="M7.373 8.369H14.32"></path>
+        <path class="plc-check plc-r2-check" d="M2.32 12.79L3.267 13.737L5.162 11.842"></path>
+        <path class="plc-line plc-r2-line" pathLength="100" d="M7.373 12.79H14.32"></path>
+        <path class="plc-check plc-r3-check" d="M2.32 17.211L3.267 18.158L5.162 16.264"></path>
+        <path class="plc-line plc-r3-line" pathLength="100" d="M7.373 17.211H14.32"></path>
+        <path class="plc-check plc-r4-check" d="M2.32 21.632L3.267 22.58L5.162 20.685"></path>
+        <path class="plc-line plc-r4-line" pathLength="100" d="M7.373 21.632H14.32"></path>
+        <path class="plc-check plc-r5-check" d="M2.32 26.054L3.267 27.001L5.162 25.106"></path>
+        <path class="plc-line plc-r5-line" pathLength="100" d="M7.373 26.054H14.32"></path>
+        <path class="plc-check plc-r6-check" d="M2.32 30.475L3.267 31.422L5.162 29.527"></path>
+        <path class="plc-line plc-r6-line" pathLength="100" d="M7.373 30.475H14.32"></path>
+        </g>
+      </g>
+    </svg></span><span class="label">96</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-title">Real placements</div><div class="card-hint">hover →</div></div>
+      <div class="stage" style="flex-direction:column; align-items:stretch; gap:14px; padding:24px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="icon-btn" type="button"><span class="plc"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+      <g mask="url(#plc-fade)">
+        <g class="plc-belt">
+        <path class="plc-check plc-r0-check" d="M2.32 3.947L3.267 4.895L5.162 3"></path>
+        <path class="plc-line plc-r0-line" pathLength="100" d="M7.373 3.947H14.32"></path>
+        <path class="plc-check plc-r1-check" d="M2.32 8.369L3.267 9.316L5.162 7.421"></path>
+        <path class="plc-line plc-r1-line" pathLength="100" d="M7.373 8.369H14.32"></path>
+        <path class="plc-check plc-r2-check" d="M2.32 12.79L3.267 13.737L5.162 11.842"></path>
+        <path class="plc-line plc-r2-line" pathLength="100" d="M7.373 12.79H14.32"></path>
+        <path class="plc-check plc-r3-check" d="M2.32 17.211L3.267 18.158L5.162 16.264"></path>
+        <path class="plc-line plc-r3-line" pathLength="100" d="M7.373 17.211H14.32"></path>
+        <path class="plc-check plc-r4-check" d="M2.32 21.632L3.267 22.58L5.162 20.685"></path>
+        <path class="plc-line plc-r4-line" pathLength="100" d="M7.373 21.632H14.32"></path>
+        <path class="plc-check plc-r5-check" d="M2.32 26.054L3.267 27.001L5.162 25.106"></path>
+        <path class="plc-line plc-r5-line" pathLength="100" d="M7.373 26.054H14.32"></path>
+        <path class="plc-check plc-r6-check" d="M2.32 30.475L3.267 31.422L5.162 29.527"></path>
+        <path class="plc-line plc-r6-line" pathLength="100" d="M7.373 30.475H14.32"></path>
+        </g>
+      </g>
+    </svg></span>Tasks</button>
+          <button class="icon-btn" type="button"><span class="plc"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+      <g mask="url(#plc-fade)">
+        <g class="plc-belt">
+        <path class="plc-check plc-r0-check" d="M2.32 3.947L3.267 4.895L5.162 3"></path>
+        <path class="plc-line plc-r0-line" pathLength="100" d="M7.373 3.947H14.32"></path>
+        <path class="plc-check plc-r1-check" d="M2.32 8.369L3.267 9.316L5.162 7.421"></path>
+        <path class="plc-line plc-r1-line" pathLength="100" d="M7.373 8.369H14.32"></path>
+        <path class="plc-check plc-r2-check" d="M2.32 12.79L3.267 13.737L5.162 11.842"></path>
+        <path class="plc-line plc-r2-line" pathLength="100" d="M7.373 12.79H14.32"></path>
+        <path class="plc-check plc-r3-check" d="M2.32 17.211L3.267 18.158L5.162 16.264"></path>
+        <path class="plc-line plc-r3-line" pathLength="100" d="M7.373 17.211H14.32"></path>
+        <path class="plc-check plc-r4-check" d="M2.32 21.632L3.267 22.58L5.162 20.685"></path>
+        <path class="plc-line plc-r4-line" pathLength="100" d="M7.373 21.632H14.32"></path>
+        <path class="plc-check plc-r5-check" d="M2.32 26.054L3.267 27.001L5.162 25.106"></path>
+        <path class="plc-line plc-r5-line" pathLength="100" d="M7.373 26.054H14.32"></path>
+        <path class="plc-check plc-r6-check" d="M2.32 30.475L3.267 31.422L5.162 29.527"></path>
+        <path class="plc-line plc-r6-line" pathLength="100" d="M7.373 30.475H14.32"></path>
+        </g>
+      </g>
+    </svg></span>Queue</button>
+        </div>
+        <div class="nav-row"><span class="plc"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+      <g mask="url(#plc-fade)">
+        <g class="plc-belt">
+        <path class="plc-check plc-r0-check" d="M2.32 3.947L3.267 4.895L5.162 3"></path>
+        <path class="plc-line plc-r0-line" pathLength="100" d="M7.373 3.947H14.32"></path>
+        <path class="plc-check plc-r1-check" d="M2.32 8.369L3.267 9.316L5.162 7.421"></path>
+        <path class="plc-line plc-r1-line" pathLength="100" d="M7.373 8.369H14.32"></path>
+        <path class="plc-check plc-r2-check" d="M2.32 12.79L3.267 13.737L5.162 11.842"></path>
+        <path class="plc-line plc-r2-line" pathLength="100" d="M7.373 12.79H14.32"></path>
+        <path class="plc-check plc-r3-check" d="M2.32 17.211L3.267 18.158L5.162 16.264"></path>
+        <path class="plc-line plc-r3-line" pathLength="100" d="M7.373 17.211H14.32"></path>
+        <path class="plc-check plc-r4-check" d="M2.32 21.632L3.267 22.58L5.162 20.685"></path>
+        <path class="plc-line plc-r4-line" pathLength="100" d="M7.373 21.632H14.32"></path>
+        <path class="plc-check plc-r5-check" d="M2.32 26.054L3.267 27.001L5.162 25.106"></path>
+        <path class="plc-line plc-r5-line" pathLength="100" d="M7.373 26.054H14.32"></path>
+        <path class="plc-check plc-r6-check" d="M2.32 30.475L3.267 31.422L5.162 29.527"></path>
+        <path class="plc-line plc-r6-line" pathLength="100" d="M7.373 30.475H14.32"></path>
+        </g>
+      </g>
+    </svg></span><span class="grow">Processing queue</span><span class="meta">running</span></div>
+        <div class="nav-row"><span class="plc"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+      <g mask="url(#plc-fade)">
+        <g class="plc-belt">
+        <path class="plc-check plc-r0-check" d="M2.32 3.947L3.267 4.895L5.162 3"></path>
+        <path class="plc-line plc-r0-line" pathLength="100" d="M7.373 3.947H14.32"></path>
+        <path class="plc-check plc-r1-check" d="M2.32 8.369L3.267 9.316L5.162 7.421"></path>
+        <path class="plc-line plc-r1-line" pathLength="100" d="M7.373 8.369H14.32"></path>
+        <path class="plc-check plc-r2-check" d="M2.32 12.79L3.267 13.737L5.162 11.842"></path>
+        <path class="plc-line plc-r2-line" pathLength="100" d="M7.373 12.79H14.32"></path>
+        <path class="plc-check plc-r3-check" d="M2.32 17.211L3.267 18.158L5.162 16.264"></path>
+        <path class="plc-line plc-r3-line" pathLength="100" d="M7.373 17.211H14.32"></path>
+        <path class="plc-check plc-r4-check" d="M2.32 21.632L3.267 22.58L5.162 20.685"></path>
+        <path class="plc-line plc-r4-line" pathLength="100" d="M7.373 21.632H14.32"></path>
+        <path class="plc-check plc-r5-check" d="M2.32 26.054L3.267 27.001L5.162 25.106"></path>
+        <path class="plc-line plc-r5-line" pathLength="100" d="M7.373 26.054H14.32"></path>
+        <path class="plc-check plc-r6-check" d="M2.32 30.475L3.267 31.422L5.162 29.527"></path>
+        <path class="plc-line plc-r6-line" pathLength="100" d="M7.373 30.475H14.32"></path>
+        </g>
+      </g>
+    </svg></span><span class="grow">Release steps</span><span class="meta">view</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-title">How it works</div><div class="card-hint">one belt, stepped + masked</div></div>
+    <div class="source"><span class="c">/* 7 identical rows stacked on a belt, clipped to the 16×16 box. */</span>
+<span class="c">/* A fixed fade mask dissolves rows at the top &amp; bottom edges. */</span>
+<span class="k">@keyframes plc-belt</span> {
+   0%, 22%   { transform: translateY(0); }        <span class="c">/* row completes at the active slot */</span>
+  31%, 56%   { transform: translateY(-4.421px); } <span class="c">/* slide up one row, next completes */</span>
+  65%, 90%   { transform: translateY(-8.842px); }
+  99%, 100%  { transform: translateY(-13.264px);} <span class="c">/* after 3 rows the loop reseats seamlessly */</span>
+}
+<span class="c">/* each incoming row strikes its LINE first, then ticks its check */</span></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Credit Activity — aisee</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  :root{
+    --lime:#CFF229;
+    --lime-soft:#E8F8A3;
+    --lime-bright:#C9FE12;
+    --yellow:#FFE253;
+    --yellow-soft:#FFF2B3;
+    --yellow-pale:#FFFADD;
+    --cream:#F7F6E9;
+    --warm:#FBFBF3;
+    --orange:#EC5212;
+    --orange-soft:#FFE0CC;
+    --orange-pale:#FFEDDE;
+    --violet:#C9B6E8;
+    --violet-soft:#E8DAF7;
+    --green:#A5D500;
+    --black:#111111;
+    --muted:rgba(17,17,17,0.62);
+    --faint:rgba(17,17,17,0.38);
+    --border:rgba(17,17,17,0.08);
+    --border-strong:rgba(17,17,17,0.18);
+  }
+  body{ background: #FAFAFA; color: var(--black); }
+  button{ font-family: inherit; cursor: pointer; border: 0; background: none; color: inherit; padding: 0; }
+  a{ color: inherit; }
+
+  /* ── Page shell ──────────────────────────────────────────────── */
+  .page{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px 32px 96px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    column-gap: 40px;
+    row-gap: 28px;
+  }
+
+  /* ── Top brand bar ───────────────────────────────────────────── */
+  .topbar{
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand{ display: flex; align-items: center; gap: 10px; }
+  .brand-mark{
+    width: 26px; height: 27px;
+    background: var(--lime);
+    border-radius: 320px 320px 0 0;
+  }
+  .brand-name{ font-family: 'Karla'; font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
+  .topbar-right{ display: flex; align-items: center; gap: 8px; }
+  .top-btn{
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 34px; padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #fff;
+    font: 500 13px/1 'Karla', sans-serif;
+  }
+  .top-btn.lime{ background: var(--lime); border-color: rgba(17,17,17,0.12); }
+  .top-btn svg{ width: 13px; height: 13px; }
+  .icon-btn{
+    width: 34px; height: 34px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .icon-btn svg{ width: 14px; height: 14px; }
+
+  /* ── Sidebar ─────────────────────────────────────────────────── */
+  .app-sidebar{
+    display: flex; flex-direction: column; gap: 4px;
+    position: sticky; top: 28px; align-self: start;
+    max-height: calc(100vh - 56px);
+  }
+  .new-analysis{
+    background: var(--lime);
+    border: 1px solid rgba(17,17,17,0.12);
+    border-radius: 999px;
+    padding: 11px 16px;
+    font: 600 14px/1 'Karla', sans-serif;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    margin-bottom: 12px;
+  }
+  .sb-section-label{
+    font: 500 10px/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding: 14px 10px 6px;
+  }
+  .sb-item{
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    font: 500 14px/1 'Karla', sans-serif;
+    cursor: pointer;
+  }
+  .sb-item:hover{ background: rgba(17,17,17,0.04); }
+  .sb-item.active{ background: rgba(17,17,17,0.05); }
+  .sb-dot{ width: 18px; height: 18px; border-radius: 50%; flex: 0 0 18px; }
+
+  .sb-footer{
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px dashed var(--border);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .credit-meter{
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .credit-meter-head{
+    display: flex; align-items: center; justify-content: space-between;
+    font: 500 12px/1 'JetBrains Mono', monospace;
+  }
+  .credit-meter-num{ display: inline-flex; align-items: center; gap: 6px; }
+  .credit-meter-num svg{ width: 12px; height: 12px; color: var(--orange); }
+  .credit-meter-bar{
+    height: 6px; border-radius: 3px;
+    background: rgba(17,17,17,0.08);
+    overflow: hidden; position: relative;
+  }
+  .credit-meter-bar::before{
+    content: ''; position: absolute; inset: 0;
+    width: 38%;
+    background: linear-gradient(90deg, var(--green), var(--lime));
+  }
+  .credit-meter small{ font: 400 11px/1 'JetBrains Mono', monospace; color: var(--muted); }
+
+  .user-card{
+    display: flex; align-items: center; gap: 10px; padding: 6px 4px;
+  }
+  .user-avatar{
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--lime); color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font: 700 11px/1 'JetBrains Mono', monospace;
+  }
+  .user-meta{ font-size: 12px; line-height: 1.25; min-width: 0; }
+  .user-meta b{ display: block; font-weight: 600; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .user-meta span{ color: var(--muted); }
+
+  /* ── Main ────────────────────────────────────────────────────── */
+  .app-main{ display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+
+  /* ── Page head ───────────────────────────────────────────────── */
+  .page-head{
+    display: flex; align-items: baseline; justify-content: space-between; gap: 24px;
+  }
+  .page-eyebrow{
+    font: 500 11px/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .page-eyebrow .back{
+    width: 22px; height: 22px;
+    border-radius: 50%; background: rgba(17,17,17,0.06);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .page-eyebrow .back svg{ width: 12px; height: 12px; }
+  .page-title{
+    font-family:'Karla',sans-serif;
+    font-size: 44px;
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .purchase-btn{
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 42px; padding: 0 20px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--lime);
+    font: 600 14px/1 'Karla', sans-serif;
+  }
+  .purchase-btn svg{ width: 14px; height: 14px; }
+
+  /* ── Hero summary card ───────────────────────────────────────── */
+  .hero{
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1.1fr 1px 1fr;
+    gap: 32px;
+    align-items: center;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.04);
+  }
+  .hero-balance{ display: flex; flex-direction: column; gap: 12px; }
+  .hero-label{
+    font: 500 11px/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-label .pulse{
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 3px rgba(165,213,0,0.25);
+  }
+  .hero-number{
+    font-family:'Karla',sans-serif;
+    font-size: 88px;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    display: flex; align-items: baseline; gap: 14px;
+  }
+  .hero-number .unit{
+    font: 500 14px/1 'JetBrains Mono', monospace;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .hero-divider{ background: var(--border); align-self: stretch; }
+  .hero-breakdown{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 18px;
+  }
+  .breakdown-item{
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .breakdown-item .k{
+    font: 500 11px/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .breakdown-item .k::before{
+    content: ''; width: 8px; height: 8px; border-radius: 2px; background: var(--bullet, var(--lime));
+  }
+  .breakdown-item .v{
+    font-family:'Karla',sans-serif;
+    font-size: 26px;
+    line-height: 1;
+  }
+  .breakdown-item .v small{
+    font: 500 12px/1 'JetBrains Mono', monospace;
+    color: var(--muted);
+    margin-left: 4px;
+    letter-spacing: 0.04em;
+  }
+  .breakdown-item.subscription{ --bullet: var(--lime); }
+  .breakdown-item.topup{ --bullet: var(--yellow); }
+  .breakdown-item.bonus{ --bullet: var(--orange); }
+  .breakdown-item.used{ --bullet: rgba(17,17,17,0.25); }
+  .breakdown-item.used .v{ color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(17,17,17,0.25); }
+
+  /* ── Filter row ──────────────────────────────────────────────── */
+  .filters{
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    padding: 0 4px;
+  }
+  .tabs{
+    display: inline-flex; gap: 4px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px;
+  }
+  .tab{
+    padding: 8px 14px;
+    border-radius: 999px;
+    font: 500 13px/1 'Karla', sans-serif;
+    color: var(--muted);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .tab.active{ background: var(--black); color: #fff; }
+  .tab .count{
+    font: 500 10px/1 'JetBrains Mono', monospace;
+    background: rgba(17,17,17,0.06);
+    color: var(--muted);
+    padding: 2px 6px;
+    border-radius: 999px;
+  }
+  .tab.active .count{ background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+  .filter-meta{
+    font: 500 12px/1 'JetBrains Mono', monospace;
+    color: var(--muted);
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .filter-meta button{
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 7px 12px; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-family: 'Karla'; font-weight: 500; font-size: 13px; color: var(--black);
+  }
+  .filter-meta svg{ width: 12px; height: 12px; }
+
+  /* ── Day group ───────────────────────────────────────────────── */
+  .day-group{ display: flex; flex-direction: column; gap: 0; }
+  .day-header{
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 4px 10px;
+    font: 500 11px/1 'JetBrains Mono', monospace;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .day-header .when{ color: var(--black); font-weight: 700; }
+  .day-header .rule{
+    flex: 1; height: 0;
+    border-top: 1px dashed var(--border-strong);
+    opacity: 0.5;
+  }
+  .day-header .totals{
+    display: inline-flex; align-items: baseline; gap: 8px;
+  }
+  .day-header .totals .amt{
+    color: var(--orange);
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .day-header .totals .count{
+    color: var(--muted);
+  }
+
+  /* ── Entries ─────────────────────────────────────────────────── */
+  .entries{
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.04);
+  }
+  .entry{
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 18px;
+    align-items: center;
+    padding: 18px 22px;
+    border-bottom: 1px dashed var(--border);
+    position: relative;
+    transition: background .12s;
+  }
+  .entry:last-child{ border-bottom: 0; }
+  .entry:hover{ background: var(--warm); }
+
+  /* ── Avatar (project chip) ───────────────────────────────────── */
+  .avatar{
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font: 700 14px/1 'JetBrains Mono', monospace;
+    color: var(--black);
+    position: relative;
+    overflow: visible;
+  }
+  .avatar.violet{ background: var(--violet); }
+  .avatar.yellow{ background: var(--yellow); }
+  .avatar.green{ background: var(--lime); }
+  .avatar.cream{ background: var(--cream); }
+  /* Tiny feature glyph anchored on the avatar */
+  .avatar .feature-dot{
+    position: absolute; bottom: -3px; right: -3px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 1px rgba(17,17,17,0.08);
+  }
+  .avatar .feature-dot svg{ width: 10px; height: 10px; }
+  .avatar .feature-dot.analysis{ background: var(--yellow); }
+  .avatar .feature-dot.post{ background: var(--violet-soft); }
+  .avatar .feature-dot.engage{ background: var(--orange); color: #fff; }
+
+  /* ── Body ────────────────────────────────────────────────────── */
+  .body{ min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+  .identity{
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap;
+  }
+  .project-link{
+    font: 600 16px/1.2 'Karla', sans-serif;
+    color: var(--black);
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .project-link:hover .arrow{ opacity: 1; transform: translate(1px, -1px); }
+  .project-link .arrow{
+    opacity: 0.4;
+    transition: opacity .12s, transform .12s;
+    width: 11px; height: 11px;
+  }
+  .feat-pill{
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 22px; padding: 0 10px;
+    border-radius: 999px;
+    font: 600 10px/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .feat-pill svg{ width: 10px; height: 10px; }
+  .feat-pill.analysis{ background: var(--yellow-pale); color: #7A5400; }
+  .feat-pill.post{ background: var(--violet-soft); color: #4A2A6E; }
+  .feat-pill.engage{ background: var(--orange-pale); color: #8A2E0A; }
+
+  .sub-chip{
+    display: inline-flex; align-items: center; gap: 5px;
+    height: 22px; padding: 0 9px;
+    border-radius: 6px;
+    background: rgba(17,17,17,0.05);
+    color: var(--black);
+    font: 500 11px/1 'Karla', sans-serif;
+  }
+  .sub-chip.outline{ background: transparent; border: 1px dashed var(--border-strong); }
+
+  /* ── Meta line ───────────────────────────────────────────────── */
+  .meta{
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap;
+    font: 500 12px/1.4 'JetBrains Mono', monospace;
+    color: var(--muted);
+  }
+  .meta .dot{
+    width: 3px; height: 3px;
+    border-radius: 50%; background: var(--faint);
+  }
+  .meta .snippet{
+    font: 400 13px/1.4 'Karla', sans-serif;
+    color: var(--black);
+    max-width: 480px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-style: italic;
+    opacity: 0.78;
+  }
+  .meta .snippet::before{ content: '"'; opacity: 0.4; margin-right: 1px; }
+  .meta .snippet::after{ content: '"'; opacity: 0.4; margin-left: 1px; }
+
+  .stat{
+    display: inline-flex; align-items: baseline; gap: 4px;
+    color: var(--black);
+  }
+  .stat .n{
+    font: 700 13px/1 'JetBrains Mono', monospace;
+    color: var(--black);
+  }
+  .stat .l{ font-size: 11px; color: var(--muted); }
+
+  /* ── Platform icons ──────────────────────────────────────────── */
+  .platforms{
+    display: inline-flex; align-items: center; gap: 0;
+  }
+  .platform-icon{
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--black); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-left: -4px; box-shadow: 0 0 0 2px #fff;
+  }
+  .platform-icon:first-child{ margin-left: 0; }
+  .platform-icon svg{ width: 9px; height: 9px; }
+  .platform-icon.reddit{ background: #FF4500; }
+  .platform-icon.discord{ background: #5865F2; }
+  .platform-icon.telegram{ background: #229ED9; }
+  .platform-handle{
+    margin-left: 8px;
+    font: 500 12px/1 'JetBrains Mono', monospace;
+    color: var(--black);
+  }
+
+  /* ── Right column (credits) ──────────────────────────────────── */
+  .right{
+    text-align: right;
+    display: flex; flex-direction: column; align-items: flex-end;
+    gap: 4px;
+    min-width: 130px;
+  }
+  .credits-amount{
+    font-family:'Karla',sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--black);
+    display: flex; align-items: baseline; gap: 4px;
+  }
+  .credits-amount .sign{ color: var(--orange); font-size: 22px; }
+  .credits-amount.included{ color: var(--muted); }
+  .credits-amount.included .sign{ color: var(--muted); }
+  .credits-label{
+    font: 500 10px/1 'JetBrains Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .credits-label.green{ color: #5A7A00; }
+
+  /* ── Tweaks compact density ──────────────────────────────────── */
+  body.density-compact .entry{ padding: 12px 22px; }
+  body.density-compact .avatar{ width: 36px; height: 36px; border-radius: 10px; font-size: 12px; }
+  body.density-compact .body{ gap: 4px; }
+  body.density-compact .project-link{ font-size: 14px; }
+  body.density-compact .credits-amount{ font-size: 22px; }
+
+  body.meta-minimal .meta .snippet{ display: none; }
+
+  #tweaks-panel{ position: fixed; top: 16px; right: 16px; z-index: 50; }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── Brand bar ─────────────────────────────────────────── -->
+    <div class="topbar">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-name">aisee</span>
+      </div>
+      <div class="topbar-right">
+        <button class="top-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/></svg>
+          Channels
+        </button>
+        <button class="top-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Past Reports
+        </button>
+        <button class="icon-btn" aria-label="Chat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Sidebar ───────────────────────────────────────────── -->
+    <aside class="app-sidebar">
+      <button class="new-analysis">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Analysis
+      </button>
+      <div class="sb-section-label">Projects</div>
+      <div class="sb-item active">
+        <span class="sb-dot" style="background:var(--violet);"></span>
+        <span>Alcell</span>
+      </div>
+      <div class="sb-item">
+        <span class="sb-dot" style="background:var(--lime);"></span>
+        <span>yeyi090</span>
+      </div>
+      <div class="sb-item">
+        <span class="sb-dot" style="background:var(--yellow);"></span>
+        <span>lens</span>
+      </div>
+
+      <div class="sb-footer">
+        <div class="credit-meter">
+          <div class="credit-meter-head">
+            <span class="credit-meter-num">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+              1,825
+            </span>
+            <span style="color: var(--muted);">/ 2,945</span>
+          </div>
+          <div class="credit-meter-bar"></div>
+          <small>Used 1,120 this period</small>
+        </div>
+        <div class="user-card">
+          <span class="user-avatar">cc</span>
+          <div class="user-meta">
+            <b>ccbakala36@gma…</b>
+            <span>Starter plan</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main ──────────────────────────────────────────────── -->
+    <main class="app-main">
+
+      <!-- Page head -->
+      <div class="page-head">
+        <div>
+          <div class="page-eyebrow">
+            <span class="back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            </span>
+            Account · Billing
+          </div>
+          <h1 class="page-title">Credit Activity</h1>
+        </div>
+        <button class="purchase-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Purchase credits
+        </button>
+      </div>
+
+      <!-- Hero balance card -->
+      <section class="hero">
+        <div class="hero-balance">
+          <div class="hero-label">
+            <span class="pulse"></span>
+            Available Balance
+          </div>
+          <div class="hero-number">
+            1,825<span class="unit">credits</span>
+          </div>
+        </div>
+
+        <div class="hero-divider"></div>
+
+        <div class="hero-breakdown">
+          <div class="breakdown-item subscription">
+            <span class="k">Subscription</span>
+            <span class="v">1,000<small>/mo</small></span>
+          </div>
+          <div class="breakdown-item topup">
+            <span class="k">Top-up</span>
+            <span class="v">800</span>
+          </div>
+          <div class="breakdown-item bonus">
+            <span class="k">Bonus</span>
+            <span class="v">25</span>
+          </div>
+          <div class="breakdown-item used">
+            <span class="k">Used this period</span>
+            <span class="v">1,120</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter row -->
+      <div class="filters">
+        <div class="tabs" role="tablist">
+          <button class="tab">All <span class="count">42</span></button>
+          <button class="tab active">Consumed <span class="count">18</span></button>
+          <button class="tab">Subscribed <span class="count">3</span></button>
+          <button class="tab">Top-up <span class="count">2</span></button>
+          <button class="tab">Bonus <span class="count">1</span></button>
+        </div>
+        <div class="filter-meta">
+          <button>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            All features
+          </button>
+          <button>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Last 30 days
+          </button>
+        </div>
+      </div>
+
+      <!-- ─── Day group: TODAY ──────────────────────────────── -->
+      <div class="day-group">
+        <div class="day-header">
+          <span class="when">Today · Oct 17</span>
+          <span class="rule"></span>
+          <span class="totals">
+            <span class="count">5 activities</span>
+            ·
+            <span class="amt">−288 credits</span>
+          </span>
+        </div>
+
+        <section class="entries">
+
+          <!-- ▸ Analysis -->
+          <article class="entry">
+            <div class="avatar violet">Al
+              <span class="feature-dot analysis" title="Analysis">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>
+              </span>
+            </div>
+            <div class="body">
+              <div class="identity">
+                <a class="project-link" href="#">Alcell
+                  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <span class="feat-pill analysis">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>
+                  Analysis
+                </span>
+                <span class="sub-chip">Action Advice</span>
+                <span class="sub-chip">AI Presence</span>
+              </div>
+              <div class="meta">
+                <span>2 modules run</span>
+                <span class="dot"></span>
+                <span>03:18 PM</span>
+              </div>
+            </div>
+            <div class="right">
+              <div class="credits-amount"><span class="sign">−</span>220</div>
+              <div class="credits-label">credits</div>
+            </div>
+          </article>
+
+          <!-- ▸ Post Agent — Publish -->
+          <article class="entry">
+            <div class="avatar violet">Al
+              <span class="feature-dot post" title="Post Agent">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              </span>
+            </div>
+            <div class="body">
+              <div class="identity">
+                <a class="project-link" href="#">Alcell
+                  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <span class="feat-pill post">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                  Post Agent
+                </span>
+                <span class="sub-chip outline">Publish</span>
+              </div>
+              <div class="meta">
+                <span class="snippet">Just dropped: aluminium-cell upgrades on the Alcell roadmap — 12% better…</span>
+                <span class="dot"></span>
+                <span class="platforms">
+                  <span class="platform-icon" title="X / Twitter">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  </span>
+                  <span class="platform-icon reddit" title="Reddit">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="#FF4500"/><path d="M17 11.5a1.5 1.5 0 0 0-2.6-1c-1-0.6-2.2-1-3.4-1l0.7-2.4 1.9 0.5a1 1 0 1 0 0.2-0.7l-2.3-0.6c-0.1 0-0.2 0-0.2 0.1l-0.8 2.8a8 8 0 0 0-3.5 1A1.5 1.5 0 1 0 6.2 13c0 0.1-0.1 0.3-0.1 0.4 0 1.7 2 3 4.4 3s4.4-1.3 4.4-3c0-0.1 0-0.3-0.1-0.4 0.6-0.4 1.1-1 1.1-1.5z" fill="#fff"/></svg>
+                  </span>
+                  <span class="platform-handle">2 channels</span>
+                </span>
+              </div>
+            </div>
+            <div class="right">
+              <div class="credits-amount"><span class="sign">−</span>25</div>
+              <div class="credits-label">credits</div>
+            </div>
+          </article>
+
+          <!-- ▸ Post Agent — Generation -->
+          <article class="entry">
+            <div class="avatar green">ye
+              <span class="feature-dot post" title="Post Agent">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              </span>
+            </div>
+            <div class="body">
+              <div class="identity">
+                <a class="project-link" href="#">yeyi090
+                  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <span class="feat-pill post">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                  Post Agent
+                </span>
+                <span class="sub-chip outline">Generation</span>
+              </div>
+              <div class="meta">
+                <span class="snippet">3 draft posts generated for the yeyi090 testnet launch — thread + 2 standalones</span>
+                <span class="dot"></span>
+                <span><span class="stat"><span class="n">3</span><span class="l">drafts</span></span></span>
+                <span class="dot"></span>
+                <span>02:44 PM</span>
+              </div>
+            </div>
+            <div class="right">
+              <div class="credits-amount"><span class="sign">−</span>25</div>
+              <div class="credits-label">credits</div>
+            </div>
+          </article>
+
+          <!-- ▸ Post Agent — AI Image -->
+          <article class="entry">
+            <div class="avatar yellow">le
+              <span class="feature-dot post" title="Post Agent">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              </span>
+            </div>
+            <div class="body">
+              <div class="identity">
+                <a class="project-link" href="#">lens
+                  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <span class="feat-pill post">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                  Post Agent
+                </span>
+                <span class="sub-chip outline">AI Image</span>
+              </div>
+              <div class="meta">
+                <span class="snippet">lens protocol cover art, minimal, lime accents, 16:9</span>
+                <span class="dot"></span>
+                <span><span class="stat"><span class="n">1</span><span class="l">image · 1024×576</span></span></span>
+                <span class="dot"></span>
+                <span>01:12 PM</span>
+              </div>
+            </div>
+            <div class="right">
+              <div class="credits-amount"><span class="sign">−</span>25</div>
+              <div class="credits-label">credits</div>
+            </div>
+          </article>
+
+          <!-- ▸ Engage -->
+          <article class="entry">
+            <div class="avatar green">ye
+              <span class="feature-dot engage" title="Engage">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5L3 21l1.5-7.5A8.5 8.5 0 1 1 21 11.5z"/></svg>
+              </span>
+            </div>
+            <div class="body">
+              <div class="identity">
+                <a class="project-link" href="#">yeyi090
+                  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <span class="feat-pill engage">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5L3 21l1.5-7.5A8.5 8.5 0 1 1 21 11.5z"/></svg>
+                  Engage
+                </span>
+              </div>
+              <div class="meta">
+                <span class="platforms">
+                  <span class="platform-icon" title="X / Twitter">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  </span>
+                  <span class="platform-handle">@yeyi090</span>
+                </span>
+                <span class="dot"></span>
+                <span><span class="stat"><span class="n">8</span><span class="l">replies sent</span></span></span>
+                <span class="dot"></span>
+                <span><span class="stat"><span class="n">3</span><span class="l">mentions</span></span></span>
+                <span class="dot"></span>
+                <span>12:30 PM</span>
+              </div>
+            </div>
+            <div class="right">
+              <div class="credits-amount"><span class="sign">−</span>10</div>
+              <div class="credits-label">credits</div>
+            </div>
+          </article>
+
+        </section>
+      </div>
+
+      <!-- ─── Day group: YESTERDAY ──────────────────────────── -->
+      <div class="day-group">
+        <div class="day-header">
+          <span class="when">Yesterday · Oct 16</span>
+          <span class="rule"></span>
+          <span class="totals">
+            <span class="count">3 activities</span>
+            ·
+            <span class="amt">−43 credits</span>
+          </span>
+        </div>
+
+        <section class="entries">
+
+          <!-- ▸ Engage — multi-platform -->
+          <article class="entry">
+            <div class="avatar yellow">le
+              <span class="feature-dot engage" title="Engage">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5L3 21l1.5-7.5A8.5 8.5 0 1 1 21 11.5z"/></svg>
+              </span>
+            </div>
+            <div class="body">
+              <div class="identity">
+                <a class="project-link" href="#">lens
+                  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <span class="feat-pill engage">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5L3 21l1.5-7.5A8.5 8.5 0 1 1 21 11.5z"/></svg>
+                  Engage
+                </span>
+              </div>
+              <div class="meta">
+                <span class="platforms">
+                  <span class="platform-icon" title="X / Twitter">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  </span>
+                  <span class="platform-icon reddit" title="Reddit">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="#FF4500"/><path d="M17 11.5a1.5 1.5 0 0 0-2.6-1c-1-0.6-2.2-1-3.4-1l0.7-2.4 1.9 0.5a1 1 0 1 0 0.2-0.7l-2.3-0.6c-0.1 0-0.2 0-0.2 0.1l-0.8 2.8a8 8 0 0 0-3.5 1A1.5 1.5 0 1 0 6.2 13c0 0.1-0.1 0.3-0.1 0.4 0 1.7 2 3 4.4 3s4.4-1.3 4.4-3c0-0.1 0-0.3-0.1-0.4 0.6-0.4 1.1-1 1.1-1.5z" fill="#fff"/></svg>
+                  </span>
+                  <span class="platform-handle">@lensprotocol</span>
+                </span>
+                <span class="dot"></span>
+                <span><span class="stat"><span class="n">14</span><span class="l">replies sent</span></span></span>
+                <span class="dot"></span>
+                <span><span class="stat"><span class="n">6</span><span class="l">mentions</span></span></span>
+                <span class="dot"></span>
+                <span>09:45 PM</span>
+              </div>
+            </div>
+            <div class="right">
+              <div class="credits-amount"><span class="sign">−</span>18</div>
+              <div class="credits-label">credits</div>
+            </div>
+          </article>
+
+          <!-- ▸ Analysis included in plan -->
+          <article class="entry">
+            <div class="avatar green">ye
+              <span class="feature-dot analysis" title="Analysis">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>
+              </span>
+            </div>
+            <div class="body">
+              <div class="identity">
+                <a class="project-link" href="#">yeyi090
+                  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <span class="feat-pill analysis">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>
+                  Analysis
+                </span>
+                <span class="sub-chip">Competitor Landscape</span>
+              </div>
+              <div class="meta">
+                <span>1 module run</span>
+                <span class="dot"></span>
+                <span>04:02 PM</span>
+              </div>
+            </div>
+            <div class="right">
+              <div class="credits-amount included"><span class="sign">−</span>0</div>
+              <div class="credits-label green">Included in plan</div>
+            </div>
+          </article>
+
+          <!-- ▸ Analysis -->
+          <article class="entry">
+            <div class="avatar violet">Al
+              <span class="feature-dot analysis" title="Analysis">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>
+              </span>
+            </div>
+            <div class="body">
+              <div class="identity">
+                <a class="project-link" href="#">Alcell
+                  <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <span class="feat-pill analysis">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>
+                  Analysis
+                </span>
+                <span class="sub-chip">Action Advice</span>
+              </div>
+              <div class="meta">
+                <span>1 module run</span>
+                <span class="dot"></span>
+                <span>11:18 AM</span>
+              </div>
+            </div>
+            <div class="right">
+              <div class="credits-amount"><span class="sign">−</span>25</div>
+              <div class="credits-label">credits</div>
+            </div>
+          </article>
+
+        </section>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Tweaks (React + Babel) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+
+  <div id="tweaks-panel"></div>
+  <script type="text/babel">
+    const { useEffect } = React;
+    function CreditTweaks() {
+      const [tweaks, setTweak] = window.useTweaks({
+        density: 'comfortable',
+        metaDetail: 'rich',
+      });
+      useEffect(() => {
+        document.body.classList.toggle('density-compact', tweaks.density === 'compact');
+        document.body.classList.toggle('meta-minimal', tweaks.metaDetail === 'minimal');
+      }, [tweaks]);
+      return (
+        <window.TweaksPanel>
+          <window.TweakRadio
+            label="Row density"
+            value={tweaks.density}
+            options={['comfortable', 'compact']}
+            onChange={v => setTweak('density', v)}
+          />
+          <window.TweakRadio
+            label="Meta detail"
+            value={tweaks.metaDetail}
+            options={['rich', 'minimal']}
+            onChange={v => setTweak('metaDetail', v)}
+          />
+        </window.TweaksPanel>
+      );
+    }
+    function tryMount() {
+      if (window.TweaksPanel && window.useTweaks) {
+        ReactDOM.createRoot(document.getElementById('tweaks-panel')).render(<CreditTweaks />);
+      } else setTimeout(tryMount, 50);
+    }
+    tryMount();
+  </script>
+</body>
+</html>

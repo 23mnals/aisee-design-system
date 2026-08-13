@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Post Reply Tutorial — Recorder</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<style>
+  @font-face {
+    font-family: "Karla";
+    src: url("fonts/Karla-VariableFont_wght.ttf") format("truetype");
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  html, body { background: #FAFAFA; margin: 0; }
+  body { font-family: "Karla", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+  /* Render the component naturally — capture target will be the yellow card only,
+     queried via DOM after mount. The wrapper just provides a 460px column so the
+     card sizes correctly. */
+  #capture-area {
+    width: 460px;
+    margin: 24px;
+    padding: 0;
+    background: transparent;
+  }
+
+  #status {
+    position: fixed; bottom: 16px; right: 16px;
+    background: #111; color: #fff; padding: 12px 18px; border-radius: 12px;
+    font-family: 'Karla', monospace; font-size: 13px;
+    z-index: 1000; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    min-width: 280px;
+  }
+  #status .row { display: flex; justify-content: space-between; gap: 12px; }
+  #status .row + .row { margin-top: 4px; }
+  #status .v { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  #download-card {
+    position: fixed;
+    bottom: 16px; left: 16px;
+    background: #FFE253; color: #111; padding: 14px 22px; border-radius: 12px;
+    font-family: 'Karla', sans-serif; font-weight: 700; font-size: 15px;
+    text-decoration: none; z-index: 1000;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    display: none;
+  }
+</style>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: "#111111",
+          "yellow-ffe253": "#FFE253",
+          "yellow-fbfbf3": "#FBFBF3",
+          "gray-f5f5f5":  "#F5F5F5",
+        },
+        fontFamily: { karla: ['Karla', 'system-ui', 'sans-serif'] },
+        keyframes: {
+          fadeInUp: {
+            "0%": { transform: "translateY(4px)", opacity: "0" },
+            "100%": { transform: "translateY(0)", opacity: "1" },
+          },
+          clickPress: {
+            "0%":   { transform: "scale(1)" },
+            "45%":  { transform: "scale(0.86)" },
+            "100%": { transform: "scale(1)" },
+          },
+        },
+        animation: {
+          "fade-in": "fadeInUp 320ms ease-out",
+          "click-press": "clickPress 320ms cubic-bezier(0.34,1.56,0.64,1)",
+        },
+      }
+    }
+  };
+</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+  integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+  integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+  integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="https://unpkg.com/html-to-image@1.11.13/dist/html-to-image.js"></script>
+<script src="scratch/mp4-muxer.js"></script>
+</head>
+<body>
+  <div id="capture-area">
+    <div id="root"></div>
+  </div>
+
+  <div id="status">
+    <div class="row"><span>Stage</span><span class="v" id="s-stage">init…</span></div>
+    <div class="row"><span>Frame</span><span class="v" id="s-frame">0</span></div>
+    <div class="row"><span>Elapsed</span><span class="v" id="s-elapsed">0.0s</span></div>
+    <div class="row"><span>Snap ms</span><span class="v" id="s-snap">—</span></div>
+    <div class="row"><span>Output</span><span class="v" id="s-output">—</span></div>
+  </div>
+
+  <a id="download-card" download="PostReplyTutorialReddit.mp4">⬇ Download MP4</a>
+
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/ui-shims.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/icons.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/post-reply-tutorial-reddit.jsx"></script>
+
+  <script type="text/babel" data-presets="env,react">
+    const { createRoot } = ReactDOM;
+    createRoot(document.getElementById("root")).render(
+      React.createElement(window.PostReplyTutorialReddit, { handle: "u/sophie" })
+    );
+  </script>
+
+  <script>
+    window.__recDone = false;
+    window.__recError = null;
+    window.__mp4Base64 = null;
+    window.__mp4Mime = "video/mp4";
+    window.__mp4ByteLength = 0;
+
+    const $s = (id) => document.getElementById(id);
+    const setStage   = (s) => $s('s-stage').textContent = s;
+    const setFrame   = (n) => $s('s-frame').textContent = String(n);
+    const setElapsed = (s) => $s('s-elapsed').textContent = s.toFixed(2) + 's';
+    const setSnap    = (s) => $s('s-snap').textContent = s.toFixed(0) + ' ms';
+    const setOutput  = (s) => $s('s-output').textContent = s;
+
+    async function waitFor(predicate, ms = 8000) {
+      const start = performance.now();
+      while (!predicate()) {
+        if (performance.now() - start > ms) throw new Error('waitFor timeout');
+        await new Promise(r => setTimeout(r, 50));
+      }
+    }
+
+    async function record() {
+      try {
+        setStage('booting…');
+        await waitFor(() => window.PostReplyTutorialReddit && window.htmlToImage && window.Mp4Muxer && window.VideoEncoder);
+        await waitFor(() => document.querySelector('[class*="bg-yellow-fbfbf3"]'));
+        await new Promise(r => setTimeout(r, 1000));
+
+        // ── Capture target = the yellow card ONLY (excludes progress dots, status strip, all surrounding padding) ─
+        const card = document.querySelector('[class*="bg-yellow-fbfbf3"]');
+        const rect = card.getBoundingClientRect();
+        const STAGE_W = Math.round(rect.width);
+        const STAGE_H = Math.round(rect.height);
+        const SCALE   = 2;
+        const W       = STAGE_W * SCALE;
+        const H       = STAGE_H * SCALE;
+        const FPS     = 30;
+        const DURATION_MS = 6800;
+        const BITRATE = 5_000_000;
+        const target  = card;
+
+        const muxer = new Mp4Muxer.Muxer({
+          target: new Mp4Muxer.ArrayBufferTarget(),
+          video: { codec: 'avc', width: W, height: H, frameRate: FPS },
+          fastStart: 'in-memory',
+        });
+        const encoder = new VideoEncoder({
+          output: (chunk, meta) => muxer.addVideoChunk(chunk, meta),
+          error:  (e) => { window.__recError = 'encoder: ' + e.message; },
+        });
+        encoder.configure({
+          codec: 'avc1.640028',
+          width: W,
+          height: H,
+          bitrate: BITRATE,
+          framerate: FPS,
+          avc: { format: 'avc' },
+        });
+
+        setStage('priming…');
+        try {
+          if (document.fonts && document.fonts.ready) {
+            await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 800))]);
+          }
+        } catch (e) { /* ignore */ }
+        // Warmup snapshot — discards the first canvas which sometimes lacks
+        // colorSpace metadata on the very first call, tripping the muxer.
+        try {
+          await window.htmlToImage.toCanvas(target, {
+            width: STAGE_W, height: STAGE_H, pixelRatio: SCALE,
+            skipFonts: true, cacheBust: false,
+          });
+          await new Promise(r => setTimeout(r, 100));
+        } catch (e) { /* ignore */ }
+
+        // Helper: race a snapshot against a hard timeout so a stalled call
+        // doesn't burn the entire recording window.
+        const snapWithTimeout = (tgt, ms) => Promise.race([
+          window.htmlToImage.toCanvas(tgt, {
+            width: STAGE_W, height: STAGE_H, pixelRatio: SCALE,
+            skipFonts: true, cacheBust: false,
+          }),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('snap timeout ' + ms + 'ms')), ms)),
+        ]);
+
+        setStage('recording');
+        const start = performance.now();
+        let frameIdx = 0;
+        let stalledFrames = 0;
+
+        while (true) {
+          const t0 = performance.now();
+          const elapsedMs = t0 - start;
+          if (elapsedMs >= DURATION_MS) break;
+
+          let snap;
+          try {
+            snap = await snapWithTimeout(target, 1500);   // 1.5s per frame max
+          } catch (e) {
+            window.__snapErr = String(e).slice(0, 200);
+            stalledFrames++;
+            // Drop this frame and keep going — wall clock continues to advance.
+            await new Promise(r => setTimeout(r, 20));
+            continue;
+          }
+
+          const tsUs = Math.round(elapsedMs * 1000);
+          const vf = new VideoFrame(snap, { timestamp: tsUs });
+          encoder.encode(vf, { keyFrame: frameIdx % 30 === 0 });
+          vf.close();
+
+          frameIdx++;
+          setFrame(frameIdx);
+          setElapsed(elapsedMs / 1000);
+          setSnap(performance.now() - t0);
+
+          await new Promise(r => setTimeout(r, 0));
+        }
+
+        window.__stalledFrames = stalledFrames;
+
+        setStage('flushing…');
+        await encoder.flush();
+        encoder.close();
+        muxer.finalize();
+        const { buffer } = muxer.target;
+        window.__mp4ByteLength = buffer.byteLength;
+        setOutput((buffer.byteLength / 1024 / 1024).toFixed(2) + ' MB · ' + frameIdx + ' frames · ' + W + '×' + H);
+
+        const blob = new Blob([buffer], { type: 'video/mp4' });
+        const url  = URL.createObjectURL(blob);
+        const dl   = $s('download-card');
+        dl.href = url;
+        dl.style.display = 'block';
+
+        const bytes = new Uint8Array(buffer);
+        let binStr = '';
+        const CHUNK = 0x8000;
+        for (let i = 0; i < bytes.length; i += CHUNK) {
+          binStr += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+        }
+        window.__mp4Base64 = btoa(binStr);
+        window.__mp4Done = true;
+        setStage('done ✓');
+      } catch (e) {
+        window.__recError = String(e && e.stack || e);
+        setStage('error');
+        setOutput('see __recError');
+      } finally {
+        window.__recDone = true;
+      }
+    }
+
+    window.addEventListener('load', () => setTimeout(record, 600));
+  </script>
+</body>
+</html>

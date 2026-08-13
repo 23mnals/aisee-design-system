@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Engage Empty State (optimized)" subtitle="Suggested chips + action-first titles + mini preview" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Engage — Empty state (optimized)</title>
+<link rel="stylesheet" href="engage-v3/styles.css" />
+<style>
+  body { background: #FAFAFA; padding: 24px 0; }
+
+  /* ── Empty-state card refresh ────────────────────────────── */
+  .es-card {
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 18px 20px 16px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .es-head {
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .es-step-num {
+    flex-shrink: 0;
+    width: 28px; height: 28px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font: 700 13px/1 'Karla', sans-serif;
+    background: var(--primary); color: var(--black);
+  }
+  .es-ttl-block { flex: 1; min-width: 0; }
+  .es-ttl {
+    font: 700 16px/1.3 'Karla', sans-serif;
+    color: var(--black);
+    margin: 0;
+  }
+  .es-sub {
+    font-size: 12.5px; color: var(--muted);
+    margin-top: 3px; line-height: 1.5;
+  }
+
+  /* "What you'll see" mini preview strip */
+  .es-preview {
+    background: var(--bg-page);
+    border: 1px dashed rgba(17,17,17,0.10);
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 11.5px; color: var(--muted);
+  }
+  .es-preview .pv-arrow {
+    flex-shrink: 0;
+    font-size: 14px; color: var(--faint);
+  }
+  .es-preview .pv-mini {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px; color: var(--black);
+    font-weight: 500;
+  }
+  .es-preview .pv-mini .av {
+    width: 14px; height: 14px; border-radius: 999px;
+    background: var(--primary-pale);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700;
+  }
+  .es-preview .pv-pill {
+    display: inline-flex; align-items: center;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--purple-soft);
+    font-size: 10px; font-weight: 600;
+    color: var(--black);
+  }
+
+  /* Suggestion chip rail */
+  .es-suggest-lbl {
+    font-size: 11px; font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .es-chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .es-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    height: 28px; padding: 0 11px;
+    border-radius: 999px;
+    border: 1px solid var(--border-hover);
+    background: var(--white);
+    font: 500 12.5px/1 'Karla', sans-serif;
+    color: var(--black);
+    cursor: pointer;
+    transition: background .12s, border-color .12s, transform .1s;
+  }
+  .es-chip:hover {
+    background: var(--primary-pale);
+    border-color: var(--black);
+  }
+  .es-chip:active { transform: scale(0.97); }
+  .es-chip .plus { color: var(--faint); font-weight: 600; font-size: 13px; }
+  .es-chip:hover .plus { color: var(--black); }
+
+  .es-input-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px dashed rgba(17,17,17,0.15);
+    background: var(--bg-page);
+  }
+  .es-input-row input {
+    flex: 1; background: transparent; border: 0; outline: 0;
+    font: 14px 'Karla', sans-serif;
+  }
+  .es-input-row input::placeholder { color: var(--faint); }
+  .es-input-row .ico { color: var(--faint); display: inline-flex; }
+  .es-input-row .hint {
+    font-size: 11px; color: var(--muted);
+    padding: 2px 6px; border-radius: 4px;
+    background: rgba(17,17,17,0.05);
+  }
+
+  /* Sub-grid for accounts/subs (uniform) */
+  .es-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .es-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  /* "Inactive" status pill */
+  .es-status {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(17,17,17,0.04);
+    font-size: 11px; font-weight: 600; color: var(--muted);
+  }
+  .es-status .d {
+    width: 6px; height: 6px; border-radius: 999px;
+    background: var(--muted);
+  }
+
+  .notes {
+    max-width: 1180px;
+    margin: 32px auto 16px;
+    padding: 16px 22px;
+    background: #FFFADD;
+    border: 1px solid #F4D960;
+    border-radius: 12px;
+    font: 13px/1.55 'Karla', sans-serif;
+    color: var(--black);
+  }
+  .notes h2 { font-size: 14px; margin: 0 0 10px; }
+  .notes ul { margin: 6px 0 0; padding-left: 20px; }
+  .notes li { margin-bottom: 6px; }
+  .notes b { color: var(--black); }
+  .notes .label {
+    display: inline-block;
+    padding: 1px 8px; border-radius: 4px;
+    background: rgba(17,17,17,0.08);
+    font-size: 11px; font-weight: 700;
+    margin-right: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app" style="grid-template-columns: 1fr; grid-template-rows: 1fr; grid-template-areas: 'main';">
+  <main class="main">
+
+    <!-- Original-style lime banner (kept as-is) -->
+    <div class="engage-banner config-banner" style="margin:0 24px;">
+      <div class="engage-banner-top">
+        <div class="icon-bubble" style="background: #fff;">
+          <img src="engage-v3/engage-icon.svg" alt="" />
+        </div>
+        <div class="titles">
+          <h1>Engage — Initial Setup</h1>
+          <div class="sub">Add at least one keyword so aisee can start scanning X &amp; Reddit for relevant conversations.</div>
+        </div>
+        <div class="banner-stats">
+          <div class="banner-stat"><span class="lbl">Keywords</span><span class="num">0</span></div>
+          <div class="banner-stat"><span class="lbl">Subreddits</span><span class="num">0</span></div>
+          <div class="banner-stat"><span class="lbl">Accounts</span><span class="num">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="config-wrap" style="padding:20px 24px 32px;">
+
+      <!-- ═══════════ 1. KEYWORDS — primary, action-first ═══════════ -->
+      <div class="es-card">
+        <div class="es-head">
+          <span class="es-step-num">1</span>
+          <div class="es-ttl-block">
+            <h3 class="es-ttl">Tell aisee what to listen for</h3>
+            <div class="es-sub">
+              Pick 2–3 phrases your audience would actually type into ChatGPT or Google.
+              We'll scan X + Reddit every 24h for matches and surface them in your Signal Feed.
+            </div>
+          </div>
+          <span class="es-status"><span class="d"></span> Inactive</span>
+        </div>
+
+        <!-- Suggestion chips -->
+        <div>
+          <div class="es-suggest-lbl" style="margin-bottom: 8px;">Suggested for AI / SEO brands</div>
+          <div class="es-chips">
+            <button class="es-chip"><span class="plus">+</span>GEO optimization</button>
+            <button class="es-chip"><span class="plus">+</span>AI search visibility</button>
+            <button class="es-chip"><span class="plus">+</span>ChatGPT SEO</button>
+            <button class="es-chip"><span class="plus">+</span>Perplexity marketing</button>
+            <button class="es-chip"><span class="plus">+</span>generative search</button>
+            <button class="es-chip"><span class="plus">+</span>LLM citations</button>
+          </div>
+        </div>
+
+        <!-- Custom input -->
+        <div class="es-input-row">
+          <span class="ico">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+          <input placeholder="Or type your own — e.g. AI brand monitoring" />
+          <span class="hint">Enter ⏎</span>
+        </div>
+
+        <!-- Mini preview of what comes next -->
+        <div class="es-preview">
+          <span>Once added, matches appear in Signal Feed like</span>
+          <span class="pv-arrow">→</span>
+          <span class="pv-mini">
+            <span class="av">M</span>
+            <span>@seo_practitioner</span>
+            <span class="pv-pill">Help-seeking</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Right column: Accounts + Subreddits -->
+      <div style="display:flex; flex-direction:column; gap:18px;">
+
+        <!-- ═══════════ 2. TRACKED ACCOUNTS ═══════════ -->
+        <div class="es-card">
+          <div class="es-head">
+            <span class="es-step-num" style="background: var(--blue-soft);">2</span>
+            <div class="es-ttl-block">
+              <h3 class="es-ttl">Watch the people shaping your niche</h3>
+              <div class="es-sub">
+                When these creators post — even without keyword match — push it to your feed.
+                Useful for staying on top of category trendsetters.
+              </div>
+            </div>
+            <span class="es-status"><span class="d"></span> Optional</span>
+          </div>
+
+          <div>
+            <div class="es-suggest-lbl" style="margin-bottom: 8px;">Popular in GEO / AI search</div>
+            <div class="es-chips">
+              <button class="es-chip"><span class="plus">+</span>@KorayGubur</button>
+              <button class="es-chip"><span class="plus">+</span>@searchengineland</button>
+              <button class="es-chip"><span class="plus">+</span>@aleyda</button>
+              <button class="es-chip"><span class="plus">+</span>@dougsechrist</button>
+            </div>
+          </div>
+
+          <button class="add-btn" style="align-self:flex-start; background: var(--white); border: 1px solid var(--border-hover);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Add custom X handle
+          </button>
+        </div>
+
+        <!-- ═══════════ 3. SUBREDDITS ═══════════ -->
+        <div class="es-card">
+          <div class="es-head">
+            <span class="es-step-num" style="background: #FFE3D6;">3</span>
+            <div class="es-ttl-block">
+              <h3 class="es-ttl">Choose communities where your topic lives</h3>
+              <div class="es-sub">
+                We'll watch keyword-matching threads inside these subreddits.
+                Pick 3–5 to start; you can always tune later.
+              </div>
+            </div>
+            <span class="es-status"><span class="d"></span> Optional</span>
+          </div>
+
+          <div>
+            <div class="es-suggest-lbl" style="margin-bottom: 8px;">Recommended starters</div>
+            <div class="es-grid-3">
+              <button class="es-chip" style="justify-content: flex-start; padding: 6px 10px; height: auto;">
+                <span class="r-ico" style="width:20px;height:20px;border-radius:5px;background:var(--orange);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">r/</span>
+                <span style="display:flex; flex-direction:column; gap:1px; text-align:left;">
+                  <span>SEO</span>
+                  <span style="font-size:10px;color:var(--muted);font-weight:500;">1.2M members</span>
+                </span>
+              </button>
+              <button class="es-chip" style="justify-content: flex-start; padding: 6px 10px; height: auto;">
+                <span class="r-ico" style="width:20px;height:20px;border-radius:5px;background:var(--orange);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">r/</span>
+                <span style="display:flex; flex-direction:column; gap:1px; text-align:left;">
+                  <span>marketing</span>
+                  <span style="font-size:10px;color:var(--muted);font-weight:500;">890K members</span>
+                </span>
+              </button>
+              <button class="es-chip" style="justify-content: flex-start; padding: 6px 10px; height: auto;">
+                <span class="r-ico" style="width:20px;height:20px;border-radius:5px;background:var(--orange);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">r/</span>
+                <span style="display:flex; flex-direction:column; gap:1px; text-align:left;">
+                  <span>ChatGPT</span>
+                  <span style="font-size:10px;color:var(--muted);font-weight:500;">4.1M members</span>
+                </span>
+              </button>
+              <button class="es-chip" style="justify-content: flex-start; padding: 6px 10px; height: auto;">
+                <span class="r-ico" style="width:20px;height:20px;border-radius:5px;background:var(--orange);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">r/</span>
+                <span style="display:flex; flex-direction:column; gap:1px; text-align:left;">
+                  <span>SaaS</span>
+                  <span style="font-size:10px;color:var(--muted);font-weight:500;">320K members</span>
+                </span>
+              </button>
+              <button class="es-chip" style="justify-content: flex-start; padding: 6px 10px; height: auto;">
+                <span class="r-ico" style="width:20px;height:20px;border-radius:5px;background:var(--orange);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">r/</span>
+                <span style="display:flex; flex-direction:column; gap:1px; text-align:left;">
+                  <span>GrowthHacking</span>
+                  <span style="font-size:10px;color:var(--muted);font-weight:500;">270K members</span>
+                </span>
+              </button>
+              <button class="es-chip" style="justify-content: flex-start; padding: 6px 10px; height: auto;">
+                <span class="r-ico" style="width:20px;height:20px;border-radius:5px;background:var(--orange);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">r/</span>
+                <span style="display:flex; flex-direction:column; gap:1px; text-align:left;">
+                  <span>artificial</span>
+                  <span style="font-size:10px;color:var(--muted);font-weight:500;">960K members</span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <button class="add-sub" style="color: var(--black); font-weight:500;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Search for another subreddit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky footer (with disabled CTA until keyword added) -->
+    <div class="config-foot" style="margin:0 24px 24px;">
+      <div class="summary">
+        <span style="display:inline-flex;align-items:center;gap:5px;color:var(--orange);font-weight:600;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          Almost there
+        </span>
+        <span>·</span>
+        <span><b>0</b> keywords <span style="color:var(--faint);">(need 1+)</span></span>
+        <span>·</span>
+        <span><b>0</b> subreddits</span>
+        <span>·</span>
+        <span><b>0</b> accounts</span>
+      </div>
+      <button class="start-btn" disabled style="opacity:0.45; cursor:not-allowed;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 16.5c-1.5 1-2 5-2 5s4-.5 5-2c.55-.8.5-2.06-.16-2.83a2 2 0 0 0-2.84.83zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M15 9a1.5 1.5 0 1 0-1.5-1.5"/></svg>
+        Add a keyword to start
+      </button>
+    </div>
+
+    <!-- Designer notes -->
+    <div class="notes">
+      <h2>🎯 优化点（对比你原版的改动）</h2>
+      <ul>
+        <li><span class="label">标题</span><b>动作化标题替代"No X yet"</b>：把"No keywords yet"换成"Tell aisee what to listen for" —— 解释功能 + 指向下一步动作，而不是描述空白现状。</li>
+        <li><span class="label">建议项</span><b>每张卡都有"一键添加"的建议 chip</b>：用户不需要凭空想象关键词/账号，点一下就加进来。比空状态文案教学有效得多。</li>
+        <li><span class="label">微预览</span><b>第 1 张卡加了"→ 加完会看到这样的卡片"的微缩示意</b>：让用户具象理解 "keyword → signal feed" 的因果，比单纯文字解释强 10 倍。</li>
+        <li><span class="label">层级</span><b>用 1/2/3 + 颜色区分必填 vs 可选</b>：Keywords 是黄色（主步骤），Accounts 蓝色、Subreddits 橙色，并用 "Optional" 状态徽章明示。原版三张卡视觉权重相同，用户不知道先填哪个。</li>
+        <li><span class="label">CTA</span><b>底部按钮显式提示"Add a keyword to start"</b> + disabled 灰态，比"Add a keyword to start"作为隐性文字更直接。</li>
+        <li><span class="label">copy</span><b>说人话</b>："Pick 2–3 phrases your audience would actually type into ChatGPT or Google" 比 "Add a phrase your audience would actually search" 更具体（提到了具体平台）。</li>
+      </ul>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

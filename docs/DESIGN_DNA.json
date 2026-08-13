@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "name": "aisee dApp v6",
+    "description": "Functional, high-density and restrained data-product design for the aisee web app.",
+    "source_references": ["docs/aisee-dapp-design.v6.md", "legacy aisee Design System.zip"],
+    "created_at": "2026-08-13"
+  },
+  "design_system": {
+    "color": {
+      "palette_type": "module-aware analogous brand palette",
+      "primary": { "hex": "#CFFF29", "role": "Analysis actions and active states" },
+      "secondary": { "hex": "#FFE253", "role": "Post Agent and Engage actions and active states" },
+      "accent": { "hex": "#EC5212", "role": "Notifications, exceptions and destructive feedback" },
+      "neutral": { "scale": ["#FFFFFF", "#FAFAFA", "#E1E1E1", "rgba(17,17,17,0.60)", "#111111"], "usage": "White cards on a light gray page with black text and subtle 5 percent borders" },
+      "semantic": { "success": "#A5D500", "warning": "#FFE253", "error": "#EC5212", "info": "#4398FF" },
+      "surface": { "background": "#FAFAFA", "card": "#FFFFFF", "elevated": "#FFFFFF" },
+      "contrast_strategy": "Dark-on-light, high text contrast, accent colors reserved for functional hierarchy"
+    },
+    "typography": {
+      "type_scale": {
+        "display": { "size": "32-48px", "weight": 600, "line_height": "1", "tracking": "0" },
+        "heading_1": { "size": "20px", "weight": 600, "line_height": "24px", "tracking": "0" },
+        "heading_2": { "size": "18-20px", "weight": 600, "line_height": "1.4", "tracking": "0" },
+        "heading_3": { "size": "16px", "weight": 600, "line_height": "1.5", "tracking": "0" },
+        "body": { "size": "14px", "weight": 400, "line_height": "1.57", "tracking": "0" },
+        "body_small": { "size": "13px", "weight": 400, "line_height": "1.5", "tracking": "0" },
+        "caption": { "size": "12px", "weight": 400, "line_height": "1.5", "tracking": "0" },
+        "overline": { "size": "10-11px", "weight": 500, "line_height": "1.4", "tracking": "0.04em" }
+      },
+      "font_families": { "heading": "Karla", "body": "Karla", "mono": "Karla" },
+      "font_style_notes": "Single-family dApp system; compact and highly legible. Gotu is prohibited."
+    },
+    "spacing": { "base_unit": "8px", "scale": ["4px", "8px", "12px", "16px", "24px", "32px", "48px", "64px"], "content_density": "compact-comfortable", "section_rhythm": "24-32px content gaps; 48-64px documentation sections" },
+    "layout": { "grid_system": "Fixed application chrome with fluid content grids", "max_content_width": "fluid desktop canvas", "columns": "12 conceptual; 2-5 component grids", "gutter": "24px", "breakpoints": ["1280px", "1440px"], "alignment_tendency": "left aligned, dense and tabular" },
+    "shape": { "border_radius": { "small": "6-8px", "medium": "12px", "large": "16-20px", "pill": "9999px" }, "border_usage": "1px rgba(17,17,17,0.05) static; stronger only for hover, selected or overlays", "divider_style": "Subtle solid or dashed 5 percent black" },
+    "elevation": { "shadow_style": "Soft and restrained", "levels": { "low": "0 1px 3px rgba(0,0,0,.06)", "medium": "0 10px 15px -3px rgba(0,0,0,.10)", "high": "0 8px 8px rgba(0,0,0,.04), 0 20px 24px rgba(0,0,0,.10)" }, "depth_cues": "Borders first, shadows for dropdowns and dialogs" },
+    "iconography": { "style": "Rounded line icons plus aisee line/fill set", "stroke_weight": "1.5px", "size_scale": ["16px", "20px", "24px"], "preferred_set": "Lucide" },
+    "motion": { "easing": "cubic-bezier(0.2,0.8,0.2,1)", "duration_scale": { "micro": "120ms", "normal": "150-250ms", "macro": "300ms max" }, "entrance_pattern": "Short fade or 8px overlay motion", "exit_pattern": "Faster reverse fade", "philosophy": "Feedback only, never decorative" },
+    "components": { "button_style": "Module-colored, 8px radius, black label", "input_style": "36px, white, subtle border and black focus", "card_style": "White, 12px radius, minimal elevation", "navigation_pattern": "70px header plus 224px sidebar and three-way module toggle", "modal_style": "24px padding, 16px radius, 15 percent outer border", "list_style": "Dense 44-48px rows with subtle dividers", "component_notes": "Analysis uses lime; Post Agent and Engage use yellow. Engage identity colors are banner-only. The dApp uses Karla exclusively; Homepage may use Karla and Gotu." }
+  },
+  "design_style": {
+    "aesthetic": { "mood": "focused, precise and quietly optimistic", "visual_metaphor": "a calm data workbench", "era_influence": "contemporary SaaS data product", "genre": "high-density AI dashboard", "personality_traits": ["technical", "confident", "friendly", "restrained"], "adjectives": ["minimal", "functional", "clear", "modular"] },
+    "visual_language": { "complexity": "moderate information complexity, low decoration", "ornamentation": "none in dApp", "whitespace_usage": "structured and economical", "visual_weight_distribution": "data and active controls carry weight", "focal_strategy": "module color and typographic hierarchy", "contrast_level": "high text, subtle surfaces", "texture_usage": "none" },
+    "composition": { "hierarchy_method": "size, weight and restrained color", "balance_type": "structured asymmetry", "flow_direction": "left-to-right chrome then top-to-bottom content", "grouping_strategy": "cards, tabs and subtle dividers", "negative_space_role": "separates functional groups without reducing density" },
+    "imagery": { "photo_treatment": "none in app UI", "illustration_style": "empty-state only", "graphic_elements": "charts and progress indicators", "pattern_usage": "radial lines only inside Analysis score gauge", "image_shape": "rounded cards and circular avatars" },
+    "interaction_feel": { "feedback_style": "immediate, compact and accessible", "hover_behavior": "5 percent tint or stronger border", "transition_personality": "short and calm", "loading_style": "1.4s skeleton shimmer", "microinteraction_density": "low-medium" },
+    "brand_voice_in_ui": { "tone": "direct and informative", "formality": "professional-friendly", "cta_style": "short verb phrases", "empty_state_approach": "plain guidance and one next action", "error_tone": "state the issue and the remedy" }
+  },
+  "visual_effects": {
+    "overview": { "effect_intensity": "low", "performance_tier": "lightweight", "fallback_strategy": "disable nonessential motion for prefers-reduced-motion", "primary_technology": "CSS transitions and SVG" },
+    "background_effects": { "type": "none", "description": "Flat functional surfaces", "technology": "CSS", "params": { "color_palette": ["#FAFAFA", "#FFFFFF"], "speed": "none", "density": "none", "opacity": 1, "blend_mode": "normal" } },
+    "particle_systems": { "enabled": false, "type": "none", "description": "Not permitted in dApp", "technology": "none", "params": { "count": 0, "shape": "none", "size_range": "none", "movement_pattern": "none", "color_behavior": "none", "interaction": "none", "spawn_area": "none" } },
+    "3d_elements": { "enabled": false, "type": "none", "description": "Not permitted", "technology": "none", "params": { "renderer": "none", "lighting": "none", "camera": "none", "materials": "none", "geometry": "none", "post_processing": "none", "interaction_model": "none" } },
+    "shader_effects": { "enabled": false, "type": "none", "description": "Not permitted", "technology": "none", "params": { "uniforms": [], "vertex_manipulation": "none", "fragment_output": "none", "noise_type": "none", "distortion": "none" } },
+    "scroll_effects": { "parallax": { "enabled": false, "layers": 0, "depth_range": "none", "speed_curve": "none" }, "scroll_triggered_animations": { "enabled": true, "trigger_points": ["first data view"], "animation_type": "one-time count and chart draw", "scrub_behavior": "triggered once" }, "scroll_morphing": { "enabled": false, "description": "none" } },
+    "text_effects": { "type": "none", "description": "No text reveal or decorative text effects", "technology": "CSS", "params": { "split_strategy": "none", "animation_per_unit": "none", "stagger": "none", "effect_style": "none" } },
+    "cursor_effects": { "enabled": false, "type": "none", "description": "Native pointer only", "params": { "shape": "native", "size": "native", "blend_mode": "normal", "trail": false, "interaction_zone": "none" } },
+    "image_effects": { "type": "none", "description": "No decorative imagery", "technology": "CSS", "params": { "filter_pipeline": "none", "hover_transform": "none", "reveal_animation": "none", "distortion_type": "none" } },
+    "glassmorphism_neumorphism": { "enabled": false, "style": "none", "params": { "blur_radius": "0", "transparency": "none", "border_treatment": "subtle flat border", "shadow_type": "soft conventional", "light_source_angle": "none" } },
+    "canvas_drawings": { "enabled": false, "type": "none", "description": "Not used", "technology": "none", "params": { "draw_method": "none", "animation_loop": false, "color_scheme": "none", "responsiveness": "none", "interaction": "none" } },
+    "svg_animations": { "enabled": true, "type": "chart path draw", "description": "First-load chart feedback only", "params": { "animation_method": "stroke-dashoffset", "path_morphing": false, "stroke_animation": true, "filter_effects": "none" } },
+    "composite_notes": "No website-style marquee, custom cursor, floating geometry, gradients outside charts, or infinite decorative motion."
+  }
+}

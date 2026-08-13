@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Engage (Aisee Repo)" subtitle="Engage feature rebuilt on the aisee-agent UI kit + tokens" -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Engage — aisee-agent</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<!-- Karla — local TTF served from the project; matches aisee-agent's localFont -->
+<style>
+  @font-face {
+    font-family: "Karla";
+    src: url("fonts/Karla-VariableFont_wght.ttf") format("truetype");
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  :root {
+    --font-karla: "Karla", system-ui, sans-serif;
+    --font-gotu:  "Karla", system-ui, sans-serif;
+  }
+  html, body { background: #FAFAFA; }
+  body { font-family: var(--font-karla); }
+  /* Lightweight scrollbar — matches feel of the real app */
+  ::-webkit-scrollbar       { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(17,17,17,0.12); border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(17,17,17,0.22); border: 2px solid transparent; background-clip: content-box; }
+
+  /* ── Filter bar responsive behavior ─────────────────────────────────────
+     The row carries 4 filter chips + a sync block. As container width drops,
+     progressively strip non-essential labels (Next in → Last sync prefix) so
+     the chips never have to wrap onto a second line. Chips themselves become
+     horizontally scrollable as a last-ditch fallback at very narrow widths. */
+  .fb-chips { scrollbar-width: none; }
+  .fb-chips::-webkit-scrollbar { display: none; }
+  .fb-chips > * { flex: 0 0 auto; }
+
+  /* below 900px: drop "Next in 23h 58m" and the "SORT BY" prefix */
+  @container (max-width: 900px) {
+    .fb-wrap .fb-sync-next { display: none; }
+    .fb-wrap .fb-sort-prefix { display: none; }
+  }
+  /* below 760px: drop the "Last sync" label, keep "2m ago" */
+  @container (max-width: 760px) { .fb-wrap .fb-sync-label { display: none; } }
+  /* below 640px: drop the entire sync block (status pulse stays on the platform menu badge) */
+  @container (max-width: 640px) { .fb-wrap .fb-sync { display: none; } }
+</style>
+
+<!-- Tailwind via Play CDN. Custom colour scale matches the repo's globals.css. -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: "#111111",
+          "yellow-ffe253": "#FFE253",
+          "yellow-fff2b3": "#FFF2B3",
+          "yellow-fffadd": "#FFFADD",
+          "yellow-fefbe3": "#FEFBE3",
+          "yellow-f7f6e9": "#F7F6E9",
+          "yellow-fbfbf3": "#FBFBF3",
+          "yellow-fceb63": "#FCEB63",
+          "gray-fafafa":  "#FAFAFA",
+          "gray-f5f5f5":  "#F5F5F5",
+          "gray-9dabb7":  "#9DABB7",
+          "green-cfff29": "#CFFF29",
+          "green-ceebc8": "#CEEBC8",
+          "green-92bc01": "#92BC01",
+          "green-f0ffba": "#F0FFBA",
+          "green-e6f2db": "#E6F2DB",
+          "green-eff4e2": "#EFF4E2",
+          "green-8c7400": "#8C7400",
+          "red-ffd0d0": "#FFD0D0",
+          "red-ec5212": "#EC5212",
+          "red-e14f12": "#E14F12",
+          "red-fdebe4": "#FDEBE4",
+          "purple-fae2fe": "#FAE2FE",
+          "blue-4398ff":   "#4398FF",
+        },
+        fontFamily: {
+          karla: ['Karla', 'system-ui', 'sans-serif'],
+          gotu:  ['Karla', 'system-ui', 'sans-serif'],
+        },
+        keyframes: {
+          bounce: {
+            "0%, 100%": { transform: "translateY(0)", opacity: "0.3" },
+            "50%":      { transform: "translateY(-2px)", opacity: "1" },
+          },
+          fadeInUp: {
+            "0%": { transform: "translateY(4px)", opacity: "0" },
+            "100%": { transform: "translateY(0)", opacity: "1" },
+          },
+          clickPress: {
+            "0%":   { transform: "scale(1)" },
+            "45%":  { transform: "scale(0.86)" },
+            "100%": { transform: "scale(1)" },
+          },
+          targetPulse: {
+            "0%":   { transform: "scale(1)" },
+            "30%":  { transform: "scale(1.18)" },
+            "55%":  { transform: "scale(0.88)" },
+            "100%": { transform: "scale(1)" },
+          },
+        },
+        animation: {
+          "fade-in": "fadeInUp 320ms ease-out",
+          "click-press": "clickPress 320ms cubic-bezier(0.34,1.56,0.64,1)",
+          "target-pulse": "targetPulse 720ms cubic-bezier(0.34,1.56,0.64,1)",
+        },
+      }
+    }
+  };
+</script>
+
+<!-- React 19 + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+  integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+  integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+  integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <template id="__bundler_thumbnail" data-bg-color="#FFE253">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#FFE253"></rect>
+      <g transform="translate(420, 240)">
+        <path d="M40 80 Q40 40 100 40 L260 40 Q320 40 320 80 L320 220 L260 220 L260 280 L200 220 L100 220 Q40 220 40 180 Z" fill="#111111"></path>
+        <circle cx="130" cy="130" r="14" fill="#FFE253"></circle>
+        <circle cx="180" cy="130" r="14" fill="#FFE253"></circle>
+        <circle cx="230" cy="130" r="14" fill="#FFE253"></circle>
+      </g>
+    </svg>
+  </template>
+  <div id="root"></div>
+
+  <!--
+    Source order matters. Each file mirrors a real Next.js module — see
+    engage-aisee/README.md for the path mapping back into aisee-live/aisee-agent.
+  -->
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/ui-shims.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/icons.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/data.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/layout-shell.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/engage-banner.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/feed-card.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/filter-bar.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/copy-link-tutorial.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/reply-panel.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/initial-config.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/sent-tab.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/keywords-accounts.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/signal-feed.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/page.jsx"></script>
+</body>
+</html>

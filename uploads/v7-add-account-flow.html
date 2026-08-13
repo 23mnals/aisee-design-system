@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Tracked Account — Flow · aisee dApp</title>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#FFE253;--primary-hover:#FCE055;--primary-bg:#FFF2B3;--primary-pale:#FFFADD;
+  --lime:#CFFF29;--black:#111111;--white:#FFFFFF;--bg-page:#FAFAFA;--cream:#F7F6E9;
+  --orange:#EC5212;--orange-pale:#FDEBE4;--green:#5BA300;--green-pale:#EAF6BD;
+  --red-light:#FFD0D0;
+  --border:rgba(17,17,17,0.08);--border-hover:rgba(17,17,17,0.18);--border-solid:#111111;
+  --muted:rgba(17,17,17,0.6);--faint:rgba(17,17,17,0.4);
+  --shadow-modal:0 8px 8px rgba(0,0,0,0.04),0 24px 40px rgba(0,0,0,0.16);
+  --ease:cubic-bezier(0.2,0.8,0.2,1);--ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;font-family:'Karla',system-ui,sans-serif;font-size:14px;line-height:1.57;color:var(--black);background:var(--bg-page);-webkit-font-smoothing:antialiased;}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit;padding:0;}
+input{font-family:inherit;color:inherit;}
+
+.stage{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:48px 24px;}
+
+/* ── Priority Accounts card (context) ── */
+.pa-card{width:440px;background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.pa-head{padding:16px 18px 14px;border-bottom:1px dashed var(--border);display:flex;align-items:flex-start;gap:10px;}
+.pa-head .stepn{width:20px;height:20px;border-radius:999px;background:var(--black);color:var(--white);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.pa-head .tb{flex:1;min-width:0;}
+.pa-head h3{margin:0;font-size:15px;font-weight:700;}
+.pa-head .sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.pa-add{height:30px;padding:0 12px;border-radius:8px;background:var(--primary);font-size:12.5px;font-weight:600;color:var(--black);display:inline-flex;align-items:center;gap:4px;border:1px solid rgba(17,17,17,0.08);transition:background .15s var(--ease),transform .12s var(--ease);flex-shrink:0;}
+.pa-add:hover{background:var(--primary-hover);}
+.pa-add:active{transform:scale(0.97);}
+.pa-platforms{display:flex;gap:8px;padding:12px 18px 4px;}
+.pa-pf{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.pa-pf .pf-ico{width:18px;height:18px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;color:#fff;}
+.pa-pf .pf-ico.x{background:var(--black);}
+.pa-pf .pf-ico.r{background:var(--orange);}
+.pa-pf b{color:var(--black);font-weight:700;}
+.acc-row{display:flex;align-items:center;gap:10px;padding:10px 18px;border-top:1px solid var(--border);}
+.acc-row:first-of-type{border-top:1px solid var(--border);}
+.acc-row.fresh{animation:flash 1.8s var(--ease);}
+@keyframes flash{0%,55%{background:var(--primary-pale);}100%{background:transparent;}}
+.acc-av{width:34px;height:34px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0;}
+.av-1{background:linear-gradient(135deg,#6366F1,#8B5CF6);}
+.av-2{background:linear-gradient(135deg,#06B6D4,#3B82F6);}
+.av-3{background:linear-gradient(135deg,#F59E0B,#EF4444);}
+.av-4{background:linear-gradient(135deg,#10B981,#14B8A6);}
+.acc-body{flex:1;min-width:0;}
+.acc-name{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:6px;}
+.acc-role{font-size:11.5px;color:var(--muted);}
+.acc-tag{font-size:10px;font-weight:600;padding:1px 7px;border-radius:999px;background:var(--primary-pale);color:#5a4f12;}
+.switch{width:36px;height:20px;border-radius:999px;background:rgba(17,17,17,0.15);position:relative;cursor:pointer;transition:background .15s var(--ease);flex-shrink:0;}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.2);transition:transform .15s var(--ease);}
+.switch.on{background:var(--primary);}
+.switch.on::after{transform:translateX(16px);background:var(--black);}
+.acc-x{width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;color:var(--faint);transition:background .15s var(--ease),color .15s var(--ease);}
+.acc-x:hover{background:var(--orange-pale);color:var(--orange);}
+
+/* ── Modal ── */
+.overlay{position:fixed;inset:0;background:rgba(17,17,17,0.45);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .2s var(--ease);z-index:100;}
+.overlay.show{opacity:1;pointer-events:auto;}
+.modal{width:452px;max-height:90vh;overflow-y:auto;background:var(--white);border-radius:16px;box-shadow:var(--shadow-modal);transform:translateY(12px) scale(0.98);transition:transform .22s var(--ease-out);}
+.overlay.show .modal{transform:translateY(0) scale(1);}
+.m-head{padding:18px 20px 14px;display:flex;align-items:flex-start;gap:10px;border-bottom:1px solid var(--border);}
+.m-head .mt{flex:1;}
+.m-head h2{margin:0;font-size:16px;font-weight:700;}
+.m-head .ms{font-size:12px;color:var(--muted);margin-top:2px;}
+.m-close{width:28px;height:28px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);transition:background .15s var(--ease);}
+.m-close:hover{background:rgba(17,17,17,0.06);color:var(--black);}
+.m-body{padding:16px 20px 6px;display:flex;flex-direction:column;gap:16px;}
+.field-label{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px;}
+
+/* platform segmented */
+.pf-seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:rgba(17,17,17,0.04);padding:4px;border-radius:9px;}
+.pf-seg button{padding:8px;border-radius:6px;font-size:13px;font-weight:500;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:all .15s var(--ease);}
+.pf-seg button .ic{width:18px;height:18px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;color:#fff;background:rgba(17,17,17,0.25);transition:background .15s var(--ease);}
+.pf-seg button.on{background:var(--white);color:var(--black);font-weight:600;box-shadow:0 1px 2px rgba(17,17,17,0.1);}
+.pf-seg button.on[data-pf="x"] .ic{background:var(--black);}
+.pf-seg button.on[data-pf="reddit"] .ic{background:var(--orange);}
+
+/* handle input */
+.handle-row{display:flex;gap:8px;}
+.handle-input{flex:1;display:flex;align-items:center;gap:2px;padding:0 12px;border:1px solid var(--border-hover);border-radius:9px;background:var(--white);transition:border-color .15s var(--ease),box-shadow .15s var(--ease);}
+.handle-input:focus-within{border-color:var(--black);box-shadow:0 0 0 3px rgba(255,226,83,0.4);}
+.handle-input .pfx{font-weight:700;color:var(--faint);font-size:14px;}
+.handle-input input{flex:1;height:40px;border:0;outline:0;background:transparent;font-size:14px;}
+.handle-input input::placeholder{color:var(--faint);}
+.verify-btn{height:42px;padding:0 16px;border-radius:9px;background:var(--black);color:var(--white);font-size:13px;font-weight:600;flex-shrink:0;transition:opacity .15s var(--ease),transform .12s var(--ease);}
+.verify-btn:hover{opacity:0.88;}
+.verify-btn:active{transform:scale(0.97);}
+.verify-btn:disabled{opacity:0.3;cursor:not-allowed;}
+
+/* verify result states */
+.vr{border-radius:10px;font-size:12.5px;}
+.vr.loading{padding:12px 14px;background:var(--bg-page);border:1px solid var(--border);display:flex;align-items:center;gap:9px;color:var(--muted);}
+.spinner{width:15px;height:15px;border:2px solid rgba(17,17,17,0.15);border-top-color:var(--black);border-radius:999px;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.vr.error{padding:11px 13px;background:var(--orange-pale);border:1px solid rgba(236,82,18,0.2);color:#8a3010;display:flex;align-items:flex-start;gap:8px;line-height:1.5;}
+.vr.warn{padding:11px 13px;background:var(--primary-pale);border:1px solid rgba(17,17,17,0.12);color:#6b5d10;display:flex;align-items:flex-start;gap:8px;line-height:1.5;}
+.vr .vr-ico{flex-shrink:0;margin-top:1px;}
+.vr .jump{color:var(--black);font-weight:700;text-decoration:underline;cursor:pointer;}
+/* success preview card */
+.vr.ok{padding:13px 14px;background:var(--green-pale);border:1px solid rgba(91,163,0,0.3);}
+.preview{display:flex;align-items:center;gap:11px;}
+.preview .pv-av{width:42px;height:42px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;flex-shrink:0;background:linear-gradient(135deg,#10B981,#14B8A6);}
+.preview .pv-body{flex:1;min-width:0;}
+.preview .pv-name{font-size:14px;font-weight:700;display:flex;align-items:center;gap:5px;}
+.preview .pv-verified{color:#1D9BF0;display:inline-flex;}
+.preview .pv-handle{font-size:12px;color:var(--muted);}
+.preview .pv-ok{flex-shrink:0;width:22px;height:22px;border-radius:999px;background:var(--green);color:#fff;display:inline-flex;align-items:center;justify-content:center;}
+.pv-stats{display:flex;gap:14px;margin-top:9px;padding-top:9px;border-top:1px solid rgba(91,163,0,0.25);font-size:11.5px;color:#4a5a2a;}
+.pv-stats b{color:var(--black);font-weight:700;}
+
+/* label + toggle (revealed after success) */
+.reveal{display:none;flex-direction:column;gap:16px;}
+.reveal.show{display:flex;}
+.label-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.lchip{padding:6px 12px;border-radius:999px;border:1px solid var(--border-hover);background:var(--white);font-size:12px;font-weight:500;color:var(--black);transition:all .12s var(--ease);}
+.lchip:hover{border-color:var(--black);}
+.lchip.on{background:var(--black);color:var(--white);border-color:var(--black);}
+.lchip.custom{border-style:dashed;color:var(--muted);}
+.custom-input{display:none;margin-top:8px;}
+.custom-input.show{display:block;}
+.custom-input input{width:100%;height:38px;padding:0 12px;border:1px solid var(--border-hover);border-radius:9px;background:var(--white);font-size:13px;outline:0;}
+.custom-input input:focus{border-color:var(--black);}
+.track-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--bg-page);}
+.track-row .tb{flex:1;}
+.track-row .tt{font-size:13px;font-weight:600;}
+.track-row .td{font-size:11.5px;color:var(--muted);margin-top:1px;}
+
+.m-foot{padding:14px 20px 18px;display:flex;align-items:center;gap:8px;border-top:1px solid var(--border);margin-top:6px;}
+.btn-cancel{height:40px;padding:0 16px;border-radius:9px;background:var(--white);border:1px solid var(--border-hover);font-size:13px;font-weight:500;transition:background .15s var(--ease);}
+.btn-cancel:hover{background:rgba(17,17,17,0.03);}
+.btn-add{height:40px;padding:0 20px;border-radius:9px;background:var(--primary);color:var(--black);font-size:13px;font-weight:700;margin-left:auto;border:1px solid rgba(17,17,17,0.1);display:inline-flex;align-items:center;gap:6px;transition:background .15s var(--ease),transform .12s var(--ease);}
+.btn-add:hover:not(:disabled){background:var(--primary-hover);}
+.btn-add:active:not(:disabled){transform:scale(0.98);}
+.btn-add:disabled{background:rgba(17,17,17,0.05);color:var(--muted);cursor:not-allowed;border-color:var(--border);}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(140%);background:var(--black);color:#fff;font-size:13px;font-weight:500;padding:11px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(17,17,17,0.3);transition:transform .25s var(--ease-out);z-index:200;display:flex;align-items:center;gap:7px;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast .tk{color:var(--lime);display:inline-flex;}
+
+.hint{width:440px;margin:14px auto 0;font-size:11.5px;color:var(--faint);text-align:center;line-height:1.6;}
+.hint code{background:rgba(17,17,17,0.06);padding:1px 5px;border-radius:4px;font-size:11px;}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div>
+    <!-- Context: Priority Accounts card -->
+    <div class="pa-card">
+      <div class="pa-head">
+        <span class="stepn">2</span>
+        <div class="tb">
+          <h3>Priority Accounts</h3>
+          <div class="sub">Track accounts. Their new posts auto-push to Signal Feed.</div>
+        </div>
+        <button class="pa-add" id="openBtn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add account
+        </button>
+      </div>
+      <div class="pa-platforms">
+        <span class="pa-pf"><span class="pf-ico x"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231z"/></svg></span>X <b>3</b></span>
+        <span class="pa-pf"><span class="pf-ico r">r/</span>Reddit <b>1</b></span>
+      </div>
+      <div id="accList">
+        <div class="acc-row">
+          <div class="acc-av av-1">K</div>
+          <div class="acc-body"><div class="acc-name">@KorayGubur <span class="acc-tag">GEO expert</span></div><div class="acc-role">234K followers</div></div>
+          <div class="switch on" onclick="this.classList.toggle('on')"></div>
+          <button class="acc-x" aria-label="Remove"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="acc-row">
+          <div class="acc-av av-2">S</div>
+          <div class="acc-body"><div class="acc-name">@searchengineland <span class="acc-tag">SEO media</span></div><div class="acc-role">488K followers</div></div>
+          <div class="switch on" onclick="this.classList.toggle('on')"></div>
+          <button class="acc-x" aria-label="Remove"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="acc-row">
+          <div class="acc-av av-3">L</div>
+          <div class="acc-body"><div class="acc-name">@lilyraynyc <span class="acc-tag">Technical SEO</span></div><div class="acc-role">89K followers</div></div>
+          <div class="switch on" onclick="this.classList.toggle('on')"></div>
+          <button class="acc-x" aria-label="Remove"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="hint">Try in the modal: type <code>koray</code> (already tracked) · <code>private_acc</code> (private) · <code>ab</code> (too short) · or anything else (success).</div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="m-head">
+      <div class="mt">
+        <h2 id="modalTitle">Add a tracked account</h2>
+        <div class="ms">Verify the handle, then choose how to file it.</div>
+      </div>
+      <button class="m-close" id="closeBtn" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+
+    <div class="m-body">
+
+      <div>
+        <div class="field-label">Platform</div>
+        <div class="pf-seg" id="pfSeg">
+          <button class="on" data-pf="x"><span class="ic"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231z"/></svg></span>X</button>
+          <button data-pf="reddit"><span class="ic">r/</span>Reddit</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="field-label" id="handleLabel">X handle</div>
+        <div class="handle-row">
+          <div class="handle-input">
+            <span class="pfx" id="handlePfx">@</span>
+            <input type="text" id="handleInput" placeholder="seo_practitioner" autocomplete="off" />
+          </div>
+          <button class="verify-btn" id="verifyBtn" disabled>Verify</button>
+        </div>
+        <div id="verifyResult" style="margin-top:10px;"></div>
+      </div>
+
+      <div class="reveal" id="revealArea">
+        <div>
+          <div class="field-label">Label</div>
+          <div class="label-chips" id="labelChips">
+            <button class="lchip">GEO expert</button>
+            <button class="lchip">SEO media</button>
+            <button class="lchip">Technical SEO</button>
+            <button class="lchip">Growth</button>
+            <button class="lchip custom" id="customChip">+ Custom</button>
+          </div>
+          <div class="custom-input" id="customInput"><input type="text" placeholder="Type a custom label" maxlength="20" /></div>
+        </div>
+        <div class="track-row">
+          <div class="tb">
+            <div class="tt">Start tracking on add</div>
+            <div class="td">New posts push to Signal Feed, checked every 3 hours.</div>
+          </div>
+          <div class="switch on" id="trackSwitch" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="m-foot">
+      <button class="btn-cancel" id="cancelBtn">Cancel</button>
+      <button class="btn-add" id="addBtn" disabled>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add account
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var overlay=document.getElementById('overlay');
+var handleInput=document.getElementById('handleInput');
+var verifyBtn=document.getElementById('verifyBtn');
+var verifyResult=document.getElementById('verifyResult');
+var revealArea=document.getElementById('revealArea');
+var addBtn=document.getElementById('addBtn');
+var handleLabel=document.getElementById('handleLabel');
+var handlePfx=document.getElementById('handlePfx');
+var pfSeg=document.getElementById('pfSeg');
+var toast=document.getElementById('toast');
+
+var platform='x';
+var verified=null;   /* holds the verified account object */
+var chosenLabel='';
+
+function showToast(msg,ok){
+  toast.innerHTML=(ok?'<span class="tk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>':'')+msg;
+  toast.classList.add('show');
+  clearTimeout(toast._t);toast._t=setTimeout(function(){toast.classList.remove('show');},2200);
+}
+
+function resetModal(){
+  handleInput.value='';
+  verifyResult.innerHTML='';
+  revealArea.classList.remove('show');
+  addBtn.disabled=true;
+  verified=null;chosenLabel='';
+  verifyBtn.disabled=true;
+  document.querySelectorAll('.lchip').forEach(function(c){c.classList.remove('on');});
+  document.getElementById('customInput').classList.remove('show');
+  document.getElementById('trackSwitch').classList.add('on');
+}
+function openModal(){resetModal();overlay.classList.add('show');setTimeout(function(){handleInput.focus();},220);}
+function closeModal(){overlay.classList.remove('show');}
+
+document.getElementById('openBtn').addEventListener('click',openModal);
+document.getElementById('closeBtn').addEventListener('click',closeModal);
+document.getElementById('cancelBtn').addEventListener('click',closeModal);
+overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('show'))closeModal();});
+
+/* platform toggle */
+pfSeg.querySelectorAll('button').forEach(function(b){
+  b.addEventListener('click',function(){
+    pfSeg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    platform=b.dataset.pf;
+    handleLabel.textContent=platform==='x'?'X handle':'Reddit username';
+    handlePfx.textContent=platform==='x'?'@':'u/';
+    handleInput.placeholder=platform==='x'?'seo_practitioner':'digital_mktg_pro';
+    verifyResult.innerHTML='';revealArea.classList.remove('show');addBtn.disabled=true;verified=null;
+  });
+});
+
+/* enable verify when input has content */
+handleInput.addEventListener('input',function(){
+  verifyBtn.disabled=handleInput.value.trim().length===0;
+  verifyResult.innerHTML='';revealArea.classList.remove('show');addBtn.disabled=true;verified=null;
+});
+handleInput.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&!verifyBtn.disabled)runVerify();
+});
+verifyBtn.addEventListener('click',runVerify);
+
+function runVerify(){
+  var raw=handleInput.value.trim().replace(/^@/,'').replace(/^u\//,'');
+  /* format check */
+  if(raw.length<3){
+    renderError('Handle is too short — needs at least 3 characters.');return;
+  }
+  if(/[^a-zA-Z0-9_]/.test(raw)){
+    renderError('Only letters, numbers and underscores are allowed.');return;
+  }
+  /* loading */
+  verifyResult.innerHTML='<div class="vr loading"><span class="spinner"></span>Verifying '+handlePfx.textContent+raw+' on '+(platform==='x'?'X':'Reddit')+'…</div>';
+  revealArea.classList.remove('show');addBtn.disabled=true;
+  setTimeout(function(){decide(raw);},850);
+}
+
+function decide(raw){
+  var low=raw.toLowerCase();
+  if(low.indexOf('koray')>-1){
+    verifyResult.innerHTML='<div class="vr warn"><span class="vr-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span><b>@KorayGubur</b> is already in your tracked list. <span class="jump" id="jumpLink">Jump to it</span></span></div>';
+    document.getElementById('jumpLink').addEventListener('click',function(){
+      closeModal();
+      var first=document.querySelector('#accList .acc-row');
+      first.classList.add('fresh');setTimeout(function(){first.classList.remove('fresh');},1800);
+    });
+    return;
+  }
+  if(low.indexOf('private')>-1){
+    verifyResult.innerHTML='<div class="vr warn"><span class="vr-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span>This account is <b>private</b> — its posts can&rsquo;t be tracked. Ask the owner to make it public, or pick another account.</span></div>';
+    return;
+  }
+  if(low.indexOf('notfound')>-1||low.indexOf('xxx')>-1){
+    renderError('No '+(platform==='x'?'X':'Reddit')+' account found for '+handlePfx.textContent+raw+'. Check the spelling.');
+    return;
+  }
+  /* success */
+  var display=raw.charAt(0).toUpperCase()+raw.slice(1).replace(/_/g,' ');
+  verified={handle:handlePfx.textContent+raw,name:display,initial:raw.charAt(0).toUpperCase()};
+  verifyResult.innerHTML=''
+    +'<div class="vr ok"><div class="preview">'
+    +'<div class="pv-av">'+verified.initial+'</div>'
+    +'<div class="pv-body">'
+    +'<div class="pv-name">'+display+' <span class="pv-verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.582.875 2.95 2.147 3.6-.154.435-.237.905-.237 1.4 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.337-.25.62 1.334 1.926 2.25 3.436 2.25 1.51 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.494-.083-.964-.237-1.4 1.272-.65 2.147-2.018 2.147-3.6zm-6.616-3.59l-4.5 6.5a.998.998 0 0 1-1.484.211l-3-3a1 1 0 1 1 1.414-1.414l2.16 2.16 3.79-5.473a1 1 0 1 1 1.62 1.16z"/></svg></span></div>'
+    +'<div class="pv-handle">'+verified.handle+' · '+(platform==='x'?'X':'Reddit')+'</div>'
+    +'</div>'
+    +'<span class="pv-ok"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>'
+    +'</div>'
+    +'<div class="pv-stats"><span><b>'+(8+Math.floor(Math.random()*40))+'K</b> followers</span><span><b>~'+(4+Math.floor(Math.random()*14))+'</b> posts / week</span><span>Public account</span></div>'
+    +'</div>';
+  revealArea.classList.add('show');
+  addBtn.disabled=false;
+}
+
+function renderError(msg){
+  verifyResult.innerHTML='<div class="vr error"><span class="vr-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span><span>'+msg+'</span></div>';
+  revealArea.classList.remove('show');addBtn.disabled=true;verified=null;
+}
+
+/* label chips */
+var customChip=document.getElementById('customChip');
+var customInput=document.getElementById('customInput');
+document.querySelectorAll('.lchip').forEach(function(c){
+  c.addEventListener('click',function(){
+    document.querySelectorAll('.lchip').forEach(function(x){x.classList.remove('on');});
+    c.classList.add('on');
+    if(c===customChip){
+      customInput.classList.add('show');
+      customInput.querySelector('input').focus();
+      chosenLabel='';
+    }else{
+      customInput.classList.remove('show');
+      chosenLabel=c.textContent.trim();
+    }
+  });
+});
+customInput.querySelector('input').addEventListener('input',function(){chosenLabel=this.value.trim();});
+
+/* add */
+addBtn.addEventListener('click',function(){
+  if(!verified)return;
+  var label=chosenLabel||'Untagged';
+  var tracking=document.getElementById('trackSwitch').classList.contains('on');
+  var list=document.getElementById('accList');
+  var row=document.createElement('div');
+  row.className='acc-row fresh';
+  row.innerHTML='<div class="acc-av av-4">'+verified.initial+'</div>'
+    +'<div class="acc-body"><div class="acc-name">'+verified.handle+' <span class="acc-tag">'+label+'</span></div><div class="acc-role">Just added · tracking '+(tracking?'on':'paused')+'</div></div>'
+    +'<div class="switch'+(tracking?' on':'')+'" onclick="this.classList.toggle(\'on\')"></div>'
+    +'<button class="acc-x" aria-label="Remove"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
+  list.insertBefore(row,list.firstChild);
+  setTimeout(function(){row.classList.remove('fresh');},1800);
+  closeModal();
+  showToast(verified.handle+' added to tracked accounts',true);
+});
+</script>
+</body>
+</html>

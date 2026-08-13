@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Paste Link Tutorial (preview)" subtitle="Looping tutorial: ⌘V paste link → Save & finish activates → click → tracking-started card. Sits after CopyLinkTutorial." viewport="520x680" -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Paste Link Tutorial — preview</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<style>
+  @font-face {
+    font-family: "Karla";
+    src: url("fonts/Karla-VariableFont_wght.ttf") format("truetype");
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  html, body { background: #FAFAFA; margin: 0; }
+  body { font-family: "Karla", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 32px 16px;
+  }
+  .wrap { width: 460px; max-width: 100%; display: flex; flex-direction: column; gap: 14px; }
+  .label {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: rgba(17,17,17,0.55);
+  }
+</style>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: "#111111",
+          "yellow-ffe253": "#FFE253",
+          "yellow-fbfbf3": "#FBFBF3",
+          "gray-f5f5f5":  "#F5F5F5",
+        },
+        fontFamily: { karla: ['Karla', 'system-ui', 'sans-serif'] },
+        keyframes: {
+          fadeInUp: {
+            "0%": { transform: "translateY(4px)", opacity: "0" },
+            "100%": { transform: "translateY(0)", opacity: "1" },
+          },
+          clickPress: {
+            "0%":   { transform: "scale(1)" },
+            "45%":  { transform: "scale(0.86)" },
+            "100%": { transform: "scale(1)" },
+          },
+        },
+        animation: {
+          "fade-in": "fadeInUp 320ms ease-out",
+          "click-press": "clickPress 320ms cubic-bezier(0.34,1.56,0.64,1)",
+        },
+      }
+    }
+  };
+</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+  integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+  integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+  integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <template id="__bundler_thumbnail" data-bg-color="#FFE253">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#FFE253"/>
+      <g transform="translate(360, 240)">
+        <rect x="0" y="0" width="480" height="120" rx="16" fill="#fff"/>
+        <rect x="22" y="50" width="320" height="14" rx="7" fill="#111" opacity=".18"/>
+        <g transform="translate(372, 36)">
+          <rect width="40" height="40" rx="8" fill="#111"/>
+          <text x="20" y="27" text-anchor="middle" font-size="20" font-weight="800" fill="#fff" font-family="monospace">⌘V</text>
+        </g>
+      </g>
+      <g transform="translate(360, 400)">
+        <rect width="480" height="56" rx="12" fill="#111"/>
+        <text x="240" y="36" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">Save &amp; finish</text>
+      </g>
+    </svg>
+  </template>
+
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/ui-shims.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/icons.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee/paste-link-tutorial.jsx"></script>
+
+  <script type="text/babel" data-presets="env,react">
+    const { createRoot } = ReactDOM;
+    function App() {
+      return (
+        <div className="page">
+          <div className="wrap">
+            <window.PasteLinkTutorial />
+          </div>
+        </div>
+      );
+    }
+    createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

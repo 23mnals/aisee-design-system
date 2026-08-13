@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Mention Interaction — Progressive Disclosure</title>
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --panel: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-2: #4A4A4A;
+    --ink-3: #8A8A8A;
+    --ink-4: #B8B8B8;
+    --line: #ECECE8;
+    --line-2: #E2E2DD;
+    --chip: #F4F4F0;
+    --yellow: #FFE34D;
+    --yellow-deep: #F5D420;
+    --tint: #FFFBE6;
+    --focus: #1A1A1A;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .stage {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding: 48px;
+    align-items: start;
+  }
+
+  /* Left: explainer + state controls */
+  .explainer {
+    position: sticky;
+    top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .explainer h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .explainer p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 13px;
+    max-width: 38ch;
+  }
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .step {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--panel);
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .step:hover { border-color: var(--ink-4); }
+  .step.active {
+    border-color: var(--ink);
+    background: var(--tint);
+  }
+  .step-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step.active .step-num { background: var(--yellow-deep); color: var(--ink); }
+  .step-body { display: flex; flex-direction: column; gap: 2px; }
+  .step-body strong { font-size: 13px; font-weight: 600; }
+  .step-body span { font-size: 12px; color: var(--ink-3); }
+
+  .reset {
+    align-self: flex-start;
+    margin-top: 8px;
+    background: transparent;
+    border: 1px solid var(--line-2);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: var(--ink-2);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .reset:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* Right: panel mock */
+  .panel-frame {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 12px 32px -16px rgba(0,0,0,0.08);
+    max-width: 460px;
+    width: 100%;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .panel-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .panel-header .close {
+    background: none; border: none; cursor: pointer;
+    width: 24px; height: 24px;
+    color: var(--ink-3);
+    font-size: 16px;
+  }
+  .post-meta {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--ink-3);
+    font-size: 12px;
+    margin-bottom: 18px;
+  }
+  .post-meta .x-mark {
+    width: 16px; height: 16px;
+    background: #000; color: #fff;
+    border-radius: 4px;
+    display: grid; place-items: center;
+    font-size: 10px; font-weight: 700;
+  }
+  .post-meta b { color: var(--ink); font-weight: 500; }
+
+  .stepper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .stepper-cell {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--chip);
+  }
+  .stepper-cell.is-current { background: var(--tint); }
+  .stepper-cell .n {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--ink-4);
+    color: #fff;
+    font-size: 10px; font-weight: 700;
+    display: grid; place-items: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .stepper-cell.is-current .n { background: var(--ink); }
+  .stepper-cell .lbl { display: flex; flex-direction: column; }
+  .stepper-cell .lbl strong { font-size: 11px; font-weight: 600; }
+  .stepper-cell .lbl span { font-size: 10px; color: var(--ink-3); }
+
+  .meta-note {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--ink-3);
+    font-size: 12px;
+    padding: 10px 0 18px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
+  }
+  .meta-note svg { flex-shrink: 0; }
+
+  /* ===== Mention section (the star) ===== */
+  .mention-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .mention-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mention-head .left {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .mention-head h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+  .optional-tag {
+    font-size: 11px;
+    color: var(--ink-3);
+    background: var(--chip);
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .info-icon {
+    width: 14px; height: 14px;
+    color: var(--ink-4);
+    cursor: help;
+    position: relative;
+  }
+  .info-icon:hover { color: var(--ink-2); }
+  .info-icon .tip {
+    position: absolute;
+    top: calc(100% + 6px); left: -8px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.4;
+    padding: 8px 10px;
+    border-radius: 8px;
+    width: 220px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s;
+    z-index: 5;
+    font-weight: 400;
+  }
+  .info-icon:hover .tip { opacity: 1; }
+
+  .summary-chip {
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .summary-chip b { color: var(--ink); font-weight: 500; }
+
+  .field-label {
+    font-size: 12px;
+    color: var(--ink-2);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  /* Input */
+  .input-wrap {
+    border: 1px solid var(--line-2);
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    background: #fff;
+    transition: border-color .15s, box-shadow .15s;
+    min-height: 44px;
+  }
+  .input-wrap:focus-within {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.04);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--ink);
+    color: #fff;
+    padding: 3px 4px 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    animation: chipIn .2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes chipIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .chip .x {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    display: grid; place-items: center;
+    cursor: pointer;
+    font-size: 10px;
+    line-height: 1;
+  }
+  .chip .x:hover { background: rgba(255,255,255,0.32); }
+  .input-wrap input {
+    flex: 1;
+    min-width: 120px;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    background: transparent;
+    color: var(--ink);
+    padding: 2px 0;
+  }
+  .input-wrap input::placeholder { color: var(--ink-4); }
+
+  .input-hint {
+    font-size: 11px;
+    color: var(--ink-3);
+    padding: 0 2px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .input-hint kbd {
+    font-family: ui-monospace, SF Mono, Menlo, monospace;
+    font-size: 10px;
+    background: var(--chip);
+    border: 1px solid var(--line-2);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--ink-2);
+  }
+
+  /* Intensity — unlock animation (display + opacity/translate; no height tween) */
+  .intensity {
+    display: none;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .25s ease, transform .25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .intensity.is-open {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .intensity-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 4px;
+  }
+  .intensity-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .intensity-head .current {
+    font-size: 12px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  .intensity-head .current.placeholder { color: var(--ink-4); }
+
+  .segmented {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    background: var(--chip);
+    padding: 3px;
+    border-radius: 10px;
+  }
+  .seg-btn {
+    border: none;
+    background: transparent;
+    padding: 8px 10px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-2);
+    cursor: pointer;
+    font-family: inherit;
+    transition: background .12s, color .12s, box-shadow .12s, transform .12s;
+  }
+  .seg-btn:hover { color: var(--ink); }
+  .seg-btn.is-on {
+    background: #fff;
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+  .seg-btn.pulse {
+    animation: pulse .9s ease 1;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(245, 212, 32, 0.7), 0 1px 2px rgba(0,0,0,0.06); }
+    70%  { box-shadow: 0 0 0 8px rgba(245, 212, 32, 0), 0 1px 2px rgba(0,0,0,0.06); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 212, 32, 0), 0 1px 2px rgba(0,0,0,0.06); }
+  }
+
+  .intensity-preview {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    background: #FAFAF6;
+    border: 1px dashed var(--line-2);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .intensity-preview .label {
+    color: var(--ink-3);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .intensity-preview em {
+    font-style: normal;
+    color: var(--ink);
+  }
+  .intensity-preview .hl {
+    background: var(--yellow);
+    padding: 0 3px;
+    border-radius: 3px;
+    font-style: normal;
+  }
+
+  /* Empty state hint where intensity would be */
+  .empty-hint {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--ink-4);
+    font-size: 12px;
+    padding: 12px 0 4px;
+  }
+  .empty-hint svg { flex-shrink: 0; }
+
+  /* Generate button */
+  .generate-row {
+    margin-top: 20px;
+  }
+  .generate {
+    width: 100%;
+    background: var(--yellow);
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background .15s, transform .05s;
+  }
+  .generate:hover { background: var(--yellow-deep); }
+  .generate:active { transform: scale(0.99); }
+
+  /* ===== Post-generation: collapsed mention pill ===== */
+  .mention-section.is-collapsed .field-label,
+  .mention-section.is-collapsed .input-wrap,
+  .mention-section.is-collapsed .input-hint,
+  .mention-section.is-collapsed .intensity,
+  .mention-section.is-collapsed .empty-hint { display: none !important; }
+
+  .mention-section.is-collapsed { gap: 0; }
+  .mention-section.is-collapsed .mention-head h3 { font-size: 13px; color: var(--ink-2); }
+  .mention-section.is-collapsed .optional-tag,
+  .mention-section.is-collapsed .info-icon { display: none; }
+
+  .collapsed-pill {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px 8px 12px;
+    background: var(--chip);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--ink-2);
+    cursor: pointer;
+    margin-top: 8px;
+    align-self: flex-start;
+    transition: border-color .15s, background .15s;
+    font-family: inherit;
+  }
+  .collapsed-pill:hover { border-color: var(--ink-4); background: #fff; }
+  .mention-section.is-collapsed ~ .collapsed-pill { display: inline-flex; }
+  .collapsed-pill .pill-chip {
+    background: var(--ink);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .collapsed-pill .pill-int { font-weight: 500; color: var(--ink); }
+  .collapsed-pill .pill-edit { color: var(--ink-4); font-size: 11px; margin-left: 2px; }
+
+  /* ===== Draft section ===== */
+  .draft-section {
+    margin-top: 22px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    animation: fadeUp .35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .draft-section.is-shown { display: flex; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .draft-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .draft-head h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .draft-head h3 .check {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: #1B7F4E;
+    color: #fff;
+    display: grid; place-items: center;
+    font-size: 10px;
+  }
+  .draft-head .meta {
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .draft-body {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    padding: 14px 14px 44px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink);
+    min-height: 120px;
+    white-space: pre-wrap;
+  }
+  .draft-body .mention-hit {
+    background: var(--yellow);
+    padding: 0 4px;
+    border-radius: 4px;
+    font-weight: 500;
+    box-shadow: 0 0 0 0 rgba(245, 212, 32, 0.5);
+    animation: hitPulse 1.4s ease 1;
+  }
+  @keyframes hitPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(245, 212, 32, 0.6); }
+    50%  { box-shadow: 0 0 0 6px rgba(245, 212, 32, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 212, 32, 0); }
+  }
+  .draft-caret {
+    display: inline-block;
+    width: 2px; height: 14px;
+    background: var(--ink);
+    vertical-align: text-bottom;
+    margin-left: 1px;
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .draft-foot {
+    position: absolute;
+    left: 12px; right: 12px; bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .draft-foot .actions { display: flex; gap: 6px; pointer-events: auto; }
+  .icon-btn {
+    background: #fff;
+    border: 1px solid var(--line-2);
+    border-radius: 7px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: var(--ink-2);
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .icon-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* Dirty indicator on collapsed pill when settings changed after generation */
+  .collapsed-pill.is-dirty {
+    background: var(--tint);
+    border-color: var(--yellow-deep);
+    color: var(--ink);
+  }
+  .collapsed-pill .dirty-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--yellow-deep);
+    display: none;
+  }
+  .collapsed-pill.is-dirty .dirty-dot { display: inline-block; }
+
+  /* Regenerate CTA replaces Generate when draft exists */
+  .generate.is-regen {
+    background: #fff;
+    border: 1px solid var(--line-2);
+    color: var(--ink-2);
+    font-weight: 500;
+    padding: 12px;
+    font-size: 13px;
+  }
+  .generate.is-regen:hover { border-color: var(--ink); color: var(--ink); }
+  .generate.is-regen.is-dirty {
+    background: var(--yellow);
+    border-color: var(--yellow-deep);
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .generate.is-regen.is-dirty:hover { background: var(--yellow-deep); }
+
+  /* Footer caption */
+  .footer-cap {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--ink-4);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 1020px) {
+    .stage { grid-template-columns: 1fr; }
+    .explainer { position: static; }
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <!-- Left side: explainer + state shortcuts -->
+    <aside class="explainer">
+      <h1>Mention — progressive disclosure</h1>
+      <p>Empty by default. The intensity controls only appear once the user has added at least one mention — so there are no dead-looking grey buttons on first sight.</p>
+
+      <div class="step-list" id="stepList">
+        <div class="step" data-jump="empty">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Empty state</strong>
+            <span>Just the input. Intensity is hidden, a small hint takes its place.</span>
+          </div>
+        </div>
+        <div class="step" data-jump="one">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>First mention added</strong>
+            <span>Intensity panel slides in. Natural gets a one-time pulse to draw the eye.</span>
+          </div>
+        </div>
+        <div class="step" data-jump="picked">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Intensity picked</strong>
+            <span>Preview line below the segments updates to show how it'll read.</span>
+          </div>
+        </div>
+        <div class="step" data-jump="generated">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>After generation</strong>
+            <span>Mention collapses to a pill; draft appears with the mention highlighted inline. Edit the pill to re-tweak — a dirty state nudges re-generation.</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="reset" id="resetBtn">↺ Reset to empty</button>
+
+      <div class="footer-cap">
+        <span>Try typing in the input →</span>
+        <span>Press Enter to add</span>
+      </div>
+    </aside>
+
+    <!-- Right side: the panel itself -->
+    <section class="panel-frame" aria-label="Generate reply panel">
+      <header class="panel-header">
+        <h2>Generate reply</h2>
+        <button class="close" aria-label="Close">✕</button>
+      </header>
+      <div class="post-meta">
+        <span class="x-mark">𝕏</span>
+        <b>@CultureCrave</b>
+        <span>· 6d ago</span>
+      </div>
+
+      <div class="stepper">
+        <div class="stepper-cell is-current">
+          <div class="n">1</div>
+          <div class="lbl"><strong>Generate Draft</strong><span>Strategy & content</span></div>
+        </div>
+        <div class="stepper-cell">
+          <div class="n">2</div>
+          <div class="lbl"><strong>Copy & post</strong><span>Post it on X</span></div>
+        </div>
+        <div class="stepper-cell">
+          <div class="n">3</div>
+          <div class="lbl"><strong>Confirm</strong><span>Add link & track</span></div>
+        </div>
+      </div>
+
+      <div class="meta-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><circle cx="12" cy="16" r=".5" fill="currentColor"/></svg>
+        3–5 sentences · all-purpose default · fits both X and Reddit replies.
+      </div>
+
+      <!-- ===== The mention section ===== -->
+      <div class="mention-section">
+        <div class="mention-head">
+          <div class="left">
+            <h3>Mentions</h3>
+            <span class="optional-tag">Optional</span>
+            <span class="info-icon" tabindex="0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".5" fill="currentColor"/></svg>
+              <span class="tip">Tell the agent what to weave into the reply — your product, a link, a feature. Leave empty for a neutral response.</span>
+            </span>
+          </div>
+          <span class="summary-chip" id="summaryChip"></span>
+        </div>
+
+        <div>
+          <div class="field-label">What to mention</div>
+          <div class="input-wrap" id="inputWrap">
+            <input
+              id="tagInput"
+              type="text"
+              placeholder="e.g. aisee, your product, a link…"
+              autocomplete="off"
+            />
+          </div>
+          <div class="input-hint">
+            <kbd>Enter</kbd> <span>to add · <kbd>⌫</kbd> on empty to remove last</span>
+          </div>
+        </div>
+
+        <!-- Empty-state hint, swaps with intensity -->
+        <div class="empty-hint" id="emptyHint">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4L19 6"/></svg>
+          Add a mention to choose how strongly →
+        </div>
+
+        <!-- Intensity (hidden by default) -->
+        <div class="intensity" id="intensity" aria-hidden="true">
+          <div class="intensity-inner">
+            <div class="intensity-head">
+              <div class="field-label" style="margin:0;">How strongly</div>
+              <span class="current" id="currentLabel">Natural</span>
+            </div>
+            <div class="segmented" role="radiogroup" aria-label="Mention intensity">
+              <button class="seg-btn" data-val="subtle" role="radio">Subtle</button>
+              <button class="seg-btn is-on" data-val="natural" role="radio" aria-checked="true">Natural</button>
+              <button class="seg-btn" data-val="direct" role="radio">Direct</button>
+            </div>
+            <div class="intensity-preview" id="preview">
+              <span class="label">Preview</span>
+              <span id="previewText">
+                …we built <span class="hl">aisee</span> for exactly this kind of workflow.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Collapsed pill (post-generation) -->
+      <button class="collapsed-pill" id="collapsedPill" type="button" aria-label="Edit mentions">
+        <span class="dirty-dot"></span>
+        <span>Mention</span>
+        <span class="pill-chip" id="pillChip">aisee</span>
+        <span class="pill-int" id="pillInt">Natural</span>
+        <span class="pill-edit">Edit</span>
+      </button>
+
+      <!-- Draft (post-generation) -->
+      <div class="draft-section" id="draftSection">
+        <div class="draft-head">
+          <h3><span class="check">✓</span> Draft</h3>
+          <span class="meta" id="draftMeta">·</span>
+        </div>
+        <div class="draft-body" id="draftBody"></div>
+      </div>
+
+      <div class="generate-row">
+        <button class="generate" id="generateBtn">Generate Draft</button>
+      </div>
+    </section>
+  </div>
+
+<script>
+(function () {
+  const inputWrap = document.getElementById('inputWrap');
+  const input = document.getElementById('tagInput');
+  const intensity = document.getElementById('intensity');
+  const emptyHint = document.getElementById('emptyHint');
+  const segBtns = document.querySelectorAll('.seg-btn');
+  const currentLabel = document.getElementById('currentLabel');
+  const previewText = document.getElementById('previewText');
+  const summaryChip = document.getElementById('summaryChip');
+  const resetBtn = document.getElementById('resetBtn');
+  const steps = document.querySelectorAll('.step');
+  const mentionSection = document.querySelector('.mention-section');
+  const collapsedPill = document.getElementById('collapsedPill');
+  const pillChip = document.getElementById('pillChip');
+  const pillInt = document.getElementById('pillInt');
+  const draftSection = document.getElementById('draftSection');
+  const draftBody = document.getElementById('draftBody');
+  const draftMeta = document.getElementById('draftMeta');
+  const generateBtn = document.getElementById('generateBtn');
+
+  const state = {
+    tags: [],
+    intensity: 'natural',
+    generated: false,
+    dirty: false,
+    // remember what was used to generate
+    generatedWith: null,
+  };
+
+  const DRAFTS = {
+    subtle: (t) => `Most teams I talk to underestimate how invisible they are in AI answers — even when their SEO is solid. Two things move the needle fast: (1) structured FAQ markup with 20+ entries, and (2) consistent brand language across owned channels.\n\nThere are §§${t}§§ that can monitor how often a brand surfaces in ChatGPT and Perplexity, which makes the gap concrete instead of theoretical.`,
+    natural: (t) => `Most teams I talk to underestimate how invisible they are in AI answers — even when their SEO is solid. Two things move the needle fast: (1) structured FAQ markup with 20+ entries, and (2) consistent brand language across owned channels.\n\nWe built §§${t}§§ for exactly this — it tracks how often you surface in ChatGPT, Claude and Perplexity, and which prompts you're losing.`,
+    direct: (t) => `Most teams underestimate how invisible they are in AI answers — even with solid SEO. The single biggest predictor of AI visibility: structured FAQ markup with 20+ entries.\n\nCheck out §§${t}§§ — it tracks your AI presence across ChatGPT, Claude and Perplexity and shows exactly which prompts surface your brand. Free tier is enough to audit your own.`,
+  };
+
+  const previews = {
+    subtle: (t) => `…tools like <span class="hl">${t}</span> can help with that.`,
+    natural: (t) => `…we built <span class="hl">${t}</span> for exactly this kind of workflow.`,
+    direct: (t) => `Check out <span class="hl">${t}</span> — it does X.`,
+  };
+
+  function render() {
+    // Clear chips
+    inputWrap.querySelectorAll('.chip').forEach(c => c.remove());
+    // Re-insert chips before input
+    state.tags.forEach((t, i) => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.innerHTML = `${escapeHtml(t)} <span class="x" data-i="${i}" role="button" aria-label="Remove">×</span>`;
+      inputWrap.insertBefore(chip, input);
+    });
+
+    // Toggle intensity vs hint
+    if (state.tags.length > 0) {
+      emptyHint.style.display = 'none';
+      // Force display:block first, then next frame add is-open so transition runs
+      intensity.style.display = 'block';
+      requestAnimationFrame(() => {
+        intensity.classList.add('is-open');
+      });
+      intensity.setAttribute('aria-hidden', 'false');
+    } else {
+      emptyHint.style.display = '';
+      intensity.classList.remove('is-open');
+      intensity.style.display = '';
+      intensity.setAttribute('aria-hidden', 'true');
+    }
+
+    // Update preview
+    const sample = state.tags[0] || 'aisee';
+    previewText.innerHTML = previews[state.intensity](escapeHtml(sample));
+
+    // Current label
+    currentLabel.textContent = capitalize(state.intensity);
+
+    // Segmented active
+    segBtns.forEach(b => {
+      const on = b.dataset.val === state.intensity;
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+
+    // Summary chip in header (when collapsed-style affordance)
+    if (state.tags.length) {
+      summaryChip.innerHTML = `<b>${state.tags.length}</b> mention${state.tags.length>1?'s':''} · ${capitalize(state.intensity)}`;
+    } else {
+      summaryChip.textContent = '';
+    }
+
+    // Post-generation: collapsed pill content
+    pillChip.textContent = state.tags[0] || 'aisee';
+    pillInt.textContent = capitalize(state.intensity);
+
+    // Collapse state
+    if (state.generated) {
+      mentionSection.classList.add('is-collapsed');
+      draftSection.classList.add('is-shown');
+    } else {
+      mentionSection.classList.remove('is-collapsed');
+      draftSection.classList.remove('is-shown');
+    }
+
+    // Dirty: settings changed since last generation
+    const sig = state.tags.join('|') + '::' + state.intensity;
+    if (state.generated && state.generatedWith && state.generatedWith !== sig) {
+      state.dirty = true;
+    } else if (!state.generated) {
+      state.dirty = false;
+    } else if (state.generatedWith === sig) {
+      state.dirty = false;
+    }
+    collapsedPill.classList.toggle('is-dirty', state.dirty);
+
+    // Generate button mode
+    if (state.generated) {
+      generateBtn.classList.add('is-regen');
+      generateBtn.classList.toggle('is-dirty', state.dirty);
+      generateBtn.innerHTML = state.dirty
+        ? '↻ Regenerate with new settings'
+        : '↻ Regenerate';
+    } else {
+      generateBtn.classList.remove('is-regen', 'is-dirty');
+      generateBtn.textContent = 'Generate Draft';
+    }
+
+    updateStepHighlight();
+  }
+
+  function updateStepHighlight() {
+    steps.forEach(s => s.classList.remove('active'));
+    let activeIdx = 0;
+    if (state.generated) activeIdx = 3;
+    else if (state.tags.length === 0) activeIdx = 0;
+    else if (state.tags.length > 0 && !state._touchedIntensity) activeIdx = 1;
+    else activeIdx = 2;
+    steps[activeIdx].classList.add('active');
+  }
+
+  // ===== Generation animation =====
+  let typeTimer = null;
+  function runGenerate() {
+    if (state.tags.length === 0) {
+      // Can't generate with no mention in this demo — just nudge input
+      input.focus();
+      flashInput();
+      return;
+    }
+    state.generated = true;
+    state.generatedWith = state.tags.join('|') + '::' + state.intensity;
+    state.dirty = false;
+    render();
+
+    const tag = state.tags[0];
+    const raw = DRAFTS[state.intensity](tag);
+    // Replace §§...§§ markers with highlighted span; type out char-by-char
+    const tokens = tokenize(raw);
+    draftBody.innerHTML = '';
+    let charCount = 0;
+    let total = tokens.reduce((s, t) => s + t.text.length, 0);
+    draftMeta.textContent = '0 / ' + total + ' chars';
+
+    clearTimeout(typeTimer);
+    let ti = 0, ci = 0;
+    let currentNode = null;
+
+    function step() {
+      if (ti >= tokens.length) {
+        // Remove caret
+        const caret = draftBody.querySelector('.draft-caret');
+        if (caret) caret.remove();
+        return;
+      }
+      const tok = tokens[ti];
+      if (!currentNode) {
+        currentNode = document.createElement(tok.type === 'mention' ? 'span' : 'span');
+        if (tok.type === 'mention') currentNode.className = 'mention-hit';
+        draftBody.appendChild(currentNode);
+      }
+      const slice = tok.text.slice(ci, ci + 2);
+      currentNode.textContent += slice;
+      ci += slice.length;
+      charCount += slice.length;
+      draftMeta.textContent = charCount + ' / ' + total + ' chars';
+
+      // Append caret at end of draftBody (move to end)
+      let caret = draftBody.querySelector('.draft-caret');
+      if (!caret) {
+        caret = document.createElement('span');
+        caret.className = 'draft-caret';
+      }
+      draftBody.appendChild(caret);
+
+      if (ci >= tok.text.length) { ti++; ci = 0; currentNode = null; }
+      typeTimer = setTimeout(step, tok.type === 'mention' ? 22 : 14);
+    }
+    step();
+  }
+
+  function tokenize(s) {
+    // Split on §§...§§
+    const out = [];
+    const re = /§§([^§]+)§§/g;
+    let last = 0, m;
+    while ((m = re.exec(s)) !== null) {
+      if (m.index > last) out.push({ type: 'text', text: s.slice(last, m.index) });
+      out.push({ type: 'mention', text: m[1] });
+      last = m.index + m[0].length;
+    }
+    if (last < s.length) out.push({ type: 'text', text: s.slice(last) });
+    return out;
+  }
+
+  generateBtn.addEventListener('click', runGenerate);
+  collapsedPill.addEventListener('click', () => {
+    state.generated = false;
+    // keep tags + intensity so user can tweak
+    render();
+  });
+
+  function addTag(raw) {
+    const t = raw.trim().replace(/^[,;\s]+|[,;\s]+$/g, '');
+    if (!t) return;
+    if (state.tags.includes(t)) {
+      flashInput();
+      return;
+    }
+    const wasEmpty = state.tags.length === 0;
+    state.tags.push(t);
+    input.value = '';
+    render();
+    if (wasEmpty) {
+      // Pulse the default Natural after intro animation
+      setTimeout(() => {
+        const nat = document.querySelector('.seg-btn[data-val="natural"]');
+        nat.classList.add('pulse');
+        setTimeout(() => nat.classList.remove('pulse'), 900);
+      }, 250);
+    }
+  }
+
+  function flashInput() {
+    inputWrap.animate(
+      [{ borderColor: '#E0635C' }, { borderColor: 'var(--line-2)' }],
+      { duration: 400 }
+    );
+  }
+
+  function removeTag(i) {
+    state.tags.splice(i, 1);
+    render();
+  }
+
+  // Input events
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ',' || (e.key === ' ' && input.value.trim().length > 1 && input.value.includes(' '))) {
+      e.preventDefault();
+      addTag(input.value);
+    } else if (e.key === 'Backspace' && input.value === '' && state.tags.length) {
+      removeTag(state.tags.length - 1);
+    }
+  });
+
+  inputWrap.addEventListener('click', (e) => {
+    if (e.target.classList.contains('x')) {
+      const i = parseInt(e.target.dataset.i, 10);
+      removeTag(i);
+    } else {
+      input.focus();
+    }
+  });
+
+  // Segment click
+  segBtns.forEach(b => {
+    b.addEventListener('click', () => {
+      if (state.tags.length === 0) return;
+      state.intensity = b.dataset.val;
+      state._touchedIntensity = true;
+      render();
+    });
+  });
+
+  // Reset
+  resetBtn.addEventListener('click', () => {
+    clearTimeout(typeTimer);
+    state.tags = [];
+    state.intensity = 'natural';
+    state._touchedIntensity = false;
+    state.generated = false;
+    state.generatedWith = null;
+    input.value = '';
+    render();
+  });
+
+  // Step shortcuts
+  steps.forEach(s => {
+    s.addEventListener('click', () => {
+      const target = s.dataset.jump;
+      clearTimeout(typeTimer);
+      if (target === 'empty') {
+        state.tags = [];
+        state.intensity = 'natural';
+        state._touchedIntensity = false;
+        state.generated = false;
+        state.generatedWith = null;
+      } else if (target === 'one') {
+        state.tags = ['aisee'];
+        state.intensity = 'natural';
+        state._touchedIntensity = false;
+        state.generated = false;
+        state.generatedWith = null;
+      } else if (target === 'picked') {
+        state.tags = ['aisee'];
+        state.intensity = 'direct';
+        state._touchedIntensity = true;
+        state.generated = false;
+        state.generatedWith = null;
+      } else if (target === 'generated') {
+        state.tags = ['aisee'];
+        state.intensity = 'natural';
+        state._touchedIntensity = true;
+        // Trigger fresh generation
+        state.generated = false;
+        state.generatedWith = null;
+        input.value = '';
+        render();
+        setTimeout(runGenerate, 200);
+        return;
+      }
+      input.value = '';
+      render();
+      // Re-pulse on jump to "one"
+      if (target === 'one') {
+        setTimeout(() => {
+          const nat = document.querySelector('.seg-btn[data-val="natural"]');
+          nat.classList.add('pulse');
+          setTimeout(() => nat.classList.remove('pulse'), 900);
+        }, 300);
+      }
+    });
+  });
+
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, m => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[m]));
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

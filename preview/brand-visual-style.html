@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Visual Style" subtitle="Homepage hero geometric shapes, mascot and footer band" viewport="700x340" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face { font-family: 'Karla'; src: url('../fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; padding: 0; font-family: 'Karla', sans-serif; }
+
+/* Geometric shape styles matching the homepage hero */
+.hero {
+  width: 700px; height: 340px; background: #fff; position: relative; overflow: hidden;
+}
+.shape { position: absolute; }
+
+.logo-mark-wrap { position: absolute; left: 32px; top: 24px; display: flex; align-items: center; gap: 8px; z-index: 10; }
+.lm-bg  { width: 25px; height: 26px; border-radius: 320px 320px 0 0; background: #CFF229; position: relative; }
+.lm-face { position: absolute; left: 0; top: 1px; width: 25px; height: 25px; border-radius: 320px 320px 0 0; background: #111; }
+.lm-eye { position: absolute; left: 50%; top: 38%; transform: translateX(-50%); width: 10px; height: 8px; border-radius: 50%; background: #fff; }
+
+.footer-band {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 70px;
+  background: rgba(207,255,41,0.5); border-top: 1px solid #111;
+  display: flex; align-items: center; padding: 0 32px;
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <!-- Background shapes — matching Figma homepage hero -->
+  <!-- Yellow circle (tilted) -->
+  <div class="shape" style="width:160px;height:160px;border-radius:50%;background:#FFE253;top:60px;right:260px;transform:rotate(8deg);opacity:0.9;"></div>
+  <!-- Blue star/square -->
+  <div class="shape" style="width:120px;height:120px;background:#C2DEFF;border-radius:8px;top:160px;left:140px;transform:rotate(8deg);"></div>
+  <!-- Pink rectangle -->
+  <div class="shape" style="width:180px;height:80px;background:#FFD3E2;top:155px;left:60px;"></div>
+  <!-- Orange triangle (clipped square) -->
+  <div class="shape" style="width:40px;height:40px;background:#EC5212;top:230px;left:340px;transform:rotate(45deg);"></div>
+  <!-- Green diamond -->
+  <div class="shape" style="width:140px;height:140px;background:#A5D500;top:90px;right:90px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;">
+    <span style="transform:rotate(-45deg);font-family:'Gotu',serif;font-size:14px;color:#111;text-align:center;line-height:1.2;">Prompt<br>Strategy</span>
+  </div>
+  <!-- Purple circle small -->
+  <div class="shape" style="width:40px;height:40px;border-radius:50%;background:#E7E1F8;top:240px;left:310px;"></div>
+  <!-- Blue circle -->
+  <div class="shape" style="width:64px;height:64px;border-radius:50%;background:#3C61E5;top:210px;right:50px;opacity:0.85;"></div>
+  <!-- Cyclops body (main hero mascot) -->
+  <div class="shape" style="width:200px;height:200px;border-radius:320px 320px 0 0;background:#E1E1E1;bottom:70px;left:50%;transform:translateX(-50%);">
+    <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:140px;height:110px;border-radius:320px 320px 0 0;background:#111;overflow:hidden;">
+      <div style="position:absolute;left:50%;top:35%;transform:translateX(-50%);width:56px;height:44px;border-radius:50%;background:#fff;"></div>
+      <div style="position:absolute;left:50%;top:35%;transform:translateX(-50%);width:32px;height:32px;border-radius:50%;background:#111;margin-top:6px;"></div>
+    </div>
+  </div>
+  <!-- Logo mark top-left -->
+  <div class="logo-mark-wrap">
+    <div class="lm-bg"><div class="lm-face"><div class="lm-eye"></div></div></div>
+    <span style="font-family:'Karla';font-size:16px;font-weight:500;color:#111;">aisee</span>
+  </div>
+  <!-- Hero text -->
+  <div style="position:absolute;top:50px;left:200px;z-index:5;">
+    <div style="font-family:'Gotu',serif;font-size:18px;color:#111;width:200px;line-height:1.4;">AI Visibility · LLM Search · Citation Score · GEO Diagnostic</div>
+  </div>
+  <!-- Footer band -->
+  <div class="footer-band">
+    <span style="font-family:'Gotu',serif;font-size:20px;color:#111;">The future of discoverability.</span>
+  </div>
+</div>
+</body>
+</html>

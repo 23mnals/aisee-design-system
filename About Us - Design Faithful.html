@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="About Us — Design Faithful" subtitle="Mission备选B · 全部6区块 · 设计系统风格" viewport="1440x900" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aisee — About Us</title>
+<style>
+@font-face { font-family:'Karla'; src:url('fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight:100 900; font-display:swap; }
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --black:#111; --white:#fff; --lime:#CFF229; --yellow:#FFE253;
+  --yellow-lt:#FFF2B3; --orange:#EC5212; --green:#A5D500;
+  --cream:#F7F6E9; --bg:#F7F8F7; --border:1.5px solid #111;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+html { scroll-behavior:smooth; }
+body { font-family:'Karla',sans-serif; background:var(--white); color:var(--black); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+
+/* ── Logo mark CSS ─────────────────────────── */
+.logo-mark { position:relative; width:28px; height:30px; flex-shrink:0; }
+.lm-bg  { position:absolute; inset:0; border-radius:320px 320px 0 0; background:var(--lime); }
+.lm-face{ position:absolute; left:0; top:1px; width:28px; height:28px; border-radius:320px 320px 0 0; background:var(--black); overflow:hidden; }
+.lm-eye { position:absolute; left:50%; top:38%; transform:translateX(-50%); width:12px; height:9px; border-radius:50%; background:var(--white); }
+
+/* ── NAV ─────────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100; height:70px;
+  background:rgba(255,255,255,.92); backdrop-filter:blur(10px);
+  border-bottom:var(--border); display:flex; align-items:center; padding:0 48px; gap:32px;
+}
+.nav-logo { display:flex; align-items:center; gap:8px; text-decoration:none; }
+.nav-wordmark { font-family:'Karla'; font-size:17px; font-weight:600; color:var(--black); letter-spacing:-.01em; }
+.nav-links { display:flex; align-items:center; gap:4px; margin-left:auto; }
+.nav-link { font-family:'Gotu',serif; font-size:14px; color:var(--black); text-decoration:none; padding:6px 14px; border-radius:999px; transition:background .15s; }
+.nav-link:hover { background:rgba(17,17,17,.06); }
+.nav-link.active { background:rgba(17,17,17,.06); }
+.nav-cta { font-family:'Gotu',serif; font-size:14px; color:var(--black); border:var(--border); border-radius:999px; padding:8px 20px; text-decoration:none; transition:background .2s; }
+.nav-cta:hover { background:var(--lime); }
+
+/* ── SHARED ──────────────────────────────── */
+section { border-bottom:var(--border); }
+.sec-pad { padding:80px 48px; }
+.sec-label {
+  font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(17,17,17,.4); display:flex; align-items:center; gap:8px; margin-bottom:16px;
+}
+.sec-label::before { content:''; width:20px; height:1.5px; background:rgba(17,17,17,.4); flex-shrink:0; }
+
+/* scroll reveal */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in { opacity:1; transform:none; }
+.reveal-l { opacity:0; transform:translateX(-24px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal-l.in { opacity:1; transform:none; }
+
+/* ── S1 HERO / MISSION ──────────────────── */
+.hero {
+  min-height:100vh; padding-top:70px; display:flex; flex-direction:column;
+  background:var(--white); position:relative; overflow:hidden;
+}
+.hero-body {
+  flex:1; padding:80px 48px 64px; display:grid;
+  grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+}
+
+/* Headline reveal lines */
+.hl-clip { overflow:hidden; display:block; }
+.hl-inner {
+  display:block; font-family:'Gotu',serif;
+  font-size:clamp(52px,5.8vw,86px);
+  line-height:1.0; letter-spacing:-.03em; color:var(--black);
+  transform:translateY(105%);
+  animation:slideUp .85s var(--ease) forwards;
+}
+.hl-clip:nth-child(1) .hl-inner { animation-delay:.4s; }
+.hl-clip:nth-child(2) .hl-inner { animation-delay:.55s; }
+.hl-clip:nth-child(3) .hl-inner { animation-delay:.7s; }
+@keyframes slideUp { to { transform:translateY(0); } }
+
+.hero-eyebrow { font-family:'Karla'; font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(17,17,17,.45); display:flex; align-items:center; gap:10px; margin-bottom:28px; opacity:0; animation:fadeUp .6s var(--ease) .25s forwards; }
+.hero-eyebrow::before { content:''; width:28px; height:1.5px; background:rgba(17,17,17,.4); flex-shrink:0; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+
+.hero-sub { font-family:'Gotu',serif; font-size:18px; color:rgba(17,17,17,.65); line-height:1.7; margin-top:28px; opacity:0; animation:fadeUp .7s var(--ease) .9s forwards; }
+.hero-tag { display:inline-flex; align-items:center; gap:8px; margin-top:24px; font-size:12px; font-weight:500; color:rgba(17,17,17,.5); opacity:0; animation:fadeUp .6s var(--ease) 1.05s forwards; }
+.hero-tag span { width:6px; height:6px; border-radius:50%; background:var(--lime); }
+
+/* Hero right — mission visual */
+.hero-right {
+  display:flex; flex-direction:column; gap:16px;
+  opacity:0; animation:fadeUp .9s var(--ease) .6s forwards;
+}
+.mission-card {
+  border:var(--border); border-radius:16px; padding:28px 32px;
+  position:relative; overflow:hidden;
+}
+.mission-card.accent { background:var(--lime); }
+.mission-card.cream  { background:var(--cream); }
+.mission-card-label { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(17,17,17,.5); margin-bottom:10px; }
+.mission-card-text { font-family:'Gotu',serif; font-size:20px; line-height:1.5; color:var(--black); }
+.mission-card-deco { position:absolute; right:24px; top:24px; font-family:'Gotu',serif; font-size:64px; color:rgba(17,17,17,.06); line-height:1; }
+
+/* Mission stat row */
+.mission-stats { display:flex; gap:0; border:var(--border); border-radius:12px; overflow:hidden; }
+.mstat { flex:1; padding:20px 24px; border-right:var(--border); }
+.mstat:last-child { border-right:none; }
+.mstat-val { font-family:'Gotu',serif; font-size:32px; line-height:1; margin-bottom:4px; }
+.mstat-lbl { font-size:11px; color:rgba(17,17,17,.5); }
+
+/* Hero bottom bar */
+.hero-bar { border-top:var(--border); display:flex; align-items:center; padding:20px 48px; gap:20px; background:var(--bg); }
+.hero-bar-text { font-family:'Gotu',serif; font-size:14px; color:rgba(17,17,17,.6); }
+.hero-bar-dot { width:5px; height:5px; border-radius:50%; background:var(--lime); flex-shrink:0; }
+
+/* ── S2 THE CONTEXT ──────────────────────── */
+.context { background:var(--black); }
+.context .sec-label { color:rgba(255,255,255,.35); }
+.context .sec-label::before { background:rgba(255,255,255,.35); }
+.context-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.context-headline { font-family:'Gotu',serif; font-size:clamp(40px,4.5vw,68px); line-height:1.02; letter-spacing:-.03em; color:var(--white); }
+.context-points { display:flex; flex-direction:column; gap:32px; }
+.ctx-point { padding-top:28px; border-top:1px solid rgba(255,255,255,.12); }
+.ctx-num { font-family:'Gotu',serif; font-size:13px; color:var(--lime); margin-bottom:8px; }
+.ctx-title { font-family:'Gotu',serif; font-size:19px; color:var(--white); margin-bottom:8px; }
+.ctx-body { font-size:14px; color:rgba(255,255,255,.55); line-height:1.7; }
+
+/* ── S3 WHAT WE BUILD ───────────────────── */
+.build { background:var(--white); }
+.build-intro { max-width:640px; margin-bottom:56px; }
+.build-intro p { font-family:'Gotu',serif; font-size:20px; color:rgba(17,17,17,.65); line-height:1.65; margin-top:12px; }
+.capabilities { display:grid; grid-template-columns:repeat(2,1fr); gap:0; border:var(--border); border-radius:12px; overflow:hidden; }
+.cap { padding:36px; border-right:var(--border); border-bottom:var(--border); position:relative; transition:background .2s; }
+.cap:nth-child(2n) { border-right:none; }
+.cap:nth-child(3), .cap:nth-child(4) { border-bottom:none; }
+.cap:hover { background:var(--bg); }
+.cap-icon { width:44px; height:44px; border-radius:10px; border:var(--border); display:flex; align-items:center; justify-content:center; margin-bottom:18px; background:var(--white); }
+.cap-name { font-family:'Gotu',serif; font-size:22px; margin-bottom:8px; }
+.cap-desc { font-size:13px; color:rgba(17,17,17,.6); line-height:1.65; }
+.cap-num { position:absolute; top:24px; right:28px; font-family:'Gotu',serif; font-size:56px; color:rgba(17,17,17,.05); line-height:1; }
+
+/* ── S4 WHO IT'S FOR ─────────────────────── */
+.for-whom { background:var(--cream); }
+.for-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:var(--border); border-radius:12px; overflow:hidden; margin-top:48px; }
+.for-card { padding:36px; border-right:var(--border); transition:background .2s; cursor:default; }
+.for-card:last-child { border-right:none; }
+.for-card:hover { background:var(--yellow-lt); }
+.for-tag { display:inline-block; padding:4px 12px; border-radius:999px; border:var(--border); font-size:11px; font-weight:600; background:var(--white); margin-bottom:16px; }
+.for-role { font-family:'Gotu',serif; font-size:20px; line-height:1.2; margin-bottom:12px; }
+.for-quote { font-family:'Gotu',serif; font-size:15px; color:rgba(17,17,17,.6); line-height:1.65; }
+.for-quote::before { content:'"'; }
+.for-quote::after  { content:'"'; }
+
+/* ── S5 OUR PRINCIPLES ───────────────────── */
+.principles { background:var(--white); }
+.prin-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:48px; }
+.prin-card { padding:32px; border:var(--border); border-radius:12px; transition:transform .2s var(--ease), background .2s; cursor:default; }
+.prin-card:hover { background:var(--bg); transform:translateY(-3px); }
+.prin-icon { width:40px; height:40px; border-radius:8px; background:var(--lime); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+.prin-title { font-family:'Gotu',serif; font-size:19px; margin-bottom:8px; }
+.prin-desc { font-size:13px; color:rgba(17,17,17,.6); line-height:1.65; }
+
+/* ── S6 WHAT'S NEXT ──────────────────────── */
+.whats-next { background:var(--lime); border-bottom:none; }
+.next-head { font-family:'Gotu',serif; font-size:clamp(44px,5vw,76px); line-height:1.0; letter-spacing:-.03em; margin-bottom:56px; }
+.cta-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.cta-card { border:var(--border); border-radius:14px; padding:28px 32px; background:var(--white); display:flex; flex-direction:column; gap:10px; transition:transform .2s var(--ease), box-shadow .2s; cursor:pointer; text-decoration:none; color:inherit; }
+.cta-card:hover { transform:translateY(-4px); box-shadow:4px 4px 0 var(--black); }
+.cta-card.dark { background:var(--black); border-color:var(--black); }
+.cta-card-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(17,17,17,.4); }
+.cta-card.dark .cta-card-label { color:rgba(255,255,255,.4); }
+.cta-card-title { font-family:'Gotu',serif; font-size:22px; color:var(--black); display:flex; align-items:center; justify-content:space-between; }
+.cta-card.dark .cta-card-title { color:var(--white); }
+.cta-card-sub { font-size:13px; color:rgba(17,17,17,.55); }
+.cta-card.dark .cta-card-sub { color:rgba(255,255,255,.5); }
+
+/* ── FOOTER ──────────────────────────────── */
+footer { background:var(--white); border-top:var(--border); padding:36px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.foot-links { display:flex; gap:20px; }
+.foot-link { font-family:'Gotu',serif; font-size:13px; color:rgba(17,17,17,.5); text-decoration:none; transition:color .15s; }
+.foot-link:hover { color:var(--black); }
+.foot-copy { font-size:12px; color:rgba(17,17,17,.35); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="Homepage Redesign.html">
+    <img src="assets/logo.svg" alt="aisee" style="height:32px;">
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="Homepage Redesign.html">Home</a>
+    <a class="nav-link" href="#features">Features</a>
+    <a class="nav-link active" href="#">About</a>
+    <a class="nav-link" href="#faq">FAQ</a>
+    <a class="nav-cta" href="#whats-next">Start Free</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     S1 — HERO + MISSION (备选B)
+════════════════════════════════════════ -->
+<div class="hero" id="hero">
+  <div class="hero-body">
+    <!-- Left: headline + sub -->
+    <div>
+      <div class="hero-eyebrow">About aisee &nbsp;·&nbsp; Est. 2024</div>
+      <h1>
+        <!-- Mission 备选B: builder-focused, concise, punchy -->
+        <span class="hl-clip"><span class="hl-inner">We built the</span></span>
+        <span class="hl-clip"><span class="hl-inner">toolkit for the</span></span>
+        <span class="hl-clip"><span class="hl-inner"><span style="background:var(--lime);padding:0 8px;border-radius:8px;">AI-first</span> internet.</span></span>
+      </h1>
+      <p class="hero-sub">aisee is an all-in-one GEO platform that helps brands and projects become visible, trusted, and recommended by AI engines — the new gatekeepers of discovery.</p>
+      <div class="hero-tag">
+        <span></span>Building for the AI-first internet
+        <span></span>GEO · Post Agent · AI Rankings
+      </div>
+    </div>
+
+    <!-- Right: mission cards -->
+    <div class="hero-right">
+      <div class="mission-card accent">
+        <div class="mission-card-label">Our mission</div>
+        <div class="mission-card-deco">B</div>
+        <div class="mission-card-text">"Visibility used to mean Google. Now it means AI. We're building the tools that close the gap."</div>
+      </div>
+      <div class="mission-stats">
+        <div class="mstat">
+          <div class="mstat-val">5+</div>
+          <div class="mstat-lbl">AI engines tracked</div>
+        </div>
+        <div class="mstat">
+          <div class="mstat-val">3×</div>
+          <div class="mstat-lbl">Avg citation lift</div>
+        </div>
+        <div class="mstat">
+          <div class="mstat-val">24/7</div>
+          <div class="mstat-lbl">Auto-publishing</div>
+        </div>
+      </div>
+      <div class="mission-card cream">
+        <div class="mission-card-label">What we do</div>
+        <div class="mission-card-text">Scan · Track · Optimize · Measure. All in one place, for everyone building in public.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bar">
+    <div class="hero-bar-dot"></div>
+    <div class="hero-bar-text">Building for the AI-first internet</div>
+    <div class="hero-bar-dot"></div>
+    <div class="hero-bar-text">GEO is the new SEO</div>
+    <div class="hero-bar-dot"></div>
+    <div class="hero-bar-text">Generative Engine Optimization</div>
+    <div class="hero-bar-dot"></div>
+    <div class="hero-bar-text">Est. 2024</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     S2 — THE CONTEXT
+════════════════════════════════════════ -->
+<section class="context sec-pad">
+  <div class="context-grid">
+    <div>
+      <div class="sec-label reveal-l">Why This Matters</div>
+      <h2 class="context-headline reveal-l" style="transition-delay:.1s">Search is no longer just Google.</h2>
+      <!-- Illustration placeholder -->
+      <div class="reveal" style="margin-top:48px;width:100%;aspect-ratio:4/3;border:1.5px dashed rgba(255,255,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;transition-delay:.2s">
+        <div style="text-align:center;">
+          <!-- Mini GEO diagram -->
+          <svg width="200" height="160" viewBox="0 0 200 160" fill="none">
+            <circle cx="100" cy="80" r="50" fill="none" stroke="#CFF229" stroke-width="1.5" stroke-dasharray="4 5"/>
+            <circle cx="100" cy="80" r="28" fill="#CFF229" stroke="#111" stroke-width="1"/>
+            <text x="100" y="75" text-anchor="middle" fill="#111" font-size="9" font-family="Karla" font-weight="700">your</text>
+            <text x="100" y="87" text-anchor="middle" fill="#111" font-size="9" font-family="Karla" font-weight="700">brand</text>
+            <!-- Orbit dots -->
+            <circle cx="100" cy="28" r="10" fill="#111"/>
+            <text x="100" y="32" text-anchor="middle" fill="#CFF229" font-size="6" font-family="Karla">GPT</text>
+            <circle cx="152" cy="80" r="10" fill="#20B2AA"/>
+            <text x="152" y="84" text-anchor="middle" fill="white" font-size="5.5" font-family="Karla">PPL</text>
+            <circle cx="100" cy="132" r="10" fill="#CC785C"/>
+            <text x="100" y="136" text-anchor="middle" fill="white" font-size="5.5" font-family="Karla">CLD</text>
+            <circle cx="48" cy="80" r="10" fill="#4285F4"/>
+            <text x="48" y="84" text-anchor="middle" fill="white" font-size="5.5" font-family="Karla">GEM</text>
+          </svg>
+          <div style="font-family:'Gotu',serif;font-size:12px;color:rgba(255,255,255,.35);margin-top:8px;">Your brand in the AI ecosystem</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="context-points">
+      <div class="ctx-point reveal" style="transition-delay:.0s">
+        <div class="ctx-num">01 — The shift</div>
+        <div class="ctx-title">The gatekeepers changed.</div>
+        <div class="ctx-body">People are asking ChatGPT, Perplexity, and AI assistants instead of typing into a search bar. The way brands get discovered has fundamentally changed.</div>
+      </div>
+      <div class="ctx-point reveal" style="transition-delay:.12s">
+        <div class="ctx-num">02 — The problem</div>
+        <div class="ctx-title">Most brands are invisible to AI.</div>
+        <div class="ctx-body">Not because they're bad — but because they haven't been optimized for how AI reads and recommends content. Citation blind spots are everywhere.</div>
+      </div>
+      <div class="ctx-point reveal" style="transition-delay:.24s">
+        <div class="ctx-num">03 — The opportunity</div>
+        <div class="ctx-title">GEO is the new SEO.</div>
+        <div class="ctx-body">Generative Engine Optimization is the new playbook. The brands that figure this out now will own the next decade of discovery.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     S3 — WHAT WE BUILD
+════════════════════════════════════════ -->
+<section class="build sec-pad">
+  <div class="build-intro">
+    <div class="sec-label reveal-l">What We Build</div>
+    <p class="reveal" style="transition-delay:.1s">A toolkit that scans, tracks, and improves how AI engines perceive and recommend your brand.</p>
+  </div>
+  <div class="capabilities">
+    <div class="cap reveal" style="transition-delay:.0s">
+      <div class="cap-num">01</div>
+      <div class="cap-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="cap-name">Scan</div>
+      <div class="cap-desc">Reveal how AI engines currently see your brand — knowledge gaps, trust issues, and citation blind spots you didn't know existed.</div>
+    </div>
+    <div class="cap reveal" style="transition-delay:.1s">
+      <div class="cap-num">02</div>
+      <div class="cap-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <div class="cap-name">Track</div>
+      <div class="cap-desc">Monitor your AI visibility score across multiple engines from a single dashboard. Week-over-week deltas, platform breakdowns, trend lines.</div>
+    </div>
+    <div class="cap reveal" style="transition-delay:.2s">
+      <div class="cap-num">03</div>
+      <div class="cap-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="cap-name">Optimize</div>
+      <div class="cap-desc">Get prioritized, actionable recommendations tied to the highest-impact GEO ranking factors. No guesswork, no dashboards-for-dashboards'-sake.</div>
+    </div>
+    <div class="cap reveal" style="transition-delay:.3s">
+      <div class="cap-num">04</div>
+      <div class="cap-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div class="cap-name">Measure</div>
+      <div class="cap-desc">Track real improvement: ranking shifts, citation growth, sentiment changes, and conversions. Every metric connects to a decision you can make.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     S4 — WHO IT'S FOR
+════════════════════════════════════════ -->
+<section class="for-whom sec-pad">
+  <div class="sec-label reveal-l">Who It's For</div>
+  <div class="for-grid reveal" style="transition-delay:.1s">
+    <div class="for-card">
+      <div class="for-tag">Founders &amp; Indie Makers</div>
+      <div class="for-role">You built something great.</div>
+      <div class="for-quote">Now make sure AI finds it. Your product deserves to be in the answer, not invisible to the tools your customers already trust.</div>
+    </div>
+    <div class="for-card">
+      <div class="for-tag">Marketing &amp; Growth Teams</div>
+      <div class="for-role">Your SEO is solid.</div>
+      <div class="for-quote">Your AI visibility is a black box. Let's fix that — with a workflow that slots into your existing stack in minutes, not months.</div>
+    </div>
+    <div class="for-card">
+      <div class="for-tag">Agencies &amp; Consultants</div>
+      <div class="for-role">Add GEO to your service stack.</div>
+      <div class="for-quote">Deliver measurable AI visibility results for clients. A new offering that sets you apart before everyone else catches up.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     S5 — OUR PRINCIPLES
+════════════════════════════════════════ -->
+<section class="principles sec-pad">
+  <div class="sec-label reveal-l">How We Think</div>
+  <div class="prin-grid">
+    <div class="prin-card reveal" style="transition-delay:.0s">
+      <div class="prin-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="prin-title">AI-first, not AI-hype</div>
+      <div class="prin-desc">We track what actually affects AI recommendations — not trends, not shortcuts, not black-box promises. Everything we ship is grounded in how LLMs actually work.</div>
+    </div>
+    <div class="prin-card reveal" style="transition-delay:.1s">
+      <div class="prin-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <div class="prin-title">Visibility with substance</div>
+      <div class="prin-desc">Getting noticed by AI means being genuinely useful, well-structured, and trustworthy. We help you earn it — not game it.</div>
+    </div>
+    <div class="prin-card reveal" style="transition-delay:.2s">
+      <div class="prin-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </div>
+      <div class="prin-title">Simple metrics, real results</div>
+      <div class="prin-desc">We don't show you dashboards for the sake of dashboards. Every number connects to a decision you can make right now.</div>
+    </div>
+    <div class="prin-card reveal" style="transition-delay:.3s">
+      <div class="prin-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div class="prin-title">Built for builders</div>
+      <div class="prin-desc">Whether you're a solo founder or a growth team, the workflow should feel fast and obvious. Complexity is a bug, not a feature.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     S6 — WHAT'S NEXT
+════════════════════════════════════════ -->
+<section class="whats-next sec-pad" id="whats-next">
+  <div class="sec-label reveal-l" style="color:rgba(17,17,17,.5);">What's Next</div>
+  <div class="next-head reveal" style="transition-delay:.1s">Ready when<br>you are.</div>
+  <div class="cta-grid">
+    <a class="cta-card dark reveal" href="#" style="transition-delay:.0s">
+      <div class="cta-card-label">Primary</div>
+      <div class="cta-card-title">Start Free <span>→</span></div>
+      <div class="cta-card-sub">Try aisee — no credit card required</div>
+    </a>
+    <a class="cta-card reveal" href="#" style="transition-delay:.08s">
+      <div class="cta-card-label">Features</div>
+      <div class="cta-card-title">Explore Features <span>→</span></div>
+      <div class="cta-card-sub">See exactly what's inside aisee</div>
+    </a>
+    <a class="cta-card reveal" href="mailto:hello@aisee.live" style="transition-delay:.16s">
+      <div class="cta-card-label">Contact</div>
+      <div class="cta-card-title">Get in Touch <span>→</span></div>
+      <div class="cta-card-sub">Partnerships, press, or questions</div>
+    </a>
+    <a class="cta-card reveal" href="https://x.com/aisee" target="_blank" style="transition-delay:.24s">
+      <div class="cta-card-label">Community</div>
+      <div class="cta-card-title">Follow on X <span>→</span></div>
+      <div class="cta-card-sub">Updates, GEO insights, and what we're building</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="Homepage Redesign.html" style="text-decoration:none;">
+    <img src="assets/logo.svg" alt="aisee" style="height:26px;">
+  </a>
+  <div class="foot-links">
+    <a class="foot-link" href="Homepage Redesign.html">Home</a>
+    <a class="foot-link" href="#">Features</a>
+    <a class="foot-link" href="#">Pricing</a>
+    <a class="foot-link" href="#">Blog</a>
+    <a class="foot-link" href="mailto:hello@aisee.live">Contact</a>
+  </div>
+  <span class="foot-copy">© 2026 aisee. The future of discoverability.</span>
+</footer>
+
+<script>
+// ── Scroll reveal ─────────────────────────────────────────────
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal, .reveal-l').forEach(el => obs.observe(el));
+
+// ── Scroll persistence ────────────────────────────────────────
+window.addEventListener('scroll', () => localStorage.setItem('au1_scroll', window.scrollY));
+const s = localStorage.getItem('au1_scroll');
+if (s) window.scrollTo(0, parseInt(s));
+</script>
+</body>
+</html>

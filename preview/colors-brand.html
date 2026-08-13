@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Color Palette" subtitle="Brand, neutral, and semantic color tokens" viewport="700x320" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face { font-family: 'Karla'; src: url('../fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; font-family: 'Karla', sans-serif; padding: 20px; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+.swatch { width: 80px; }
+.swatch-block { width: 80px; height: 64px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); }
+.swatch-label { font-size: 10px; color: #555; margin-top: 5px; line-height: 1.3; }
+.swatch-value { font-size: 9px; color: #999; font-family: monospace; }
+.section { margin-bottom: 18px; }
+.section-title { font-size: 10px; font-weight: 600; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="section">
+  <div class="section-title">Core</div>
+  <div class="row">
+    <div class="swatch"><div class="swatch-block" style="background:#111111;"></div><div class="swatch-label">Black</div><div class="swatch-value">#111111</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#FFFFFF; border:1px solid #e0e0e0;"></div><div class="swatch-label">White</div><div class="swatch-value">#FFFFFF</div></div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">Brand</div>
+  <div class="row">
+    <div class="swatch"><div class="swatch-block" style="background:#CFF229;"></div><div class="swatch-label">Lime</div><div class="swatch-value">#CFF229</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#C9FE12;"></div><div class="swatch-label">Lime Bright</div><div class="swatch-value">#C9FE12</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:rgba(207,255,41,0.5);"></div><div class="swatch-label">Lime BG</div><div class="swatch-value">rgba(207,255,41,.5)</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#FFE253;"></div><div class="swatch-label">Yellow</div><div class="swatch-value">#FFE253</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#FFF2B3;"></div><div class="swatch-label">Yellow Light</div><div class="swatch-value">#FFF2B3</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#FFFADD;"></div><div class="swatch-label">Yellow Pale</div><div class="swatch-value">#FFFADD</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#EC5212;"></div><div class="swatch-label">Orange</div><div class="swatch-value">#EC5212</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#A5D500;"></div><div class="swatch-label">Green</div><div class="swatch-value">#A5D500</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#92BC01;"></div><div class="swatch-label">Green Dark</div><div class="swatch-value">#92BC01</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#F7F6E9;"></div><div class="swatch-label">Cream</div><div class="swatch-value">#F7F6E9</div></div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">Neutral</div>
+  <div class="row">
+    <div class="swatch"><div class="swatch-block" style="background:#F7F8F7;"></div><div class="swatch-label">BG Page</div><div class="swatch-value">#F7F8F7</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#FAFAFA;"></div><div class="swatch-label">BG Card</div><div class="swatch-value">#FAFAFA</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#F5F5F5;"></div><div class="swatch-label">Gray 100</div><div class="swatch-value">#F5F5F5</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#E1E1E1;"></div><div class="swatch-label">Gray 200</div><div class="swatch-value">#E1E1E1</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#D9D9D9;"></div><div class="swatch-label">Gray 300</div><div class="swatch-value">#D9D9D9</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:rgba(17,17,17,0.6);"></div><div class="swatch-label">Muted</div><div class="swatch-value">rgba(17,17,17,.6)</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:rgba(17,17,17,0.05);"></div><div class="swatch-label">Subtle</div><div class="swatch-value">rgba(17,17,17,.05)</div></div>
+    <div class="swatch"><div class="swatch-block" style="background:#FFD0D0;"></div><div class="swatch-label">Error BG</div><div class="swatch-value">#FFD0D0</div></div>
+  </div>
+</div>
+</body>
+</html>

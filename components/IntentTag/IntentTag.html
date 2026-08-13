@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="IntentTag" subtitle="Signal-Feed classification chip — intent + keyword-type variants (意图类型 / keywords类型)" viewport="700x260" -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>IntentTag</title>
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<style>
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg-page, #FBFBF9);
+    font-family: 'Karla', sans-serif;
+    color: #111;
+    padding: 28px 32px;
+    box-sizing: border-box;
+  }
+  h2 { font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(17,17,17,0.45); margin: 0 0 12px; font-weight: 700; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .label { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: rgba(17,17,17,0.4); margin-top: 6px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script>
+    const { IntentTag } = window.AiseeDesignSystem_2b2427;
+    const h = React.createElement;
+    const intents = [
+      ['intent', 'Help-seeking'], ['opinion', 'Hot take'], ['discuss', 'Discussion'],
+      ['compare', 'Comparison'], ['data', 'Data share'],
+    ];
+    const keywords = [
+      ['brand', 'brand'], ['competitor', 'competitor'], ['painpoint', 'pain-point'],
+    ];
+    function Demo() {
+      return h('div', null,
+        h('h2', null, 'Intent variants'),
+        h('div', { className: 'row' }, intents.map(([v, l]) =>
+          h(IntentTag, { key: v, variant: v }, l))),
+        h('h2', null, 'Keyword-type variants'),
+        h('div', { className: 'row' }, keywords.map(([v, l]) =>
+          h(IntentTag, { key: v, kind: 'keyword', variant: v }, l))),
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+  </script>
+</body>
+</html>

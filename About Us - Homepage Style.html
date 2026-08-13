@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="About Us — Homepage Style" subtitle="首页动画风格 · word reveal · mascot · cursor" viewport="1440x900" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aisee — About Us</title>
+<style>
+@font-face { font-family:'Karla'; src:url('fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight:100 900; font-display:swap; }
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --black:#111; --white:#fff; --lime:#CFF229; --yellow:#FFE253;
+  --yellow-lt:#FFF2B3; --orange:#EC5212; --green:#A5D500;
+  --cream:#F7F6E9; --bg:#F7F8F7;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --border:1.5px solid #111;
+}
+html { scroll-behavior:smooth; }
+body { font-family:'Karla',sans-serif; background:var(--white); color:var(--black); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+
+/* ── Custom cursor ── */
+.cur { position:fixed; top:0;left:0; width:18px;height:18px; border:1.5px solid var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:difference; transition:width .2s var(--ease),height .2s var(--ease); }
+.cur.big { width:52px;height:52px; }
+
+/* ── Logo mark CSS ── */
+.lm { position:relative; width:28px;height:30px;flex-shrink:0; }
+.lm-bg  { position:absolute;inset:0;border-radius:320px 320px 0 0;background:var(--lime); }
+.lm-face{ position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:320px 320px 0 0;background:var(--black);overflow:hidden; }
+.lm-eye { position:absolute;left:50%;top:38%;transform:translateX(-50%);width:12px;height:9px;border-radius:50%;background:var(--white); }
+
+/* ── NAV ── */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:100;height:70px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(12px);
+  border-bottom:var(--border);display:flex;align-items:center;padding:0 48px;gap:32px;
+  transform:translateY(-100%); animation:navIn .6s var(--ease) .05s forwards;
+}
+@keyframes navIn { to{transform:translateY(0);} }
+.nav-logo { display:flex;align-items:center;gap:8px;text-decoration:none; }
+.nav-wm { font-family:'Karla';font-size:17px;font-weight:600;color:var(--black); }
+.nav-links { display:flex;align-items:center;gap:4px;margin-left:auto; }
+.nav-a { font-family:'Gotu',serif;font-size:14px;color:var(--black);text-decoration:none;padding:6px 14px;border-radius:999px;transition:background .15s; }
+.nav-a:hover,.nav-a.active { background:rgba(17,17,17,.06); }
+.nav-cta { font-family:'Gotu',serif;font-size:14px;color:var(--black);border:var(--border);border-radius:999px;padding:8px 20px;text-decoration:none;display:flex;gap:10px;transition:background .2s; }
+.nav-cta:hover { background:var(--lime); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp  { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+@keyframes slideUp { to{transform:translateY(0)} }
+@keyframes mascotIn{ from{opacity:0;transform:translateY(40px) scale(.94)} to{opacity:1;transform:none} }
+@keyframes float   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+@keyframes blink   { 0%,85%,100%{transform:scaleY(1)} 90%{transform:scaleY(0.05)} }
+@keyframes decoIn  { to{opacity:1} }
+@keyframes driftA  { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-14px) rotate(3deg)} }
+@keyframes driftB  { 0%,100%{transform:rotate(-3deg) translateY(0)} 50%{transform:rotate(3deg) translateY(10px)} }
+
+/* scroll reveal */
+.rv  { opacity:0;transform:translateY(28px);transition:opacity .72s var(--ease),transform .72s var(--ease); }
+.rvl { opacity:0;transform:translateX(-24px);transition:opacity .72s var(--ease),transform .72s var(--ease); }
+.rv.in,.rvl.in { opacity:1;transform:none; }
+
+/* shared section */
+section { border-bottom:var(--border); }
+.sp { padding:88px 48px; }
+.sec-eye { font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(17,17,17,.4);display:flex;align-items:center;gap:8px;margin-bottom:14px; }
+.sec-eye::before { content:'';width:18px;height:1.5px;background:rgba(17,17,17,.4);flex-shrink:0; }
+.sec-title { font-family:'Gotu',serif;font-size:clamp(40px,4.5vw,64px);line-height:1.0;letter-spacing:-.03em; }
+
+/* ─────── HERO ─────── */
+.hero { min-height:100vh;padding-top:70px;display:flex;flex-direction:column;position:relative;overflow:hidden; }
+
+/* Deco blobs */
+.hero-deco { position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden; }
+.d { position:absolute; }
+.d1 { width:260px;height:260px;border-radius:50%;background:var(--yellow);top:10%;right:4%;opacity:0;animation:decoIn .9s var(--ease) 1.1s forwards, driftA 8s ease-in-out 2.1s infinite; }
+.d2 { width:200px;height:90px;background:#FFD3E2;bottom:28%;left:1%;transform:rotate(-3deg);opacity:0;animation:decoIn .9s var(--ease) 1.3s forwards, driftB 9s ease-in-out 2.3s infinite; }
+.d3 { width:72px;height:72px;border-radius:50%;background:#3C61E5;bottom:35%;right:20%;opacity:0;animation:decoIn .7s var(--ease) 1.5s forwards, driftA 7s ease-in-out 2.5s infinite; }
+.d4 { width:44px;height:44px;border-radius:50%;background:#E7E1F8;top:50%;left:14%;opacity:0;animation:decoIn .7s var(--ease) 1.4s forwards; }
+.d5 { width:0;height:0;border-left:26px solid transparent;border-right:26px solid transparent;border-bottom:44px solid var(--orange);top:25%;left:6%;opacity:0;animation:decoIn .7s var(--ease) 1.6s forwards; }
+.d6 { width:16px;height:16px;border-radius:50%;background:var(--lime);top:38%;right:34%;opacity:0;animation:decoIn .5s var(--ease) 1.7s forwards; }
+
+/* Hero layout */
+.hero-body { flex:1;padding:80px 48px 0;display:grid;grid-template-columns:1fr 400px;gap:64px;align-items:center;position:relative;z-index:1; }
+
+/* Animated headline */
+.hero-eye { font-family:'Karla';font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(17,17,17,.45);display:flex;align-items:center;gap:10px;margin-bottom:26px;opacity:0;animation:fadeUp .6s var(--ease) .35s forwards; }
+.hero-eye::before { content:'';width:26px;height:1.5px;background:rgba(17,17,17,.4);flex-shrink:0; }
+.hero-hl { margin-bottom:28px; }
+.hl-row { overflow:hidden;display:block;line-height:1.0; }
+.hl-in { display:block;font-family:'Gotu',serif;font-size:clamp(56px,6.2vw,92px);letter-spacing:-.03em;color:var(--black);transform:translateY(110%);animation:slideUp .88s var(--ease) forwards; }
+.hl-row:nth-child(1) .hl-in { animation-delay:.45s; }
+.hl-row:nth-child(2) .hl-in { animation-delay:.6s; }
+.hl-row:nth-child(3) .hl-in { animation-delay:.75s; }
+.lime-chip { background:var(--lime);padding:0 8px;border-radius:8px; }
+
+.hero-sub { font-family:'Gotu',serif;font-size:17px;color:rgba(17,17,17,.65);line-height:1.7;max-width:500px;margin-bottom:36px;opacity:0;animation:fadeUp .7s var(--ease) 1.0s forwards; }
+.hero-btns { display:flex;gap:12px;opacity:0;animation:fadeUp .6s var(--ease) 1.15s forwards; }
+.btn-p { font-family:'Gotu',serif;font-size:16px;color:var(--white);background:var(--black);border:var(--border);border-radius:999px;padding:13px 30px;cursor:pointer;text-decoration:none;display:flex;gap:12px;position:relative;overflow:hidden; }
+.btn-p::after { content:'';position:absolute;inset:0;background:var(--lime);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease);z-index:0; }
+.btn-p span { position:relative;z-index:1;transition:color .35s; }
+.btn-p:hover::after { transform:scaleX(1); }
+.btn-p:hover span { color:var(--black); }
+.btn-g { font-family:'Gotu',serif;font-size:16px;color:var(--black);background:transparent;border:var(--border);border-radius:999px;padding:13px 30px;cursor:pointer;text-decoration:none;transition:background .2s; }
+.btn-g:hover { background:rgba(17,17,17,.05); }
+
+/* Mascot right */
+.hero-right { display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;opacity:0;animation:mascotIn .9s var(--ease) .65s forwards; }
+.mascot-float { animation:float 5s ease-in-out infinite; }
+.mascot-float svg .eye-inner { transform-origin:160px 138px;animation:blink 5s ease-in-out 2.5s infinite; }
+
+/* Keyword orbiting tags */
+.ktag { position:absolute;font-family:'Gotu',serif;font-size:11px;padding:5px 12px;border-radius:999px;border:var(--border);white-space:nowrap;opacity:0;animation:fadeUp .5s var(--ease) forwards; }
+.ktag:nth-child(1){top:2%;left:-20px;background:var(--lime);animation-delay:1.2s;}
+.ktag:nth-child(2){top:20%;right:-40px;background:var(--yellow);animation-delay:1.4s;}
+.ktag:nth-child(3){top:48%;left:-50px;background:var(--cream);animation-delay:1.6s;}
+.ktag:nth-child(4){top:68%;right:-30px;background:var(--lime);animation-delay:1.8s;}
+.ktag:nth-child(5){bottom:5%;left:10%;background:var(--yellow-lt);animation-delay:2s;}
+
+/* Stats bar */
+.hero-stats { border-top:var(--border);display:flex;opacity:0;animation:fadeUp .7s var(--ease) 1.3s forwards;position:relative;z-index:1; }
+.hstat { flex:1;padding:22px 48px;border-right:var(--border); }
+.hstat:last-child{border-right:none;}
+.hstat-v { font-family:'Gotu',serif;font-size:40px;line-height:1;margin-bottom:3px; }
+.hstat-l { font-size:12px;color:rgba(17,17,17,.5); }
+
+/* ─────── TICKER ─────── */
+.ticker { background:var(--lime);border-top:var(--border);border-bottom:var(--border);overflow:hidden;padding:13px 0;white-space:nowrap; }
+.ticker-t { display:inline-flex;animation:ticker 22s linear infinite; }
+.ticker-t span { font-family:'Gotu',serif;font-size:14px;padding:0 24px; }
+.ts { color:rgba(17,17,17,.3);font-size:10px; }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ─────── CONTEXT (dark) ─────── */
+.context { background:var(--black); }
+.context .sec-eye { color:rgba(255,255,255,.35); }
+.context .sec-eye::before { background:rgba(255,255,255,.35); }
+.context .sec-title { color:var(--white); }
+.ctx-grid { display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start; }
+.ctx-pts { display:flex;flex-direction:column;gap:0; }
+.ctx-pt { padding:28px 0;border-top:1px solid rgba(255,255,255,.1); }
+.ctx-pt:last-child { border-bottom:1px solid rgba(255,255,255,.1); }
+.ctx-n { font-family:'Gotu',serif;font-size:12px;color:var(--lime);margin-bottom:6px; }
+.ctx-t { font-family:'Gotu',serif;font-size:19px;color:var(--white);margin-bottom:8px; }
+.ctx-b { font-size:14px;color:rgba(255,255,255,.5);line-height:1.7; }
+
+/* Context illustration */
+.ctx-illus { display:flex;flex-direction:column;gap:16px; }
+.ctx-card { border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:24px;position:relative;overflow:hidden; }
+.ctx-card-accent { border-color:var(--lime);background:rgba(207,242,41,.06); }
+.ctx-card-label { font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px; }
+.ctx-card-val { font-family:'Gotu',serif;font-size:28px;color:var(--white);margin-bottom:4px; }
+.ctx-card-sub { font-size:12px;color:rgba(255,255,255,.45); }
+.ctx-bar { height:5px;border-radius:3px;background:rgba(255,255,255,.08);margin-top:12px;overflow:hidden; }
+.ctx-bar-fill { height:100%;border-radius:3px;background:var(--lime); }
+
+/* ─────── WHAT WE BUILD ─────── */
+.build { background:var(--white); }
+.build-top { display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:56px; }
+.build-intro-text { font-family:'Gotu',serif;font-size:19px;color:rgba(17,17,17,.65);line-height:1.65; }
+.caps { display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:var(--border);border-radius:14px;overflow:hidden; }
+.cap { padding:36px;border-right:var(--border);border-bottom:var(--border);position:relative;transition:background .2s,transform .2s var(--ease);cursor:default; }
+.cap:nth-child(2n){border-right:none;}
+.cap:nth-child(3),.cap:nth-child(4){border-bottom:none;}
+.cap:hover{background:var(--bg);transform:translateY(-3px);}
+.cap-ico { width:44px;height:44px;border-radius:10px;border:var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:18px;background:var(--white); }
+.cap-n { font-family:'Gotu',serif;font-size:21px;margin-bottom:8px; }
+.cap-d { font-size:13px;color:rgba(17,17,17,.6);line-height:1.65; }
+.cap-num { position:absolute;top:20px;right:24px;font-family:'Gotu',serif;font-size:52px;color:rgba(17,17,17,.05);line-height:1; }
+
+/* ─────── WHO IT'S FOR ─────── */
+.for-whom { background:var(--cream); }
+.for-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:var(--border);border-radius:14px;overflow:hidden;margin-top:48px; }
+.fc { padding:36px;border-right:var(--border);transition:background .2s;cursor:default; }
+.fc:last-child{border-right:none;}
+.fc:hover{background:rgba(255,226,83,.25);}
+.fc-tag { display:inline-block;padding:4px 12px;border-radius:999px;border:var(--border);font-size:11px;font-weight:600;background:var(--white);margin-bottom:14px; }
+.fc-role { font-family:'Gotu',serif;font-size:19px;line-height:1.2;margin-bottom:10px; }
+.fc-q { font-family:'Gotu',serif;font-size:14px;color:rgba(17,17,17,.6);line-height:1.65; }
+.fc-q::before{content:'"';} .fc-q::after{content:'"';}
+
+/* ─────── PRINCIPLES ─────── */
+.principles { background:var(--white); }
+.prin-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:48px; }
+.pc { padding:32px;border:var(--border);border-radius:12px;transition:transform .2s var(--ease),background .2s,box-shadow .2s;cursor:default; }
+.pc:hover{background:var(--bg);transform:translateY(-4px);box-shadow:4px 4px 0 var(--black);}
+.pc-ico { width:40px;height:40px;border-radius:8px;background:var(--lime);display:flex;align-items:center;justify-content:center;margin-bottom:16px; }
+.pc-t { font-family:'Gotu',serif;font-size:19px;margin-bottom:8px; }
+.pc-d { font-size:13px;color:rgba(17,17,17,.6);line-height:1.65; }
+
+/* ─────── CTA ─────── */
+.cta-sec { background:var(--lime);padding:96px 48px;border-bottom:none;display:flex;align-items:center;justify-content:space-between;gap:48px; }
+.cta-hl { font-family:'Gotu',serif;font-size:clamp(48px,5.5vw,84px);line-height:0.98;letter-spacing:-.03em; }
+.cta-right { display:flex;flex-direction:column;gap:12px;flex-shrink:0; }
+.cta-grid { display:grid;grid-template-columns:1fr 1fr;gap:14px;width:480px; }
+.cta-card { border:var(--border);border-radius:12px;padding:24px 28px;background:var(--white);display:flex;flex-direction:column;gap:8px;transition:transform .2s var(--ease),box-shadow .2s;cursor:pointer;text-decoration:none;color:inherit; }
+.cta-card:hover{transform:translateY(-4px);box-shadow:4px 4px 0 var(--black);}
+.cta-card.dark{background:var(--black);border-color:var(--black);}
+.cta-lbl { font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(17,17,17,.4); }
+.cta-card.dark .cta-lbl{color:rgba(255,255,255,.4);}
+.cta-title { font-family:'Gotu',serif;font-size:18px;color:var(--black);display:flex;align-items:center;justify-content:space-between; }
+.cta-card.dark .cta-title{color:var(--white);}
+.cta-sub { font-size:12px;color:rgba(17,17,17,.5); }
+.cta-card.dark .cta-sub{color:rgba(255,255,255,.5);}
+
+/* ─────── FOOTER ─────── */
+footer { background:var(--white);border-top:var(--border);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px; }
+.foot-a { font-family:'Gotu',serif;font-size:13px;color:rgba(17,17,17,.5);text-decoration:none;transition:color .15s; }
+.foot-a:hover{color:var(--black);}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="Homepage Redesign.html">
+    <img src="assets/logo.svg" alt="aisee" style="height:32px;">
+  </a>
+  <div class="nav-links">
+    <a class="nav-a" href="Homepage Redesign.html">Home</a>
+    <a class="nav-a" href="#">Features</a>
+    <a class="nav-a active" href="#">About</a>
+    <a class="nav-a" href="#">FAQ</a>
+    <a class="nav-cta" href="#cta"><span>Start Free</span><span>Start Free</span></a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero" id="hero">
+  <div class="hero-deco">
+    <div class="d d1"></div>
+    <div class="d d2"></div>
+    <div class="d d3"></div>
+    <div class="d d4"></div>
+    <div class="d d5"></div>
+    <div class="d d6"></div>
+  </div>
+
+  <div class="hero-body">
+    <!-- Left -->
+    <div>
+      <div class="hero-eye">About aisee &nbsp;·&nbsp; Est. 2024</div>
+      <h1 class="hero-hl">
+        <span class="hl-row"><span class="hl-in">We built</span></span>
+        <span class="hl-row"><span class="hl-in">the toolkit for</span></span>
+        <span class="hl-row"><span class="hl-in">the <span class="lime-chip">AI-first</span> internet.</span></span>
+      </h1>
+      <p class="hero-sub">aisee is an all-in-one GEO platform that helps brands become visible, trusted, and recommended by the AI engines your customers already use.</p>
+      <div class="hero-btns">
+        <a class="btn-p" href="#cta"><span>Start for free</span><span>→</span></a>
+        <a class="btn-g" href="#context">Our story</a>
+      </div>
+    </div>
+
+    <!-- Right: mascot + floating tags -->
+    <div class="hero-right" style="position:relative;">
+      <div class="ktag">LLM Search</div>
+      <div class="ktag">AI Visibility</div>
+      <div class="ktag">GEO Diagnostic</div>
+      <div class="ktag">Citation Score</div>
+      <div class="ktag">Post Agent</div>
+
+      <div class="mascot-float">
+        <svg width="300" height="340" viewBox="0 0 300 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- lime arch body -->
+          <path d="M150 12 C70 12 12 70 12 150 L 12 350 L 288 350 L 288 150 C 288 70 230 12 150 12 Z" fill="#CFF229" stroke="#111" stroke-width="1.5"/>
+          <!-- dark head -->
+          <circle cx="150" cy="148" r="108" fill="#111111"/>
+          <!-- white eye (blinks) -->
+          <ellipse class="eye-inner" cx="150" cy="138" rx="48" ry="42" fill="white"/>
+          <!-- pupil -->
+          <circle cx="150" cy="138" r="24" fill="#111111"/>
+          <!-- shine -->
+          <circle cx="163" cy="126" r="9" fill="white"/>
+          <circle cx="142" cy="148" r="4" fill="white" opacity="0.5"/>
+          <!-- mouth hint -->
+          <path d="M 124 196 Q 150 212 176 196" stroke="#111" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.15"/>
+          <!-- arms -->
+          <path d="M12 235 Q-24 225 -32 198" stroke="#CFF229" stroke-width="16" stroke-linecap="round" fill="none"/>
+          <path d="M288 235 Q324 225 332 198" stroke="#CFF229" stroke-width="16" stroke-linecap="round" fill="none"/>
+          <!-- feet / base -->
+          <rect x="80" y="345" width="44" height="20" rx="10" fill="#111"/>
+          <rect x="176" y="345" width="44" height="20" rx="10" fill="#111"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-v" data-count="5">0</div><div class="hstat-l">AI engines monitored</div></div>
+    <div class="hstat"><div class="hstat-v">3×</div><div class="hstat-l">Average citation lift</div></div>
+    <div class="hstat"><div class="hstat-v">24/7</div><div class="hstat-l">Automated publishing</div></div>
+    <div class="hstat"><div class="hstat-v" data-count="50" data-suffix="+">0</div><div class="hstat-l">Brands tracked</div></div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-t">
+    <span>AI Visibility</span><span class="ts">·</span>
+    <span>Citation Score</span><span class="ts">·</span>
+    <span>LLM Search</span><span class="ts">·</span>
+    <span>Prompt Strategy</span><span class="ts">·</span>
+    <span>GEO Diagnostic</span><span class="ts">·</span>
+    <span>AI Rankings</span><span class="ts">·</span>
+    <span>Post Agent</span><span class="ts">·</span>
+    <span>Generative Engine Optimization</span><span class="ts">·</span>
+    <span>AI Visibility</span><span class="ts">·</span>
+    <span>Citation Score</span><span class="ts">·</span>
+    <span>LLM Search</span><span class="ts">·</span>
+    <span>Prompt Strategy</span><span class="ts">·</span>
+    <span>GEO Diagnostic</span><span class="ts">·</span>
+    <span>AI Rankings</span><span class="ts">·</span>
+    <span>Post Agent</span><span class="ts">·</span>
+    <span>Generative Engine Optimization</span><span class="ts">·</span>
+  </div>
+</div>
+
+<!-- ═══ CONTEXT ═══ -->
+<section class="context sp" id="context">
+  <div class="ctx-grid">
+    <div>
+      <div class="sec-eye rvl">Why This Matters</div>
+      <h2 class="sec-title rv" style="transition-delay:.1s;color:#fff;">Search is no<br>longer just<br>Google.</h2>
+    </div>
+
+    <div class="ctx-illus">
+      <!-- AI Score cards — inline illustration -->
+      <div class="ctx-card ctx-card-accent rv" style="transition-delay:.0s">
+        <div class="ctx-card-label">Your AI Visibility Score</div>
+        <div class="ctx-card-val">82 <span style="font-family:'Karla';font-size:16px;color:rgba(255,255,255,.4)">/100</span></div>
+        <div class="ctx-card-sub">↑ +12 pts from last month</div>
+        <div class="ctx-bar"><div class="ctx-bar-fill" style="width:82%"></div></div>
+      </div>
+      <div class="ctx-card rv" style="transition-delay:.1s">
+        <div class="ctx-card-label">Citation Score</div>
+        <div class="ctx-card-val">9.4%</div>
+        <div class="ctx-card-sub">LLM mentions across ChatGPT, Perplexity, Gemini</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ctx-pts" style="margin-top:56px;">
+    <div class="ctx-pt rv" style="transition-delay:.0s">
+      <div class="ctx-n">01 — The shift</div>
+      <div class="ctx-t">The gatekeepers changed.</div>
+      <div class="ctx-b">People are asking ChatGPT, Perplexity, and AI assistants instead of typing into a search bar. The way brands get discovered has fundamentally changed — and most brands haven't caught up.</div>
+    </div>
+    <div class="ctx-pt rv" style="transition-delay:.12s">
+      <div class="ctx-n">02 — The problem</div>
+      <div class="ctx-t">Most brands are invisible to AI.</div>
+      <div class="ctx-b">Not because they're bad — because they haven't been optimized for how AI reads and recommends content. Citation blind spots are everywhere. GEO closes that gap.</div>
+    </div>
+    <div class="ctx-pt rv" style="transition-delay:.24s">
+      <div class="ctx-n">03 — The opportunity</div>
+      <div class="ctx-t">GEO is the new SEO.</div>
+      <div class="ctx-b">The brands that figure this out now will own the next decade of discovery. We built aisee so you don't have to figure it out alone.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT WE BUILD ═══ -->
+<section class="build sp">
+  <div class="build-top">
+    <div>
+      <div class="sec-eye rvl">What We Build</div>
+      <h2 class="sec-title rv" style="transition-delay:.1s">Scan. Track.<br>Optimize. Measure.</h2>
+    </div>
+    <p class="build-intro-text rv" style="transition-delay:.15s">A toolkit that improves how AI engines perceive and recommend your brand — in one clean dashboard.</p>
+  </div>
+  <div class="caps">
+    <div class="cap rv" style="transition-delay:.0s">
+      <div class="cap-num">01</div>
+      <div class="cap-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <div class="cap-n">Scan</div>
+      <div class="cap-d">Reveal how AI engines currently see your brand — knowledge gaps, trust issues, and citation blind spots you didn't know existed.</div>
+    </div>
+    <div class="cap rv" style="transition-delay:.1s">
+      <div class="cap-num">02</div>
+      <div class="cap-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="cap-n">Track</div>
+      <div class="cap-d">Monitor your AI visibility score across multiple engines from a single dashboard. Week-over-week deltas, platform breakdowns, trend lines.</div>
+    </div>
+    <div class="cap rv" style="transition-delay:.2s">
+      <div class="cap-num">03</div>
+      <div class="cap-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+      <div class="cap-n">Optimize</div>
+      <div class="cap-d">Get prioritized, actionable recommendations tied to the highest-impact GEO ranking factors. Every suggestion connects to a clear action.</div>
+    </div>
+    <div class="cap rv" style="transition-delay:.3s">
+      <div class="cap-num">04</div>
+      <div class="cap-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <div class="cap-n">Measure</div>
+      <div class="cap-d">Track real improvement: ranking shifts, citation growth, sentiment changes, and conversions. Every metric connects to a decision.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHO IT'S FOR ═══ -->
+<section class="for-whom sp">
+  <div class="sec-eye rvl">Who It's For</div>
+  <div class="for-grid rv" style="transition-delay:.1s">
+    <div class="fc">
+      <div class="fc-tag">Founders &amp; Indie Makers</div>
+      <div class="fc-role">You built something great.</div>
+      <div class="fc-q">Now make sure AI finds it. Your product deserves to be in the answer, not invisible to the tools your customers already trust.</div>
+    </div>
+    <div class="fc">
+      <div class="fc-tag">Marketing &amp; Growth Teams</div>
+      <div class="fc-role">Your SEO is solid.</div>
+      <div class="fc-q">Your AI visibility is a black box. Let's fix that — with a workflow that slots into your existing stack in minutes, not months.</div>
+    </div>
+    <div class="fc">
+      <div class="fc-tag">Agencies &amp; Consultants</div>
+      <div class="fc-role">Add GEO to your service stack.</div>
+      <div class="fc-q">Deliver measurable AI visibility results for clients. A new offering that sets you apart before everyone else catches up.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRINCIPLES ═══ -->
+<section class="principles sp">
+  <div class="sec-eye rvl">How We Think</div>
+  <div class="prin-grid">
+    <div class="pc rv" style="transition-delay:.0s">
+      <div class="pc-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></div>
+      <div class="pc-t">AI-first, not AI-hype</div>
+      <div class="pc-d">We track what actually affects AI recommendations — not trends, not shortcuts, not black-box promises. Everything we ship is grounded in how LLMs actually work.</div>
+    </div>
+    <div class="pc rv" style="transition-delay:.1s">
+      <div class="pc-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <div class="pc-t">Visibility with substance</div>
+      <div class="pc-d">Getting noticed by AI means being genuinely useful, well-structured, and trustworthy. We help you earn it — not game it.</div>
+    </div>
+    <div class="pc rv" style="transition-delay:.2s">
+      <div class="pc-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+      <div class="pc-t">Simple metrics, real results</div>
+      <div class="pc-d">We don't show you dashboards for the sake of dashboards. Every number connects to a decision you can make right now.</div>
+    </div>
+    <div class="pc rv" style="transition-delay:.3s">
+      <div class="pc-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="pc-t">Built for builders</div>
+      <div class="pc-d">Whether you're a solo founder or a growth team, the workflow should feel fast and obvious. Complexity is a bug, not a feature.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-sec" id="cta">
+  <h2 class="cta-hl rvl">Ready when<br>you are.</h2>
+  <div class="cta-grid rv" style="transition-delay:.1s">
+    <a class="cta-card dark" href="#">
+      <div class="cta-lbl">Primary</div>
+      <div class="cta-title">Start Free <span>→</span></div>
+      <div class="cta-sub">No credit card required</div>
+    </a>
+    <a class="cta-card" href="#">
+      <div class="cta-lbl">Features</div>
+      <div class="cta-title">Explore Features <span>→</span></div>
+      <div class="cta-sub">See exactly what's inside</div>
+    </a>
+    <a class="cta-card" href="mailto:hello@aisee.live">
+      <div class="cta-lbl">Contact</div>
+      <div class="cta-title">Get in Touch <span>→</span></div>
+      <div class="cta-sub">Partnerships, press, questions</div>
+    </a>
+    <a class="cta-card" href="https://x.com/aisee" target="_blank">
+      <div class="cta-lbl">Community</div>
+      <div class="cta-title">Follow on X <span>→</span></div>
+      <div class="cta-sub">Updates, GEO insights, builds</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="Homepage Redesign.html" style="text-decoration:none;">
+    <img src="assets/logo.svg" alt="aisee" style="height:26px;">
+  </a>
+  <div style="display:flex;gap:20px;">
+    <a class="foot-a" href="Homepage Redesign.html">Home</a>
+    <a class="foot-a" href="#">Features</a>
+    <a class="foot-a" href="#">Pricing</a>
+    <a class="foot-a" href="#">Blog</a>
+    <a class="foot-a" href="mailto:hello@aisee.live">Contact</a>
+  </div>
+  <span style="font-size:12px;color:rgba(17,17,17,.35);">© 2026 aisee. The future of discoverability.</span>
+</footer>
+
+<script>
+// ── Custom cursor ──────────────────────────────────────────────
+const cur = document.getElementById('cur');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){
+  cx+=(mx-cx)*.12; cy+=(my-cy)*.12;
+  cur.style.left=cx+'px'; cur.style.top=cy+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.cap,.fc,.pc,.cta-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+
+// ── Scroll reveal ──────────────────────────────────────────────
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.rv,.rvl').forEach(el=>obs.observe(el));
+
+// ── Countup ────────────────────────────────────────────────────
+function countUp(el,target,suffix=''){
+  const dur=1400; const t0=performance.now();
+  (function s(now){
+    const p=Math.min((now-t0)/dur,1);
+    const e=1-Math.pow(1-p,4);
+    el.textContent=Math.floor(e*target)+suffix;
+    if(p<1) requestAnimationFrame(s);
+  })(performance.now());
+}
+const cObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      countUp(e.target,+e.target.dataset.count,e.target.dataset.suffix||'+');
+      cObs.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cObs.observe(el));
+
+// ── Parallax deco ──────────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  const sy=window.scrollY;
+  const d1=document.querySelector('.d1');
+  const d2=document.querySelector('.d2');
+  if(d1) d1.style.transform=`translateY(${-sy*.35}px)`;
+  if(d2) d2.style.transform=`rotate(-3deg) translateY(${sy*.18}px)`;
+},{passive:true});
+
+// ── Scroll persistence ─────────────────────────────────────────
+window.addEventListener('scroll',()=>localStorage.setItem('au2_scroll',window.scrollY),{passive:true});
+const s=localStorage.getItem('au2_scroll');
+if(s) window.scrollTo(0,parseInt(s));
+</script>
+</body>
+</html>

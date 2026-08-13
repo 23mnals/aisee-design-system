@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Status Default — Variations</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body { margin: 0; font-family: 'Karla', system-ui, sans-serif; color: #111; background: #F7F8F7; }
+
+  /* ── Filter bar (matches engage signal-feed) ─────────────────── */
+  .bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 20px;
+    background: #fff;
+    border-bottom: 1px solid rgba(17,17,17,0.05);
+    flex-wrap: wrap;
+  }
+  .bar .filters-label {
+    font-size: 12px; color: rgba(17,17,17,0.5);
+    margin-left: auto;
+  }
+  .chip {
+    height: 24px; padding: 0 8px;
+    border: 1px solid rgba(17,17,17,0.05);
+    border-radius: 8px;
+    font-size: 12px; font-weight: 500;
+    color: #111;
+    background: transparent;
+    display: inline-flex; align-items: center; gap: 4px;
+    white-space: nowrap;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .chip.selected {
+    background: #FFFADD;
+    border-color: rgba(17,17,17,0.15);
+  }
+  /* Soft / smart-default variant */
+  .chip.soft {
+    background: rgba(17,17,17,0.03);
+    border-color: rgba(17,17,17,0.08);
+    border-style: dashed;
+  }
+  .chip .count {
+    height: 16px; min-width: 16px; padding: 0 4px;
+    border-radius: 9999px;
+    background: #111; color: #FFE253;
+    font-size: 10px; font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .chip .x {
+    width: 14px; height: 14px;
+    border-radius: 9999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: rgba(17,17,17,0.6);
+    margin-left: 2px;
+  }
+  .chip .x:hover { background: rgba(17,17,17,0.12); color: #111; }
+  .chip svg { width: 10px; height: 10px; }
+  .chip .pin {
+    width: 12px; height: 12px;
+    color: rgba(17,17,17,0.4);
+    margin-right: 1px;
+  }
+
+  /* ── Dropdown panel ──────────────────────────────────────────── */
+  .panel {
+    width: 240px;
+    background: #fff;
+    border: 1px solid rgba(17,17,17,0.12);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -4px rgba(0,0,0,.1), 0 10px 15px -3px rgba(0,0,0,.1);
+    overflow: hidden;
+    font-family: inherit;
+  }
+  .panel-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px 4px;
+  }
+  .panel-head .title {
+    font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: rgba(17,17,17,0.5);
+  }
+  .panel-head .clear {
+    font-size: 12px; font-weight: 500; color: #111;
+    text-decoration: underline; text-underline-offset: 2px;
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .opts { padding: 4px 0 8px; }
+  .opt {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .opt:hover { background: rgba(17,17,17,0.04); }
+  .opt .cb {
+    width: 16px; height: 16px;
+    border: 1.5px solid rgba(17,17,17,0.35);
+    border-radius: 4px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #fff; flex: none;
+  }
+  .opt.checked .cb { background: #111; border-color: #111; }
+  .opt.checked .cb svg { color: #CFF229; }
+  .opt .label { flex: 1; }
+  .opt .hint {
+    font-size: 11px;
+    color: rgba(17,17,17,0.45);
+    font-weight: 500;
+    padding: 1px 6px;
+    background: rgba(17,17,17,0.05);
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+  }
+  .opt .hint.smart {
+    background: #FFFADD;
+    color: rgba(17,17,17,0.7);
+  }
+
+  /* ── Artboard innards ────────────────────────────────────────── */
+  .ab {
+    background: #fff;
+    height: 100%;
+    display: flex; flex-direction: column;
+  }
+  .ab-bar { background: #fff; }
+  .ab-stage {
+    flex: 1; padding: 28px 28px 20px;
+    background: #F7F8F7;
+    display: flex; justify-content: flex-start;
+  }
+  .ab-stage .anchor {
+    margin-left: 86px; /* aligns approx under Status chip */
+  }
+  .ab-blurb {
+    padding: 14px 20px 18px;
+    border-top: 1px solid rgba(17,17,17,0.06);
+    font-size: 12.5px;
+    color: rgba(17,17,17,0.7);
+    line-height: 1.55;
+    background: #fff;
+  }
+  .ab-blurb strong { color: #111; font-weight: 600; }
+  .ab-blurb .pro { color: #2a6f3d; }
+  .ab-blurb .con { color: #b04223; }
+  .ab-blurb .row { margin-top: 4px; display: block; }
+
+  .reco {
+    position: absolute;
+    top: -10px; right: 14px;
+    background: #CFF229; color: #111;
+    border: 1px solid #111;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 9999px;
+    z-index: 5;
+  }
+</style>
+</head>
+<body>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { DesignCanvas, DCSection, DCArtboard } = window;
+
+const Chev = () => (<svg viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>);
+const XGlyph = () => (<svg viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>);
+const Tick = () => (<svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M2.5 6.2l2.4 2.4 4.6-5.2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>);
+const Pin = () => (<svg viewBox="0 0 12 12" fill="none" className="pin"><path d="M3 1.5h6M6 1.5v4M4 5.5h4l-1 5H5z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>);
+
+// Stable filter bar surrounding the Status chip under test.
+function Bar({ statusChip }) {
+  return (
+    <div className="bar">
+      <div className="chip"><span>All Platform</span><span style={{color:"rgba(17,17,17,0.45)",fontSize:11}}>5</span><Chev /></div>
+      <span style={{fontSize:11,color:"rgba(17,17,17,0.5)",margin:"0 6px"}}>Last sync <b style={{color:"#111"}}>2m ago</b></span>
+      <div style={{flex:1}}></div>
+      <span className="filters-label">Filters:</span>
+      <div className="chip"><span>Keywords</span><Chev /></div>
+      {statusChip}
+      <div className="chip"><span>Intents</span><Chev /></div>
+      <div className="chip"><span>Subreddits</span><Chev /></div>
+    </div>
+  );
+}
+
+// Reusable open dropdown panel.
+function Panel({ title, items, clear, alignLeft = 86 }) {
+  return (
+    <div className="panel" style={{marginLeft: alignLeft}}>
+      <div className="panel-head">
+        <span className="title">{title}</span>
+        {clear && <button className="clear">{clear}</button>}
+      </div>
+      <div className="opts">
+        {items.map((it, i) => (
+          <div key={i} className={`opt ${it.checked ? "checked" : ""}`}>
+            <span className="cb">{it.checked && <Tick />}</span>
+            <span className="label">{it.label}</span>
+            {it.hint && <span className={`hint ${it.hintKind || ""}`}>{it.hint}</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── A · Today (no default) ───────────────────────────────────── */
+function VariantA() {
+  return (
+    <div className="ab">
+      <div className="ab-bar">
+        <Bar statusChip={
+          <div className="chip"><span>Status</span><Chev /></div>
+        } />
+      </div>
+      <div className="ab-stage">
+        <Panel title="Status" items={[
+          { label: "Not replied" },
+          { label: "Replied" },
+        ]} />
+      </div>
+      <div className="ab-blurb">
+        <strong>A · Today — no default</strong>
+        <span className="row con">✗ User lands on all 3.46k feeds (replied + unreplied). The "not replied + high score" opportunities aren't surfaced.</span>
+        <span className="row con">✗ Power users have to set Status every session.</span>
+      </div>
+    </div>
+  );
+}
+
+/* ── B · Default selected, chip reads "Status" ─────────────────── */
+function VariantB() {
+  return (
+    <div className="ab">
+      <div className="ab-bar">
+        <Bar statusChip={
+          <div className="chip selected">
+            <span>Status</span>
+            <span className="count">1</span>
+            <span className="x"><XGlyph /></span>
+          </div>
+        } />
+      </div>
+      <div className="ab-stage">
+        <Panel title="Status · 1 selected" clear="Clear" items={[
+          { label: "Not replied", checked: true },
+          { label: "Replied" },
+        ]} />
+      </div>
+      <div className="ab-blurb">
+        <strong>B · Default selected, label stays "Status"</strong>
+        <span className="row pro">✓ Honest — chip looks active because it IS active.</span>
+        <span className="row pro">✓ Consistent with multi-chip pattern (Status / Intents / Subreddits all behave the same).</span>
+        <span className="row con">✗ User must open the dropdown to see WHICH status is filtering. One extra click vs. variant C.</span>
+      </div>
+    </div>
+  );
+}
+
+/* ── C · Default selected, chip reads "Not replied" (RECO) ─────── */
+function VariantC() {
+  return (
+    <div className="ab" style={{position:"relative"}}>
+      <span className="reco">★ Recommended</span>
+      <div className="ab-bar">
+        <Bar statusChip={
+          <div className="chip selected">
+            <span>Not replied</span>
+            <span className="x"><XGlyph /></span>
+          </div>
+        } />
+      </div>
+      <div className="ab-stage">
+        <Panel title="Status" clear="Clear" items={[
+          { label: "Not replied", checked: true, hint: "default", hintKind: "smart" },
+          { label: "Replied" },
+        ]} />
+      </div>
+      <div className="ab-blurb">
+        <strong>C · Default selected + chip shows the value</strong>
+        <span className="row pro">✓ Chip is self-explanatory at a glance — no need to open it to know what's filtering.</span>
+        <span className="row pro">✓ "(default)" pill inside dropdown tells user this came from the system, not their last session.</span>
+        <span className="row pro">✓ Cleanest visual — binary filters don't need a count badge.</span>
+        <span className="row pro">✓ × clears it and the chip flips back to "Status" (just like A's first state). User mental model never breaks.</span>
+        <span className="row con">✗ Special-cases binary chips vs. multi-chips. Tiny rule to remember in the spec: <em>≤1 selection → show value as label; ≥2 → show "Label · N"</em>.</span>
+      </div>
+    </div>
+  );
+}
+
+/* ── D · Soft / smart-default visual ───────────────────────────── */
+function VariantD() {
+  return (
+    <div className="ab">
+      <div className="ab-bar">
+        <Bar statusChip={
+          <div className="chip soft">
+            <Pin />
+            <span>Not replied</span>
+            <span className="x"><XGlyph /></span>
+          </div>
+        } />
+      </div>
+      <div className="ab-stage">
+        <Panel title="Status" clear="Clear" items={[
+          { label: "Not replied", checked: true, hint: "default", hintKind: "smart" },
+          { label: "Replied" },
+        ]} />
+      </div>
+      <div className="ab-blurb">
+        <strong>D · Distinct "smart default" style — dashed border + pin icon</strong>
+        <span className="row pro">✓ Differentiates "system suggested" from "user chosen" — visually softer, less assertive.</span>
+        <span className="row con">✗ Adds a third chip state to the system (default / selected-by-user / soft-default). More to design and document.</span>
+        <span className="row con">✗ The moment the user touches the chip (uncheck or check anything), the "default" identity disappears and the chip needs to swap to selected style — that transition is awkward.</span>
+        <span className="row con">✗ Doesn't scale: if you add more smart defaults later (sort by Score, Recency &lt; 24h, etc.) the bar fills with dashed chips and stops feeling intentional.</span>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection id="cur" title="Today" subtitle="What it looks like before adding a default.">
+        <DCArtboard id="a" label="A · No default (current)" width={680} height={520}>
+          <VariantA />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="proposals" title="Three ways to render the default" subtitle="Pick a chip rendering for the pre-selected 'Not replied'.">
+        <DCArtboard id="b" label="B · Selected, label = 'Status'" width={680} height={580}>
+          <VariantB />
+        </DCArtboard>
+        <DCArtboard id="c" label="C · Selected, label = 'Not replied' (recommended)" width={680} height={620}>
+          <VariantC />
+        </DCArtboard>
+        <DCArtboard id="d" label="D · Soft smart-default style" width={680} height={620}>
+          <VariantD />
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

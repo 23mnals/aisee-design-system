@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Spacing, Radii & Shadows" subtitle="8px spacing scale, border radii, shadow levels" viewport="700x280" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face { font-family: 'Karla'; src: url('../fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; padding: 20px 24px; font-family: 'Karla', sans-serif; }
+.section-title { font-size: 10px; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 18px; }
+.swatch { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.swatch-label { font-size: 9px; color: #999; }
+.radius-block { background: rgba(17,17,17,0.08); border: 1.5px solid rgba(17,17,17,0.2); }
+
+/* shadow demos */
+.shadow-demo { width: 80px; height: 48px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #888; }
+</style>
+</head>
+<body>
+
+<div class="section-title" style="margin-bottom:10px;">Spacing Scale (px)</div>
+<div class="row" style="align-items:flex-end;">
+  <div class="swatch"><div style="width:4px;height:4px;background:#CFF229;border-radius:2px;"></div><div class="swatch-label">4</div></div>
+  <div class="swatch"><div style="width:8px;height:8px;background:#CFF229;border-radius:2px;"></div><div class="swatch-label">8</div></div>
+  <div class="swatch"><div style="width:12px;height:12px;background:#CFF229;border-radius:2px;"></div><div class="swatch-label">12</div></div>
+  <div class="swatch"><div style="width:16px;height:16px;background:#CFF229;border-radius:2px;"></div><div class="swatch-label">16</div></div>
+  <div class="swatch"><div style="width:24px;height:24px;background:#CFF229;border-radius:2px;"></div><div class="swatch-label">24</div></div>
+  <div class="swatch"><div style="width:32px;height:32px;background:#CFF229;border-radius:2px;"></div><div class="swatch-label">32</div></div>
+  <div class="swatch"><div style="width:48px;height:48px;background:#CFF229;border-radius:2px;"></div><div class="swatch-label">48</div></div>
+  <div class="swatch"><div style="width:64px;height:64px;background:#CFF229;border-radius:2px;"></div><div class="swatch-label">64</div></div>
+</div>
+
+<div class="section-title" style="margin-bottom:10px;">Border Radius</div>
+<div class="row">
+  <div class="swatch"><div class="radius-block" style="width:40px;height:40px;border-radius:0;"></div><div class="swatch-label">0px</div></div>
+  <div class="swatch"><div class="radius-block" style="width:40px;height:40px;border-radius:4px;"></div><div class="swatch-label">4px</div></div>
+  <div class="swatch"><div class="radius-block" style="width:40px;height:40px;border-radius:8px;"></div><div class="swatch-label">8px btn</div></div>
+  <div class="swatch"><div class="radius-block" style="width:40px;height:40px;border-radius:12px;"></div><div class="swatch-label">12px card</div></div>
+  <div class="swatch"><div class="radius-block" style="width:40px;height:40px;border-radius:16px;"></div><div class="swatch-label">16px card-lg</div></div>
+  <div class="swatch"><div class="radius-block" style="width:64px;height:32px;border-radius:9999px;"></div><div class="swatch-label">pill</div></div>
+  <div class="swatch"><div class="radius-block" style="width:40px;height:40px;border-radius:50%;"></div><div class="swatch-label">circle</div></div>
+  <div class="swatch"><div class="radius-block" style="width:25px;height:26px;border-radius:320px 320px 0 0;"></div><div class="swatch-label">logo mark</div></div>
+</div>
+
+<div class="section-title" style="margin-bottom:10px;">Shadows</div>
+<div class="row">
+  <div class="swatch">
+    <div class="shadow-demo" style="box-shadow:none;border:1px solid #e0e0e0;">none</div>
+    <div class="swatch-label">card</div>
+  </div>
+  <div class="swatch">
+    <div class="shadow-demo" style="box-shadow:0 1px 3px rgba(0,0,0,0.08);">subtle</div>
+    <div class="swatch-label">card-sm</div>
+  </div>
+  <div class="swatch">
+    <div class="shadow-demo" style="box-shadow:0px 4px 6px -4px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);">lg</div>
+    <div class="swatch-label">dropdown</div>
+  </div>
+  <div class="swatch">
+    <div class="shadow-demo" style="box-shadow:0px 8px 8px rgba(0,0,0,0.04),0px 20px 24px rgba(0,0,0,0.1);">xl</div>
+    <div class="swatch-label">modal</div>
+  </div>
+</div>
+
+</body>
+</html>

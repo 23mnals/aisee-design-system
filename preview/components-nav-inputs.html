@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Nav, Inputs & Toggles" subtitle="Tab toggle, sidebar nav, dropdowns, text input, toggle" viewport="700x300" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face { font-family:'Karla'; src:url('../fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight:100 900; }
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { background:#fff; padding:24px 28px; font-family:'Karla',sans-serif; font-size:14px; color:#111; }
+.section-title { font-size:10px; color:#aaa; letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px; font-weight:600; }
+.row { display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; margin-bottom:20px; }
+hr { border:none; border-top:1px solid #f0f0f0; margin:16px 0; }
+
+/* ── Nav bar (matches Homepage Redesign) ── */
+.nav-demo {
+  width:100%; height:56px; background:rgba(255,255,255,0.9);
+  border:1.5px solid #111; border-radius:10px;
+  display:flex; align-items:center; padding:0 24px; gap:32px;
+  margin-bottom:6px;
+}
+.nav-logo-demo img { height:24px; }
+.nav-links-demo { display:flex; align-items:center; gap:4px; margin-left:auto; }
+.nav-link-demo {
+  font-family:'Gotu',serif; font-size:13px; color:#111; text-decoration:none;
+  padding:5px 12px; border-radius:999px; background:rgba(17,17,17,.06);
+}
+.nav-link-demo.plain { background:transparent; }
+.nav-cta-demo {
+  font-family:'Gotu',serif; font-size:13px; color:#111;
+  border:1.5px solid #111; border-radius:999px; padding:6px 16px;
+  display:flex; gap:10px; background:#fff; margin-left:8px;
+}
+.nav-cta-demo.lime { background:#CFF229; }
+
+/* ── Tab toggle (matches sidebar) ── */
+.tab-wrap { background:rgba(17,17,17,.02); border-radius:8px; padding:4px; display:inline-flex; gap:1px; }
+.tab-item { padding:4px 14px; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer; color:rgba(17,17,17,.65); font-family:'Karla'; }
+.tab-item.active { background:#FFF2B3; border:1px solid rgba(17,17,17,.05); color:#111; }
+
+/* ── Sidebar nav items ── */
+.sidebar-demo { width:195px; display:flex; flex-direction:column; gap:2px; }
+.s-item { display:flex; align-items:center; gap:8px; padding:5px 8px; border-radius:8px; font-size:13px; font-family:'Karla'; color:#111; }
+.s-item.active { background:#FFE253; font-weight:500; }
+.s-icon { width:18px; height:18px; border-radius:4px; background:rgba(17,17,17,.12); flex-shrink:0; }
+
+/* ── Dropdown (matches app) ── */
+.dropdown-demo {
+  background:#fff; border:1px solid #000; border-radius:8px;
+  box-shadow:0 4px 6px -4px rgba(0,0,0,.1), 0 10px 15px -3px rgba(0,0,0,.1);
+  padding:8px; min-width:140px; display:inline-flex; flex-direction:column; gap:4px;
+}
+.d-item { padding:6px 10px; border-radius:6px; font-size:13px; font-family:'Karla'; color:#111; cursor:pointer; }
+.d-item.selected { background:#FFE253; font-weight:500; }
+.d-item:hover:not(.selected) { background:rgba(17,17,17,.05); }
+
+/* ── Text input ── */
+.input-demo {
+  border:1.5px solid rgba(17,17,17,.12); border-radius:8px;
+  padding:9px 12px; font-size:14px; font-family:'Karla'; color:#111;
+  background:#fff; outline:none; width:220px;
+  transition:border-color .2s;
+}
+.input-demo::placeholder { color:rgba(17,17,17,.4); }
+.input-demo.focused { border-color:#111; }
+
+/* ── Toggle ── */
+.tog { width:32px; height:18px; border-radius:999px; background:rgba(17,17,17,.12); position:relative; }
+.tog.on { background:#CFF229; }
+.tog-knob { position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.2); transition:left .15s; }
+.tog.on .tog-knob { left:16px; }
+
+/* ── Buttons (matches homepage) ── */
+.btn-primary-demo {
+  font-family:'Gotu',serif; font-size:15px; color:#fff;
+  background:#111; border:1.5px solid #111; border-radius:999px;
+  padding:12px 28px; cursor:pointer; display:flex; gap:12px; text-decoration:none;
+}
+.btn-ghost-demo {
+  font-family:'Gotu',serif; font-size:15px; color:#111;
+  background:transparent; border:1.5px solid #111; border-radius:999px;
+  padding:12px 28px; cursor:pointer; text-decoration:none;
+}
+.btn-yellow-demo {
+  font-family:'Karla',sans-serif; font-size:14px; font-weight:500; color:#111;
+  background:#FFE253; border:none; border-radius:10px;
+  padding:6px 14px; cursor:pointer; display:flex; align-items:center; gap:6px;
+}
+
+/* ── Nav CTA double-text style note ── */
+.note { font-size:11px; color:#bbb; margin-top:4px; font-family:'Karla'; }
+</style>
+</head>
+<body>
+
+<div class="section-title" style="margin-bottom:8px;">Navigation Bar</div>
+<div class="nav-demo">
+  <div class="nav-logo-demo"><img src="../assets/logo-full.png" alt="aisee"></div>
+  <div class="nav-links-demo">
+    <a class="nav-link-demo plain">Features</a>
+    <a class="nav-link-demo plain">How it works</a>
+    <a class="nav-link-demo plain">FAQ</a>
+    <div class="nav-cta-demo"><span>Start Free</span><span>Start Free</span></div>
+  </div>
+</div>
+<div class="note">Fixed, 70px, backdrop-blur(12px), border-bottom 1.5px solid #111 · CTA uses double-text duck.school pattern</div>
+
+<hr>
+
+<div class="section-title">Analysis / Post Agent Tab Toggle</div>
+<div class="row">
+  <div>
+    <div class="tab-wrap">
+      <div class="tab-item">Analysis</div>
+      <div class="tab-item active">Post Agent</div>
+    </div>
+    <div class="note">Active: #FFF2B3 bg + rgba(17,17,17,.05) border</div>
+  </div>
+  <div>
+    <!-- App header version -->
+    <div style="background:rgba(17,17,17,.02);border-radius:8px;padding:4px;display:inline-flex;gap:1px;">
+      <div style="padding:6px 16px;border-radius:8px;font-size:14px;font-weight:500;font-family:'Karla';color:rgba(17,17,17,.6)">Analysis</div>
+      <div style="padding:6px 16px;border-radius:8px;font-size:14px;font-weight:500;font-family:'Karla';color:#111;background:#FFF2B3;border:1px solid rgba(17,17,17,.05)">Post Agent</div>
+    </div>
+    <div class="note">Header version (larger, 15px Karla)</div>
+  </div>
+</div>
+
+<hr>
+
+<div class="section-title">Sidebar Nav Items</div>
+<div class="sidebar-demo">
+  <div class="s-item active"><div class="s-icon"></div>Dashboard</div>
+  <div class="s-item"><div class="s-icon"></div>Calendar</div>
+  <div class="s-item"><div class="s-icon"></div>Channels</div>
+  <div class="s-item"><div class="s-icon"></div>Post Agent</div>
+  <div class="s-item"><div class="s-icon"></div>Models</div>
+  <div class="s-item"><div class="s-icon"></div>Media</div>
+</div>
+<div class="note" style="margin-top:4px;">Active: #FFE253 bg · Icon: 18px, r=4px, rgba(17,17,17,.1)</div>
+
+<hr>
+
+<div class="row">
+  <div>
+    <div class="section-title">Dropdown</div>
+    <div class="dropdown-demo">
+      <div class="d-item selected">Daily</div>
+      <div class="d-item">Weekly</div>
+      <div class="d-item">Monthly</div>
+    </div>
+    <div class="note" style="margin-top:4px;">border:1px solid #000, shadow-lg</div>
+  </div>
+  <div>
+    <div class="section-title">Text Input</div>
+    <input class="input-demo" placeholder="Start writing your post…">
+    <br><br>
+    <input class="input-demo focused" value="ccbakala36@gmail.com">
+    <div class="note" style="margin-top:4px;">Focus: border-color #111</div>
+  </div>
+  <div>
+    <div class="section-title">Toggle</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:4px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="tog"><div class="tog-knob"></div></div>
+        <span style="font-size:12px;color:rgba(17,17,17,.55)">Off</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="tog on"><div class="tog-knob"></div></div>
+        <span style="font-size:12px;color:#111">On — #CFF229</span>
+      </div>
+    </div>
+    <div class="note">32×18px, knob 14px</div>
+  </div>
+</div>
+
+<hr>
+
+<div class="section-title">Buttons</div>
+<div class="row" style="align-items:center;">
+  <div>
+    <a class="btn-primary-demo"><span>Start for free</span><span>→</span></a>
+    <div class="note">Primary — Gotu, #111 bg, lime hover sweep</div>
+  </div>
+  <div>
+    <a class="btn-ghost-demo">See how it works</a>
+    <div class="note">Ghost — transparent, #111 border</div>
+  </div>
+  <div>
+    <div class="btn-yellow-demo">＋ New</div>
+    <div class="note">App header CTA — #FFE253, r=10px, Karla 500</div>
+  </div>
+  <div>
+    <div style="font-family:'Gotu',serif;font-size:14px;color:#111;border:1.5px solid #111;border-radius:999px;padding:7px 18px;display:flex;gap:12px;background:#CFF229;">
+      <span>Start Free</span><span>Start Free</span>
+    </div>
+    <div class="note">Nav CTA — lime hover state</div>
+  </div>
+</div>
+
+</body>
+</html>

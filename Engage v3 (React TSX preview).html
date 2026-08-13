@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Engage v3 (React TSX preview)" subtitle="Preview of the TSX modules in aisee-agent-test/" -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engage v3 — React/TSX preview</title>
+  <link rel="stylesheet" href="engage-v3/styles.css" />
+  <meta name="ext-resource-dependency" content="engage-v3/engage-icon.svg" data-resource-id="engageIcon" />
+  <style>
+    .__src-tag {
+      position: fixed; left: 12px; bottom: 12px;
+      z-index: 999;
+      background: #111; color: #FFE253;
+      font: 600 11px/1.2 'Karla', system-ui, sans-serif;
+      letter-spacing: 0.04em;
+      padding: 7px 11px; border-radius: 999px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .__src-tag b { color: #fff; font-weight: 700; }
+    .__src-tag code {
+      font: 600 10.5px ui-monospace, monospace;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      padding: 2px 5px; border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <div class="__src-tag">
+    <span>Preview of</span>
+    <code>aisee-agent-test/app/(pages)/engage/*.tsx</code>
+    <span>· branch <b>aisee-agent-test</b></span>
+  </div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="engage-v3/icons.jsx"></script>
+  <script type="text/babel" src="engage-v3/shell.jsx"></script>
+  <script type="text/babel" src="engage-v3/initial-config.jsx"></script>
+  <script type="text/babel" src="engage-v3/keywords-accounts.jsx"></script>
+  <script type="text/babel" src="engage-v3/sent.jsx"></script>
+  <script type="text/babel" src="engage-v3/signal-feed.jsx"></script>
+  <script type="text/babel" src="engage-v3/app.jsx"></script>
+</body>
+</html>

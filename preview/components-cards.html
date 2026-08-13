@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Cards & Data" subtitle="Stat cards, post cards, credit bar" viewport="700x320" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face { font-family: 'Karla'; src: url('../fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #F7F8F7; padding: 20px; font-family: 'Karla', sans-serif; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+.section-title { font-size: 10px; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+
+/* Card */
+.card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); min-width: 200px; }
+.card-title { font-size: 12px; color: rgba(17,17,17,0.6); margin-bottom: 4px; }
+.card-value { font-size: 28px; font-weight: 700; color: #111; letter-spacing: -0.02em; }
+.card-sub { font-size: 12px; color: rgba(17,17,17,0.5); margin-top: 4px; }
+
+/* Post card */
+.post-card { background: #fff; border-radius: 10px; border: 1px solid rgba(17,17,17,0.06); padding: 12px; width: 240px; }
+.post-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.avatar { width: 28px; height: 28px; border-radius: 50%; background: #E1E1E1; flex-shrink: 0; }
+.post-name { font-size: 13px; font-weight: 600; color: #111; }
+.post-platform { display: inline-block; width: 14px; height: 14px; border-radius: 3px; background: #111; vertical-align: middle; margin-left: 4px; }
+.post-body { font-size: 13px; color: #111; line-height: 1.5; margin-bottom: 10px; }
+.post-footer { display: flex; align-items: center; justify-content: space-between; }
+.post-status { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 999px; }
+.status-scheduled { background: #FFF2B3; color: #111; }
+.status-sent { background: #A5D500; color: #111; }
+.status-draft { background: rgba(17,17,17,0.06); color: #111; }
+.post-time { font-size: 11px; color: rgba(17,17,17,0.5); }
+
+/* Credit progress */
+.credit-bar { width: 179px; height: 6px; border-radius: 4px; background: rgba(17,17,17,0.05); overflow: hidden; }
+.credit-fill { height: 100%; border-radius: 4px; background: #CFF229; }
+</style>
+</head>
+<body>
+<div style="display:flex;flex-direction:column;gap:20px;">
+
+  <div>
+    <div class="section-title">Stat Cards</div>
+    <div class="row">
+      <div class="card">
+        <div class="card-title">AI Visibility Score</div>
+        <div class="card-value">82<span style="font-size:16px;font-weight:400;color:rgba(17,17,17,0.5)">/100</span></div>
+        <div class="card-sub">↑ +4.2 this week</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Citation Score</div>
+        <div class="card-value">9.4<span style="font-size:16px;font-weight:400;color:rgba(17,17,17,0.5)">%</span></div>
+        <div class="card-sub">LLM mentions</div>
+      </div>
+      <div class="card" style="background:#CFF229;">
+        <div class="card-title">Posts This Week</div>
+        <div class="card-value">24</div>
+        <div class="card-sub">3 platforms</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-title">Post Cards</div>
+    <div class="row">
+      <div class="post-card">
+        <div class="post-header">
+          <div class="avatar"></div>
+          <div>
+            <div class="post-name">@aisee_hq <span class="post-platform"></span></div>
+          </div>
+        </div>
+        <div class="post-body">GEO is the evolution of SEO for the AI-first era. Optimize your brand for AI-generated answers.</div>
+        <div class="post-footer">
+          <span class="post-status status-scheduled">Scheduled</span>
+          <span class="post-time">Today 8:20 AM</span>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-header">
+          <div class="avatar" style="background:#F7F6E9;"></div>
+          <div><div class="post-name">@aisee_hq</div></div>
+        </div>
+        <div class="post-body">Your AI Rankings report is ready. Citation score up 12% this month.</div>
+        <div class="post-footer">
+          <span class="post-status status-sent">Sent</span>
+          <span class="post-time">Yesterday</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-title">Credits</div>
+    <div style="background:#FAFAFA;border-radius:8px;padding:12px;display:inline-flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:#111;">
+        <span>1825 Credits</span>
+      </div>
+      <div class="credit-bar"><div class="credit-fill" style="width:60%;"></div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

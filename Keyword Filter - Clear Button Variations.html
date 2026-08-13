@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Keyword Filter — Clear Button Variations</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body { margin: 0; font-family: 'Karla', system-ui, sans-serif; color: #111; background: #F7F8F7; }
+
+  /* ── Filter row (matches Engage signal feed) ───────────────────── */
+  .demo-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 16px 20px;
+    background: #fff;
+    border-bottom: 1px solid rgba(17,17,17,0.08);
+  }
+  .chip {
+    height: 32px; padding: 0 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid rgba(17,17,17,0.12); border-radius: 9999px;
+    font-size: 13px; color: #111; background: #fff;
+    font-family: 'Karla', sans-serif;
+    cursor: pointer; white-space: nowrap;
+  }
+  .chip.dim { color: rgba(17,17,17,0.6); }
+  .chip svg { width: 10px; height: 10px; }
+  .chip.kw-trigger { border-color: #111; box-shadow: 0 0 0 2px rgba(207, 242, 41, 0.4); }
+
+  /* count pill on trigger */
+  .chip .count {
+    background: #CFF229; color: #111;
+    border-radius: 9999px;
+    height: 18px; min-width: 18px;
+    padding: 0 5px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    margin-left: 2px;
+  }
+  .chip .x-btn {
+    width: 16px; height: 16px;
+    border-radius: 9999px;
+    background: rgba(17,17,17,0.08);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-left: 2px;
+    transition: background 120ms;
+  }
+  .chip .x-btn:hover { background: rgba(17,17,17,0.18); }
+  .chip .x-btn svg { width: 8px; height: 8px; }
+
+  /* ── Dropdown panel ────────────────────────────────────────────── */
+  .panel {
+    position: relative;
+    margin-top: 6px;
+    width: 240px;
+    background: #fff;
+    border: 1px solid rgba(17,17,17,0.12);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -4px rgba(0,0,0,.1), 0 10px 15px -3px rgba(0,0,0,.1);
+    overflow: hidden;
+    font-family: 'Karla', sans-serif;
+  }
+  .panel-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px 6px;
+  }
+  .panel-head .title {
+    font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+    color: rgba(17,17,17,0.5); font-weight: 600;
+  }
+  .panel-head .clear {
+    font-size: 12px; color: #111;
+    text-decoration: underline; text-underline-offset: 2px;
+    cursor: pointer; font-weight: 500;
+    background: none; border: 0; padding: 0;
+    font-family: inherit;
+  }
+  .panel-head .clear.subtle { color: rgba(17,17,17,0.6); }
+
+  .opts { padding: 4px 0 8px; }
+  .opt {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 14px;
+    font-size: 13.5px;
+    cursor: pointer;
+  }
+  .opt:hover { background: rgba(17,17,17,0.04); }
+  .opt .cb {
+    width: 16px; height: 16px;
+    border: 1.5px solid rgba(17,17,17,0.35);
+    border-radius: 4px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #fff; flex: none;
+  }
+  .opt.checked .cb {
+    background: #111; border-color: #111;
+  }
+  .opt.checked .cb svg { color: #CFF229; }
+
+  .panel-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px;
+    border-top: 1px solid rgba(17,17,17,0.08);
+    background: #FAFAFA;
+  }
+  .panel-foot .count-text {
+    font-size: 12px; color: rgba(17,17,17,0.6);
+  }
+  .panel-foot .clear-btn {
+    font-size: 12px; color: #111; font-weight: 600;
+    background: none; border: 0; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 2px;
+    font-family: inherit;
+  }
+  .panel-foot .apply {
+    font-size: 12px; padding: 6px 12px;
+    background: #111; color: #fff; border: 0; border-radius: 9999px;
+    cursor: pointer; font-family: inherit; font-weight: 600;
+  }
+
+  /* selected chips strip (variant D) */
+  .selected-strip {
+    display: flex; align-items: center; gap: 6px;
+    margin-top: 8px;
+    padding: 0 4px;
+    flex-wrap: wrap;
+  }
+  .sel-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    height: 24px; padding: 0 4px 0 8px;
+    background: #FFFADD;
+    border: 1px solid rgba(17,17,17,0.12);
+    border-radius: 9999px;
+    font-size: 12px;
+  }
+  .sel-chip .x {
+    width: 14px; height: 14px;
+    border-radius: 9999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .sel-chip .x:hover { background: rgba(17,17,17,0.1); }
+  .sel-chip .x svg { width: 7px; height: 7px; }
+
+  .clear-all-link {
+    font-size: 12px;
+    color: rgba(17,17,17,0.7);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    background: none; border: 0; cursor: pointer;
+    font-family: inherit;
+    padding: 0 4px;
+  }
+
+  /* ── Artboard layout helpers ───────────────────────────────────── */
+  .ab-body {
+    padding: 0;
+    background: #fff;
+  }
+  .ab-canvas {
+    padding: 16px 20px 28px;
+    background: #F7F8F7;
+    min-height: 380px;
+  }
+  .blurb {
+    padding: 14px 20px;
+    border-top: 1px solid rgba(17,17,17,0.08);
+    font-size: 12.5px;
+    color: rgba(17,17,17,0.7);
+    line-height: 1.55;
+    background: #fff;
+  }
+  .blurb strong { color: #111; font-weight: 600; }
+  .blurb .pro { color: #2a6f3d; }
+  .blurb .con { color: #b04223; }
+  .blurb ul { margin: 6px 0 0; padding-left: 16px; }
+  .blurb li { margin: 2px 0; }
+
+  /* Recommended badge */
+  .recommended {
+    position: absolute; top: -10px; right: 12px;
+    background: #CFF229; color: #111;
+    border: 1px solid #111;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 9999px;
+    z-index: 5;
+  }
+
+  /* indicator arrow showing trigger -> panel */
+  .anchor {
+    width: 0; height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid rgba(17,17,17,0.12);
+    margin-left: 260px;
+    margin-top: 4px;
+    margin-bottom: -7px;
+    position: relative; z-index: 2;
+  }
+</style>
+</head>
+<body>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { DesignCanvas, DCSection, DCArtboard } = window;
+
+const KEYWORDS = ["geo", "seo", "claude ai", "U.S. stocks", "AI PC", "chatgpt", "openai"];
+
+function ChevDown() {
+  return (<svg viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>);
+}
+function XGlyph() {
+  return (<svg viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>);
+}
+function Tick() {
+  return (<svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M2.5 6.2l2.4 2.4 4.6-5.2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>);
+}
+
+// Reusable filter row
+function FilterRow({ trigger }) {
+  return (
+    <div className="demo-row">
+      <div className="chip dim">All scores <ChevDown /></div>
+      {trigger}
+      <div className="chip dim">Not replied <ChevDown /></div>
+      <div className="chip dim">All intents <ChevDown /></div>
+    </div>
+  );
+}
+
+function Options({ selected }) {
+  return (
+    <div className="opts">
+      {KEYWORDS.map((k) => (
+        <div key={k} className={`opt ${selected.includes(k) ? "checked" : ""}`}>
+          <span className="cb">{selected.includes(k) && <Tick />}</span>
+          <span>{k}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── VARIANT A — Clear link in dropdown header (right) ─────────────
+function VariantA() {
+  const selected = ["geo", "seo", "chatgpt"];
+  return (
+    <div className="ab-body">
+      <FilterRow trigger={
+        <div className="chip kw-trigger">
+          <span>Keywords</span>
+          <span className="count">3</span>
+          <ChevDown />
+        </div>
+      } />
+      <div className="ab-canvas">
+        <div className="anchor"></div>
+        <div className="panel" style={{marginLeft: 200}}>
+          <div className="panel-head">
+            <span className="title">Keywords · 3 selected</span>
+            <button className="clear">Clear</button>
+          </div>
+          <Options selected={selected} />
+        </div>
+      </div>
+      <div className="blurb">
+        <strong>A · Clear link in dropdown header</strong> — appears top-right when ≥1 item selected.<br/>
+        <span className="pro">✓ Standard pattern (Linear, Notion, Asana). Sits right above the options — eyes never leave the panel.</span><br/>
+        <span className="pro">✓ Hidden when nothing is selected, so it doesn't add visual noise.</span><br/>
+        <span className="con">✗ Requires opening the dropdown to clear.</span>
+      </div>
+    </div>
+  );
+}
+
+// ── VARIANT B — × on trigger chip (no need to open) ───────────────
+function VariantB() {
+  return (
+    <div className="ab-body">
+      <FilterRow trigger={
+        <div className="chip kw-trigger">
+          <span>Keywords</span>
+          <span className="count">3</span>
+          <span className="x-btn" title="Clear keywords"><XGlyph /></span>
+        </div>
+      } />
+      <div className="ab-canvas">
+        <div style={{display: "flex", justifyContent: "center", paddingTop: 60}}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "10px 16px", background: "#111", color: "#fff",
+            borderRadius: 9999, fontSize: 12.5
+          }}>
+            <span style={{width: 6, height: 6, borderRadius: 9999, background: "#CFF229"}}></span>
+            Click the × on the chip → clears all 3, dropdown never opens
+          </div>
+        </div>
+      </div>
+      <div className="blurb">
+        <strong>B · × button on the trigger chip</strong> — count pill replaced by × on hover (or always visible).<br/>
+        <span className="pro">✓ Fastest path: one click, no dropdown re-open.</span><br/>
+        <span className="pro">✓ Mirrors the "remove tag" mental model users already know.</span><br/>
+        <span className="con">✗ Users might miss it; the × is small and competes with the chevron.</span><br/>
+        <span className="con">✗ No undo — if they misclick it, all selections gone.</span>
+      </div>
+    </div>
+  );
+}
+
+// ── VARIANT C — Clear in dropdown footer (with Apply) ─────────────
+function VariantC() {
+  const selected = ["geo", "seo", "chatgpt"];
+  return (
+    <div className="ab-body">
+      <FilterRow trigger={
+        <div className="chip kw-trigger">
+          <span>Keywords</span>
+          <span className="count">3</span>
+          <ChevDown />
+        </div>
+      } />
+      <div className="ab-canvas">
+        <div className="anchor"></div>
+        <div className="panel" style={{marginLeft: 200}}>
+          <div className="panel-head">
+            <span className="title">Keywords</span>
+          </div>
+          <Options selected={selected} />
+          <div className="panel-foot">
+            <button className="clear-btn">Clear all</button>
+            <span className="count-text">3 selected</span>
+          </div>
+        </div>
+      </div>
+      <div className="blurb">
+        <strong>C · Clear in sticky footer</strong> — bottom-left, always visible.<br/>
+        <span className="pro">✓ Clear affordance, easy to find.</span><br/>
+        <span className="con">✗ Eyes have to travel down past the options.</span><br/>
+        <span className="con">✗ When the list grows (10+ keywords) the footer gets pushed below the scroll fold.</span>
+      </div>
+    </div>
+  );
+}
+
+// ── VARIANT D — Recommended: A + B combined ───────────────────────
+function VariantD() {
+  const selected = ["geo", "seo", "chatgpt"];
+  return (
+    <div className="ab-body" style={{position: "relative"}}>
+      <span className="recommended">★ Recommended</span>
+      <FilterRow trigger={
+        <div className="chip kw-trigger">
+          <span>Keywords</span>
+          <span className="count">3</span>
+          <span className="x-btn" title="Clear all"><XGlyph /></span>
+        </div>
+      } />
+      <div className="ab-canvas">
+        <div className="anchor"></div>
+        <div className="panel" style={{marginLeft: 200}}>
+          <div className="panel-head">
+            <span className="title">Keywords · 3 selected</span>
+            <button className="clear">Clear</button>
+          </div>
+          <Options selected={selected} />
+        </div>
+      </div>
+      <div className="blurb">
+        <strong>D · Combine A + B</strong> — × on the trigger AND a Clear link in the dropdown header.<br/>
+        <span className="pro">✓ Power users get a 1-click shortcut on the chip.</span><br/>
+        <span className="pro">✓ New users who don't notice the × will discover Clear inside when they re-open.</span><br/>
+        <span className="pro">✓ Both affordances only appear when selections exist — zero noise at rest.</span><br/>
+        <strong>Recommended micro-rules:</strong>
+        <ul>
+          <li>Count pill (3) shown when 1–9 selected, "9+" when overflow.</li>
+          <li>× on trigger only shows on hover/focus of the chip — avoids accidental clicks while keeping discoverability.</li>
+          <li>Header "Clear" only appears when count ≥ 1.</li>
+          <li>Both actions don't close the dropdown — user may want to re-select right after.</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+// ── Bottom-up before/after to anchor the discussion ───────────────
+function CurrentState() {
+  return (
+    <div className="ab-body">
+      <FilterRow trigger={
+        <div className="chip dim">
+          <span>All keywords</span>
+          <ChevDown />
+        </div>
+      } />
+      <div className="ab-canvas">
+        <div className="anchor"></div>
+        <div className="panel" style={{marginLeft: 200}}>
+          <div className="opts">
+            {KEYWORDS.map((k) => (
+              <div key={k} className={`opt ${["geo","seo","chatgpt"].includes(k) ? "checked" : ""}`}>
+                <span className="cb">{["geo","seo","chatgpt"].includes(k) && <Tick />}</span>
+                <span>{k}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="blurb">
+        <strong>Current state</strong> — no Clear, no selection count.<br/>
+        <span className="con">✗ User has to uncheck each box one by one.</span><br/>
+        <span className="con">✗ The trigger says "All keywords" even when 3 are selected — no feedback on what's filtered.</span>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection id="baseline" title="Today" subtitle="What the dropdown looks like right now in dev">
+        <DCArtboard id="current" label="Current — no Clear" width={620} height={760}>
+          <CurrentState />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="options" title="Four placements" subtitle="Pick where Clear lives. Recommendation marked.">
+        <DCArtboard id="a" label="A · Header link" width={620} height={760}>
+          <VariantA />
+        </DCArtboard>
+        <DCArtboard id="b" label="B · × on trigger" width={620} height={760}>
+          <VariantB />
+        </DCArtboard>
+        <DCArtboard id="c" label="C · Footer button" width={620} height={760}>
+          <VariantC />
+        </DCArtboard>
+        <DCArtboard id="d" label="D · Combined (recommended)" width={620} height={760}>
+          <VariantD />
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+
+</body>
+</html>

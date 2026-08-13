@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aisee — Awaiting review · expiry queue</title>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* on-system tokens (from v11 canonical set) */
+  --primary:#FFE253;--primary-hover:#FCE055;--primary-bg:#FFF2B3;--primary-pale:#FFFADD;
+  --black:#111111;--white:#FFFFFF;--bg-page:#FAFAFA;
+  --ink:#17170F;
+  --muted:#5f5f59;            /* secondary meta — 6.4:1 on white */
+  --hair:rgba(17,17,17,.08);--hair-2:rgba(17,17,17,.16);
+  /* state palette — colour encodes STATE only. no invented amber. */
+  --st-draft-bg:#F1F1EF;--st-draft-tx:#68685f;   /* 5.0:1 — was #83837D 3.4:1 */
+  --st-fail-bg:#FBE4DF;--st-fail-tx:#A83320;--st-fail-line:#E4A79E;  /* Expired = terminal = red */
+  --draft:#5b46c9;--draft-bg:#EDE9FF;             /* Draft badge (purple = Engage identity) */
+  --near-ink:#2b2b26;                             /* ≤24h emphasis: dark+bold, NOT a new hue */
+  --focus:#7C5CFC;                                /* purple focus ring, on-system */
+  --shadow-sm:0 1px 2px rgba(17,17,17,.05);
+  --shadow:0 2px 6px -2px rgba(17,17,17,.08),0 14px 30px -16px rgba(17,17,17,.18);
+  --ease:cubic-bezier(.22,.68,.32,1);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Karla',system-ui,sans-serif;color:var(--ink);background:var(--bg-page);padding:26px 22px 72px;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;}
+
+/* focus-visible — one ring for the whole page (was missing) */
+:focus{outline:none;}
+:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px;border-radius:8px;}
+
+/* tab row */
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--hair);margin-bottom:14px;}
+.tab{appearance:none;background:none;border:0;padding:0 0 11px;font:700 14px 'Karla';color:var(--muted);cursor:pointer;position:relative;transition:color .16s var(--ease);}
+.tab:hover{color:var(--ink);}
+.tab[aria-selected="true"]{color:var(--ink);font-weight:800;}
+.tab[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2.5px;background:var(--ink);border-radius:2px;}
+.tab .cnt{margin-left:6px;font-size:12px;font-weight:800;color:var(--muted);}
+
+/* channel sub-filter */
+.subf{display:flex;gap:9px;margin-bottom:16px;}
+.chan{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px;border:1px solid var(--hair);border-radius:999px;background:#fff;font:700 12.5px 'Karla';color:var(--ink);cursor:pointer;transition:.16s var(--ease);}
+.chan:hover{border-color:var(--hair-2);}
+.chan[aria-pressed="true"]{background:#111;color:#fff;border-color:#111;}
+.chan .mk{width:16px;height:16px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:#fff;}
+.chan .mk.x{background:#111;} .chan[aria-pressed="true"] .mk.x{background:#fff;color:#111;}
+.chan .mk.rd{background:#EC5212;}
+.chan .n{font-weight:800;opacity:.7;}
+
+/* urgency stat strip — workload + urgency only, no performance metrics */
+.qstats{display:flex;gap:12px;margin:2px 0 18px;}
+.qstat{flex:1;background:#fff;border:1px solid var(--hair);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-sm);transition:border-color .16s var(--ease);}
+.qstat .n{font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1;display:flex;align-items:baseline;gap:5px;}
+.qstat .n .u{font-size:12px;font-weight:700;color:var(--muted);}
+.qstat .l{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:6px;display:flex;align-items:center;gap:5px;}
+.qstat.urgent{border-color:#EBD98A;background:linear-gradient(180deg,#FFFBEC,#fff);}
+.qstat.urgent .n{color:var(--near-ink);}
+.qstat.link .n{color:var(--draft);}
+.qstat.expired .n{color:var(--muted);}
+
+/* sort caption — makes the ordering rule explicit */
+.sortcap{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:600;margin:0 2px 12px;}
+.sortcap b{color:var(--ink);font-weight:800;}
+
+/* proactive banner — primary family, aria-live */
+.alert{display:flex;align-items:center;gap:12px;background:var(--primary-bg);border:1px solid #EBD98A;border-radius:13px;padding:12px 15px;margin-bottom:20px;}
+.alert .ic{width:28px;height:28px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;}
+.alert .tx{font-size:13px;font-weight:700;color:var(--ink);}
+.alert .tx span{color:#4a4a44;font-weight:600;}
+.alert .go{margin-left:auto;background:#111;color:#fff;border:0;border-radius:9px;padding:9px 15px;font:800 12px 'Karla';cursor:pointer;min-height:36px;transition:.16s var(--ease);}
+.alert .go:hover{transform:translateY(-1px);}
+
+.card{background:#fff;border:1px solid var(--hair);border-radius:16px;box-shadow:var(--shadow-sm);margin-bottom:14px;overflow:hidden;transition:box-shadow .2s var(--ease),transform .2s var(--ease);}
+.card:hover{box-shadow:var(--shadow);}
+.card.expired{border-left:3px solid var(--st-fail-line);opacity:.94;}
+.card .body{padding:16px 18px;}
+.hd{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#9b86ff,#6A4DF4);flex:none;}
+.av.t{background:linear-gradient(135deg,#ff8a3d,#ffb86c);}
+.arrow{color:var(--muted);font-size:13px;}
+.nm{font-weight:800;font-size:13px;} .tg{font-weight:700;font-size:13px;color:#4a4a44;}
+.xmk{font-size:9px;color:#fff;background:#111;width:15px;height:15px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;}
+
+.badges{margin-left:auto;display:flex;align-items:center;gap:8px;}
+/* countdown chip = LEAD metadata, sort key = display value */
+.exp{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--st-draft-bg);color:var(--st-draft-tx);}
+.exp.near{color:var(--near-ink);font-weight:800;}       /* ≤24h: dark+bold, same grey chip */
+.exp.gone{color:var(--st-fail-tx);background:var(--st-fail-bg);}
+/* posted-awaiting-link: neutral, no deadline, no red */
+.exp.link{color:var(--draft);background:var(--draft-bg);}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;color:var(--draft);background:var(--draft-bg);}
+.drafted{font-size:11px;color:var(--muted);font-weight:600;}  /* demoted secondary */
+
+.from{margin-top:12px;font-size:13px;line-height:1.5;color:#4a4a44;}
+.from .lb{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:6px;}
+
+.reply{margin-top:12px;border:1px solid var(--hair);border-radius:12px;background:#FCFCFA;padding:12px 14px;}
+.reply .rh{display:flex;align-items:center;gap:9px;margin-bottom:7px;}
+.reply .rh .lb{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+.pg{margin-left:auto;display:inline-flex;align-items:center;gap:2px;font-size:11.5px;color:var(--muted);font-weight:700;}
+.pg .idx{padding:0 6px;}
+.pg button{border:0;background:none;cursor:pointer;color:var(--muted);border-radius:8px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;transition:.14s var(--ease);}
+.pg button:hover{background:#F1F1EF;color:var(--ink);}
+.reply .txt{font-size:13px;line-height:1.55;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.seemore{margin-top:6px;font-size:12px;font-weight:700;color:var(--muted);background:none;border:0;cursor:pointer;padding:4px 0;min-height:28px;}
+.seemore:hover{color:var(--ink);}
+
+.foot{display:flex;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid var(--hair);background:#FBFBF8;flex-wrap:wrap;}
+.strat{font-size:11.5px;font-weight:700;color:var(--muted);background:#F0F0EC;border-radius:999px;padding:5px 11px;}
+.acts{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{border:1px solid var(--hair-2);background:#fff;border-radius:9px;padding:0 13px;min-height:38px;font:800 12px 'Karla';color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.16s var(--ease);}
+.btn:hover{transform:translateY(-1px);}
+.btn.dark{background:#111;color:#fff;border-color:#111;}
+.btn.post{background:var(--primary);border-color:#EBD05B;color:#111;}
+.btn.post:hover{background:var(--primary-hover);}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none;}
+
+.blocked{display:flex;align-items:center;gap:9px;padding:11px 18px;background:var(--st-fail-bg);border-top:1px solid var(--st-fail-line);font-size:12.5px;color:var(--st-fail-tx);font-weight:700;}
+
+.list{list-style:none;margin:0;padding:0;}
+.sect{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:26px 2px 12px;display:flex;align-items:center;gap:9px;}
+.sect .cnt{background:#EDEDEA;color:var(--muted);border-radius:999px;font-size:10.5px;padding:1px 8px;font-weight:800;}
+.sect .hint{font-weight:600;text-transform:none;letter-spacing:0;color:var(--muted);font-size:11px;}
+.sect::after{content:"";flex:1;height:1px;background:var(--hair);}
+
+/* add-link inline affordance (posted, url pending) */
+.linkrow{display:flex;align-items:center;gap:9px;margin-top:12px;border:1px dashed var(--hair-2);border-radius:11px;background:#FCFBFF;padding:9px 11px;}
+.linkrow .lb{font-size:11px;font-weight:800;color:var(--draft);white-space:nowrap;}
+.linkrow input{flex:1;border:1px solid var(--hair-2);border-radius:8px;height:34px;padding:0 11px;font:600 12.5px 'Karla';color:var(--ink);background:#fff;}
+.linkrow input::placeholder{color:#9a9a92;}
+.linkrow .save{border:0;background:var(--draft);color:#fff;border-radius:8px;height:34px;padding:0 15px;font:800 12px 'Karla';cursor:pointer;transition:.16s var(--ease);}
+.linkrow .save:hover{transform:translateY(-1px);}
+.posted-meta{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px;}
+
+.note{margin-top:26px;font-size:12px;color:#4a4a44;background:#fff;border:1px solid var(--hair);border-radius:13px;padding:15px 17px;line-height:1.7;}
+.note b{color:var(--ink);}
+.note .h{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- tabs: history vs action-queue live on different tabs -->
+  <div class="tabs" role="tablist" aria-label="Replies views">
+    <button class="tab" role="tab" aria-selected="false">All<span class="cnt">13</span></button>
+    <button class="tab" role="tab" aria-selected="false">Sent<span class="cnt">1</span></button>
+    <button class="tab" role="tab" aria-selected="true">Awaiting review<span class="cnt">3</span></button>
+  </div>
+
+  <div class="subf">
+    <button class="chan" aria-pressed="true"><span class="mk x" aria-hidden="true">𝕏</span>X<span class="n">3</span></button>
+    <button class="chan" aria-pressed="false"><span class="mk rd" aria-hidden="true">r</span>Reddit<span class="n">2</span></button>
+  </div>
+
+  <!-- 4 states → 4 cards. workload + urgency only, no impressions/likes -->
+  <div class="qstats">
+    <div class="qstat">
+      <div class="n">3</div>
+      <div class="l">Drafts to post</div>
+    </div>
+    <div class="qstat urgent">
+      <div class="n">2</div>
+      <div class="l"><span aria-hidden="true">⏳</span> Expiring within 24h</div>
+    </div>
+    <div class="qstat link">
+      <div class="n">4</div>
+      <div class="l"><span aria-hidden="true">🔗</span> Posted · add link</div>
+    </div>
+    <div class="qstat expired">
+      <div class="n">1</div>
+      <div class="l">Expired · reference</div>
+    </div>
+  </div>
+
+  <p class="sortcap">Grouped by <b>what you need to do</b>. Drafts sort by time left; expiring ones rise to the top.</p>
+
+  <!-- proactive banner — announced to assistive tech -->
+  <div class="alert" role="status" aria-live="polite">
+    <span class="ic" aria-hidden="true">⏳</span>
+    <span class="tx">2 drafts expire within 24h — <span>post them before the 7-day reply window closes.</span></span>
+    <button class="go">Review</button>
+  </div>
+
+  <ul class="list">
+
+    <div class="sect">Drafts to post <span class="cnt">3</span><span class="hint">sorted by time left · post before the 7-day window closes</span></div>
+
+    <!-- 1 · most urgent (≤24h) — top of queue -->
+    <li class="card">
+      <div class="body">
+        <div class="hd">
+          <span class="av" aria-hidden="true"></span><span class="nm">ccbakala</span><span class="arrow" aria-hidden="true">→</span>
+          <span class="av t" aria-hidden="true"></span><span class="tg">@via0xgina</span><span class="xmk" aria-hidden="true">𝕏</span>
+          <span class="badges">
+            <span class="exp near" role="text" aria-label="Expires today, most urgent">Expires today</span>
+            <span class="badge"><span aria-hidden="true">✎</span> Draft</span>
+            <span class="drafted">drafted 6d ago</span>
+          </span>
+        </div>
+        <div class="from"><span class="lb">From</span>Anyone else seeing AI Overviews completely tank organic traffic for top-of-funnel queries? Our blog views are down 40%…</div>
+        <div class="reply">
+          <div class="rh"><span class="lb">Your reply</span>
+            <span class="pg"><button aria-label="Previous reply variant">‹</button><span class="idx">1 / 2</span><button aria-label="Next reply variant">›</button></span>
+          </div>
+          <div class="txt">What your experiment really shows isn't "LLMs have no basic research," it's that they don't have one canonical SEO playbook — they're pattern-matching from training data plus your prompt…</div>
+          <button class="seemore">See more <span aria-hidden="true">⌄</span></button>
+        </div>
+      </div>
+      <div class="foot">
+        <span class="strat">Expert answer</span>
+        <div class="acts">
+          <button class="btn"><span aria-hidden="true">↗</span> Open in Signal Feed</button>
+          <button class="btn dark"><span aria-hidden="true">𝕏</span> Copy &amp; Open X</button>
+          <button class="btn post"><span aria-hidden="true">✦</span> Post via Aisee Extension</button>
+        </div>
+      </div>
+    </li>
+
+    <!-- 2 · urgent (≤24h) -->
+    <li class="card">
+      <div class="body">
+        <div class="hd">
+          <span class="av" aria-hidden="true"></span><span class="nm">ccbakala</span><span class="arrow" aria-hidden="true">→</span>
+          <span class="av t" aria-hidden="true"></span><span class="tg">@via0xgina</span><span class="xmk" aria-hidden="true">𝕏</span>
+          <span class="badges">
+            <span class="exp near" role="text" aria-label="Expires tomorrow">Expires tomorrow</span>
+            <span class="badge"><span aria-hidden="true">✎</span> Draft</span>
+            <span class="drafted">drafted 6d ago</span>
+          </span>
+        </div>
+        <div class="from"><span class="lb">From</span>So if you learn Figma 2026 you automatically do product design, slide/deck design, poster and marketing design…</div>
+        <div class="reply">
+          <div class="rh"><span class="lb">Your reply</span>
+            <span class="pg"><button aria-label="Previous reply variant">‹</button><span class="idx">1 / 2</span><button aria-label="Next reply variant">›</button></span>
+          </div>
+          <div class="txt">Facts. But add: UX thinking &gt; tool. Ship flows, not just frames. The tool floor keeps dropping; judgment about what to build is the part that compounds…</div>
+          <button class="seemore">See more <span aria-hidden="true">⌄</span></button>
+        </div>
+      </div>
+      <div class="foot">
+        <span class="strat">Empathy-led</span>
+        <div class="acts">
+          <button class="btn"><span aria-hidden="true">↗</span> Open in Signal Feed</button>
+          <button class="btn dark"><span aria-hidden="true">𝕏</span> Copy &amp; Open X</button>
+          <button class="btn post"><span aria-hidden="true">✦</span> Post via Aisee Extension</button>
+        </div>
+      </div>
+    </li>
+
+    <!-- 3 · healthy, plenty of time -->
+    <li class="card">
+      <div class="body">
+        <div class="hd">
+          <span class="av" aria-hidden="true"></span><span class="nm">ccbakala</span><span class="arrow" aria-hidden="true">→</span>
+          <span class="av t" aria-hidden="true"></span><span class="tg">@QTT_H3ntai</span><span class="xmk" aria-hidden="true">𝕏</span>
+          <span class="badges">
+            <span class="exp" role="text" aria-label="Expires in 5 days">Expires in 5 days</span>
+            <span class="badge"><span aria-hidden="true">✎</span> Draft</span>
+            <span class="drafted">drafted 16h ago</span>
+          </span>
+        </div>
+        <div class="from"><span class="lb">From</span>Design your own AI workflow and ship a running demo in a weekend — here's the stack I used…</div>
+        <div class="reply">
+          <div class="rh"><span class="lb">Your reply</span>
+            <span class="pg"><button aria-label="Previous reply variant">‹</button><span class="idx">1 / 1</span><button aria-label="Next reply variant">›</button></span>
+          </div>
+          <div class="txt">Solid. One add: treat the demo as the spec. If it runs, the handoff is 80% done — the remaining 20% is edge states nobody screenshots…</div>
+          <button class="seemore">See more <span aria-hidden="true">⌄</span></button>
+        </div>
+      </div>
+      <div class="foot">
+        <span class="strat">Expert answer</span>
+        <div class="acts">
+          <button class="btn"><span aria-hidden="true">↗</span> Open in Signal Feed</button>
+          <button class="btn dark"><span aria-hidden="true">𝕏</span> Copy &amp; Open X</button>
+          <button class="btn post"><span aria-hidden="true">✦</span> Post via Aisee Extension</button>
+        </div>
+      </div>
+    </li>
+
+    <!-- posted, awaiting link backfill — different action, no deadline, neutral -->
+    <div class="sect">Posted · add link <span class="cnt">4</span><span class="hint">already replied — paste the post URL so we can track it</span></div>
+
+    <li class="card">
+      <div class="body">
+        <div class="hd">
+          <span class="av" aria-hidden="true"></span><span class="nm">ccbakala</span><span class="arrow" aria-hidden="true">→</span>
+          <span class="av t" aria-hidden="true"></span><span class="tg">@leyeConnect</span><span class="xmk" aria-hidden="true">𝕏</span>
+          <span class="badges">
+            <span class="exp link" role="text" aria-label="Posted, link needed"><span aria-hidden="true">🔗</span> Link needed</span>
+            <span class="drafted">posted 2h ago</span>
+          </span>
+        </div>
+        <div class="from"><span class="lb">From</span>So if you learn Figma 2026 you automatically do product design, slide/deck design, poster and marketing design…</div>
+        <div class="reply">
+          <div class="rh"><span class="lb">Your posted reply</span></div>
+          <div class="txt">Facts. But add: UX thinking &gt; tool. Ship flows, not just frames.</div>
+        </div>
+        <div class="linkrow">
+          <span class="lb"><span aria-hidden="true">🔗</span> Post URL</span>
+          <input type="url" placeholder="Paste the link to your posted reply — e.g. x.com/…/status/…" aria-label="Post URL for this reply">
+          <button class="save">Save link</button>
+        </div>
+        <div class="posted-meta">We couldn't auto-capture the link. Adding it lets us pull impressions &amp; replies into Sent.</div>
+      </div>
+      <div class="foot">
+        <span class="strat">Empathy-led</span>
+        <div class="acts">
+          <button class="btn"><span aria-hidden="true">↗</span> Open in Signal Feed</button>
+          <button class="btn dark"><span aria-hidden="true">𝕏</span> Open the post on X</button>
+        </div>
+      </div>
+    </li>
+
+    <!-- expired — sinks below active queue -->
+    <div class="sect">Expired · reference <span class="cnt">1</span><span class="hint">reply window closed — kept for reference, no action</span></div>
+
+    <li class="card expired">
+      <div class="body">
+        <div class="hd">
+          <span class="av" aria-hidden="true"></span><span class="nm">ccbakala</span><span class="arrow" aria-hidden="true">→</span>
+          <span class="av t" aria-hidden="true"></span><span class="tg">@via0xgina</span><span class="xmk" aria-hidden="true">𝕏</span>
+          <span class="badges">
+            <span class="exp gone" role="text" aria-label="Expired">Expired</span>
+            <span class="badge"><span aria-hidden="true">✎</span> Draft</span>
+            <span class="drafted">drafted 8d ago</span>
+          </span>
+        </div>
+        <div class="from"><span class="lb">From</span>Anyone else seeing AI Overviews completely tank organic traffic for top-of-funnel queries? Our blog views are down 40%…</div>
+        <div class="reply">
+          <div class="rh"><span class="lb">Your reply</span>
+            <span class="pg"><button aria-label="Previous reply variant">‹</button><span class="idx">1 / 2</span><button aria-label="Next reply variant">›</button></span>
+          </div>
+          <div class="txt">What your experiment really shows isn't "LLMs have no basic research," it's that they don't have one canonical SEO playbook — they're pattern-matching from training data plus your prompt…</div>
+          <button class="seemore">See more <span aria-hidden="true">⌄</span></button>
+        </div>
+      </div>
+      <div class="blocked"><span aria-hidden="true">⛔</span>This post is over 7 days old — you can no longer reply. The draft is kept for reference.</div>
+      <div class="foot">
+        <span class="strat">Expert answer</span>
+        <div class="acts">
+          <button class="btn"><span aria-hidden="true">↗</span> Source</button>
+          <button class="btn dark">Copy reply text</button>
+          <button class="btn post" disabled aria-disabled="true" aria-label="Post via Aisee Extension — unavailable, reply window closed"><span aria-hidden="true">✦</span> Post via Aisee Extension</button>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+
+  <div class="note">
+    <span class="h">Design decisions in this build</span>
+    <b>① 4 states, but only 2 kinds of action → group by action, not one flat list.</b> The page carries Draft, Expiring-soon, Posted-awaiting-link, and Expired. But "Expiring soon" is just an urgent Draft and "Expired" is a dead Draft — those three are one action (<i>post it</i>). "Posted · add link" is a different action (<i>backfill the URL</i>) with no deadline. So the page is three sections by task: <b>Drafts to post → Posted · add link → Expired</b>.<br>
+    <b>② Sort only inside "Drafts to post".</b> A single time-left sort can't span the whole page — Posted-awaiting-link has no deadline. So only drafts sort by time left (expiring first, countdown chip as lead metadata); the other sections sort by recency.<br>
+    <b>③ One colour axis, no invented amber.</b> Countdown chips are neutral grey; ≤24h uses dark+bold text (not a new hue) + top position + banner. Red is reserved for Expired (terminal). "Link needed" uses the purple Engage-identity token — it's a neutral to-do, not urgent, so no red, no countdown.<br>
+    <b>④ Awaiting review = "needs your hand," incl. posted-awaiting-link.</b> It's already posted but tracking is broken until you paste the URL, so the action isn't done — it stays here, not in Sent. Inline paste-field, not a modal.<br>
+    <b>⑤ Stats mirror the 4 states</b> (Drafts to post · Expiring ≤24h · Posted·add link · Expired) — workload &amp; urgency only. No impressions/likes; those are Sent's job.<br>
+    <b>⑥ Accessibility.</b> All text ≥ 4.5:1 (incl. the previously-failing draft chip). Page-wide <code>:focus-visible</code>, banner is an <code>aria-live</code> status, pager arrows labelled + 32px+ targets, decorative glyphs <code>aria-hidden</code>, real <code>ul/li</code> semantics, the paste field has a label.
+  </div>
+</div>
+</body>
+</html>

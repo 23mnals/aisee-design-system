@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Animated Bubble Icon</title>
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  :root {
+    --ink: #111111;
+    --muted: #6b6b6b;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --hair: rgba(0, 0, 0, 0.08);
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 64px 32px 96px;
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  .lede {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 40px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--hair);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .card-hint {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .stage {
+    background:
+      linear-gradient(transparent 0 0),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px);
+    border-radius: 10px;
+    padding: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+  }
+  .sizes {
+    display: flex;
+    align-items: flex-end;
+    gap: 36px;
+  }
+  .size-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .size-cell .label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ──────────────────────────────────────────────
+     The animated bubble icon
+     ────────────────────────────────────────────── */
+  .bubble {
+    display: inline-block;
+    color: var(--ink);
+    cursor: pointer;
+    /* hit area + space so rotation never clips */
+    padding: 6px;
+  }
+  .bubble svg {
+    display: block;
+    overflow: visible;
+    /* rotation pivot near the tail (bottom-left point of the bubble) */
+    transform-origin: 20% 90%;
+    transition: transform 240ms ease-out;
+  }
+
+  /* hover triggers the loop */
+  .bubble:hover svg {
+    animation: bubble-sway 1600ms ease-in-out infinite;
+  }
+  .bubble:hover .bubble-line-a {
+    animation: line-draw 1600ms ease-in-out infinite;
+  }
+  .bubble:hover .bubble-line-b {
+    animation: line-draw 1600ms ease-in-out 120ms infinite;
+  }
+
+  /* sway = subtle rotate + breathe */
+  @keyframes bubble-sway {
+    0%   { transform: rotate(0deg)   scale(1);    }
+    20%  { transform: rotate(-6deg)  scale(1.04); }
+    50%  { transform: rotate(0deg)   scale(1.02); }
+    75%  { transform: rotate(4deg)   scale(1.04); }
+    100% { transform: rotate(0deg)   scale(1);    }
+  }
+
+  /* inner lines: idle hidden, hover draws them in then back out */
+  .bubble-line-a,
+  .bubble-line-b {
+    stroke-dasharray: var(--len);
+    stroke-dashoffset: 0;                 /* default = lines visible */
+  }
+  .bubble-line-a { --len: 4;   } /* M6.438 6 H10.438 → length 4 */
+  .bubble-line-b { --len: 2;   } /* M6.438 8.8 H8.438 → length 2 */
+
+  @keyframes line-draw {
+    0%   { stroke-dashoffset: 0; }            /* visible */
+    20%  { stroke-dashoffset: var(--len); }   /* wipe out */
+    55%  { stroke-dashoffset: 0; }            /* draw back in */
+    100% { stroke-dashoffset: 0; }            /* hold */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bubble:hover svg,
+    .bubble:hover .bubble-line-a,
+    .bubble:hover .bubble-line-b { animation: none; }
+    .bubble-line-a,
+    .bubble-line-b { stroke-dashoffset: 0; }
+  }
+
+  /* ──────────────────────────────────────────────
+     Real-world placement: in an inline button
+     ────────────────────────────────────────────── */
+  .row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .icon-btn {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--hair);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
+  }
+  .icon-btn:hover {
+    background: #f3f3f3;
+    border-color: rgba(0, 0, 0, 0.14);
+  }
+  /* propagate the hover from the button to the icon */
+  .icon-btn:hover .bubble svg {
+    animation: bubble-sway 1600ms ease-in-out infinite;
+  }
+  .icon-btn:hover .bubble-line-a {
+    animation: line-draw 1600ms ease-in-out infinite;
+  }
+  .icon-btn:hover .bubble-line-b {
+    animation: line-draw 1600ms ease-in-out 120ms infinite;
+  }
+  .icon-btn .bubble {
+    padding: 0;
+  }
+  .count {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .source {
+    margin-top: 8px;
+    background: #0f0f10;
+    color: #e8e8e8;
+    border-radius: 12px;
+    padding: 20px 22px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.65;
+    overflow: auto;
+  }
+  .source .c { color: #6b7a8a; }
+  .source .k { color: #c2a8ff; }
+  .source .s { color: #ffd28a; }
+  .source .a { color: #8ad3ff; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Animated chat-bubble icon</h1>
+  <p class="lede">Hover any icon below — gentle sway around the tail + the two inner lines draw in like a typing indicator.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Sizes</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage">
+        <div class="sizes">
+          <div class="size-cell">
+            <span class="bubble" aria-label="Message" role="img">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.02809 12.6885L3.31809 14.4001L3.79289 11.4013C2.66649 10.3629 2.03809 8.9209 2.03809 7.3265C2.03809 4.1637 4.51089 1.6001 8.43809 1.6001C12.3653 1.6001 14.8381 4.1641 14.8381 7.3265C14.8381 10.4889 12.3653 13.0529 8.43809 13.0529C7.55809 13.0529 6.75089 12.9241 6.02809 12.6885Z"></path>
+                <path class="bubble-line-a" d="M6.43799 6H10.438"></path>
+                <path class="bubble-line-b" d="M6.43799 8.8H8.43799"></path>
+              </svg>
+            </span>
+            <span class="label">16</span>
+          </div>
+          <div class="size-cell">
+            <span class="bubble" aria-label="Message" role="img">
+              <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.02809 12.6885L3.31809 14.4001L3.79289 11.4013C2.66649 10.3629 2.03809 8.9209 2.03809 7.3265C2.03809 4.1637 4.51089 1.6001 8.43809 1.6001C12.3653 1.6001 14.8381 4.1641 14.8381 7.3265C14.8381 10.4889 12.3653 13.0529 8.43809 13.0529C7.55809 13.0529 6.75089 12.9241 6.02809 12.6885Z"></path>
+                <path class="bubble-line-a" d="M6.43799 6H10.438"></path>
+                <path class="bubble-line-b" d="M6.43799 8.8H8.43799"></path>
+              </svg>
+            </span>
+            <span class="label">24</span>
+          </div>
+          <div class="size-cell">
+            <span class="bubble" aria-label="Message" role="img">
+              <svg width="48" height="48" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.02809 12.6885L3.31809 14.4001L3.79289 11.4013C2.66649 10.3629 2.03809 8.9209 2.03809 7.3265C2.03809 4.1637 4.51089 1.6001 8.43809 1.6001C12.3653 1.6001 14.8381 4.1641 14.8381 7.3265C14.8381 10.4889 12.3653 13.0529 8.43809 13.0529C7.55809 13.0529 6.75089 12.9241 6.02809 12.6885Z"></path>
+                <path class="bubble-line-a" d="M6.43799 6H10.438"></path>
+                <path class="bubble-line-b" d="M6.43799 8.8H8.43799"></path>
+              </svg>
+            </span>
+            <span class="label">48</span>
+          </div>
+          <div class="size-cell">
+            <span class="bubble" aria-label="Message" role="img">
+              <svg width="96" height="96" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.02809 12.6885L3.31809 14.4001L3.79289 11.4013C2.66649 10.3629 2.03809 8.9209 2.03809 7.3265C2.03809 4.1637 4.51089 1.6001 8.43809 1.6001C12.3653 1.6001 14.8381 4.1641 14.8381 7.3265C14.8381 10.4889 12.3653 13.0529 8.43809 13.0529C7.55809 13.0529 6.75089 12.9241 6.02809 12.6885Z"></path>
+                <path class="bubble-line-a" d="M6.43799 6H10.438"></path>
+                <path class="bubble-line-b" d="M6.43799 8.8H8.43799"></path>
+              </svg>
+            </span>
+            <span class="label">96</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Inline placements</div>
+        <div class="card-hint">hover the row →</div>
+      </div>
+      <div class="stage" style="flex-direction:column; align-items:flex-start; gap:14px; padding:28px 32px;">
+        <button class="icon-btn" type="button">
+          <span class="bubble">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6.02809 12.6885L3.31809 14.4001L3.79289 11.4013C2.66649 10.3629 2.03809 8.9209 2.03809 7.3265C2.03809 4.1637 4.51089 1.6001 8.43809 1.6001C12.3653 1.6001 14.8381 4.1641 14.8381 7.3265C14.8381 10.4889 12.3653 13.0529 8.43809 13.0529C7.55809 13.0529 6.75089 12.9241 6.02809 12.6885Z"></path>
+              <path class="bubble-line-a" d="M6.43799 6H10.438"></path>
+              <path class="bubble-line-b" d="M6.43799 8.8H8.43799"></path>
+            </svg>
+          </span>
+          Reply
+        </button>
+
+        <button class="icon-btn" type="button">
+          <span class="bubble">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6.02809 12.6885L3.31809 14.4001L3.79289 11.4013C2.66649 10.3629 2.03809 8.9209 2.03809 7.3265C2.03809 4.1637 4.51089 1.6001 8.43809 1.6001C12.3653 1.6001 14.8381 4.1641 14.8381 7.3265C14.8381 10.4889 12.3653 13.0529 8.43809 13.0529C7.55809 13.0529 6.75089 12.9241 6.02809 12.6885Z"></path>
+              <path class="bubble-line-a" d="M6.43799 6H10.438"></path>
+              <path class="bubble-line-b" d="M6.43799 8.8H8.43799"></path>
+            </svg>
+          </span>
+          Comments <span class="count">128</span>
+        </button>
+
+        <button class="icon-btn" type="button" style="border-radius:999px;padding:8px 14px;">
+          <span class="bubble">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6.02809 12.6885L3.31809 14.4001L3.79289 11.4013C2.66649 10.3629 2.03809 8.9209 2.03809 7.3265C2.03809 4.1637 4.51089 1.6001 8.43809 1.6001C12.3653 1.6001 14.8381 4.1641 14.8381 7.3265C14.8381 10.4889 12.3653 13.0529 8.43809 13.0529C7.55809 13.0529 6.75089 12.9241 6.02809 12.6885Z"></path>
+              <path class="bubble-line-a" d="M6.43799 6H10.438"></path>
+              <path class="bubble-line-b" d="M6.43799 8.8H8.43799"></path>
+            </svg>
+          </span>
+          Message thread
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">How it works</div>
+      <div class="card-hint">drop into any page</div>
+    </div>
+    <div class="source"><span class="c">&lt;!-- HTML --&gt;</span>
+<span class="k">&lt;span</span> <span class="a">class</span>=<span class="s">"bubble"</span><span class="k">&gt;</span>
+  <span class="k">&lt;svg</span> <span class="a">width</span>=<span class="s">"16"</span> <span class="a">height</span>=<span class="s">"16"</span> <span class="a">viewBox</span>=<span class="s">"0 0 16 16"</span> <span class="a">fill</span>=<span class="s">"none"</span>
+       <span class="a">stroke</span>=<span class="s">"currentColor"</span> <span class="a">stroke-linecap</span>=<span class="s">"round"</span> <span class="a">stroke-linejoin</span>=<span class="s">"round"</span><span class="k">&gt;</span>
+    <span class="k">&lt;path</span> <span class="a">d</span>=<span class="s">"M6.028 12.69L3.318 14.4l0.475-3 …"</span><span class="k">/&gt;</span>
+    <span class="k">&lt;path</span> <span class="a">class</span>=<span class="s">"bubble-line-a"</span> <span class="a">d</span>=<span class="s">"M6.438 6H10.438"</span><span class="k">/&gt;</span>
+    <span class="k">&lt;path</span> <span class="a">class</span>=<span class="s">"bubble-line-b"</span> <span class="a">d</span>=<span class="s">"M6.438 8.8H8.438"</span><span class="k">/&gt;</span>
+  <span class="k">&lt;/svg&gt;</span>
+<span class="k">&lt;/span&gt;</span>
+
+<span class="c">/* CSS */</span>
+<span class="k">.bubble svg</span> { transform-origin: 20% 90%; overflow: visible; }
+<span class="k">.bubble:hover svg</span> { animation: bubble-sway 1.6s ease-in-out infinite; }
+<span class="k">.bubble:hover .bubble-line-a</span> { animation: line-draw 1.6s ease-in-out infinite; }
+<span class="k">.bubble:hover .bubble-line-b</span> { animation: line-draw 1.6s ease-in-out 120ms infinite; }
+
+<span class="k">.bubble-line-a</span> { stroke-dasharray: 4; stroke-dashoffset: 0; }
+<span class="k">.bubble-line-b</span> { stroke-dasharray: 2; stroke-dashoffset: 0; }
+
+<span class="k">@keyframes bubble-sway</span> {
+   0% { transform: rotate(0)   scale(1);    }
+  20% { transform: rotate(-6deg) scale(1.04); }
+  50% { transform: rotate(0)   scale(1.02); }
+  75% { transform: rotate(4deg)  scale(1.04); }
+ 100% { transform: rotate(0)   scale(1);    }
+}
+<span class="k">@keyframes line-draw</span> {
+   0% { stroke-dashoffset: 0; }            <span class="c">/* visible */</span>
+  20% { stroke-dashoffset: var(--len); }   <span class="c">/* wipe */</span>
+  55% { stroke-dashoffset: 0; }            <span class="c">/* redraw */</span>
+ 100% { stroke-dashoffset: 0; }
+}</div>
+  </div>
+</div>
+</body>
+</html>

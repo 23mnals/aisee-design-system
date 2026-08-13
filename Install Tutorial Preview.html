@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Install Tutorial Preview" subtitle="328×144 looping animation: click Download → drag onto chrome://extensions/ → installed." viewport="1280x720" -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Install tutorial — preview</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<style>
+  @font-face {
+    font-family: "Karla";
+    src: url("fonts/Karla-VariableFont_wght.ttf") format("truetype");
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  :root { --font-karla: "Karla", system-ui, sans-serif; }
+  html, body { background: #FAFAFA; }
+  body { font-family: var(--font-karla); margin: 0; }
+</style>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: "#111111",
+          "yellow-ffe253": "#FFE253",
+          "yellow-fff2b3": "#FFF2B3",
+          "yellow-fffadd": "#FFFADD",
+          "yellow-fefbe3": "#FEFBE3",
+          "yellow-f7f6e9": "#F7F6E9",
+          "yellow-fbfbf3": "#FBFBF3",
+          "yellow-fceb63": "#FCEB63",
+          "gray-fafafa":  "#FAFAFA",
+          "gray-f5f5f5":  "#F5F5F5",
+          "gray-9dabb7":  "#9DABB7",
+          "green-cfff29": "#CFFF29",
+          "green-ceebc8": "#CEEBC8",
+          "green-92bc01": "#92BC01",
+          "green-f0ffba": "#F0FFBA",
+          "green-8c7400": "#8C7400",
+          "red-ec5212":   "#EC5212",
+          "purple-f3e7f4":"#F3E7F4",
+        },
+        fontFamily: { karla: ['Karla', 'system-ui', 'sans-serif'] },
+        keyframes: {
+          fadeInUp: {
+            "0%": { transform: "translateY(4px)", opacity: "0" },
+            "100%": { transform: "translateY(0)", opacity: "1" },
+          },
+          clickPress: {
+            "0%":   { transform: "scale(1)" },
+            "45%":  { transform: "scale(0.86)" },
+            "100%": { transform: "scale(1)" },
+          },
+          targetPulse: {
+            "0%":   { transform: "scale(1)" },
+            "30%":  { transform: "scale(1.18)" },
+            "55%":  { transform: "scale(0.88)" },
+            "100%": { transform: "scale(1)" },
+          },
+        },
+        animation: {
+          "fade-in": "fadeInUp 320ms ease-out",
+          "click-press": "clickPress 320ms cubic-bezier(0.34,1.56,0.64,1)",
+          "target-pulse": "targetPulse 720ms cubic-bezier(0.34,1.56,0.64,1)",
+        },
+      }
+    }
+  };
+</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+  integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+  integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+  integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <template id="__bundler_thumbnail" data-bg-color="#FFFADD">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#FFFADD"></rect>
+      <g transform="translate(420, 260)">
+        <rect x="0" y="0" width="360" height="280" rx="32" fill="#FFFFFF" stroke="#111" stroke-width="6"></rect>
+        <rect x="40" y="60" width="280" height="120" rx="14" fill="#FBFBF3"></rect>
+        <rect x="40" y="200" width="180" height="20" rx="10" fill="#E5E5E2"></rect>
+        <rect x="240" y="194" width="80" height="32" rx="10" fill="#FFE253"></rect>
+      </g>
+    </svg>
+  </template>
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/ui-shims.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/icons.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/install-tutorial.jsx"></script>
+
+  <script type="text/babel" data-presets="env,react">
+    const { InstallTutorial } = window;
+
+    function App() {
+      // Mocks the in-app popover anchored to the "Get extensions" button.
+      return (
+        <div className="min-h-screen flex flex-col items-center justify-center gap-10 p-12 bg-gray-fafafa">
+          <div className="text-center">
+            <div className="text-[11px] uppercase tracking-[0.12em] text-primary/45 font-semibold">Install tutorial · 328 × 144 looping</div>
+            <div className="text-[24px] font-bold tracking-[-0.02em] mt-1.5">How to download extensions 👋</div>
+          </div>
+
+          {/* Popover, sized as it would render in-app */}
+          <div className="relative w-[360px] bg-white rounded-[16px] border border-primary/[0.05] p-3.5"
+               style={{ boxShadow: "0 24px 60px -12px rgba(17,17,17,0.18), 0 4px 12px rgba(0,0,0,0.04)" }}>
+            {/* speech-bubble pointer to the (imaginary) Get extensions button */}
+            <span
+              className="absolute -top-1.5 right-7 w-3 h-3 bg-white border-l border-t border-primary/[0.05]"
+              style={{ transform: "rotate(45deg)" }}
+            />
+
+            <div className="flex items-start justify-between mb-2.5 px-0.5">
+              <div className="text-[14px] font-semibold inline-flex items-center gap-1.5">
+                How to download extensions
+                <span className="text-[14px]" aria-hidden>👋</span>
+              </div>
+              <button
+                aria-label="Dismiss"
+                className="w-5 h-5 inline-flex items-center justify-center rounded text-primary/40 hover:text-primary hover:bg-primary/[0.04] cursor-pointer"
+              >
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </button>
+            </div>
+
+            {/* The looping 328×144 tutorial */}
+            <div className="overflow-hidden">
+              <InstallTutorial />
+            </div>
+
+            <p className="text-[11.5px] text-primary/65 leading-[1.55] mt-3 px-0.5">
+              Click <span className="font-semibold text-primary">Get extension</span>, then drag the installer onto{" "}
+              <span className="font-mono text-[10.5px] text-primary/85 bg-gray-f5f5f5 px-1 py-px rounded">chrome://extensions/</span>{" "}
+              to enable replies directly on X and Reddit.
+            </p>
+
+            <div className="flex justify-end mt-3 px-0.5">
+              <button className="px-3 h-[28px] rounded-lg bg-yellow-ffe253 text-primary text-[12px] font-semibold hover:bg-yellow-fceb63 transition-colors cursor-pointer">
+                Got it
+              </button>
+            </div>
+          </div>
+
+          {/* Bare-frame reference so the user can see the animation crop alone */}
+          <div className="flex flex-col items-center gap-2">
+            <div className="text-[10.5px] uppercase tracking-[0.12em] text-primary/40 font-semibold">Animation only · 328 × 144</div>
+            <div style={{ boxShadow: "0 12px 30px -8px rgba(17,17,17,0.14)" }}>
+              <InstallTutorial />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

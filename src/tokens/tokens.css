@@ -1,0 +1,88 @@
+/* Generated from tokens.json. Do not edit directly. */
+:root {
+  --aisee-color-black: #111111;
+  --aisee-color-white: #FFFFFF;
+  --aisee-color-page: #FAFAFA;
+  --aisee-color-card: #FFFFFF;
+  --aisee-color-card-warm: #FBFBF3;
+  --aisee-color-cream: #F7F6E9;
+  --aisee-color-analysis-primary: #CFFF29;
+  --aisee-color-analysis-hover: #BFEE19;
+  --aisee-color-analysis-soft: rgba(207,255,41,0.18);
+  --aisee-color-analysis-pale: #F5FFD4;
+  --aisee-color-post-agent-primary: #FFE253;
+  --aisee-color-post-agent-hover: #FCE055;
+  --aisee-color-post-agent-soft: #FFF2B3;
+  --aisee-color-post-agent-pale: #FFFADD;
+  --aisee-color-engage-banner: #F3E7F4;
+  --aisee-color-engage-setup: #F0FFBA;
+  --aisee-color-engage-lavender: #FAE2FE;
+  --aisee-color-engage-gold: #8C7400;
+  --aisee-color-engage-blue: #4398FF;
+  --aisee-color-orange: #EC5212;
+  --aisee-color-green: #A5D500;
+  --aisee-color-green-dark: #92BC01;
+  --aisee-color-red-light: #FFD0D0;
+  --aisee-color-gray200: #E1E1E1;
+  --aisee-color-gray300: #D9D9D9;
+  --aisee-color-text-muted: rgba(17,17,17,0.60);
+  --aisee-color-text-faint: rgba(17,17,17,0.40);
+  --aisee-color-border: rgba(17,17,17,0.05);
+  --aisee-color-border-hover: rgba(17,17,17,0.18);
+  --aisee-color-overlay: rgba(17,17,17,0.40);
+  --aisee-space-1: 4px;
+  --aisee-space-2: 8px;
+  --aisee-space-3: 12px;
+  --aisee-space-4: 16px;
+  --aisee-space-5: 24px;
+  --aisee-space-6: 32px;
+  --aisee-space-7: 48px;
+  --aisee-space-8: 64px;
+  --aisee-radius-control: 8px;
+  --aisee-radius-input: 8px;
+  --aisee-radius-card: 12px;
+  --aisee-radius-large: 16px;
+  --aisee-radius-modal: 16px;
+  --aisee-radius-pill: 9999px;
+  --aisee-shadow-card: 0 1px 3px rgba(0,0,0,0.06);
+  --aisee-shadow-dropdown: 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.10);
+  --aisee-shadow-modal: 0 8px 8px rgba(0,0,0,0.04), 0 20px 24px rgba(0,0,0,0.10);
+  --aisee-size-header: 70px;
+  --aisee-size-sidebar: 224px;
+  --aisee-size-input: 36px;
+  --aisee-size-toggle-width: 24px;
+  --aisee-size-toggle-height: 16px;
+  --aisee-font-family-ui: Karla, sans-serif;
+  --aisee-font-family-mono: Karla, sans-serif;
+  --aisee-font-family-gauge: Karla, sans-serif;
+  --aisee-font-size-micro: 10px;
+  --aisee-font-size-caption: 12px;
+  --aisee-font-size-label: 13px;
+  --aisee-font-size-body: 14px;
+  --aisee-font-size-card-title: 16px;
+  --aisee-font-size-section: 18px;
+  --aisee-font-size-title: 20px;
+  --aisee-font-size-stat: 32px;
+  --aisee-font-weight-regular: 400;
+  --aisee-font-weight-medium: 500;
+  --aisee-font-weight-semibold: 600;
+  --aisee-font-weight-bold: 700;
+  --aisee-motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --aisee-motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --aisee-motion-micro: 120ms;
+  --aisee-motion-fast: 150ms;
+  --aisee-motion-normal: 250ms;
+  --aisee-motion-slow: 300ms;
+  --aisee-module-primary: var(--aisee-color-analysis-primary);
+  --aisee-module-primary-hover: var(--aisee-color-analysis-hover);
+  --aisee-module-primary-soft: var(--aisee-color-analysis-soft);
+  --aisee-module-primary-pale: var(--aisee-color-analysis-pale);
+}
+
+[data-aisee-theme="post-agent"],
+[data-aisee-theme="engage"] {
+  --aisee-module-primary: var(--aisee-color-post-agent-primary);
+  --aisee-module-primary-hover: var(--aisee-color-post-agent-hover);
+  --aisee-module-primary-soft: var(--aisee-color-post-agent-soft);
+  --aisee-module-primary-pale: var(--aisee-color-post-agent-pale);
+}

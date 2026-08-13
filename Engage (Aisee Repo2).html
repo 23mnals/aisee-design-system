@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Engage (Aisee Repo2)" subtitle="Engage v5 — 4-tab Engage zone (Dashboard / Signal Feed / Keywords & Accounts / Replies)" -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Engage v5 — aisee-agent</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="ext-resource-dependency" content="engage-aisee-v2/engage-banner-icon.svg" data-resource-id="engageBannerIcon" />
+
+<!-- Karla — local TTF -->
+<style>
+  @font-face {
+    font-family: "Karla";
+    src: url("fonts/Karla-VariableFont_wght.ttf") format("truetype");
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  :root {
+    --font-karla: "Karla", system-ui, sans-serif;
+    --font-gotu:  "Karla", system-ui, sans-serif;
+  }
+  html, body { background: #FAFAFA; }
+  body { font-family: var(--font-karla); }
+  ::-webkit-scrollbar       { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(17,17,17,0.12); border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(17,17,17,0.22); border: 2px solid transparent; background-clip: content-box; }
+
+  /* Filter bar responsive — same as v1 */
+  .fb-chips { scrollbar-width: none; }
+  .fb-chips::-webkit-scrollbar { display: none; }
+  .fb-chips > * { flex: 0 0 auto; }
+  @container (max-width: 900px) {
+    .fb-wrap .fb-sync-next { display: none; }
+    .fb-wrap .fb-sort-prefix { display: none; }
+  }
+  @container (max-width: 760px) { .fb-wrap .fb-sync-label { display: none; } }
+  @container (max-width: 640px) { .fb-wrap .fb-sync { display: none; } }
+</style>
+
+<!-- Tailwind via Play CDN. Custom palette matches repo + v5 additions. -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: "#111111",
+          "yellow-ffe253": "#FFE253",
+          "yellow-fff2b3": "#FFF2B3",
+          "yellow-fffadd": "#FFFADD",
+          "yellow-fefbe3": "#FEFBE3",
+          "yellow-f7f6e9": "#F7F6E9",
+          "yellow-fbfbf3": "#FBFBF3",
+          "yellow-fceb63": "#FCEB63",
+          "gray-fafafa":  "#FAFAFA",
+          "gray-f5f5f5":  "#F5F5F5",
+          "gray-9dabb7":  "#9DABB7",
+          "green-cfff29": "#CFFF29",
+          "green-ceebc8": "#CEEBC8",
+          "green-92bc01": "#92BC01",
+          "green-f0ffba": "#F0FFBA",
+          "green-e6f2db": "#E6F2DB",
+          "green-eff4e2": "#EFF4E2",
+          "green-8c7400": "#8C7400",
+          "red-ffd0d0":   "#FFD0D0",
+          "red-ec5212":   "#EC5212",
+          "red-e14f12":   "#E14F12",
+          "red-fdebe4":   "#FDEBE4",
+          "purple-fae2fe":"#FAE2FE",
+          "purple-f3e7f4":"#F3E7F4",  /* v5 — Engage banner-only */
+          "blue-4398ff":  "#4398FF",
+        },
+        fontFamily: {
+          karla: ['Karla', 'system-ui', 'sans-serif'],
+          gotu:  ['Karla', 'system-ui', 'sans-serif'],
+        },
+        keyframes: {
+          bounce: {
+            "0%, 100%": { transform: "translateY(0)", opacity: "0.3" },
+            "50%":      { transform: "translateY(-2px)", opacity: "1" },
+          },
+          fadeInUp: {
+            "0%": { transform: "translateY(4px)", opacity: "0" },
+            "100%": { transform: "translateY(0)", opacity: "1" },
+          },
+          clickPress: {
+            "0%":   { transform: "scale(1)" },
+            "45%":  { transform: "scale(0.86)" },
+            "100%": { transform: "scale(1)" },
+          },
+          targetPulse: {
+            "0%":   { transform: "scale(1)" },
+            "30%":  { transform: "scale(1.18)" },
+            "55%":  { transform: "scale(0.88)" },
+            "100%": { transform: "scale(1)" },
+          },
+        },
+        animation: {
+          "fade-in": "fadeInUp 320ms ease-out",
+          "click-press": "clickPress 320ms cubic-bezier(0.34,1.56,0.64,1)",
+          "target-pulse": "targetPulse 720ms cubic-bezier(0.34,1.56,0.64,1)",
+        },
+      }
+    }
+  };
+</script>
+
+<!-- React 18 + Babel — pinned -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+  integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+  integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+  integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <template id="__bundler_thumbnail" data-bg-color="#F3E7F4">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#F3E7F4"></rect>
+      <g transform="translate(420, 240)">
+        <path d="M40 80 Q40 40 100 40 L260 40 Q320 40 320 80 L320 220 L260 220 L260 280 L200 220 L100 220 Q40 220 40 180 Z" fill="#111111"></path>
+        <circle cx="130" cy="130" r="14" fill="#F3E7F4"></circle>
+        <circle cx="180" cy="130" r="14" fill="#F3E7F4"></circle>
+        <circle cx="230" cy="130" r="14" fill="#F3E7F4"></circle>
+      </g>
+    </svg>
+  </template>
+  <div id="root"></div>
+
+  <!--
+    Source order matters. Mirrors v1's repo file mapping but lives under
+    engage-aisee-v2/. v5 changes:
+      - layout-shell:  224px sidebar, 3-tab Toggle, 4-item Engage sub-nav
+      - engage-banner: #F3E7F4 (was #FAE2FE in v4 — that color now Channel-only)
+      - dashboard:     new — KPI strip + 2 cream charts + 3 bottom cards
+      - signal-feed:   slimmed down to just the Signal Feed view
+      - keywords-acc:  unchanged from v4
+      - replies:       new — Sent + Awaiting review sub-tabs
+      - feed-card:     adds Replied / Expired states with hover tooltip
+      - reply-panel:   single "Configure your reply" workspace + Continue
+      - page:          4-tab top-level routing
+  -->
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/ui-shims.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/icons.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/data.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/layout-shell.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/engage-banner.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/feed-card.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/filter-bar.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/copy-link-tutorial.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/reply-panel.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/initial-config.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/keywords-accounts.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/dashboard.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/replies.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/signal-feed.jsx"></script>
+  <script type="text/babel" data-presets="env,react" src="engage-aisee-v2/page.jsx"></script>
+</body>
+</html>

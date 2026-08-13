@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="PlanCard" subtitle="Pricing tier card — Starter / Developer / Pro (套餐_mo_*)" viewport="1000x760" -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>PlanCard</title>
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<style>
+  html, body { margin: 0; }
+  body {
+    background: #F7F8F7;
+    font-family: 'Karla', sans-serif;
+    color: #111;
+    padding: 32px;
+    box-sizing: border-box;
+  }
+  .grid { display: flex; gap: 20px; align-items: stretch; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script>
+    const { PlanCard } = window.AiseeDesignSystem_2b2427;
+    const h = React.createElement;
+    const cube = (d) => '<svg width="40" height="40" viewBox="0 0 32 32" fill="none" stroke="#111" stroke-width="1.2" stroke-linejoin="round">' + d + '</svg>';
+    const plans = [
+      {
+        id: 'starter', name: 'Starter', tag: 'For Individuals', price: '$9', credits: '1,000',
+        desc: 'Get the basics of AEO Checker, at a limited rate.',
+        icon: cube('<path d="M16 4 L28 10 L28 22 L16 28 L4 22 L4 10 Z"/><path d="M16 4 L16 16 M4 10 L16 16 M28 10 L16 16"/>'),
+        cta: { label: 'Current Plan', kind: 'current' },
+        sections: [
+          { title: 'Analysis · AI Visibility', items: [
+            { label: 'Core AI models' },
+            { label: 'Brand presence detection · <b>basic</b>' },
+            { label: 'Competitor mentions overview' },
+          ]},
+          { title: 'Engage · Track & Reply', items: [
+            { label: '3 tracked keywords', meta: 'MAX', metaKind: 'max' },
+            { label: 'Priority tracked accounts', dash: true },
+            { label: 'AI-generated replies', meta: '10 / mo trial', metaKind: 'trial' },
+          ]},
+        ],
+      },
+      {
+        id: 'developer', name: 'Developer', tag: 'For Startups', price: '$25', credits: '4,000',
+        desc: 'Run unlimited monthly checks with limited models.',
+        icon: cube('<path d="M16 3 L29 24 L3 24 Z"/><path d="M16 3 L16 24 M9 13 L23 13"/>'),
+        cta: { label: 'Upgrade Plan →', kind: 'upgrade' },
+        sections: [
+          { title: 'Analysis · AI Visibility', items: [
+            { label: 'All AI models' },
+            { label: 'Multi-model comparison' },
+            { label: 'Website AI Diagnostic & Priorities Report' },
+          ]},
+          { title: 'Engage · Track & Reply', items: [
+            { label: '10 tracked keywords', meta: 'MAX', metaKind: 'max' },
+            { label: '10 priority tracked accounts' },
+            { label: 'AI-generated replies', meta: 'Unlimited', metaKind: 'unlimited' },
+          ]},
+        ],
+      },
+      {
+        id: 'pro', name: 'Pro', tag: 'For Organizations', price: '$55', credits: '10,000',
+        desc: 'Optimize for long term AEO presence and track progress.',
+        badge: 'Full Engage', featured: true,
+        icon: cube('<rect x="3" y="3" width="11" height="11"/><rect x="18" y="3" width="11" height="11"/><rect x="3" y="18" width="11" height="11"/><rect x="18" y="18" width="11" height="11"/>'),
+        cta: { label: 'Upgrade Plan →', kind: 'primary' },
+        sections: [
+          { title: 'Analysis · AI Visibility', items: [
+            { label: 'All AI platforms · full coverage' },
+            { label: 'Brand presence detection · <b>full</b>' },
+            { label: 'Website AI diagnostic + priorities' },
+          ]},
+          { title: 'Engage · Track & Reply', items: [
+            { label: '30 tracked keywords', meta: 'MAX', metaKind: 'max' },
+            { label: 'Priority accounts · <b>unlimited</b>' },
+            { label: 'AI-generated replies', meta: 'Unlimited', metaKind: 'unlimited' },
+          ]},
+        ],
+      },
+    ];
+    function Demo() {
+      return h('div', { className: 'grid' }, plans.map(p =>
+        h(PlanCard, { key: p.id, plan: p })));
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+  </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Plugin Entry Options" subtitle="Three placement options for the browser-extension install entry, mocked in Engage v5." viewport="4080x1080" -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Plugin entry — placement options</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  @font-face {
+    font-family: "Karla";
+    src: url("fonts/Karla-VariableFont_wght.ttf") format("truetype");
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: #EEEEEC;
+    font-family: "Karla", system-ui, -apple-system, sans-serif;
+    color: #111;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { padding: 56px 64px 120px; }
+
+  .hd { max-width: 880px; margin: 0 0 48px; }
+  .hd .eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(17,17,17,0.5);
+    margin-bottom: 14px;
+  }
+  .hd h1 {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin: 0 0 14px;
+  }
+  .hd p {
+    margin: 0;
+    font-size: 15.5px;
+    color: rgba(17,17,17,0.62);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  .frames {
+    display: flex;
+    gap: 56px;
+    align-items: flex-start;
+  }
+  .frame {
+    width: 1280px;
+    flex-shrink: 0;
+  }
+  .label { margin: 0 0 18px; padding: 0 2px; }
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(17,17,17,0.05);
+    color: rgba(17,17,17,0.55);
+    margin-bottom: 12px;
+  }
+  .kicker.rec {
+    background: #FFE253;
+    color: #111;
+  }
+  .kicker.rec::before {
+    content: "★";
+    font-size: 10px;
+  }
+  .label h2 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 0 0 8px;
+  }
+  .label p {
+    font-size: 13px;
+    color: rgba(17,17,17,0.62);
+    margin: 0;
+    line-height: 1.55;
+    max-width: 540px;
+    text-wrap: pretty;
+  }
+
+  .shell {
+    width: 1280px;
+    height: 860px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow:
+      0 30px 80px -20px rgba(17,17,17,0.18),
+      0 2px 6px rgba(0,0,0,0.04),
+      inset 0 0 0 1px rgba(17,17,17,0.04);
+    position: relative;
+  }
+  .shell iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #FAFAFA;
+  }
+
+  /* Subtle annotation pin pointing at the actual entry on each frame */
+  .pin {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pin .ring {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: rgba(255, 226, 83, 0.35);
+    box-shadow: 0 0 0 2px #FFE253;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  .pin .tag {
+    background: #111;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 9px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.18); opacity: 0.55; }
+  }
+
+  /* Pin positions per option */
+  .frame.opt1 .pin { left: 12px; bottom: 122px; }
+  .frame.opt2 .pin { right: 168px; top: 22px; flex-direction: row-reverse; }
+  .frame.opt3 .pin { left: 32px; top: 184px; }
+</style>
+</head>
+<body>
+  <div class="hd">
+    <span class="eyebrow">Plugin entry · placement exploration</span>
+    <h1>Three places to land the browser-extension entry</h1>
+    <p>All three mocked in context on the Signal Feed view of Engage v5. Compare presence, noise, and discoverability — pick one, or combine 1+2 as a primary-plus-fallback.</p>
+  </div>
+
+  <div class="frames">
+    <div class="frame opt1">
+      <div class="label">
+        <span class="kicker rec">Option 1 · Recommended</span>
+        <h2>Sidebar card</h2>
+        <p>Tucked above the account card. Persistent across every page, contextual to the workspace, dismissible. The green-chip puzzle mark reads as "feature" without competing with the active-tab yellow.</p>
+      </div>
+      <div class="shell">
+        <div class="pin"><span class="ring"></span><span class="tag">Install card</span></div>
+        <iframe src="Engage%20(Aisee%20Repo2).html?plugin=sidebar&view=signal" loading="lazy"></iframe>
+      </div>
+    </div>
+
+    <div class="frame opt2">
+      <div class="label">
+        <span class="kicker">Option 2</span>
+        <h2>Header icon</h2>
+        <p>A puzzle button beside the bell, matching its rounded-square treatment with a small green dot indicator. Zero footprint, always visible — discoverability rides on the tooltip.</p>
+      </div>
+      <div class="shell">
+        <div class="pin"><span class="ring"></span><span class="tag">Puzzle icon</span></div>
+        <iframe src="Engage%20(Aisee%20Repo2).html?plugin=header&view=signal" loading="lazy"></iframe>
+      </div>
+    </div>
+
+    <div class="frame opt3">
+      <div class="label">
+        <span class="kicker">Option 3</span>
+        <h2>Inline banner</h2>
+        <p>A lavender banner at the top of Signal Feed — where the extension most directly speeds up the workflow. Strongest context, biggest CTA, but the prompt only appears on one tab.</p>
+      </div>
+      <div class="shell">
+        <div class="pin"><span class="ring"></span><span class="tag">Install banner</span></div>
+        <iframe src="Engage%20(Aisee%20Repo2).html?plugin=banner&view=signal" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

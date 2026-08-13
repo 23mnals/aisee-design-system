@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Animated Process List Icon</title>
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  :root {
+    --ink: #09244B;
+    --muted: #6b6b6b;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --hair: rgba(0, 0, 0, 0.08);
+    --accent: #2f6df6;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 64px 32px 96px; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lede { color: var(--muted); font-size: 14px; margin: 0 0 40px; max-width: 60ch; line-height: 1.6; }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--hair);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; }
+  .card-title { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+  .card-hint { font-size: 12px; color: var(--muted); }
+  .stage {
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px);
+    border-radius: 10px;
+    padding: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+  }
+  .sizes { display: flex; align-items: flex-end; gap: 36px; }
+  .size-cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .size-cell .label { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: var(--muted); }
+
+  /* ──────────────────────────────────────────────
+     The animated process-list icon
+     Lines draw left→right in a staggered top-to-bottom wave;
+     each check gives a subtle tick pop just as its line redraws.
+     ────────────────────────────────────────────── */
+  .pl {
+    display: inline-block;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 6px;
+  }
+  .pl svg { display: block; overflow: visible; }
+
+  .pl svg .pl-line  { stroke-dasharray: 100; }
+  .pl svg .pl-check { transform-box: fill-box; transform-origin: center; }
+
+  /* One sequential timeline (2700ms): complete row 1, then row 2, then row 3,
+     clear, repeat. Each row = check ticks ON, then its line strikes across.
+     Triggered by hovering the icon OR a button / row wrapper around it. */
+  :is(.pl, .icon-btn, .icon-only, .nav-row):hover .pl-check-1 { animation: pl-check-1 2700ms ease-out infinite; }
+  :is(.pl, .icon-btn, .icon-only, .nav-row):hover .pl-line-1  { animation: pl-line-1  2700ms ease-out infinite; }
+  :is(.pl, .icon-btn, .icon-only, .nav-row):hover .pl-check-2 { animation: pl-check-2 2700ms ease-out infinite; }
+  :is(.pl, .icon-btn, .icon-only, .nav-row):hover .pl-line-2  { animation: pl-line-2  2700ms ease-out infinite; }
+  :is(.pl, .icon-btn, .icon-only, .nav-row):hover .pl-check-3 { animation: pl-check-3 2700ms ease-out infinite; }
+  :is(.pl, .icon-btn, .icon-only, .nav-row):hover .pl-line-3  { animation: pl-line-3  2700ms ease-out infinite; }
+
+  /* ── Row 1 — completes first ───────────────── */
+  @keyframes pl-check-1 {
+    0%   { opacity: 0; transform: scale(0.4); }
+    2%   { opacity: 0; transform: scale(0.4); }
+    7%   { opacity: 1; transform: scale(1.25); }   /* tick on */
+    12%  { opacity: 1; transform: scale(1);    }
+    100% { opacity: 1; transform: scale(1);    }   /* stays done */
+  }
+  @keyframes pl-line-1 {
+    0%   { stroke-dashoffset: 100; }               /* empty */
+    9%   { stroke-dashoffset: 100; }               /* wait for the check */
+    26%  { stroke-dashoffset: 0;   }               /* strike across L→R */
+    100% { stroke-dashoffset: 0;   }               /* stays done */
+  }
+  /* ── Row 2 ─────────────────────────────────── */
+  @keyframes pl-check-2 {
+    0%, 35% { opacity: 0; transform: scale(0.4);  }
+    40%     { opacity: 1; transform: scale(1.25); }
+    45%     { opacity: 1; transform: scale(1);    }
+    100%    { opacity: 1; transform: scale(1);    }
+  }
+  @keyframes pl-line-2 {
+    0%, 42% { stroke-dashoffset: 100; }
+    59%     { stroke-dashoffset: 0;   }
+    100%    { stroke-dashoffset: 0;   }
+  }
+  /* ── Row 3 — then the whole list resets ────── */
+  @keyframes pl-check-3 {
+    0%, 68% { opacity: 0; transform: scale(0.4);  }
+    73%     { opacity: 1; transform: scale(1.25); }
+    78%     { opacity: 1; transform: scale(1);    }
+    94%     { opacity: 1; transform: scale(1);    }
+    100%    { opacity: 0; transform: scale(0.4);  }   /* clear for the next pass */
+  }
+  @keyframes pl-line-3 {
+    0%, 75% { stroke-dashoffset: 100; }
+    92%     { stroke-dashoffset: 0;   }
+    96%     { stroke-dashoffset: 0;   }
+    100%    { stroke-dashoffset: 100; }                /* clear with the checks */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :is(.pl, .icon-btn, .icon-only, .nav-row):hover .pl svg *,
+    .pl:hover svg * { animation: none; }
+  }
+
+  /* ──────────────────────────────────────────────
+     Inline placements
+     ────────────────────────────────────────────── */
+  .icon-btn {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--hair);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+  .icon-btn:hover { background: #f3f3f3; border-color: rgba(0, 0, 0, 0.14); }
+  .icon-btn .pl { padding: 0; }
+
+  .icon-only {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .icon-only:hover { background: rgba(47, 109, 246, 0.08); color: var(--accent); }
+  .icon-only .pl { padding: 0; }
+
+  .nav-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border: 1px solid var(--hair);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
+  }
+  .nav-row:hover { background: #f6f8ff; border-color: rgba(47, 109, 246, 0.25); }
+  .nav-row .grow { flex: 1; font-size: 13px; font-weight: 500; }
+  .nav-row .meta { font-size: 12px; color: var(--muted); }
+  .nav-row .pl { padding: 0; color: var(--accent); }
+
+  .source {
+    margin-top: 8px;
+    background: #0f0f10;
+    color: #e8e8e8;
+    border-radius: 12px;
+    padding: 20px 22px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.65;
+    overflow: auto;
+  }
+  .source .c { color: #6b7a8a; }
+  .source .k { color: #c2a8ff; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Animated process-list icon</h1>
+  <p class="lede">Hover any icon — the list completes one row at a time: a check ticks on, its line strikes across left&nbsp;→&nbsp;right, then the next row, then the next. Once all three are done the list clears and starts over.</p>
+  <p style="font-size:13px; margin:0 0 40px;">Other version: <a href="Animated Process List Scroll Icon.html" style="color:var(--accent); text-decoration:none;">scroll / conveyor →</a></p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Sizes</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage">
+        <div class="sizes">
+          <div class="size-cell">
+            <span class="pl" aria-label="Process list" role="img">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+                <path class="pl-check pl-check-1" d="M2.32007 3.94736L3.26743 4.89472L5.16214 3"></path>
+                <path class="pl-check pl-check-2" d="M2.32007 8.36849L3.26743 9.31585L5.16214 7.42113"></path>
+                <path class="pl-check pl-check-3" d="M2.32007 12.7896L3.26743 13.737L5.16214 11.8423"></path>
+                <path class="pl-line pl-line-1" pathLength="100" d="M7.3729 3.94736H14.3201"></path>
+                <path class="pl-line pl-line-2" pathLength="100" d="M7.3729 8.36849H14.3201"></path>
+                <path class="pl-line pl-line-3" pathLength="100" d="M7.3729 12.7896H14.3201"></path>
+              </svg>
+            </span>
+            <span class="label">16</span>
+          </div>
+          <div class="size-cell">
+            <span class="pl" aria-label="Process list" role="img">
+              <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+                <path class="pl-check pl-check-1" d="M2.32007 3.94736L3.26743 4.89472L5.16214 3"></path>
+                <path class="pl-check pl-check-2" d="M2.32007 8.36849L3.26743 9.31585L5.16214 7.42113"></path>
+                <path class="pl-check pl-check-3" d="M2.32007 12.7896L3.26743 13.737L5.16214 11.8423"></path>
+                <path class="pl-line pl-line-1" pathLength="100" d="M7.3729 3.94736H14.3201"></path>
+                <path class="pl-line pl-line-2" pathLength="100" d="M7.3729 8.36849H14.3201"></path>
+                <path class="pl-line pl-line-3" pathLength="100" d="M7.3729 12.7896H14.3201"></path>
+              </svg>
+            </span>
+            <span class="label">24</span>
+          </div>
+          <div class="size-cell">
+            <span class="pl" aria-label="Process list" role="img">
+              <svg width="48" height="48" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+                <path class="pl-check pl-check-1" d="M2.32007 3.94736L3.26743 4.89472L5.16214 3"></path>
+                <path class="pl-check pl-check-2" d="M2.32007 8.36849L3.26743 9.31585L5.16214 7.42113"></path>
+                <path class="pl-check pl-check-3" d="M2.32007 12.7896L3.26743 13.737L5.16214 11.8423"></path>
+                <path class="pl-line pl-line-1" pathLength="100" d="M7.3729 3.94736H14.3201"></path>
+                <path class="pl-line pl-line-2" pathLength="100" d="M7.3729 8.36849H14.3201"></path>
+                <path class="pl-line pl-line-3" pathLength="100" d="M7.3729 12.7896H14.3201"></path>
+              </svg>
+            </span>
+            <span class="label">48</span>
+          </div>
+          <div class="size-cell">
+            <span class="pl" aria-label="Process list" role="img">
+              <svg width="96" height="96" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+                <path class="pl-check pl-check-1" d="M2.32007 3.94736L3.26743 4.89472L5.16214 3"></path>
+                <path class="pl-check pl-check-2" d="M2.32007 8.36849L3.26743 9.31585L5.16214 7.42113"></path>
+                <path class="pl-check pl-check-3" d="M2.32007 12.7896L3.26743 13.737L5.16214 11.8423"></path>
+                <path class="pl-line pl-line-1" pathLength="100" d="M7.3729 3.94736H14.3201"></path>
+                <path class="pl-line pl-line-2" pathLength="100" d="M7.3729 8.36849H14.3201"></path>
+                <path class="pl-line pl-line-3" pathLength="100" d="M7.3729 12.7896H14.3201"></path>
+              </svg>
+            </span>
+            <span class="label">96</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Real placements</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage" style="flex-direction:column; align-items:stretch; gap:14px; padding:24px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="icon-btn" type="button">
+            <span class="pl">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+                <path class="pl-check pl-check-1" d="M2.32007 3.94736L3.26743 4.89472L5.16214 3"></path>
+                <path class="pl-check pl-check-2" d="M2.32007 8.36849L3.26743 9.31585L5.16214 7.42113"></path>
+                <path class="pl-check pl-check-3" d="M2.32007 12.7896L3.26743 13.737L5.16214 11.8423"></path>
+                <path class="pl-line pl-line-1" pathLength="100" d="M7.3729 3.94736H14.3201"></path>
+                <path class="pl-line pl-line-2" pathLength="100" d="M7.3729 8.36849H14.3201"></path>
+                <path class="pl-line pl-line-3" pathLength="100" d="M7.3729 12.7896H14.3201"></path>
+              </svg>
+            </span>
+            Tasks
+          </button>
+          <button class="icon-btn" type="button">
+            <span class="pl">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+                <path class="pl-check pl-check-1" d="M2.32007 3.94736L3.26743 4.89472L5.16214 3"></path>
+                <path class="pl-check pl-check-2" d="M2.32007 8.36849L3.26743 9.31585L5.16214 7.42113"></path>
+                <path class="pl-check pl-check-3" d="M2.32007 12.7896L3.26743 13.737L5.16214 11.8423"></path>
+                <path class="pl-line pl-line-1" pathLength="100" d="M7.3729 3.94736H14.3201"></path>
+                <path class="pl-line pl-line-2" pathLength="100" d="M7.3729 8.36849H14.3201"></path>
+                <path class="pl-line pl-line-3" pathLength="100" d="M7.3729 12.7896H14.3201"></path>
+              </svg>
+            </span>
+            Checklist
+          </button>
+        </div>
+
+        <div class="nav-row">
+          <span class="pl">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+              <path class="pl-check pl-check-1" d="M2.32007 3.94736L3.26743 4.89472L5.16214 3"></path>
+              <path class="pl-check pl-check-2" d="M2.32007 8.36849L3.26743 9.31585L5.16214 7.42113"></path>
+              <path class="pl-check pl-check-3" d="M2.32007 12.7896L3.26743 13.737L5.16214 11.8423"></path>
+              <path class="pl-line pl-line-1" pathLength="100" d="M7.3729 3.94736H14.3201"></path>
+              <path class="pl-line pl-line-2" pathLength="100" d="M7.3729 8.36849H14.3201"></path>
+              <path class="pl-line pl-line-3" pathLength="100" d="M7.3729 12.7896H14.3201"></path>
+            </svg>
+          </span>
+          <span class="grow">Onboarding checklist</span>
+          <span class="meta">2 of 3 done</span>
+        </div>
+
+        <div class="nav-row">
+          <span class="pl">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="square">
+              <path class="pl-check pl-check-1" d="M2.32007 3.94736L3.26743 4.89472L5.16214 3"></path>
+              <path class="pl-check pl-check-2" d="M2.32007 8.36849L3.26743 9.31585L5.16214 7.42113"></path>
+              <path class="pl-check pl-check-3" d="M2.32007 12.7896L3.26743 13.737L5.16214 11.8423"></path>
+              <path class="pl-line pl-line-1" pathLength="100" d="M7.3729 3.94736H14.3201"></path>
+              <path class="pl-line pl-line-2" pathLength="100" d="M7.3729 8.36849H14.3201"></path>
+              <path class="pl-line pl-line-3" pathLength="100" d="M7.3729 12.7896H14.3201"></path>
+            </svg>
+          </span>
+          <span class="grow">Release steps</span>
+          <span class="meta">view</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">How it works</div>
+      <div class="card-hint">six paths, one timeline</div>
+    </div>
+    <div class="source"><span class="c">/* Split the icon into 3 checks + 3 lines. pathLength="100" normalises the dash math. */</span>
+<span class="k">.pl svg .pl-line</span>  { stroke-dasharray: 100; }
+<span class="k">.pl svg .pl-check</span> { transform-box: fill-box; transform-origin: center; }
+
+<span class="c">/* One 2.7s timeline. Each row owns a window: check ON, then line strikes across. */</span>
+<span class="k">@keyframes pl-check-1</span> {
+   2%  { opacity: 0; transform: scale(.4);   }
+   7%  { opacity: 1; transform: scale(1.25); }   <span class="c">/* tick on */</span>
+  12%  { opacity: 1; transform: scale(1);    }   <span class="c">/* …holds done */</span>
+}
+<span class="k">@keyframes pl-line-1</span> {
+   9%  { stroke-dashoffset: 100; }               <span class="c">/* wait for the check */</span>
+  26%  { stroke-dashoffset: 0;   }               <span class="c">/* strike across L→R */</span>
+}
+<span class="c">/* row 2 runs ~35–59%, row 3 ~68–92%, then check-3 + line-3 clear at 100% */</span>
+<span class="c">/* so the whole list resets and the loop repeats. */</span></div>
+  </div>
+</div>
+</body>
+</html>

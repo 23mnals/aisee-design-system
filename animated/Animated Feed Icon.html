@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Animated Feed Icon</title>
+<style>
+  :root {
+    --ink: #111111;
+    --muted: #6b6b6b;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --hair: rgba(0, 0, 0, 0.08);
+    --accent: #00B900;
+  }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 64px 32px 96px; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lede { color: var(--muted); font-size: 14px; margin: 0 0 40px; }
+  .grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; margin-bottom: 40px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--hair);
+    border-radius: 14px; padding: 28px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; }
+  .card-title {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase;
+  }
+  .card-hint { font-size: 12px; color: var(--muted); }
+  .stage {
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.025) 0 1px, transparent 1px 16px);
+    border-radius: 10px; padding: 36px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 180px;
+  }
+  .sizes { display: flex; align-items: flex-end; gap: 36px; }
+  .size-cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .size-cell .label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px; color: var(--muted);
+  }
+
+  /* ──────────────────────────────────────────────
+     The animated feed icon
+     ────────────────────────────────────────────── */
+  .feed {
+    display: inline-block;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 6px;
+  }
+  .feed svg { display: block; overflow: visible; }
+
+  /* each bar pulses scaleY around its own midpoint (y=8) */
+  .feed svg .feed-bar { transform-box: view-box; }
+  .feed svg .b-outer-l { transform-origin: 3px    8px; }
+  .feed svg .b-mid-l   { transform-origin: 5.5px  8px; }
+  .feed svg .b-center  { transform-origin: 8px    8px; }
+  .feed svg .b-mid-r   { transform-origin: 10.5px 8px; }
+  .feed svg .b-outer-r { transform-origin: 13px   8px; }
+
+  .feed:hover svg .feed-bar {
+    /* linear timing on a sine-shaped curve → no easing hitches at peaks */
+    animation: feed-pulse 1400ms linear infinite;
+  }
+  /* phase delays: outer first, center last (wave moves inward) */
+  .feed:hover svg .b-outer-l,
+  .feed:hover svg .b-outer-r { animation-delay: 0ms;   }
+  .feed:hover svg .b-mid-l,
+  .feed:hover svg .b-mid-r   { animation-delay: 140ms; }
+  .feed:hover svg .b-center  { animation-delay: 280ms; }
+
+  /* Sine-shaped scaleY: many small steps → continuous velocity */
+  @keyframes feed-pulse {
+    0%    { transform: scaleY(1);    }
+    12.5% { transform: scaleY(1.17); }
+    25%   { transform: scaleY(1.22); }   /* tall peak */
+    37.5% { transform: scaleY(1.13); }
+    50%   { transform: scaleY(1);    }   /* through rest */
+    62.5% { transform: scaleY(0.78); }
+    75%   { transform: scaleY(0.6);  }   /* short trough */
+    87.5% { transform: scaleY(0.78); }
+    100%  { transform: scaleY(1);    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feed:hover svg * { animation: none; transform: none; }
+  }
+
+  /* ──────────────────────────────────────────────
+     Inline button placements
+     ────────────────────────────────────────────── */
+  .icon-btn {
+    appearance: none; background: transparent;
+    border: 1px solid var(--hair); border-radius: 8px;
+    padding: 8px 12px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font: inherit; font-size: 13px; color: var(--ink);
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+  .icon-btn:hover {
+    background: #f3f3f3; border-color: rgba(0, 0, 0, 0.14);
+  }
+  .icon-btn.brand:hover {
+    background: rgba(0, 185, 0, 0.06);
+    border-color: rgba(0, 185, 0, 0.3);
+    color: var(--accent);
+  }
+  .icon-btn:hover .feed svg .feed-bar {
+    animation: feed-pulse 1400ms linear infinite;
+  }
+  .icon-btn:hover .feed svg .b-outer-l,
+  .icon-btn:hover .feed svg .b-outer-r { animation-delay: 0ms; }
+  .icon-btn:hover .feed svg .b-mid-l,
+  .icon-btn:hover .feed svg .b-mid-r   { animation-delay: 140ms; }
+  .icon-btn:hover .feed svg .b-center  { animation-delay: 280ms; }
+  .icon-btn .feed { padding: 0; }
+
+  .icon-only {
+    appearance: none; background: transparent; border: none;
+    padding: 6px; border-radius: 6px; color: var(--ink); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .icon-only:hover { background: rgba(0, 185, 0, 0.08); color: var(--accent); }
+  .icon-only:hover .feed svg .feed-bar {
+    animation: feed-pulse 1400ms linear infinite;
+  }
+  .icon-only:hover .feed svg .b-outer-l,
+  .icon-only:hover .feed svg .b-outer-r { animation-delay: 0ms; }
+  .icon-only:hover .feed svg .b-mid-l,
+  .icon-only:hover .feed svg .b-mid-r   { animation-delay: 140ms; }
+  .icon-only:hover .feed svg .b-center  { animation-delay: 280ms; }
+  .icon-only .feed { padding: 0; }
+
+  /* fake row example */
+  .row-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; border: 1px solid var(--hair);
+    border-radius: 8px; background: #fff;
+  }
+  .row-item .grow { flex: 1; font-size: 13px; }
+  .row-item .meta { font-size: 12px; color: var(--muted); }
+
+  .source {
+    margin-top: 8px;
+    background: #0f0f10; color: #e8e8e8;
+    border-radius: 12px; padding: 20px 22px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; line-height: 1.65; overflow: auto;
+  }
+  .source .c { color: #6b7a8a; }
+  .source .k { color: #c2a8ff; }
+  .source .s { color: #ffd28a; }
+  .source .a { color: #8ad3ff; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Animated single-feed / voice icon</h1>
+  <p class="lede">Hover any icon — the 5 bars pulse vertically around their own midpoints, with a delay propagating from the outer bars inward to the center, like a sound wave coming in.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Sizes</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage">
+        <div class="sizes">
+          <!-- 16 -->
+          <div class="size-cell">
+            <span class="feed" aria-label="Now playing" role="img">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+                <line class="feed-bar b-outer-l" x1="3"    y1="6.7"  x2="3"    y2="9.3"/>
+                <line class="feed-bar b-mid-l"   x1="5.5"  y1="4.82" x2="5.5"  y2="11.18"/>
+                <line class="feed-bar b-center"  x1="8"    y1="3.04" x2="8"    y2="13"/>
+                <line class="feed-bar b-mid-r"   x1="10.5" y1="4.82" x2="10.5" y2="11.18"/>
+                <line class="feed-bar b-outer-r" x1="13"   y1="6.7"  x2="13"   y2="9.3"/>
+              </svg>
+            </span>
+            <span class="label">16</span>
+          </div>
+          <!-- 24 -->
+          <div class="size-cell">
+            <span class="feed" aria-label="Now playing" role="img">
+              <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+                <line class="feed-bar b-outer-l" x1="3"    y1="6.7"  x2="3"    y2="9.3"/>
+                <line class="feed-bar b-mid-l"   x1="5.5"  y1="4.82" x2="5.5"  y2="11.18"/>
+                <line class="feed-bar b-center"  x1="8"    y1="3.04" x2="8"    y2="13"/>
+                <line class="feed-bar b-mid-r"   x1="10.5" y1="4.82" x2="10.5" y2="11.18"/>
+                <line class="feed-bar b-outer-r" x1="13"   y1="6.7"  x2="13"   y2="9.3"/>
+              </svg>
+            </span>
+            <span class="label">24</span>
+          </div>
+          <!-- 48 -->
+          <div class="size-cell">
+            <span class="feed" aria-label="Now playing" role="img">
+              <svg width="48" height="48" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+                <line class="feed-bar b-outer-l" x1="3"    y1="6.7"  x2="3"    y2="9.3"/>
+                <line class="feed-bar b-mid-l"   x1="5.5"  y1="4.82" x2="5.5"  y2="11.18"/>
+                <line class="feed-bar b-center"  x1="8"    y1="3.04" x2="8"    y2="13"/>
+                <line class="feed-bar b-mid-r"   x1="10.5" y1="4.82" x2="10.5" y2="11.18"/>
+                <line class="feed-bar b-outer-r" x1="13"   y1="6.7"  x2="13"   y2="9.3"/>
+              </svg>
+            </span>
+            <span class="label">48</span>
+          </div>
+          <!-- 96 -->
+          <div class="size-cell">
+            <span class="feed" aria-label="Now playing" role="img">
+              <svg width="96" height="96" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+                <line class="feed-bar b-outer-l" x1="3"    y1="6.7"  x2="3"    y2="9.3"/>
+                <line class="feed-bar b-mid-l"   x1="5.5"  y1="4.82" x2="5.5"  y2="11.18"/>
+                <line class="feed-bar b-center"  x1="8"    y1="3.04" x2="8"    y2="13"/>
+                <line class="feed-bar b-mid-r"   x1="10.5" y1="4.82" x2="10.5" y2="11.18"/>
+                <line class="feed-bar b-outer-r" x1="13"   y1="6.7"  x2="13"   y2="9.3"/>
+              </svg>
+            </span>
+            <span class="label">96</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Real placements</div>
+        <div class="card-hint">hover →</div>
+      </div>
+      <div class="stage" style="flex-direction:column; align-items:stretch; gap:14px; padding:24px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="icon-btn brand" type="button">
+            <span class="feed">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+                <line class="feed-bar b-outer-l" x1="3"    y1="6.7"  x2="3"    y2="9.3"/>
+                <line class="feed-bar b-mid-l"   x1="5.5"  y1="4.82" x2="5.5"  y2="11.18"/>
+                <line class="feed-bar b-center"  x1="8"    y1="3.04" x2="8"    y2="13"/>
+                <line class="feed-bar b-mid-r"   x1="10.5" y1="4.82" x2="10.5" y2="11.18"/>
+                <line class="feed-bar b-outer-r" x1="13"   y1="6.7"  x2="13"   y2="9.3"/>
+              </svg>
+            </span>
+            Now live
+          </button>
+
+          <button class="icon-btn" type="button">
+            <span class="feed">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+                <line class="feed-bar b-outer-l" x1="3"    y1="6.7"  x2="3"    y2="9.3"/>
+                <line class="feed-bar b-mid-l"   x1="5.5"  y1="4.82" x2="5.5"  y2="11.18"/>
+                <line class="feed-bar b-center"  x1="8"    y1="3.04" x2="8"    y2="13"/>
+                <line class="feed-bar b-mid-r"   x1="10.5" y1="4.82" x2="10.5" y2="11.18"/>
+                <line class="feed-bar b-outer-r" x1="13"   y1="6.7"  x2="13"   y2="9.3"/>
+              </svg>
+            </span>
+            Listen to feed
+          </button>
+        </div>
+
+        <div class="row-item">
+          <div class="grow">Morning briefing</div>
+          <span class="meta">4 min</span>
+          <button class="icon-only" type="button" aria-label="Play feed">
+            <span class="feed">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+                <line class="feed-bar b-outer-l" x1="3"    y1="6.7"  x2="3"    y2="9.3"/>
+                <line class="feed-bar b-mid-l"   x1="5.5"  y1="4.82" x2="5.5"  y2="11.18"/>
+                <line class="feed-bar b-center"  x1="8"    y1="3.04" x2="8"    y2="13"/>
+                <line class="feed-bar b-mid-r"   x1="10.5" y1="4.82" x2="10.5" y2="11.18"/>
+                <line class="feed-bar b-outer-r" x1="13"   y1="6.7"  x2="13"   y2="9.3"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <div class="row-item">
+          <div class="grow">Team standup recap</div>
+          <span class="meta">12 min</span>
+          <button class="icon-only" type="button" aria-label="Play feed">
+            <span class="feed">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+                <line class="feed-bar b-outer-l" x1="3"    y1="6.7"  x2="3"    y2="9.3"/>
+                <line class="feed-bar b-mid-l"   x1="5.5"  y1="4.82" x2="5.5"  y2="11.18"/>
+                <line class="feed-bar b-center"  x1="8"    y1="3.04" x2="8"    y2="13"/>
+                <line class="feed-bar b-mid-r"   x1="10.5" y1="4.82" x2="10.5" y2="11.18"/>
+                <line class="feed-bar b-outer-r" x1="13"   y1="6.7"  x2="13"   y2="9.3"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">How it works</div>
+      <div class="card-hint">5 bars, 1 keyframe, 3 phase offsets</div>
+    </div>
+    <div class="source"><span class="c">/* CSS — each bar pulses scaleY around its own midpoint y=8 */</span>
+<span class="k">.feed svg .b-outer-l</span> { transform-origin: 3px    8px; }
+<span class="k">.feed svg .b-mid-l</span>   { transform-origin: 5.5px  8px; }
+<span class="k">.feed svg .b-center</span>  { transform-origin: 8px    8px; }
+<span class="k">.feed svg .b-mid-r</span>   { transform-origin: 10.5px 8px; }
+<span class="k">.feed svg .b-outer-r</span> { transform-origin: 13px   8px; }
+
+<span class="k">.feed:hover svg .feed-bar</span> { animation: feed-pulse 1.4s linear infinite; }
+
+<span class="c">/* wave travels INWARD: outer first, center last */</span>
+<span class="k">.feed:hover svg .b-outer-l, .b-outer-r</span> { animation-delay:   0ms; }
+<span class="k">.feed:hover svg .b-mid-l,   .b-mid-r</span>   { animation-delay: 140ms; }
+<span class="k">.feed:hover svg .b-center</span>             { animation-delay: 280ms; }
+
+<span class="c">/* Sine-shaped scaleY → continuous velocity, no hitches */</span>
+<span class="k">@keyframes feed-pulse</span> {
+    0%   { transform: scaleY(1);    }
+  12.5%  { transform: scaleY(1.17); }
+   25%   { transform: scaleY(1.22); }   <span class="c">/* tall peak */</span>
+  37.5%  { transform: scaleY(1.13); }
+   50%   { transform: scaleY(1);    }   <span class="c">/* through rest */</span>
+  62.5%  { transform: scaleY(0.78); }
+   75%   { transform: scaleY(0.6);  }   <span class="c">/* short trough */</span>
+  87.5%  { transform: scaleY(0.78); }
+  100%   { transform: scaleY(1);    }
+}</div>
+  </div>
+</div>
+</body>
+</html>

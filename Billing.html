@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Billing & invoices — aisee</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="my-account.css">
+<link rel="stylesheet" href="my-account.main.css">
+<link rel="stylesheet" href="upgrade-v3.css">
+
+<template id="__bundler_thumbnail" data-bg-color="#F2F1E8">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect x="60" y="60" width="640" height="260" rx="14" fill="#E8F8A3"/>
+    <rect x="720" y="60" width="420" height="260" rx="14" fill="#fff" stroke="#111" stroke-opacity="0.08"/>
+    <rect x="750" y="100" width="80" height="50" rx="6" fill="#EB001B"/>
+    <rect x="800" y="100" width="80" height="50" rx="6" fill="#F79E1B" opacity="0.85"/>
+    <rect x="60" y="360" width="1080" height="380" rx="14" fill="#fff" stroke="#111" stroke-opacity="0.08"/>
+    <rect x="80" y="400" width="1040" height="40" rx="6" fill="#FAFAFA"/>
+    <rect x="80" y="460" width="1040" height="50" rx="6" fill="#fff" stroke="#111" stroke-opacity="0.05"/>
+    <rect x="80" y="520" width="1040" height="50" rx="6" fill="#fff" stroke="#111" stroke-opacity="0.05"/>
+    <rect x="80" y="580" width="1040" height="50" rx="6" fill="#fff" stroke="#111" stroke-opacity="0.05"/>
+    <text x="600" y="730" font-family="serif" font-size="34" fill="#111" text-anchor="middle">Billing &amp; invoices</text>
+  </svg>
+</template>
+<style>
+  /* Billing-page specific */
+  .bill-row{
+    display:grid;grid-template-columns:1.2fr 1fr;gap:14px;margin-bottom:14px;
+  }
+
+  /* Subscription card */
+  .sub-card{
+    background:var(--lime-pale);border-radius:14px;padding:22px 24px;
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .sub-card .sub-top{display:flex;align-items:center;justify-content:space-between;}
+  .sub-card .plan-pill{
+    display:inline-flex;align-items:baseline;gap:10px;
+    font-family:'Karla',sans-serif;font-size:28px;line-height:1;
+  }
+  .sub-card .plan-pill .price{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);
+    font-weight:500;
+  }
+  .sub-card .plan-pill .price b{color:var(--black);font-weight:600;}
+  .sub-card .status{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
+    background:#fff;color:#3D5E00;padding:5px 10px;border-radius:999px;
+  }
+  .sub-card .status .dot{width:6px;height:6px;border-radius:50%;background:#3D5E00;}
+
+  .sub-info-grid{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;
+    background:#fff;border-radius:10px;padding:14px 18px;
+  }
+  .sub-info{display:flex;flex-direction:column;gap:3px;}
+  .sub-info .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;font-family:'Karla';}
+  .sub-info .v{font-family:'Karla';font-size:14px;color:var(--black);font-weight:500;}
+  .sub-info .v small{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);font-weight:400;margin-top:2px;}
+
+  .sub-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .sub-actions button{
+    height:34px;padding:0 14px;border-radius:8px;
+    font-family:'Karla';font-size:13px;font-weight:500;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .sub-actions .primary{background:var(--black);color:#fff;border:0;}
+  .sub-actions .secondary{background:#fff;border:1px solid var(--border-strong);color:var(--black);}
+  .sub-actions .danger{background:transparent;border:0;color:var(--orange);font-size:12.5px;margin-left:auto;}
+
+  /* Payment method card */
+  .pay-card{
+    background:#fff;border:1px solid var(--border);border-radius:14px;
+    padding:22px 24px;display:flex;flex-direction:column;gap:14px;
+  }
+  .pay-head{display:flex;align-items:center;justify-content:space-between;}
+  .pay-head h3{font-family:'Karla';font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0;font-weight:600;}
+  .pay-head .add{
+    font-size:12.5px;color:var(--orange);font-family:'Karla';font-weight:500;
+    cursor:pointer;background:transparent;border:0;
+    display:inline-flex;align-items:center;gap:4px;
+  }
+  .pay-method{
+    display:flex;align-items:center;gap:14px;
+    padding:14px;background:#FAFAFA;border-radius:10px;
+    border:1px solid var(--border);
+  }
+  .pay-card-visual{
+    width:48px;height:32px;border-radius:6px;
+    background:linear-gradient(135deg,#EB001B 0%,#F79E1B 100%);
+    position:relative;flex-shrink:0;
+    box-shadow:0 1px 3px rgba(0,0,0,0.1);
+  }
+  .pay-card-visual::before,
+  .pay-card-visual::after{
+    content:"";position:absolute;top:50%;width:14px;height:14px;border-radius:50%;
+    transform:translateY(-50%);
+  }
+  .pay-card-visual::before{left:7px;background:#EB001B;opacity:0.95;}
+  .pay-card-visual::after{left:18px;background:#F79E1B;mix-blend-mode:multiply;}
+  .pay-info{flex:1;}
+  .pay-info .pn{font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--black);}
+  .pay-info .pe{font-size:11.5px;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',monospace;}
+  .pay-default{
+    background:var(--lime-soft);color:#3D5E00;
+    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+    padding:3px 8px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:0.05em;
+  }
+  .pay-bill-addr{
+    padding:14px;font-size:12.5px;color:var(--muted);
+    border-top:1px dashed var(--border-strong);padding-top:14px;
+  }
+  .pay-bill-addr b{color:var(--black);font-weight:500;display:block;margin-bottom:4px;font-family:'Karla';}
+
+  /* Section header */
+  .sect-head{
+    display:flex;align-items:center;justify-content:space-between;
+    margin:32px 0 14px;
+  }
+  .sect-head h2{font-family:'Karla',sans-serif;font-size:22px;line-height:1;margin:0;}
+  .sect-head .sub{font-size:13px;color:var(--muted);}
+
+  /* Invoice table */
+  .inv-card{
+    background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  }
+  .inv-head{
+    display:grid;grid-template-columns:140px 1fr 130px 110px 130px 110px;
+    gap:14px;padding:14px 24px;background:#FAFAFA;
+    border-bottom:1px solid var(--border);
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);
+  }
+  .inv-head .r{text-align:right;}
+  .inv-row{
+    display:grid;grid-template-columns:140px 1fr 130px 110px 130px 110px;
+    gap:14px;padding:14px 24px;align-items:center;
+    border-top:1px solid var(--border);font-size:13.5px;
+  }
+  .inv-row:first-child{border-top:0;}
+  .inv-row .date{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);}
+  .inv-row .num{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);}
+  .inv-row .amt{font-family:'JetBrains Mono',monospace;font-size:13px;text-align:right;font-weight:600;}
+  .inv-row .desc{font-family:'Karla';}
+  .inv-row .desc small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px;font-family:'JetBrains Mono',monospace;}
+  .inv-status{
+    display:inline-flex;align-items:center;gap:5px;
+    font-family:'Karla';font-size:11.5px;font-weight:600;
+    padding:3px 9px;border-radius:6px;width:fit-content;
+  }
+  .inv-status.paid{background:var(--lime-soft);color:#3D5E00;}
+  .inv-status.refunded{background:#FFE5DD;color:var(--orange);}
+  .inv-status.failed{background:#FEE2E2;color:#B91C1C;}
+  .dl-btn{
+    background:transparent;border:1px solid var(--border-strong);
+    height:30px;padding:0 12px;border-radius:7px;
+    font-family:'Karla';font-size:12px;font-weight:500;cursor:pointer;
+    display:inline-flex;align-items:center;gap:5px;color:var(--black);
+  }
+  .dl-btn:hover{background:var(--yellow-pale);}
+  .dl-btn svg{width:12px;height:12px;}
+
+  .back-link-v3{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:13px;color:var(--muted);margin-bottom:14px;font-family:'Karla';
+  }
+  .back-link-v3:hover{color:var(--black);}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Header -->
+  <header class="header">
+    <a href="#" class="brand">
+      <div class="brand-mark"></div>
+      <span class="brand-name">aisee</span>
+    </a>
+    <div class="header-right">
+      <button class="icon-btn" aria-label="Notifications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <span class="badge">184</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Account sidebar -->
+  <aside class="acct-sidebar">
+    <a class="acct-back" href="#">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      Back to app
+    </a>
+    <div class="acct-side-head">
+      <div class="eyebrow">Account</div>
+      <h2>ccbakala@gmail.com</h2>
+    </div>
+    <nav class="acct-nav">
+      <a class="acct-nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+      <a class="acct-nav-item" href="My Account.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>Plan &amp; credits</a>
+      <a class="acct-nav-item active" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Billing &amp; invoices</a>
+      <a class="acct-nav-item" href="Credit History.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>Usage history</a>
+      <a class="acct-nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Preferences</a>
+    </nav>
+    <div class="acct-card" style="margin-top:auto;">
+      <button class="btn-logout">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="acct-main">
+    <a class="back-link-v3" href="My Account.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      Plan &amp; credits
+    </a>
+    <div class="page-head">
+      <div class="left">
+        <h1>Billing &amp; invoices</h1>
+        <p>Manage your subscription, payment method, and download past invoices.</p>
+      </div>
+    </div>
+
+    <!-- Subscription + Payment row -->
+    <div class="bill-row">
+      <!-- Subscription card -->
+      <div class="sub-card">
+        <div class="sub-top">
+          <div class="plan-pill">Starter <span class="price">· <b>$9.00</b> / month</span></div>
+          <span class="status"><span class="dot"></span>Active</span>
+        </div>
+
+        <div class="sub-info-grid">
+          <div class="sub-info">
+            <span class="k">Started on</span>
+            <span class="v">Sep 17, 2025<small>2 months ago</small></span>
+          </div>
+          <div class="sub-info">
+            <span class="k">Current cycle</span>
+            <span class="v">Oct 17 — Nov 17<small>12 days remaining</small></span>
+          </div>
+          <div class="sub-info">
+            <span class="k">Next charge</span>
+            <span class="v">$9.00 on Nov 17<small>auto-renew on</small></span>
+          </div>
+        </div>
+
+        <div class="sub-actions">
+          <button class="primary">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Upgrade plan
+          </button>
+          <button class="secondary">Change billing cycle</button>
+          <button class="danger">Cancel subscription</button>
+        </div>
+      </div>
+
+      <!-- Payment method -->
+      <div class="pay-card">
+        <div class="pay-head">
+          <h3>Payment method</h3>
+          <button class="add">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Add another
+          </button>
+        </div>
+
+        <div class="pay-method">
+          <div class="pay-card-visual"></div>
+          <div class="pay-info">
+            <div class="pn">Mastercard · •• •• •• 4242</div>
+            <div class="pe">Expires 08/27 · CC Bakala</div>
+          </div>
+          <span class="pay-default">Default</span>
+        </div>
+
+        <div class="pay-bill-addr">
+          <b>Billing address</b>
+          CC Bakala<br>
+          123 Maple Street, Apt 4B<br>
+          San Francisco, CA 94110, US
+        </div>
+      </div>
+    </div>
+
+    <!-- Invoices -->
+    <div class="sect-head">
+      <h2>Invoices</h2>
+      <span class="sub">PDF receipts for every charge — subscription refills and one-time top-ups.</span>
+    </div>
+
+    <div class="inv-card">
+      <div class="inv-head">
+        <span>Date</span>
+        <span>Description</span>
+        <span>Invoice #</span>
+        <span>Status</span>
+        <span class="r">Amount</span>
+        <span class="r">PDF</span>
+      </div>
+
+      <div class="inv-row">
+        <span class="date">Oct 17, 2025</span>
+        <span class="desc">Subscription · Starter<small>Monthly · auto-renew</small></span>
+        <span class="num">INV-2025-1017</span>
+        <span><em class="inv-status paid">Paid</em></span>
+        <span class="amt">$9.00</span>
+        <span style="text-align:right;"><button class="dl-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF</button></span>
+      </div>
+      <div class="inv-row">
+        <span class="date">Sep 22, 2025</span>
+        <span class="desc">Top-up · Growth pack<small>5,000 credits · one-time</small></span>
+        <span class="num">INV-2025-0922</span>
+        <span><em class="inv-status paid">Paid</em></span>
+        <span class="amt">$45.00</span>
+        <span style="text-align:right;"><button class="dl-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF</button></span>
+      </div>
+      <div class="inv-row">
+        <span class="date">Sep 17, 2025</span>
+        <span class="desc">Subscription · Starter<small>Monthly · first month</small></span>
+        <span class="num">INV-2025-0917</span>
+        <span><em class="inv-status paid">Paid</em></span>
+        <span class="amt">$9.00</span>
+        <span style="text-align:right;"><button class="dl-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF</button></span>
+      </div>
+      <div class="inv-row">
+        <span class="date">Aug 03, 2025</span>
+        <span class="desc">Top-up · Mini pack<small>1,000 credits · one-time</small></span>
+        <span class="num">INV-2025-0803</span>
+        <span><em class="inv-status refunded">Refunded</em></span>
+        <span class="amt">$10.00</span>
+        <span style="text-align:right;"><button class="dl-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF</button></span>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted);background:#FAFAFA;">
+        <span>Showing 4 of 4 invoices</span>
+        <button class="dl-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download all (.zip)</button>
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "AiseeTrackingEye.tsx",
+              "aisee-agent-test/app/(pages)/engage/**",
+              "aisee-agent-test/app/(pages)/engage/_components/**",
+              "aisee-agent-test/app/(pages)/engage/_lib/**",
+              "animated/**",
+              "components/IntentTag/**",
+              "components/PlanCard/**",
+              "components/StatusBadge/**",
+              "design-canvas.jsx",
+              "engage-aisee-v2/**",
+              "engage-aisee/**",
+              "engage-dashboard-redesigned.jsx",
+              "engage-replies-page.jsx",
+              "engage-replies-tracking.jsx",
+              "engage-tracking.jsx",
+              "engage-v3/**",
+              "engage/**",
+              "my-account.plans.js",
+              "scratch/**",
+              "tweaks-panel.jsx",
+              "ui_kits/webapp/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Karla|Gotu|JetBrains Mono))/i]",
+        "message": "Font not provided by the design system. Available: Karla, Gotu, JetBrains Mono."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='IntentTag'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|label|kind|variant|style|key|ref|className|style|children)$/]",
+        "message": "<IntentTag> doesn't accept that prop. Declared props: children, label, kind, variant, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='IntentTag'] > JSXAttribute[name.name='kind'] > Literal[value!=/^(?:intent|keyword)$/]",
+        "message": "<IntentTag> kind must be one of 'intent' | 'keyword'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='PlanFeatureItem'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|meta|metaKind|dash|key|ref|className|style|children)$/]",
+        "message": "<PlanFeatureItem> doesn't accept that prop. Declared props: label, meta, metaKind, dash."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='StatusBadge'] > JSXAttribute > JSXIdentifier[name!=/^(?:status|label|style|key|ref|className|style|children)$/]",
+        "message": "<StatusBadge> doesn't accept that prop. Declared props: status, label, style."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "IntentTag": {
+        "replaces": []
+      },
+      "PlanFeatureItem": {
+        "replaces": []
+      },
+      "StatusBadge": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--accent-action",
+      "--accent-alert",
+      "--accent-primary",
+      "--accent-success",
+      "--bg-card",
+      "--bg-input",
+      "--bg-page",
+      "--bg-primary",
+      "--black",
+      "--blue-soft",
+      "--border",
+      "--border-default",
+      "--border-divider",
+      "--border-hover",
+      "--border-modal",
+      "--border-solid",
+      "--border-strong",
+      "--color-bg-card",
+      "--color-bg-page",
+      "--color-black",
+      "--color-border",
+      "--color-border-solid",
+      "--color-cream",
+      "--color-error-bg",
+      "--color-gray-100",
+      "--color-gray-200",
+      "--color-gray-300",
+      "--color-gray-400",
+      "--color-green",
+      "--color-green-dark",
+      "--color-lime",
+      "--color-lime-bg",
+      "--color-lime-bright",
+      "--color-muted",
+      "--color-orange",
+      "--color-subtle",
+      "--color-success-bg",
+      "--color-white",
+      "--color-yellow",
+      "--color-yellow-light",
+      "--color-yellow-pale",
+      "--cream",
+      "--cream-warm",
+      "--ease",
+      "--ease-out",
+      "--faint",
+      "--fg-disabled",
+      "--fg-primary",
+      "--fg-secondary",
+      "--green",
+      "--header-h",
+      "--header-height",
+      "--lime",
+      "--muted",
+      "--orange",
+      "--page-padding",
+      "--page-padding-sm",
+      "--primary",
+      "--primary-bg",
+      "--primary-hover",
+      "--primary-pale",
+      "--purple-soft",
+      "--radius-btn",
+      "--radius-card",
+      "--radius-card-lg",
+      "--radius-logo",
+      "--radius-pill",
+      "--red-light",
+      "--shadow-card",
+      "--shadow-dropdown",
+      "--shadow-modal",
+      "--sidebar-w",
+      "--sidebar-width",
+      "--space-1",
+      "--space-2",
+      "--space-3",
+      "--space-4",
+      "--space-5",
+      "--space-6",
+      "--space-7",
+      "--space-8",
+      "--white"
+    ],
+    "tokenKinds": {
+      "--color-black": "color",
+      "--color-white": "color",
+      "--color-lime": "color",
+      "--color-lime-bright": "color",
+      "--color-lime-bg": "color",
+      "--color-yellow": "color",
+      "--color-yellow-light": "color",
+      "--color-yellow-pale": "color",
+      "--color-orange": "color",
+      "--color-green": "color",
+      "--color-green-dark": "color",
+      "--color-cream": "color",
+      "--color-bg-page": "color",
+      "--color-bg-card": "color",
+      "--color-gray-100": "color",
+      "--color-gray-200": "color",
+      "--color-gray-300": "color",
+      "--color-gray-400": "color",
+      "--color-muted": "color",
+      "--color-subtle": "color",
+      "--color-border": "color",
+      "--color-border-solid": "color",
+      "--color-error-bg": "color",
+      "--color-success-bg": "color",
+      "--shadow-dropdown": "shadow",
+      "--shadow-modal": "shadow",
+      "--shadow-card": "shadow",
+      "--radius-pill": "radius",
+      "--radius-btn": "radius",
+      "--radius-card": "radius",
+      "--radius-card-lg": "radius",
+      "--radius-logo": "radius",
+      "--space-1": "spacing",
+      "--space-2": "spacing",
+      "--space-3": "spacing",
+      "--space-4": "spacing",
+      "--space-5": "spacing",
+      "--space-6": "spacing",
+      "--space-7": "spacing",
+      "--space-8": "spacing",
+      "--header-height": "spacing",
+      "--sidebar-width": "spacing",
+      "--page-padding": "spacing",
+      "--page-padding-sm": "spacing",
+      "--fg-primary": "color",
+      "--fg-secondary": "color",
+      "--fg-disabled": "color",
+      "--bg-primary": "color",
+      "--bg-page": "color",
+      "--bg-card": "color",
+      "--bg-input": "color",
+      "--accent-primary": "color",
+      "--accent-action": "color",
+      "--accent-alert": "color",
+      "--accent-success": "color",
+      "--border-default": "color",
+      "--border-strong": "color",
+      "--border-divider": "color",
+      "--primary": "color",
+      "--primary-hover": "color",
+      "--primary-bg": "color",
+      "--primary-pale": "color",
+      "--lime": "color",
+      "--black": "color",
+      "--white": "color",
+      "--cream": "color",
+      "--cream-warm": "color",
+      "--orange": "color",
+      "--green": "color",
+      "--red-light": "color",
+      "--purple-soft": "color",
+      "--blue-soft": "color",
+      "--border": "color",
+      "--border-hover": "color",
+      "--border-solid": "color",
+      "--border-modal": "color",
+      "--muted": "color",
+      "--faint": "color",
+      "--ease": "other",
+      "--ease-out": "other",
+      "--header-h": "spacing",
+      "--sidebar-w": "spacing"
+    },
+    "fontFamilies": [
+      "Gotu",
+      "JetBrains Mono",
+      "Karla"
+    ]
+  }
+}

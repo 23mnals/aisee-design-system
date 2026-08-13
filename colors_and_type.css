@@ -1,0 +1,260 @@
+/* ═══════════════════════════════════════════════════════════════
+   aisee Design System — Colors & Typography
+   Fonts: Gotu (display), Karla (UI/body), JetBrains Mono (code)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Karla — local variable font */
+@font-face {
+  font-family: 'Karla';
+  src: url('./fonts/Karla-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gotu & JetBrains Mono — Google Fonts (no local files provided) */
+@import url('https://fonts.googleapis.com/css2?family=Gotu&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ─── Base Color Tokens ─────────────────────────────────────── */
+:root {
+  /* Core */
+  --color-black:        #111111;
+  --color-white:        #FFFFFF;
+
+  /* Brand — Lime */
+  --color-lime:         #CFF229;
+  --color-lime-bright:  #C9FE12;
+  --color-lime-bg:      rgba(207, 255, 41, 0.5);
+
+  /* Brand — Yellow */
+  --color-yellow:       #FFE253;
+  --color-yellow-light: #FFF2B3;
+  --color-yellow-pale:  #FFFADD;
+
+  /* Brand — Orange (alerts, badges) */
+  --color-orange:       #EC5212;
+
+  /* Brand — Green (success) */
+  --color-green:        #A5D500;
+  --color-green-dark:   #92BC01;
+
+  /* Warm Cream (editor backgrounds) */
+  --color-cream:        #F7F6E9;
+
+  /* Grays */
+  --color-bg-page:      #F7F8F7;
+  --color-bg-card:      #FAFAFA;
+  --color-gray-100:     #F5F5F5;
+  --color-gray-200:     #E1E1E1;
+  --color-gray-300:     #D9D9D9;
+  --color-gray-400:     #C2C6CE;
+
+  /* Semantic transparency */
+  --color-muted:        rgba(17, 17, 17, 0.6);
+  --color-subtle:       rgba(17, 17, 17, 0.05);
+  --color-border:       rgba(17, 17, 17, 0.12);
+  --color-border-solid: #111111;
+
+  /* State colors */
+  --color-error-bg:     #FFD0D0;
+  --color-success-bg:   rgba(165, 213, 0, 0.15);
+
+  /* Shadows */
+  --shadow-dropdown:  0px 4px 6px -4px rgba(0,0,0,0.1), 0px 10px 15px -3px rgba(0,0,0,0.1);
+  --shadow-modal:     0px 8px 8px rgba(0,0,0,0.04), 0px 20px 24px rgba(0,0,0,0.1);
+  --shadow-card:      0px 1px 3px rgba(0,0,0,0.06);
+
+  /* Border Radii */
+  --radius-pill:      9999px;
+  --radius-btn:       8px;
+  --radius-card:      12px;
+  --radius-card-lg:   16px;
+  --radius-logo:      320px 320px 0px 0px;
+
+  /* Spacing (8px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Layout */
+  --header-height:    70px;
+  --sidebar-width:    211px;
+  --page-padding:     48px;
+  --page-padding-sm:  16px;
+}
+
+/* ─── Semantic Color Aliases ─────────────────────────────────── */
+:root {
+  --fg-primary:       var(--color-black);
+  --fg-secondary:     var(--color-muted);
+  --fg-disabled:      var(--color-gray-400);
+
+  --bg-primary:       var(--color-white);
+  --bg-page:          var(--color-bg-page);
+  --bg-card:          var(--color-bg-card);
+  --bg-input:         var(--color-white);
+
+  --accent-primary:   var(--color-lime);
+  --accent-action:    var(--color-yellow);
+  --accent-alert:     var(--color-orange);
+  --accent-success:   var(--color-green);
+
+  --border-default:   var(--color-border);
+  --border-strong:    var(--color-border-solid);
+  --border-divider:   var(--color-gray-200);
+}
+
+/* ─── Base Typography Reset ──────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Karla', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.57;
+  color: var(--fg-primary);
+  background-color: var(--bg-page);
+  margin: 0;
+}
+
+/* ─── Display / Heading (Gotu) ───────────────────────────────── */
+.display-hero {
+  font-family: 'Gotu', serif;
+  font-size: 86px;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--fg-primary);
+}
+
+.display-xl {
+  font-family: 'Gotu', serif;
+  font-size: 48px;
+  line-height: 1.1;
+  color: var(--fg-primary);
+}
+
+.display-lg {
+  font-family: 'Gotu', serif;
+  font-size: 32px;
+  line-height: 1.25;
+  color: var(--fg-primary);
+}
+
+.display-md {
+  font-family: 'Gotu', serif;
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--fg-primary);
+}
+
+.display-sm {
+  font-family: 'Gotu', serif;
+  font-size: 18px;
+  line-height: 1.33;
+  color: var(--fg-primary);
+}
+
+/* Gotu base class */
+.font-gotu { font-family: 'Gotu', serif; }
+
+/* ─── UI / Body (Karla) ──────────────────────────────────────── */
+.text-xl {
+  font-family: 'Karla', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+.text-lg {
+  font-family: 'Karla', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.56;
+}
+
+.text-md {
+  font-family: 'Karla', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.text-base {
+  font-family: 'Karla', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.57;
+}
+
+.text-sm {
+  font-family: 'Karla', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.text-xs {
+  font-family: 'Karla', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.font-medium  { font-weight: 500; }
+.font-semibold{ font-weight: 600; }
+.font-bold    { font-weight: 700; }
+.text-muted   { color: var(--fg-secondary); }
+.text-center  { text-align: center; }
+
+/* ─── Mono (JetBrains Mono) ──────────────────────────────────── */
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.mono-sm {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.mono-bold {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ─── Semantic Element Styles ────────────────────────────────── */
+h1 { font-family: 'Gotu', serif; font-size: 32px; font-weight: 400; line-height: 1.25; margin: 0 0 16px; }
+h2 { font-family: 'Gotu', serif; font-size: 24px; font-weight: 400; line-height: 1.33; margin: 0 0 12px; }
+h3 { font-family: 'Gotu', serif; font-size: 18px; font-weight: 400; line-height: 1.44; margin: 0 0 8px; }
+h4 { font-family: 'Karla', sans-serif; font-size: 16px; font-weight: 600; line-height: 1.5; margin: 0 0 8px; }
+h5 { font-family: 'Karla', sans-serif; font-size: 14px; font-weight: 600; line-height: 1.57; margin: 0; }
+p  { font-family: 'Karla', sans-serif; font-size: 14px; font-weight: 400; line-height: 1.57; margin: 0 0 12px; }
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  background: var(--color-cream);
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+
+a {
+  color: var(--fg-primary);
+  text-decoration: underline;
+}

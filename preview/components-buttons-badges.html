@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Buttons & Badges" subtitle="Pill/standard buttons, badges, notification dot" viewport="700x230" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face { font-family: 'Karla'; src: url('../fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; padding: 20px 24px; font-family: 'Karla', sans-serif; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start; }
+.col { display: flex; flex-direction: column; gap: 8px; }
+.section-title { font-size: 10px; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
+
+/* Logo mark */
+.logo-mark {
+  width: 25px; height: 26px; position: relative; display: inline-block;
+}
+.logo-mark-bg {
+  position: absolute; left: 0; top: 0; width: 25px; height: 26px;
+  border-radius: 320px 320px 0 0; background: #CFF229;
+}
+.logo-mark-face {
+  position: absolute; left: 0; top: 1px; width: 25px; height: 25px;
+  border-radius: 320px 320px 0 0; background: #111; overflow: hidden;
+}
+.logo-mark-face::after {
+  content: ''; position: absolute; left: 50%; top: 38%; transform: translateX(-50%);
+  width: 10px; height: 8px; border-radius: 50%; background: #fff;
+}
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'Karla', sans-serif; cursor: pointer; border: none; }
+.btn-pill { border-radius: 9999px; padding: 6px 18px; font-size: 16px; font-family: 'Gotu', serif; }
+.btn-std  { border-radius: 8px; padding: 5px 12px; font-size: 14px; font-weight: 500; }
+.btn-sm   { border-radius: 8px; padding: 4px 10px; font-size: 12px; }
+
+.btn-outline { background: #fff; border: 1px solid #111; color: #111; }
+.btn-primary { background: #CFF229; border: 1px solid #111; color: #111; }
+.btn-yellow  { background: #FFE253; color: #111; }
+.btn-ghost   { background: rgba(17,17,17,0.05); color: #111; }
+.btn-danger  { background: #EC5212; color: #fff; }
+
+/* Tags / Badges */
+.badge { display: inline-flex; align-items: center; gap: 4px; border-radius: 9999px; padding: 2px 10px; font-size: 12px; font-weight: 500; }
+.badge-lime    { background: #CFF229; color: #111; }
+.badge-yellow  { background: #FFE253; color: #111; }
+.badge-orange  { background: #EC5212; color: #fff; }
+.badge-green   { background: #A5D500; color: #111; }
+.badge-gray    { background: rgba(17,17,17,0.05); color: #111; border: 1px solid rgba(17,17,17,0.1); }
+.badge-error   { background: #FFD0D0; color: #111; }
+.badge-notification { background: #EC5212; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; padding: 0; }
+</style>
+</head>
+<body>
+
+<div style="display:flex; flex-direction:column; gap:20px;">
+
+  <div>
+    <div class="section-title">Logo Mark</div>
+    <div class="row" style="align-items:center;">
+      <div class="logo-mark"><div class="logo-mark-bg"></div><div class="logo-mark-face"></div></div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div class="logo-mark"><div class="logo-mark-bg"></div><div class="logo-mark-face"></div></div>
+        <span style="font-family:'Karla',sans-serif;font-size:16px;font-weight:500;color:#111;">aisee</span>
+      </div>
+      <div style="background:#111; padding:8px 12px; border-radius:8px; display:flex; align-items:center; gap:8px;">
+        <div style="position:relative;width:25px;height:26px;">
+          <div style="position:absolute;width:25px;height:26px;border-radius:320px 320px 0 0;background:#CFF229;"></div>
+          <div style="position:absolute;top:1px;width:25px;height:25px;border-radius:320px 320px 0 0;background:#333;overflow:hidden;">
+            <div style="position:absolute;left:50%;top:38%;transform:translateX(-50%);width:10px;height:8px;border-radius:50%;background:#fff;"></div>
+          </div>
+        </div>
+        <span style="font-family:'Karla',sans-serif;font-size:16px;font-weight:500;color:#fff;">aisee</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-title">Buttons</div>
+    <div class="row">
+      <button class="btn btn-pill btn-outline">Start Free</button>
+      <button class="btn btn-pill btn-primary">Start Free</button>
+      <button class="btn btn-std btn-yellow">＋ New</button>
+      <button class="btn btn-std btn-outline">Analysis</button>
+      <button class="btn btn-std btn-ghost">Post Agent</button>
+      <button class="btn btn-sm btn-ghost">Logout</button>
+      <button class="btn btn-sm btn-danger">Delete</button>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-title">Badges &amp; Tags</div>
+    <div class="row" style="align-items:center;">
+      <span class="badge badge-lime">Active</span>
+      <span class="badge badge-yellow">Post Agent</span>
+      <span class="badge badge-orange">Alert</span>
+      <span class="badge badge-green">Success</span>
+      <span class="badge badge-gray">Draft</span>
+      <span class="badge badge-error">Failed</span>
+      <span class="badge-notification">7</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

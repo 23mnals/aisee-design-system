@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aisee · GEO Console v4</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  :root{
+    --ink:#111; --muted:rgba(17,17,17,0.55); --faint:rgba(17,17,17,0.4);
+    --line:rgba(17,17,17,0.08); --card:#fff;
+    --green:#92BC01; --lime:#CFF229; --amber:#F2A201; --red:#E0584E; --neon:#7CFF1F;
+    --ease:cubic-bezier(0.2,0.8,0.2,1);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:'Karla',sans-serif; color:var(--ink);
+    background:radial-gradient(135% 105% at 50% -10%, #FCFCF4 0%, #F6F7EF 50%, #F1F3E9 100%);
+    min-height:100vh;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ── Top bar ─────────────────────────── */
+  .top{display:flex; align-items:center; gap:14px; padding:16px 30px; border-bottom:1px solid var(--line); background:rgba(255,255,255,0.65); backdrop-filter:blur(8px); position:sticky; top:0; z-index:30;}
+  .lock{display:flex; align-items:center; gap:11px;}
+  .mk{width:34px;height:34px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(157,196,0,0.3);}
+  .mk i{width:10px;height:10px;border-radius:50%;background:#111;}
+  .wm{font-family:'Karla',sans-serif;font-size:23px;}
+  .top .tag{font-size:14px;color:var(--faint);font-weight:500;}
+  .top-r{margin-left:auto;display:flex;align-items:center;gap:16px;}
+  .plan{font-size:13.5px;color:var(--muted);} .plan b{color:#111;font-weight:700;}
+  .ghostbtn{display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--line);background:#fff;color:#111;font-family:'Karla',sans-serif;font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:99px;transition:.15s;}
+  .ghostbtn:hover{background:rgba(17,17,17,0.03);}
+  .ghostbtn svg{width:14px;height:14px;}
+
+  /* ── Shell ───────────────────────────── */
+  .shell{display:grid; grid-template-columns:230px 1fr; min-height:calc(100vh - 69px);}
+
+  /* ── Projects sidebar ────────────────── */
+  .side{border-right:1px solid var(--line); padding:20px 14px; background:rgba(255,255,255,0.45);}
+  .newproj{width:100%;border:none;cursor:pointer;background:var(--lime);font-family:'Karla',sans-serif;font-weight:700;font-size:15px;color:#111;padding:12px;border-radius:12px;transition:.15s;}
+  .newproj:hover{filter:brightness(0.97);}
+  .side-h{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin:22px 8px 9px;}
+  .proj{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:11px;cursor:pointer;transition:background .15s;margin-bottom:2px;position:relative;}
+  .proj:hover{background:rgba(17,17,17,0.04);}
+  .proj.on{background:#fff;box-shadow:0 4px 14px -8px rgba(0,0,0,0.2);}
+  .proj.on::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--green);}
+  .proj .av{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;flex:none;font-family:'Karla',sans-serif;}
+  .proj .nm{font-size:14.5px;font-weight:500;}
+  .proj.on .nm{font-weight:700;}
+  .proj .meta{margin-left:auto;text-align:right;}
+  .proj .sc{font-family:'JetBrains Mono',monospace;font-size:12.5px;display:block;line-height:1;}
+  .proj .mini{width:44px;height:4px;border-radius:99px;background:rgba(17,17,17,0.08);margin-top:4px;overflow:hidden;}
+  .proj .mini i{display:block;height:100%;border-radius:99px;}
+
+  /* ── Main ───────────────────────────── */
+  .main{padding:24px 32px 48px; max-width:1240px;}
+
+  /* onboarding banner */
+  .onboard{display:flex;align-items:center;gap:16px;background:#111;color:#fff;border-radius:16px;padding:16px 22px;margin-bottom:22px;}
+  .onboard .num{font-family:'Karla',sans-serif;font-size:13px;background:var(--lime);color:#111;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;}
+  .onboard .ot{font-size:14.5px;line-height:1.5;}
+  .onboard .ot b{color:var(--lime);font-weight:700;}
+  .onboard .ox{margin-left:auto;cursor:pointer;background:rgba(255,255,255,0.12);border:none;color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;}
+  .onboard .ox svg{width:14px;height:14px;}
+
+  /* page title */
+  .ptitle{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px;gap:20px;}
+  .ptitle h1{font-family:'Karla',sans-serif;font-size:32px;margin:0;line-height:1;}
+  .ptitle .psub{font-size:13.5px;color:var(--muted);margin-top:7px;}
+  .ptitle .pbrand{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 14px 5px 6px;}
+  .ptitle .pbrand .pav{width:28px;height:28px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;}
+  .ptitle .pbrand .pav i{width:8px;height:8px;border-radius:50%;border:2.5px solid #fff;}
+
+  /* ── Pipeline stepper ────────────────── */
+  .pipe{display:flex;align-items:stretch;gap:0;margin-bottom:26px;}
+  .pstep{flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 16px 15px;cursor:pointer;transition:.18s var(--ease);position:relative;display:flex;flex-direction:column;gap:9px;}
+  .pstep:hover{border-color:rgba(17,17,17,0.18);transform:translateY(-2px);}
+  .pstep.sel{border-color:#111;box-shadow:0 12px 28px -16px rgba(0,0,0,0.4);}
+  .pstep.active{background:#111;color:#fff;border-color:#111;}
+  .pstep-h{display:flex;align-items:center;justify-content:space-between;}
+  .pstep .pn{font-family:'Karla',sans-serif;font-size:15px;color:var(--faint);}
+  .pstep.active .pn{color:rgba(255,255,255,0.5);}
+  .pbadge{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:99px;display:inline-flex;align-items:center;gap:4px;}
+  .pbadge svg{width:10px;height:10px;}
+  .b-done{background:var(--color-success-bg);color:var(--color-green-dark);}
+  .b-here{background:var(--lime);color:#111;}
+  .b-next{background:rgba(17,17,17,0.06);color:var(--muted);}
+  .pstep.active .b-here{background:var(--neon);}
+  .pstep-ic{width:38px;height:38px;border-radius:11px;background:rgba(17,17,17,0.05);display:flex;align-items:center;justify-content:center;color:#111;}
+  .pstep.active .pstep-ic{background:rgba(255,255,255,0.14);color:#fff;}
+  .pstep-ic svg{width:20px;height:20px;}
+  .pstep .pname{font-size:17px;font-weight:700;line-height:1;}
+  .pstep .pmod{font-size:11.5px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--faint);}
+  .pstep.active .pmod{color:rgba(255,255,255,0.6);}
+  .pstep .pdesc{font-size:12.5px;color:var(--muted);line-height:1.45;}
+  .pstep.active .pdesc{color:rgba(255,255,255,0.7);}
+  .parrow{display:flex;align-items:center;justify-content:center;width:30px;flex:none;color:var(--faint);}
+  .parrow svg{width:18px;height:18px;}
+  .parrow.loop{color:var(--green);}
+
+  /* ── Content grid ───────────────────── */
+  .cgrid{display:grid;grid-template-columns:1fr 340px;gap:22px;align-items:start;}
+
+  /* hero next-move */
+  .hero{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 28px;box-shadow:0 16px 40px -26px rgba(40,50,30,0.34);position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--lime);}
+  .hero-eye{font-size:11px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:10px;}
+  .hero-eye .step{color:#111;}
+  .hero-gain{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:var(--color-green-dark);background:var(--color-success-bg);padding:3px 10px;border-radius:99px;}
+  .hero-title{font-size:24px;font-weight:700;line-height:1.25;margin:14px 0 14px;letter-spacing:-0.01em;}
+  .hero-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;}
+  .src{display:inline-flex;align-items:center;gap:6px;background:var(--color-success-bg);border-radius:99px;padding:6px 13px;font-size:13px;color:var(--color-green-dark);}
+  .src svg{width:12px;height:12px;} .src b{font-family:'JetBrains Mono',monospace;}
+  .hero-meta .typ{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);}
+  .hero-meta .typ .ti{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;flex:none;}
+  .hero-meta .typ .ti svg{width:13px;height:13px;}
+  .ti-eng{background:#8B7BE8;} .ti-in{background:#1466C2;font-size:10px;font-weight:700;} .ti-r{background:var(--color-orange);font-size:10px;font-weight:700;} .ti-x{background:#111;}
+  .hero-act{display:flex;align-items:center;gap:18px;}
+  .execbtn{display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;background:var(--lime);color:#111;font-family:'Karla',sans-serif;font-size:16px;font-weight:700;padding:15px 30px;border-radius:13px;box-shadow:0 6px 18px rgba(157,196,0,0.34);transition:.15s;position:relative;}
+  .execbtn:hover{filter:brightness(0.97);transform:translateY(-1px);}
+  .execbtn:disabled{opacity:0.6;cursor:default;transform:none;filter:none;box-shadow:none;}
+  .execbtn svg{width:17px;height:17px;}
+  .execbtn.pulse::after{content:'';position:absolute;inset:-4px;border-radius:16px;border:2px solid var(--lime);animation:pulse 1.8s var(--ease) infinite;}
+  @keyframes pulse{0%{opacity:0.7;transform:scale(1);}100%{opacity:0;transform:scale(1.12);}}
+  @media(prefers-reduced-motion:reduce){.execbtn.pulse::after{display:none;}}
+  .hero-help{font-size:13px;color:var(--muted);line-height:1.4;}
+  .hero-help b{color:#111;font-weight:600;}
+  .hero.clear{text-align:center;}
+  .hero.clear::before{display:none;}
+  .hero.clear .ct{font-family:'Karla',sans-serif;font-size:26px;margin:6px 0 8px;}
+  .hero.clear .cs{font-size:14px;color:var(--muted);}
+
+  /* feedback row under hero (what just happened) */
+  .feedrow{margin-top:18px;display:flex;align-items:center;gap:12px;background:#FBFBF3;border:1px dashed var(--line);border-radius:14px;padding:14px 18px;font-size:13.5px;color:var(--muted);}
+  .feedrow .fb{width:34px;height:34px;border-radius:50%;background:var(--color-success-bg);color:var(--color-green-dark);display:flex;align-items:center;justify-content:center;flex:none;}
+  .feedrow .fb svg{width:17px;height:17px;}
+  .feedrow b{color:#111;}
+
+  /* detail panel */
+  .detail{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px 26px;box-shadow:0 14px 36px -28px rgba(40,50,30,0.3);}
+  .detail-h{display:flex;align-items:center;gap:13px;margin-bottom:6px;}
+  .detail-ic{width:42px;height:42px;border-radius:12px;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;flex:none;}
+  .detail-ic svg{width:21px;height:21px;}
+  .detail-eye{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--faint);}
+  .detail-title{font-family:'Karla',sans-serif;font-size:21px;line-height:1.1;}
+  .detail-sub{font-size:13.5px;color:var(--muted);margin:11px 0 20px;line-height:1.55;}
+  .dcards{display:flex;gap:12px;margin-bottom:20px;}
+  .dcard{flex:1;background:#FBFBF3;border:1px solid var(--line);border-radius:13px;padding:14px;}
+  .dcard .v{font-family:'Karla',sans-serif;font-size:27px;line-height:1;}
+  .dcard .k{font-size:12px;color:var(--muted);margin-top:5px;}
+  .dcard.delta .v{color:var(--green);}
+  .dsec{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin:0 0 13px;}
+  .vis{display:flex;flex-direction:column;gap:13px;}
+  .vrow{display:grid;grid-template-columns:80px 1fr 32px;align-items:center;gap:14px;}
+  .vrow .l{font-size:14px;font-weight:500;}
+  .vrow .n{font-family:'JetBrains Mono',monospace;font-size:12.5px;text-align:right;color:var(--muted);}
+  .bar{height:8px;border-radius:99px;background:rgba(17,17,17,0.07);overflow:hidden;}
+  .bar i{display:block;height:100%;border-radius:99px;transition:width .5s var(--ease);}
+  .ilist{display:flex;flex-direction:column;gap:10px;}
+  .irow{display:flex;align-items:center;gap:12px;padding:13px 15px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:13.5px;}
+  .irow.top{border-color:rgba(146,188,1,0.4);background:var(--color-success-bg);}
+  .irow .ii{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex:none;color:#fff;}
+  .irow .ii svg{width:14px;height:14px;}
+  .ii-eng{background:#8B7BE8;} .ii-x{background:#111;} .ii-r{background:var(--color-orange);font-size:11px;font-weight:700;} .ii-in{background:#1466C2;font-size:11px;font-weight:700;}
+  .irow .it{flex:1;min-width:0;}
+  .irow .it b{font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .irow .it span{font-size:11.5px;color:var(--muted);}
+  .irow .g{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--green);font-weight:700;flex:none;}
+  .detail-cta{display:inline-flex;align-items:center;gap:6px;margin-top:22px;color:var(--color-green-dark);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;}
+
+  /* ── Score panel (right) ────────────── */
+  .scorepanel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 14px 36px -28px rgba(40,50,30,0.3);position:sticky;top:90px;}
+  .sp-eye{font-size:11px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--faint);text-align:center;}
+  .ring-wrap{position:relative;width:200px;height:200px;margin:14px auto 6px;}
+  .ring-wrap svg{transform:rotate(-90deg);}
+  .ring-core{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .ring-core .bs{font-family:'Karla',sans-serif;font-size:46px;line-height:1;transition:color .4s var(--ease);}
+  .ring-core .bt{font-size:11.5px;color:var(--muted);margin-top:3px;}
+  .sp-gap{text-align:center;font-size:13.5px;color:var(--muted);margin-bottom:4px;}
+  .sp-gap b{color:#111;font-weight:700;}
+  .sp-delta{text-align:center;}
+  .sp-delta span{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:var(--color-green-dark);background:var(--color-success-bg);padding:3px 11px;border-radius:99px;visibility:hidden;}
+  .sp-div{height:1px;background:var(--line);margin:18px 0 16px;}
+  .sp-trajh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px;}
+  .sp-trajh .l{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);}
+  .sp-trajh .r{font-size:11.5px;color:var(--muted);}
+
+  /* toast */
+  .toast-wrap{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;}
+  .toast{background:#111;color:#fff;border-radius:12px;padding:13px 22px;display:flex;align-items:center;gap:13px;box-shadow:0 14px 32px rgba(0,0,0,0.28);opacity:0;transform:translateY(-10px);transition:opacity .3s var(--ease), transform .3s var(--ease);}
+  .toast.show{opacity:1;transform:translateY(0);}
+  .toast .big{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--neon);}
+  .toast .tx{font-size:13.5px;} .toast .tx b{font-family:'JetBrains Mono',monospace;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="20" fill="#F4F6EC"/><rect x="20" y="38" width="18" height="24" rx="4" fill="#111"/><rect x="41" y="38" width="18" height="24" rx="4" fill="#CFF229"/><rect x="62" y="38" width="18" height="24" rx="4" fill="#111"/></svg>
+</template>
+
+<div class="top">
+  <div class="lock"><span class="mk"><i></i></span><span class="wm">aisee</span></div>
+  <span class="tag">· GEO Console</span>
+  <div class="top-r">
+    <span class="plan">GEO plan · Day <b id="dayNum">1</b> / 30</span>
+    <button class="ghostbtn" id="topRescan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg>Re-scan</button>
+  </div>
+</div>
+
+<div class="shell">
+  <!-- Projects -->
+  <aside class="side">
+    <button class="newproj">+ New Project</button>
+    <div class="side-h">Projects · 8</div>
+    <div id="projList"></div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main" data-screen-label="GEO Console v4">
+
+    <!-- Onboarding -->
+    <div class="onboard" id="onboard">
+      <span class="num">i</span>
+      <span class="ot">New here? aisee lifts your AI score in a <b>repeating loop</b>. Follow the 4 steps below, left to right — then hit the big <b>Execute</b> button to make your first move and watch the score climb.</span>
+      <button class="ox" id="onboardX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+
+    <!-- Title -->
+    <div class="ptitle">
+      <div>
+        <h1>GEO Command Center</h1>
+        <div class="psub">Grow your visibility across AI answer engines · current brand below</div>
+      </div>
+      <div class="pbrand"><span class="pav"><i></i></span><span style="font-weight:700">aisee</span><span style="color:var(--muted);font-size:13px">· aisee.live</span></div>
+    </div>
+
+    <!-- Pipeline -->
+    <div class="pipe" id="pipe"></div>
+
+    <!-- Content -->
+    <div class="cgrid">
+      <div>
+        <div class="hero" id="hero"></div>
+        <div class="detail" id="detail"></div>
+      </div>
+
+      <!-- Score panel -->
+      <div class="scorepanel">
+        <div class="sp-eye">AI Score</div>
+        <div class="ring-wrap">
+          <svg width="200" height="200" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(17,17,17,0.07)" stroke-width="11"/>
+            <circle id="ringArc" cx="100" cy="100" r="86" fill="none" stroke="var(--green)" stroke-width="11" stroke-linecap="round"/>
+            <g id="targetTick"></g>
+          </svg>
+          <div class="ring-core"><div class="bs" id="coreScore">51.5</div><div class="bt">/ 90 target</div></div>
+        </div>
+        <div class="sp-gap">Target <b>90</b> · <span id="coreGap">+38.5</span> to go</div>
+        <div class="sp-delta"><span id="coreDelta">+0.0</span></div>
+        <div class="sp-div"></div>
+        <div class="sp-trajh"><span class="l">30-Day Trajectory</span><span class="r">Day <b id="trajNow">1</b> / 30</span></div>
+        <svg id="trajSvg" width="100%" height="100" viewBox="0 0 292 100" preserveAspectRatio="none"></svg>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+(function(){
+  // ── score → color ──
+  var stops=[[40,[224,88,78]],[62,[242,162,1]],[78,[165,213,0]],[90,[124,255,31]]];
+  function lerp(a,b,t){return Math.round(a+(b-a)*t);}
+  function rgb(c){return 'rgb('+c[0]+','+c[1]+','+c[2]+')';}
+  function scoreColor(s){
+    if(s<=stops[0][0])return rgb(stops[0][1]);
+    if(s>=stops[stops.length-1][0])return rgb(stops[stops.length-1][1]);
+    for(var i=0;i<stops.length-1;i++){if(s>=stops[i][0]&&s<=stops[i+1][0]){var t=(s-stops[i][0])/(stops[i+1][0]-stops[i][0]);var a=stops[i][1],b=stops[i+1][1];return rgb([lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)]);}}
+    return rgb(stops[0][1]);
+  }
+
+  // ── data ──
+  var projects=[
+    {id:'aisee',av:'A',avc:'#92BC01',score:51.5},{id:'tesla',av:'T',avc:'#E0584E',score:88.0},
+    {id:'duolingo',av:'D',avc:'#58CC02',score:76.2},{id:'hims',av:'h',avc:'#5A5A5A',score:64.1},
+    {id:'robinhood',av:'R',avc:'#3DA35D',score:59.7},{id:'figma',av:'F',avc:'#46B86F',score:91.3},
+    {id:'pinterest',av:'P',avc:'#E60023',score:82.5},{id:'claude',av:'c',avc:'#D97757',score:70.4}
+  ];
+  var BACKLOG={aisee:[
+    {src:'#ac02',title:'Publish flagship comparison page — AISEE vs Profound / Otterly',kind:'post',plat:'in',gain:4.3},
+    {src:'#ac01',title:'Reply to 5 high-intent threads on X & Reddit',kind:'engage',plat:'eng',gain:2.6},
+    {src:'#sr02',title:'Post a build-in-public teaser on LinkedIn',kind:'post',plat:'in',gain:1.8},
+    {src:'#sr05',title:'Create official Reddit account + first value post',kind:'post',plat:'r',gain:1.4}
+  ]};
+  var visBase={GPT:100,Gemini:87,Claude:10,Perplexity:0,Grok:0};
+  var STEPS=[
+    {node:'analysis',n:'01',name:'Diagnose',mod:'Analysis',desc:'Scan AI answer engines, find your score gaps',ic:'<path d="M3 3v18h18"/><path d="M7 14l3-4 3 2 4-6"/>'},
+    {node:'schedule',n:'02',name:'Plan',mod:'Task Center',desc:'Gaps become ranked weekly tasks',ic:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>'},
+    {node:'execute',n:'03',name:'Execute',mod:'Post · Engage',desc:'Publish & reply — this is what lifts your score',ic:'<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>'},
+    {node:'rescan',n:'04',name:'Re-scan',mod:'Verify',desc:'Recompute the score, log the trajectory',ic:'<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/>'}
+  ];
+
+  var state={pid:'aisee',node:'execute',executing:false,lastGain:null,lastSrc:null};
+  var live={};
+  projects.forEach(function(p){live[p.id]={score:p.score,day:1,history:[{day:1,score:p.score}],queue:(BACKLOG[p.id]||[]).slice()};});
+
+  var C=2*Math.PI*86;
+  var ringArc=document.getElementById('ringArc');
+  var targetTick=document.getElementById('targetTick');
+
+  // ── icons ──
+  function svg(p,fill){return '<svg viewBox="0 0 24 24" fill="'+(fill||'none')+'" stroke="'+(fill?'none':'currentColor')+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
+  function linkIcon(){return svg('<path d="M9 15l6-6"/><path d="M11 6l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 18l-1 1a4 4 0 0 1-6-6l1-1"/>');}
+  function playIcon(){return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';}
+  function checkIcon(){return svg('<path d="M20 6 9 17l-5-5"/>');}
+  function starIcon(){return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 4.7L18.5 8l-3.5 3 .9 4.9L12 13.6 8.1 15.9l.9-4.9L5.5 8l4.6-1.3z"/></svg>';}
+  function xIcon(){return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.2L7 21H4l7.5-8.6L3.6 3H10l4.5 5.7z"/></svg>';}
+  function spinner(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" style="animation:spin .8s linear infinite"><path d="M21 12a9 9 0 1 1-3-6.7"/></svg>';}
+  function typeIcon(t){
+    if(t.kind==='engage')return '<span class="ti ti-eng">'+starIcon()+'</span>Engage · 5 replies';
+    if(t.plat==='in')return '<span class="ti ti-in">in</span>Post · LinkedIn';
+    if(t.plat==='r')return '<span class="ti ti-r">r/</span>Post · Reddit';
+    return '<span class="ti ti-x">'+xIcon()+'</span>Post · X';
+  }
+  function listIcon(t){
+    if(t.kind==='engage')return '<span class="ii ii-eng">'+starIcon()+'</span>';
+    if(t.plat==='r')return '<span class="ii ii-r">r/</span>';
+    if(t.plat==='in')return '<span class="ii ii-in">in</span>';
+    return '<span class="ii ii-x">'+xIcon()+'</span>';
+  }
+
+  // ── ring + trajectory ──
+  function renderRing(){
+    var s=live[state.pid].score, frac=Math.min(s/100,1);
+    ringArc.style.strokeDasharray=C;
+    ringArc.style.strokeDashoffset=C*(1-frac);
+    ringArc.style.stroke=scoreColor(s);
+    ringArc.style.transition='stroke-dashoffset .6s var(--ease), stroke .6s var(--ease)';
+    var ang=(-90+360*0.9)*Math.PI/180;
+    var x1=100+78*Math.cos(ang),y1=100+78*Math.sin(ang),x2=100+94*Math.cos(ang),y2=100+94*Math.sin(ang);
+    targetTick.innerHTML='<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>';
+    document.getElementById('coreScore').textContent=s.toFixed(1);
+    document.getElementById('coreScore').style.color=scoreColor(s);
+    document.getElementById('coreGap').textContent='+'+(90-s).toFixed(1);
+  }
+  function renderTraj(){
+    var svgEl=document.getElementById('trajSvg'),W=292,H=100,pad=10;
+    var hist=live[state.pid].history;
+    function X(d){return pad+(d-1)/29*(W-pad*2);}
+    function Y(sc){return H-pad-(sc/100)*(H-pad*2);}
+    var html='',last=hist[hist.length-1];
+    html+='<line x1="'+pad+'" y1="'+Y(90)+'" x2="'+(W-pad)+'" y2="'+Y(90)+'" stroke="rgba(17,17,17,0.18)" stroke-width="1" stroke-dasharray="4 4"/>';
+    html+='<text x="'+(W-pad)+'" y="'+(Y(90)-4)+'" text-anchor="end" font-size="8" font-family="JetBrains Mono" fill="rgba(17,17,17,0.4)">90</text>';
+    html+='<line x1="'+X(last.day)+'" y1="'+Y(last.score)+'" x2="'+X(30)+'" y2="'+Y(90)+'" stroke="rgba(17,17,17,0.22)" stroke-width="1.5" stroke-dasharray="3 4"/>';
+    var pts=hist.map(function(h){return X(h.day)+','+Y(h.score);});
+    var col=scoreColor(last.score);
+    html+='<path d="M'+X(hist[0].day)+','+(H-pad)+' L'+pts.join(' L')+' L'+X(last.day)+','+(H-pad)+' Z" fill="'+col+'" opacity="0.12"/>';
+    html+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    html+='<circle cx="'+X(last.day)+'" cy="'+Y(last.score)+'" r="4.5" fill="'+col+'" stroke="#fff" stroke-width="2"/>';
+    svgEl.innerHTML=html;
+    document.getElementById('trajNow').textContent=last.day;
+  }
+
+  // ── projects ──
+  function renderProjects(){
+    var el=document.getElementById('projList');el.innerHTML='';
+    projects.forEach(function(p){
+      var s=live[p.id].score,d=document.createElement('div');
+      d.className='proj'+(p.id===state.pid?' on':'');
+      d.innerHTML='<span class="av" style="background:'+p.avc+'">'+p.av+'</span><span class="nm">'+p.id+'</span><span class="meta"><span class="sc">'+s.toFixed(1)+'</span><span class="mini"><i style="width:'+Math.min(s,100)+'%;background:'+scoreColor(s)+'"></i></span></span>';
+      d.onclick=function(){if(state.executing)return;state.pid=p.id;state.lastGain=null;renderAll();};
+      el.appendChild(d);
+    });
+  }
+
+  // ── pipeline ──
+  function statusOf(node){
+    // done = before execute; here = execute; next = rescan
+    var order=['analysis','schedule','execute','rescan'];
+    var qEmpty=!live[state.pid].queue.length;
+    if(node==='analysis'||node==='schedule')return 'done';
+    if(node==='execute')return qEmpty?'done':'here';
+    if(node==='rescan')return qEmpty?'here':'next';
+  }
+  function badgeHTML(st){
+    if(st==='done')return '<span class="pbadge b-done">'+checkIcon()+'Done</span>';
+    if(st==='here')return '<span class="pbadge b-here">You are here</span>';
+    return '<span class="pbadge b-next">Next</span>';
+  }
+  function renderPipe(){
+    var el=document.getElementById('pipe');el.innerHTML='';
+    STEPS.forEach(function(s,i){
+      var st=statusOf(s.node);
+      var d=document.createElement('div');
+      d.className='pstep'+(state.node===s.node?' sel':'')+(st==='here'?' active':'');
+      d.innerHTML='<div class="pstep-h"><span class="pn">'+s.n+'</span>'+badgeHTML(st)+'</div>'+
+        '<div class="pstep-ic">'+svg(s.ic)+'</div>'+
+        '<div class="pname">'+s.name+'</div><div class="pmod">'+s.mod+'</div>'+
+        '<div class="pdesc">'+s.desc+'</div>';
+      d.onclick=function(){state.node=s.node;renderPipe();renderDetail();};
+      el.appendChild(d);
+      if(i<STEPS.length-1){
+        var a=document.createElement('div');a.className='parrow';
+        a.innerHTML=svg('<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>');
+        el.appendChild(a);
+      }
+    });
+    // loop-back chip
+    var loop=document.createElement('div');loop.className='parrow loop';
+    loop.innerHTML=svg('<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/>');
+    loop.title='score climbs, loop repeats';
+    el.appendChild(loop);
+  }
+
+  // ── hero (next move) ──
+  function renderHero(){
+    var lp=live[state.pid],hero=document.getElementById('hero');
+    if(!lp.queue.length){
+      hero.className='hero clear';
+      hero.innerHTML='<div class="hero-eye" style="justify-content:center">'+checkIcon()+' All moves done this cycle</div>'+
+        '<div class="ct">You\u2019re all caught up</div>'+
+        '<div class="cs">Re-scan to capture the gains and generate the next batch of moves.</div>'+
+        '<div style="margin-top:18px"><button class="execbtn" id="execBtn" style="background:#111;color:#fff">'+playIcon().replace('currentColor','#fff')+'Re-scan now</button></div>'+feedHTML();
+      document.getElementById('execBtn').onclick=function(){doRescan();};
+      return;
+    }
+    var t=lp.queue[0];
+    hero.className='hero';
+    hero.innerHTML=
+      '<div class="hero-eye"><span class="step">Your next move · Step 03 Execute</span><span class="hero-gain">+'+t.gain.toFixed(1)+' to your score</span></div>'+
+      '<div class="hero-title">'+t.title+'</div>'+
+      '<div class="hero-meta"><span class="src">'+linkIcon()+'<b>'+t.src+'</b> source gap</span><span class="typ">'+typeIcon(t)+'</span></div>'+
+      '<div class="hero-act"><button class="execbtn pulse" id="execBtn">'+playIcon()+'Execute this move</button>'+
+      '<span class="hero-help"><b>What happens:</b> we publish / reply, the web updates,<br>then aisee re-scans and your score moves.</span></div>'+
+      feedHTML();
+    document.getElementById('execBtn').onclick=runStep;
+  }
+  function feedHTML(){
+    if(!state.lastGain)return '';
+    return '<div class="feedrow"><span class="fb">'+checkIcon()+'</span><span>Last move landed <b>+'+state.lastGain.toFixed(1)+'</b> from <b>'+state.lastSrc+'</b> · logged on your Day '+live[state.pid].history[live[state.pid].history.length-1].day+' trajectory.</span></div>';
+  }
+
+  // ── detail panel ──
+  function renderDetail(){
+    var s=live[state.pid].score,node=state.node,d=document.getElementById('detail');
+    var stepMeta=STEPS.find(function(x){return x.node===node;});
+    var body='',sub='',cta='',ctaRescan=false;
+    if(node==='analysis'){
+      sub='Your AI score is the weighted visibility across answer engines. The lowest bars are the gaps your tasks target.';
+      body=dcardsHTML(s)+'<div class="dsec">AI Engine Visibility</div><div class="vis">'+visHTML()+'</div>';cta='View full diagnostics';
+    }else if(node==='schedule'){
+      sub='Each gap becomes a task, ranked by predicted score gain. The top one is surfaced as your next move above.';
+      body='<div class="dsec">This week · ranked by impact</div><div class="ilist">'+queueHTML()+'</div>';cta='Open Task Center';
+    }else if(node==='execute'){
+      sub='This is where moves actually run. Hit Execute above to publish or reply — then the loop re-scans automatically.';
+      body='<div class="dcards"><div class="dcard"><div class="v">48</div><div class="k">Posts this month</div></div><div class="dcard"><div class="v">277</div><div class="k">New signals</div></div><div class="dcard delta"><div class="v">'+live[state.pid].queue.length+'</div><div class="k">Moves queued</div></div></div><div class="dsec">Up next</div><div class="ilist">'+queueHTML(3)+'</div>';cta='Open publisher';
+    }else{
+      sub='Re-running the scan recomputes your score from the live web and writes a fresh point on the 30-day trajectory.';
+      body='<div class="dcards"><div class="dcard"><div class="v">'+s.toFixed(1)+'</div><div class="k">Current score</div></div><div class="dcard delta"><div class="v">+'+(90-s).toFixed(1)+'</div><div class="k">To target 90</div></div></div><div class="dsec">Trajectory</div><div class="ilist"><div class="irow"><span class="ii ii-eng">'+starIcon()+'</span><div class="it"><b>'+live[state.pid].history.length+' points logged</b><span>Last scan · Day '+live[state.pid].history[live[state.pid].history.length-1].day+'</span></div></div></div>';cta='Re-scan now';ctaRescan=true;
+    }
+    d.innerHTML='<div class="detail-h"><div class="detail-ic">'+svg(stepMeta.ic)+'</div><div><div class="detail-eye">Step '+stepMeta.n+' · '+stepMeta.mod+'</div><div class="detail-title">'+stepMeta.name+'</div></div></div>'+
+      '<div class="detail-sub">'+sub+'</div>'+body+'<a class="detail-cta" id="detailCta">'+cta+' \u2192</a>';
+    if(ctaRescan)document.getElementById('detailCta').onclick=function(){doRescan();};
+  }
+  function dcardsHTML(s){return '<div class="dcards"><div class="dcard"><div class="v">'+s.toFixed(1)+'</div><div class="k">Current score</div></div><div class="dcard delta"><div class="v">+'+(90-s).toFixed(1)+'</div><div class="k">To target 90</div></div></div>';}
+  function visHTML(){return ['GPT','Gemini','Claude','Perplexity','Grok'].map(function(k){var v=visBase[k];var col=v>=60?'var(--green)':'var(--color-orange)';return '<div class="vrow"><span class="l">'+k+'</span><span class="bar"><i style="width:'+Math.max(v,3)+'%;background:'+col+'"></i></span><span class="n">'+v+'</span></div>';}).join('');}
+  function queueHTML(limit){
+    var q=live[state.pid].queue.slice(0,limit||4);
+    if(!q.length)return '<div class="irow"><div class="it"><b>All clear</b><span>Re-scan to generate the next batch.</span></div></div>';
+    return q.map(function(t,i){return '<div class="irow'+(i===0?' top':'')+'">'+listIcon(t)+'<div class="it"><b>'+t.title+'</b><span>'+t.src+' · '+(t.kind==='post'?'Post':'Engage')+(i===0?' · your next move':'')+'</span></div><span class="g">+'+t.gain.toFixed(1)+'</span></div>';}).join('');
+  }
+
+  // ── toast / count-up ──
+  function toast(gain,src){
+    var w=document.getElementById('toastWrap'),t=document.createElement('div');
+    t.className='toast';t.innerHTML='<span class="big">+'+gain.toFixed(1)+'</span><span class="tx">score gain from <b>'+src+'</b></span>';
+    w.appendChild(t);setTimeout(function(){t.classList.add('show');},20);
+    setTimeout(function(){t.classList.remove('show');setTimeout(function(){w.removeChild(t);},350);},3200);
+  }
+  function countUp(from,to,dur,cb){
+    var st=Date.now();
+    var timer=setInterval(function(){
+      var p=Math.min((Date.now()-st)/dur,1),e=1-Math.pow(1-p,3),s=from+(to-from)*e;
+      document.getElementById('coreScore').textContent=s.toFixed(1);
+      document.getElementById('coreScore').style.color=scoreColor(s);
+      document.getElementById('coreGap').textContent='+'+(90-s).toFixed(1);
+      ringArc.style.transition='none';ringArc.style.strokeDashoffset=C*(1-Math.min(s/100,1));ringArc.style.stroke=scoreColor(s);
+      if(p>=1){clearInterval(timer);cb&&cb();}
+    },16);
+  }
+
+  // ── the loop ──
+  function runStep(){
+    if(state.executing)return;
+    var lp=live[state.pid];if(!lp.queue.length)return;
+    state.executing=true;
+    var t=lp.queue[0],btn=document.getElementById('execBtn');
+    btn.disabled=true;btn.classList.remove('pulse');btn.innerHTML=spinner()+'Running…';
+    setTimeout(function(){
+      var from=lp.score,to=Math.min(from+t.gain,100);
+      lp.queue.shift();lp.day+=1;document.getElementById('dayNum').textContent=lp.day;
+      countUp(from,to,1100,function(){
+        lp.score=to;lp.history.push({day:lp.day,score:to});
+        state.lastGain=t.gain;state.lastSrc=t.src;
+        var dpill=document.getElementById('coreDelta');
+        dpill.textContent='+'+t.gain.toFixed(1)+' from '+t.src;dpill.style.visibility='visible';
+        toast(t.gain,t.src);
+        renderProjects();renderTraj();renderRing();renderPipe();
+        state.executing=false;renderHero();renderDetail();
+        setTimeout(function(){dpill.style.visibility='hidden';},3600);
+      });
+    },850);
+  }
+  function doRescan(){renderRing();renderTraj();renderPipe();}
+  document.getElementById('topRescan').onclick=doRescan;
+  document.getElementById('onboardX').onclick=function(){document.getElementById('onboard').style.display='none';};
+
+  function renderAll(){
+    renderProjects();renderRing();renderTraj();renderPipe();renderHero();renderDetail();
+    document.getElementById('dayNum').textContent=live[state.pid].day;
+  }
+  renderAll();
+})();
+</script>
+</body>
+</html>
