@@ -77,6 +77,17 @@ test('component modal previews keep vertical breathing room inside demo surfaces
   assert.match(components, /\.confirm-demo\{min-height:360px;padding:32px 24px\}/);
 });
 
+test('all dialog titles use Karla semibold 600 rather than bold 700', async () => {
+  const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  assert.match(components, /\.modal h3\{[^}]*font-weight:600/);
+  assert.match(components, /\.confirm-head h3\{[^}]*font-weight:600/);
+  assert.match(styles, /\.aisee-dialog__title \{[^}]*font-weight: 600;/);
+  assert.match(styles, /\.aisee-confirmation-dialog__title \{[^}]*font-weight: 600;/);
+  assert.doesNotMatch(components, /(?:\.modal h3|\.confirm-head h3)\{[^}]*font-weight:700/);
+  assert.doesNotMatch(styles, /(?:\.aisee-dialog__title|\.aisee-confirmation-dialog__title) \{[^}]*font-weight: 700;/);
+});
+
 test('confirmation dialog follows the Figma unsaved changes pattern', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
