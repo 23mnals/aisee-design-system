@@ -66,9 +66,15 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
 test('danger button follows the Figma destructive action style', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
-  assert.match(components, /\.danger\{[^}]*background:var\(--danger\)[^}]*color:#fff[^}]*font:500 16px\/24px Karla/);
-  assert.match(styles, /\.aisee-button--danger \{[\s\S]*?color: var\(--aisee-color-white\);[\s\S]*?background: var\(--aisee-color-danger\);[\s\S]*?font-size: 16px;/);
+  assert.match(components, /\.row \.danger\{[^}]*padding:8px 16px[^}]*font:500 14px\/18px Karla/);
+  assert.match(styles, /\.aisee-button--danger \{[\s\S]*?color: var\(--aisee-color-white\);[\s\S]*?background: var\(--aisee-color-danger\);[\s\S]*?font-size: 14px;/);
   assert.match(portal, /Danger \/ Alert[\s\S]*?#EC5212 · white text/);
+});
+
+test('component modal previews keep vertical breathing room inside demo surfaces', async () => {
+  const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  assert.match(components, /\.modal-demo\{min-height:300px;padding:32px 24px\}/);
+  assert.match(components, /\.confirm-demo\{min-height:360px;padding:32px 24px\}/);
 });
 
 test('confirmation dialog follows the Figma unsaved changes pattern', async () => {

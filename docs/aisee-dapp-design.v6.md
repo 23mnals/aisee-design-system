@@ -348,7 +348,7 @@ Logo mark:                      320px 320px 0 0
 
 **Danger**
 - 以 Figma [`button大小`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9905-214773) 为准：底 `#EC5212`，文字 `#FFFFFF`
-- Karla Medium 16px / 500 / line-height 24px；padding `6px 16px`；高度 36；圆角 8；无描边
+- 在共享按钮组中与 Primary / Secondary / Ghost 统一为 Karla Medium 14px / 500 / line-height 18px；padding `8px 16px`；高度 36；圆角 8；无描边
 - 用于 Delete / Disconnect / Discard Changes 等不可逆或高风险操作。`#FFD0D0` 仅保留给错误提示面、危险 Tag 等浅色容器
 
 ### 6.5 Inputs / Toggle / Checkbox
