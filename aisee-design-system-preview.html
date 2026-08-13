@@ -164,16 +164,6 @@
         list-style: none;
       }
       .nav-group summary::-webkit-details-marker { display: none; }
-      .nav-group summary::before {
-        content: "";
-        width: 7px;
-        height: 7px;
-        border-right: 1.6px solid currentColor;
-        border-bottom: 1.6px solid currentColor;
-        transform: rotate(-45deg);
-        transition: transform 140ms ease;
-      }
-      .nav-group[open] summary::before { transform: rotate(45deg) translate(-1px, -1px); }
       .nav-group summary:hover { background: var(--surface-subtle); }
       .group-count { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 500; }
       .nav-list { display: grid; gap: 4px; padding: 3px 0 0 15px; }
