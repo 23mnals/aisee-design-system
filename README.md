@@ -1,6 +1,6 @@
 # aisee Design System
 
-aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System **增量升级**而来：旧内容完整保留。当前视觉产品源是 **Figma 5.6**，最新实施规则以 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md) 为基线，后续团队决策以 [`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 为最高优先级。两条版本线的关系见 [`docs/FIGMA_SOURCES.md`](docs/FIGMA_SOURCES.md)。
+aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System **增量升级**而来：旧内容完整保留。Figma **5.6 是当前最新的功能版本页面，不是整个 Figma 文件的全局版本**；最新实施规则以 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md) 为基线，后续团队决策以 [`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 为最高优先级。两条版本线的关系及 Figma 页面维护规则见 [`docs/FIGMA_SOURCES.md`](docs/FIGMA_SOURCES.md)。
 
 ## 四个入口
 
@@ -106,4 +106,4 @@ git push -u origin main
 
 ## 版本与维护
 
-采用 Semantic Versioning。分支以 `feat/`、`fix/`、`docs/` 开头；所有改动通过 PR、截图对比和 CI 后合并。详见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
+代码包采用 Semantic Versioning。Figma 页面按功能维护：新增功能或独立新需求时新开页面；已有功能追加需求时不新开页面，而是在该功能原版本页面的上方增加最新设计内容。分支以 `feat/`、`fix/`、`docs/` 开头；所有改动通过 PR、截图对比和 CI 后合并。详见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。

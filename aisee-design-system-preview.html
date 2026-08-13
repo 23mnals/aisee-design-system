@@ -441,7 +441,7 @@
       <main class="main" id="main-content">
         <section class="home" id="homeView">
           <div class="hero">
-            <p class="eyebrow">Figma 5.6 · Design Spec v6 · Shared source of truth</p>
+            <p class="eyebrow">Latest feature page 5.6 · Design Spec v6 · Shared source of truth</p>
             <h1>Build every AISEE experience from the same system.</h1>
             <p class="hero-copy">Foundations, reusable components and preserved product previews—updated from the latest dApp design specification while keeping unmatched legacy work available.</p>
           </div>
@@ -450,8 +450,8 @@
             <div class="status-copy">
               <span class="status-dot" aria-hidden="true"></span>
               <div>
-                <strong>Current product source: Figma 5.6</strong>
-                <p>Implementation rules follow Design Specification v6 and the latest team decisions.</p>
+                <strong>Latest registered feature page: 5.6</strong>
+                <p>Figma versions belong to feature pages; implementation rules follow Design Specification v6 and the latest team decisions.</p>
               </div>
             </div>
             <button class="action-button primary" id="openFoundations" type="button">Use this system</button>
@@ -500,9 +500,9 @@
             <p>Design files and written specifications serve different roles. The Figma file is the visual product source; the specification and team decisions make implementation rules explicit.</p>
             <div class="source-panel">
               <article class="source-card current">
-                <span class="source-label">Current visual source</span>
-                <h3>Figma Product Design 5.6 <span class="version-badge">Latest</span></h3>
-                <p><code>备份-官网+dapp主功能.fig</code> contains the homepage and main dApp flows. Earlier missing product versions will be added to this source over time.</p>
+                <span class="source-label">Registered Figma archive</span>
+                <h3>Figma feature page 5.6 <span class="version-badge">Latest feature</span></h3>
+                <p><code>备份-官网+dapp主功能.fig</code> contains the homepage and main dApp flows. Page 5.6 is the latest newly opened feature page, not a global version of the complete file.</p>
                 <ul class="source-meta"><li><span>Exported</span><strong>2026-08-13 12:20 +08:00</strong></li><li><span>Archive size</span><strong>275 MB</strong></li><li><span>Repository policy</span><strong>Reference only; not copied into Git</strong></li></ul>
               </article>
               <article class="source-card">
@@ -512,7 +512,7 @@
                 <ul class="source-meta"><li><span>Spec</span><strong>docs/aisee-dapp-design.v6.md</strong></li><li><span>Tokens</span><strong>73 generated variables</strong></li><li><span>Current package</span><strong>@aisee/design-system 1.0.0</strong></li></ul>
               </article>
             </div>
-            <div class="priority-note"><strong>Conflict priority:</strong> latest Team Decisions → current Design Spec v6 → Figma 5.6 visual source → preserved historical files. Old content remains available, but it does not override a newer confirmed rule.</div>
+            <div class="priority-note"><strong>Conflict priority:</strong> latest Team Decisions → current Design Spec v6 → the relevant feature page's topmost new content → preserved content below. Page 5.6 must not globally override unrelated feature pages.</div>
           </section>
 
           <section class="overview-section" id="content" aria-labelledby="content-title">
@@ -595,8 +595,8 @@
 
           <section class="overview-section" id="versions" aria-labelledby="versions-title">
             <h2 id="versions-title">Versions and maintenance</h2>
-            <p>Versions are recorded as they are added. Missing older Figma versions can be appended without replacing the current source or deleting preserved history.</p>
-            <div class="table-wrap"><table class="overview-table"><thead><tr><th>Version</th><th>Status</th><th>Scope</th><th>Maintenance rule</th></tr></thead><tbody><tr><td>Figma 5.6</td><td><span class="item-tag current">Current</span></td><td>Latest homepage and dApp product design source</td><td>Use for present visual structure and screen behavior</td></tr><tr><td>Design Spec v6</td><td><span class="item-tag current">Current</span></td><td>Tokens, components, interaction and implementation rules</td><td>Team Decisions overrides conflicts</td></tr><tr><td>Earlier Figma versions</td><td><span class="item-tag">Planned</span></td><td>Historical product evolution</td><td>Add to this table and retain; do not overwrite 5.6</td></tr><tr><td>Legacy HTML previews</td><td><span class="item-tag">Legacy</span></td><td>Unmatched components, flows, assets and experiments</td><td>Retain unless a separate deprecation review approves removal</td></tr></tbody></table></div>
+            <p>Figma versions belong to feature pages. Open a new page for a new feature or independent new requirement; when an existing function gains a requirement, add its newest design above the earlier content on that function's original page.</p>
+            <div class="table-wrap"><table class="overview-table"><thead><tr><th>Version / source</th><th>Status</th><th>Scope</th><th>Maintenance rule</th></tr></thead><tbody><tr><td>Figma feature page 5.6</td><td><span class="item-tag current">Latest feature</span></td><td>Latest newly opened feature-version page</td><td>Do not treat it as the global version of the complete Figma file</td></tr><tr><td>Existing feature pages</td><td><span class="item-tag current">Living</span></td><td>Original functions and their later requirements</td><td>Add the newest requirement above earlier content on the same page</td></tr><tr><td>Design Spec v6</td><td><span class="item-tag current">Current</span></td><td>Tokens, components, interaction and implementation rules</td><td>Team Decisions overrides conflicts</td></tr><tr><td>Missing earlier feature pages</td><td><span class="item-tag">Planned</span></td><td>Feature history not yet registered here</td><td>Add and retain each page; do not overwrite it with 5.6</td></tr><tr><td>Legacy HTML previews</td><td><span class="item-tag">Legacy</span></td><td>Unmatched components, flows, assets and experiments</td><td>Retain unless a separate deprecation review approves removal</td></tr></tbody></table></div>
           </section>
 
           <section class="home-section" aria-labelledby="start-title">

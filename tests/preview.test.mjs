@@ -94,11 +94,13 @@ test('sidebar uses compact 14px navigation typography', () => {
   assert.match(portal, /\.nav-item \{[^}]*font-size: 14px;/);
 });
 
-test('overview documents the current Figma and specification versions', () => {
-  assert.match(portal, /Figma Product Design 5\.6/);
+test('overview documents feature-page and specification version rules', () => {
+  assert.match(portal, /Figma feature page 5\.6/);
   assert.match(portal, /Design Specification v6/);
-  assert.match(portal, /Figma 5\.6[\s\S]*?Current/);
-  assert.match(portal, /Earlier Figma versions[\s\S]*?Planned/);
+  assert.match(portal, /Page 5\.6 is the latest newly opened feature page, not a global version/);
+  assert.match(portal, /Existing feature pages[\s\S]*?Living/);
+  assert.match(portal, /newest design above the earlier content on that function's original page/);
+  assert.match(portal, /Missing earlier feature pages[\s\S]*?Planned/);
 });
 
 test('overview contains the complete documentation sections', () => {

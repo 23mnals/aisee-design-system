@@ -1,15 +1,15 @@
 # Figma Sources
 
-Figma product versions and written design specifications are tracked separately:
+Figma feature-page versions and written design specifications are tracked separately:
 
-- **Figma version** describes the current visual product source and screen set.
+- **Figma feature-page version** identifies a page opened for a new feature or independent requirement. It is not a global version of the whole Figma file.
 - **Design Spec version** describes the current implementation rules, tokens and component behavior.
 
 ## Current source
 
 | Field | Value |
 |---|---|
-| Figma product version | **5.6 — current** |
+| Latest feature page | **5.6 — latest registered feature version** |
 | Local source file | `备份-官网+dapp主功能.fig` |
 | Scope | Marketing homepage + primary dApp functionality |
 | Figma export time | 2026-08-13 12:20 +08:00 |
@@ -17,19 +17,20 @@ Figma product versions and written design specifications are tracked separately:
 | SHA-256 | `cefdb828349ff1974595a678e0c34ccd21d7b13f93c5cd8caaa715f26d6309ee` |
 | Repository policy | Do not copy the full `.fig` archive into Git; track its metadata and version here |
 
-The current implementation specification is [`aisee-dapp-design.v6.md`](aisee-dapp-design.v6.md). Later team clarifications in [`TEAM_DECISIONS.md`](TEAM_DECISIONS.md) override conflicting content in both the specification and historical designs.
+The current implementation specification is [`aisee-dapp-design.v6.md`](aisee-dapp-design.v6.md). Later team clarifications in [`TEAM_DECISIONS.md`](TEAM_DECISIONS.md) override conflicting content in both the specification and historical designs. Feature work must be checked against its own Figma page; 5.6 must not be treated as a global replacement for every other page.
 
 ## Version registry
 
-| Product version | Status | Notes |
+| Feature page | Status | Notes |
 |---|---|---|
-| 5.6 | Current | Latest product design source supplied on 2026-08-13 |
-| Earlier versions | Planned | Add missing versions here as they are supplied; retain them for comparison without replacing 5.6 |
+| 5.6 | Latest feature page | Latest newly opened feature-version page registered on 2026-08-13; not a global file version |
+| Existing feature pages | Living | Add later requirements at the top of the original page; do not open a new page for an existing function |
+| Missing earlier feature pages | Planned | Register them as they are supplied; retain their page ownership and history |
 
-When a new version is supplied:
+## Page maintenance rule
 
-1. Record the version, file name, export time, byte size and SHA-256.
-2. Describe the pages or modules it contains.
-3. Compare duplicate responsibilities with the current version.
-4. Replace current rules only when the new source is explicitly designated as newer.
-5. Preserve unmatched historical pages and assets.
+1. For a new feature or independent new requirement, open and register a new feature-version page.
+2. For a new requirement on an existing function, keep the original feature page and add the newest design above its earlier content.
+3. Within one feature page, the newest top section overrides duplicated responsibility below it; unmatched earlier content remains available.
+4. Record the relevant feature page, file name, export time, byte size and SHA-256 when a source archive is supplied.
+5. Describe the pages or modules it contains and preserve unmatched historical pages and assets.
