@@ -132,7 +132,7 @@
       }
       .nav-home, .nav-item {
         width: 100%;
-        min-height: 44px;
+        min-height: 32px;
         border: 0;
         border-radius: var(--radius-sm);
         background: transparent;
@@ -142,17 +142,17 @@
       .nav-home {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         padding: 0 12px;
         font-size: 14px;
         font-weight: 720;
       }
-      .nav-home svg { width: 18px; height: 18px; }
+      .nav-home svg { width: 16px; height: 16px; }
       .nav-home:hover, .nav-item:hover { background: var(--surface-subtle); }
       .nav-home.active, .nav-item.active { background: var(--accent-soft); color: #293000; }
-      .nav-group { margin-top: 12px; }
+      .nav-group { margin-top: 8px; }
       .nav-group summary {
-        min-height: 44px;
+        min-height: 32px;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -176,8 +176,12 @@
       .nav-group[open] summary::before { transform: rotate(45deg) translate(-1px, -1px); }
       .nav-group summary:hover { background: var(--surface-subtle); }
       .group-count { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 500; }
-      .nav-list { display: grid; gap: 2px; padding: 3px 0 0 15px; }
-      .nav-item { position: relative; display: block; padding: 8px 72px 8px 13px; color: #565960; font-size: 14px; line-height: 1.35; }
+      .nav-list { display: grid; gap: 4px; padding: 3px 0 0 15px; }
+      .nav-item { position: relative; display: flex; min-height: 32px; align-items: center; gap: 8px; padding: 0 72px 0 13px; color: #565960; font-size: 14px; line-height: 1.2; }
+      .nav-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; color: currentColor; }
+      .nav-icon img { width: 15px; height: 15px; object-fit: contain; }
+      .nav-group-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; }
+      .nav-group-icon img { width: 15px; height: 15px; object-fit: contain; }
       .nav-item .item-tag { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); }
       .item-tag {
         display: inline-flex;
@@ -257,6 +261,7 @@
       .overview-nav { position: sticky; top: calc(var(--topbar) + 8px); z-index: 5; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 34px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(12px); padding: 7px; }
       .overview-nav a { min-height: 36px; display: inline-flex; align-items: center; border-radius: 7px; color: var(--muted); padding: 0 11px; font-size: 13px; font-weight: 600; text-decoration: none; }
       .overview-nav a:hover { background: var(--surface-subtle); color: var(--ink); }
+      .overview-nav a.active { background: var(--accent-soft); color: #293000; }
       .overview-section { scroll-margin-top: calc(var(--topbar) + 74px); margin-top: 60px; border-top: 1px solid var(--line); padding-top: 34px; }
       .overview-section h2 { margin: 0; font-size: 28px; letter-spacing: -.03em; }
       .overview-section > p { max-width: 790px; margin: 10px 0 0; color: var(--muted); font-size: 16px; }
@@ -434,7 +439,7 @@
     <div class="shell">
       <aside class="sidebar" id="sidebar" aria-label="Design system navigation">
         <button class="nav-home active" id="homeButton" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5" stroke-linecap="round"/></svg>
+          <span class="nav-icon"><img src="assets/stemui/nav-overview.svg" alt="" aria-hidden="true"></span>
           README
         </button>
         <nav id="navGroups"></nav>
@@ -717,6 +722,14 @@
 
       const groupOrder = ["Brand", "Components", "UI Kits — Webapp"];
       const groupLabels = { "Brand": "Brand", "Components": "Components", "UI Kits — Webapp": "UI Kits — Webapp" };
+      const groupIcons = { "Brand": "nav-overview", "Components": "nav-analysis", "UI Kits — Webapp": "nav-overview" };
+      const pageIcons = {
+        "dApp v6 Foundations": "nav-overview", "dApp v6 Components": "nav-analysis", "PlanCard": "nav-growth", "PlanCard — Current": "nav-growth",
+        "IntentTag": "nav-signal-feed", "StatusBadge": "nav-replies", "Web App UI Kit": "nav-overview", "Logo": "nav-overview", "Visual Style": "nav-overview",
+        "Color Palette": "nav-overview", "Buttons & Badges": "action-check", "Cards & Data": "nav-signal-feed", "Nav, Inputs & Toggles": "nav-overview",
+        "Spacing, Radii & Shadows": "nav-overview", "Display Type — Gotu": "nav-overview", "UI Type — Karla + Mono": "nav-overview", "Tracking Eye": "nav-verify"
+      };
+      const stemuiIcon = name => `<img src="assets/stemui/${name}.svg" alt="" aria-hidden="true">`;
       const navGroups = document.getElementById("navGroups");
       const homeView = document.getElementById("homeView");
       const previewView = document.getElementById("previewView");
@@ -749,10 +762,11 @@
           if (!groupItems.length) return "";
           const itemMarkup = groupItems.map(item => `
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}">
+              <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
               ${escapeHtml(item.name)}
               <span class="item-tag ${item.status === "Current" ? "current" : ""}">${escapeHtml(item.status)}</span>
             </button>`).join("");
-          return `<details class="nav-group" open><summary>${escapeHtml(groupLabels[group])}<span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
+          return `<details class="nav-group" open><summary><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span>${escapeHtml(groupLabels[group])}<span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
         }).join("") || `<p class="empty-search">No pages match “${escapeHtml(query)}”.</p>`;
 
         navGroups.querySelectorAll("[data-path]").forEach(button => {
@@ -807,7 +821,12 @@
 
       function readHash() {
         const match = location.hash.match(/^#page=(.+)$/);
-        if (!match) { openHome(false); return; }
+        if (!match) {
+          openHome(false);
+          const anchor = location.hash.match(/^#([a-z0-9-]+)$/i);
+          if (anchor) requestAnimationFrame(() => document.getElementById(anchor[1])?.scrollIntoView({ behavior: "smooth", block: "start" }));
+          return;
+        }
         const path = decodeURIComponent(match[1]);
         items.some(item => item.path === path) ? openItem(path, false) : openHome(false);
       }
@@ -838,6 +857,14 @@
 
       renderNav();
       readHash();
+      const overviewLinks = [...document.querySelectorAll(".overview-nav a")];
+      const overviewSections = overviewLinks.map(link => document.getElementById(link.hash.slice(1))).filter(Boolean);
+      const overviewObserver = new IntersectionObserver(entries => {
+        const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        overviewLinks.forEach(link => link.classList.toggle("active", link.hash === `#${visible.target.id}`));
+      }, { rootMargin: "-26% 0px -58% 0px", threshold: [0.01, 0.2, 0.5] });
+      overviewSections.forEach(section => overviewObserver.observe(section));
       homeButton.addEventListener("click", () => openHome());
       document.getElementById("backButton").addEventListener("click", () => openHome());
       document.getElementById("openFoundations").addEventListener("click", () => openItem("preview/dapp-v6-foundations.html"));
