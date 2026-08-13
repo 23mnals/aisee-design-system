@@ -11,14 +11,14 @@ aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System
 | **Components** | 旧系统组件、动画图标、Engage 业务组件与 v6 React 基础组件 | [`components/`](components/) |
 | **UI Kits — Webapp** | 仅 Karla 的 dApp foundations、layouts、patterns、screens 与交互 UI Kit | [`ui_kits/webapp/`](ui_kits/webapp/) |
 
-原有历史页面与资源均保留，包括 Brand previews、animated icons、Engage、Analysis、Post Agent、Billing、Pricing、My Account、教程、screenshots 和 uploads。为缩短仓库根目录，旧版 HTML / 文档已集中到 [`legacy/`](legacy/)；没有重复项的旧资源没有删除。
+原有 692 个文件与子目录均保留，包括 Brand previews、animated icons、Engage、Analysis、Post Agent、Billing、Pricing、My Account、教程、screenshots 和 uploads。v6 有明确同职责规则的内容已经定点更新；没有重复项的旧资源没有删除。
 
 ## 团队预览页面
 
 直接打开 [`aisee-design-system-preview.html`](aisee-design-system-preview.html) 即可浏览完整系统，无需安装依赖。页面包含 README、Brand、Components、UI Kits — Webapp 四个部分，并提供：
 
 - v6 Foundations 与 Components 当前规范页
-- 所有保留的旧版 HTML 预览，并以 `Legacy` 标识（页面文件位于 `legacy/pages/`）
+- 所有保留的旧版 HTML 预览，并以 `Legacy` 标识
 - 目录搜索、内嵌预览、独立打开和页面链接复制
 - 桌面端与移动端响应式浏览
 
@@ -107,7 +107,19 @@ CI 会检测生成文件是否过期。
 
 ## GitHub
 
-当前远端为私有仓库 [`23mnals/aisee-design-system`](https://github.com/23mnals/aisee-design-system)。团队成员通过 GitHub Collaborators 获得访问权限；网页预览可通过 GitHub Pages 发布。
+本地内容已经准备好，但尚未创建 GitHub 远端。建议创建空仓库：
+
+- Owner：你的账号或团队 Organization
+- Repository name：`aisee-design-system`
+- README / `.gitignore` / License：全部不要勾选（本地已有 README 与 `.gitignore`；授权方案待团队确认）
+- Visibility：建议先选 **Private**，因为仓库包含品牌资产、产品原型与历史上传资源
+
+创建后复制仓库 URL，再执行：
+
+```bash
+git remote add origin https://github.com/OWNER/aisee-design-system.git
+git push -u origin main
+```
 
 ## 版本与维护
 
