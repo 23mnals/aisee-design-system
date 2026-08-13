@@ -7,6 +7,7 @@
 - Digital Numbers Regular：`fonts/DigitalNumbers-Regular.ttf`（仅保留为专项数字资产，不进入 dApp / App / Webapp 字体规则）
 - Logo mark / wordmark：PNG、SVG、GIF 多种格式
 - Homepage 纹理、build 系列插画、tracking eye 与 trail 资源
+- Analysis 加载动画原视频：`assets/animated/aisee-loading-analysis-green.mp4`（绿色版本，只读快照）
 - StemUI 自有图标库：GitHub [`qi15582378779/stemui`](https://github.com/qi15582378779/stemui) + npm README [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons?activeTab=readme)
 - Lucide 仅作为 StemUI 暂无对应资源时的补充；animated React icon 集仍在 StemUI 仓库维护
 - Engage、Analysis、Post Agent、Billing、Pricing、My Account 等历史原型和交互示例
@@ -24,6 +25,11 @@
 - JetBrains Mono：团队已确认 dApp 只使用 Karla。
 - Digital Numbers：字体文件作为专项资产保留；Score Gauge 与 App 全局仍使用 Karla。
 - 旧系统 ZIP 内已有的图标、动画、Logo 与 Webapp UI Kit 不需要重复上传。
+
+## Loading 动画
+
+- Analysis 使用绿色原视频 `aisee-loading-analysis-green.mp4`。
+- Post / Engage 的加载状态沿用同一眨眼节奏，但主题色切换为黄色；如需最终黄色视频，应由设计侧提供对应源文件，避免对绿色原视频做不可逆修改。
 
 新增资源请保留来源、授权和用途说明；不要直接覆盖不同语义的同名文件。
 
