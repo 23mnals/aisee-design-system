@@ -263,8 +263,11 @@
       .capability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
       .capability-card { min-height: 190px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; }
       .capability-number { width: 28px; height: 28px; display: grid; place-items: center; margin-bottom: 26px; border-radius: 50%; background: var(--ink); color: white; font-size: 12px; font-weight: 700; }
-      .capability-card:nth-child(2) .capability-number { background: #8c7400; }
+      .capability-card:nth-child(2) .capability-number { background: #789b00; }
       .capability-card:nth-child(3) .capability-number { background: #6d3c75; }
+      .capability-card:nth-child(4) .capability-number { background: #8c7400; }
+      .capability-card:nth-child(5) .capability-number { background: #47820b; }
+      .capability-card:nth-child(6) .capability-number { background: #275f8f; }
       .capability-card h3 { margin: 0 0 8px; font-size: 18px; }
       .capability-card p { margin: 0; color: var(--muted); font-size: 14px; }
       .tagline { margin-top: 18px; border-left: 3px solid var(--accent); color: var(--muted); padding: 10px 0 10px 16px; font-size: 18px; font-style: italic; }
@@ -467,12 +470,16 @@
 
           <section class="overview-section" id="product-overview" aria-labelledby="product-title">
             <h2 id="product-title">Product overview</h2>
-            <p>AISEE is an AI visibility and social engagement platform. The system supports three related product capabilities while keeping their navigation and module accents distinct.</p>
+            <p>AISEE is an AI visibility and social engagement platform. Six connected capabilities form a continuous diagnose → grow → execute → verify loop, supported by reusable channel and account connections.</p>
             <div class="capability-grid">
               <article class="capability-card"><span class="capability-number">01</span><h3>Analysis / GEO</h3><p>Measures AI visibility, citation performance, rankings and prompt coverage across generative search platforms.</p></article>
-              <article class="capability-card"><span class="capability-number">02</span><h3>Post Agent</h3><p>Plans, generates, schedules and publishes social content through connected channels and calendar workflows.</p></article>
+              <article class="capability-card"><span class="capability-number">02</span><h3>Growth</h3><p>Turns diagnostic gaps into prioritized improvement plans, key steps and measurable score-growth tasks.</p></article>
               <article class="capability-card"><span class="capability-number">03</span><h3>Engage</h3><p>Finds relevant conversations, manages keywords and accounts, drafts replies and tracks response outcomes.</p></article>
+              <article class="capability-card"><span class="capability-number">04</span><h3>Post Agent</h3><p>Plans, generates, schedules and publishes social content through connected channels and calendar workflows.</p></article>
+              <article class="capability-card"><span class="capability-number">05</span><h3>Verify</h3><p>Re-scans live visibility after execution, records score changes and verifies whether planned actions created measurable gains.</p></article>
+              <article class="capability-card"><span class="capability-number">06</span><h3>Connection</h3><p>Manages the channels, social accounts and extension connections required by Growth, Engage and Post workflows.</p></article>
             </div>
+            <div class="priority-note"><strong>Capability relationship:</strong> Analysis diagnoses → Growth prioritizes → Engage and Post execute → Verify measures the result. Connection supplies the reusable account and channel layer across the loop.</div>
             <blockquote class="tagline">“The future of discoverability.”</blockquote>
 
             <h3 class="subheading">Products and surfaces</h3>
@@ -481,7 +488,7 @@
                 <thead><tr><th>Surface</th><th>Purpose</th><th>Design baseline</th><th>Typography</th></tr></thead>
                 <tbody>
                   <tr><td>Marketing homepage</td><td>Public brand story, product value, FAQ and pricing.</td><td>1440px desktop with responsive mobile states</td><td>Karla + Gotu</td></tr>
-                  <tr><td>dApp / Webapp</td><td>Analysis, Post Agent, Engage and account workflows.</td><td>1440px application shell; 224px sidebar; 70px header</td><td>Karla only</td></tr>
+                  <tr><td>dApp / Webapp</td><td>Analysis, Growth, Engage, Post Agent, Verify, Connection and account workflows.</td><td>1440px application shell; 224px sidebar; 70px header</td><td>Karla only</td></tr>
                   <tr><td>Mobile references</td><td>Responsive and compact product flows where present in Figma.</td><td>Frame-specific; document each added version</td><td>Karla only</td></tr>
                 </tbody>
               </table>
@@ -520,7 +527,7 @@
               <article class="principle"><strong>Errors explain the fix</strong><p>State what happened and the next action. Avoid blame, jokes or generic “Something went wrong”.</p></article>
             </div>
             <h3 class="subheading">Examples</h3>
-            <ul class="example-list"><li>CTA: “Start Free”, “New analysis”, “Save changes”</li><li>Navigation: “Dashboard”, “Analysis”, “Post Agent”, “Engage”, “Replies”</li><li>Placeholder: “Enter the website URL” or “Start writing your post…”</li><li>Error: “Your post needs at least one character or one image.”</li></ul>
+            <ul class="example-list"><li>CTA: “Start Free”, “New analysis”, “Save changes”</li><li>Navigation: “Analysis”, “Growth”, “Engage”, “Post”, “Verify”, “Connection”</li><li>Placeholder: “Enter the website URL” or “Start writing your post…”</li><li>Error: “Your post needs at least one character or one image.”</li></ul>
           </section>
 
           <section class="overview-section" id="visual" aria-labelledby="visual-title">
@@ -582,7 +589,7 @@
               <article><h3>Content and status</h3><p>Cards, Stat Cards, Tags, Badges, StatusBadge, IntentTag and PlanCard.</p></article>
               <article><h3>Data display</h3><p>Tables, charts, Score Gauge, KPI strips and comparison patterns.</p></article>
               <article><h3>Overlays and feedback</h3><p>Dialog, modal footer, tooltip, toast, loading, empty and error states.</p></article>
-              <article><h3>Product patterns</h3><p>Post Editor, Signal Feed, Reply Panel, Review Queue and Keywords & Accounts.</p></article>
+              <article><h3>Product patterns</h3><p>Analysis reports, Growth plans, Signal Feed, Post Editor, Verify re-scan, Connection management, Reply Panel and Review Queue.</p></article>
             </div>
           </section>
 

@@ -29,6 +29,19 @@ dApp 是官网的"工作态"版本：
 - **替换字体策略**：官网保留 Gotu；**dApp 全部使用 Karla**，包括页面一级标题、弹窗标题、导航、表格与表单。
 - **节奏**：以数据卡片、表格、侧边栏导航为主，靠功能区色彩高亮。
 
+### 1.1 产品能力闭环
+
+Product overview 必须完整呈现六个相互连接的能力，不能只列 Analysis / Post Agent / Engage：
+
+1. **Analysis / GEO**：诊断 AI visibility、citation、ranking 与 prompt coverage。
+2. **Growth**：把诊断缺口转化为提升计划、关键步骤和可执行任务。
+3. **Engage**：发现相关对话并完成回复、跟踪和效果管理。
+4. **Post Agent**：生成、排期并发布内容。
+5. **Verify**：执行后重新扫描，记录分数轨迹并验证实际提升。
+6. **Connection**：统一管理 channel、social account 与 extension 连接，供 Growth / Engage / Post 复用。
+
+主流程关系：**Analysis diagnoses → Growth prioritizes → Engage / Post execute → Verify measures**；Connection 是跨流程的底层连接能力。六项是产品能力结构，不等同于顶部模块主色切换结构。
+
 ### ★ 双主色系统（核心规则）
 
 dApp 按 **功能模块** 划分两套主色调，**侧边栏 tab 切换时整页高亮色随之切换**：

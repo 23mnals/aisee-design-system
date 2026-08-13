@@ -110,6 +110,14 @@ test('overview contains the complete documentation sections', () => {
   assert.match(portal, /Never redraw the eye or wordmark with CSS/);
 });
 
+test('product overview contains the complete six-capability loop', () => {
+  for (const capability of ['Analysis / GEO', 'Growth', 'Engage', 'Post Agent', 'Verify', 'Connection']) {
+    assert.match(portal, new RegExp(`<h3>${capability.replace('/', '\\/')}</h3>`));
+  }
+  assert.match(portal, /Analysis diagnoses → Growth prioritizes → Engage and Post execute → Verify measures/);
+  assert.match(portal, /Analysis, Growth, Engage, Post Agent, Verify, Connection and account workflows/);
+});
+
 test('brand fonts are local and application typography remains Karla-only', async () => {
   const displayType = await readFile(new URL('../preview/type-display.html', import.meta.url), 'utf8');
   const logoPreview = await readFile(new URL('../preview/brand-logo.html', import.meta.url), 'utf8');
