@@ -91,6 +91,29 @@ test('portal uses the official AISEE logo mark', async () => {
   await access(new URL('../assets/aisee-logo-mark.png', import.meta.url));
 });
 
+test('webapp UI kit follows the 5.5 Growth Loop shell and official branding', async () => {
+  const kit = await readFile(new URL('../ui_kits/webapp/index.html', import.meta.url), 'utf8');
+  const shared = await readFile(new URL('../ui_kits/webapp/Components.jsx', import.meta.url), 'utf8');
+  const dna = JSON.parse(await readFile(new URL('../ui_kits/webapp/design-dna-v5.5.json', import.meta.url), 'utf8'));
+  assert.match(kit, /src="\.\.\/\.\.\/assets\/aisee-logo-wordmark\.svg"/);
+  assert.match(kit, /src="\.\.\/\.\.\/assets\/aisee-logo-mark\.png"/);
+  assert.match(kit, /Growth Loop/);
+  assert.match(kit, /data-screen="Overview"/);
+  assert.match(kit, /data-screen="Analysis"/);
+  assert.match(kit, /data-screen="Growth"/);
+  assert.match(kit, /data-screen="Engage"/);
+  assert.match(kit, /data-screen="Post"/);
+  assert.match(kit, /Turn insights into measurable growth/);
+  assert.match(kit, /Score Improvement Plan/);
+  assert.match(kit, /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
+  assert.doesNotMatch(kit, /\['Analysis', 'Post Agent', 'Engage'\]/);
+  assert.match(shared, /aisee-logo-wordmark\.svg/);
+  assert.match(shared, /aisee-logo-mark\.png/);
+  assert.doesNotMatch(shared, /borderRadius: '320px 320px 0 0'/);
+  assert.equal(dna.design_system.layout.columns, '4 KPI columns followed by asymmetric two-column content');
+  assert.equal(dna.visual_effects['3d_elements'].enabled, false);
+});
+
 test('legacy buttons preview uses official logo assets instead of a CSS redraw', async () => {
   const buttons = await readFile(new URL('../preview/components-buttons-badges.html', import.meta.url), 'utf8');
   assert.match(buttons, /src="\.\.\/assets\/aisee-logo-mark\.png"/);

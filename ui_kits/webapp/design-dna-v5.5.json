@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "name": "AISEE Webapp 5.5 Growth Overview",
+    "description": "Current Webapp UI Kit baseline extracted from the 5.5 Growth Overview reference.",
+    "source_references": ["codex-clipboard-771e1d2e-b68e-49e0-ab03-44e954d493f1.png", "Figma feature page 5.5"],
+    "created_at": "2026-08-13"
+  },
+  "design_system": {
+    "color": {
+      "palette_type": "neutral with lime and soft green accents",
+      "primary": { "hex": "#CFFF29", "role": "analysis progress, credit progress and high-emphasis system feedback" },
+      "secondary": { "hex": "#E4EFC1", "role": "Growth banner and supporting score-growth surfaces" },
+      "accent": { "hex": "#B9F24A", "role": "AI suggestion actions and positive lift indicators" },
+      "neutral": { "scale": ["#FFFFFF", "#FAFAFA", "#F5F5F5", "#E8E8E8", "#87919E", "#111111"], "usage": "White cards on a light gray page with dark text and cool gray metadata" },
+      "semantic": { "success": "#B9F24A", "warning": "#FFE253", "error": "#EC5212", "info": "#DCEEFF" },
+      "surface": { "background": "#FAFAFA", "card": "#FFFFFF", "elevated": "#FFFFFF" },
+      "contrast_strategy": "dark-on-light with restrained tinted areas for workflow emphasis"
+    },
+    "typography": {
+      "type_scale": {
+        "display": { "size": "30px", "weight": "600", "line_height": "36px", "tracking": "-0.01em" },
+        "heading_1": { "size": "24px", "weight": "600", "line_height": "30px", "tracking": "0" },
+        "heading_2": { "size": "20px", "weight": "600", "line_height": "26px", "tracking": "0" },
+        "heading_3": { "size": "16px", "weight": "600", "line_height": "22px", "tracking": "0" },
+        "body": { "size": "14px", "weight": "400", "line_height": "22px", "tracking": "0" },
+        "body_small": { "size": "13px", "weight": "400", "line_height": "20px", "tracking": "0" },
+        "caption": { "size": "12px", "weight": "400", "line_height": "18px", "tracking": "0" },
+        "overline": { "size": "10px", "weight": "500", "line_height": "14px", "tracking": "0.08em" }
+      },
+      "font_families": { "heading": "Karla", "body": "Karla", "mono": "Karla" },
+      "font_style_notes": "Karla only across the dApp, including data and navigation"
+    },
+    "spacing": {
+      "base_unit": "4px",
+      "scale": ["4px", "8px", "12px", "16px", "20px", "24px", "32px", "48px"],
+      "content_density": "comfortable data-dense",
+      "section_rhythm": "12px card gaps, 24px major regions and 32px main padding"
+    },
+    "layout": {
+      "grid_system": "fixed header and sidebar with fluid main dashboard grid",
+      "max_content_width": "none within 1440px baseline",
+      "columns": "4 KPI columns followed by asymmetric two-column content",
+      "gutter": "12px",
+      "breakpoints": ["720px", "1040px", "1280px"],
+      "alignment_tendency": "left aligned, strong shared edges and consistent card baselines"
+    },
+    "shape": {
+      "border_radius": { "small": "8px", "medium": "12px", "large": "16px", "pill": "9999px" },
+      "border_usage": "1px low-contrast borders on cards and controls, stronger only for interaction",
+      "divider_style": "1px solid or dashed 5 percent black"
+    },
+    "elevation": {
+      "shadow_style": "minimal and soft",
+      "levels": { "low": "0 1px 3px rgba(0,0,0,.04)", "medium": "0 10px 15px -3px rgba(0,0,0,.10)", "high": "0 20px 24px rgba(0,0,0,.10)" },
+      "depth_cues": "surface tint and borders before shadow"
+    },
+    "iconography": {
+      "style": "rounded outline with select filled status marks",
+      "stroke_weight": "1.5px",
+      "size_scale": ["16px", "18px", "24px"],
+      "preferred_set": "AISEE internal icon library with Lucide-compatible fallback"
+    },
+    "motion": {
+      "easing": "cubic-bezier(0.2,0.8,0.2,1)",
+      "duration_scale": { "micro": "120ms", "normal": "180ms", "macro": "300ms" },
+      "entrance_pattern": "short opacity and translate transitions for overlays only",
+      "exit_pattern": "short fade",
+      "philosophy": "state clarity without decorative movement"
+    },
+    "components": {
+      "button_style": "36-44px controls, 8-10px radius, black or green action fills",
+      "input_style": "36px white input with subtle border and module-color interaction ring",
+      "card_style": "white 12-16px radius cards with 1px subtle border and almost no shadow",
+      "navigation_pattern": "70px brand header plus 224px grouped project sidebar",
+      "modal_style": "white 16px radius layer with restrained shadow and 24px internal padding",
+      "list_style": "stacked 72-96px task rows with status pills and right-aligned actions",
+      "component_notes": "Overview, Growth, Engage and Post live in one project sidebar; 5.5 removes the old top module toggle from the primary shell"
+    }
+  },
+  "design_style": {
+    "aesthetic": {
+      "mood": "calm, capable and optimistic",
+      "visual_metaphor": "a guided growth operating system",
+      "era_influence": "contemporary 2026 SaaS dashboard",
+      "genre": "AI analytics and workflow SaaS",
+      "personality_traits": ["precise", "helpful", "data-led", "approachable"],
+      "adjectives": ["clean", "structured", "soft", "functional", "growth-oriented"]
+    },
+    "visual_language": {
+      "complexity": "moderate information density with simple surfaces",
+      "ornamentation": "minimal",
+      "whitespace_usage": "comfortable around grouped data",
+      "visual_weight_distribution": "sidebar and banner establish context; white content cards carry detail",
+      "focal_strategy": "pale green workflow banner then KPI strip then growth tasks",
+      "contrast_level": "medium-high for text, low for container boundaries",
+      "texture_usage": "none"
+    },
+    "composition": {
+      "hierarchy_method": "group labels, card scale, numeric emphasis and restrained tint",
+      "balance_type": "structured asymmetry",
+      "flow_direction": "top to bottom, left score evidence to right action plan",
+      "grouping_strategy": "nested cards and sidebar section labels",
+      "negative_space_role": "separates workflow phases and prevents dense data from feeling heavy"
+    },
+    "imagery": {
+      "photo_treatment": "no photography",
+      "illustration_style": "small functional line illustrations in tinted square containers",
+      "graphic_elements": "progress lines, pills, stars and simple charts",
+      "pattern_usage": "none",
+      "image_shape": "rounded square icon containers and circular project marks"
+    },
+    "interaction_feel": {
+      "feedback_style": "subtle surface and border response",
+      "hover_behavior": "5 percent dark fill or slightly stronger border",
+      "transition_personality": "quick and restrained",
+      "loading_style": "stable skeleton cards and progress indicators",
+      "microinteraction_density": "low"
+    },
+    "brand_voice_in_ui": {
+      "tone": "direct, supportive and measurable",
+      "formality": "professional-friendly",
+      "cta_style": "short verb-first labels",
+      "empty_state_approach": "explain the next growth action",
+      "error_tone": "specific and corrective"
+    }
+  },
+  "visual_effects": {
+    "overview": { "effect_intensity": "low", "performance_tier": "lightweight", "fallback_strategy": "static CSS with no movement under prefers-reduced-motion", "primary_technology": "CSS" },
+    "background_effects": { "type": "none", "description": "flat light-gray application surface", "technology": "CSS", "params": { "color_palette": ["#FAFAFA"], "speed": "0", "density": "0", "opacity": "1", "blend_mode": "normal" } },
+    "particle_systems": { "enabled": false, "type": "none", "description": "No particles", "technology": "none", "params": { "count": 0, "shape": "none", "size_range": "0", "movement_pattern": "none", "color_behavior": "none", "interaction": "none", "spawn_area": "none" } },
+    "3d_elements": { "enabled": false, "type": "none", "description": "No 3D", "technology": "none", "params": { "renderer": "none", "lighting": "none", "camera": "none", "materials": "none", "geometry": "none", "post_processing": "none", "interaction_model": "none" } },
+    "shader_effects": { "enabled": false, "type": "none", "description": "No shaders", "technology": "none", "params": { "uniforms": {}, "vertex_manipulation": "none", "fragment_output": "none", "noise_type": "none", "distortion": "none" } },
+    "scroll_effects": {
+      "parallax": { "enabled": false, "layers": 0, "depth_range": "0", "speed_curve": "none" },
+      "scroll_triggered_animations": { "enabled": false, "trigger_points": [], "animation_type": "none", "scrub_behavior": "none" },
+      "scroll_morphing": { "enabled": false, "description": "No scroll morphing" }
+    },
+    "text_effects": { "type": "none", "description": "Static readable text", "technology": "CSS", "params": { "split_strategy": "none", "animation_per_unit": "none", "stagger": "0", "effect_style": "none" } },
+    "cursor_effects": { "enabled": false, "type": "default", "description": "Native cursor", "params": { "shape": "default", "size": "default", "blend_mode": "normal", "trail": "none", "interaction_zone": "controls" } },
+    "image_effects": { "type": "none", "description": "No image effects", "technology": "none", "params": { "filter_pipeline": "none", "hover_transform": "none", "reveal_animation": "none", "distortion_type": "none" } },
+    "glassmorphism_neumorphism": { "enabled": false, "style": "none", "params": { "blur_radius": "0", "transparency": "0", "border_treatment": "subtle solid", "shadow_type": "soft standard", "light_source_angle": "none" } },
+    "canvas_drawings": { "enabled": false, "type": "none", "description": "No canvas", "technology": "none", "params": { "draw_method": "none", "animation_loop": "none", "color_scheme": "none", "responsiveness": "none", "interaction": "none" } },
+    "svg_animations": { "enabled": false, "type": "static icons", "description": "SVG icons remain static", "params": { "animation_method": "none", "path_morphing": false, "stroke_animation": false, "filter_effects": "none" } },
+    "composite_notes": "The reference relies on typography, grouping and low-contrast surfaces rather than special visual effects."
+  }
+}

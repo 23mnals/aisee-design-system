@@ -1,530 +1,60 @@
-<!DOCTYPE html>
-<!-- @dsCard group="UI Kit — Webapp" name="Web App UI Kit" subtitle="Interactive webapp — Dashboard, Calendar, Channels, Post Agent" viewport="1440x900" -->
+<!doctype html>
+<!-- @dsCard group="UI Kit — Webapp" name="Web App UI Kit" subtitle="Current 5.5 Growth Loop shell — Overview, Analysis, Growth, Engage and Post" viewport="1440x900" -->
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>aisee — Web App UI Kit</title>
-<link rel="stylesheet" href="../../src/tokens/tokens.css">
-<style>
-  @font-face { font-family: 'Karla'; src: url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
-</style>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; overflow: hidden; }
-  body { background: #FAFAFA; font-family: 'Karla', sans-serif; }
-
-  #app { display: flex; flex-direction: column; height: 100vh; }
-
-  .app-layout { display: flex; flex: 1; overflow: hidden; }
-  .main-content { flex: 1; overflow-y: auto; padding: 24px; }
-
-  /* Screen transitions */
-  .screen { display: none; }
-  .screen.active { display: block; }
-
-  /* Page header */
-  .page-title { font-family: 'Karla', sans-serif; font-size: 20px; font-weight: 600; line-height: 24px; color: #111; margin-bottom: 20px; }
-
-  /* Grid */
-  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
-  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-
-  /* Stat card */
-  .stat-card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-  .stat-label { font-size: 11px; color: rgba(17,17,17,0.5); margin-bottom: 4px; }
-  .stat-value { font-size: 28px; font-weight: 700; color: #111; letter-spacing: -0.02em; }
-  .stat-unit { font-size: 14px; font-weight: 400; color: rgba(17,17,17,0.4); }
-  .stat-sub { font-size: 11px; color: rgba(17,17,17,0.4); margin-top: 4px; }
-
-  /* Post list */
-  .post-list { display: flex; flex-direction: column; gap: 8px; }
-  .post-item { background: #fff; border-radius: 10px; border: 1px solid rgba(17,17,17,0.06); padding: 12px 14px; cursor: pointer; transition: border-color 0.15s; }
-  .post-item:hover { border-color: rgba(17,17,17,0.15); }
-  .post-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
-  .post-avatar { width: 26px; height: 26px; border-radius: 50%; background: #E1E1E1; flex-shrink: 0; }
-  .post-handle { font-size: 12px; font-weight: 600; color: #111; }
-  .platform-dot { width: 14px; height: 14px; border-radius: 3px; background: #111; display: inline-block; }
-  .post-body-text { font-size: 13px; color: #111; line-height: 1.5; margin-bottom: 9px; }
-  .post-foot { display: flex; align-items: center; justify-content: space-between; }
-  .status-pill { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 999px; }
-  .status-scheduled { background: #FFF2B3; color: #111; }
-  .status-sent      { background: #A5D500; color: #111; }
-  .status-draft     { background: rgba(17,17,17,0.05); color: #111; }
-  .status-failed    { background: #FFD0D0; color: #111; }
-  .post-time-label { font-size: 11px; color: rgba(17,17,17,0.4); }
-
-  /* Calendar */
-  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .cal-month { font-size: 16px; font-weight: 600; color: #111; font-family: 'Karla'; }
-  .cal-nav { width: 28px; height: 28px; border-radius: 8px; background: rgba(17,17,17,0.05); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #111; }
-  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-  .cal-day-name { font-size: 10px; font-weight: 600; color: rgba(17,17,17,0.4); text-align: center; padding: 4px 0; font-family: 'Karla'; letter-spacing: 0.06em; }
-  .cal-day-cell { aspect-ratio: 1; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; cursor: pointer; font-size: 13px; color: #111; font-family: 'Karla'; }
-  .cal-day-cell:hover { background: rgba(17,17,17,0.04); }
-  .cal-day-cell.active { background: #FFE253; }
-  .cal-day-cell.today { font-weight: 700; }
-  .cal-dot { width: 5px; height: 5px; border-radius: 50%; background: #CFF229; }
-  .cal-day-cell.active .cal-dot { background: #111; }
-
-  /* Channels */
-  .channel-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #fff; border-radius: 10px; border: 1px solid rgba(17,17,17,0.06); margin-bottom: 6px; }
-  .ch-avatar { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; }
-  .ch-name { font-size: 14px; font-weight: 500; color: #111; font-family: 'Karla'; flex: 1; }
-  .ch-handle { font-size: 11px; color: rgba(17,17,17,0.5); font-family: 'Karla'; }
-  .ch-status { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-  .ch-connected { background: #CFF229; }
-  .ch-disconnected { background: rgba(17,17,17,0.05); }
-
-  /* Sections */
-  .section-row { display: flex; gap: 16px; margin-bottom: 20px; }
-  .section-box { background: #fff; border-radius: 12px; padding: 16px; flex: 1; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-  .section-box-title { font-size: 13px; font-weight: 600; color: #111; margin-bottom: 12px; font-family: 'Karla'; }
-
-  /* Post agent */
-  .agent-card { background: #fff; border-radius: 12px; border: 1px solid rgba(17,17,17,0.07); padding: 14px; margin-bottom: 8px; }
-  .agent-title { font-size: 14px; font-weight: 600; color: #111; font-family: 'Karla'; margin-bottom: 4px; }
-  .agent-desc { font-size: 12px; color: rgba(17,17,17,0.55); font-family: 'Karla'; line-height: 1.5; margin-bottom: 10px; }
-  .agent-footer { display: flex; align-items: center; gap: 8px; }
-  .agent-run-btn { padding: '5px 12px'; background: '#FFE253'; border-radius: 8; font-size: 13; font-weight: 500; }
-
-  /* Modal overlay */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.32); z-index: 100; display: flex; align-items: flex-end; justify-content: center; }
-  .modal-sheet { background: #fff; border-radius: 16px 16px 0 0; width: 100%; max-width: 520px; padding: 20px; box-shadow: 0 20px 24px rgba(0,0,0,0.1); }
-  .modal-title { font-size: 20px; font-weight: 600; line-height: 30px; color: #111; font-family: 'Karla'; }
-
-  /* Editor */
-  .editor-wrap { border: 1px solid rgba(17,17,17,0.05); border-radius: 12px; overflow: hidden; margin: 12px 0; }
-  .editor-toolbar { background: #F7F6E9; padding: 6px 12px; display: flex; gap: 12px; border-bottom: 1px solid rgba(17,17,17,0.06); }
-  .editor-toolbar span { font-size: 13px; color: rgba(17,17,17,0.6); cursor: pointer; }
-  .editor-body { padding: 12px; min-height: 80px; font-size: 14px; font-family: 'Karla'; color: rgba(17,17,17,0.4); outline: none; }
-  .editor-body:focus { color: #111; }
-  .editor-footer { display: flex; justify-content: flex-end; padding: 0 12px 8px; }
-  .char-count { background: rgba(17,17,17,0.04); border: 1px solid rgba(17,17,17,0.05); border-radius: 8px; padding: 3px 8px; font-size: 11px; font-weight: 500; color: #111; font-family: 'Karla'; }
-
-  .btn-icon { width: 44px; height: 44px; border-radius: 10px; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-  .btn-outline-sm { background: #fff; border: 1px solid rgba(17,17,17,0.15); }
-  .btn-lime { background: #CFF229; }
-
-  /* Alert bar */
-  .alert-bar { background: #FFD0D0; border-radius: 6px; padding: 6px 10px; font-size: 12px; color: #111; font-family: 'Karla'; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>aisee — Web App UI Kit 5.5</title>
+  <style>
+    @font-face{font-family:Karla;src:url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
+    :root{--ink:#111;--muted:#87919e;--page:#fafafa;--card:#fff;--line:rgba(17,17,17,.06);--lime:#cfff29;--growth:#e4efc1;--growth-action:#b9f24a;--soft:#f5f5f5;--radius:12px;--sidebar:224px;--header:70px;--ease:cubic-bezier(.2,.8,.2,1)}
+    *{box-sizing:border-box}html,body{height:100%;margin:0}body{overflow:hidden;background:var(--page);color:var(--ink);font-family:Karla,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}button{font:inherit;color:inherit}.app{height:100vh;display:grid;grid-template-rows:var(--header) 1fr}.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 24px 0 22px;border-bottom:1px solid var(--line);background:#fff}.brand-logo{display:block;width:142px;height:64px;object-fit:contain}.top-actions{display:flex;align-items:center;gap:22px;color:rgba(17,17,17,.5)}.top-actions span{font-weight:500}.top-actions .progress{display:flex;min-height:34px;align-items:center;gap:9px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:#fff}.progress-ring{width:19px;height:19px;border:3px solid var(--soft);border-radius:50%}.bell{display:grid;width:34px;height:34px;padding:0;border:0;border-radius:9px;place-items:center;background:#f7f7f7;cursor:pointer}.shell{min-height:0;display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr)}.sidebar{min-height:0;display:flex;flex-direction:column;padding:16px 8px 10px;border-right:1px solid var(--line);background:#fff}.project{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff}.project-mark{width:32px;height:32px;object-fit:contain}.project-copy{min-width:0}.project-copy strong{display:block;font-size:13px;font-weight:600}.project-copy small{display:block;margin-top:2px;color:rgba(17,17,17,.5);font-size:11px}.sidebar-rule{height:1px;margin:16px 0;background:var(--line)}.nav{min-height:0;overflow:auto;padding-right:2px}.nav-label{margin:6px 10px 7px;color:#a6b2c0;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.nav-item{display:flex;width:100%;min-height:36px;align-items:center;gap:9px;padding:7px 10px;border:0;border-radius:8px;background:transparent;text-align:left;cursor:pointer;transition:background .15s}.nav-item:hover,.nav-item.active{background:#f5f5f5}.nav-icon{display:grid;width:16px;height:16px;flex:0 0 auto;place-items:center;font-size:15px}.nav-children{margin:3px 0 8px 16px;padding-left:10px;border-left:1px solid rgba(17,17,17,.1)}.nav-children .nav-item{padding-left:8px}.account{margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}.account-card{display:flex;align-items:center;gap:8px;padding:8px 9px;border-radius:10px;background:#fafafa}.account-avatar{width:32px;height:32px;border-radius:4px;background:#cce7ff}.account-avatar img{width:100%;height:100%;object-fit:contain}.account-copy{min-width:0}.account-copy strong{display:block;overflow:hidden;font-size:12px;text-overflow:ellipsis;white-space:nowrap}.account-copy small{color:rgba(17,17,17,.5);font-size:11px}.credits{padding:9px 10px 8px}.credits strong{font-size:13px}.credit-track{height:6px;margin-top:7px;overflow:hidden;border-radius:999px;background:#f0f0f0}.credit-track span{display:block;width:92%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#cfff29,#a5d500)}.logout{width:100%;min-height:38px;border:0;border-radius:9px;background:#fafafa;cursor:pointer}.main{min-width:0;overflow:auto;padding:20px;background:var(--page)}.page{max-width:1500px;margin:0 auto}.growth-banner{display:flex;min-height:68px;align-items:center;gap:12px;padding:12px 16px;border-radius:16px;background:var(--growth);box-shadow:0 0 0 5px #fff}.banner-icon{display:grid;width:44px;height:44px;flex:0 0 auto;border-radius:10px;place-items:center;background:#fff;font-size:23px}.banner-copy{min-width:0}.banner-copy h1{margin:0;font-size:20px;font-weight:600;line-height:24px}.banner-copy p{margin:2px 0 0;font-size:14px}.secondary-action{min-height:36px;margin-left:auto;padding:7px 14px;border:1px solid var(--line);border-radius:9px;background:#fff;font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.04);cursor:pointer}.overview-block{margin-top:24px;padding:24px;border-radius:16px;background:rgba(255,255,255,.42);box-shadow:0 0 0 5px #fff}.section-title{margin:0 0 16px;font-size:18px;font-weight:600}.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.kpi{min-height:74px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff}.kpi strong{display:flex;align-items:center;gap:7px;font-size:26px;line-height:30px}.kpi small{display:block;margin-top:3px;color:#758292;font-size:12px}.pill{display:inline-flex;min-height:20px;align-items:center;padding:2px 8px;border-radius:999px;background:#111;color:#fff;font-size:10px;font-weight:500}.content-grid{display:grid;grid-template-columns:minmax(360px,.95fr) minmax(500px,1fr);gap:14px;margin-top:24px}.panel{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.65)}.visibility-panel{padding:20px;background:#fcfdf5}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{margin:0;font-size:17px}.panel-head p{margin:4px 0 0;color:rgba(17,17,17,.55);font-size:12px}.score-box{margin-top:20px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#fff}.score-summary{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px}.score-metric span{display:block;color:rgba(17,17,17,.5);font-size:12px}.score-metric strong{display:block;margin-top:4px;font-size:26px}.score-arrow{color:#8ec800;font-size:24px}.chart{position:relative;height:64px;margin-top:-36px;margin-left:52%;border-bottom:1px solid var(--line)}.chart:before{position:absolute;right:8px;bottom:9px;left:8px;border-top:2px dashed var(--lime);transform:rotate(-14deg);transform-origin:right;content:""}.chart:after{position:absolute;right:4px;top:4px;width:7px;height:7px;border:1px solid #111;border-radius:50%;background:var(--lime);content:""}.chart-label{position:absolute;color:rgba(17,17,17,.5);font-size:10px}.chart-label.start{bottom:0;left:0}.chart-label.end{right:0;bottom:0}.outcome{margin-top:18px;padding-top:17px;border-top:1px solid var(--line)}.outcome small{color:rgba(17,17,17,.6)}.outcome h3{margin:8px 0 6px;font-size:16px}.outcome p{margin:0;color:rgba(17,17,17,.5);font-size:12px}.dark-action{min-height:36px;margin-top:18px;padding:7px 14px;border:0;border-radius:9px;background:#111;color:#fff;font-weight:500;cursor:pointer}.plan-panel{padding:20px}.plan-tag{display:inline-flex;margin-left:8px;padding:4px 9px;border-radius:999px;background:#e7f4b8;font-size:11px;font-weight:500}.task-list{display:grid;gap:9px;margin-top:20px}.task{display:grid;grid-template-columns:26px minmax(0,1fr) 135px 140px;align-items:center;gap:12px;min-height:78px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff}.task-index{display:grid;width:25px;height:25px;border-radius:50%;place-items:center;background:#f3f1e8;font-size:12px}.task-copy{min-width:0}.task-copy strong{display:block;overflow:hidden;font-size:14px;text-overflow:ellipsis;white-space:nowrap}.task-copy small{display:block;margin-top:5px;color:rgba(17,17,17,.42)}.stars{margin-top:5px;color:#ffe253;letter-spacing:1px;text-shadow:0 0 0 #111}.lift small{display:block;color:rgba(17,17,17,.55)}.lift span{display:inline-flex;margin-top:5px;padding:3px 8px;border-radius:999px;background:#e4ff85;font-weight:600}.suggest{min-height:36px;border:1px solid #a5dd46;border-radius:10px;background:linear-gradient(90deg,#d4ff65,#a9eba1);font-weight:500;cursor:pointer}.easy{display:inline-flex;margin-left:8px;padding:3px 8px;border-radius:999px;background:#d7efce;color:#4d6d46;font-size:11px}.screen-note{display:none;margin:24px;padding:20px;border:1px dashed rgba(17,17,17,.18);border-radius:12px;background:#fff}.screen-note.active{display:block}@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.content-grid{grid-template-columns:1fr}.task{grid-template-columns:26px minmax(0,1fr) 110px}.suggest{grid-column:2/-1;width:max-content}}@media(max-width:760px){:root{--sidebar:0px}.top-actions>span,.progress{display:none!important}.shell{display:block}.sidebar{display:none}.main{padding:14px}.growth-banner{align-items:flex-start}.secondary-action{display:none}.kpi-grid{grid-template-columns:1fr}.overview-block{padding:16px}.content-grid{margin-top:18px}.task{grid-template-columns:24px 1fr}.lift,.suggest{grid-column:2}.brand-logo{width:118px}}@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+  </style>
 </head>
 <body>
-<div id="app"></div>
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
-<!-- Raw browser copy is generated from Components.jsx to avoid dev-server JSX transforms. -->
-<script type="text/babel" src="/legacy/webapp-components.txt"></script>
-
-<script type="text/babel">
-const { useState, useEffect } = React;
-
-// ─── Data ──────────────────────────────────────────────────────────
-const POSTS = [
-  { id: 1, content: 'GEO is the evolution of SEO for the AI-first era. Optimize your brand for AI-generated answers — where decisions are increasingly made.', platform: 'X', status: 'Scheduled', time: 'Today 8:20 AM' },
-  { id: 2, content: 'Your AI Rankings report is ready. Citation score up 12% this month. 🔍', platform: 'LinkedIn', status: 'Sent', time: 'Yesterday' },
-  { id: 3, content: 'How LLMs decide what to recommend — and how you can influence it. Read our latest breakdown.', platform: 'Reddit', status: 'Draft', time: '—' },
-  { id: 4, content: 'aisee now supports TikTok scheduling. Connect your channel and let the Post Agent do the work.', platform: 'TikTok', status: 'Scheduled', time: 'Tomorrow 9:00 AM' },
-  { id: 5, content: 'Prompt Strategy matters more than ever. Here\'s how top brands are optimizing for ChatGPT.', platform: 'X', status: 'Sent', time: 'Mon 8:00 AM' },
-];
-
-const CHANNELS = [
-  { name: 'X (Twitter)', handle: '@aisee_hq', connected: true, color: '#111' },
-  { name: 'LinkedIn', handle: 'aisee Company Page', connected: true, color: '#0A66C2' },
-  { name: 'Reddit', handle: 'r/aisee', connected: false, color: '#FF4500' },
-  { name: 'TikTok', handle: '@aisee', connected: true, color: '#111' },
-  { name: 'YouTube', handle: 'aisee Channel', connected: false, color: '#FF0000' },
-];
-
-const CAL_DAYS = [
-  { day: 1, posts: 0 }, { day: 2, posts: 2 }, { day: 3, posts: 0 }, { day: 4, posts: 1 }, { day: 5, posts: 3 },
-  { day: 6, posts: 0 }, { day: 7, posts: 0 }, { day: 8, posts: 1 }, { day: 9, posts: 0 }, { day: 10, posts: 2 },
-  { day: 11, posts: 0 }, { day: 12, posts: 0 }, { day: 13, posts: 4 }, { day: 14, posts: 0 }, { day: 15, posts: 0 },
-  { day: 16, posts: 1 }, { day: 17, posts: 0 }, { day: 18, posts: 3 }, { day: 19, posts: 0 }, { day: 20, posts: 1 },
-  { day: 21, posts: 0 }, { day: 22, posts: 0 }, { day: 23, posts: 2 }, { day: 24, posts: 0 }, { day: 25, posts: 0 },
-  { day: 26, posts: 1 }, { day: 27, posts: 0 }, { day: 28, posts: 0 }, { day: 29, posts: 2 }, { day: 30, posts: 0 },
-];
-
-// ─── Screens ─────────────────────────────────────────────────────
-
-function DashboardScreen({ onNewPost }) {
-  return (
-    <div>
-      <div className="page-title">Dashboard</div>
-
-      <div className="grid-3" style={{ marginBottom: 20 }}>
-        <div className="stat-card">
-          <div className="stat-label">AI Visibility Score</div>
-          <div className="stat-value">82<span className="stat-unit">/100</span></div>
-          <div className="stat-sub">↑ +4.2 this week</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Citation Score</div>
-          <div className="stat-value">9.4<span className="stat-unit">%</span></div>
-          <div className="stat-sub">LLM mentions</div>
-        </div>
-        <div className="stat-card" style={{ background: '#CFF229' }}>
-          <div className="stat-label">Posts This Week</div>
-          <div className="stat-value">24</div>
-          <div className="stat-sub">Across 3 platforms</div>
-        </div>
-      </div>
-
-      <div className="section-row">
-        <div className="section-box" style={{ flex: 2 }}>
-          <div className="section-box-title">Recent Posts</div>
-          <div className="post-list">
-            {POSTS.slice(0, 3).map(post => (
-              <div className="post-item" key={post.id}>
-                <div className="post-meta">
-                  <div className="post-avatar" />
-                  <span className="post-handle">@aisee_hq</span>
-                  <div className="platform-dot" />
-                </div>
-                <div className="post-body-text">{post.content}</div>
-                <div className="post-foot">
-                  <span className={`status-pill status-${post.status.toLowerCase()}`}>{post.status}</span>
-                  <span className="post-time-label">{post.time}</span>
-                </div>
-              </div>
-            ))}
+  <div class="app">
+    <header class="topbar">
+      <img class="brand-logo" src="../../assets/aisee-logo-wordmark.svg" alt="aisee">
+      <div class="top-actions" aria-label="Account controls"><span>X</span><span>in</span><span>Me</span><div class="progress"><i class="progress-ring"></i><strong>0% 0/89</strong></div><button class="bell" aria-label="Notifications"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></button></div>
+    </header>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="project"><img class="project-mark" src="../../assets/aisee-logo-mark.png" alt=""><div class="project-copy"><strong>aisee</strong><small>Last Updated: Aug 12, 2026</small></div></div>
+        <div class="sidebar-rule"></div>
+        <nav class="nav" aria-label="Product navigation">
+          <p class="nav-label">Project</p>
+          <button class="nav-item active" data-screen="Overview"><span class="nav-icon">⌘</span>Overview</button>
+          <p class="nav-label" style="margin-top:17px">Growth Loop</p>
+          <button class="nav-item" data-screen="Analysis"><span class="nav-icon">◉</span>Analysis</button>
+          <button class="nav-item" data-screen="Growth"><span class="nav-icon">☷</span>Growth</button>
+          <div class="nav-children"><button class="nav-item" data-screen="Improve Score"><span class="nav-icon">↑</span>Improve Score</button><button class="nav-item" data-screen="Build Brand Influence"><span class="nav-icon">◌</span>Build Brand Influence</button></div>
+          <button class="nav-item" data-screen="Engage"><span class="nav-icon">◴</span>Engage</button>
+          <div class="nav-children"><button class="nav-item" data-screen="Signal Feed"><span class="nav-icon">≋</span>Signal Feed</button><button class="nav-item" data-screen="Keywords & Accounts"><span class="nav-icon">⌨</span>Keywords & Accounts</button><button class="nav-item" data-screen="Replies"><span class="nav-icon">➤</span>Replies</button></div>
+          <button class="nav-item" data-screen="Post"><span class="nav-icon">▣</span>Post</button>
+          <div class="nav-children"><button class="nav-item" data-screen="Calendar"><span class="nav-icon">▦</span>Calendar</button><button class="nav-item" data-screen="Channels"><span class="nav-icon">◎</span>Channels</button><button class="nav-item" data-screen="Media"><span class="nav-icon">▤</span>Media</button></div>
+        </nav>
+        <div class="account"><div class="account-card"><div class="account-avatar"><img src="../../assets/aisee-logo-mark.png" alt=""></div><div class="account-copy"><strong>projects5@gmail.com</strong><small>Growth-Loop Plan</small></div></div><div class="credits"><strong>✦ 6840 Credits</strong><div class="credit-track"><span></span></div></div><button class="logout">↪ Logout</button></div>
+      </aside>
+      <main class="main">
+        <div class="page" id="overviewScreen">
+          <section class="growth-banner"><div class="banner-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/><path d="m15.5 7.5 2 2 3-3" stroke="#8ec800" stroke-width="2"/></svg></div><div class="banner-copy"><h1>Turn insights into measurable growth.</h1><p>Track your visibility, complete prioritized actions, and verify the impact over time.</p></div><button class="secondary-action">Open Today's Plan</button></section>
+          <section class="overview-block"><h2 class="section-title">Overview</h2><div class="kpi-grid"><article class="kpi"><strong>68.3 <span class="pill">— baseline</span></strong><small>AI visibility</small></article><article class="kpi"><strong>0 / 17</strong><small>Score tasks completed</small></article><article class="kpi"><strong>0 / 72</strong><small>Brand influence tasks completed</small></article><article class="kpi"><strong>6840</strong><small>Available credits</small></article></div></section>
+          <div class="content-grid">
+            <section class="panel visibility-panel"><div class="panel-head"><h2>AI Visibility Score</h2></div><div class="score-box"><div class="score-summary"><div class="score-metric"><span>Current</span><strong>68.3</strong><span>Last scan · Aug 12</span></div><div class="score-arrow">→</div><div class="score-metric"><span>7-day goal</span><strong>74.5</strong></div></div><div class="chart"><span class="chart-label start">0 day</span><span class="chart-label end">7 day</span></div></div><div class="outcome"><small>Target outcome</small><h3>Become a Top 3 recommended GEO/AEO platform</h3><p>For “best GEO / AEO tools” across ChatGPT, Claude, Perplexity, Gemini and Grok.</p><button class="dark-action">View diagnosis</button></div></section>
+            <section class="panel plan-panel"><div class="panel-head"><div><h2>Score Improvement Plan <span class="plan-tag">Score Growth</span></h2><p>Top actions generated from your latest Analysis.</p></div><button class="secondary-action">View Score Plan</button></div><div class="task-list">
+              <article class="task"><span class="task-index">1</span><div class="task-copy"><strong>Expand Brand Lexicon and Schema</strong><small>Brand</small><div class="stars">★★★★☆ <span class="easy">easy</span></div></div><div class="lift"><small>Est. Score Lift</small><span>↑ ~2.4</span></div><button class="suggest">Get AI Suggestion</button></article>
+              <article class="task"><span class="task-index">2</span><div class="task-copy"><strong>Maintain Field Completeness</strong><small>Coverage</small><div class="stars">★★☆☆☆ <span class="easy">easy</span></div></div><div class="lift"><small>Est. Score Lift</small><span>↑ ~4.8</span></div><button class="suggest">Get AI Suggestion</button></article>
+              <article class="task"><span class="task-index">3</span><div class="task-copy"><strong>Build Stable Industry Recognition</strong><small>Industry</small><div class="stars">★★☆☆☆ <span class="easy">easy</span></div></div><div class="lift"><small>Est. Score Lift</small><span>↑ ~2.8</span></div><button class="suggest">Get AI Suggestion</button></article>
+            </div></section>
           </div>
         </div>
-        <div className="section-box" style={{ flex: 1 }}>
-          <div className="section-box-title">AI Rankings</div>
-          {[['ChatGPT', 82], ['Perplexity', 74], ['Gemini', 61], ['Claude', 58]].map(([name, score]) => (
-            <div key={name} style={{ marginBottom: 10 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                <span style={{ fontSize: 12, fontFamily: 'Karla', color: '#111' }}>{name}</span>
-                <span style={{ fontSize: 12, fontWeight: 600, fontFamily: 'Karla', color: '#111' }}>{score}</span>
-              </div>
-              <div style={{ height: 5, borderRadius: 3, background: 'rgba(17,17,17,0.06)', overflow: 'hidden' }}>
-                <div style={{ width: `${score}%`, height: '100%', background: '#CFF229', borderRadius: 3 }} />
-              </div>
-            </div>
-          ))}
-          <div style={{ marginTop: 16 }}>
-            <div className="section-box-title">Credits</div>
-            <div style={{ fontSize: 22, fontWeight: 700, color: '#111', fontFamily: 'Karla', marginBottom: 6 }}>1825</div>
-            <div style={{ height: 6, borderRadius: 4, background: 'rgba(17,17,17,0.06)', overflow: 'hidden' }}>
-              <div style={{ width: '60%', height: '100%', background: '#CFF229', borderRadius: 4 }} />
-            </div>
-            <div style={{ fontSize: 11, color: 'rgba(17,17,17,0.4)', fontFamily: 'Karla', marginTop: 4 }}>1825 / 3000</div>
-          </div>
-        </div>
-      </div>
+        <section class="screen-note" id="screenNote"><h2 class="section-title" id="screenTitle">Screen</h2><p>This navigation destination is retained in the 5.5 information architecture. Its detailed screen can be added from the corresponding Figma feature page without reverting the shell.</p></section>
+      </main>
     </div>
-  );
-}
-
-function CalendarScreen() {
-  const [activeDay, setActiveDay] = useState(20);
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-  return (
-    <div>
-      <div className="page-title">Calendar</div>
-      <div className="section-row">
-        <div className="section-box" style={{ flex: 1 }}>
-          <div className="cal-header">
-            <span className="cal-month">April 2026</span>
-            <div style={{ display: 'flex', gap: 4 }}>
-              <button className="cal-nav">‹</button>
-              <button className="cal-nav">›</button>
-            </div>
-          </div>
-          <div className="cal-grid">
-            {dayNames.map(d => <div key={d} className="cal-day-name">{d}</div>)}
-            {/* offset for April 1 = Wednesday */}
-            {[0,1,2].map(i => <div key={'e'+i} />)}
-            {CAL_DAYS.map(({ day, posts }) => (
-              <div key={day} className={`cal-day-cell${day === activeDay ? ' active' : ''}${day === 20 ? ' today' : ''}`} onClick={() => setActiveDay(day)}>
-                {day}
-                {posts > 0 && <div className="cal-dot" />}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="section-box" style={{ flex: 2 }}>
-          <div className="section-box-title">April {activeDay} — Scheduled</div>
-          {POSTS.filter(p => p.status === 'Scheduled' || p.status === 'Draft').map(post => (
-            <div className="post-item" key={post.id} style={{ marginBottom: 8 }}>
-              <div className="post-meta">
-                <div className="post-avatar" />
-                <span className="post-handle">@aisee_hq</span>
-                <span className={`status-pill status-${post.status.toLowerCase()}`} style={{ marginLeft: 'auto' }}>{post.status}</span>
-              </div>
-              <div className="post-body-text">{post.content}</div>
-              <div className="post-time-label">{post.time}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ChannelsScreen() {
-  return (
-    <div>
-      <div className="page-title">Channels</div>
-      <div style={{ maxWidth: 560 }}>
-        {CHANNELS.map(ch => (
-          <div className="channel-item" key={ch.name}>
-            <div className="ch-avatar" style={{ background: ch.color }} />
-            <div style={{ flex: 1 }}>
-              <div className="ch-name">{ch.name}</div>
-              <div className="ch-handle">{ch.handle}</div>
-            </div>
-            <div className={`ch-status ${ch.connected ? 'ch-connected' : 'ch-disconnected'}`}>
-              {ch.connected
-                ? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                : <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#aaa" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              }
-            </div>
-          </div>
-        ))}
-        <div style={{ marginTop: 16 }}>
-          <button style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', borderRadius: 10, background: '#fff', border: '1px dashed rgba(17,17,17,0.2)', cursor: 'pointer', fontFamily: 'Karla', fontSize: 14, fontWeight: 500, color: '#111', width: '100%', justifyContent: 'center' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Channel
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PostAgentScreen() {
-  return (
-    <div>
-      <div className="page-title">Post Agent</div>
-      <div style={{ maxWidth: 640 }}>
-        <div style={{ background: '#FFF2B3', border: '1px solid rgba(17,17,17,0.08)', borderRadius: 12, padding: '14px 16px', marginBottom: 20, display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 8, background: '#FFE253', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          </div>
-          <div>
-            <div style={{ fontSize: 14, fontWeight: 600, fontFamily: 'Karla', color: '#111', marginBottom: 2 }}>AI Post Agent Active</div>
-            <div style={{ fontSize: 12, fontFamily: 'Karla', color: 'rgba(17,17,17,0.6)' }}>Generating content for your 3 connected channels</div>
-          </div>
-        </div>
-
-        {[
-          { title: 'X / Twitter Strategy', desc: 'Generates daily X posts optimized for AI citation and engagement. Tracks character limits and reply threading.', runs: 12, status: 'Active' },
-          { title: 'LinkedIn Thought Leadership', desc: 'Writes weekly LinkedIn articles positioning your brand in GEO conversations. References trending AI topics.', runs: 4, status: 'Active' },
-          { title: 'Reddit Community Posts', desc: 'Crafts authentic Reddit posts for relevant subreddits. Monitors tone to match community standards.', runs: 0, status: 'Paused' },
-        ].map(agent => (
-          <div className="agent-card" key={agent.title}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 6 }}>
-              <div className="agent-title">{agent.title}</div>
-              <span className={`status-pill ${agent.status === 'Active' ? 'status-scheduled' : 'status-draft'}`} style={{ flexShrink: 0, marginLeft: 8 }}>{agent.status}</span>
-            </div>
-            <div className="agent-desc">{agent.desc}</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 11, color: 'rgba(17,17,17,0.5)', fontFamily: 'Karla' }}>{agent.runs} posts generated</span>
-              <div style={{ flex: 1 }} />
-              <button style={{ padding: '5px 14px', borderRadius: 8, background: '#FFE253', border: 'none', fontFamily: 'Karla', fontSize: 13, fontWeight: 500, color: '#111', cursor: 'pointer' }}>Run Now</button>
-              <button style={{ padding: '5px 10px', borderRadius: 8, background: 'rgba(17,17,17,0.05)', border: 'none', fontFamily: 'Karla', fontSize: 13, color: '#111', cursor: 'pointer' }}>Edit</button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function AllPostsScreen() {
-  return (
-    <div>
-      <div className="page-title">All Posts</div>
-      {/* Filter row */}
-      <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-        {['All', 'Scheduled', 'Sent', 'Draft', 'Failed'].map(f => (
-          <div key={f} style={{ padding: '5px 14px', borderRadius: 8, background: f === 'All' ? '#FFE253' : 'rgba(17,17,17,0.05)', fontFamily: 'Karla', fontSize: 13, fontWeight: f === 'All' ? 500 : 400, color: '#111', cursor: 'pointer' }}>{f}</div>
-        ))}
-      </div>
-      <div className="post-list">
-        {POSTS.map(post => (
-          <div className="post-item" key={post.id}>
-            <div className="post-meta">
-              <div className="post-avatar" />
-              <span className="post-handle">@aisee_hq</span>
-              <div className="platform-dot" style={{ background: { X: '#111', LinkedIn: '#0A66C2', Reddit: '#FF4500', TikTok: '#111' }[post.platform] }} />
-              <span style={{ fontSize: 11, color: 'rgba(17,17,17,0.4)', fontFamily: 'Karla', marginLeft: 2 }}>{post.platform}</span>
-            </div>
-            <div className="post-body-text">{post.content}</div>
-            <div className="post-foot">
-              <span className={`status-pill status-${post.status.toLowerCase()}`}>{post.status}</span>
-              <span className="post-time-label">{post.time}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ─── App Shell ───────────────────────────────────────────────────
-function App() {
-  const [activeScreen, setActiveScreen] = useState(() => localStorage.getItem('aisee_screen') || 'Dashboard');
-  const [sidebarTab, setSidebarTab] = useState('Post Agent');
-  const [showCreatePost, setShowCreatePost] = useState(false);
-  const [charCount, setCharCount] = useState(280);
-
-  useEffect(() => { localStorage.setItem('aisee_screen', activeScreen); }, [activeScreen]);
-
-  const screens = {
-    Dashboard: <DashboardScreen onNewPost={() => setShowCreatePost(true)} />,
-    Calendar: <CalendarScreen />,
-    Channels: <ChannelsScreen />,
-    'Post Agent': <PostAgentScreen />,
-    'All Posts': <AllPostsScreen />,
-  };
-
-  return (
-    <div id="app" style={{ display: 'flex', flexDirection: 'column', height: '100vh', fontFamily: 'Karla, sans-serif' }}>
-      {/* Header */}
-      <div style={{ height: 70, background: '#fff', borderBottom: '1px solid rgba(17,17,17,0.06)', display: 'flex', alignItems: 'center', padding: '0 24px', flexShrink: 0, zIndex: 10 }}>
-        {/* Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginRight: 32 }}>
-          <div style={{ position: 'relative', width: 25, height: 26, flexShrink: 0 }}>
-            <div style={{ position: 'absolute', left: 0, top: 0, width: 25, height: 26, borderRadius: '320px 320px 0 0', background: '#CFF229' }} />
-            <div style={{ position: 'absolute', left: 0, top: 1, width: 25, height: 25, borderRadius: '320px 320px 0 0', background: '#111', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', left: '50%', top: '38%', transform: 'translateX(-50%)', width: 10, height: 8, borderRadius: '50%', background: '#fff' }} />
-            </div>
-          </div>
-          <span style={{ fontFamily: 'Karla', fontSize: 16, fontWeight: 500, color: '#111' }}>aisee</span>
-        </div>
-        {/* Tab toggle */}
-        <div style={{ background: 'rgba(17,17,17,0.02)', borderRadius: 8, padding: 4, display: 'flex', gap: 1, marginRight: 'auto' }}>
-          {['Analysis', 'Post Agent', 'Engage'].map(t => (
-            <div key={t} onClick={() => { setSidebarTab(t); setActiveScreen(t === 'Post Agent' ? 'Post Agent' : 'Dashboard'); }} style={{ padding: '6px 12px', borderRadius: 8, background: sidebarTab === t ? '#FFFFFF' : 'transparent', boxShadow: sidebarTab === t ? 'inset 0 0 0 1px rgba(17,17,17,0.05), 0 1px 2px rgba(0,0,0,0.12)' : 'none', fontSize: 14, fontWeight: 500, fontFamily: 'Karla', color: sidebarTab === t ? '#111' : 'rgba(17,17,17,0.5)', cursor: 'pointer' }}>
-              {t}
-            </div>
-          ))}
-        </div>
-        {/* Right */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 32, height: 32, borderRadius: 8, background: '#FFFADD', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', cursor: 'pointer' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <div style={{ position: 'absolute', top: -4, right: -4, width: 16, height: 16, borderRadius: '50%', background: '#EC5212', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontSize: 9, color: '#fff', fontWeight: 600 }}>7</span>
-            </div>
-          </div>
-          <div onClick={() => setShowCreatePost(true)} style={{ height: 32, borderRadius: 10, background: sidebarTab === 'Analysis' ? '#CFFF29' : '#FFE253', display: 'flex', alignItems: 'center', gap: 6, padding: '0 14px', cursor: 'pointer' }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            <span style={{ fontSize: 14, fontWeight: 500, color: '#111' }}>New</span>
-          </div>
-          <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-            <span style={{ fontSize: 12, fontWeight: 700, color: '#fff' }}>A</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Body */}
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-        {/* Sidebar */}
-        <div style={{ width: 224, background: '#fff', borderRight: '1px solid rgba(17,17,17,0.05)', display: 'flex', flexDirection: 'column', padding: '12px 8px 16px', flexShrink: 0, overflowY: 'auto' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 1 }}>
-            {[
-              ['Dashboard', '▦'],
-              ['Calendar', '▦'],
-              ['Channels', '◎'],
-              ['Post Agent', '▦'],
-              ['All Posts', '▦'],
-            ].map(([label]) => (
-              <div key={label} onClick={() => setActiveScreen(label)} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 8px', borderRadius: 8, background: label === activeScreen ? (sidebarTab === 'Analysis' ? '#CFFF29' : '#FFE253') : 'transparent', cursor: 'pointer', fontSize: 14, fontFamily: 'Karla', color: '#111', fontWeight: label === activeScreen ? 500 : 400 }}>
-                <div style={{ width: 18, height: 18, borderRadius: 4, background: 'rgba(17,17,17,0.1)', flexShrink: 0 }} />
-                {label}
-              </div>
-            ))}
-          </div>
-          {/* Profile */}
-          <div style={{ border: '1px solid rgba(17,17,17,0.05)', borderRadius: 8, padding: '10px 8px 12px', marginTop: 12, background: '#FAFAFA' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-              <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#111', flexShrink: 0 }} />
-              <div>
-                <div style={{ fontSize: 11, fontWeight: 500, color: '#111' }}>ccbakala36@gmail…</div>
-                <div style={{ fontSize: 10, color: 'rgba(17,17,17,0.5)' }}>Starter plan</div>
-              </div>
-            </div>
-            <div style={{ borderTop: '1px dashed #E5E6EC', paddingTop: 8 }}>
-              <div style={{ fontSize: 12, fontWeight: 500, color: '#111', marginBottom: 4 }}>1825 Credits</div>
-              <div style={{ height: 5, borderRadius: 4, background: 'rgba(17,17,17,0.06)' }}>
-                <div style={{ width: '60%', height: '100%', background: '#CFF229', borderRadius: 4 }} />
-              </div>
-            </div>
-            <div style={{ marginTop: 10, padding: '5px 8px', borderRadius: 8, background: 'rgba(17,17,17,0.05)', textAlign: 'center', fontSize: 12, fontWeight: 500, color: '#111', cursor: 'pointer' }}>Logout</div>
-          </div>
-        </div>
-
-        {/* Main */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '24px 32px', background: '#FAFAFA' }}>
-          {screens[activeScreen] || <div style={{ color: '#aaa', fontFamily: 'Karla' }}>Nothing Here</div>}
-        </div>
-      </div>
-
-      {/* Create Post modal */}
-      {showCreatePost && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.32)', zIndex: 100, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }} onClick={() => setShowCreatePost(false)}>
-          <div style={{ background: '#fff', borderRadius: '16px 16px 0 0', width: '100%', maxWidth: 540, padding: 20, boxShadow: '0 20px 24px rgba(0,0,0,0.1)', border: '1px solid rgba(17,17,17,0.15)' }} onClick={e => e.stopPropagation()}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-              <span style={{ fontSize: 20, fontWeight: 600, lineHeight: '30px', color: '#111' }}>Create Post</span>
-              <div onClick={() => setShowCreatePost(false)} style={{ cursor: 'pointer', padding: 4 }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              </div>
-            </div>
-            {/* Platforms */}
-            <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
-              {['X', 'Li', 'Re'].map((p, i) => (
-                <div key={p} style={{ width: 32, height: 32, borderRadius: '50%', background: ['#111','#0A66C2','#FF4500'][i], border: '1px solid #111', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: '#fff', cursor: 'pointer' }}>{p}</div>
-              ))}
-              <div style={{ width: 32, height: 32, borderRadius: '50%', border: '1px solid rgba(17,17,17,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </div>
-            </div>
-            {/* Editor */}
-            <div style={{ border: '1px solid rgba(17,17,17,0.05)', borderRadius: 12, overflow: 'hidden', marginBottom: 14 }}>
-              <div style={{ background: '#F7F6E9', padding: '6px 12px', display: 'flex', gap: 14, borderBottom: '1px solid rgba(17,17,17,0.06)' }}>
-                <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(17,17,17,0.6)', cursor: 'pointer' }}>B</span>
-                <span style={{ fontSize: 13, color: 'rgba(17,17,17,0.6)', cursor: 'pointer' }}>😊</span>
-              </div>
-              <div
-                contentEditable
-                suppressContentEditableWarning
-                onInput={e => setCharCount(280 - e.target.innerText.length)}
-                style={{ padding: '12px', minHeight: 80, fontSize: 14, color: '#111', outline: 'none', fontFamily: 'Karla' }}
-                data-placeholder="Start writing your post..."
-              />
-              <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0 12px 8px' }}>
-                <div style={{ background: 'rgba(17,17,17,0.04)', border: '1px solid rgba(17,17,17,0.12)', borderRadius: 8, padding: '3px 8px', fontSize: 11, fontWeight: 500, color: charCount < 0 ? '#EC5212' : '#111' }}>{charCount}</div>
-              </div>
-            </div>
-            {/* Actions */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button onClick={() => setShowCreatePost(false)} style={{ width: 44, height: 44, borderRadius: 10, border: '1px solid rgba(17,17,17,0.12)', background: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              </button>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <button style={{ height: 44, padding: '0 16px', borderRadius: 10, border: '1px solid rgba(17,17,17,0.12)', background: '#FAFAFA', cursor: 'pointer', fontSize: 14, fontWeight: 500, fontFamily: 'Karla', color: '#111' }}>Schedule</button>
-                <button onClick={() => setShowCreatePost(false)} style={{ width: 44, height: 44, borderRadius: 10, border: 'none', background: '#CFF229', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-ReactDOM.createRoot(document.getElementById('app')).render(<App />);
-</script>
+  </div>
+  <script>
+    const overview=document.getElementById('overviewScreen'),note=document.getElementById('screenNote'),title=document.getElementById('screenTitle');
+    document.querySelectorAll('[data-screen]').forEach(item=>item.addEventListener('click',()=>{document.querySelectorAll('[data-screen]').forEach(x=>x.classList.toggle('active',x===item));const name=item.dataset.screen;overview.style.display=name==='Overview'?'block':'none';note.classList.toggle('active',name!=='Overview');title.textContent=name;}));
+  </script>
 </body>
 </html>
