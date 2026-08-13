@@ -1,5 +1,9 @@
 # Components
 
+## 当前业务组件
+
+- [`PlanCardCurrent/`](PlanCardCurrent/)：Figma v5.4 Upgrade Plan 当前套餐卡；React 实现位于 [`../src/components/PlanCard.tsx`](../src/components/PlanCard.tsx)
+
 ## 旧系统组件（完整保留）
 
 - [`IntentTag/`](IntentTag/)

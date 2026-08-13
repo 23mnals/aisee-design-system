@@ -42,6 +42,7 @@ npm run site
 - Header 70px；Sidebar 224px；主内容 padding 24–32px
 - 页面背景 `#FAFAFA`，卡片 `#FFFFFF`，静态描边统一 5% 黑
 - 页面与弹窗标题统一 Karla 20px / 600
+- PlanCard 新增 v5.4 Upgrade Plan 当前版本，旧套餐卡继续作为 Legacy 保留
 - Figma 对齐 Toggle、Modal footer 和 Engage v5 页面规则
 - 73 个设计令牌由 JSON 自动生成 CSS 与 TypeScript
 

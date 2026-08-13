@@ -168,6 +168,29 @@ test('webapp UI kit inline controller is syntactically valid', async () => {
   assert.doesNotThrow(() => new Function(scripts[0][1]));
 });
 
+test('current PlanCard follows the latest Figma upgrade-plan pattern while legacy remains available', async () => {
+  const current = await readFile(new URL('../components/PlanCardCurrent/PlanCardCurrent.html', import.meta.url), 'utf8');
+  const legacy = await readFile(new URL('../components/PlanCard/PlanCard.html', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../src/components/PlanCard.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  for (const label of ['Monthly', 'Yearly', '15% off', 'Starter', 'Developer', 'Pro', 'Analysis', 'Engage', 'Post Agent', 'Support']) {
+    assert.ok(current.includes(label), `current PlanCard should include ${label}`);
+  }
+  assert.match(current, /assets\/plan-card\/current\/starter\.png/);
+  assert.match(current, /assets\/plan-card\/current\/developer\.png/);
+  assert.match(current, /assets\/plan-card\/current\/pro\.png/);
+  assert.match(current, /border-radius:24px/);
+  assert.match(source, /export function PlanCard/);
+  assert.match(styles, /\.aisee-plan-card \{[^}]*border-radius: 24px;/);
+  assert.match(portal, /components\/PlanCardCurrent\/PlanCardCurrent\.html/);
+  assert.match(portal, /components\/PlanCard\/PlanCard\.html/);
+  assert.match(legacy, /Starter/);
+  const scripts = [...current.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+  assert.equal(scripts.length, 1);
+  assert.doesNotThrow(() => new Function(scripts[0][1]));
+  await Promise.all(['starter.png', 'developer.png', 'pro.png'].map(name => access(new URL(`../assets/plan-card/current/${name}`, import.meta.url))));
+});
+
 test('legacy buttons preview uses official logo assets instead of a CSS redraw', async () => {
   const buttons = await readFile(new URL('../preview/components-buttons-badges.html', import.meta.url), 'utf8');
   assert.match(buttons, /src="\.\.\/assets\/aisee-logo-mark\.png"/);

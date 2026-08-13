@@ -748,6 +748,8 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 
 > **UI Kit 功能预览覆盖规则（2026-08-13）**：Web App UI Kit 不能只展示 Overview。当前侧边栏中的每个可到达功能都必须有可识别的近似页面预览，至少覆盖 Overview、Analysis、Growth、Improve Score、Build Brand Influence、Engage、Signal Feed、Keywords & Accounts、Replies、Post、Calendar、Channels、Media、Verify 与 Connection。预览无需逐像素复刻，但必须同步对应 Figma 设计区块的页面目的、主要信息结构、模块身份色和关键组件状态；不得使用空白页或通用占位卡代替。新增 Figma 功能时同步更新导航、页面注册表与自动覆盖测试。
 
+> **PlanCard 当前版本规则（2026-08-13）**：现行套餐卡以 Figma `v5.4-upgrade plan-页面优化 / upgrade`（node `8253:116053`）为准。页面包含 Plans / Credits 标签、Monthly / Yearly（15% off）计费切换，以及 Starter、Developer、Pro 三张 24px 圆角白色卡片。权益必须按 Analysis、Engage、Post Agent、Support 分组，并保留 Current Plan、Upgrade Plan、黑色 Primary CTA 与 Full Engage 徽章等状态。当前实现位于 `src/components/PlanCard.tsx` 与 `components/PlanCardCurrent/`；旧 `components/PlanCard/` 继续作为 Legacy 保留，不覆盖、不删除。
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ ▢   Engage                              New  Keywords  X acc  sub  Sent │

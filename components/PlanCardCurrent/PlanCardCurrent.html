@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AISEE PlanCard — Current</title>
+  <style>
+    @font-face{font-family:Karla;src:url('../../public/fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900}
+    *{box-sizing:border-box}body{margin:0;color:#111;background:#f5f5f5;font-family:Karla,Arial,sans-serif;font-size:14px}
+    button{font:inherit}.page{max-width:1440px;margin:auto;padding:40px 48px 64px}.tabs{display:flex;gap:26px;border-bottom:1px solid rgba(17,17,17,.08)}
+    .tab{position:relative;padding:12px 0;border:0;color:rgba(17,17,17,.5);background:transparent;cursor:pointer}.tab.active{color:#111;font-weight:600}.tab.active:after{position:absolute;right:0;bottom:-1px;left:0;height:2px;background:#111;content:''}
+    .intro{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin:42px 0 34px}.eyebrow{margin:0 0 8px;color:rgba(17,17,17,.45);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+    h1{margin:0;font-size:36px;font-weight:600;line-height:1.2}.intro p{max-width:600px;margin:10px 0 0;color:rgba(17,17,17,.6);font-size:16px;line-height:24px}
+    .billing{display:flex;align-items:center;gap:4px;padding:4px;border-radius:12px;background:rgba(17,17,17,.04)}.billing button{padding:8px 14px;border:0;border-radius:8px;color:rgba(17,17,17,.55);background:transparent;cursor:pointer}.billing button.active{color:#fff;background:#111}.billing small{margin-left:5px;color:#8c7400;font-size:11px}
+    .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:start}.card{position:relative;display:flex;min-width:0;flex-direction:column;gap:24px;padding:30px 24px;border:1px solid rgba(17,17,17,.06);border-radius:24px;background:#fff}
+    .badge{position:absolute;top:-18px;left:50%;padding:7px 14px;transform:translateX(-50%);border-radius:999px;background:#ffe253;font-weight:600;white-space:nowrap}.top,.name-row,.credits{display:flex;align-items:center}.top{justify-content:space-between}.plan-icon{width:50px;height:50px;object-fit:contain}
+    .price{display:flex;align-items:baseline;gap:3px}.price strong{font-size:26px;font-weight:600;line-height:36px}.price span{font-size:12px}.identity{display:grid;gap:8px}.name-row{gap:7px}.name-row h2{margin:0;font-size:18px;font-weight:400;line-height:24px}.audience{padding:4px 8px;border-radius:8px;background:#ffe253;font-size:13px}
+    .description{min-height:48px;margin:0;font-size:16px;line-height:24px}.credits{gap:5px}.credits strong{font-size:20px;line-height:32px}.credits span{font-size:14px}.action{height:48px;border:0;border-radius:12px;font-weight:500;cursor:pointer}.action.current{background:rgba(17,17,17,.04);cursor:default}.action.upgrade{background:#ffe253}.action.primary{color:#fff;background:#111}
+    .sections{display:grid;gap:18px}.section h3{margin:0 0 8px;padding-bottom:7px;border-bottom:1px dashed rgba(17,17,17,.08);font-size:14px;font-weight:600;line-height:22px}.section.analysis h3{color:#ec5212}.section.engage h3{color:#763c7d}.section.post h3{color:#907800}.section ul{display:grid;gap:7px;margin:0;padding:0;list-style:none}.section li{display:grid;grid-template-columns:18px minmax(0,1fr) auto;align-items:center;gap:7px;line-height:22px}.section li.disabled{color:rgba(17,17,17,.38)}
+    .check{display:grid;width:18px;height:18px;place-items:center;border-radius:6px;background:#cfff29;font-size:11px;font-weight:700}.disabled .check{background:rgba(17,17,17,.04)}.meta{padding:3px 7px;border-radius:6px;background:rgba(17,17,17,.05);font-size:10px;white-space:nowrap}.source{margin:30px 0 0;color:rgba(17,17,17,.5);font-size:12px;text-align:center}
+    @media(max-width:980px){.page{padding:28px 24px}.intro{align-items:flex-start;flex-direction:column}.cards{grid-template-columns:1fr}.card{max-width:560px;width:100%;margin:auto}}
+  </style>
+</head>
+<body>
+  <!-- @dsCard group="Components" name="PlanCard — Current" subtitle="Current v5.4 Upgrade Plan cards with billing cycle, grouped benefits and plan states" viewport="1440x1100" -->
+  <main class="page">
+    <nav class="tabs" aria-label="Billing pages"><button class="tab active">Plans</button><button class="tab">Credits</button></nav>
+    <section class="intro">
+      <div><p class="eyebrow">AISEE · Upgrade plan · Current</p><h1>Upgrade your plan</h1><p>Choose the plan that matches your AI visibility, engagement and publishing workflow.</p></div>
+      <div class="billing" aria-label="Billing cycle"><button class="active" data-cycle="monthly">Monthly</button><button data-cycle="yearly">Yearly <small>15% off</small></button></div>
+    </section>
+    <section class="cards" id="cards" aria-label="Available plans"></section>
+    <p class="source">Current source: Figma v5.4 Upgrade Plan. The former PlanCard remains available as Legacy.</p>
+  </main>
+  <script>
+    const plans=[
+      {name:'Starter',audience:'For Individuals',description:'Get the basics of AI visibility at a focused starting rate.',monthly:'$9',yearly:'$92',credits:'1,000',icon:'../../assets/plan-card/current/starter.png',action:'Current Plan',state:'current',sections:[
+        ['Analysis','analysis',[['Core AI models'],['Brand presence detection','basic'],['Competitor mentions overview']]],
+        ['Engage','engage',[['3 tracked keywords','MAX'],['Priority tracked accounts','',true],['AI-generated replies','10 / mo trial']]],
+        ['Post Agent','post',[['Basic social content tools'],['Connected channel publishing','',true]]],
+        ['Support','support',[['Standard email support']]]]},
+      {name:'Developer',audience:'For Startups',description:'Run unlimited monthly checks and coordinate growing channel activity.',monthly:'$25',yearly:'$255',credits:'4,000',icon:'../../assets/plan-card/current/developer.png',action:'Upgrade Plan',state:'upgrade',sections:[
+        ['Analysis','analysis',[['All AI models'],['Multi-model comparison'],['Website AI Diagnostic & Priorities Report']]],
+        ['Engage','engage',[['10 tracked keywords','MAX'],['10 priority tracked accounts'],['AI-generated replies','Unlimited']]],
+        ['Post Agent','post',[['AI-assisted content generation'],['Calendar scheduling'],['Post performance overview']]],
+        ['Support','support',[['Priority email support']]]]},
+      {name:'Pro',audience:'For Organizations',description:'Optimize long-term AI visibility and scale every growth-loop workflow.',monthly:'$55',yearly:'$561',credits:'10,000',icon:'../../assets/plan-card/current/pro.png',action:'Upgrade Plan',state:'primary',badge:'FULL ENGAGE',sections:[
+        ['Analysis','analysis',[['All AI platforms · full coverage'],['Brand presence detection · full'],['Website diagnostic + priorities']]],
+        ['Engage','engage',[['30 tracked keywords','MAX'],['Priority accounts · unlimited'],['AI-generated replies','Unlimited']]],
+        ['Post Agent','post',[['Full AI content workflow'],['Multi-channel scheduling'],['Advanced performance insights']]],
+        ['Support','support',[['Priority support and account guidance']]] ]}
+    ];
+    let cycle='monthly';
+    function render(){document.getElementById('cards').innerHTML=plans.map(plan=>`<article class="card">
+      ${plan.badge?`<span class="badge">${plan.badge}</span>`:''}<div class="top"><img class="plan-icon" src="${plan.icon}" alt=""><div class="price"><strong>${plan[cycle]}</strong><span>/ ${cycle==='monthly'?'Month':'Year'}</span></div></div>
+      <div class="identity"><div class="name-row"><h2>${plan.name}</h2><span class="audience">${plan.audience}</span></div><p class="description">${plan.description}</p></div>
+      <div class="credits"><strong>${plan.credits}</strong><span>credits / mo</span></div><button class="action ${plan.state}" ${plan.state==='current'?'disabled':''}>${plan.action}${plan.state==='current'?'':' →'}</button>
+      <div class="sections">${plan.sections.map(([title,tone,items])=>`<section class="section ${tone}"><h3>${title.toUpperCase()}</h3><ul>${items.map(([label,meta,disabled])=>`<li class="${disabled?'disabled':''}"><span class="check">${disabled?'–':'✓'}</span><span>${label}</span>${meta?`<small class="meta">${meta}</small>`:''}</li>`).join('')}</ul></section>`).join('')}</div>
+    </article>`).join('')}
+    document.querySelectorAll('[data-cycle]').forEach(button=>button.addEventListener('click',()=>{cycle=button.dataset.cycle;document.querySelectorAll('[data-cycle]').forEach(item=>item.classList.toggle('active',item===button));render()}));render();
+  </script>
+</body>
+</html>

@@ -13,3 +13,4 @@ export * from './components/ModuleToggle';
 export * from './components/Dialog';
 export * from './components/ConfirmationDialog';
 export * from './components/Dropdown';
+export * from './components/PlanCard';
