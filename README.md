@@ -47,6 +47,22 @@ npm run site
 
 完整迁移表见 [`docs/MIGRATION.md`](docs/MIGRATION.md)，资源状态见 [`docs/RESOURCE_INVENTORY.md`](docs/RESOURCE_INVENTORY.md)。
 
+## Icon Library
+
+AISEE 自有 icon 的唯一资源源是 [StemUI GitHub](https://github.com/qi15582378779/stemui)，产品代码通过 npm 的 [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons) 使用：
+
+```bash
+npm install @stemui/icons
+```
+
+```tsx
+import { LineFileSaveIcon } from '@stemui/icons';
+
+<LineFileSaveIcon size={20} color="currentColor" />
+```
+
+设计系统不复制整套 SVG，只维护视觉规则、入口和组件使用示例。新增、修改或删除 icon 时，应在 StemUI 中完成 SVG 更新、预览、构建和 npm 发布，再让产品项目升级依赖。完整流程见 [`docs/ICON_LIBRARY.md`](docs/ICON_LIBRARY.md)。
+
 ## 本地运行
 
 ```bash

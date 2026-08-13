@@ -529,10 +529,11 @@ Logo mark:                      320px 320px 0 0
 - 平台 chips 横排，每个 chip 圆角 999 + 平台 icon + 名称
 
 ### 6.14 Iconography
-- 统一使用 **Lucide**，1.5px stroke，rounded linecap
+- AISEE 自有 icon 统一来自 **StemUI**：源文件与 React 组件维护在 [`qi15582378779/stemui`](https://github.com/qi15582378779/stemui)，产品端安装 [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons)
+- 设计系统不复制整套 SVG；StemUI 是唯一资源源。Lucide 仅在 StemUI 暂无对应图标时作为补充，补充图标仍遵守 1.5px stroke、rounded linecap，并应评估后续纳入 StemUI
 - UI 尺寸：16×16（标准）/ 20×20（按钮内）/ 24×24（nav）
 - 颜色：`#111` 默认；在 lime / yellow 底上保持 `#111`；在黑底用 `#fff`
-- Sidebar / Analysis 区域有项目自有图标库（`line_*` 描边、`fill_*` / `flat_*` 填充），保持同一视觉权重
+- 自有图标采用 `line_*` 描边、`fill_*` / `flat_*` 填充命名家族，保持同一视觉权重；产品代码使用生成后的 typed React icon component
 
 ### 6.15 Page Title（Karla）
 > 顶部页面 / 分区一级标题统一使用 Karla SemiBold，与 dApp 单字体系统保持一致。
@@ -685,8 +686,10 @@ Logo mark:                      320px 320px 0 0
 | Gotu | 仅官网（Homepage）使用；dApp 不加载 |
 | JetBrains Mono | Google Fonts，可选数字列 |
 | Logo mark / wordmark | 与官网共用 |
-| Lucide | 主 icon 库 |
-| 自有图标 | `line_*` / `fill_*` / `flat_*`，用于 Sidebar、Analysis 模块 |
+| StemUI GitHub | 图标 SVG、生成代码与预览的唯一资源源：`qi15582378779/stemui` |
+| `@stemui/icons` | 产品代码的 npm 使用入口 |
+| Lucide | StemUI 暂无对应图标时的补充，不作为 AISEE 自有图标的第二资源源 |
+| 自有图标 | `line_*` / `fill_*` / `flat_*`，用于 Sidebar、Analysis、Growth、Engage、Post 等模块 |
 
 ---
 

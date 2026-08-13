@@ -108,6 +108,16 @@ test('portal uses the official AISEE logo mark', async () => {
   await access(new URL('../assets/aisee-logo-mark.png', import.meta.url));
 });
 
+test('iconography points to the StemUI GitHub source and npm package', async () => {
+  const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8');
+  const workflow = await readFile(new URL('../docs/ICON_LIBRARY.md', import.meta.url), 'utf8');
+  assert.match(portal, /https:\/\/github\.com\/qi15582378779\/stemui/);
+  assert.match(portal, /https:\/\/www\.npmjs\.com\/package\/@stemui\/icons/);
+  assert.match(readme, /npm install @stemui\/icons/);
+  assert.match(workflow, /npm run publish:icons/);
+  assert.match(workflow, /npm run publish:icons:manual/);
+});
+
 test('webapp UI kit follows the 5.5 Growth Loop shell and official branding', async () => {
   const kit = await readFile(new URL('../ui_kits/webapp/index.html', import.meta.url), 'utf8');
   const shared = await readFile(new URL('../ui_kits/webapp/Components.jsx', import.meta.url), 'utf8');
