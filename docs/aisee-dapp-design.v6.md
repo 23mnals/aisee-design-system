@@ -459,6 +459,18 @@ Logo mark:                      320px 320px 0 0
 
 > **标题字体规则**：Figma 中页面一级标题与弹窗标题全部使用 Karla；弹窗标题统一 Karla SemiBold 20px / weight 600（不是 Gotu、也不是 Bold 700），参见 6.15。
 
+#### 6.9.1 二次确认弹窗 / Confirmation Dialog
+> 适用于关闭未保存内容、删除、断开连接等需要用户再次确认的高风险操作。唯一参考为 Figma [`关掉弹窗时提示用户`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9905-214758)。它是独立模式，不得用带输入框的标准表单弹窗代替。
+
+- 容器：宽 512px，白底，`1px solid rgba(17,17,17,0.15)`，圆角 16；阴影 `0 20px 12px rgba(0,0,0,0.10), 0 8px 4px rgba(0,0,0,0.04)`
+- 标题区：上、左右 padding 24px；标题 Karla SemiBold 20px / 600 / line-height 30px
+- 关闭按钮：右上 30×30、圆角 8，使用官方 `dialog-close.svg`；图形 13.5×13.5，stroke 1.5 / `#111`
+- 正文：与标题垂直间距 24px，左右 padding 24px；Karla Regular 16px / line-height 24px / `#111`
+- 操作区：与正文保持 24px 模块间距，按钮区上下 20px、左右 24px；两个按钮等宽，gap 12px
+- Keep Editing：高度 44px，底 `rgba(17,17,17,0.02)`，无描边，Karla Medium 16px / 24px
+- Discard Changes：高度 44px，底 `#EC5212`、白字，Karla Medium 16px / 24px；继承 Danger 语义
+- 行为：点击 Keep Editing、右上关闭或 Esc 均回到编辑；只有点击 Discard Changes 才执行不可逆操作。标题需用 `aria-labelledby`，正文需用 `aria-describedby`
+
 ### 6.10 Tag / Badge / Chip
 - 圆角 999，padding `2px 8px`，Karla 11–12 / 500
 - 状态色：

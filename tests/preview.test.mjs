@@ -54,6 +54,21 @@ test('danger button follows the Figma destructive action style', async () => {
   assert.match(portal, /Danger \/ Alert[\s\S]*?#EC5212 · white text/);
 });
 
+test('confirmation dialog follows the Figma unsaved changes pattern', async () => {
+  const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../src/components/ConfirmationDialog.tsx', import.meta.url), 'utf8');
+  assert.match(components, /Confirmation Dialog/);
+  assert.match(components, /Discard unsaved changes\?/);
+  assert.match(components, /Keep Editing[\s\S]*?Discard Changes/);
+  assert.match(styles, /\.aisee-confirmation-dialog \{[\s\S]*?width: min\(512px/);
+  assert.match(styles, /\.aisee-confirmation-dialog__actions \.aisee-button \{ width: 100%; height: 44px;/);
+  assert.match(source, /aria-labelledby=\{titleId\}/);
+  assert.match(source, /aria-describedby=\{descriptionId\}/);
+  assert.match(source, /dialog-close\.svg/);
+  await access(new URL('../assets/dialog-close.svg', import.meta.url));
+});
+
 test('portal uses the official AISEE logo mark', async () => {
   assert.match(portal, /src="\.\/assets\/aisee-logo-mark\.png"/);
   await access(new URL('../assets/aisee-logo-mark.png', import.meta.url));

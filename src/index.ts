@@ -11,3 +11,4 @@ export * from './components/Card';
 export * from './components/Tag';
 export * from './components/ModuleToggle';
 export * from './components/Dialog';
+export * from './components/ConfirmationDialog';

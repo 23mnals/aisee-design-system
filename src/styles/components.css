@@ -147,4 +147,38 @@
 .aisee-dialog__footer { display: flex; justify-content: flex-end; gap: 12px; margin: 20px -24px 0; padding: 14px 24px 0; border-top: 1px solid rgba(17,17,17,.06); }
 .aisee-dialog__footer .aisee-button--secondary { min-height: 40px; border-color: rgba(17,17,17,.06); background: rgba(17,17,17,.02); }
 
+.aisee-confirmation-dialog {
+  width: min(512px, calc(100vw - 32px));
+  padding: 0 0 12px;
+  border: 1px solid rgba(17,17,17,.15);
+  border-radius: var(--aisee-radius-modal);
+  color: var(--aisee-color-black);
+  background: var(--aisee-color-white);
+  box-shadow: var(--aisee-shadow-confirmation);
+}
+.aisee-confirmation-dialog::backdrop { background: var(--aisee-color-overlay); backdrop-filter: blur(3px); }
+.aisee-confirmation-dialog__header { position: relative; display: flex; align-items: center; padding: 24px 24px 0; }
+.aisee-confirmation-dialog__title { margin: 0; font-size: 20px; font-weight: 600; line-height: 30px; }
+.aisee-confirmation-dialog__close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  place-items: center;
+  background: transparent;
+  cursor: pointer;
+}
+.aisee-confirmation-dialog__close:hover { background: var(--aisee-color-border); }
+.aisee-confirmation-dialog__close:focus-visible { outline: 2px solid var(--aisee-color-black); outline-offset: 2px; }
+.aisee-confirmation-dialog__close img { width: 13.5px; height: 13.5px; }
+.aisee-confirmation-dialog__description { margin: 24px 0 0; padding: 0 24px; font-size: 16px; line-height: 24px; }
+.aisee-confirmation-dialog__actions { display: flex; gap: 12px; margin-top: 24px; padding: 20px 24px; }
+.aisee-confirmation-dialog__actions .aisee-button { width: 100%; height: 44px; flex: 1 1 0; font-size: 16px; line-height: 24px; }
+.aisee-confirmation-dialog__actions .aisee-button--secondary { border: 0; background: rgba(17,17,17,.02); }
+
 .aisee-tooltip { max-width: 320px; padding: 8px 12px; border-radius: 8px; color: #fff; background: #111; box-shadow: 0 10px 12px rgba(0,0,0,.12); font-size: 14px; line-height: 20px; }

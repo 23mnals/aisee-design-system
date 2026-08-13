@@ -48,6 +48,7 @@
   --aisee-shadow-card: 0 1px 3px rgba(0,0,0,0.06);
   --aisee-shadow-dropdown: 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.10);
   --aisee-shadow-modal: 0 8px 8px rgba(0,0,0,0.04), 0 20px 24px rgba(0,0,0,0.10);
+  --aisee-shadow-confirmation: 0 20px 12px rgba(0,0,0,0.10), 0 8px 4px rgba(0,0,0,0.04);
   --aisee-size-header: 70px;
   --aisee-size-sidebar: 224px;
   --aisee-size-input: 36px;
