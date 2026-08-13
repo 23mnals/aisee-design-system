@@ -6,7 +6,7 @@
 |---|---|
 | [StemUI GitHub](https://github.com/qi15582378779/stemui) | SVG 源文件、生成代码、预览与版本历史的唯一资源源 |
 | [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons?activeTab=readme) | 产品项目安装和使用 icon 的正式 npm 包；README 页用于查看安装、导出与版本说明 |
-| aisee Design System | 记录 icon 视觉规则、尺寸、语义和使用示例，不复制完整 SVG 库 |
+| aisee Design System | 记录 icon 视觉规则、尺寸、语义和使用示例；`assets/stemui/` 只保存预览所需的只读快照，不复制完整 SVG 库 |
 
 维护机当前主工作目录为 `~/aisee icon github`。`~/stemui` 是同一 Git 仓库的 worktree，不应当作第二份独立 icon 库。
 
@@ -65,6 +65,32 @@ export function SaveAction() {
 ```
 
 产品升级后应检查锁文件、构建结果与关键页面截图。设计系统仅在视觉规则、语义、命名或使用方式发生变化时同步更新文档，不需要为每个 SVG 保存副本。
+
+## 设计系统预览同步
+
+设计系统的单文件 HTML 不能直接执行 React npm 组件，因此 Web App UI Kit 将所需资源保存为只读 SVG 快照：
+
+```text
+assets/stemui/
+├── manifest.json
+├── nav-*.svg
+├── action-*.svg
+└── avatar-*.svg
+```
+
+StemUI 更新完成后，在设计系统仓库运行：
+
+```bash
+npm run sync:stemui
+```
+
+脚本只读取 StemUI 并复制指定资源到设计系统，不修改 StemUI、不发布 npm，也不推送 StemUI 仓库。默认读取 `~/stemui`；若维护目录不同，可显式指定：
+
+```bash
+STEMUI_ROOT="$HOME/aisee icon github" npm run sync:stemui
+```
+
+产品代码仍应直接安装并调用 `@stemui/icons`。快照只服务于设计系统的离线 HTML 预览，避免 `file://`、GitHub Pages 或 iframe 环境出现空白图标。
 
 ## 当前包边界
 

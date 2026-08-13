@@ -136,6 +136,18 @@ test('iconography points to the StemUI GitHub source and npm package', async () 
   assert.match(workflow, /npm run publish:icons:manual/);
 });
 
+test('StemUI preview snapshot is read-only, versioned and complete', async () => {
+  const manifest = JSON.parse(await readFile(new URL('../assets/stemui/manifest.json', import.meta.url), 'utf8'));
+  const syncScript = await readFile(new URL('../scripts/sync-stemui-assets.mjs', import.meta.url), 'utf8');
+  assert.equal(manifest.package, '@stemui/icons');
+  assert.equal(manifest.mode, 'read-only source snapshot');
+  assert.ok(manifest.assets.length >= 32, `expected at least 32 StemUI preview assets, found ${manifest.assets.length}`);
+  for (const file of ['nav-calendar.svg', 'nav-growth.svg', 'avatar-user.svg', 'avatar-social-1.svg', 'platform-x.svg', 'platform-linkedin.svg', 'platform-reddit.svg']) {
+    await access(new URL(`../assets/stemui/${file}`, import.meta.url));
+  }
+  assert.doesNotMatch(syncScript, /writeFile\([^)]*sourceRoot|copyFile\([^,]+,\s*source/);
+});
+
 test('webapp UI kit follows the current Growth Loop shell and previews every functional destination', async () => {
   const kit = await readFile(new URL('../ui_kits/webapp/index.html', import.meta.url), 'utf8');
   const shared = await readFile(new URL('../ui_kits/webapp/Components.jsx', import.meta.url), 'utf8');
@@ -152,12 +164,21 @@ test('webapp UI kit follows the current Growth Loop shell and previews every fun
   assert.match(kit, /hashchange/);
   assert.match(kit, /Turn insights into measurable growth/);
   assert.match(kit, /Score Improvement Plan/);
+  assert.match(kit, /Content Calendar/);
+  assert.match(kit, /assets\/stemui\/avatar-user\.svg/);
+  assert.match(kit, /avatar-social-/);
+  assert.match(kit, /platform-/);
+  assert.doesNotMatch(kit, /const svg=/);
+  assert.doesNotMatch(kit, /This navigation destination is retained/);
   assert.match(kit, /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
   assert.doesNotMatch(kit, /\['Analysis', 'Post Agent', 'Engage'\]/);
   assert.match(shared, /aisee-logo-wordmark\.svg/);
   assert.match(shared, /aisee-logo-mark\.png/);
   assert.match(shared, /label: 'Verify'/);
   assert.match(shared, /label: 'Connection'/);
+  assert.match(shared, /function StemUIAsset/);
+  assert.match(shared, /name="avatar-user"/);
+  assert.doesNotMatch(shared, /Small Icons \(inline SVG\)/);
   assert.match(shared, /fontSize: 20, fontWeight: 600/);
   assert.doesNotMatch(shared, /borderRadius: '320px 320px 0 0'/);
   assert.equal(dna.design_system.layout.columns, '4 KPI columns followed by asymmetric two-column content');

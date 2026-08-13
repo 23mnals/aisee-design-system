@@ -30,6 +30,8 @@ An interactive, multi-page recreation of the current aisee web application shell
 - New Figma feature destinations must be added to both the sidebar registry and `screens` registry. Automated tests enforce the coverage list.
 - Figma page names are only routing hints. For recency and update scope, use the black title bar above each design block as the source of truth.
 
+Navigation icons, notification/logout controls, social platform marks, and user/social avatars are rendered from the read-only StemUI snapshot in `../../assets/stemui/`. Refresh it with `npm run sync:stemui` after the icon package changes; the sync never writes to the StemUI repository.
+
 ## Components (`Components.jsx`)
 | Component | Props |
 |---|---|

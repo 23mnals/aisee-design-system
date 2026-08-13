@@ -24,6 +24,7 @@
     "./tokens.json": "./dist/tokens.json"
   },
   "scripts": {
+    "sync:stemui": "node scripts/sync-stemui-assets.mjs",
     "dev": "node scripts/sync-legacy-browser-source.mjs && vite",
     "tokens": "node scripts/build-tokens.mjs",
     "tokens:check": "node scripts/build-tokens.mjs --check",

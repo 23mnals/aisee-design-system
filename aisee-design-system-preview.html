@@ -795,7 +795,7 @@
         previewDescription.textContent = `${item.group} · ${item.subtitle}`;
         previewTag.textContent = item.status;
         previewTag.className = `item-tag${item.status === "Current" ? " current" : ""}`;
-        previewFrame.src = item.path;
+        previewFrame.src = `${item.path}${item.path.includes("?") ? "&" : "?"}preview=20260813-stemui`;
         previewFrame.title = `${item.name} preview`;
         openStandalone.href = item.path;
         if (updateHash) history.pushState(null, "", `#page=${encodeURIComponent(item.path)}`);

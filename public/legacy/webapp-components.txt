@@ -8,6 +8,18 @@ function LogoMark({ size = 25, darkFace = true }) {
   return <img src="../../assets/aisee-logo-mark.png" alt="" width={size} height={size} style={{ display: 'block', objectFit: 'contain', flexShrink: 0 }} />;
 }
 
+const stemuiAssets = {
+  Overview: 'nav-overview', Analysis: 'nav-analysis', Growth: 'nav-growth',
+  'Improve Score': 'nav-improve-score', 'Build Brand Influence': 'nav-brand-influence',
+  Engage: 'nav-engage', 'Signal Feed': 'nav-signal-feed',
+  'Keywords & Accounts': 'nav-keywords', Replies: 'nav-replies', Post: 'nav-post',
+  Calendar: 'nav-calendar', Channels: 'nav-channels', Media: 'nav-media',
+  Verify: 'nav-verify', Connection: 'nav-connection'
+};
+function StemUIAsset({ name, size = 16, alt = '' }) {
+  return <img src={`../../assets/stemui/${name}.svg`} alt={alt} width={size} height={size} style={{ display: 'block', objectFit: 'contain', flexShrink: 0 }} />;
+}
+
 // ─── App Header ──────────────────────────────────────────────────
 function AppHeader({ credits = 6840 }) {
   return (
@@ -19,7 +31,7 @@ function AppHeader({ credits = 6840 }) {
           <i style={{ width: 19, height: 19, border: '3px solid #f5f5f5', borderRadius: '50%' }} />
           <strong>0% 0/89</strong>
         </div>
-        <button type="button" aria-label="Notifications" style={{ width: 34, height: 34, border: 0, borderRadius: 9, background: '#f7f7f7', cursor: 'pointer' }}><BellIcon /></button>
+        <button type="button" aria-label="Notifications" style={{ width: 34, height: 34, border: 0, borderRadius: 9, background: '#f7f7f7', cursor: 'pointer', display: 'grid', placeItems: 'center' }}><StemUIAsset name="action-bell" size={17} /></button>
       </div>
     </div>
   );
@@ -28,42 +40,42 @@ function AppHeader({ credits = 6840 }) {
 // ─── Sidebar ─────────────────────────────────────────────────────
 function Sidebar({ activeItem = 'Overview', credits = 6840 }) {
   const navItems = [
-    { label: 'Overview', icon: '⌘', group: 'PROJECT' },
-    { label: 'Analysis', icon: '◉', group: 'GROWTH LOOP' },
-    { label: 'Growth', icon: '☷' },
-    { label: 'Improve Score', icon: '↑', child: true },
-    { label: 'Build Brand Influence', icon: '◌', child: true },
-    { label: 'Engage', icon: '◴' },
-    { label: 'Signal Feed', icon: '≋', child: true },
-    { label: 'Keywords & Accounts', icon: '⌨', child: true },
-    { label: 'Replies', icon: '➤', child: true },
-    { label: 'Post', icon: '▣' },
-    { label: 'Calendar', icon: '▦', child: true },
-    { label: 'Channels', icon: '◎', child: true },
-    { label: 'Media', icon: '▤', child: true },
-    { label: 'Verify', icon: '✓' },
-    { label: 'Connection', icon: '⊕' },
+    { label: 'Overview', group: 'PROJECT' },
+    { label: 'Analysis', group: 'GROWTH LOOP' },
+    { label: 'Growth' },
+    { label: 'Improve Score', child: true },
+    { label: 'Build Brand Influence', child: true },
+    { label: 'Engage' },
+    { label: 'Signal Feed', child: true },
+    { label: 'Keywords & Accounts', child: true },
+    { label: 'Replies', child: true },
+    { label: 'Post' },
+    { label: 'Calendar', child: true },
+    { label: 'Channels', child: true },
+    { label: 'Media', child: true },
+    { label: 'Verify' },
+    { label: 'Connection' },
   ];
   return (
     <div style={{ width: 224, height: '100%', background: '#fff', borderRight: '1px solid rgba(17,17,17,0.05)', display: 'flex', flexDirection: 'column', padding: '16px 8px 10px', flexShrink: 0 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', border: '1px solid rgba(17,17,17,.06)', borderRadius: 12 }}><LogoMark size={32} /><div><strong style={{ display: 'block', fontSize: 13 }}>aisee</strong><small style={{ color: 'rgba(17,17,17,.5)' }}>Last Updated: Aug 12, 2026</small></div></div>
       <div style={{ height: 1, margin: '16px 0', background: 'rgba(17,17,17,.06)' }} />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 1, overflow: 'auto' }}>
-        {navItems.map(({ label, icon, group, child }) => <React.Fragment key={label}>
+        {navItems.map(({ label, group, child }) => <React.Fragment key={label}>
           {group && <div style={{ margin: '6px 10px 7px', color: '#a6b2c0', fontSize: 10, fontWeight: 600, letterSpacing: '.08em' }}>{group}</div>}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 9, minHeight: 36, padding: `7px 10px 7px ${child ? 28 : 10}px`, borderLeft: child ? '1px solid rgba(17,17,17,.1)' : 0, borderRadius: 8, background: label === activeItem ? '#f5f5f5' : 'transparent', cursor: 'pointer', fontSize: 14, fontFamily: 'Karla', color: '#111' }}><span style={{ width: 16 }}>{icon}</span>{label}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, minHeight: 36, padding: `7px 10px 7px ${child ? 28 : 10}px`, borderLeft: child ? '1px solid rgba(17,17,17,.1)' : 0, borderRadius: 8, background: label === activeItem ? '#f5f5f5' : 'transparent', cursor: 'pointer', fontSize: 14, fontFamily: 'Karla', color: '#111' }}><StemUIAsset name={stemuiAssets[label]} />{label}</div>
         </React.Fragment>)}
       </div>
       <div style={{ paddingTop: 10, borderTop: '1px solid rgba(17,17,17,.06)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-          <LogoMark size={32} />
+          <StemUIAsset name="avatar-user" size={32} alt="User avatar" />
           <div>
             <div style={{ fontSize: 12, fontWeight: 500 }}>projects5@gmail.com</div>
             <div style={{ fontSize: 11, color: 'rgba(17,17,17,0.6)' }}>Growth-Loop Plan</div>
           </div>
         </div>
         <strong style={{ fontSize: 13 }}>✦ {credits} Credits</strong><div style={{ height: 6, marginTop: 7, borderRadius: 999, background: '#f0f0f0' }}><div style={{ width: '92%', height: '100%', borderRadius: 999, background: '#CFFF29' }} /></div>
-        <div style={{ marginTop: 10, padding: 8, borderRadius: 9, background: '#fafafa', textAlign: 'center', fontWeight: 500 }}>↪ Logout</div>
+        <div style={{ marginTop: 10, padding: 8, borderRadius: 9, background: '#fafafa', fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}><StemUIAsset name="action-logout" size={15} />Logout</div>
       </div>
     </div>
   );
@@ -86,7 +98,7 @@ function PostCard({ content, platform = 'X', status = 'Scheduled', time = 'Today
   return (
     <div style={{ background: '#fff', borderRadius: 10, border: '1px solid rgba(17,17,17,0.07)', padding: '12px 14px', width: '100%' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-        <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#E1E1E1' }} />
+        <StemUIAsset name="avatar-social-1" size={28} alt="Social account avatar" />
         <span style={{ fontSize: 12, fontWeight: 600, color: '#111', fontFamily: 'Karla' }}>@aisee_hq</span>
         <div style={{ width: 14, height: 14, borderRadius: 3, background: '#111', marginLeft: 2 }} />
       </div>
@@ -99,29 +111,29 @@ function PostCard({ content, platform = 'X', status = 'Scheduled', time = 'Today
   );
 }
 
-// ─── Small Icons (inline SVG) ────────────────────────────────────
+// ─── Small Icons (StemUI resource snapshot) ─────────────────────
 function BellIcon() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>;
+  return <StemUIAsset name="action-bell" />;
 }
 function PlusIcon() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>;
+  return <StemUIAsset name="action-plus" />;
 }
 function CalIcon() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
+  return <StemUIAsset name="nav-calendar" />;
 }
 function XIcon() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
+  return <StemUIAsset name="action-close" />;
 }
 function CheckIcon() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>;
+  return <StemUIAsset name="action-check" />;
 }
 
 // ─── Channel Badge ────────────────────────────────────────────────
 function ChannelBadge({ name, connected = true }) {
-  const colors = { X: '#111', LinkedIn: '#0A66C2', Reddit: '#FF4500', TikTok: '#111', YouTube: '#FF0000' };
+  const platformAssets = { X: 'platform-x', LinkedIn: 'platform-linkedin', Reddit: 'platform-reddit', TikTok: 'platform-tiktok', YouTube: 'platform-youtube', Medium: 'platform-medium' };
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 10, background: '#fff', border: '1px solid rgba(17,17,17,0.08)', width: '100%' }}>
-      <div style={{ width: 28, height: 28, borderRadius: '50%', background: colors[name] || '#E1E1E1', flexShrink: 0 }} />
+      <StemUIAsset name={platformAssets[name] || 'nav-channels'} size={28} />
       <span style={{ fontSize: 13, fontWeight: 500, color: '#111', fontFamily: 'Karla', flex: 1 }}>{name}</span>
       <div style={{ width: 20, height: 20, borderRadius: '50%', background: connected ? '#CFF229' : 'rgba(17,17,17,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {connected ? <CheckIcon /> : null}

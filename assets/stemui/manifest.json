@@ -1,0 +1,137 @@
+{
+  "package": "@stemui/icons",
+  "version": "0.1.21",
+  "repository": "https://github.com/qi15582378779/stemui",
+  "npm": "https://www.npmjs.com/package/@stemui/icons",
+  "mode": "read-only source snapshot",
+  "assets": [
+    {
+      "file": "nav-overview.svg",
+      "source": "line_categrary_layout.svg"
+    },
+    {
+      "file": "nav-analysis.svg",
+      "source": "line_scan_analysis.svg"
+    },
+    {
+      "file": "nav-growth.svg",
+      "source": "line_process_list.svg"
+    },
+    {
+      "file": "nav-improve-score.svg",
+      "source": "draw_list_task_score.svg"
+    },
+    {
+      "file": "nav-brand-influence.svg",
+      "source": "draw_earth_growth.svg"
+    },
+    {
+      "file": "nav-engage.svg",
+      "source": "line_bubble_message.svg"
+    },
+    {
+      "file": "nav-signal-feed.svg",
+      "source": "line_single_feed.svg"
+    },
+    {
+      "file": "nav-keywords.svg",
+      "source": "line_keyboard_keyword.svg"
+    },
+    {
+      "file": "nav-replies.svg",
+      "source": "line_arrowup_send.svg"
+    },
+    {
+      "file": "nav-post.svg",
+      "source": "draw_file_post.svg"
+    },
+    {
+      "file": "nav-calendar.svg",
+      "source": "line_calendar_schedule.svg"
+    },
+    {
+      "file": "nav-channels.svg",
+      "source": "line_media_channel.svg"
+    },
+    {
+      "file": "nav-media.svg",
+      "source": "line_movie_media.svg"
+    },
+    {
+      "file": "nav-verify.svg",
+      "source": "draw_arrow_verify.svg"
+    },
+    {
+      "file": "nav-connection.svg",
+      "source": "draw_link_connect.svg"
+    },
+    {
+      "file": "action-bell.svg",
+      "source": "fill_bell_notice.svg"
+    },
+    {
+      "file": "action-logout.svg",
+      "source": "line_arrow_logout.svg"
+    },
+    {
+      "file": "action-plus.svg",
+      "source": "line_plus_add.svg"
+    },
+    {
+      "file": "action-close.svg",
+      "source": "line_x_close.svg"
+    },
+    {
+      "file": "action-check.svg",
+      "source": "line_correct_done.svg"
+    },
+    {
+      "file": "avatar-user.svg",
+      "source": "avatar_dapp_001.svg"
+    },
+    {
+      "file": "avatar-social-1.svg",
+      "source": "avatar_social_1.svg"
+    },
+    {
+      "file": "avatar-social-2.svg",
+      "source": "avatar_social_2.svg"
+    },
+    {
+      "file": "avatar-social-3.svg",
+      "source": "avatar_social_3.svg"
+    },
+    {
+      "file": "platform-x.svg",
+      "source": "platform=x.svg"
+    },
+    {
+      "file": "platform-linkedin.svg",
+      "source": "platform=linkedin.svg"
+    },
+    {
+      "file": "platform-reddit.svg",
+      "source": "platform=reddit.svg"
+    },
+    {
+      "file": "platform-medium.svg",
+      "source": "platform=medium.svg"
+    },
+    {
+      "file": "platform-youtube.svg",
+      "source": "platform=youtube.svg"
+    },
+    {
+      "file": "platform-tiktok.svg",
+      "source": "platform=tiktok.svg"
+    },
+    {
+      "file": "platform-github.svg",
+      "source": "platform=github.svg"
+    },
+    {
+      "file": "platform-google.svg",
+      "source": "platform=google.svg"
+    }
+  ]
+}
