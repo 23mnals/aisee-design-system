@@ -54,13 +54,16 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(components, /class="select-trigger"[\s\S]*?aria-haspopup="listbox"[\s\S]*?aria-expanded="true"/);
   assert.match(components, /class="select-menu"[\s\S]*?role="listbox"/);
   assert.match(components, /class="select-option selected"[\s\S]*?role="option"[\s\S]*?aria-selected="true"/);
-  assert.match(styles, /\.aisee-dropdown__menu \{[\s\S]*?border: 1px solid var\(--aisee-color-black\);[\s\S]*?box-shadow: var\(--aisee-shadow-dropdown\);/);
-  assert.match(styles, /\.aisee-dropdown__option\[aria-selected="true"\] \{ background: var\(--aisee-module-primary\);/);
+  assert.match(components, /\.select-menu\{[^}]*top:70px/);
+  assert.match(components, /\.select-option:hover,\.select-option\.selected\{background:rgba\(17,17,17,\.05\)\}/);
+  assert.match(styles, /\.aisee-dropdown__menu \{[\s\S]*?top: calc\(100% \+ 8px\);[\s\S]*?border: 1px solid var\(--aisee-color-black\);[\s\S]*?box-shadow: var\(--aisee-shadow-dropdown\);/);
+  assert.match(styles, /\.aisee-dropdown__option\[aria-selected="true"\] \{ background: rgba\(17,17,17,\.05\);/);
   assert.match(source, /aria-haspopup="listbox"/);
   assert.match(source, /role="option"/);
   assert.match(source, /ArrowDown/);
   assert.match(source, /Escape/);
-  assert.match(portal, /dropdown menus use a black border, soft elevation, 5% hover fill and module-color selection/);
+  assert.match(portal, /dropdown menus keep an 8px gap below the trigger/);
+  assert.match(portal, /5% black fill for hover, focus and selected items/);
 });
 
 test('danger button follows the Figma destructive action style', async () => {
