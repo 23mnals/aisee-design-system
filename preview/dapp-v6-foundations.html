@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aisee dApp v6 Foundations</title>
+<style>
+@font-face{font-family:Karla;src:url('../fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
+:root{--black:#111;--muted:rgba(17,17,17,.6);--line:rgba(17,17,17,.05);--lime:#CFFF29;--yellow:#FFE253;--page:#FAFAFA;--white:#fff;--orange:#EC5212;--green:#A5D500;--cream:#F7F6E9;--lav:#F3E7F4}
+*{box-sizing:border-box}body{margin:0;padding:32px;background:var(--page);color:var(--black);font-family:Karla,sans-serif;font-size:14px;line-height:1.5}.shell{max-width:1120px;margin:auto}.top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px}.eyebrow{margin:0 0 6px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.12em}.top h1{margin:0;font-size:28px;line-height:1.1}.badge{padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--muted);font-size:12px}.section{margin-bottom:28px}.section-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}.section-head span{display:grid;width:24px;height:24px;place-items:center;border-radius:50%;background:#111;color:#fff;font-size:11px}.section h2{margin:0;font-size:16px}.palette{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.swatch{overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#fff}.color{height:76px;border-bottom:1px solid var(--line)}.meta{display:grid;gap:2px;padding:10px}.meta strong{font-size:12px}.meta code{color:var(--muted);font-size:10px}.theme-grid,.rule-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.theme{min-height:118px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff}.theme i{display:block;width:42px;height:8px;margin-bottom:20px;border-radius:999px}.theme h3{margin:0 0 5px;font-size:15px}.theme p{margin:0;color:var(--muted);font-size:12px}.type-card{display:grid;grid-template-columns:1.2fr 1fr 1fr;border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}.type-card>div{min-height:130px;padding:18px;border-right:1px solid var(--line)}.type-card>div:last-child{border:0}.label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.06em}.page-title{margin:22px 0 0;font-size:20px;font-weight:600;line-height:24px}.body{margin:20px 0 0;font-size:14px}.caption{margin:22px 0 0;color:var(--muted);font-size:12px}.rule{padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff}.rule strong{display:block;margin-bottom:6px}.rule p{margin:0;color:var(--muted);font-size:12px}.space-line{display:flex;align-items:flex-end;gap:12px;padding:20px;border:1px solid var(--line);border-radius:12px;background:#fff}.space{display:grid;place-items:center;background:var(--lime);font-size:10px;font-weight:600}.s1{width:20px;height:20px}.s2{width:28px;height:28px}.s3{width:36px;height:36px}.s4{width:44px;height:44px}.s5{width:56px;height:56px}.s6{width:72px;height:72px}.note{margin:18px 0 0;padding:12px 14px;border-left:3px solid var(--lime);background:#fff;color:var(--muted);font-size:12px}@media(max-width:720px){body{padding:20px}.top{align-items:flex-start;flex-direction:column}.palette{grid-template-columns:repeat(2,1fr)}.theme-grid,.rule-grid,.type-card{grid-template-columns:1fr}.type-card>div{border-right:0;border-bottom:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="top"><div><p class="eyebrow">AISEE DAPP · FOUNDATIONS · V6</p><h1>功能优先，数据驱动，品牌克制。</h1></div><span class="badge">Karla only · 2026-08-13</span></header>
+  <section class="section"><div class="section-head"><span>1</span><h2>Core palette</h2></div><div class="palette">
+    <article class="swatch"><div class="color" style="background:#CFFF29"></div><div class="meta"><strong>Analysis</strong><code>#CFFF29</code></div></article>
+    <article class="swatch"><div class="color" style="background:#FFE253"></div><div class="meta"><strong>Post Agent / Engage</strong><code>#FFE253</code></div></article>
+    <article class="swatch"><div class="color" style="background:#FAFAFA"></div><div class="meta"><strong>Page</strong><code>#FAFAFA</code></div></article>
+    <article class="swatch"><div class="color" style="background:#FFFFFF"></div><div class="meta"><strong>Card</strong><code>#FFFFFF</code></div></article>
+    <article class="swatch"><div class="color" style="background:#EC5212"></div><div class="meta"><strong>Notification / Error</strong><code>#EC5212</code></div></article>
+    <article class="swatch"><div class="color" style="background:#A5D500"></div><div class="meta"><strong>Success</strong><code>#A5D500</code></div></article>
+    <article class="swatch"><div class="color" style="background:#F7F6E9"></div><div class="meta"><strong>Warm surface</strong><code>#F7F6E9</code></div></article>
+    <article class="swatch"><div class="color" style="background:#F3E7F4"></div><div class="meta"><strong>Engage banner</strong><code>#F3E7F4</code></div></article>
+  </div></section>
+  <section class="section"><div class="section-head"><span>2</span><h2>Module themes</h2></div><div class="theme-grid">
+    <article class="theme"><i style="background:#CFFF29"></i><h3>Analysis</h3><p>New Analysis、Score、Report、progress 与 active navigation。</p></article>
+    <article class="theme"><i style="background:#FFE253"></i><h3>Post Agent</h3><p>New、Calendar、Channels、Models、Media 与 Post Editor。</p></article>
+    <article class="theme"><i style="background:#FFE253"></i><h3>Engage</h3><p>平级第三模块，沿用 yellow；Banner 使用独立 lavender 身份色。</p></article>
+  </div></section>
+  <section class="section"><div class="section-head"><span>3</span><h2>Typography</h2></div><div class="type-card">
+    <div><span class="label">Page / Dialog title</span><p class="page-title">Account Profile</p><p class="caption">Karla 20 / 600 / 24</p></div>
+    <div><span class="label">Body / Table</span><p class="body">Track visibility across AI platforms and compare every report.</p><p class="caption">Karla 14 / 400 / 1.57</p></div>
+    <div><span class="label">Caption / Helper</span><p class="caption">Updated 2 minutes ago<br>1825 Credits · 68.4 Score</p><p class="caption">Karla 12 / 400 / 1.5</p></div>
+  </div><p class="note">Homepage / Brand 可使用 Karla + Gotu；dApp、数据、代码提示与 Score Gauge 全部只使用 Karla。</p></section>
+  <section class="section"><div class="section-head"><span>4</span><h2>Layout & rhythm</h2></div><div class="rule-grid">
+    <article class="rule"><strong>AppHeader · 70px</strong><p>白底，padding 14×24，模块主色跟随当前功能区。</p></article><article class="rule"><strong>Sidebar · 224px</strong><p>Analysis / Post Agent / Engage 三项平级切换。</p></article><article class="rule"><strong>Content · 24–32px</strong><p>1440px desktop 基线，向下兼容到 1280px。</p></article>
+  </div><div class="space-line" style="margin-top:10px"><div class="space s1">4</div><div class="space s2">8</div><div class="space s3">12</div><div class="space s4">16</div><div class="space s5">24</div><div class="space s6">32</div></div></section>
+</main>
+</body>
+</html>

@@ -38,7 +38,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx vite build --mode docs
+      - uses: actions/configure-pages@v5
+      - run: npm run site
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

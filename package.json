@@ -30,6 +30,7 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
     "build": "npm run tokens && node scripts/sync-legacy-browser-source.mjs && tsc -p tsconfig.build.json && vite build && node scripts/copy-package-assets.mjs",
+    "site": "node scripts/build-static-site.mjs",
     "check": "npm run tokens:check && npm run typecheck && npm test && npm run build"
   },
   "peerDependencies": {

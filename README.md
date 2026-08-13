@@ -13,6 +13,21 @@ aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System
 
 原有 692 个文件与子目录均保留，包括 Brand previews、animated icons、Engage、Analysis、Post Agent、Billing、Pricing、My Account、教程、screenshots 和 uploads。v6 有明确同职责规则的内容已经定点更新；没有重复项的旧资源没有删除。
 
+## 团队预览页面
+
+直接打开 [`aisee-design-system-preview.html`](aisee-design-system-preview.html) 即可浏览完整系统，无需安装依赖。页面包含 README、Brand、Components、UI Kits — Webapp 四个部分，并提供：
+
+- v6 Foundations 与 Components 当前规范页
+- 所有保留的旧版 HTML 预览，并以 `Legacy` 标识
+- 目录搜索、内嵌预览、独立打开和页面链接复制
+- 桌面端与移动端响应式浏览
+
+GitHub 仓库启用 Pages 后，每次合并到 `main` 都会自动发布同一个入口页，团队成员只需要保存 Pages URL。也可以本地生成发布目录：
+
+```bash
+npm run site
+```
+
 ## 字体边界
 
 - **Homepage / Brand：Karla + Gotu**
