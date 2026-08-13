@@ -33,3 +33,9 @@
 - 旧的顶部 Analysis / Post Agent / Engage 三模块切换不再作为当前 Shell。
 - 当前侧栏结构为 Project / Overview，以及 Growth Loop 下的 Analysis、Growth、Engage、Post 分组及其子项。
 - 旧 Dashboard、Calendar、Channels、Post Agent、All Posts 仍作为历史内容保留，但不得继续充当 UI Kit 当前预览入口。
+
+## 2026-08-13 — 设计系统与 v6 文档差异处理
+
+- 每次设计系统更新都必须对照 `docs/aisee-dapp-design.v6.md` 做一致性检查。
+- 发现实现与 v6 文档不一致时，先记录差异并通知产品/设计负责人，由负责人决定更新文档还是更新系统。
+- 在确认前不得擅自改写 v6 文档，也不得把未确认的实现差异标记为正式规范。
