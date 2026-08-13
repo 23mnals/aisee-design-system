@@ -41,6 +41,26 @@ test('portal uses the official AISEE logo mark', async () => {
   await access(new URL('../assets/aisee-logo-mark.png', import.meta.url));
 });
 
+test('legacy buttons preview uses official logo assets instead of a CSS redraw', async () => {
+  const buttons = await readFile(new URL('../preview/components-buttons-badges.html', import.meta.url), 'utf8');
+  assert.match(buttons, /src="\.\.\/assets\/aisee-logo-mark\.png"/);
+  assert.match(buttons, /src="\.\.\/assets\/logo-wordmark\.png"/);
+  assert.doesNotMatch(buttons, /logo-mark-bg|logo-mark-face/);
+});
+
+test('brand logo preview uses official assets instead of a CSS redraw', async () => {
+  const logo = await readFile(new URL('../preview/brand-logo.html', import.meta.url), 'utf8');
+  assert.match(logo, /src="\.\.\/assets\/aisee-logo-mark\.png"/);
+  assert.match(logo, /src="\.\.\/assets\/logo-wordmark\.png"/);
+  assert.doesNotMatch(logo, /lm-bg|lm-face|lm-eye/);
+});
+
+test('sidebar uses compact 14px navigation typography', () => {
+  assert.match(portal, /\.nav-home \{[\s\S]*?font-size: 14px;/);
+  assert.match(portal, /\.nav-group summary \{[\s\S]*?font-size: 14px;/);
+  assert.match(portal, /\.nav-item \{[^}]*font-size: 14px;/);
+});
+
 test('brand fonts are local and application typography remains Karla-only', async () => {
   const displayType = await readFile(new URL('../preview/type-display.html', import.meta.url), 'utf8');
   const logoPreview = await readFile(new URL('../preview/brand-logo.html', import.meta.url), 'utf8');

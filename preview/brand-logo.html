@@ -11,12 +11,8 @@ body { background: #fff; padding: 24px; font-family: 'Karla', sans-serif; }
 .row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
 .label { font-size: 10px; color: #aaa; margin-top: 8px; }
 
-.logo-mark {
-  width: 25px; height: 26px; position: relative; display: inline-block; flex-shrink: 0;
-}
-.lm-bg { position: absolute; left: 0; top: 0; width: 25px; height: 26px; border-radius: 320px 320px 0 0; }
-.lm-face { position: absolute; left: 0; top: 1px; width: 25px; height: 25px; border-radius: 320px 320px 0 0; overflow: hidden; }
-.lm-eye { position: absolute; left: 50%; top: 38%; transform: translateX(-50%); width: 10px; height: 8px; border-radius: 50%; background: #fff; }
+.logo-mark { display: block; object-fit: contain; flex-shrink: 0; }
+.logo-wordmark { display: block; object-fit: contain; }
 </style>
 </head>
 <body>
@@ -25,10 +21,7 @@ body { background: #fff; padding: 24px; font-family: 'Karla', sans-serif; }
   <!-- Small -->
   <div style="text-align:center;">
     <div style="display:flex;align-items:center;gap:6px;">
-      <div class="logo-mark" style="width:20px;height:21px;">
-        <div class="lm-bg" style="background:#CFF229;width:20px;height:21px;border-radius:320px 320px 0 0;"></div>
-        <div class="lm-face" style="width:20px;height:20px;top:1px;background:#111;"><div class="lm-eye" style="width:8px;height:6px;"></div></div>
-      </div>
+      <img class="logo-mark" src="../assets/aisee-logo-mark.png" alt="AISEE logo mark" style="width:20px;height:20px;">
       <span style="font-family:'Karla';font-size:14px;font-weight:500;color:#111;">aisee</span>
     </div>
     <div class="label">Small (20px)</div>
@@ -37,11 +30,7 @@ body { background: #fff; padding: 24px; font-family: 'Karla', sans-serif; }
   <!-- Standard -->
   <div style="text-align:center;">
     <div style="display:flex;align-items:center;gap:8px;">
-      <div class="logo-mark">
-        <div class="lm-bg" style="background:#CFF229;"></div>
-        <div class="lm-face" style="background:#111;"><div class="lm-eye"></div></div>
-      </div>
-      <span style="font-family:'Karla';font-size:16px;font-weight:500;color:#111;">aisee</span>
+      <img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark" style="width:88px;height:40px;">
     </div>
     <div class="label">Standard (25px)</div>
   </div>
@@ -49,23 +38,15 @@ body { background: #fff; padding: 24px; font-family: 'Karla', sans-serif; }
   <!-- Large -->
   <div style="text-align:center;">
     <div style="display:flex;align-items:center;gap:12px;">
-      <div class="logo-mark" style="width:48px;height:50px;">
-        <div class="lm-bg" style="background:#CFF229;width:48px;height:50px;border-radius:320px 320px 0 0;"></div>
-        <div class="lm-face" style="width:48px;height:48px;top:2px;background:#111;"><div class="lm-eye" style="width:20px;height:15px;"></div></div>
-      </div>
-      <span style="font-family:'Karla';font-size:32px;font-weight:500;color:#111;">aisee</span>
+      <img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark large" style="width:142px;height:64px;">
     </div>
     <div class="label">Large (48px)</div>
   </div>
 
   <!-- On dark -->
   <div style="background:#111;border-radius:12px;padding:16px 20px;text-align:center;">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="logo-mark">
-        <div class="lm-bg" style="background:#CFF229;"></div>
-        <div class="lm-face" style="background:#333;"><div class="lm-eye"></div></div>
-      </div>
-      <span style="font-family:'Karla';font-size:16px;font-weight:500;color:#fff;">aisee</span>
+    <div style="display:flex;align-items:center;gap:8px;background:#fff;border-radius:8px;padding:3px 10px;">
+      <img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark on a white safety area" style="width:88px;height:40px;">
     </div>
     <div class="label" style="color:#555;">On dark</div>
   </div>
@@ -73,11 +54,8 @@ body { background: #fff; padding: 24px; font-family: 'Karla', sans-serif; }
   <!-- On lime -->
   <div style="background:#CFF229;border-radius:12px;padding:16px 20px;text-align:center;">
     <div style="display:flex;align-items:center;gap:8px;">
-      <div class="logo-mark">
-        <div class="lm-bg" style="background:#111;"></div>
-        <div class="lm-face" style="background:#CFF229;"><div class="lm-eye" style="background:#111;"></div></div>
-      </div>
-      <span style="font-family:'Karla';font-size:16px;font-weight:500;color:#111;">aisee</span>
+      <img class="logo-mark" src="../assets/aisee-logo-mark.png" alt="AISEE logo mark on lime" style="width:26px;height:26px;">
+      <span style="font-family:'Karla';font-size:16px;font-weight:600;color:#111;">aisee</span>
     </div>
     <div class="label" style="color:rgba(17,17,17,0.6);">On lime</div>
   </div>

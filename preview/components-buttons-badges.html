@@ -12,22 +12,9 @@ body { background: #fff; padding: 20px 24px; font-family: 'Karla', sans-serif; }
 .col { display: flex; flex-direction: column; gap: 8px; }
 .section-title { font-size: 10px; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
 
-/* Logo mark */
-.logo-mark {
-  width: 25px; height: 26px; position: relative; display: inline-block;
-}
-.logo-mark-bg {
-  position: absolute; left: 0; top: 0; width: 25px; height: 26px;
-  border-radius: 320px 320px 0 0; background: #CFF229;
-}
-.logo-mark-face {
-  position: absolute; left: 0; top: 1px; width: 25px; height: 25px;
-  border-radius: 320px 320px 0 0; background: #111; overflow: hidden;
-}
-.logo-mark-face::after {
-  content: ''; position: absolute; left: 50%; top: 38%; transform: translateX(-50%);
-  width: 10px; height: 8px; border-radius: 50%; background: #fff;
-}
+/* Official logo assets — never redraw the eye mark with CSS. */
+.logo-mark { width: 26px; height: 26px; display: block; object-fit: contain; }
+.logo-wordmark { width: 88px; height: 40px; display: block; object-fit: contain; object-position: left center; }
 
 /* Buttons */
 .btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'Karla', sans-serif; cursor: pointer; border: none; }
@@ -59,20 +46,8 @@ body { background: #fff; padding: 20px 24px; font-family: 'Karla', sans-serif; }
   <div>
     <div class="section-title">Logo Mark</div>
     <div class="row" style="align-items:center;">
-      <div class="logo-mark"><div class="logo-mark-bg"></div><div class="logo-mark-face"></div></div>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <div class="logo-mark"><div class="logo-mark-bg"></div><div class="logo-mark-face"></div></div>
-        <span style="font-family:'Karla',sans-serif;font-size:16px;font-weight:500;color:#111;">aisee</span>
-      </div>
-      <div style="background:#111; padding:8px 12px; border-radius:8px; display:flex; align-items:center; gap:8px;">
-        <div style="position:relative;width:25px;height:26px;">
-          <div style="position:absolute;width:25px;height:26px;border-radius:320px 320px 0 0;background:#CFF229;"></div>
-          <div style="position:absolute;top:1px;width:25px;height:25px;border-radius:320px 320px 0 0;background:#333;overflow:hidden;">
-            <div style="position:absolute;left:50%;top:38%;transform:translateX(-50%);width:10px;height:8px;border-radius:50%;background:#fff;"></div>
-          </div>
-        </div>
-        <span style="font-family:'Karla',sans-serif;font-size:16px;font-weight:500;color:#fff;">aisee</span>
-      </div>
+      <img class="logo-mark" src="../assets/aisee-logo-mark.png" alt="AISEE logo mark">
+      <img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark">
     </div>
   </div>
 
