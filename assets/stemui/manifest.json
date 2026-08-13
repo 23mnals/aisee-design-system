@@ -19,11 +19,11 @@
     },
     {
       "file": "nav-improve-score.svg",
-      "source": "draw_list_task_score.svg"
+      "source": "line_calendar_task.svg"
     },
     {
       "file": "nav-brand-influence.svg",
-      "source": "draw_earth_growth.svg"
+      "source": "line_earth_timezone.svg"
     },
     {
       "file": "nav-engage.svg",
@@ -43,7 +43,7 @@
     },
     {
       "file": "nav-post.svg",
-      "source": "draw_file_post.svg"
+      "source": "line_file_social.svg"
     },
     {
       "file": "nav-calendar.svg",
@@ -59,11 +59,11 @@
     },
     {
       "file": "nav-verify.svg",
-      "source": "draw_arrow_verify.svg"
+      "source": "line_arrow_rescan.svg"
     },
     {
       "file": "nav-connection.svg",
-      "source": "draw_link_connect.svg"
+      "source": "line_arrow_connect.svg"
     },
     {
       "file": "action-bell.svg",

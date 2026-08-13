@@ -98,3 +98,9 @@ STEMUI_ROOT="$HOME/aisee icon github" npm run sync:stemui
 - `@stemui/animated-tabs`：已发布的交互组件包，不属于静态 icon 集。
 - `@stemui/animated-icons`：StemUI workspace 中的动画 icon 包；尚未发布到 npm 前，不得在产品代码中声明 registry 依赖。
 - Lucide：只在 StemUI 缺少对应 icon 时临时补充；频繁复用的补充图标应进入 StemUI，避免形成第二套资源库。
+
+## 功能图标与插图区分
+
+- 侧边栏、按钮、输入、下拉框、标签、状态和其他可交互位置，使用 StemUI 的功能图标家族：`line_*`、`fill_*`、`flat_*` 等；优先使用 `line_*`，保持 16px 线性识别。
+- `illustration_*` 不用于功能交互或导航。插图只用于 Banner、空状态，以及页面需要增加呼吸感的非交互区域。
+- UI Kit 的 `assets/stemui/nav-*.svg` 是上述功能图标的只读快照；其 manifest 会记录对应 StemUI 源文件名，更新时通过 `npm run sync:stemui` 重新生成。
