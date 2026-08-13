@@ -529,7 +529,7 @@ Logo mark:                      320px 320px 0 0
 - 平台 chips 横排，每个 chip 圆角 999 + 平台 icon + 名称
 
 ### 6.14 Iconography
-- AISEE 自有 icon 统一来自 **StemUI**：源文件与 React 组件维护在 [`qi15582378779/stemui`](https://github.com/qi15582378779/stemui)，产品端安装 [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons)
+- AISEE 自有 icon 统一来自 **StemUI**：源文件与 React 组件维护在 [`qi15582378779/stemui`](https://github.com/qi15582378779/stemui)，产品端通过 npm README 页面安装与查看版本说明：[`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons?activeTab=readme)
 - 设计系统不复制整套 SVG；StemUI 是唯一资源源。Lucide 仅在 StemUI 暂无对应图标时作为补充，补充图标仍遵守 1.5px stroke、rounded linecap，并应评估后续纳入 StemUI
 - UI 尺寸：16×16（标准）/ 20×20（按钮内）/ 24×24（nav）
 - 颜色：`#111` 默认；在 lime / yellow 底上保持 `#111`；在黑底用 `#fff`

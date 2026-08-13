@@ -49,7 +49,7 @@ npm run site
 
 ## Icon Library
 
-AISEE 自有 icon 的唯一资源源是 [StemUI GitHub](https://github.com/qi15582378779/stemui)，产品代码通过 npm 的 [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons) 使用：
+AISEE 自有 icon 的唯一资源源是 [StemUI GitHub](https://github.com/qi15582378779/stemui)，产品代码通过 npm 的 [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons?activeTab=readme) 使用：
 
 ```bash
 npm install @stemui/icons

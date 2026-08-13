@@ -5,7 +5,7 @@
 | 入口 | 用途 |
 |---|---|
 | [StemUI GitHub](https://github.com/qi15582378779/stemui) | SVG 源文件、生成代码、预览与版本历史的唯一资源源 |
-| [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons) | 产品项目安装和使用 icon 的正式 npm 包 |
+| [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons?activeTab=readme) | 产品项目安装和使用 icon 的正式 npm 包；README 页用于查看安装、导出与版本说明 |
 | aisee Design System | 记录 icon 视觉规则、尺寸、语义和使用示例，不复制完整 SVG 库 |
 
 维护机当前主工作目录为 `~/aisee icon github`。`~/stemui` 是同一 Git 仓库的 worktree，不应当作第二份独立 icon 库。

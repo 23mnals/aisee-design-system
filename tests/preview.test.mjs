@@ -127,7 +127,7 @@ test('iconography points to the StemUI GitHub source and npm package', async () 
   const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8');
   const workflow = await readFile(new URL('../docs/ICON_LIBRARY.md', import.meta.url), 'utf8');
   assert.match(portal, /https:\/\/github\.com\/qi15582378779\/stemui/);
-  assert.match(portal, /https:\/\/www\.npmjs\.com\/package\/@stemui\/icons/);
+  assert.match(portal, /https:\/\/www\.npmjs\.com\/package\/@stemui\/icons\?activeTab=readme/);
   assert.match(readme, /npm install @stemui\/icons/);
   assert.match(workflow, /npm run publish:icons/);
   assert.match(workflow, /npm run publish:icons:manual/);
