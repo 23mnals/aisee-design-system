@@ -133,27 +133,39 @@ test('iconography points to the StemUI GitHub source and npm package', async () 
   assert.match(workflow, /npm run publish:icons:manual/);
 });
 
-test('webapp UI kit follows the 5.5 Growth Loop shell and official branding', async () => {
+test('webapp UI kit follows the current Growth Loop shell and previews every functional destination', async () => {
   const kit = await readFile(new URL('../ui_kits/webapp/index.html', import.meta.url), 'utf8');
   const shared = await readFile(new URL('../ui_kits/webapp/Components.jsx', import.meta.url), 'utf8');
   const dna = JSON.parse(await readFile(new URL('../ui_kits/webapp/design-dna-v5.5.json', import.meta.url), 'utf8'));
   assert.match(kit, /src="\.\.\/\.\.\/assets\/aisee-logo-wordmark\.svg"/);
   assert.match(kit, /src="\.\.\/\.\.\/assets\/aisee-logo-mark\.png"/);
   assert.match(kit, /Growth Loop/);
-  assert.match(kit, /data-screen="Overview"/);
-  assert.match(kit, /data-screen="Analysis"/);
-  assert.match(kit, /data-screen="Growth"/);
-  assert.match(kit, /data-screen="Engage"/);
-  assert.match(kit, /data-screen="Post"/);
+  const destinations = ['Overview', 'Analysis', 'Growth', 'Improve Score', 'Build Brand Influence', 'Engage', 'Signal Feed', 'Keywords & Accounts', 'Replies', 'Post', 'Calendar', 'Channels', 'Media', 'Verify', 'Connection'];
+  for (const destination of destinations) {
+    assert.match(kit, new RegExp(`['\"]${destination.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')}['\"]`));
+  }
+  assert.match(kit, /name="aisee-preview-pages"/);
+  assert.match(kit, /history\.replaceState/);
+  assert.match(kit, /hashchange/);
   assert.match(kit, /Turn insights into measurable growth/);
   assert.match(kit, /Score Improvement Plan/);
   assert.match(kit, /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
   assert.doesNotMatch(kit, /\['Analysis', 'Post Agent', 'Engage'\]/);
   assert.match(shared, /aisee-logo-wordmark\.svg/);
   assert.match(shared, /aisee-logo-mark\.png/);
+  assert.match(shared, /label: 'Verify'/);
+  assert.match(shared, /label: 'Connection'/);
+  assert.match(shared, /fontSize: 20, fontWeight: 600/);
   assert.doesNotMatch(shared, /borderRadius: '320px 320px 0 0'/);
   assert.equal(dna.design_system.layout.columns, '4 KPI columns followed by asymmetric two-column content');
   assert.equal(dna.visual_effects['3d_elements'].enabled, false);
+});
+
+test('webapp UI kit inline controller is syntactically valid', async () => {
+  const kit = await readFile(new URL('../ui_kits/webapp/index.html', import.meta.url), 'utf8');
+  const scripts = [...kit.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+  assert.equal(scripts.length, 1);
+  assert.doesNotThrow(() => new Function(scripts[0][1]));
 });
 
 test('legacy buttons preview uses official logo assets instead of a CSS redraw', async () => {

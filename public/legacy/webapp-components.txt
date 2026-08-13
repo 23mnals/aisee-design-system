@@ -41,6 +41,8 @@ function Sidebar({ activeItem = 'Overview', credits = 6840 }) {
     { label: 'Calendar', icon: '▦', child: true },
     { label: 'Channels', icon: '◎', child: true },
     { label: 'Media', icon: '▤', child: true },
+    { label: 'Verify', icon: '✓' },
+    { label: 'Connection', icon: '⊕' },
   ];
   return (
     <div style={{ width: 224, height: '100%', background: '#fff', borderRight: '1px solid rgba(17,17,17,0.05)', display: 'flex', flexDirection: 'column', padding: '16px 8px 10px', flexShrink: 0 }}>
@@ -155,7 +157,7 @@ function CreatePostModal({ onClose }) {
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.32)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', zIndex: 100 }} onClick={onClose}>
       <div style={{ background: '#fff', borderRadius: '16px 16px 0 0', width: '100%', maxWidth: 480, padding: 20, boxShadow: '0 20px 24px rgba(0,0,0,0.1)', marginBottom: 0 }} onClick={e => e.stopPropagation()}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-          <span style={{ fontSize: 20, fontWeight: 700, fontFamily: 'Karla', color: '#111' }}>Create Post</span>
+          <span style={{ fontSize: 20, fontWeight: 600, fontFamily: 'Karla', color: '#111' }}>Create Post</span>
           <div style={{ cursor: 'pointer', padding: 4 }} onClick={onClose}><XIcon /></div>
         </div>
         {/* Platform row */}

@@ -1,6 +1,6 @@
 # aisee Web App UI Kit
 
-A high-fidelity interactive recreation of the current aisee web application shell. The layout baseline is the **Figma 5.5 Growth Loop feature page** and component behavior continues to follow the v6 design specification.
+An interactive, multi-page recreation of the current aisee web application shell. The layout baseline is the **Figma 5.5 Growth Loop feature page** and each functional destination is synchronized as a recognisable preview from its current Figma feature area. These previews preserve information architecture and visual language; they are not pixel-perfect production screens.
 
 ## Design Width
 1440px desktop. Sidebar: 224px. Header: 70px. Main content padding: 24–32px.
@@ -9,7 +9,7 @@ A high-fidelity interactive recreation of the current aisee web application shel
 
 - The dApp loads and uses **Karla only**. Gotu belongs to Homepage / Brand and must not be introduced here.
 - The primary shell no longer uses the old Analysis / Post Agent / Engage top module toggle.
-- The current information architecture is Project → Overview, followed by Growth Loop → Analysis, Growth, Engage and Post groups.
+- The current information architecture is Project → Overview, followed by the complete Growth Loop: Analysis → Growth → Engage / Post → Verify, with Connection providing the shared account and channel layer.
 - Growth uses a pale-green contextual banner and lime progress/action feedback; detailed module components still follow the documented theme rules.
 
 ## Screens Included
@@ -17,16 +17,18 @@ A high-fidelity interactive recreation of the current aisee web application shel
 |---|---|
 | **Overview** | Growth banner, AI visibility baseline, task totals, available credits, score trajectory and improvement plan |
 | **Analysis** | Entry to diagnosis and AI visibility reporting |
-| **Growth** | Improve Score and Build Brand Influence workflows |
-| **Engage** | Signal Feed, Keywords & Accounts and Replies |
-| **Post** | Calendar, Channels and Media |
+| **Growth** | Growth dashboard plus individual Improve Score and Build Brand Influence previews |
+| **Engage** | Engage dashboard plus Signal Feed, Keywords & Accounts and Replies previews |
+| **Post** | Post workspace plus Calendar, Channels and Media previews |
+| **Verify** | Before/after visibility, citation lift and verified outcome preview |
+| **Connection** | Website, repository, content source and analytics connection preview |
 
 ## Interactive Features
-- Click sidebar items to switch screens
-- Click **New** or any CTA to open the Create Post modal
-- Type in the post editor — character count counts down from 280
-- Click grouped sidebar items to inspect the 5.5 product information architecture
-- Overview is the fully documented current reference screen; detailed destinations are added from their own Figma feature pages without replacing the shell
+- Click any sidebar item to switch to that functional preview.
+- Every page has a dedicated URL hash, for example `index.html#Signal%20Feed`, so teammates can share a specific preview.
+- All 15 current destinations contain a representative banner, KPI, list, table, editor, calendar, asset or integration state; no destination is an empty placeholder.
+- New Figma feature destinations must be added to both the sidebar registry and `screens` registry. Automated tests enforce the coverage list.
+- Figma page names are only routing hints. For recency and update scope, use the black title bar above each design block as the source of truth.
 
 ## Components (`Components.jsx`)
 | Component | Props |
@@ -41,7 +43,7 @@ A high-fidelity interactive recreation of the current aisee web application shel
 | `Dropdown` | `items`, `selected` |
 | `CreatePostModal` | `onClose` |
 
-`public/legacy/webapp-components.txt` is generated from `Components.jsx` by the dev/build scripts. The main `index.html` is now a self-contained 5.5 reference preview; edit `Components.jsx` when maintaining reusable UI Kit components.
+`public/legacy/webapp-components.txt` is generated from `Components.jsx` by the dev/build scripts. The main `index.html` is a self-contained, multi-page current reference preview; edit `Components.jsx` when maintaining reusable UI Kit components.
 
 The extracted three-dimensional design profile is stored in [`design-dna-v5.5.json`](design-dna-v5.5.json).
 

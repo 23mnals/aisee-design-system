@@ -746,6 +746,8 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 
 > **设计系统预览页应用规则（2026-08-13）**：组件与规范预览页的顶部说明区也使用 AISEE Banner 语言，不使用通用后台模板式的大标题栏。标题为 Karla 20 / 600，副标题 12 / 400，左侧使用 44–48px 白色 icon 容器，外层圆角 16px，并保留白色 4–5px 呼吸环。Analysis 使用 `#F5FFD4`，Post Agent 使用 `#FFFADD`，Engage 使用其身份色 `#F3E7F4`；组件卡标题统一 Karla 14 / 600，避免 Ant Design 式偏大、偏粗的展示层级。
 
+> **UI Kit 功能预览覆盖规则（2026-08-13）**：Web App UI Kit 不能只展示 Overview。当前侧边栏中的每个可到达功能都必须有可识别的近似页面预览，至少覆盖 Overview、Analysis、Growth、Improve Score、Build Brand Influence、Engage、Signal Feed、Keywords & Accounts、Replies、Post、Calendar、Channels、Media、Verify 与 Connection。预览无需逐像素复刻，但必须同步对应 Figma 设计区块的页面目的、主要信息结构、模块身份色和关键组件状态；不得使用空白页或通用占位卡代替。新增 Figma 功能时同步更新导航、页面注册表与自动覆盖测试。
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ ▢   Engage                              New  Keywords  X acc  sub  Sent │
