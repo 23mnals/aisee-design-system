@@ -167,6 +167,8 @@ test('overview documents feature-page and specification version rules', () => {
   assert.match(portal, /Page 5\.6 is the latest newly opened feature page, not a global version/);
   assert.match(portal, /Existing feature pages[\s\S]*?Living/);
   assert.match(portal, /newest design above the earlier content on that function's original page/);
+  assert.match(portal, /black title frame records its update subject and date/);
+  assert.match(portal, /page and file names are location aids, not freshness evidence/);
   assert.match(portal, /Missing earlier feature pages[\s\S]*?Planned/);
 });
 
