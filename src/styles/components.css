@@ -23,7 +23,17 @@
 .aisee-button--secondary:hover:not(:disabled) { background: rgba(17,17,17,.04); }
 .aisee-button--ghost { padding-inline: 10px; background: transparent; }
 .aisee-button--ghost:hover:not(:disabled) { background: var(--aisee-color-border); border-color: transparent; }
-.aisee-button--danger { background: var(--aisee-color-red-light); }
+.aisee-button--danger {
+  min-height: 36px;
+  padding: 6px 16px;
+  border: 0;
+  color: var(--aisee-color-white);
+  background: var(--aisee-color-danger);
+  font-size: 16px;
+  font-weight: var(--aisee-font-weight-medium);
+  line-height: 24px;
+}
+.aisee-button--danger:hover:not(:disabled) { border: 0; }
 .aisee-button--sm { min-height: 32px; padding: 6px 12px; font-size: 12px; }
 .aisee-button--lg { min-height: 40px; font-size: 14px; }
 

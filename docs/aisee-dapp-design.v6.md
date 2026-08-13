@@ -107,9 +107,9 @@ document.documentElement.style.setProperty('--module-primary', moduleTheme.prima
 | `--bg-card` | `#FFFFFF` | 卡片、Header、Sidebar背景 |
 | `--bg-card-warm` | `#FBFBF3` / `#F9F9F1` | 软 cream 色卡片背景变体 |
 | `--cream` | `#F7F6E9` | Post 编辑器底、warm 区域、信息提示块 |
-| `--orange` | `#EC5212` | 通知红点 / 数字徽章、危险 / 异常 |
+| `--orange` / `--danger` | `#EC5212` | 通知红点 / 数字徽章 / Danger 按钮 / 异常 |
 | `--green` | `#A5D500` | 成功 dot / 完成态、通道已连接、上升数据 |
-| `--red-light` | `#FFD0D0` | 错误背景、删除态 |
+| `--red-light` | `#FFD0D0` | 浅色错误提示面、Tag、非按钮错误容器；不用于 Danger 按钮 |
 | `--gray-200` | `#E1E1E1` | 分隔线、描边 |
 | `--gray-300` | `#D9D9D9` | inactive 描边、占位（已极少使用） |
 | 次要文字 | `rgba(17,17,17,0.6)` | secondary text |
@@ -322,7 +322,7 @@ Logo mark:                      320px 320px 0 0
   - Post Agent 模块自动 = `#FFE253` yellow
 - Hover：底变 `var(--module-primary-hover)`
 - Disabled：opacity 0.5
-- **唯一例外**：危险操作（Delete / Disconnect）始终用 red-light 底，与模块色无关
+- **唯一例外**：危险操作（Delete / Disconnect / Discard Changes）使用 Danger 按钮，与模块色无关
 
 **Secondary** — "Cancel" / 次要操作
 - 白底，描边 `1px solid rgba(17,17,17,0.05)`，文字 `#111`
@@ -334,7 +334,9 @@ Logo mark:                      320px 320px 0 0
 - 用于工具栏图标按钮
 
 **Danger**
-- 底 `#FFD0D0`，文字 `#111`，hover 加深
+- 以 Figma [`button大小`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9905-214773) 为准：底 `#EC5212`，文字 `#FFFFFF`
+- Karla Medium 16px / 500 / line-height 24px；padding `6px 16px`；高度 36；圆角 8；无描边
+- 用于 Delete / Disconnect / Discard Changes 等不可逆或高风险操作。`#FFD0D0` 仅保留给错误提示面、危险 Tag 等浅色容器
 
 ### 6.5 Inputs / Toggle / Checkbox
 - Input：高度 36，圆角 8，默认描边 `1px solid rgba(17,17,17,0.05)`

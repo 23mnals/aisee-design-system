@@ -8,6 +8,8 @@ test('v6 module colors are exact', () => {
   assert.equal(tokens.color.analysis.primary, '#CFFF29');
   assert.equal(tokens.color.postAgent.primary, '#FFE253');
   assert.equal(tokens.color.engage.banner, '#F3E7F4');
+  assert.equal(tokens.color.danger, '#EC5212');
+  assert.equal(tokens.color.redLight, '#FFD0D0');
 });
 
 test('v6 layout and border rules are exact', () => {

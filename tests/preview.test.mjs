@@ -46,6 +46,14 @@ test('input interaction follows the Figma compound module ring', async () => {
   assert.match(portal, /1px black inner border plus a 2px module-color ring/);
 });
 
+test('danger button follows the Figma destructive action style', async () => {
+  const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  assert.match(components, /\.danger\{[^}]*background:var\(--danger\)[^}]*color:#fff[^}]*font:500 16px\/24px Karla/);
+  assert.match(styles, /\.aisee-button--danger \{[\s\S]*?color: var\(--aisee-color-white\);[\s\S]*?background: var\(--aisee-color-danger\);[\s\S]*?font-size: 16px;/);
+  assert.match(portal, /Danger \/ Alert[\s\S]*?#EC5212 · white text/);
+});
+
 test('portal uses the official AISEE logo mark', async () => {
   assert.match(portal, /src="\.\/assets\/aisee-logo-mark\.png"/);
   await access(new URL('../assets/aisee-logo-mark.png', import.meta.url));
