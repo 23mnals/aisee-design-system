@@ -36,6 +36,16 @@ test('portal and v6 previews self-host Karla', async () => {
   assert.match(foundations, /dApp.*Karla/);
 });
 
+test('input interaction follows the Figma compound module ring', async () => {
+  const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  assert.match(components, /box-shadow:0 0 0 2px var\(--module,#CFFF29\)/);
+  assert.match(components, /analysis\?'#CFFF29':'#FFE253'/);
+  assert.match(components, /Hover \/ focus/);
+  assert.match(styles, /box-shadow: 0 0 0 var\(--aisee-size-input-ring\) var\(--aisee-module-primary\)/);
+  assert.match(portal, /1px black inner border plus a 2px module-color ring/);
+});
+
 test('portal uses the official AISEE logo mark', async () => {
   assert.match(portal, /src="\.\/assets\/aisee-logo-mark\.png"/);
   await access(new URL('../assets/aisee-logo-mark.png', import.meta.url));

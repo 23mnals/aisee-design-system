@@ -13,6 +13,7 @@ test('v6 module colors are exact', () => {
 test('v6 layout and border rules are exact', () => {
   assert.equal(tokens.size.sidebar, '224px');
   assert.equal(tokens.size.header, '70px');
+  assert.equal(tokens.size.inputRing, '2px');
   assert.equal(tokens.color.border, 'rgba(17,17,17,0.05)');
 });
 

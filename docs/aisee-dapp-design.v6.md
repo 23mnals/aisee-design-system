@@ -337,7 +337,11 @@ Logo mark:                      320px 320px 0 0
 - 底 `#FFD0D0`，文字 `#111`，hover 加深
 
 ### 6.5 Inputs / Toggle / Checkbox
-- Input：高度 36，圆角 8，描边 `1px solid rgba(17,17,17,0.05)`，focus 描边 `#111`
+- Input：高度 36，圆角 8，默认描边 `1px solid rgba(17,17,17,0.05)`
+- **Input hover / focus（compound 双描边）**：内层描边切换为 `1px solid #111`，外层增加 `2px solid var(--module-primary)` 的模块色环；圆角保持 8px，不使用浏览器默认 outline。实现可使用 `box-shadow: 0 0 0 2px var(--module-primary)`，效果必须等价于 Figma [`Input hover`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9420-448029)
+  - Analysis：外环 `#CFFF29`
+  - Post Agent / Engage：外环 `#FFE253`
+- Error 优先级高于 hover / focus：保留 orange 错误描边并移除模块色外环；Disabled 不响应 hover
 - Select / Dropdown trigger：同 Input 样式 + 右侧 caret 图标
 - **Checkbox**：18×18，圆角 4，**未选描边 `1.5px solid #111`**（全黑实线，保持可点击感），选中底 `var(--module-primary)` + 黑色 ✓
   - **Hover 反馈**：鼠标移到承载该 checkbox 的整行（如 list row / table row）时，checkbox 底色变 `var(--module-primary)`（lime / yellow 提示即将选中）；离开恢复
@@ -565,7 +569,7 @@ Logo mark:                      320px 320px 0 0
 |---|---|
 | Hover | 底色叠 `rgba(17,17,17,0.05)` 或 lime 加深 0.06 |
 | Active / Pressed | 元素 `transform: scale(0.98)` + 底色再加深 0.02 |
-| Focus | `outline: 2px solid #111` + offset 2，或描边变 `#111` |
+| Focus | 普通控件使用 `outline: 2px solid #111` + offset 2；Input 使用 `1px #111` 内描边 + `2px var(--module-primary)` 外环 |
 | Disabled | `opacity: 0.5`，`cursor: not-allowed` |
 | Loading | 骨架屏：`linear-gradient(90deg, #F0F0F0, #FAFAFA, #F0F0F0)` shimmer，1.4s loop |
 | Selected (list / row) | 底 `var(--module-primary-bg)` + 左侧 2px `var(--module-primary)` 实线（可选）+ 1px 描边 `#111` |

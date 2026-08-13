@@ -42,9 +42,13 @@
   transition: border-color var(--aisee-motion-fast), box-shadow var(--aisee-motion-fast);
 }
 .aisee-input::placeholder { color: rgba(17,17,17,.32); }
-.aisee-input:hover { border-color: var(--aisee-color-border-hover); }
-.aisee-input:focus { border-color: var(--aisee-color-black); outline: none; box-shadow: 0 0 0 2px rgba(17,17,17,.08); }
-.aisee-input[aria-invalid="true"] { border-color: var(--aisee-color-orange); }
+.aisee-input:hover:not(:disabled):not([aria-invalid="true"]),
+.aisee-input:focus:not(:disabled):not([aria-invalid="true"]) {
+  border-color: var(--aisee-color-black);
+  outline: none;
+  box-shadow: 0 0 0 var(--aisee-size-input-ring) var(--aisee-module-primary);
+}
+.aisee-input[aria-invalid="true"] { border-color: var(--aisee-color-orange); box-shadow: none; }
 .aisee-input:disabled { opacity: .5; cursor: not-allowed; }
 
 .aisee-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
