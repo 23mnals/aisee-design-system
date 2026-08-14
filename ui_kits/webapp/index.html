@@ -43,7 +43,8 @@
     @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
     /* Current AISEE sizing and spacing overrides */
     :root{--page:#fbfbfb}
-    .brand-logo{width:auto;height:26px}
+    .brand-logo{display:none}
+    .topbar:before{content:'aisee';display:flex;width:92px;height:26px;align-items:center;padding-left:33px;background:url('../../assets/aisee-logo-mark.png') left center/25px 26px no-repeat;font:500 30px/24px Karla,sans-serif;letter-spacing:.035em;white-space:nowrap}
     .project img{width:25px;height:26px}
     .nav-item{white-space:nowrap}
     .nav-item .nav-icon svg{width:15px;height:15px;display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
