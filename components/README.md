@@ -2,15 +2,17 @@
 
 ## 组件导航
 
-设计系统门户中的 Components 按职责分组，Current 始终排在 Legacy 之前：
+门户中的 Components 采用 **Category → Component** 层级；只有真实存在且可复用的组件才进入导航，variants、states、sizes 和 specs 保留在组件页面内部。
 
-- **Overview**（原 `dApp v6 Components`）：当前组件总览页，集中展示共享控件、状态、弹窗和交互规则。
-- **Actions**：`Buttons & Badges`（Legacy，保留历史按钮/徽章样例）。
-- **Inputs & Controls**：`Nav, Inputs & Toggles`（Legacy，保留历史输入、下拉、切换和导航控件样例）。
-- **Content & Status**：`PlanCard — Current`、`IntentTag`（Legacy）、`StatusBadge`（Legacy）。
-- **Data Display**：`Cards & Data`（Legacy，保留历史数据卡片样例）。
+- **Overview**：当前 dApp v6 组件总览。
+- **Actions**：Button（Current）。
+- **Inputs & Controls**：Input、Select / Dropdown、Toggle（Current）。
+- **Navigation**：Tabs（Current）、Sidebar Navigation（Legacy）。
+- **Content & Status**：PlanCard — Current、Tag（Current）、Badge（Legacy）。
+- **Data Display**：Stat Card、Post Card、Credit Bar（Legacy）。
+- **Feedback & Overlays**：Dialog、Confirmation Dialog（Current）。
 
-当前没有真实内容的 Navigation、Feedback & Overlays 分类不会在门户中显示。完整业务页面继续留在 UI Kits 或原有业务页面目录中。
+旧的 `Buttons & Badges`、`Nav, Inputs & Toggles`、`Cards & Data` 仍保留在 `preview/` 作为历史页面，但不再作为组件入口。`IntentTag` 与 `StatusBadge` 的源文件也保留，但因当前门户预览为空/未验证，不再显示在 Components 导航中。完整业务页面继续留在 UI Kits 或原有业务页面目录中。
 
 ## 当前业务组件
 

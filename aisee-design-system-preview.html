@@ -604,15 +604,15 @@
           </section>
 
           <section class="overview-section" id="components-overview" aria-labelledby="components-title">
-            <h2 id="components-title">Components and patterns</h2>
-            <p>The system combines maintainable v6 foundations with retained historical product references. Current components take precedence when responsibilities overlap.</p>
+            <h2 id="components-title">Component library</h2>
+            <p>Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.</p>
             <div class="component-map">
-              <article><h3>Global shell</h3><p>AppHeader, Sidebar, ModuleToggle, page title and route transition.</p></article>
-              <article><h3>Actions and input</h3><p>Button, Input, URL Input, Toggle, Checkbox, interactive Select / Dropdown, action chips and the dedicated 512px confirmation dialog for destructive or unsaved-change flows. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a black border, soft elevation and 5% black fill for hover, focus and selected items.</p></article>
-              <article><h3>Content and status</h3><p>Cards, Stat Cards, Tags, Badges, StatusBadge, IntentTag and PlanCard.</p></article>
-              <article><h3>Data display</h3><p>Tables, charts, Score Gauge, KPI strips and comparison patterns.</p></article>
-              <article><h3>Overlays and feedback</h3><p>Dialog, modal footer, tooltip, toast, loading, empty and error states.</p></article>
-              <article><h3>Product patterns</h3><p>Analysis reports, Growth plans, Signal Feed, Post Editor, Verify re-scan, Connection management, Reply Panel and Review Queue.</p></article>
+              <article><h3>Actions</h3><p>Button.</p></article>
+              <article><h3>Inputs &amp; Controls</h3><p>Input, Select / Dropdown and Toggle. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.</p></article>
+              <article><h3>Navigation</h3><p>Tabs and the retained Legacy Sidebar Navigation specimen.</p></article>
+              <article><h3>Content &amp; Status</h3><p>PlanCard — Current, Tag and Legacy Badge.</p></article>
+              <article><h3>Data Display</h3><p>Legacy Stat Card, Post Card and Credit Bar specimens.</p></article>
+              <article><h3>Feedback &amp; Overlays</h3><p>Dialog and Confirmation Dialog.</p></article>
             </div>
           </section>
 
@@ -715,18 +715,26 @@
         { group: "Brand", name: "Logo", path: "preview/brand-logo.html", subtitle: "Real logo image, full wordmark, sizes, backgrounds and mark scale.", status: "Legacy" },
         { group: "Brand", name: "Visual Style", path: "preview/brand-visual-style.html", subtitle: "Homepage hero geometric shapes, mascot and footer band.", status: "Legacy" },
         { group: "Brand", name: "Color Palette", path: "preview/colors-brand.html", subtitle: "Brand, neutral and semantic color tokens.", status: "Legacy" },
-        { group: "Components", category: "Actions", name: "Buttons & Badges", path: "preview/components-buttons-badges.html", subtitle: "Legacy button, pill, badge and notification-dot specimens.", status: "Legacy" },
-        { group: "Components", category: "Data Display", name: "Cards & Data", path: "preview/components-cards.html", subtitle: "Legacy stat-card, post-card and credit-bar specimens.", status: "Legacy" },
-        { group: "Components", category: "Inputs & Controls", name: "Nav, Inputs & Toggles", path: "preview/components-nav-inputs.html", subtitle: "Legacy tabs, dropdown, text-input, toggle and sidebar-control specimens.", status: "Legacy" },
         { group: "Brand", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
         { group: "Brand", name: "Display Type — Gotu", path: "preview/type-display.html", subtitle: "Gotu display scale from hero to body.", status: "Legacy" },
         { group: "Brand", name: "UI Type — Karla + Mono", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
         { group: "Brand", name: "Tracking Eye", path: "legacy/pages/Tracking Eye.html", subtitle: "AISEE character peeks out of the eye and scans sources.", status: "Legacy" },
 
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
+        { group: "Components", category: "Actions", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
+        { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current" },
+        { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current select trigger, menu, hover and selected states.", status: "Current" },
+        { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with on and off states.", status: "Current" },
+        { group: "Components", category: "Navigation", name: "Tabs", path: "components/Tabs/Tabs.html", subtitle: "Current page tabs with active indicator and module context.", status: "Current" },
+        { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "Legacy sidebar navigation specimen retained for reference.", status: "Legacy" },
         { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
-        { group: "Components", category: "Content & Status", name: "IntentTag", path: "components/IntentTag/IntentTag.html", subtitle: "Legacy signal-feed classification chip; use the current component implementation when available.", status: "Legacy" },
-        { group: "Components", category: "Content & Status", name: "StatusBadge", path: "components/StatusBadge/StatusBadge.html", subtitle: "Legacy reply-lifecycle pill; use the current component implementation when available.", status: "Legacy" },
+        { group: "Components", category: "Content & Status", name: "Tag", path: "components/Tag/Tag.html", subtitle: "Current intent and context tags used for module labels and filters.", status: "Current" },
+        { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Legacy compact status and notification badge specimens.", status: "Legacy" },
+        { group: "Components", category: "Data Display", name: "Stat Card", path: "components/StatCard/StatCard.html", subtitle: "Legacy metric card specimen retained from Cards & Data.", status: "Legacy" },
+        { group: "Components", category: "Data Display", name: "Post Card", path: "components/PostCard/PostCard.html", subtitle: "Legacy social post card specimen retained from Cards & Data.", status: "Legacy" },
+        { group: "Components", category: "Data Display", name: "Credit Bar", path: "components/CreditBar/CreditBar.html", subtitle: "Legacy credits progress specimen retained from Cards & Data.", status: "Legacy" },
+        { group: "Components", category: "Feedback & Overlays", name: "Dialog", path: "components/Dialog/Dialog.html", subtitle: "Current create-analysis dialog with URL input and actions.", status: "Current" },
+        { group: "Components", category: "Feedback & Overlays", name: "Confirmation Dialog", path: "components/ConfirmationDialog/ConfirmationDialog.html", subtitle: "Current destructive confirmation pattern for unsaved changes.", status: "Current" },
 
         { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Interactive 15-page Growth Loop preview covering Analysis, Growth, Engage, Post, Verify and Connection.", status: "Current" }
       ];
