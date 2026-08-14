@@ -183,6 +183,11 @@
       .nav-icon img { width: 15px; height: 15px; object-fit: contain; }
       .nav-group-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; }
       .nav-group-icon img { width: 15px; height: 15px; object-fit: contain; }
+      /* Portal navigation uses text-only labels; product/UI-kit icons remain unchanged. */
+      .sidebar .nav-icon,
+      .sidebar .nav-group-icon { display: none; }
+      .sidebar .nav-item,
+      .sidebar .nav-group summary { gap: 0; }
       .nav-item .item-tag { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); }
       .item-tag {
         display: inline-flex;
