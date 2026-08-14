@@ -85,8 +85,25 @@
       'Connection':'<svg viewBox="0 0 24 24"><path d="M8 12h8M12 8v8"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/></svg>'
     };
     document.querySelectorAll('.nav-item').forEach(item=>{const label=item.dataset.screen;if(navSvg[label]) item.querySelector('.nav-icon').innerHTML=navSvg[label]});
-    const bannerArt={overview:'build-optimize',analysis:'build-scan',growth:'build-optimize',engage:'build-track',keywords:'build-track',post:'build-execute',calendar:'build-execute',channels:'build-execute',media:'build-execute',verify:'build-verify',connection:'build-track'};
-    const banner=(title,subtitle,color,icon='overview',right='')=>`<section class="banner" style="--banner:${color}"><div class="banner-icon"><img src="../../assets/${bannerArt[icon]||'build-optimize'}.svg" alt="" aria-hidden="true"></div><div class="banner-copy"><h1>${title}</h1><p>${subtitle}</p></div>${right}</section>`;
+    // Each feature keeps a distinct illustration so the banner communicates the destination's job.
+    const bannerArt={overview:'build-optimize',analysis:'build-analyze',growth:'build-score',improve:'build-boost',influence:'build-recommend',engage:'build-track',signal:'build-scan',keywords:'build-recommend',replies:'build-measure',post:'build-execute',calendar:'build-measure',channels:'build-track',media:'build-boost',verify:'build-verify',connection:'build-measure'};
+    const bannerIcon=(title,icon)=>{
+      const byTitle={
+        'Turn diagnosis into an action plan.':'build-score',
+        'Improve your AI visibility score.':'build-boost',
+        'Build Brand Influence':'build-recommend',
+        'Engage':'build-track',
+        'Signal Feed':'build-scan',
+        'Keywords & Accounts':'build-recommend',
+        'Replies':'build-measure',
+        'Content Calendar':'build-measure',
+        'Channels':'build-track',
+        'Media Library':'build-boost',
+        'Connection':'build-measure'
+      };
+      return byTitle[title] || bannerArt[icon] || 'build-optimize';
+    };
+    const banner=(title,subtitle,color,icon='overview',right='')=>`<section class="banner" style="--banner:${color}"><div class="banner-icon"><img src="../../assets/${bannerIcon(title,icon)}.svg" alt="" aria-hidden="true"></div><div class="banner-copy"><h1>${title}</h1><p>${subtitle}</p></div>${right}</section>`;
     const kpis=(items)=>`<div class="kpi-grid">${items.map(([v,l,p])=>`<article class="kpi"><strong>${v}${p?`<span class="pill ${p[1]||''}">${p[0]}</span>`:''}</strong><small>${l}</small></article>`).join('')}</div>`;
     const head=(title,copy,action='')=>`<div class="page-head"><div><h2>${title}</h2><p>${copy}</p></div>${action}</div>`;
     const list=(items,accent='#cfff29')=>`<div class="list" style="--accent:${accent}">${items.map(([title,sub,value])=>`<article class="list-row"><div><strong>${title}</strong><small>${sub}</small>${value?`<div class="progress-line"><span style="width:${value}"></span></div>`:''}</div><button class="list-action">Open</button></article>`).join('')}</div>`;

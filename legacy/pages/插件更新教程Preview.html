@@ -57,6 +57,10 @@
     </svg>
   </template>
   <div id="root"></div>
+  <div id="preview-fallback" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:#fafafa;font-family:Karla,system-ui,sans-serif">
+    <div style="text-align:center"><div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(17,17,17,.45);font-weight:600">Update tutorial · 328 × 160 looping</div><div style="font-size:24px;font-weight:600;margin-top:6px">How to update the extension</div></div>
+    <div style="width:360px;background:#fff;border:1px solid rgba(17,17,17,.08);border-radius:16px;padding:18px;box-shadow:0 18px 42px rgba(17,17,17,.1)"><strong style="font-size:14px">Update available</strong><div style="margin-top:14px;border-radius:10px;background:#f0ffba;padding:30px;text-align:center;color:#111;font-weight:600">Download v2.4 → remove old version → drag the new package in</div><p style="font-size:12px;line-height:1.5;color:rgba(17,17,17,.62)">Open <code>chrome://extensions/</code>, remove the old aisee version, then drag the new file in.</p><div style="text-align:right"><button style="border:0;border-radius:8px;background:#ffe253;padding:7px 14px;font-weight:600">Got it</button></div></div>
+  </div>
 
   <script type="text/babel" data-presets="env,react" src="../../engage-aisee-v2/ui-shims.jsx"></script>
   <script type="text/babel" data-presets="env,react" src="../../engage-aisee-v2/icons.jsx"></script>
@@ -99,6 +103,7 @@
       );
     }
     ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    document.getElementById('preview-fallback').remove();
   </script>
 </body>
 </html>
