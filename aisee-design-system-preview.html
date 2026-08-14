@@ -174,9 +174,15 @@
       .nav-group-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .group-count { margin-left: auto; flex: 0 0 auto; color: var(--muted); font-size: 12px; font-weight: 500; }
       .nav-list { display: grid; gap: 4px; padding: 3px 0 0 15px; }
-      .nav-subgroup { display: grid; gap: 4px; }
+      .nav-subgroup { margin-top: 4px; }
       .nav-subgroup + .nav-subgroup { margin-top: 8px; }
-      .nav-subgroup-label { padding: 4px 13px 1px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+      .nav-subgroup-toggle { min-height: 30px; display: flex; align-items: center; gap: 7px; width: 100%; border: 0; border-radius: var(--radius-sm); padding: 0 13px; color: var(--muted); background: transparent; cursor: pointer; font: 600 14px/1.2 Karla, Arial, sans-serif; list-style: none; text-align: left; white-space: nowrap; }
+      .nav-subgroup-toggle::-webkit-details-marker { display: none; }
+      .nav-subgroup-toggle:hover { background: var(--surface-subtle); color: #111; }
+      .nav-subgroup-chevron { width: 12px; height: 12px; display: grid; flex: 0 0 12px; place-items: center; transition: transform 150ms ease; }
+      .nav-subgroup-chevron::before { width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; content: ""; transform: rotate(-45deg); }
+      .nav-subgroup[open] .nav-subgroup-chevron { transform: rotate(90deg); }
+      .nav-subgroup-items { display: grid; gap: 4px; padding: 2px 0 0 15px; }
       .nav-item { position: relative; display: flex; min-height: 32px; align-items: center; gap: 8px; padding: 0 72px 0 13px; color: #565960; font-size: 14px; line-height: 1.2; white-space: nowrap; }
       .nav-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .nav-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; color: currentColor; }
@@ -790,7 +796,7 @@
             ? componentCategoryOrder.map(category => {
                 const categoryItems = groupItems.filter(item => item.category === category);
                 if (!categoryItems.length) return "";
-                return `<div class="nav-subgroup"><div class="nav-subgroup-label">${escapeHtml(category)}</div>${categoryItems.map(renderItem).join("")}</div>`;
+                return `<details class="nav-subgroup" open><summary class="nav-subgroup-toggle"><span class="nav-subgroup-chevron" aria-hidden="true"></span><span>${escapeHtml(category)}</span></summary><div class="nav-subgroup-items">${categoryItems.map(renderItem).join("")}</div></details>`;
               }).join("")
             : groupItems.map(renderItem).join("");
           return `<details class="nav-group" open><summary><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span><span class="nav-group-label">${escapeHtml(groupLabels[group])}</span><span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
