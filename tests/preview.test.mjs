@@ -15,7 +15,8 @@ test('system portal preserves the four required sections', () => {
 
 test('every catalog preview exists and paths are unique', async () => {
   const paths = [...portal.matchAll(/path: "([^"]+)"/g)].map(match => match[1]);
-  assert.ok(paths.length >= 40, `expected at least 40 previews, found ${paths.length}`);
+  // Three duplicate legacy Engage pages were intentionally removed from the catalog.
+  assert.ok(paths.length >= 37, `expected at least 37 previews, found ${paths.length}`);
   assert.equal(new Set(paths).size, paths.length, 'catalog paths must be unique');
   await Promise.all(paths.map(path => access(new URL(path, projectUrl))));
 });
