@@ -208,7 +208,6 @@
         letter-spacing: .04em;
         text-transform: uppercase;
       }
-      .item-tag.current { background: var(--accent); color: #222900; }
       .empty-search { margin: 16px 12px; color: var(--muted); font-size: 14px; }
 
       .main { min-height: calc(100vh - var(--topbar)); margin-left: var(--sidebar); }
@@ -790,7 +789,7 @@
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
               <span class="nav-label">${escapeHtml(item.name)}</span>
-              <span class="item-tag ${item.status === "Current" ? "current" : ""}">${escapeHtml(item.status)}</span>
+              ${item.status === "Legacy" ? '<span class="item-tag">Legacy</span>' : ""}
             </button>`;
           const itemMarkup = group === "Components"
             ? componentCategoryOrder.map(category => {
@@ -840,8 +839,10 @@
         previewView.hidden = false;
         previewTitle.textContent = item.name;
         previewDescription.textContent = `${item.group} · ${item.subtitle}`;
-        previewTag.textContent = item.status;
-        previewTag.className = `item-tag${item.status === "Current" ? " current" : ""}`;
+        const isLegacy = item.status === "Legacy";
+        previewTag.textContent = isLegacy ? "Legacy" : "";
+        previewTag.className = "item-tag";
+        previewTag.hidden = !isLegacy;
         previewFrame.src = `${item.path}${item.path.includes("?") ? "&" : "?"}preview=20260813-stemui`;
         previewFrame.title = `${item.name} preview`;
         openStandalone.href = item.path;
