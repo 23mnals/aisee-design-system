@@ -174,6 +174,9 @@
       .nav-group-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .group-count { margin-left: auto; flex: 0 0 auto; color: var(--muted); font-size: 12px; font-weight: 500; }
       .nav-list { display: grid; gap: 4px; padding: 3px 0 0 15px; }
+      .nav-subgroup { display: grid; gap: 4px; }
+      .nav-subgroup + .nav-subgroup { margin-top: 8px; }
+      .nav-subgroup-label { padding: 4px 13px 1px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
       .nav-item { position: relative; display: flex; min-height: 32px; align-items: center; gap: 8px; padding: 0 72px 0 13px; color: #565960; font-size: 14px; line-height: 1.2; white-space: nowrap; }
       .nav-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .nav-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; color: currentColor; }
@@ -707,18 +710,18 @@
         { group: "Brand", name: "Logo", path: "preview/brand-logo.html", subtitle: "Real logo image, full wordmark, sizes, backgrounds and mark scale.", status: "Legacy" },
         { group: "Brand", name: "Visual Style", path: "preview/brand-visual-style.html", subtitle: "Homepage hero geometric shapes, mascot and footer band.", status: "Legacy" },
         { group: "Brand", name: "Color Palette", path: "preview/colors-brand.html", subtitle: "Brand, neutral and semantic color tokens.", status: "Legacy" },
-        { group: "Brand", name: "Buttons & Badges", path: "preview/components-buttons-badges.html", subtitle: "Pill and standard buttons, badges and notification dots.", status: "Legacy" },
-        { group: "Brand", name: "Cards & Data", path: "preview/components-cards.html", subtitle: "Stat cards, post cards and credit bar.", status: "Legacy" },
-        { group: "Brand", name: "Nav, Inputs & Toggles", path: "preview/components-nav-inputs.html", subtitle: "Tab toggle, sidebar nav, dropdowns, text input and toggle.", status: "Legacy" },
+        { group: "Components", category: "Actions", name: "Buttons & Badges", path: "preview/components-buttons-badges.html", subtitle: "Legacy button, pill, badge and notification-dot specimens.", status: "Legacy" },
+        { group: "Components", category: "Data Display", name: "Cards & Data", path: "preview/components-cards.html", subtitle: "Legacy stat-card, post-card and credit-bar specimens.", status: "Legacy" },
+        { group: "Components", category: "Inputs & Controls", name: "Nav, Inputs & Toggles", path: "preview/components-nav-inputs.html", subtitle: "Legacy tabs, dropdown, text-input, toggle and sidebar-control specimens.", status: "Legacy" },
         { group: "Brand", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
         { group: "Brand", name: "Display Type — Gotu", path: "preview/type-display.html", subtitle: "Gotu display scale from hero to body.", status: "Legacy" },
         { group: "Brand", name: "UI Type — Karla + Mono", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
         { group: "Brand", name: "Tracking Eye", path: "legacy/pages/Tracking Eye.html", subtitle: "AISEE character peeks out of the eye and scans sources.", status: "Legacy" },
 
-        { group: "Components", name: "dApp v6 Components", path: "preview/dapp-v6-components.html", subtitle: "Current buttons, inputs, tags, tabs, toggles and modal patterns.", status: "Current" },
-        { group: "Components", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
-        { group: "Components", name: "IntentTag", path: "components/IntentTag/IntentTag.html", subtitle: "Signal-feed classification chip with intent and keyword variants.", status: "Legacy" },
-        { group: "Components", name: "StatusBadge", path: "components/StatusBadge/StatusBadge.html", subtitle: "Reply-lifecycle states including author replied.", status: "Legacy" },
+        { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
+        { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
+        { group: "Components", category: "Content & Status", name: "IntentTag", path: "components/IntentTag/IntentTag.html", subtitle: "Legacy signal-feed classification chip; use the current component implementation when available.", status: "Legacy" },
+        { group: "Components", category: "Content & Status", name: "StatusBadge", path: "components/StatusBadge/StatusBadge.html", subtitle: "Legacy reply-lifecycle pill; use the current component implementation when available.", status: "Legacy" },
 
         { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Interactive 15-page Growth Loop preview covering Analysis, Growth, Engage, Post, Verify and Connection.", status: "Current" }
       ];
@@ -726,8 +729,9 @@
       const groupOrder = ["Brand", "Components", "UI Kits — Webapp"];
       const groupLabels = { "Brand": "Brand", "Components": "Components", "UI Kits — Webapp": "UI Kits — Webapp" };
       const groupIcons = { "Brand": "nav-overview", "Components": "nav-analysis", "UI Kits — Webapp": "nav-overview" };
+      const componentCategoryOrder = ["Overview", "Actions", "Inputs & Controls", "Navigation", "Content & Status", "Data Display", "Feedback & Overlays"];
       const pageIcons = {
-        "dApp v6 Foundations": "nav-overview", "dApp v6 Components": "nav-analysis", "PlanCard": "nav-growth", "PlanCard — Current": "nav-growth",
+        "dApp v6 Foundations": "nav-overview", "Overview": "nav-analysis", "dApp v6 Components": "nav-analysis", "PlanCard": "nav-growth", "PlanCard — Current": "nav-growth",
         "IntentTag": "nav-signal-feed", "StatusBadge": "nav-replies", "Web App UI Kit": "nav-overview", "Logo": "nav-overview", "Visual Style": "nav-overview",
         "Color Palette": "nav-overview", "Buttons & Badges": "action-check", "Cards & Data": "nav-signal-feed", "Nav, Inputs & Toggles": "nav-overview",
         "Spacing, Radii & Shadows": "nav-overview", "Display Type — Gotu": "nav-overview", "UI Type — Karla + Mono": "nav-overview", "Tracking Eye": "nav-verify"
@@ -763,12 +767,19 @@
         navGroups.innerHTML = groupOrder.map(group => {
           const groupItems = visible.filter(item => item.group === group);
           if (!groupItems.length) return "";
-          const itemMarkup = groupItems.map(item => `
+          const renderItem = item => `
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
               <span class="nav-label">${escapeHtml(item.name)}</span>
               <span class="item-tag ${item.status === "Current" ? "current" : ""}">${escapeHtml(item.status)}</span>
-            </button>`).join("");
+            </button>`;
+          const itemMarkup = group === "Components"
+            ? componentCategoryOrder.map(category => {
+                const categoryItems = groupItems.filter(item => item.category === category);
+                if (!categoryItems.length) return "";
+                return `<div class="nav-subgroup"><div class="nav-subgroup-label">${escapeHtml(category)}</div>${categoryItems.map(renderItem).join("")}</div>`;
+              }).join("")
+            : groupItems.map(renderItem).join("");
           return `<details class="nav-group" open><summary><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span><span class="nav-group-label">${escapeHtml(groupLabels[group])}</span><span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
         }).join("") || `<p class="empty-search">No pages match “${escapeHtml(query)}”.</p>`;
 
