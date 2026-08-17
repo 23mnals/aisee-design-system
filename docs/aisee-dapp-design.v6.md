@@ -4,7 +4,7 @@
 > 设计宽度：**1440px**（desktop），向下兼容到 1280
 > 字体规则：**aisee dApp 全部统一使用 Karla**；Gotu 仅保留在官网（Homepage），不进入 dApp；弹窗标题使用 Karla SemiBold 20px / weight 600
 > 设计基调：**功能优先 · 信息密度高 · 极简数据驱动 · 与官网同源但更克制**
-> 版本：**v5.1** · 2026-08-11 · dApp 字体统一 Karla；Toggle 组件规范与 Figma 组件源同步；Modal 间距与文字规范补全
+> 版本：**v6** · 2026-08-11 · dApp 字体统一 Karla；Toggle 组件规范与 Figma 组件源同步；Modal 间距与文字规范补全
 
 ---
 
@@ -1183,7 +1183,7 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 
 ---
 
-> 文档版本：**v5.1** · 2026-08-11 · Figma 反向校对；dApp 字体统一 Karla；Toggle 与 Modal 规范修正
+> 文档版本：**v6** · 2026-08-11 · Figma 反向校对；dApp 字体统一 Karla；Toggle 与 Modal 规范修正
 >
 > **v5.x 关键变更**（护航着顶，旧版本变更在本项目仓库的 git 历史 / archive 中可查）：
 > - **Engage 独立 tab**（Sidebar Tab Toggle 与 Analysis / Post Agent 平级，不是二级子项）；主色仍 yellow `#FFE253`
@@ -1197,4 +1197,4 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 > - **Modal 统一规范**：四边 padding 固定为 24px；标题 20/600/30，描述 12/400/18；标题与描述间距为 0，标题区与内容区按场景使用 12px 或 16px。
 > - **Modal Footer Button 统一规范**：操作区增加 `#111 / 6%` 的 1px 顶部分割线；灰色次按钮使用 `#111 / 2%` 底色和 `#111 / 6%` 的 1px 描边，参考 Figma 节点 `9872:287453`。
 
-> **关于旧版本变更是否保留**：不建议。md 是现说明书、不是 changelog。**只保留当前版本与上一版的 diff 足够（上面 v5.x 列表）**；更早的变更什么时候发生、为什么发生必须靠 git log + commit message 、不不宜塞进设计规范。后续 v6 只重写 v5→v6 的差异，本节不要肥大。
+> **关于旧版本变更是否保留**：不建议。md 是现说明书、不是 changelog。**只保留当前版本与上一版的 diff 足够（上面 v5.x 列表）**；更早的变更什么时候发生、为什么发生必须靠 git log + commit message，不宜塞进设计规范。当前 v6 只重写 v5→v6 的差异，本节不要肥大。
