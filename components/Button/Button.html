@@ -1,1 +1,59 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Button · AISEE Components</title><style>body{margin:0;background:#f7f8f7;color:#111;font-family:Karla,Arial,sans-serif}main{max-width:960px;margin:48px auto;padding:0 32px}h1{font-size:32px;font-weight:600;margin:0 0 8px}h2{font-size:18px;font-weight:600;margin-top:36px}.muted{color:#777}.row{display:flex;gap:12px;flex-wrap:wrap}.btn{border:1px solid #111;border-radius:8px;padding:10px 18px;font:500 14px Karla;background:#fff;cursor:pointer}.primary{background:#cfff29}.subtle{border-color:#e1e1e1}.danger{background:#ec5212;color:#fff;border-color:#ec5212}.btn.active{box-shadow:0 0 0 2px #cfff29}.note{background:#fff;border:1px solid #e1e1e1;border-radius:12px;padding:20px}.status{margin-top:12px;color:#777}</style></head><body><main><p class="muted">Components · Actions · Current</p><h1>Button</h1><p class="muted">A reusable action control for primary, secondary, subtle and destructive actions.</p><h2>Overview / Examples</h2><div class="note"><div class="row"><button class="btn primary active" data-variant="Primary">Primary</button><button class="btn" data-variant="Secondary">Secondary</button><button class="btn subtle" data-variant="Subtle">Subtle</button><button class="btn danger" data-variant="Danger">Danger</button></div><div class="status" aria-live="polite">Selected appearance: Primary</div></div><h2>States</h2><p>Default, hover/focus ring, disabled and loading states are documented in the shared component source.</p><h2>Usage</h2><p>Use a concise verb. Keep one primary action per surface.</p><h2>Specs</h2><p>Height 36px · radius 8px · Karla 14px / 500 · 8px horizontal spacing.</p></main><script>document.querySelectorAll('[data-variant]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-variant]').forEach(x=>x.classList.toggle('active',x===b));document.querySelector('.status').textContent='Selected appearance: '+b.dataset.variant}));</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Button · AISEE Components</title>
+  <style>
+    @font-face{font-family:Karla;src:url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
+    :root{--black:#111;--muted:rgba(17,17,17,.6);--line:rgba(17,17,17,.06);--lime:#CFFF29;--orange:#EC5212;--page:#F5F5F5;--ease:cubic-bezier(.2,.8,.2,1)}
+    *{box-sizing:border-box} body{margin:0;padding:32px;background:var(--page);color:var(--black);font:14px/1.5 Karla,Arial,sans-serif}
+    main{max-width:960px;margin:auto}.eyebrow{margin:0 0 6px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+    h1{margin:0;font-size:28px;font-weight:600;line-height:34px}h2{margin:34px 0 14px;font-size:18px;font-weight:600;line-height:24px}
+    .muted{color:var(--muted)}.intro{max-width:680px;margin:8px 0 0;font-size:16px;color:var(--muted)}
+    .panel{padding:20px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.62)}
+        .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.btn{min-height:36px;padding:8px 16px;border:1px solid transparent;border-radius:8px;background:#fff;color:#111;font:500 14px Karla;cursor:pointer;transition:background .15s,border-color .15s,transform .15s var(--ease)}
+        .btn:hover{border-color:rgba(17,17,17,.18)}.btn:active{transform:scale(.98)}.btn:focus-visible{outline:2px solid #111;outline-offset:2px}.primary{background:var(--lime)}.secondary{border-color:var(--line)}.subtle{border-color:var(--line);color:var(--black)}.dark{background:var(--black);border-color:var(--black);color:#fff}.danger{background:var(--orange);border-color:var(--orange);color:#fff}.btn.active{box-shadow:0 0 0 2px var(--lime)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.state-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.state-card{padding:14px;border:1px solid var(--line);border-radius:10px;background:#fff}.state-card small{display:block;margin-bottom:10px;color:var(--muted);font-size:12px}
+    .status{margin-top:14px;color:var(--muted);font-size:12px}.specs{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Components · Button</p>
+    <h1>Button</h1>
+    <p class="intro">A reusable action control for primary, secondary, subtle and destructive actions.</p>
+
+    <h2>Overview / Examples</h2>
+    <section class="panel" aria-label="Button appearances">
+      <div class="row">
+        <button class="btn primary active" data-variant="Primary">Primary</button>
+        <button class="btn secondary" data-variant="Secondary">Secondary</button>
+            <button class="btn subtle" data-variant="Subtle">Subtle</button>
+            <button class="btn dark" data-variant="Dark">Dark</button>
+            <button class="btn danger" data-variant="Danger">Danger</button>
+      </div>
+      <div class="status" aria-live="polite">Selected appearance: Primary</div>
+    </section>
+
+        <h2>States</h2>
+        <section class="state-grid" aria-label="Button states">
+          <div class="state-card"><small>Default</small><button class="btn secondary">Continue</button></div>
+          <div class="state-card"><small>Disabled</small><button class="btn secondary" disabled>Continue</button></div>
+          <div class="state-card"><small>Loading</small><button class="btn dark" disabled>Loading…</button></div>
+        </section>
+        <p class="muted">Hover and focus use the same lime focus ring shown in the examples above.</p>
+    <h2>Usage</h2>
+    <p>Use a concise verb. Keep one primary action per surface.</p>
+    <h2>Specs</h2>
+    <p class="specs">Height 36px · radius 8px · Karla 14px / 500 · 8px horizontal spacing.</p>
+  </main>
+  <script>
+    const buttons=[...document.querySelectorAll('[data-variant]')];
+    const status=document.querySelector('.status');
+    buttons.forEach(button=>button.addEventListener('click',()=>{
+      buttons.forEach(item=>item.classList.toggle('active',item===button));
+      status.textContent='Selected appearance: '+button.dataset.variant;
+    }));
+  </script>
+</body>
+</html>

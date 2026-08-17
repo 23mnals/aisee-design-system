@@ -1,1 +1,95 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Input · AISEE Components</title><style>body{margin:0;background:#f7f8f7;color:#111;font-family:Karla,Arial,sans-serif}main{max-width:960px;margin:48px auto;padding:0 32px}h1{font-size:32px;font-weight:600;margin:0 0 8px}h2{font-size:18px;font-weight:600;margin-top:36px}.muted{color:#777}.card{background:#fff;border:1px solid #e1e1e1;border-radius:12px;padding:24px;max-width:560px}label{display:block;font-weight:600;margin-bottom:8px}input{width:100%;box-sizing:border-box;height:40px;border:1px solid #111;border-radius:8px;padding:0 12px;font:400 14px Karla;box-shadow:0 0 0 2px #cfff29}.small{color:#777;font-size:12px;margin-top:8px}</style></head><body><main><p class="muted">Components · Inputs & Controls · Current</p><h1>Input</h1><p class="muted">Text and URL entry with a clear focus ring and optional helper text.</p><h2>Overview / Examples</h2><div class="card"><label>Website URL</label><input value="https://example.com" aria-label="Website URL"><div class="small">We will analyze the public website.</div></div><h2>States</h2><p>Default, hover/focus, disabled and error states are defined where used.</p><h2>Usage</h2><p>Use sentence-case labels and direct helper or error copy.</p><h2>Specs</h2><p>Height 40px · radius 8px · focus ring 2px module color.</p></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Input · AISEE Components</title>
+  <style>
+    :root{--aisee-module-primary:#cfff29;--aisee-size-input-ring:2px;--ink:#111;--muted:#777;--line:#d9d9d9;--page:#f7f8f7}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--page);color:var(--ink);font-family:Karla,Arial,sans-serif}
+    main{max-width:960px;margin:48px auto;padding:0 32px}
+    h1{font-size:32px;line-height:1.15;font-weight:600;margin:0 0 8px}
+    h2{font-size:18px;font-weight:600;margin:36px 0 14px}
+    h3{font-size:15px;font-weight:600;margin:0 0 10px}
+    p{line-height:1.5}.muted,.small{color:var(--muted)}.small{font-size:12px;margin:8px 0 0}
+    .card{background:#fff;border:1px solid #e1e1e1;border-radius:12px;padding:24px}
+    .interactive-card{max-width:640px}
+    label{display:block;font-weight:600;margin-bottom:8px}
+    input{width:100%;height:40px;border:1px solid var(--ink);border-radius:8px;padding:0 12px;background:#fff;color:var(--ink);font:400 14px Karla,Arial,sans-serif;transition:border-color .15s,box-shadow .15s,background .15s}
+    input::placeholder{color:#999}
+    input:hover,.is-hover{border-color:var(--ink);box-shadow:0 0 0 var(--aisee-size-input-ring) var(--aisee-module-primary)}
+    input:focus,.is-focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 var(--aisee-size-input-ring) var(--aisee-module-primary)}
+    input.is-error{border-color:#ec5212;box-shadow:0 0 0 var(--aisee-size-input-ring) #ec5212}
+    input:disabled,.is-disabled{background:#f5f5f5;color:#999;border-color:#d9d9d9;box-shadow:none;cursor:not-allowed}
+    .live-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+    .state-pill{font-size:12px;font-weight:600;border-radius:999px;background:#f1f1f1;padding:5px 9px;white-space:nowrap}
+    .state-pill[data-state="error"]{background:#ffded5;color:#b7370b}.state-pill[data-state="disabled"]{color:#777}
+    .state-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+    .state-controls button{border:1px solid #d9d9d9;background:#fff;border-radius:8px;padding:8px 12px;font:500 13px Karla;color:var(--ink);cursor:pointer}
+    .state-controls button:hover,.state-controls button[aria-pressed="true"]{border-color:var(--ink);background:#f1f1f1}
+    .state-controls button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--aisee-module-primary)}
+    .error-copy{color:#ec5212}.state-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .state-card{background:#fff;border:1px solid #e1e1e1;border-radius:10px;padding:16px}.state-card .small{min-height:18px}
+    .specs{color:#555;font-size:14px}
+    @media(max-width:680px){main{margin:24px auto;padding:0 16px}.state-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="muted">Components · Inputs &amp; Controls · Current</p>
+    <h1>Input</h1>
+    <p class="muted">Text and URL entry with a clear focus ring and optional helper text.</p>
+
+    <h2>Overview / Examples</h2>
+    <section class="card interactive-card" aria-labelledby="interactive-title">
+      <div class="live-head"><h3 id="interactive-title">Interactive preview</h3><span class="state-pill" id="stateLabel" data-state="default">Default</span></div>
+      <label for="liveInput">Website URL</label>
+      <input id="liveInput" type="url" placeholder="https://example.com" aria-describedby="liveHelp">
+      <p class="small" id="liveHelp">We will analyze the public website.</p>
+      <div class="state-controls" role="group" aria-label="Input states">
+        <button type="button" data-state="default" aria-pressed="true">Default</button>
+        <button type="button" data-state="hover" aria-pressed="false">Hover</button>
+        <button type="button" data-state="focus" aria-pressed="false">Focus</button>
+        <button type="button" data-state="disabled" aria-pressed="false">Disabled</button>
+        <button type="button" data-state="error" aria-pressed="false">Error</button>
+      </div>
+      <p class="small" id="interactionHint">Type in the field to preview the default state.</p>
+    </section>
+
+    <h2>State examples</h2>
+    <div class="state-grid">
+      <section class="state-card"><h3>Default</h3><label for="defaultInput">Email</label><input id="defaultInput" type="email" placeholder="Enter your email"><p class="small">Ready for input.</p></section>
+      <section class="state-card"><h3>Hover</h3><label for="hoverInput">Website URL</label><input id="hoverInput" class="is-hover" type="url" placeholder="https://example.com"><p class="small">Lime ring on pointer hover.</p></section>
+      <section class="state-card"><h3>Focus</h3><label for="focusInput">Website URL</label><input id="focusInput" class="is-focus" type="url" value="https://example.com"><p class="small">Lime ring indicates keyboard focus.</p></section>
+      <section class="state-card"><h3>Disabled</h3><label for="disabledInput">Website URL</label><input id="disabledInput" class="is-disabled" type="url" value="https://example.com" disabled><p class="small">Unavailable until the flow is enabled.</p></section>
+      <section class="state-card"><h3>Error</h3><label for="errorInput">Website URL</label><input id="errorInput" class="is-error" type="url" value="not-a-url" aria-invalid="true"><p class="small error-copy">Enter a valid URL.</p></section>
+    </div>
+
+    <h2>Usage</h2><p>Use sentence-case labels and direct helper or error copy. Keep the field editable unless the flow is unavailable.</p>
+    <h2>Specs</h2><p class="specs">Height 40px · radius 8px · Karla 14px / 400 · focus ring 2px module color.</p>
+  </main>
+  <script>
+    const input=document.querySelector('#liveInput');
+    const helper=document.querySelector('#liveHelp');
+    const hint=document.querySelector('#interactionHint');
+    const label=document.querySelector('#stateLabel');
+    const buttons=[...document.querySelectorAll('[data-state]')].filter(el=>el.tagName==='BUTTON');
+    let current='default';
+    const copy={default:['We will analyze the public website.','Type in the field to preview the default state.'],hover:['Move your pointer over the field to see the lime ring.','Hover styling is previewed on the field.'],focus:['Focus ring uses the module lime token.','Click or tab into the field to test focus.'],disabled:['This field is unavailable right now.','Disabled inputs cannot be edited.'],error:['Enter a valid URL.','Error copy is direct and actionable.']};
+    function setState(state){
+      current=state; input.className=''; input.disabled=state==='disabled';
+      if(state==='hover'||state==='focus'||state==='error') input.classList.add('is-'+state);
+      input.value=state==='error'?'not-a-url':'';
+      input.placeholder=state==='error'?'Enter a valid URL':'https://example.com';
+      helper.textContent=copy[state][0]; helper.className='small'+(state==='error'?' error-copy':''); hint.textContent=copy[state][1];
+      label.textContent=state[0].toUpperCase()+state.slice(1); label.dataset.state=state;
+      buttons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.state===state)));
+      if(state==='focus') input.focus(); else input.blur();
+    }
+    buttons.forEach(button=>button.addEventListener('click',()=>setState(button.dataset.state)));
+    input.addEventListener('input',()=>{if(current==='default'&&input.value) helper.textContent='Ready to analyze.';});
+    setState('default');
+  </script>
+</body>
+</html>

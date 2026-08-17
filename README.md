@@ -15,7 +15,22 @@ aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System
 
 ## 团队预览页面
 
-直接打开 [`aisee-design-system-preview.html`](aisee-design-system-preview.html) 即可浏览完整系统，无需安装依赖。页面包含 README、Brand、Components、UI Kits — Webapp 四个部分，并提供：
+### 在线预览（推荐）
+
+GitHub Pages 发布后，可直接访问仓库的 Pages URL。在线页面由服务器提供资源，团队成员或 AI 读取时不受本地 `file://` 限制。
+
+### 下载仓库后的正确打开方式
+
+仓库里的 `index.html` 是 Vite 开发入口，不能用文件管理器双击打开；旧页面/资源也不建议直接双击。直接用 `file://` 打开时，浏览器会阻止 `/docs/main.tsx`、模块脚本或相对资源加载，所以可能出现空白页、资源失效或“文件已被移动/删除”提示。这不是仓库内容自动丢失。
+
+```bash
+npm install
+npm run preview:local
+```
+
+然后打开 `http://127.0.0.1:4173/`。该命令使用 Node 内置静态服务器，不会修改 StemUI 或产品开发库。若要开发源码/热更新仍使用 `npm run dev`。
+
+页面包含 README、Brand、Components、UI Kits — Webapp 四个部分，并提供：
 
 - v6 Foundations 与 Components 当前规范页
 - 所有保留的旧版 HTML 预览，并以 `Legacy` 标识（页面文件位于 `legacy/pages/`）
@@ -67,7 +82,11 @@ import { LineFileSaveIcon } from '@stemui/icons';
 ## 本地运行
 
 ```bash
+# 团队静态预览（推荐）
 npm install
+npm run preview:local
+
+# 源码开发（Vite + React）
 npm run dev
 ```
 

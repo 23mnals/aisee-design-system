@@ -318,12 +318,15 @@
       .principle p { margin: 0; color: var(--muted); font-size: 14px; }
       .example-list, .spec-list { margin: 12px 0 0; color: var(--muted); padding-left: 20px; }
       .example-list li, .spec-list li { margin: 7px 0; }
-      .token-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px; }
-      .token-card { overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
-      .token-color { height: 64px; border-bottom: 1px solid rgba(0,0,0,.08); }
-      .token-meta { display: grid; gap: 1px; padding: 10px; }
-      .token-meta strong { font-size: 13px; }
-      .token-meta code { color: var(--muted); font-size: 11px; }
+.token-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+.token-card { overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.token-color { height: 76px; border-bottom: 1px solid rgba(0,0,0,.08); }
+.token-meta { display: grid; gap: 8px; padding: 12px 14px 14px; }
+.token-meta strong { color: var(--ink); font-size: 14px; font-weight: 600; }
+.token-field { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 9px; border-radius: 6px; background: #f0ffba; }
+.token-field-label { color: var(--muted); font-size: 10px; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; }
+.token-field code { color: var(--ink); font-size: 12px; font-family: var(--mono); white-space: nowrap; }
+.token-usage { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.4; }
       .spec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
       .spec-card { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 18px; }
       .spec-card h3 { margin: 0 0 9px; font-size: 16px; }
@@ -429,7 +432,169 @@
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
       }
-    </style>
+      /* Reference reading layout: compact, readable, and hierarchy-first. */
+      body {
+        font-size: 14px;
+        line-height: 1.55;
+        color: #111111;
+        background: #ffffff;
+      }
+      .topbar {
+        height: 64px;
+        padding: 0 20px;
+        background: #ffffff;
+        border-bottom-color: #eeeeee;
+      }
+      .brand-wordmark {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: .02em;
+      }
+      .system-label {
+        color: rgba(17,17,17,.6);
+        font-size: 13px;
+      }
+      .sidebar {
+        width: 264px;
+        padding: 18px 12px 32px;
+        background: #ffffff;
+        border-right-color: #eeeeee;
+      }
+      .nav-home,
+      .nav-item {
+        min-height: 30px;
+        padding: 0 10px 0 14px;
+        font-size: 14px;
+        line-height: 1.25;
+        color: rgba(17,17,17,.6);
+      }
+      .nav-home.active,
+      .nav-item.active {
+        color: #111111;
+        font-weight: 500;
+        background: #f3f3f3;
+      }
+      .nav-group-title,
+      .nav-subgroup-title {
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: .01em;
+      }
+      .nav-group-title { padding: 8px 12px; }
+      .nav-subgroup-title { min-height: 30px; padding: 0 12px; }
+      .item-tag { font-size: 10px; }
+      .home {
+        max-width: 960px;
+        padding: 32px 36px 72px;
+      }
+      .home h1,
+      .hero h1,
+      .page-title {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.3;
+        letter-spacing: 0;
+      }
+      .hero-copy,
+      .home .lede,
+      .home > p {
+        font-size: 14px;
+        line-height: 1.55;
+        color: rgba(17,17,17,.6);
+      }
+      .overview-section {
+        margin-top: 40px;
+        padding-top: 24px;
+      }
+      .home-section {
+        margin-top: 40px;
+      }
+      .section-heading {
+        margin-bottom: 16px;
+      }
+      .section-heading h2 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.35;
+        letter-spacing: 0;
+      }
+      .section-heading p {
+        margin-top: 6px;
+        font-size: 14px;
+        line-height: 1.55;
+        color: rgba(17,17,17,.6);
+      }
+      .status-copy strong {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.4;
+      }
+      .status-copy p {
+        font-size: 14px;
+        line-height: 1.55;
+        color: rgba(17,17,17,.6);
+      }
+      .quick-card h3 {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+      .quick-card p {
+        font-size: 14px;
+        line-height: 1.55;
+        color: rgba(17,17,17,.6);
+      }
+      .tagline {
+        margin-top: 16px;
+        padding: 8px 0 8px 14px;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+      .preview-meta h1 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .overview-section h2 {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.35;
+        letter-spacing: 0;
+      }
+      .overview-section h3,
+      .overview-section .subheading {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.4;
+        color: #111111;
+      }
+      .overview-section > p,
+      .overview-section li,
+      .overview-section td,
+      .overview-section p {
+        font-size: 14px;
+        line-height: 1.55;
+        color: rgba(17,17,17,.6);
+      }
+      .overview-section strong,
+      .overview-section th {
+        color: #111111;
+        font-weight: 500;
+      }
+      .overview-section code,
+      .overview-section .code-pill {
+        font-size: 13px;
+      }
+      .preview-frame-wrap {
+        background: #f7f7f7;
+        padding: 16px 20px 24px;
+      }
+      @media (max-width: 900px) {
+        .home { max-width: 100%; padding: 28px 24px 64px; }
+      }
+</style>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -563,14 +728,14 @@
             <p>Functional hierarchy comes first. Module color establishes location and action context; neutral surfaces carry the majority of the interface.</p>
             <h3 class="subheading">Core and module colors</h3>
             <div class="token-grid">
-              <article class="token-card"><div class="token-color" style="background:#111111"></div><div class="token-meta"><strong>Black</strong><code>#111111</code></div></article>
-              <article class="token-card"><div class="token-color" style="background:#FAFAFA"></div><div class="token-meta"><strong>Page</strong><code>#FAFAFA</code></div></article>
-              <article class="token-card"><div class="token-color" style="background:#CFFF29"></div><div class="token-meta"><strong>Analysis</strong><code>#CFFF29</code></div></article>
-              <article class="token-card"><div class="token-color" style="background:#FFE253"></div><div class="token-meta"><strong>Post Agent</strong><code>#FFE253</code></div></article>
-              <article class="token-card"><div class="token-color" style="background:#F3E7F4"></div><div class="token-meta"><strong>Engage banner</strong><code>#F3E7F4</code></div></article>
-              <article class="token-card"><div class="token-color" style="background:#F0FFBA"></div><div class="token-meta"><strong>Engage setup</strong><code>#F0FFBA</code></div></article>
-              <article class="token-card"><div class="token-color" style="background:#EC5212"></div><div class="token-meta"><strong>Danger / Alert</strong><code>#EC5212 · white text</code></div></article>
-              <article class="token-card"><div class="token-color" style="background:#FFD0D0"></div><div class="token-meta"><strong>Error surface</strong><code>#FFD0D0</code></div></article>
+    <article class="token-card"><div class="token-color" style="background:#111111"></div><div class="token-meta"><strong>Black</strong><div class="token-field"><span class="token-field-label">Value</span><code>#111111</code></div><p class="token-usage">Primary text, borders, icons</p></div></article>
+    <article class="token-card"><div class="token-color" style="background:#FAFAFA"></div><div class="token-meta"><strong>Page</strong><div class="token-field"><span class="token-field-label">Value</span><code>#FAFAFA</code></div><p class="token-usage">App page background</p></div></article>
+    <article class="token-card"><div class="token-color" style="background:#CFFF29"></div><div class="token-meta"><strong>Analysis</strong><div class="token-field"><span class="token-field-label">Value</span><code>#CFFF29</code></div><p class="token-usage">Analysis module accent and active context</p></div></article>
+    <article class="token-card"><div class="token-color" style="background:#FFE253"></div><div class="token-meta"><strong>Post Agent</strong><div class="token-field"><span class="token-field-label">Value</span><code>#FFE253</code></div><p class="token-usage">Post Agent module accent and active context</p></div></article>
+    <article class="token-card"><div class="token-color" style="background:#F3E7F4"></div><div class="token-meta"><strong>Engage banner</strong><div class="token-field"><span class="token-field-label">Value</span><code>#F3E7F4</code></div><p class="token-usage">Engage banner surface</p></div></article>
+    <article class="token-card"><div class="token-color" style="background:#F0FFBA"></div><div class="token-meta"><strong>Engage setup</strong><div class="token-field"><span class="token-field-label">Value</span><code>#F0FFBA</code></div><p class="token-usage">Engage setup and onboarding surface</p></div></article>
+    <article class="token-card"><div class="token-color" style="background:#EC5212"></div><div class="token-meta"><strong>Danger / Alert</strong><div class="token-field"><span class="token-field-label">Value</span><code>#EC5212 · white text</code></div><p class="token-usage">Error and destructive actions</p></div></article>
+    <article class="token-card"><div class="token-color" style="background:#FFD0D0"></div><div class="token-meta"><strong>Error surface</strong><div class="token-field"><span class="token-field-label">Value</span><code>#FFD0D0</code></div><p class="token-usage">Input and feedback error background</p></div></article>
             </div>
 
             <h3 class="subheading">Typography</h3>
@@ -726,7 +891,7 @@
         { group: "Brand", name: "Tracking Eye", path: "legacy/pages/Tracking Eye.html", subtitle: "AISEE character peeks out of the eye and scans sources.", status: "Legacy" },
 
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
-        { group: "Components", category: "Actions", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
+        { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
         { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current" },
         { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current select trigger, menu, hover and selected states.", status: "Current" },
         { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with on and off states.", status: "Current" },
@@ -747,7 +912,7 @@
       const groupOrder = ["Brand", "Components", "UI Kits — Webapp"];
       const groupLabels = { "Brand": "Brand", "Components": "Components", "UI Kits — Webapp": "UI Kits — Webapp" };
       const groupIcons = { "Brand": "nav-overview", "Components": "nav-analysis", "UI Kits — Webapp": "nav-overview" };
-      const componentCategoryOrder = ["Overview", "Actions", "Inputs & Controls", "Navigation", "Content & Status", "Data Display", "Feedback & Overlays"];
+      const componentCategoryOrder = ["Overview", "Inputs & Controls", "Navigation", "Content & Status", "Data Display", "Feedback & Overlays"];
       const pageIcons = {
         "dApp v6 Foundations": "nav-overview", "Overview": "nav-analysis", "dApp v6 Components": "nav-analysis", "PlanCard": "nav-growth", "PlanCard — Current": "nav-growth",
         "IntentTag": "nav-signal-feed", "StatusBadge": "nav-replies", "Web App UI Kit": "nav-overview", "Logo": "nav-overview", "Visual Style": "nav-overview",
@@ -792,11 +957,22 @@
               ${item.status === "Legacy" ? '<span class="item-tag">Legacy</span>' : ""}
             </button>`;
           const itemMarkup = group === "Components"
-            ? componentCategoryOrder.map(category => {
+            ? (() => {
+                const renderCategory = category => {
                 const categoryItems = groupItems.filter(item => item.category === category);
                 if (!categoryItems.length) return "";
+                // A category is useful only when it groups multiple real components.
+                // Singletons (for example Overview and Button) stay as direct entries.
+                if (categoryItems.length === 1) return categoryItems.map(renderItem).join("");
                 return `<details class="nav-subgroup" open><summary class="nav-subgroup-toggle"><span class="nav-subgroup-chevron" aria-hidden="true"></span><span>${escapeHtml(category)}</span></summary><div class="nav-subgroup-items">${categoryItems.map(renderItem).join("")}</div></details>`;
-              }).join("")
+                };
+                // Overview remains first; ungrouped real components (for example
+                // Button) follow it as direct entries, without a synthetic category.
+                const overview = renderCategory("Overview");
+                const uncategorized = groupItems.filter(item => !item.category).map(renderItem).join("");
+                const remaining = componentCategoryOrder.filter(category => category !== "Overview").map(renderCategory).join("");
+                return `${overview}${uncategorized}${remaining}`;
+              })()
             : groupItems.map(renderItem).join("");
           return `<details class="nav-group" open><summary><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span><span class="nav-group-label">${escapeHtml(groupLabels[group])}</span><span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
         }).join("") || `<p class="empty-search">No pages match “${escapeHtml(query)}”.</p>`;
