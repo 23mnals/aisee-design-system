@@ -393,6 +393,7 @@ Logo mark:                      320px 320px 0 0
 - 展开层白底，描边 `1px solid #000`，圆角 8，padding 8，与 trigger 保持 **8px** 可见间距；不得覆盖 trigger
 - `box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1)`
 - item 高度 32–36，padding `6px 12px`，圆角 6；**hover / focus / selected 均使用 `rgba(17,17,17,0.05)`**；单选项不显示尾部对勾；多选项在文字左侧显示 20×20 复选框，选中时仅使用模块色填充，不在右侧追加对勾；文字可使用 500 字重
+- Filterable 下拉中的搜索框沿用 Input 的交互规则：默认 5% 黑描边，hover / focus 使用 `1px #111` 内描边 + `2px` 模块色外环，禁止浏览器默认蓝色 focus ring
 - 展开时 caret 旋转 180°；菜单 `opacity 0 → 1` + `translateY(-4px) → 0`，150ms
 - 语义使用 button trigger + `role="listbox"` / `role="option"`，支持 Enter、Space、↑、↓、Home、End 与 Escape
 

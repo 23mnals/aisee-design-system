@@ -65,6 +65,7 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(components, /\.select-option:hover,\.select-option\.selected\{background:rgba\(17,17,17,\.05\)\}/);
   assert.match(styles, /\.aisee-dropdown__menu \{[\s\S]*?top: calc\(100% \+ 8px\);[\s\S]*?border: 1px solid var\(--aisee-color-black\);[\s\S]*?box-shadow: var\(--aisee-shadow-dropdown\);/);
   assert.match(styles, /\.aisee-dropdown__option\[aria-selected="true"\] \{ background: rgba\(17,17,17,\.05\);/);
+  assert.match(styles, /\.aisee-dropdown__filter:hover:not\(:disabled\),[\s\S]*?box-shadow: 0 0 0 var\(--aisee-size-input-ring\) var\(--aisee-module-primary\)/);
   assert.match(source, /aria-haspopup="listbox"/);
   assert.match(source, /role="option"/);
   assert.match(source, /ArrowDown/);
@@ -78,6 +79,7 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.doesNotMatch(source, /aisee-dropdown__option.*<svg/);
   assert.match(detail, /action-chevron-down\.svg/);
   assert.match(detail, /option-leading/);
+  assert.match(detail, /\.menu-search:hover,.menu-search:focus\{border-color:var\(--black\);outline:0;box-shadow:0 0 0 2px var\(--lime\)\}/);
   assert.doesNotMatch(detail, /class="check"/);
   assert.match(portal, /dropdown menus keep an 8px gap below the trigger/);
   assert.match(portal, /5% black fill for hover, focus and selected items/);
