@@ -31,6 +31,7 @@ const assets = {
   'action-plus.svg': 'line_plus_add.svg',
   'action-close.svg': 'line_x_close.svg',
   'action-check.svg': 'line_correct_done.svg',
+  'action-chevron-down.svg': 'line_down_arrow_dropdown.svg',
   'avatar-user.svg': 'avatar_dapp_001.svg',
   'avatar-social-1.svg': 'avatar_social_1.svg',
   'avatar-social-2.svg': 'avatar_social_2.svg',

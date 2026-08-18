@@ -133,9 +133,7 @@
 .aisee-dropdown__input { width: 100%; min-width: 0; padding: 0; border: 0; outline: 0; color: inherit; background: transparent; font: inherit; }
 .aisee-dropdown__input::placeholder { color: rgba(17,17,17,.32); }
 .aisee-dropdown__placeholder { color: rgba(17,17,17,.32); }
-.aisee-dropdown__caret { width: 16px; height: 16px; flex: 0 0 auto; transition: transform var(--aisee-motion-fast) var(--aisee-motion-ease); }
-.aisee-dropdown__caret path,
-.aisee-dropdown__option svg path { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.aisee-dropdown__caret { display: block; width: 16px; height: 16px; flex: 0 0 auto; object-fit: contain; transition: transform var(--aisee-motion-fast) var(--aisee-motion-ease); }
 .aisee-dropdown__trigger[aria-expanded="true"] .aisee-dropdown__caret,
 .aisee-dropdown__trigger--input.is-open .aisee-dropdown__caret { transform: rotate(180deg); }
 .aisee-dropdown__menu {
@@ -159,7 +157,7 @@
   width: 100%;
   min-height: 34px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   padding: 6px 12px;
   border: 0;
@@ -173,7 +171,9 @@
 .aisee-dropdown__option:focus-visible,
 .aisee-dropdown__option[data-active="true"] { outline: none; background: rgba(17,17,17,.05); }
 .aisee-dropdown__option[aria-selected="true"] { background: rgba(17,17,17,.05); font-weight: var(--aisee-font-weight-medium); }
-.aisee-dropdown__option svg { width: 16px; height: 16px; flex: 0 0 auto; }
+.aisee-dropdown__option-leading { display: inline-flex; min-width: 0; align-items: center; gap: 8px; }
+.aisee-dropdown__checkbox { display: block; width: 20px; height: 20px; flex: 0 0 auto; border: 1.25px solid var(--aisee-color-black); border-radius: 6.667px; background: var(--aisee-color-white); }
+.aisee-dropdown__option[aria-selected="true"] .aisee-dropdown__checkbox { background: var(--aisee-module-primary); }
 .aisee-dropdown__option:disabled { opacity: .4; cursor: not-allowed; }
 .aisee-dropdown__filter { min-height: 34px; margin-bottom: 4px; padding: 6px 10px; border: 1px solid var(--aisee-color-border); border-radius: 6px; color: var(--aisee-color-black); background: var(--aisee-color-white); font: inherit; }
 .aisee-dropdown__filter:focus { border-color: var(--aisee-color-black); outline: none; }

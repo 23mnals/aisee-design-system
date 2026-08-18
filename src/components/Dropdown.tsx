@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import dropdownChevronIcon from '../../assets/stemui/action-chevron-down.svg';
 
 export interface DropdownItem {
   id: string;
@@ -151,7 +152,7 @@ export function Dropdown({
         onFocus={() => setOpen(true)}
         onKeyDown={handleKeyDown}
       />
-      <svg className="aisee-dropdown__caret" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
+      <img className="aisee-dropdown__caret" src={dropdownChevronIcon} alt="" aria-hidden="true" />
     </div> : <button
       className="aisee-dropdown__trigger"
       type="button"
@@ -164,7 +165,7 @@ export function Dropdown({
       onKeyDown={handleKeyDown}
     >
       <span className={selectionMode === 'multiple' ? (selectedValues.length ? '' : 'aisee-dropdown__placeholder') : (selectedItem ? '' : 'aisee-dropdown__placeholder')}>{triggerCopy}</span>
-      <svg className="aisee-dropdown__caret" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
+      <img className="aisee-dropdown__caret" src={dropdownChevronIcon} alt="" aria-hidden="true" />
     </button>}
     {open && <div id={menuId} className="aisee-dropdown__menu" role="listbox" aria-multiselectable={selectionMode === 'multiple' || undefined} aria-label={ariaLabel ?? label ?? placeholder}>
       {filterable && !editable && <input
@@ -188,8 +189,10 @@ export function Dropdown({
         disabled={item.disabled}
         onClick={() => selectItem(item)}
       >
-        <span>{item.label}</span>
-        {isSelected(item.id) && <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" /></svg>}
+        <span className="aisee-dropdown__option-leading">
+          {selectionMode === 'multiple' && <span className="aisee-dropdown__checkbox" aria-hidden="true" />}
+          <span>{item.label}</span>
+        </span>
       </button>) : <p className="aisee-dropdown__empty">{noResultsText}</p>}
     </div>}
   </div>;

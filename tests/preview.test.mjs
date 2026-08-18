@@ -53,8 +53,10 @@ test('input interaction follows the Figma compound module ring', async () => {
 
 test('dropdown follows the Figma trigger, menu and selection pattern', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/Select/Select.html', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   const source = await readFile(new URL('../src/components/Dropdown.tsx', import.meta.url), 'utf8');
+  await access(new URL('../assets/stemui/action-chevron-down.svg', import.meta.url));
   assert.match(components, /Select \/ Dropdown/);
   assert.match(components, /class="select-trigger"[\s\S]*?aria-haspopup="listbox"[\s\S]*?aria-expanded="true"/);
   assert.match(components, /class="select-menu"[\s\S]*?role="listbox"/);
@@ -71,6 +73,12 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(source, /filterable\?: boolean/);
   assert.match(source, /editable\?: boolean/);
   assert.match(source, /aria-multiselectable/);
+  assert.match(source, /action-chevron-down\.svg/);
+  assert.match(source, /aisee-dropdown__option-leading/);
+  assert.doesNotMatch(source, /aisee-dropdown__option.*<svg/);
+  assert.match(detail, /action-chevron-down\.svg/);
+  assert.match(detail, /option-leading/);
+  assert.doesNotMatch(detail, /class="check"/);
   assert.match(portal, /dropdown menus keep an 8px gap below the trigger/);
   assert.match(portal, /5% black fill for hover, focus and selected items/);
 });

@@ -82,7 +82,7 @@ Legacy 页面继续保留：Sidebar Navigation、Badge、Stat Card、Post Card�
 - Tabs：10px vertical padding / 28px gap → 8px / 24px，补齐 focus-visible 与过渡。
 - Checkbox：新增 Default、Row hover、Selected、Disabled 与 Analysis/Post/Engage 主题切换示例。
 - Card：新增 neutral Card Current 页面，明确与 StatCard、PostCard、PlanCard 等业务组件的边界。
-- Dropdown：详情页修正为 36px trigger、5% 默认描边、黑色内边 + 2px 模块环、8px menu gap、黑色 check；发布 API 同步四种模式。
+- Dropdown：详情页修正为 36px trigger、5% 默认描边、黑色内边 + 2px 模块环、8px menu gap；多选项改为文字左侧复选框，不显示右侧尾部对勾；发布 API 同步四种模式。
 - Tooltip / Toast、Stat Card、Table、Chart、Score Gauge：新增 Current 页面和可发布实现。
 
 ## 下一步优先级

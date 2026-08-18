@@ -1,6 +1,6 @@
 {
   "package": "@stemui/icons",
-  "version": "0.1.21",
+  "version": "0.1.24",
   "repository": "https://github.com/qi15582378779/stemui",
   "npm": "https://www.npmjs.com/package/@stemui/icons",
   "mode": "read-only source snapshot",
@@ -84,6 +84,10 @@
     {
       "file": "action-check.svg",
       "source": "line_correct_done.svg"
+    },
+    {
+      "file": "action-chevron-down.svg",
+      "source": "line_down_arrow_dropdown.svg"
     },
     {
       "file": "avatar-user.svg",

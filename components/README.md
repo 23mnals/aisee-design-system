@@ -30,7 +30,7 @@
 
 现行可发布 React + TypeScript 组件位于 [`../src/components/`](../src/components/)：Button、Input、Checkbox、Toggle、Tabs、Card、PlanCard、Tag、ModuleToggle、Dialog、ConfirmationDialog、Dropdown、Tooltip、Toast、StatCard、Table、ScoreGauge、LineChart。
 
-`Dropdown` 的 Current API 覆盖单选、多选、菜单过滤和可输入建议；静态详情页与发布 API 使用同一 36px trigger、8px 菜单间距、黑色内边与模块色 focus ring。
+`Dropdown` 的 Current API 覆盖单选、多选、菜单过滤和可输入建议；静态详情页与发布 API 使用同一 36px trigger、8px 菜单间距、黑色内边与模块色 focus ring。多选菜单项在文字左侧显示复选框，不使用右侧尾部对勾。
 
 其中 `ModuleToggle` 仅保留给仍使用旧三模块切换的历史/兼容场景；当前 5.5 Growth Loop Shell 不把它作为主导航入口。
 

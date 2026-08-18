@@ -392,7 +392,7 @@ Logo mark:                      320px 320px 0 0
 - Trigger 高度 36，白底，默认描边 `1px solid rgba(17,17,17,0.05)`，圆角 8，padding `8px 12px`，右侧 16×16 caret；hover / focus / 展开态沿用 Input 的黑色内边 + 2px 模块色外环
 - 展开层白底，描边 `1px solid #000`，圆角 8，padding 8，与 trigger 保持 **8px** 可见间距；不得覆盖 trigger
 - `box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1)`
-- item 高度 32–36，padding `6px 12px`，圆角 6；**hover / focus / selected 均使用 `rgba(17,17,17,0.05)`**；selected 另显示 check 并可使用 500 字重，不使用 lime / yellow 模块色
+- item 高度 32–36，padding `6px 12px`，圆角 6；**hover / focus / selected 均使用 `rgba(17,17,17,0.05)`**；单选项不显示尾部对勾；多选项在文字左侧显示 20×20 复选框，选中时仅使用模块色填充，不在右侧追加对勾；文字可使用 500 字重
 - 展开时 caret 旋转 180°；菜单 `opacity 0 → 1` + `translateY(-4px) → 0`，150ms
 - 语义使用 button trigger + `role="listbox"` / `role="option"`，支持 Enter、Space、↑、↓、Home、End 与 Escape
 
