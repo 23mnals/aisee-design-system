@@ -22,11 +22,12 @@ test('v6 layout and border rules are exact', () => {
   assert.equal(tokens.color.border, 'rgba(17,17,17,0.05)');
 });
 
-test('dApp typography excludes Gotu', () => {
+test('dApp typography excludes Gotu and scopes Digital Numbers to Score Gauge', () => {
   assert.match(tokens.font.family.ui, /^Karla/);
   assert.doesNotMatch(JSON.stringify(tokens), /Gotu/i);
-  assert.doesNotMatch(JSON.stringify(tokens), /JetBrains|Digital Numbers/i);
-  assert.equal(new Set(Object.values(tokens.font.family)).size, 1);
+  assert.doesNotMatch(JSON.stringify(tokens), /JetBrains/i);
+  assert.equal(tokens.font.family.mono, 'Karla, sans-serif');
+  assert.equal(tokens.font.family.gauge, "'Digital Numbers', monospace");
 });
 
 test('Figma color architecture keeps primitive and semantic layers separate', () => {

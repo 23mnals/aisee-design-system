@@ -395,13 +395,18 @@
 .aisee-table td[data-numeric="true"] { font-family: var(--aisee-font-family-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
 .aisee-table__empty { color: var(--aisee-color-text-muted); text-align: center; }
 
-.aisee-score-gauge { position: relative; display: grid; min-height: 350px; overflow: hidden; padding: 24px; border-radius: var(--aisee-radius-large); place-items: center; color: var(--aisee-color-black); background: var(--aisee-color-analysis-primary); isolation: isolate; }
-.aisee-score-gauge::before { position: absolute; z-index: -1; width: 560px; height: 560px; border-radius: 50%; background: repeating-conic-gradient(rgba(17,17,17,.11) 0 1deg, transparent 1deg 12deg); content: ''; opacity: .42; }
-.aisee-score-gauge h3 { position: absolute; top: 24px; left: 24px; margin: 0; font-size: 24px; font-weight: 700; }
-.aisee-score-gauge__dial { position: relative; display: grid; width: 210px; aspect-ratio: 1; border-radius: 50%; place-items: center; background: conic-gradient(var(--aisee-color-black) var(--aisee-score-angle), rgba(17,17,17,.14) 0); box-shadow: 0 0 0 10px rgba(255,255,255,.5); }
-.aisee-score-gauge__dial::before { position: absolute; width: 164px; aspect-ratio: 1; border-radius: 50%; background: var(--aisee-color-analysis-primary); content: ''; }
-.aisee-score-gauge__dial strong { position: relative; z-index: 1; font-family: var(--aisee-font-family-gauge); font-size: clamp(56px, 8vw, 72px); font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
-.aisee-score-gauge > p { position: absolute; right: 24px; bottom: 20px; left: 24px; margin: 0; text-align: center; }
+.aisee-score-gauge { position: relative; width: min(381px, 100%); aspect-ratio: 381 / 216; overflow: hidden; border: 1px solid rgba(17,17,17,.05); border-radius: 16px; color: var(--aisee-color-black); background: var(--aisee-color-analysis-primary); isolation: isolate; }
+.aisee-score-gauge::before { position: absolute; z-index: -1; inset: 0; background: url('../assets/score-gauge/score-gauge-texture.png') center / 100% 100% no-repeat; content: ''; opacity: .32; }
+.aisee-score-gauge h3 { position: absolute; top: 16px; left: 16px; margin: 0; font-size: 18px; font-weight: 500; line-height: 26px; }
+.aisee-score-gauge__container { position: absolute; top: 54px; right: 16px; bottom: 19px; left: 16px; }
+.aisee-score-gauge__scale { position: absolute; top: 6px; left: 50%; width: 184.545px; height: 100px; overflow: hidden; transform: translateX(-50%); }
+.aisee-score-gauge__guide { position: absolute; top: 36px; left: 50%; width: 118.182px; height: 59.091px; border: .659px solid var(--aisee-color-black); border-radius: 50%; transform: translateX(-50%); }
+.aisee-score-gauge__tick { position: absolute; top: 0; left: 50%; width: 3.953px; height: 18.445px; background: rgba(17,17,17,.1); transform: translateX(-50%) rotate(var(--aisee-score-tick-angle)); transform-origin: 50% 100px; }
+.aisee-score-gauge__tick.is-active { background: var(--aisee-color-black); }
+.aisee-score-gauge__needle { position: absolute; top: 48.182px; left: 50%; width: 3.636px; height: 30px; background: var(--aisee-color-black); transform: translateX(-50%); }
+.aisee-score-gauge__hub { position: absolute; top: 72.727px; left: 50%; width: 18.182px; height: 18.182px; border: 3.636px solid var(--aisee-color-white); border-radius: 50%; background: var(--aisee-color-black); box-shadow: inset 0 0 0 3.636px var(--aisee-color-black); transform: translateX(-50%); }
+.aisee-score-gauge__hub::after { position: absolute; top: 50%; left: 50%; width: 3.636px; height: 3.636px; border-radius: 50%; background: var(--aisee-color-analysis-primary); content: ''; transform: translate(-50%,-50%); }
+.aisee-score-gauge__value { position: absolute; top: 111px; left: 50%; display: grid; width: 64px; height: 26px; align-items: center; justify-content: center; color: var(--aisee-color-black); background: var(--aisee-color-white); font-family: var(--aisee-font-family-gauge); font-size: 20px; font-weight: 400; line-height: 26px; font-variant-numeric: tabular-nums; transform: translateX(-50%); }
 
 .aisee-chart { margin: 0; padding: 20px; border: 1px solid var(--aisee-color-border); border-radius: var(--aisee-radius-card); background: var(--aisee-color-white); }
 .aisee-chart figcaption { display: grid; gap: 3px; margin-bottom: 14px; }

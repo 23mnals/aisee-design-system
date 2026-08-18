@@ -11,11 +11,12 @@ Figma feature-page versions and written design specifications are tracked separa
 | Field | Value |
 |---|---|
 | Latest feature page | **5.6 — latest registered feature version** |
-| Registered local source file | `备份-官网+dapp主功能.fig`（当前仓库仅保留元数据，文件本体不在 system 目录） |
+| Registered local source file | `design-sources/figma/备份-官网+dapp主功能.fig`（本地存在、Git 忽略） |
 | Scope | Marketing homepage + primary dApp functionality |
-| Figma export time | 2026-08-13 12:20 +08:00 |
-| Archive size | 288,584,555 bytes (about 275 MB) |
-| SHA-256 | `cefdb828349ff1974595a678e0c34ccd21d7b13f93c5cd8caaa715f26d6309ee` |
+| Figma export time | 2026-08-18 14:04:34 +08:00 |
+| Archive size | 320,249,468 bytes (about 305.4 MB) |
+| SHA-256 | `ec15aa202e65ccaa7751ee10589ef50f9bcc26f54e24ecb610e1eef53f852787` |
+| Stable cloud source | [Figma file](https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/%E5%A4%87%E4%BB%BD-%E5%AE%98%E7%BD%91-dapp%E4%B8%BB%E5%8A%9F%E8%83%BD) |
 | Repository policy | Do not copy the full `.fig` archive into Git; track its metadata and version here |
 
 The current implementation specification is [`aisee-dapp-design.v6.md`](aisee-dapp-design.v6.md). Later team clarifications in [`TEAM_DECISIONS.md`](TEAM_DECISIONS.md) override conflicting content in both the specification and historical designs. Feature work must be checked against its own Figma page; 5.6 must not be treated as a global replacement for every other page.
@@ -24,7 +25,7 @@ The current implementation specification is [`aisee-dapp-design.v6.md`](aisee-da
 
 Use [`../design-sources/figma/`](../design-sources/figma/README.md) as the only local intake directory:
 
-- Replace `aisee-current.fig` in place whenever a new local backup is saved.
+- Replace the filename registered in `source.json` whenever a new local backup is saved.
 - Do not commit the large `.fig` binary; `.gitignore` keeps it local.
 - Before every design comparison, check the file modification time, byte size and SHA-256 instead of trusting an older filename.
 - A raw `.fig` archive is suitable for update detection and best-effort preview/resource extraction, but it does not guarantee complete machine-readable access to nodes, variants or Variables.

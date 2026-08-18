@@ -66,7 +66,7 @@ function App() {
           <StatCard label="AI VISIBILITY" value="68.4" unit="/ 100" delta="+12.4%" deltaTone="positive" helper="vs last week" />
           <Table columns={tableColumns} rows={tableRows} rowKey="id" caption="Visibility sources" />
           <LineChart title="AI visibility" description="Last six months" data={[{ label: 'Mar', value: 31 }, { label: 'Apr', value: 38 }, { label: 'May', value: 47 }, { label: 'Jun', value: 52 }, { label: 'Jul', value: 60 }, { label: 'Aug', value: 68 }]} />
-          <ScoreGauge value={45} description="+8.4 points this month" />
+          <ScoreGauge value={30.8} />
         </div>
       </section>
 

@@ -10,22 +10,37 @@ export interface ScoreGaugeProps extends HTMLAttributes<HTMLElement> {
 
 export function ScoreGauge({
   value,
-  max = 100,
+  max = 50,
   label = 'Score',
   precision = 1,
   description,
   className = '',
   ...props
 }: ScoreGaugeProps) {
-  const safeMax = max > 0 ? max : 100;
+  const safeMax = max > 0 ? max : 50;
   const clampedValue = Math.min(Math.max(value, 0), safeMax);
   const progress = clampedValue / safeMax;
-  const style = { '--aisee-score-angle': `${progress * 360}deg` } as CSSProperties;
+  const activeTicks = Math.round(progress * 14);
+  const ticks = Array.from({ length: 15 }, (_, index) => ({
+    angle: -93.333 + index * 13.333,
+    active: index <= activeTicks,
+  }));
   return <article {...props} className={`aisee-score-gauge ${className}`.trim()} aria-label={`${String(label)} ${clampedValue} of ${safeMax}`}>
     <h3>{label}</h3>
-    <div className="aisee-score-gauge__dial" style={style} role="meter" aria-valuemin={0} aria-valuemax={safeMax} aria-valuenow={clampedValue}>
-      <strong>{clampedValue.toFixed(precision)}</strong>
+    <div className="aisee-score-gauge__container">
+      <div className="aisee-score-gauge__scale" role="meter" aria-valuemin={0} aria-valuemax={safeMax} aria-valuenow={clampedValue}>
+        <span className="aisee-score-gauge__guide" aria-hidden="true" />
+        {ticks.map(({ angle, active }, index) => <span
+          aria-hidden="true"
+          className={`aisee-score-gauge__tick${active ? ' is-active' : ''}`}
+          key={index}
+          style={{ '--aisee-score-tick-angle': `${angle}deg` } as CSSProperties}
+        />)}
+        <span className="aisee-score-gauge__needle" aria-hidden="true" />
+        <span className="aisee-score-gauge__hub" aria-hidden="true" />
+      </div>
+      <strong className="aisee-score-gauge__value">{clampedValue.toFixed(precision)}</strong>
     </div>
-    {description && <p>{description}</p>}
+    {description && <span className="aisee-sr-only">{description}</span>}
   </article>;
 }

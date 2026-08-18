@@ -1,10 +1,10 @@
 # AISEE Figma 本地设计源
 
-固定把最新的本地 Figma 备份复制到：
+当前固定读取 `source.json` 的 `figFile`：
 
-`design-sources/figma/aisee-current.fig`
+`design-sources/figma/备份-官网+dapp主功能.fig`
 
-每次替换时保持文件名不变。后续进行设计稿对比前，先检查这个目录中文件的更新时间和内容哈希，避免继续使用旧版设计源。
+每次替换时保持文件名不变。若以后需要改名，只需同步修改 `source.json`。后续进行设计稿对比前，先检查这个目录中文件的更新时间和内容哈希，避免继续使用旧版设计源。
 
 ## 重要限制
 

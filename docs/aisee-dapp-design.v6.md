@@ -610,21 +610,26 @@ Logo mark:                      320px 320px 0 0
 - Success / Agent 使用 polite `status`；Error 使用 assertive `alert`
 
 ### 6.18 Score Gauge（**仅 Analysis**）
-> 来自 figma + 截图——Analysis Overview 的核心数据视觉。
+> 唯一视觉基准：Figma node [`58:32548`](https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/%E5%A4%87%E4%BB%BD-%E5%AE%98%E7%BD%91-dapp%E4%B8%BB%E5%8A%9F%E8%83%BD?node-id=58-32548)。禁止用 donut / 完整圆环替代。
 
-- **容器**：圆角 16 卡片，宽度 50%，高度约 350px
-- **背景**：lime `#CFFF29` 实色铺底 + 顶层叠加放射状线条 / 太阳光线装饰
+- **容器**：`381×216px`，圆角 16，内描边 `1px rgba(17,17,17,.05)`；响应式时等比缩放，不拉伸为大卡片
+- **背景**：lime `#CFFF29` 实色铺底；Figma 导出的 `381×216px` 放射纹理以 `32%` opacity 覆盖
+- **标题**：左上 `16px / 16px`；Karla 18px / 500 / line-height 26；文本 `Score`
+- **仪表区**：位于 `x=16, y=54` 的 `349×143px` 容器中；半圆刻度区 `184.545×100px`，刻度 `3.953×18.445px`
+- **指针**：垂直黑色 `3.636×30px`；中心圆外径 `18.182px`，白环、黑芯、lime 圆点
+- **数字框**：`64×26px` 白底，水平居中，顶部位于仪表容器 `111px`
 - **中心数字**：
   ```css
   .gauge-digit {
     font-family: 'Digital Numbers', monospace;
-    font-size: 64–80px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
     color: #111;
   }
   ```
-  示例显示 "45.0" 这种带小数点的数码管数字
-- **环形 / 弧形 progress**：黑色 stroke 在 lime 底上做指针 / 弧形指示
-- **标签**：左上角 "Score" Karla Bold 24px / #111
+- 示例值为 `30.8`；默认量程 `0–50`
+- **描述文本**：当前 Figma 变体不显示月度变化文案；如 API 传入 description，仅作为辅助技术文本，不进入视觉布局
 - **Post Agent 模块下不显示此组件**——直接换成 Dashboard StatCard 矩阵
 
 ---

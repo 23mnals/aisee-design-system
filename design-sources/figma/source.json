@@ -1,7 +1,8 @@
 {
   "name": "AISEE current design source",
-  "figFile": "aisee-current.fig",
+  "figFile": "备份-官网+dapp主功能.fig",
   "variables": "variables.json",
   "exportsDir": "exports",
-  "figmaUrl": ""
+  "figmaUrl": "https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/%E5%A4%87%E4%BB%BD-%E5%AE%98%E7%BD%91-dapp%E4%B8%BB%E5%8A%9F%E8%83%BD",
+  "scoreGaugeNodeId": "58:32548"
 }

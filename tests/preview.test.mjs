@@ -101,6 +101,28 @@ test('high-priority feedback and data components are publishable Current entries
   }
 });
 
+test('score gauge follows Figma node 58:32548 instead of the legacy donut', async () => {
+  const source = await readFile(new URL('../src/components/ScoreGauge.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/ScoreGauge/ScoreGauge.html', import.meta.url), 'utf8');
+  const overview = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  await access(new URL('../src/assets/score-gauge/score-gauge-texture.png', import.meta.url));
+
+  assert.match(source, /max = 50/);
+  assert.match(source, /length: 15/);
+  assert.match(source, /aisee-score-gauge__needle/);
+  assert.match(styles, /aspect-ratio: 381 \/ 216/);
+  assert.match(styles, /font-size: 18px; font-weight: 500; line-height: 26px/);
+  assert.match(styles, /score-gauge-texture\.png/);
+  assert.match(styles, /font-size: 20px; font-weight: 400; line-height: 26px/);
+  assert.doesNotMatch(styles, /\.aisee-score-gauge__dial/);
+  assert.match(detail, /Figma node 58:32548/);
+  assert.match(detail, /aria-valuemax="50" aria-valuenow="30\.8"/);
+  assert.match(overview, /class="gauge-scale"/);
+  assert.match(overview, /<strong>30\.8<\/strong>/);
+  assert.doesNotMatch(detail, /45\.0|points this month|conic-gradient/);
+});
+
 test('toast follows the Figma one-line, two-line and functional-color variants', async () => {
   const source = await readFile(new URL('../src/components/Toast.tsx', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
@@ -422,7 +444,7 @@ test('overview contains the complete documentation sections', () => {
     assert.match(portal, new RegExp(`id="${id}"`));
   }
   assert.match(portal, /Homepage \/ Brand[\s\S]*?Karla \+ Gotu/);
-  assert.match(portal, /dApp \/ App \/ Webapp[\s\S]*?Karla only/);
+  assert.match(portal, /dApp \/ App \/ Webapp[\s\S]*?Karla \+ Digital Numbers/);
   assert.match(portal, /Never redraw the eye or wordmark with CSS/);
 });
 
@@ -434,7 +456,7 @@ test('product overview contains the complete six-capability loop', () => {
   assert.match(portal, /Analysis, Growth, Engage, Post Agent, Verify, Connection and account workflows/);
 });
 
-test('brand fonts are local and application typography remains Karla-only', async () => {
+test('brand and the scoped Score Gauge font are self-hosted', async () => {
   const displayType = await readFile(new URL('../preview/type-display.html', import.meta.url), 'utf8');
   const logoPreview = await readFile(new URL('../preview/brand-logo.html', import.meta.url), 'utf8');
   for (const html of [displayType, logoPreview]) {
@@ -446,5 +468,7 @@ test('brand fonts are local and application typography remains Karla-only', asyn
 
   const foundations = await readFile(new URL('../preview/dapp-v6-foundations.html', import.meta.url), 'utf8');
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
-  assert.doesNotMatch(`${foundations}\n${components}`, /DigitalNumbers-Regular|font-family:\s*(?:'|")?Digital Numbers/i);
+  assert.doesNotMatch(foundations, /DigitalNumbers-Regular|font-family:\s*(?:'|")?Digital Numbers/i);
+  assert.match(components, /DigitalNumbers-Regular 2\.ttf/);
+  assert.match(components, /font:400 20px\/26px 'Digital Numbers',monospace/);
 });

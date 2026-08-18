@@ -15,6 +15,14 @@
         font-display: swap;
       }
 
+      @font-face {
+        font-family: "Digital Numbers";
+        src: url("./fonts/DigitalNumbers-Regular 2.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }
+
       :root {
         color-scheme: light;
         --canvas: #fafafa;
@@ -796,7 +804,7 @@
             </div>
 
             <h3 class="subheading">Typography</h3>
-            <div class="table-wrap"><table class="overview-table"><thead><tr><th>Surface</th><th>Family</th><th>Roles</th><th>Rule</th></tr></thead><tbody><tr><td>Homepage / Brand</td><td>Karla + Gotu</td><td>Gotu for selected display moments; Karla for UI and body</td><td>Self-host both fonts</td></tr><tr><td>dApp / App / Webapp</td><td>Karla only</td><td>Headings, body, tables, data, code hints and score gauges</td><td>No Gotu, JetBrains Mono or Digital Numbers</td></tr></tbody></table></div>
+            <div class="table-wrap"><table class="overview-table"><thead><tr><th>Surface</th><th>Family</th><th>Roles</th><th>Rule</th></tr></thead><tbody><tr><td>Homepage / Brand</td><td>Karla + Gotu</td><td>Gotu for selected display moments; Karla for UI and body</td><td>Self-host both fonts</td></tr><tr><td>dApp / App / Webapp</td><td>Karla + Digital Numbers</td><td>Karla for all UI; Digital Numbers only for the Score Gauge value</td><td>No Gotu or JetBrains Mono; self-host the gauge font</td></tr></tbody></table></div>
 
             <h3 class="subheading">Layout, spacing and surfaces</h3>
             <div class="spec-grid">

@@ -56,7 +56,7 @@
 
 - 当前来源优先级是什么？
 - Analysis、Post Agent、Engage 的主色分别是什么？
-- dApp 是否允许 Gotu 或 Digital Numbers？
+- dApp 是否允许 Gotu 或 Digital Numbers？（答案：Gotu 不用于 dApp；Digital Numbers 仅允许用于 Score Gauge 数字）
 - Input / Dropdown 的默认边框、focus 双环和高度是什么？
 - 哪些页面是 Current，哪些只能作为 Legacy 参考？
 - 它准备复用哪些导出的 React 组件？
