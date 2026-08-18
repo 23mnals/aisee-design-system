@@ -105,6 +105,7 @@ test('toast follows the Figma one-line, two-line and functional-color variants',
   const source = await readFile(new URL('../src/components/Toast.tsx', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   const detail = await readFile(new URL('../components/TooltipToast/TooltipToast.html', import.meta.url), 'utf8');
+  const overview = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
   await Promise.all([
     '../assets/stemui/action-check.svg',
     '../assets/stemui/action-close.svg',
@@ -120,6 +121,9 @@ test('toast follows the Figma one-line, two-line and functional-color variants',
   assert.match(detail, /assets\/stemui\/action-check\.svg/);
   assert.match(detail, /assets\/stemui\/action-close\.svg/);
   assert.doesNotMatch(detail, /assets\/toast\/.*\.png/);
+  assert.match(overview, /assets\/stemui\/action-check\.svg/);
+  assert.match(overview, /assets\/stemui\/action-close\.svg/);
+  assert.doesNotMatch(overview, /assets\/toast\/.*\.png/);
   assert.match(styles, /\.aisee-toast \{[\s\S]*?width: min\(368px, 100%\);[\s\S]*?min-height: 56px;/);
   assert.match(styles, /\.aisee-toast--two-line \{ width: min\(400px, 100%\); min-height: 72px; \}/);
   assert.match(styles, /--aisee-color-semantic-button-analysis/);

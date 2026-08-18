@@ -70,6 +70,12 @@ npm run site
 
 完整迁移表见 [`docs/MIGRATION.md`](docs/MIGRATION.md)，资源状态见 [`docs/RESOURCE_INVENTORY.md`](docs/RESOURCE_INVENTORY.md)。
 
+## 本地 Figma 设计源
+
+最新本地 Figma 备份使用固定入口 [`design-sources/figma/`](design-sources/figma/README.md)。将文件替换为 `design-sources/figma/aisee-current.fig` 后，后续设计稿对比应先检查该文件的更新时间和内容哈希。
+
+原始 `.fig` 可以用于发现版本变化和读取可识别的预览/资源，但它不是稳定的机器可读交换格式。若需要可靠同步组件节点、Variables 和图标，请同时更新 `variables.json`、`exports/`，或在 `source.json` 中保存一个持续更新的同文件 Figma URL。详细规则见 [`docs/FIGMA_SOURCES.md`](docs/FIGMA_SOURCES.md)。
+
 ## Icon Library
 
 AISEE 自有 icon 的唯一资源源是 [StemUI GitHub](https://github.com/qi15582378779/stemui)，产品代码通过 npm 的 [`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons?activeTab=readme) 使用：

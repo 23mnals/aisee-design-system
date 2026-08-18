@@ -11,7 +11,7 @@ Figma feature-page versions and written design specifications are tracked separa
 | Field | Value |
 |---|---|
 | Latest feature page | **5.6 — latest registered feature version** |
-| Local source file | `备份-官网+dapp主功能.fig` |
+| Registered local source file | `备份-官网+dapp主功能.fig`（当前仓库仅保留元数据，文件本体不在 system 目录） |
 | Scope | Marketing homepage + primary dApp functionality |
 | Figma export time | 2026-08-13 12:20 +08:00 |
 | Archive size | 288,584,555 bytes (about 275 MB) |
@@ -19,6 +19,16 @@ Figma feature-page versions and written design specifications are tracked separa
 | Repository policy | Do not copy the full `.fig` archive into Git; track its metadata and version here |
 
 The current implementation specification is [`aisee-dapp-design.v6.md`](aisee-dapp-design.v6.md). Later team clarifications in [`TEAM_DECISIONS.md`](TEAM_DECISIONS.md) override conflicting content in both the specification and historical designs. Feature work must be checked against its own Figma page; 5.6 must not be treated as a global replacement for every other page.
+
+## Fixed local update path
+
+Use [`../design-sources/figma/`](../design-sources/figma/README.md) as the only local intake directory:
+
+- Replace `aisee-current.fig` in place whenever a new local backup is saved.
+- Do not commit the large `.fig` binary; `.gitignore` keeps it local.
+- Before every design comparison, check the file modification time, byte size and SHA-256 instead of trusting an older filename.
+- A raw `.fig` archive is suitable for update detection and best-effort preview/resource extraction, but it does not guarantee complete machine-readable access to nodes, variants or Variables.
+- For reliable automatic ingestion, update `variables.json` and `exports/` beside the archive, or keep a stable cloud file URL in `source.json`. A stable URL always resolves to that file's latest saved version, so it does not need to be resent after each update.
 
 ## Version registry
 

@@ -5,3 +5,5 @@ site/
 *.log
 .env*
 !.env.example
+design-sources/figma/*.fig
+design-sources/figma/*.figma
