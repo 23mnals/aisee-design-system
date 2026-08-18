@@ -363,6 +363,9 @@ test('webapp UI kit follows the current Growth Loop shell and previews every fun
   assert.match(kit, /Score Improvement Plan/);
   assert.match(kit, /Content Calendar/);
   assert.match(kit, /assets\/stemui\/avatar-user\.svg/);
+  assert.match(kit, /icon==='overview'\?'\.\.\/\.\.\/assets\/stemui\/nav-overview\.svg'/);
+  assert.doesNotMatch(kit, /banner-overview\.png/);
+  assert.doesNotMatch(kit, /const navSvg=/);
   assert.match(kit, /avatar-social-/);
   assert.match(kit, /platform-/);
   assert.doesNotMatch(kit, /const svg=/);
