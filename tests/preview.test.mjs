@@ -390,6 +390,12 @@ test('sidebar uses compact 14px navigation typography', () => {
   assert.match(portal, /\.nav-item \{[^}]*font-size: 14px;/);
 });
 
+test('sidebar subgroup chevrons keep readable spacing and vertical alignment', () => {
+  assert.match(portal, /\.nav-subgroup-toggle \{[^}]*align-items: center;/);
+  assert.match(portal, /\.nav-subgroup-toggle > span:last-child \{[^}]*align-items: center;[^}]*line-height: 18px;/);
+  assert.match(portal, /\.nav-subgroup-chevron \{[^}]*width: 14px;[^}]*height: 14px;[^}]*margin-right: 10px;[^}]*place-items: center;/);
+});
+
 test('overview documents feature-page and specification version rules', () => {
   assert.match(portal, /Figma feature page 5\.6/);
   assert.match(portal, /Design Specification v6/);
