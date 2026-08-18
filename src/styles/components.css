@@ -352,7 +352,12 @@
 .aisee-toast--two-line { width: min(400px, 100%); min-height: 72px; }
 .aisee-toast--error { --aisee-toast-accent: var(--aisee-color-semantic-feedback-wrong); }
 .aisee-toast--agent { --aisee-toast-accent: var(--aisee-color-semantic-button-agent); }
-.aisee-toast__icon { display: block; width: 40px; height: 40px; object-fit: contain; }
+.aisee-toast__icon { display: grid; width: 40px; height: 40px; border-radius: 50%; place-items: center; background: color-mix(in srgb, var(--aisee-toast-accent) 20%, transparent); }
+.aisee-toast__icon > span { position: relative; display: grid; width: 32px; height: 32px; border-radius: 50%; place-items: center; background: color-mix(in srgb, var(--aisee-toast-accent) 80%, transparent); }
+.aisee-toast__icon > span::before { position: absolute; width: 24px; height: 24px; border-radius: 50%; background: var(--aisee-color-semantic-button-usual); content: ""; }
+.aisee-toast__icon img { position: relative; display: block; width: 16px; height: 16px; filter: invert(1); }
+.aisee-toast--agent .aisee-toast__icon > span::before { background: var(--aisee-color-semantic-tag-base); }
+.aisee-toast--agent .aisee-toast__icon img { filter: none; }
 .aisee-toast__content { display: grid; min-width: 0; }
 .aisee-toast__title { color: var(--aisee-color-semantic-text-primary); font-size: 14px; font-weight: 500; line-height: 22px; letter-spacing: -.078px; }
 .aisee-toast__description { color: var(--aisee-color-semantic-text-description); font-size: 12px; font-weight: 400; line-height: 18px; letter-spacing: -.078px; }

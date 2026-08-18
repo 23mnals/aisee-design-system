@@ -1,8 +1,6 @@
 import { useEffect, type CSSProperties, type HTMLAttributes, type ReactNode } from 'react';
-import toastAgentIcon from '../../assets/toast/agent.svg';
-import toastCloseIcon from '../../assets/toast/close.png';
-import toastErrorIcon from '../../assets/toast/error.png';
-import toastSuccessIcon from '../../assets/toast/success.png';
+import toastCheckIcon from '../../assets/stemui/action-check.svg';
+import toastCloseIcon from '../../assets/stemui/action-close.svg';
 
 export type ToastTone = 'default' | 'success' | 'error' | 'agent';
 
@@ -37,9 +35,9 @@ export function Toast({
   if (!open) return null;
   const visualTone = tone === 'default' ? 'success' : tone;
   const icon = {
-    success: toastSuccessIcon,
-    error: toastErrorIcon,
-    agent: toastAgentIcon,
+    success: toastCheckIcon,
+    error: toastCloseIcon,
+    agent: toastCheckIcon,
   }[visualTone];
   const toastStyle = {
     ...style,
@@ -53,7 +51,7 @@ export function Toast({
     role={tone === 'error' ? 'alert' : 'status'}
     aria-live={tone === 'error' ? 'assertive' : 'polite'}
   >
-    <img className="aisee-toast__icon" src={icon} alt="" aria-hidden="true" />
+    <span className="aisee-toast__icon" aria-hidden="true"><span><img src={icon} alt="" /></span></span>
     <span className="aisee-toast__content">
       <span className="aisee-toast__title">{children}</span>
       {description && <span className="aisee-toast__description">{description}</span>}

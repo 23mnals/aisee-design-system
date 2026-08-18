@@ -19,7 +19,12 @@
     .toast{--accent:#cfff29;position:relative;display:grid;width:min(368px,100%);min-height:56px;grid-template-columns:40px minmax(0,1fr) 16px;align-items:center;gap:12px;overflow:hidden;padding:7px 16px;border:1px solid #111;border-radius:8px;background:#fff;box-shadow:0 20px 24px -4px rgba(16,24,40,.1),0 8px 8px -4px rgba(16,24,40,.04)}
     .toast.error{--accent:#ec5212}
     .toast.agent{--accent:#ffe253;width:min(400px,100%);min-height:72px}
-    .toast-icon{display:block;width:40px;height:40px;object-fit:contain}
+    .toast-icon{display:grid;width:40px;height:40px;border-radius:50%;background:color-mix(in srgb,var(--accent) 20%,transparent);place-items:center}
+    .toast-icon>span{position:relative;display:grid;width:32px;height:32px;border-radius:50%;background:color-mix(in srgb,var(--accent) 80%,transparent);place-items:center}
+    .toast-icon>span:before{position:absolute;width:24px;height:24px;border-radius:50%;background:#111;content:""}
+    .toast-icon img{position:relative;display:block;width:16px;height:16px;filter:invert(1)}
+    .toast.agent .toast-icon>span:before{background:#fff}
+    .toast.agent .toast-icon img{filter:none}
     .toast-copy{display:grid;min-width:0}
     .toast-title{font-size:14px;font-weight:500;line-height:22px;letter-spacing:-.078px}
     .toast-description{color:#3d3d3a;font-size:12px;font-weight:400;line-height:18px;letter-spacing:-.078px}
@@ -56,21 +61,21 @@
     <section class="demo">
       <div class="toast-stack" id="toast-stack">
         <div class="toast success" data-toast="success" role="status" aria-live="polite">
-          <img class="toast-icon" src="../../assets/toast/success.png" alt="">
+          <span class="toast-icon" aria-hidden="true"><span><img src="../../assets/stemui/action-check.svg" alt=""></span></span>
           <span class="toast-copy"><span class="toast-title">Brand details updated successfully!</span></span>
-          <button class="toast-close" type="button" aria-label="Dismiss success notification"><img src="../../assets/toast/close.png" alt=""></button>
+          <button class="toast-close" type="button" aria-label="Dismiss success notification"><img src="../../assets/stemui/action-close.svg" alt=""></button>
           <span class="toast-track" aria-hidden="true"><span></span></span>
         </div>
         <div class="toast error" data-toast="error" role="alert" aria-live="assertive">
-          <img class="toast-icon" src="../../assets/toast/error.png" alt="">
+          <span class="toast-icon" aria-hidden="true"><span><img src="../../assets/stemui/action-close.svg" alt=""></span></span>
           <span class="toast-copy"><span class="toast-title">Brand details update failed!</span></span>
-          <button class="toast-close" type="button" aria-label="Dismiss error notification"><img src="../../assets/toast/close.png" alt=""></button>
+          <button class="toast-close" type="button" aria-label="Dismiss error notification"><img src="../../assets/stemui/action-close.svg" alt=""></button>
           <span class="toast-track" aria-hidden="true"><span></span></span>
         </div>
         <div class="toast agent" data-toast="agent" role="status" aria-live="polite">
-          <img class="toast-icon" src="../../assets/toast/agent.svg" alt="">
+          <span class="toast-icon" aria-hidden="true"><span><img src="../../assets/stemui/action-check.svg" alt=""></span></span>
           <span class="toast-copy"><span class="toast-title">Switched to extension tracking.</span><span class="toast-description">No more credits will be spent on this reply.</span></span>
-          <button class="toast-close" type="button" aria-label="Dismiss agent notification"><img src="../../assets/toast/close.png" alt=""></button>
+          <button class="toast-close" type="button" aria-label="Dismiss agent notification"><img src="../../assets/stemui/action-close.svg" alt=""></button>
           <span class="toast-track" aria-hidden="true"><span></span></span>
         </div>
       </div>

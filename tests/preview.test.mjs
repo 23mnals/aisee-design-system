@@ -106,18 +106,20 @@ test('toast follows the Figma one-line, two-line and functional-color variants',
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   const detail = await readFile(new URL('../components/TooltipToast/TooltipToast.html', import.meta.url), 'utf8');
   await Promise.all([
-    '../assets/toast/success.png',
-    '../assets/toast/error.png',
-    '../assets/toast/agent.svg',
-    '../assets/toast/close.png',
+    '../assets/stemui/action-check.svg',
+    '../assets/stemui/action-close.svg',
   ].map(path => access(new URL(path, import.meta.url))));
 
   assert.match(source, /ToastTone = 'default' \| 'success' \| 'error' \| 'agent'/);
   assert.match(source, /description\?: ReactNode/);
   assert.match(source, /aisee-toast--two-line/);
-  assert.match(source, /toastSuccessIcon/);
-  assert.match(source, /toastErrorIcon/);
-  assert.match(source, /toastAgentIcon/);
+  assert.match(source, /toastCheckIcon/);
+  assert.match(source, /assets\/stemui\/action-check\.svg/);
+  assert.match(source, /assets\/stemui\/action-close\.svg/);
+  assert.doesNotMatch(source, /assets\/toast\/.*\.png/);
+  assert.match(detail, /assets\/stemui\/action-check\.svg/);
+  assert.match(detail, /assets\/stemui\/action-close\.svg/);
+  assert.doesNotMatch(detail, /assets\/toast\/.*\.png/);
   assert.match(styles, /\.aisee-toast \{[\s\S]*?width: min\(368px, 100%\);[\s\S]*?min-height: 56px;/);
   assert.match(styles, /\.aisee-toast--two-line \{ width: min\(400px, 100%\); min-height: 72px; \}/);
   assert.match(styles, /--aisee-color-semantic-button-analysis/);
