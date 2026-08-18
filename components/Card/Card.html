@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Card · AISEE Components</title>
+  <style>
+    @font-face{font-family:Karla;src:url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
+    *{box-sizing:border-box}body{margin:0;padding:32px;background:#fafafa;color:#111;font:14px/1.5 Karla,Arial,sans-serif}main{max-width:960px;margin:auto}.eyebrow{margin:0 0 6px;color:rgba(17,17,17,.6);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}h1{margin:0;font-size:28px;font-weight:600;line-height:34px}h2{margin:34px 0 14px;font-size:18px;font-weight:600}.intro,.specs{color:rgba(17,17,17,.6)}.intro{max-width:680px;margin:8px 0 0;font-size:16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{padding:20px;border:1px solid rgba(17,17,17,.05);border-radius:12px;background:#fff}.card.shadow{box-shadow:0 1px 3px rgba(0,0,0,.06)}.card h3{margin:0 0 8px;font-size:16px;font-weight:600;line-height:24px}.card p{margin:0;color:rgba(17,17,17,.6)}@media(max-width:680px){body{padding:20px}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Components · Data Display</p>
+    <h1>Card</h1>
+    <p class="intro">A neutral surface that groups a title and related content without adding business-specific structure.</p>
+    <h2>Overview / Examples</h2>
+    <section class="grid">
+      <article class="card"><h3>Default card</h3><p>Use the shared 5% black border on white.</p></article>
+      <article class="card shadow"><h3>Elevated card</h3><p>Use the minimal card shadow only when separation needs reinforcement.</p></article>
+    </section>
+    <h2>Usage</h2>
+    <p>Keep reusable Card neutral. Stat, Post, Plan and chart surfaces belong to their own components or UI Kit patterns.</p>
+    <h2>Specs</h2>
+    <p class="specs">White surface · radius 12px · padding 16–24px · title Karla 16px / 600 · body Karla 14px / 400.</p>
+  </main>
+</body>
+</html>

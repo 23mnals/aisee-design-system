@@ -1,6 +1,6 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Button, Card, Dialog, Dropdown, Input, ModuleToggle, TabItem, Tabs, Tag, Toggle, type AiseeTheme } from '../src';
+import { Button, Card, Checkbox, Dialog, Dropdown, Input, LineChart, ModuleToggle, ScoreGauge, StatCard, TabItem, Table, Tabs, Tag, Toast, Toggle, Tooltip, type AiseeTheme } from '../src';
 import './site.css';
 
 const tabItems: TabItem[] = [
@@ -14,12 +14,25 @@ const swatches = [
   ['Page', '#FAFAFA'], ['Card', '#FFFFFF'], ['Orange', '#EC5212'], ['Success', '#A5D500'], ['Cream', '#F7F6E9'],
 ];
 
+const tableRows = [
+  { id: 'chatgpt', source: 'ChatGPT', mentions: 1284, visibility: '68.4%' },
+  { id: 'perplexity', source: 'Perplexity', mentions: 832, visibility: '54.2%' },
+  { id: 'gemini', source: 'Gemini', mentions: 604, visibility: '41.8%' },
+];
+
+const tableColumns = [
+  { id: 'source', header: 'Source', accessor: 'source' as const },
+  { id: 'mentions', header: 'Mentions', accessor: 'mentions' as const, align: 'right' as const, numeric: true },
+  { id: 'visibility', header: 'Visibility', accessor: 'visibility' as const, align: 'right' as const, numeric: true },
+];
+
 function App() {
   const [theme, setTheme] = useState<AiseeTheme>('analysis');
   const [tab, setTab] = useState('overview');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [enabled, setEnabled] = useState(true);
   const [period, setPeriod] = useState('weekly');
+  const [toastOpen, setToastOpen] = useState(false);
   return <div className="aisee-root docs-shell" data-aisee-theme={theme}>
     <aside className="docs-sidebar">
       <img src="./assets/aisee-logo-wordmark.svg" alt="aisee" className="docs-logo" />
@@ -46,9 +59,14 @@ function App() {
       <section id="components" className="docs-section"><div className="docs-section-head"><div><p>03</p><h2>Components</h2></div><span>Accessible React + CSS</span></div>
         <div className="component-grid">
           <Card title="Buttons"><div className="component-row"><Button>Primary</Button><Button variant="secondary">Secondary</Button><Button variant="ghost">Ghost</Button><Button variant="danger">Danger</Button></div></Card>
-          <Card title="Form controls"><div className="form-stack"><Input label="Website URL" placeholder="Enter the website url" hint="We will analyze the public site." /><Dropdown label="Reporting period" items={[{ id: 'daily', label: 'Daily' }, { id: 'weekly', label: 'Weekly' }, { id: 'monthly', label: 'Monthly' }]} value={period} onValueChange={setPeriod} /><Toggle checked={enabled} onChange={(event) => setEnabled(event.target.checked)} label={enabled ? 'Monitoring on' : 'Monitoring off'} /></div></Card>
+          <Card title="Form controls"><div className="form-stack"><Input label="Website URL" placeholder="Enter the website url" hint="We will analyze the public site." /><Checkbox label="Include competitor mentions" description="Add matching posts to this report." /><Dropdown label="Reporting period" items={[{ id: 'daily', label: 'Daily' }, { id: 'weekly', label: 'Weekly' }, { id: 'monthly', label: 'Monthly' }]} value={period} onValueChange={setPeriod} /><Toggle checked={enabled} onChange={(event) => setEnabled(event.target.checked)} label={enabled ? 'Monitoring on' : 'Monitoring off'} /></div></Card>
           <Card title="Tags"><div className="component-row"><Tag variant="latest">Latest</Tag><Tag variant="baseline">Baseline</Tag><Tag variant="target">Target</Tag><Tag variant="help">Help-seeking</Tag><Tag variant="opinion">Hot take</Tag></div></Card>
           <Card title="Page tabs"><Tabs items={tabItems} value={tab} onValueChange={setTab} /><p className="tab-result">Current view: {tab}</p></Card>
+          <Card title="Feedback"><div className="component-row"><Tooltip content="Set as baseline"><Button variant="secondary">Hover or focus</Button></Tooltip><Button onClick={() => setToastOpen(true)}>Show toast</Button></div><Toast open={toastOpen} onDismiss={() => setToastOpen(false)}>Link copied to clipboard</Toast></Card>
+          <StatCard label="AI VISIBILITY" value="68.4" unit="/ 100" delta="+12.4%" deltaTone="positive" helper="vs last week" />
+          <Table columns={tableColumns} rows={tableRows} rowKey="id" caption="Visibility sources" />
+          <LineChart title="AI visibility" description="Last six months" data={[{ label: 'Mar', value: 31 }, { label: 'Apr', value: 38 }, { label: 'May', value: 47 }, { label: 'Jun', value: 52 }, { label: 'Jul', value: 60 }, { label: 'Aug', value: 68 }]} />
+          <ScoreGauge value={45} description="+8.4 points this month" />
         </div>
       </section>
 

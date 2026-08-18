@@ -318,15 +318,42 @@
       .principle p { margin: 0; color: var(--muted); font-size: 14px; }
       .example-list, .spec-list { margin: 12px 0 0; color: var(--muted); padding-left: 20px; }
       .example-list li, .spec-list li { margin: 7px 0; }
-.token-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
-.token-card { overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
-.token-color { height: 76px; border-bottom: 1px solid rgba(0,0,0,.08); }
-.token-meta { display: grid; gap: 8px; padding: 12px 14px 14px; }
-.token-meta strong { color: var(--ink); font-size: 14px; font-weight: 600; }
-.token-field { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 9px; border-radius: 6px; background: #f0ffba; }
-.token-field-label { color: var(--muted); font-size: 10px; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; }
-.token-field code { color: var(--ink); font-size: 12px; font-family: var(--mono); white-space: nowrap; }
-.token-usage { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.4; }
+      .color-rule { display: flex; align-items: flex-start; gap: 12px; margin-top: 18px; border: 1px solid #d7e67d; border-radius: 10px; background: #f8ffe0; padding: 14px 16px; }
+      .color-rule-mark { width: 26px; height: 26px; flex: 0 0 auto; display: grid; border-radius: 50%; background: var(--ink); color: white; font-size: 13px; font-weight: 700; place-items: center; }
+      .color-rule strong { display: block; margin-bottom: 2px; color: var(--ink); }
+      .color-rule p { margin: 0; color: var(--muted); font-size: 13px; }
+      .color-flow { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr; align-items: stretch; margin-top: 16px; }
+      .color-flow-step { min-height: 116px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 16px; }
+      .color-flow-step.current { border-color: #c7dc57; background: linear-gradient(145deg, #fbffe9, #fff); }
+      .color-flow-kicker { color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+      .color-flow-step strong { display: block; margin: 8px 0 4px; color: var(--ink); }
+      .color-flow-step p { margin: 0; color: var(--muted); font-size: 12px; }
+      .color-flow-arrow { display: grid; color: var(--muted); font-size: 20px; place-items: center; }
+      .color-browser { margin-top: 18px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+      .color-browser-head { display: grid; gap: 14px; border-bottom: 1px solid var(--line); padding: 14px; }
+      .color-layer-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+      .color-layer-tab { min-height: 34px; border: 1px solid var(--line); border-radius: 8px; background: white; color: var(--muted); padding: 6px 11px; font: inherit; font-size: 13px; font-weight: 650; cursor: pointer; }
+      .color-layer-tab[aria-selected="true"] { border-color: var(--ink); background: var(--ink); color: white; }
+      .color-layer-tab:focus-visible, .color-control input:focus-visible, .color-control select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .color-controls { display: grid; grid-template-columns: minmax(220px, 1fr) 150px 170px; gap: 10px; }
+      .color-control { display: grid; gap: 5px; }
+      .color-control span { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+      .color-control input, .color-control select { width: 100%; height: 36px; border: 1px solid var(--line-strong); border-radius: 7px; background: white; color: var(--ink); padding: 0 10px; font: inherit; font-size: 13px; }
+      .color-table-wrap { overflow-x: auto; }
+      .color-table { width: 100%; min-width: 840px; border-collapse: collapse; }
+      .color-table th, .color-table td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: middle; }
+      .color-table th { background: #f5f5ef; color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+      .color-table tr:last-child td { border-bottom: 0; }
+      .color-table td { color: var(--muted); font-size: 12px; }
+      .color-table code { color: var(--ink); background: transparent; padding: 0; font-family: var(--mono); font-size: 11px; }
+      .color-variable { color: var(--ink); font-weight: 650; }
+      .color-swatch { width: 30px; height: 30px; display: block; border: 1px solid rgba(17,17,17,.16); border-radius: 7px; background-image: linear-gradient(45deg,#eee 25%,transparent 25%),linear-gradient(-45deg,#eee 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#eee 75%),linear-gradient(-45deg,transparent 75%,#eee 75%); background-position: 0 0,0 5px,5px -5px,-5px 0; background-size: 10px 10px; box-shadow: inset 0 0 0 15px var(--swatch); }
+      .color-reference { display: inline-flex; align-items: center; gap: 5px; border-radius: 5px; background: #f1ffc2; color: #4c5600; padding: 3px 6px; font-family: var(--mono); font-size: 11px; }
+      .color-reference.raw { background: #f0f0ed; color: var(--muted); }
+      .color-review { display: inline-flex; border-radius: 999px; background: #fff0e9; color: #9a370d; padding: 3px 7px; font-size: 10px; font-weight: 700; }
+      .color-ok { color: #337006; font-size: 11px; font-weight: 650; }
+      .color-results { margin: 0; border-top: 1px solid var(--line); color: var(--muted); padding: 9px 14px; font-size: 11px; }
+      .color-empty { padding: 30px !important; color: var(--muted) !important; text-align: center !important; }
       .spec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
       .spec-card { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 18px; }
       .spec-card h3 { margin: 0 0 9px; font-size: 16px; }
@@ -400,7 +427,8 @@
         .architecture { grid-template-columns: repeat(2, 1fr); }
         .capability-grid, .spec-grid { grid-template-columns: 1fr; }
         .source-panel { grid-template-columns: 1fr; }
-        .token-grid { grid-template-columns: repeat(2, 1fr); }
+        .color-controls { grid-template-columns: 1fr 1fr; }
+        .color-control:first-child { grid-column: 1 / -1; }
       }
       @media (max-width: 640px) {
         .topbar { padding: 0 10px; gap: 8px; }
@@ -419,7 +447,10 @@
         .quick-grid, .rules, .principles-grid, .component-map { grid-template-columns: 1fr; }
         .architecture { grid-template-columns: 1fr; }
         .overview-nav { position: static; }
-        .token-grid { grid-template-columns: 1fr 1fr; }
+        .color-flow { grid-template-columns: 1fr; gap: 8px; }
+        .color-flow-arrow { transform: rotate(90deg); }
+        .color-controls { grid-template-columns: 1fr; }
+        .color-control:first-child { grid-column: auto; }
         .section-heading { display: block; }
         .section-heading p { margin-top: 5px; }
         .preview-toolbar { padding: 10px; }
@@ -658,6 +689,7 @@
             <a href="#interaction">Interaction</a>
             <a href="#assets">Assets</a>
             <a href="#components-overview">Components</a>
+            <a href="#ai-handoff">AI handoff</a>
             <a href="#versions">Versions</a>
           </nav>
 
@@ -702,7 +734,7 @@
                 <span class="source-label">Current implementation source</span>
                 <h3>Design Specification v6</h3>
                 <p>Defines tokens, layout, components, motion and content behavior. Team Decisions overrides it when a later clarification exists.</p>
-                <ul class="source-meta"><li><span>Spec</span><strong>docs/aisee-dapp-design.v6.md</strong></li><li><span>Tokens</span><strong>73 generated variables</strong></li><li><span>Current package</span><strong>@aisee/design-system 1.0.0</strong></li></ul>
+                <ul class="source-meta"><li><span>Spec</span><strong>docs/aisee-dapp-design.v6.md</strong></li><li><span>Color tokens</span><strong>44 primitive + 46 semantic</strong></li><li><span>Current package</span><strong>@aisee/design-system 1.0.0</strong></li></ul>
               </article>
             </div>
             <div class="priority-note"><strong>Conflict priority:</strong> latest Team Decisions → current Design Spec v6 → the relevant feature page's dated black title frame and its design block → preserved content below. Read update subject and date from the black title frame; page and file names are location aids, not freshness evidence. Page 5.6 must not globally override unrelated feature pages.</div>
@@ -726,16 +758,37 @@
           <section class="overview-section" id="visual" aria-labelledby="visual-title">
             <h2 id="visual-title">Visual foundations</h2>
             <p>Functional hierarchy comes first. Module color establishes location and action context; neutral surfaces carry the majority of the interface.</p>
-            <h3 class="subheading">Core and module colors</h3>
-            <div class="token-grid">
-    <article class="token-card"><div class="token-color" style="background:#111111"></div><div class="token-meta"><strong>Black</strong><div class="token-field"><span class="token-field-label">Value</span><code>#111111</code></div><p class="token-usage">Primary text, borders, icons</p></div></article>
-    <article class="token-card"><div class="token-color" style="background:#FAFAFA"></div><div class="token-meta"><strong>Page</strong><div class="token-field"><span class="token-field-label">Value</span><code>#FAFAFA</code></div><p class="token-usage">App page background</p></div></article>
-    <article class="token-card"><div class="token-color" style="background:#CFFF29"></div><div class="token-meta"><strong>Analysis</strong><div class="token-field"><span class="token-field-label">Value</span><code>#CFFF29</code></div><p class="token-usage">Analysis module accent and active context</p></div></article>
-    <article class="token-card"><div class="token-color" style="background:#FFE253"></div><div class="token-meta"><strong>Post Agent</strong><div class="token-field"><span class="token-field-label">Value</span><code>#FFE253</code></div><p class="token-usage">Post Agent module accent and active context</p></div></article>
-    <article class="token-card"><div class="token-color" style="background:#F3E7F4"></div><div class="token-meta"><strong>Engage banner</strong><div class="token-field"><span class="token-field-label">Value</span><code>#F3E7F4</code></div><p class="token-usage">Engage banner surface</p></div></article>
-    <article class="token-card"><div class="token-color" style="background:#F0FFBA"></div><div class="token-meta"><strong>Engage setup</strong><div class="token-field"><span class="token-field-label">Value</span><code>#F0FFBA</code></div><p class="token-usage">Engage setup and onboarding surface</p></div></article>
-    <article class="token-card"><div class="token-color" style="background:#EC5212"></div><div class="token-meta"><strong>Danger / Alert</strong><div class="token-field"><span class="token-field-label">Value</span><code>#EC5212 · white text</code></div><p class="token-usage">Error and destructive actions</p></div></article>
-    <article class="token-card"><div class="token-color" style="background:#FFD0D0"></div><div class="token-meta"><strong>Error surface</strong><div class="token-field"><span class="token-field-label">Value</span><code>#FFD0D0</code></div><p class="token-usage">Input and feedback error background</p></div></article>
+            <h3 class="subheading">Color variables</h3>
+            <div class="color-rule">
+              <span class="color-rule-mark" aria-hidden="true">!</span>
+              <div><strong>页面和组件只能使用语义化变量</strong><p>元数据只保存未经功能修饰的原始颜色；语义化变量根据文字、背景、边框、状态和模块功能引用元数据。禁止在业务页面直接写 HEX 或引用 <code>--aisee-color-primitive-*</code>。</p></div>
+            </div>
+            <div class="color-flow" aria-label="Color token dependency flow">
+              <article class="color-flow-step"><span class="color-flow-kicker">Layer 1 · source</span><strong>元数据 / Primitive</strong><p>44 个原始颜色，只有名称、Light / Dark 值，不附加功能含义。</p></article>
+              <span class="color-flow-arrow" aria-hidden="true">→</span>
+              <article class="color-flow-step current"><span class="color-flow-kicker">Layer 2 · contract</span><strong>语义化 / Semantic</strong><p>46 个功能角色，通过 alias 引用元数据；这里才定义用途和状态。</p></article>
+              <span class="color-flow-arrow" aria-hidden="true">→</span>
+              <article class="color-flow-step"><span class="color-flow-kicker">Layer 3 · consumer</span><strong>组件与页面</strong><p>只消费 <code>--aisee-color-semantic-*</code>；换主题时无需修改组件内部颜色。</p></article>
+            </div>
+            <div class="color-browser" aria-label="Color variable browser">
+              <div class="color-browser-head">
+                <div class="color-layer-tabs" role="tablist" aria-label="Color variable layer">
+                  <button class="color-layer-tab" id="primitiveColorTab" type="button" role="tab" aria-selected="false" data-color-layer="primitive">元数据 <span id="primitiveColorCount">44</span></button>
+                  <button class="color-layer-tab" id="semanticColorTab" type="button" role="tab" aria-selected="true" data-color-layer="semantic">语义化 <span id="semanticColorCount">46</span></button>
+                </div>
+                <div class="color-controls">
+                  <label class="color-control"><span>Search variable</span><input id="colorSearch" type="search" placeholder="搜索变量名、引用或 HEX" autocomplete="off"></label>
+                  <label class="color-control"><span>Mode</span><select id="colorMode"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+                  <label class="color-control"><span>Category</span><select id="colorScope"><option value="all">全部类别</option></select></label>
+                </div>
+              </div>
+              <div class="color-table-wrap">
+                <table class="color-table">
+                  <thead><tr><th>Color</th><th>Figma variable</th><th id="colorReferenceHeading">Alias reference</th><th>Resolved value</th><th>CSS variable</th><th>Audit</th></tr></thead>
+                  <tbody id="colorTokenRows"></tbody>
+                </table>
+              </div>
+              <p class="color-results" id="colorResults" aria-live="polite"></p>
             </div>
 
             <h3 class="subheading">Typography</h3>
@@ -778,12 +831,24 @@
             <p>Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.</p>
             <div class="component-map">
               <article><h3>Actions</h3><p>Button.</p></article>
-              <article><h3>Inputs &amp; Controls</h3><p>Input, Select / Dropdown and Toggle. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.</p></article>
+              <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown and Toggle. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.</p></article>
               <article><h3>Navigation</h3><p>Tabs and the retained Legacy Sidebar Navigation specimen.</p></article>
               <article><h3>Content &amp; Status</h3><p>PlanCard — Current, Tag and Legacy Badge.</p></article>
-              <article><h3>Data Display</h3><p>Legacy Stat Card, Post Card and Credit Bar specimens.</p></article>
-              <article><h3>Feedback &amp; Overlays</h3><p>Dialog and Confirmation Dialog.</p></article>
+              <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart and Analysis-only Score Gauge; Legacy Post Card and Credit Bar remain for reference.</p></article>
+              <article><h3>Feedback &amp; Overlays</h3><p>Dialog, Confirmation Dialog, Tooltip and Toast.</p></article>
             </div>
+          </section>
+
+          <section class="overview-section" id="ai-handoff" aria-labelledby="ai-handoff-title">
+            <h2 id="ai-handoff-title">AI implementation handoff</h2>
+            <p>This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.</p>
+            <div class="principles-grid">
+              <article class="principle"><strong>Minimum input</strong><p>Share this HTML, <code>docs/aisee-dapp-design.v6.md</code>, <code>docs/TEAM_DECISIONS.md</code> and the target-page requirements.</p></article>
+              <article class="principle"><strong>Reliable assets</strong><p>Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.</p></article>
+              <article class="principle"><strong>Implementation order</strong><p>Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.</p></article>
+              <article class="principle"><strong>Verification</strong><p>Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.</p></article>
+            </div>
+            <div class="priority-note"><strong>Machine-readable contract:</strong> this HTML embeds <code>#aisee-ai-contract</code> as JSON. Full instructions and a copyable prompt are in <code>docs/AI_HANDOFF.md</code>.</div>
           </section>
 
           <section class="overview-section" id="versions" aria-labelledby="versions-title">
@@ -858,7 +923,36 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+    <script type="application/json" id="aisee-color-architecture">{"$schema":"https://design-tokens.github.io/community-group/format/","meta":{"name":"aisee color architecture","source":"Figma local variable collections: 元数据 and 语义化","syncedAt":"2026-08-17","modes":["Light","Dark"],"rule":"Product pages and components consume semantic variables only. Primitive variables are raw source values and must not be used directly outside the token layer."},"primitive":[{"id":"grass-green","name":"草绿","light":"#CFFF29","dark":"#CFFF29"},{"id":"red","name":"red","light":"#EC5212","dark":"#EC5212"},{"id":"yellow-50","name":"yellow/yellow-50","light":"#FFFADD","dark":"#2C2400"},{"id":"yellow-100","name":"yellow/yellow-100","light":"#FEF9DC","dark":"#1A1500"},{"id":"yellow-400","name":"yellow/yellow-400","light":"#FFE253","dark":"#FFE253"},{"id":"yellow-tint","name":"yellow/yellow-tint","light":"#9078001A","dark":"#FFE2532E"},{"id":"white-0","name":"gray/white-0","light":"#FFFFFF","dark":"#111111"},{"id":"gray-50","name":"gray/gray-50","light":"#FAFAFA","dark":"#1E1D18"},{"id":"gray-100","name":"gray/gray-100","light":"#FBFBF3","dark":"#0E0E0D"},{"id":"gray-200","name":"gray/gray-200","light":"#D9D9D9","dark":"#3A3937"},{"id":"gray-400","name":"gray/gray-400","light":"#857E5B","dark":"#A09870"},{"id":"gray-500","name":"gray/gray-500","light":"#5C6D7A","dark":"#8AA4B8"},{"id":"gray-900","name":"gray/gray-900","light":"#111111","dark":"#EDEBE6"},{"id":"gray-900-50","name":"gray/gray-900-50","light":"#11111180","dark":"#F2F2F280"},{"id":"gray-900-5","name":"gray/gray-900-5","light":"#1111110F","dark":"#F2F2F214"},{"id":"black","name":"gray/black","light":"#000000","dark":"#000000"},{"id":"green-50","name":"green/green-50","light":"#E7F5E1","dark":"#0D1F0E"},{"id":"green-200","name":"green/green-200","light":"#E3E8A2","dark":"#2A3210"},{"id":"green-700","name":"green/green-700","light":"#076D0A","dark":"#4ADE80"},{"id":"green-700-70","name":"green/green-700-70","light":"#076D0AB2","dark":"#4ADE80B2"},{"id":"reddit","name":"red/reddit","light":"#FF4500","dark":"#FF4500"},{"id":"producthunt","name":"red/producthunt","light":"#EC5212","dark":"#EC5212"},{"id":"gray-800","name":"gray/gray-800","light":"#3D3D3A","dark":"#F2F2F2"},{"id":"yellow-45","name":"yellow/yellow-45","light":"#F0EACD","dark":"#5F5A41"},{"id":"pink-001","name":"red/pink001","light":"#FCE7E7","dark":"#FCE7E7"},{"id":"blue-50","name":"blue/blue-50","light":"#F1F7FB","dark":"#E5F1F9"},{"id":"purple-45","name":"purple/purple-45","light":"#EFE5F9","dark":"#EFE5F9"},{"id":"green-45","name":"green/green-45","light":"#E6F2DB","dark":"#E6F2DB"},{"id":"mint-50","name":"green/mint-50","light":"#D5F6E5","dark":"#D5F6E5"},{"id":"green-46","name":"green/green-46","light":"#EBF4E7","dark":"#EBF4E7"},{"id":"green-47","name":"green/green-47","light":"#E6F0CD","dark":"#EBF4E7"},{"id":"yellow-200","name":"yellow/yellow-200","light":"#FFF2B3","dark":"#FFFFFF"},{"id":"yellow-75","name":"yellow/yellow-75","light":"#FEFBE3","dark":"#FFFFFF"},{"id":"warm-50","name":"yellow/warm-50","light":"#F7F6E9","dark":"#FFFFFF"},{"id":"gray-900-2","name":"gray/gray-900-2","light":"#11111105","dark":"#FFFFFF"},{"id":"gray-300","name":"gray/gray-300","light":"#E5E6EC","dark":"#FFFFFF"},{"id":"lime-primary","name":"lime/lime-primary","light":"#CFFF29","dark":"#FFFFFF"},{"id":"yellow-700","name":"yellow/yellow-700","light":"#8C7400","dark":"#FFFFFF"},{"id":"gray-900-4","name":"gray/gray-900-4","light":"#1111110A","dark":"#FFFFFF"},{"id":"gray-900-3","name":"gray/gray-900-3","light":"#11111108","dark":"#FFFFFF"},{"id":"gray-900-32","name":"gray/gray-900-32","light":"#11111152","dark":"#F2F2F252"},{"id":"gray-900-8","name":"gray/gray-900-8","light":"#11111114","dark":"#F2F2F214"},{"id":"lime-score-line","name":"lime/line-分数辅助","light":"#7FA400","dark":"#7FA400"},{"id":"orange-50","name":"yellow/orange-50","light":"#FDF6F0","dark":"#FDF6F0"}],"semantic":[{"id":"button-analysis","name":"colour/button/analysis","scope":"action","light":{"ref":"草绿","value":"#CFFF29"},"dark":{"ref":"草绿","value":"#CFFF29"}},{"id":"feedback-wrong","name":"colour/feedback/wrong","scope":"feedback","light":{"ref":"colour/social/producthunt","value":"#EC5212"},"dark":{"ref":"colour/social/producthunt","value":"#EC5212"}},{"id":"button-agent","name":"colour/button/agent","scope":"action","light":{"ref":"yellow/yellow-400","value":"#FFE253"},"dark":{"ref":"yellow/yellow-400","value":"#FFE253"}},{"id":"feedback-success","name":"colour/feedback/success","scope":"feedback","light":{"ref":"red","value":"#EC5212"},"dark":{"ref":"red","value":"#EC5212"},"review":"当前指向 red，与 success 语义不一致，需在 Figma 校对。"},{"id":"feedback-warning","name":"colour/feedback/warning","scope":"feedback","light":{"ref":"red","value":"#EC5212"},"dark":{"ref":"red","value":"#EC5212"},"review":"当前与 wrong 使用同一红色，需在 Figma 校对。"},{"id":"brand-primary","name":"colour/brand/primary","scope":"brand","light":{"ref":"yellow/yellow-400","value":"#FFE253"},"dark":{"ref":"yellow/yellow-400","value":"#FFE253"}},{"id":"brand-primary-light","name":"colour/brand/primary-light","scope":"brand","light":{"ref":"yellow/yellow-50","value":"#FFFADD"},"dark":{"ref":"yellow/yellow-50","value":"#2C2400"}},{"id":"brand-primary-tint","name":"colour/brand/primary-tint","scope":"brand","light":{"ref":"yellow/yellow-tint","value":"#9078001A"},"dark":{"ref":"yellow/yellow-tint","value":"#FFE2532E"}},{"id":"bg-base","name":"colour/bg/base","scope":"background","light":{"ref":"gray/white-0","value":"#FFFFFF"},"dark":{"ref":"gray/white-0","value":"#111111"}},{"id":"bg-agent02","name":"colour/bg/agent02","scope":"background","light":{"ref":"gray/gray-50","value":"#FAFAFA"},"dark":{"ref":"gray/gray-50","value":"#1E1D18"}},{"id":"bg-agent01","name":"colour/bg/agent01","scope":"background","light":{"ref":"gray/gray-100","value":"#FBFBF3"},"dark":{"ref":"gray/gray-100","value":"#0E0E0D"}},{"id":"text-primary","name":"colour/text/primary","scope":"text","light":{"ref":"gray/gray-900","value":"#111111"},"dark":{"ref":"gray/gray-900","value":"#EDEBE6"}},{"id":"text-secondary","name":"colour/text/secondary","scope":"text","light":{"ref":"gray/gray-900-50","value":"#11111180"},"dark":{"ref":"gray/gray-900-50","value":"#F2F2F280"}},{"id":"text-muted","name":"colour/text/muted","scope":"text","light":{"ref":"gray/gray-400","value":"#857E5B"},"dark":{"ref":"gray/gray-400","value":"#A09870"}},{"id":"text-blue-gray","name":"colour/text/blue-gray","scope":"text","light":{"ref":"gray/gray-500","value":"#5C6D7A"},"dark":{"ref":"gray/gray-500","value":"#8AA4B8"}},{"id":"border-stroke-hover","name":"colour/border/描边- hover","scope":"border","light":{"ref":"gray/gray-900","value":"#111111"},"dark":{"ref":"gray/gray-200","value":"#3A3937"}},{"id":"border-stroke","name":"colour/border/描边","scope":"border","light":{"ref":"gray/gray-900-5","value":"#1111110F"},"dark":{"ref":"gray/gray-900-5","value":"#F2F2F214"}},{"id":"status-success-font","name":"colour/status/success-font","scope":"status","light":{"ref":"green/green-700","value":"#076D0A"},"dark":{"ref":"green/green-700","value":"#4ADE80"}},{"id":"status-success-bg","name":"colour/status/success-bg","scope":"status","light":{"ref":"green/green-50","value":"#E7F5E1"},"dark":{"ref":"green/green-50","value":"#0D1F0E"}},{"id":"status-lime","name":"colour/status/lime","scope":"status","light":{"ref":"green/green-200","value":"#E3E8A2"},"dark":{"ref":"green/green-200","value":"#2A3210"}},{"id":"social-reddit","name":"colour/social/reddit","scope":"social","light":{"ref":"red/reddit","value":"#FF4500"},"dark":{"ref":"red/reddit","value":"#FF4500"}},{"id":"social-producthunt","name":"colour/social/producthunt","scope":"social","light":{"ref":"red/producthunt","value":"#EC5212"},"dark":{"ref":"red/producthunt","value":"#EC5212"}},{"id":"text-description","name":"colour/text/description","scope":"text","light":{"ref":"gray/gray-800","value":"#3D3D3A"},"dark":{"ref":"gray/gray-900-50","value":"#F2F2F280"}},{"id":"text-on-brand","name":"colour/text/on-brand","scope":"text","light":{"ref":"colour/button/usual","value":"#111111"},"dark":{"ref":"colour/button/usual","value":"#FFE253"}},{"id":"tag-base","name":"tag","scope":"tag","light":{"ref":null,"value":"#FFFFFF"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"语义集合中使用了原始值，建议改为元数据别名。"},{"id":"tag-01","name":"colour/tag/01","scope":"tag","light":{"ref":"yellow/yellow-45","value":"#F0EACD"},"dark":{"ref":"yellow/yellow-45","value":"#5F5A41"}},{"id":"tag-02","name":"colour/tag/02","scope":"tag","light":{"ref":"red/pink001","value":"#FCE7E7"},"dark":{"ref":"red/pink001","value":"#FCE7E7"}},{"id":"tag-03","name":"colour/tag/03","scope":"tag","light":{"ref":"blue/blue-50","value":"#F1F7FB"},"dark":{"ref":"blue/blue-50","value":"#E5F1F9"}},{"id":"tag-04","name":"colour/tag/04","scope":"tag","light":{"ref":"purple/purple-45","value":"#EFE5F9"},"dark":{"ref":"purple/purple-45","value":"#EFE5F9"}},{"id":"tag-06","name":"colour/tag/06","scope":"tag","light":{"ref":"green/green-45","value":"#E6F2DB"},"dark":{"ref":"green/green-45","value":"#E6F2DB"}},{"id":"tag-07","name":"colour/tag/07","scope":"tag","light":{"ref":"green/mint-50","value":"#D5F6E5"},"dark":{"ref":"green/mint-50","value":"#D5F6E5"}},{"id":"tag-08","name":"colour/tag/08","scope":"tag","light":{"ref":"green/green-46","value":"#EBF4E7"},"dark":{"ref":"green/green-46","value":"#EBF4E7"}},{"id":"button-usual","name":"colour/button/usual","scope":"action","light":{"ref":"gray/gray-900","value":"#111111"},"dark":{"ref":"yellow/yellow-400","value":"#FFE253"}},{"id":"border-divider-hover","name":"colour/border/分割线- hover","scope":"border","light":{"ref":"gray/gray-900","value":"#111111"},"dark":{"ref":"gray/gray-900-5","value":"#F2F2F214"}},{"id":"bg-hover","name":"colour/bg/hover","scope":"background","light":{"ref":"gray/gray-900-4","value":"#1111110A"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"Dark 模式仍为原始白色，建议补充元数据别名。"},{"id":"tag-09","name":"colour/tag/09","scope":"tag","light":{"ref":"green/green-47","value":"#E6F0CD"},"dark":{"ref":"green/green-46","value":"#EBF4E7"}},{"id":"bg-yellow-mid","name":"colour/bg/yellow-mid","scope":"background","light":{"ref":"yellow/yellow-200","value":"#FFF2B3"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"Dark 模式仍为原始白色，建议补充元数据别名。"},{"id":"bg-yellow-light","name":"colour/bg/yellow-light","scope":"background","light":{"ref":"yellow/yellow-75","value":"#FEFBE3"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"Dark 模式仍为原始白色，建议补充元数据别名。"},{"id":"bg-warm","name":"colour/bg/warm","scope":"background","light":{"ref":"yellow/warm-50","value":"#F7F6E9"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"Dark 模式仍为原始白色，建议补充元数据别名。"},{"id":"bg-overlay-subtle","name":"colour/bg/overlay-subtle","scope":"background","light":{"ref":"gray/gray-900-3","value":"#11111108"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"Dark 模式仍为原始白色，建议补充元数据别名。"},{"id":"border-light","name":"colour/border/light","scope":"border","light":{"ref":"gray/gray-300","value":"#E5E6EC"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"Dark 模式仍为原始白色，建议补充元数据别名。"},{"id":"brand-lime","name":"colour/brand/lime","scope":"brand","light":{"ref":"lime/lime-primary","value":"#CFFF29"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"Dark 模式仍为原始白色，建议补充元数据别名。"},{"id":"text-amber","name":"colour/text/amber","scope":"text","light":{"ref":"yellow/yellow-700","value":"#8C7400"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"Dark 模式仍为原始白色，建议补充元数据别名。"},{"id":"border-divider","name":"colour/border/分割线","scope":"border","light":{"ref":"gray/gray-900-8","value":"#11111114"},"dark":{"ref":"gray/gray-900-5","value":"#F2F2F214"}},{"id":"text-mini-tiny","name":"colour/text/mini-tiny","scope":"text","light":{"ref":"lime/line-分数辅助","value":"#7FA400"},"dark":{"ref":"lime/line-分数辅助","value":"#7FA400"}},{"id":"bg-warning","name":"colour/bg/⚠️警告","scope":"background","light":{"ref":"yellow/orange-50","value":"#FDF6F0"},"dark":{"ref":null,"value":"#FFFFFF"},"review":"Dark 模式仍为原始白色，建议补充元数据别名。"}]}</script>
+
+    <script type="application/json" id="aisee-ai-contract">
+      {
+        "system": "AISEE dApp Design System",
+        "status": "Current",
+        "authorityOrder": ["docs/TEAM_DECISIONS.md", "docs/aisee-dapp-design.v6.md", "src/components and Current component pages", "relevant dated Figma feature block", "Legacy references"],
+        "requiredSources": ["aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
+        "rules": {
+          "appTypography": "Karla only",
+          "pageBackground": "#FAFAFA",
+          "cardBackground": "#FFFFFF",
+          "analysisPrimary": "#CFFF29",
+          "postAgentPrimary": "#FFE253",
+          "engagePrimary": "#FFE253",
+          "controlRadius": "8px",
+          "cardRadius": "12px",
+          "dialogRadius": "16px",
+          "staticBorder": "rgba(17,17,17,0.05)",
+          "colorArchitecture": "Pages and components must consume semantic color variables only; primitive colors are raw token-layer values.",
+          "implementation": "Reuse Current exported components and tokens; do not copy Legacy styling when a Current equivalent exists."
+        },
+        "handoffGuide": "docs/AI_HANDOFF.md"
+      }
+    </script>
+
     <script>
+      const colorArchitecture = JSON.parse(document.getElementById("aisee-color-architecture").textContent);
+      let activeColorLayer = "semantic";
+
       const items = [
         { group: "Brand", name: "dApp v6 Foundations", path: "preview/dapp-v6-foundations.html", subtitle: "Current color, typography, layout and module-theme rules.", status: "Current" },
         { group: "Brand", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "328×160 looping animation: download new version → remove old → drag new package in.", status: "Legacy" },
@@ -893,18 +987,25 @@
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
         { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
         { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current" },
-        { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current select trigger, menu, hover and selected states.", status: "Current" },
+        { group: "Components", category: "Inputs & Controls", name: "Checkbox", path: "components/Checkbox/Checkbox.html", subtitle: "Current independent selection control with module-color hover and selected states.", status: "Current" },
+        { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter and input-assisted dropdown with complete states.", status: "Current" },
         { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with on and off states.", status: "Current" },
         { group: "Components", category: "Navigation", name: "Tabs", path: "components/Tabs/Tabs.html", subtitle: "Current page tabs with active indicator and module context.", status: "Current" },
         { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "Legacy sidebar navigation specimen retained for reference.", status: "Legacy" },
         { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
         { group: "Components", category: "Content & Status", name: "Tag", path: "components/Tag/Tag.html", subtitle: "Current intent and context tags used for module labels and filters.", status: "Current" },
         { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Legacy compact status and notification badge specimens.", status: "Legacy" },
+        { group: "Components", category: "Data Display", name: "Card", path: "components/Card/Card.html", subtitle: "Current neutral content surface with optional minimal elevation.", status: "Current" },
+        { group: "Components", category: "Data Display", name: "Stat Card — Current", path: "components/StatCardCurrent/StatCardCurrent.html", subtitle: "Current dashboard metric with value, unit and semantic delta.", status: "Current" },
+        { group: "Components", category: "Data Display", name: "Table", path: "components/Table/Table.html", subtitle: "Current semantic data table with compact rows and numeric alignment.", status: "Current" },
+        { group: "Components", category: "Data Display", name: "Chart", path: "components/Chart/Chart.html", subtitle: "Current module-aware line chart with accessible point values.", status: "Current" },
+        { group: "Components", category: "Data Display", name: "Score Gauge", path: "components/ScoreGauge/ScoreGauge.html", subtitle: "Current Analysis-only lime score visualization.", status: "Current" },
         { group: "Components", category: "Data Display", name: "Stat Card", path: "components/StatCard/StatCard.html", subtitle: "Legacy metric card specimen retained from Cards & Data.", status: "Legacy" },
         { group: "Components", category: "Data Display", name: "Post Card", path: "components/PostCard/PostCard.html", subtitle: "Legacy social post card specimen retained from Cards & Data.", status: "Legacy" },
         { group: "Components", category: "Data Display", name: "Credit Bar", path: "components/CreditBar/CreditBar.html", subtitle: "Legacy credits progress specimen retained from Cards & Data.", status: "Legacy" },
         { group: "Components", category: "Feedback & Overlays", name: "Dialog", path: "components/Dialog/Dialog.html", subtitle: "Current create-analysis dialog with URL input and actions.", status: "Current" },
         { group: "Components", category: "Feedback & Overlays", name: "Confirmation Dialog", path: "components/ConfirmationDialog/ConfirmationDialog.html", subtitle: "Current destructive confirmation pattern for unsaved changes.", status: "Current" },
+        { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "Current accessible short feedback with black surface and motion rules.", status: "Current" },
 
         { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Interactive 15-page Growth Loop preview covering Analysis, Growth, Engage, Post, Verify and Connection.", status: "Current" }
       ];
@@ -932,13 +1033,59 @@
       const searchInput = document.getElementById("searchInput");
       const toast = document.getElementById("toast");
       const menuButton = document.getElementById("menuButton");
+      const colorSearch = document.getElementById("colorSearch");
+      const colorMode = document.getElementById("colorMode");
+      const colorScope = document.getElementById("colorScope");
+      const colorTokenRows = document.getElementById("colorTokenRows");
+      const colorResults = document.getElementById("colorResults");
+      const colorReferenceHeading = document.getElementById("colorReferenceHeading");
       let activePath = "";
       let toastTimer;
 
       document.getElementById("pageCount").textContent = `${items.length + 1} pages`;
 
       function escapeHtml(value) {
-        return value.replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
+        return String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
+      }
+
+      function colorCategory(token) {
+        if (activeColorLayer === "semantic") return token.scope || "other";
+        return token.name.includes("/") ? token.name.split("/")[0] : "base";
+      }
+
+      function refreshColorScopeOptions() {
+        const current = colorScope.value;
+        const categories = [...new Set(colorArchitecture[activeColorLayer].map(colorCategory))].sort();
+        colorScope.innerHTML = `<option value="all">全部类别</option>${categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}`;
+        colorScope.value = categories.includes(current) ? current : "all";
+      }
+
+      function renderColorTokens(resetScope = false) {
+        if (resetScope) refreshColorScopeOptions();
+        const mode = colorMode.value;
+        const query = colorSearch.value.trim().toLowerCase();
+        const category = colorScope.value;
+        const source = colorArchitecture[activeColorLayer];
+        const visible = source.filter(token => {
+          const modeData = activeColorLayer === "semantic" ? token[mode] : { value: token[mode], ref: "" };
+          const haystack = `${token.name} ${token.id} ${modeData.ref || ""} ${modeData.value} ${token.review || ""}`.toLowerCase();
+          return (category === "all" || colorCategory(token) === category) && (!query || haystack.includes(query));
+        });
+
+        colorReferenceHeading.textContent = activeColorLayer === "semantic" ? "Alias reference" : "Layer rule";
+        document.querySelectorAll("[data-color-layer]").forEach(tab => tab.setAttribute("aria-selected", String(tab.dataset.colorLayer === activeColorLayer)));
+        colorTokenRows.innerHTML = visible.length ? visible.map(token => {
+          const modeData = activeColorLayer === "semantic" ? token[mode] : { value: token[mode], ref: null };
+          const cssName = `--aisee-color-${activeColorLayer === "semantic" ? "semantic" : "primitive"}-${token.id}`;
+          const reference = activeColorLayer === "semantic"
+            ? (modeData.ref ? `<span class="color-reference">→ ${escapeHtml(modeData.ref)}</span>` : '<span class="color-reference raw">原始值 · 待改 alias</span>')
+            : '<span class="color-reference raw">无功能语义</span>';
+          const audit = token.review
+            ? `<span class="color-review" title="${escapeHtml(token.review)}">待校对</span>`
+            : (activeColorLayer === "semantic" ? '<span class="color-ok">Alias OK</span>' : '<span class="color-ok">Source</span>');
+          return `<tr><td><span class="color-swatch" style="--swatch:${escapeHtml(modeData.value)}" title="${escapeHtml(modeData.value)}"></span></td><td><span class="color-variable">${escapeHtml(token.name)}</span></td><td>${reference}</td><td><code>${escapeHtml(modeData.value)}</code></td><td><code>${escapeHtml(cssName)}</code></td><td>${audit}</td></tr>`;
+        }).join("") : '<tr><td class="color-empty" colspan="6">没有匹配的颜色变量</td></tr>';
+        colorResults.textContent = `显示 ${visible.length} / ${source.length} 个${activeColorLayer === "semantic" ? "语义化" : "元数据"}颜色 · ${mode === "light" ? "Light" : "Dark"} 模式`;
       }
 
       function renderNav(query = "") {
@@ -1066,6 +1213,8 @@
       }
 
       renderNav();
+      refreshColorScopeOptions();
+      renderColorTokens();
       readHash();
       const overviewLinks = [...document.querySelectorAll(".overview-nav a")];
       const overviewSections = overviewLinks.map(link => document.getElementById(link.hash.slice(1))).filter(Boolean);
@@ -1080,6 +1229,13 @@
       document.getElementById("openFoundations").addEventListener("click", () => openItem("preview/dapp-v6-foundations.html"));
       document.querySelectorAll("[data-quick-path]").forEach(button => button.addEventListener("click", () => openItem(button.dataset.quickPath)));
       searchInput.addEventListener("input", event => renderNav(event.target.value));
+      document.querySelectorAll("[data-color-layer]").forEach(tab => tab.addEventListener("click", () => {
+        activeColorLayer = tab.dataset.colorLayer;
+        renderColorTokens(true);
+      }));
+      colorSearch.addEventListener("input", () => renderColorTokens());
+      colorMode.addEventListener("change", () => renderColorTokens());
+      colorScope.addEventListener("change", () => renderColorTokens());
       document.getElementById("shareButton").addEventListener("click", sharePage);
       menuButton.addEventListener("click", () => {
         const opening = !document.body.classList.contains("nav-open");

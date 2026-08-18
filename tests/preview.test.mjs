@@ -63,8 +63,96 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(source, /role="option"/);
   assert.match(source, /ArrowDown/);
   assert.match(source, /Escape/);
+  assert.match(source, /selectionMode\?: 'single' \| 'multiple'/);
+  assert.match(source, /filterable\?: boolean/);
+  assert.match(source, /editable\?: boolean/);
+  assert.match(source, /aria-multiselectable/);
   assert.match(portal, /dropdown menus keep an 8px gap below the trigger/);
   assert.match(portal, /5% black fill for hover, focus and selected items/);
+});
+
+test('high-priority feedback and data components are publishable Current entries', async () => {
+  const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const componentFiles = [
+    ['Tooltip', '../src/components/Tooltip.tsx', '../components/TooltipToast/TooltipToast.html'],
+    ['Toast', '../src/components/Toast.tsx', '../components/TooltipToast/TooltipToast.html'],
+    ['StatCard', '../src/components/StatCard.tsx', '../components/StatCardCurrent/StatCardCurrent.html'],
+    ['Table', '../src/components/Table.tsx', '../components/Table/Table.html'],
+    ['ScoreGauge', '../src/components/ScoreGauge.tsx', '../components/ScoreGauge/ScoreGauge.html'],
+    ['Chart', '../src/components/Chart.tsx', '../components/Chart/Chart.html'],
+  ];
+  for (const [name, sourcePath, detailPath] of componentFiles) {
+    await access(new URL(sourcePath, import.meta.url));
+    await access(new URL(detailPath, import.meta.url));
+    assert.match(exports, new RegExp(`components/${name}`));
+  }
+  assert.match(styles, /\.aisee-toast-viewport/);
+  assert.match(styles, /\.aisee-stat-card/);
+  assert.match(styles, /\.aisee-table/);
+  assert.match(styles, /\.aisee-score-gauge/);
+  assert.match(styles, /\.aisee-chart/);
+  for (const path of ['TooltipToast/TooltipToast.html', 'StatCardCurrent/StatCardCurrent.html', 'Table/Table.html', 'ScoreGauge/ScoreGauge.html', 'Chart/Chart.html']) {
+    assert.match(portal, new RegExp(`components/${path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`));
+  }
+});
+
+test('portal contains an explicit machine-readable AI implementation contract', async () => {
+  const contractSource = portal.match(/<script type="application\/json" id="aisee-ai-contract">([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(contractSource, 'AI contract should be embedded in the standalone portal');
+  const contract = JSON.parse(contractSource);
+  assert.equal(contract.rules.appTypography, 'Karla only');
+  assert.equal(contract.rules.analysisPrimary, '#CFFF29');
+  assert.match(contract.rules.implementation, /Current exported components/);
+  const handoff = await readFile(new URL('../docs/AI_HANDOFF.md', import.meta.url), 'utf8');
+  assert.match(handoff, /能读到 HTML 不代表|不等于它会自动按照 demo 精确实现/);
+  assert.match(handoff, /docs\/TEAM_DECISIONS\.md/);
+});
+
+test('portal exposes the complete Figma color architecture as a searchable table', () => {
+  const colorSource = portal.match(/<script type="application\/json" id="aisee-color-architecture">([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(colorSource, 'Color architecture should be embedded in the standalone portal');
+  const colors = JSON.parse(colorSource);
+  assert.equal(colors.primitive.length, 44);
+  assert.equal(colors.semantic.length, 46);
+  assert.match(portal, /页面和组件只能使用语义化变量/);
+  assert.match(portal, /id="colorTokenRows"/);
+  assert.match(portal, /data-color-layer="primitive"/);
+  assert.match(portal, /data-color-layer="semantic"/);
+  assert.match(portal, /--aisee-color-semantic-/);
+});
+
+test('checkbox is published, documented and follows the v6 selection states', async () => {
+  const source = await readFile(new URL('../src/components/Checkbox.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/Checkbox/Checkbox.html', import.meta.url), 'utf8');
+  const overview = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
+  assert.match(source, /export const Checkbox/);
+  assert.match(source, /type="checkbox"/);
+  assert.match(exports, /components\/Checkbox/);
+  assert.match(styles, /\.aisee-checkbox__control \{[\s\S]*?width: 18px;[\s\S]*?height: 18px;[\s\S]*?border: 1\.5px solid/);
+  assert.match(styles, /\.aisee-checkbox-row:hover \.aisee-checkbox__control \{ background: var\(--aisee-module-primary\); \}/);
+  for (const state of ['Default', 'Row hover', 'Selected', 'Disabled']) assert.match(detail, new RegExp(state));
+  assert.match(overview, /<h2>Checkbox<\/h2>/);
+  assert.match(portal, /components\/Checkbox\/Checkbox\.html/);
+});
+
+test('current component detail pages stay aligned with the published control specs', async () => {
+  const input = await readFile(new URL('../components/Input/Input.html', import.meta.url), 'utf8');
+  const toggle = await readFile(new URL('../components/Toggle/Toggle.html', import.meta.url), 'utf8');
+  const tabs = await readFile(new URL('../components/Tabs/Tabs.html', import.meta.url), 'utf8');
+  const card = await readFile(new URL('../components/Card/Card.html', import.meta.url), 'utf8');
+  assert.match(input, /height:36px/);
+  assert.match(input, /--line:rgba\(17,17,17,\.05\)/);
+  assert.match(input, /input\.is-error\{border-color:#ec5212;box-shadow:none\}/);
+  assert.match(toggle, /width:24px;height:16px/);
+  assert.match(toggle, /width:10px;height:10px/);
+  assert.doesNotMatch(toggle, /Track 36×20px/);
+  assert.match(tabs, /gap:24px/);
+  assert.match(tabs, /padding:8px 0/);
+  assert.match(card, /Current neutral content surface|A neutral surface/);
+  assert.match(portal, /components\/Card\/Card\.html/);
 });
 
 test('component preview uses the AISEE banner shell and compact type hierarchy', async () => {
@@ -84,7 +172,11 @@ test('danger button follows the Figma destructive action style', async () => {
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   assert.match(components, /\.row \.danger\{[^}]*padding:8px 16px[^}]*font:500 14px\/18px Karla/);
   assert.match(styles, /\.aisee-button--danger \{[\s\S]*?color: var\(--aisee-color-white\);[\s\S]*?background: var\(--aisee-color-danger\);[\s\S]*?font-size: 14px;/);
-  assert.match(portal, /Danger \/ Alert[\s\S]*?#EC5212 · white text/);
+  const colorSource = portal.match(/<script type="application\/json" id="aisee-color-architecture">([\s\S]*?)<\/script>/)?.[1];
+  const colors = JSON.parse(colorSource);
+  const wrong = colors.semantic.find(token => token.name === 'colour/feedback/wrong');
+  assert.equal(wrong.light.value, '#EC5212');
+  assert.equal(wrong.light.ref, 'colour/social/producthunt');
 });
 
 test('component modal previews keep vertical breathing room inside demo surfaces', async () => {

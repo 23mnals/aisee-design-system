@@ -21,7 +21,8 @@
       "import": "./dist/aisee-design-system.js",
       "require": "./dist/aisee-design-system.cjs"
     },
-    "./tokens.json": "./dist/tokens.json"
+    "./tokens.json": "./dist/tokens.json",
+    "./color-architecture.json": "./dist/color-architecture.json"
   },
   "scripts": {
     "sync:stemui": "node scripts/sync-stemui-assets.mjs",

@@ -1,84 +1,95 @@
-# AISEE Design System：设计稿对照扫描报告
+# AISEE Design System：组件对照与漏项报告
 
 扫描日期：2026-08-17  
-对照来源：`docs/aisee-dapp-design.v6.md`、`src/components/`、Components 导航页面、Web App UI Kit 页面及现有静态预览。
+对照来源：`docs/TEAM_DECISIONS.md`、`docs/aisee-dapp-design.v6.md`、Figma 文件 `tv7gTsQn6OipGVwHG8z0mX`、本地 `.fig` 导出、`src/components/`、Components 门户及 Web App UI Kit。
 
-## 结论摘要
+## 本次结论
 
-当前系统已覆盖主要的基础交互组件，但设计规范中的“组件清单”比当前可独立复用的实现更完整。当前差异主要不是 token 缺失，而是部分组件仍只有 UI Kit/历史页面示例，没有独立的 Current 组件页面或 TypeScript 实现。
+本轮已将截图中列出的高优先级缺口闭环为可发布组件和 Current 文档：
 
-另外，文件名使用 `v6`，文档内部版本仍写作 `v5.1 · 2026-08-11`。这属于版本标识不一致，建议由产品/设计负责人确认后统一，不应由系统自动推断。
+1. **Checkbox / Card**：已补 React 实现或 Current 详情页、Overview 与门户入口。
+2. **Dropdown**：发布 API 已扩展为单选、多选、菜单过滤和可输入建议，并保持原单选 API 向后兼容。
+3. **Tooltip / Toast**：已新增可访问 React API、完整状态样式、Current 页面与门户入口。
+4. **Table / Stat Card / Score Gauge / Chart**：已明确复用边界并新增通用发布 API、独立 Current 页面和门户入口；Score Gauge 明确限制为 Analysis。
 
-## 当前系统实际库存
+仍保留为业务模式、未强行基础化的内容包括 Post Editor、AppHeader、Sidebar、PostCard、ChannelBadge 与 CalDay；它们继续由 UI Kit 承载。
 
-### Components 导航中已有
+## Figma 复核证据
 
-| 状态 | 页面 |
+- 本地源文件：`备份-官网+dapp主功能.fig`，导出时间 2026-08-13 12:20 +08:00，约 275MB；元数据与 `docs/FIGMA_SOURCES.md` 一致。
+- Figma 顶层共有 7 个页面；组件规范页为 `—— 组件规范-持续更新`（page `716:7641`）。
+- 对组件规范页进行只读扫描，共读取约 3,548 个节点、283 个 Component / Component Set。绝大多数是 icon、illustration 与平台资产。
+- 可确认的语义资产包括 Header 组件、Button 状态组件集、Card 示例、Empty asset 组件集；Input 与 Toast 主要以画板 Frame 形式存在。
+- 组件规范页按命名检索未发现独立 Checkbox、Toggle、Tabs、Tooltip、Dialog/Modal、Gauge 组件；Table 与 Dropdown 命中主要是 icon 名称。这说明 Figma 组件页本身并不是完整的发布组件目录，不能只依赖节点名称判断产品是否需要某个组件。
+- v5.0 产品页全量遍历因文件规模触发 Figma 服务端 504，未发生写入。本报告因此以组件规范页、v6 规范的精确节点引用、当前仓库实现和本地 `.fig` 元数据交叉判断；没有把超时页面推断为“无组件”。
+
+## 当前系统库存（本次更新后）
+
+### Components 门户 Current 页面
+
+| 分类 | Current 页面 |
 | --- | --- |
-| Current | Overview、Button、Input、Select / Dropdown、Toggle、Tabs、PlanCard — Current、Tag、Dialog、Confirmation Dialog |
-| Legacy | Sidebar Navigation、Badge、Stat Card、Post Card、Credit Bar |
+| Overview | Overview |
+| Actions | Button |
+| Inputs & Controls | Input、Checkbox、Select / Dropdown、Toggle |
+| Navigation | Tabs |
+| Content & Status | PlanCard — Current、Tag |
+| Data Display | Card、Stat Card — Current、Table、Chart、Score Gauge |
+| Feedback & Overlays | Dialog、Confirmation Dialog、Tooltip / Toast |
 
-旧的 `Buttons & Badges`、`Nav, Inputs & Toggles`、`Cards & Data` 仍作为历史页面保留，但不再作为组件级入口。`IntentTag`、`StatusBadge` 的历史源目录仍保留。
+Legacy 页面继续保留：Sidebar Navigation、Badge、Stat Card、Post Card、Credit Bar。`IntentTag`、`StatusBadge` 和旧 PlanCard 的源资产仍在仓库中，没有删除。
 
-### 当前 TypeScript 可复用实现
+### 可发布 React + TypeScript 组件
 
-`src/components/` 目前包含：Button、Input、Toggle、Tabs、Card、PlanCard、Tag、ModuleToggle、Dialog、ConfirmationDialog、Dropdown。
+`src/components/` 当前包含并从 `src/index.ts` 导出：
 
-这意味着“有页面示例”与“有可直接导入的组件实现”并不完全等价，后续维护时应分别标注。
+`Button`、`Input`、`Checkbox`、`Toggle`、`Tabs`、`Card`、`PlanCard`、`Tag`、`ModuleToggle`、`Dialog`、`ConfirmationDialog`、`Dropdown`、`Tooltip`、`Toast`、`StatCard`、`Table`、`ScoreGauge`、`LineChart`。
 
-## 设计规范组件对照
+`ModuleToggle` 是兼容旧三模块切换的保留实现；当前 5.5 Growth Loop Shell 已不再把它作为主导航入口，因此不应仅因源码存在就标成 Current 门户页面。
 
-| 设计规范要求 | 当前情况 | 状态 |
+### UI Kit 组合组件
+
+`ui_kits/webapp/Components.jsx` 还包含 `LogoMark`、`AppHeader`、`Sidebar`、`StatCard`、`PostCard`、`ChannelBadge`、`CalDay`、`Dropdown`、`CreatePostModal`。这些组件服务于完整页面预览，尚未全部迁移为发布包 API。
+
+## 逐项差异
+
+| 设计规范 / 设计稿能力 | 当前实现 | 判断 |
 | --- | --- | --- |
-| Button：Primary / Secondary / Ghost / Danger | 有 Current Button 页面和实现；深色/Dark 作为产品语义变体需继续保持 | 已覆盖 |
-| Input / URL Input | Input 页面覆盖文本与 URL 示例；URL Input 尚未独立命名为页面 | 部分覆盖 |
-| Select / Dropdown | Current 页面已展示单选、多选、Filter、Input 等交互示例及 hover/selected 语义 | 已覆盖 |
-| Toggle | 有 Current 页面和实现 | 已覆盖 |
-| Checkbox | 规范明确要求，但没有独立 Current 页面或 `src/components/Checkbox.tsx` | 缺失 |
-| Tabs | 有 Current 页面和实现 | 已覆盖 |
-| Sidebar Navigation | 只有 Legacy 页面；UI Kit 中有业务侧边栏示例，但没有独立 Current 组件实现 | 部分覆盖/Legacy |
-| PlanCard | 有 `PlanCard — Current` 页面和实现，旧版仍保留 | 已覆盖 |
-| Tag / Chip | Tag 有 Current 页面；可操作 Chip 的独立页面尚未建立 | 部分覆盖 |
-| Badge / StatusBadge / IntentTag | Badge 为 Legacy；IntentTag、StatusBadge 保留历史内容，尚无可验证 Current 页面 | Legacy |
-| Stat Card / KPI | 有历史页面或 UI Kit 使用，但没有独立 Current 实现 | 部分覆盖 |
-| Table | 设计规范要求，当前未发现独立 Current 页面或实现 | 缺失 |
-| Chart / Data Viz / Score Gauge | UI Kit 中有图表/分数示例，但没有独立 Current 组件实现 | 部分覆盖 |
-| Dialog / Modal | Dialog 与 Confirmation Dialog 均有 Current 页面和实现 | 已覆盖 |
-| Tooltip / Toast | 规范要求，但当前没有独立 Current 页面或实现 | 缺失 |
-| AppHeader | 规范有 70px Header、logo、模块切换等规则；目前主要存在于 UI Kit 示例 | 部分覆盖 |
-| Post Editor | 规范要求，当前属于业务页面/历史示例，没有独立 Current 组件实现 | 部分覆盖 |
-| Loading / Empty / Error 反馈模式 | 在规范和部分页面中有描述，但没有统一的 Current 组件入口 | 部分覆盖 |
+| Button：Primary / Secondary / Ghost / Danger | 页面和发布组件均覆盖；详情页额外出现 Dark，但 `ButtonVariant` 与 v6 正式规范未定义 Dark | 已覆盖，Dark 待统一 |
+| Input / URL Input | 通用 Input 已覆盖 Default、Hover、Focus、Disabled、Error；详情页已修正为 36px、5% 默认描边和错误优先级 | 已覆盖；72px URL Input 仍是业务变体 |
+| Checkbox | 本次新增 React 实现、Current 页面、Overview 示例和门户入口 | 已补齐 |
+| Select / Dropdown | Current 页面与发布 API 均覆盖单选、多选、Filter、Input-assisted；保留原单选调用方式 | 已补齐 |
+| Toggle | 发布组件符合 24×16 / 10px thumb；详情页此前是旧 36×20，本次已对齐 | 已覆盖 |
+| Tabs | 发布组件符合 8px padding、24px gap、2px indicator；详情页本次已对齐 | 已覆盖 |
+| Card | 发布组件已存在；本次补齐 Current 页面和门户入口 | 已补齐 |
+| PlanCard | Current v5.4 页面和 React 实现均存在；旧版继续保留 | 已覆盖 |
+| Tag / Chip | Tag 已发布；可操作 Comparing chip 仍只属于业务模式，没有独立 API | 部分覆盖 |
+| Dialog / Confirmation Dialog | 页面与发布组件均存在 | 已覆盖 |
+| Tooltip | React 组件支持 top/bottom、hover/focus 与 `role=tooltip`；有 Current 页面 | 已补齐 |
+| Toast | 受控 React 组件支持 default/success/error、自动 3.5s、dismiss、status/alert；有 Current 页面 | 已补齐 |
+| AppHeader / Sidebar | UI Kit 已实现当前 Shell；发布包没有独立 API，旧 Sidebar 页面是 Legacy | UI Kit 已覆盖，待定是否抽离 |
+| StatCard | 新增通用 value/unit/delta React API 与 Current 页面；旧 Stat Card 继续标记 Legacy | 已补齐 |
+| PostCard / ChannelBadge / CalDay | UI Kit 有业务实现；门户对应旧资产仍为 Legacy | 业务组合，暂不抽离 |
+| Table | 新增泛型 columns/rows/rowKey API，语义 table、空状态与数值对齐 | 已补齐 |
+| Chart / Score Gauge | 新增 LineChart 与 Analysis-only ScoreGauge API、Current 页面和模块边界 | 已补齐 |
+| Post Editor | CreatePostModal / Post 页面已有组合示例；没有独立发布 API | 业务模式，待定是否抽离 |
+| Loading / Empty / Error | Button loading、Empty asset、输入错误等分散存在；没有统一反馈组件族 | 部分覆盖 |
 
-## 状态与交互规则差异
+## 已修复的详情页漂移
 
-规范要求按真实存在的组件记录 Default、Hover、Active、Focus、Disabled、Loading、Selected、Empty、Error。当前情况如下：
+- Input：40px → 36px；默认黑边 → 5% 黑；Error 移除模块色外环。
+- Toggle：36×20 / 14px knob → 24×16 / 10px thumb，并改为原生 checkbox + `role="switch"`。
+- Tabs：10px vertical padding / 28px gap → 8px / 24px，补齐 focus-visible 与过渡。
+- Checkbox：新增 Default、Row hover、Selected、Disabled 与 Analysis/Post/Engage 主题切换示例。
+- Card：新增 neutral Card Current 页面，明确与 StatCard、PostCard、PlanCard 等业务组件的边界。
+- Dropdown：详情页修正为 36px trigger、5% 默认描边、黑色内边 + 2px 模块环、8px menu gap、黑色 check；发布 API 同步四种模式。
+- Tooltip / Toast、Stat Card、Table、Chart、Score Gauge：新增 Current 页面和可发布实现。
 
-- Button、Input、Dropdown、Toggle、Tabs、Dialog 已有较明确的可操作示例。
-- Input 已展示 Default、Hover/Focus、Disabled、Error 等状态，但 Loading 没有独立展示。
-- Dropdown 已有 trigger、menu gap、hover、selected 规则；键盘语义仍应在实现层补充验证。
-- Dialog 与 Confirmation Dialog 已覆盖主要间距和按钮语义；统一的 Loading/Empty/Error 反馈组件尚未形成。
-- 规范中的 motion（下拉、弹窗、tabs、侧边栏、toast、路由过渡等）已有原则，但当前没有逐组件的 motion 验收清单。
+## 下一步优先级
 
-## 视觉规则差异
+1. 决定 Button 的 Dark 是否是正式第五种 variant；若保留，应同步 v6 规范、React 类型、Overview 与详情页 hover 规则。
+2. 评估 AppHeader、Sidebar、Post Editor、PostCard、ChannelBadge、CalDay 是否真的需要跨产品页面复用；在确认前继续留在 UI Kit。
+3. 为数据组件补充真实产品数据下的格式化、排序、tooltip 和响应式验收案例。
+4. 持续维护 Current 组件状态矩阵和自动覆盖测试，区分“静态示例”“发布 API”“业务模式”。
 
-- v6 文档规定 dApp 使用 Karla；Gotu 仅用于官网/品牌展示。当前文档与字体资源已记录这一规则。
-- 规范中的页面/对话框标题为 Karla 20px / 600，section 标题约 18–20px / 600，正文 14px；静态文档预览中的大标题是展示层级，不应被误认为产品组件 token。
-- Header 70px、Sidebar 224px、主内容 24–32px padding 及 8px spacing scale 已在文档中明确；AppHeader/Sidebar 目前还不是独立可复用的 TS 组件。
-- 模块色、危险色、hover/focus ring、selected fill 等 token 已在规范中定义；本次扫描没有建议修改 token。
-- 图标规范要求优先使用 StemUI，Lucide 作为 fallback；当前 UI Kit 仍存在部分 inline SVG/历史资源，建议后续做一次命名与来源映射审计。
-
-## Web App UI Kit 覆盖情况
-
-规范要求有可识别的页面预览：Overview、Analysis、Growth、Improve Score、Build Brand Influence、Engage、Signal Feed、Keywords & Accounts、Replies、Post、Calendar、Channels、Media、Verify、Connection。
-
-当前 UI Kit 已包含上述 Growth Loop 页面入口，未发现因缺少页面而需要新增空白页面的情况。完整业务页面仍应留在 UI Kits，不应迁移到 Components。
-
-## 建议的下一步（本报告不自动执行）
-
-1. 产品/设计确认文件名 `v6` 与文档内部 `v5.1` 的正式版本号。
-2. 如果 Checkbox、Tooltip、Toast、Table、Score Gauge、Post Editor 等确实是当前产品要复用的组件，再分别补齐 Current 组件页面和实现；不要仅为填满导航而创建空页面。
-3. 将 URL Input 作为 Input 的真实变体保留，除非团队需要独立 API，暂不必拆成新组件。
-4. 为现有 Current 组件补一份状态矩阵（Default/Hover/Focus/Disabled/Loading/Selected/Error），只记录设计稿真实存在的状态。
-5. 将 UI Kit 中的 Header、Sidebar、Stat Card、Chart 等业务组合与基础组件边界写清楚，避免重复维护。
-
-本报告没有删除历史资产、没有修改 StemUI/icon 开发仓库，也没有改变现有 design token。
+本次没有删除 Legacy 资产、没有修改 StemUI 仓库，也没有更改未确认的 v6 规则。

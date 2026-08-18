@@ -79,6 +79,22 @@ document.documentElement.style.setProperty('--module-primary', moduleTheme.prima
 > dApp 使用与官网相同的色板，但**按功能模块切换主色**。
 > **页面主背景：`#FAFAFA`**。
 
+### 2.0 两层颜色变量架构（强制）
+
+Figma 与代码必须保持同一条依赖链：
+
+```text
+元数据 / Primitive（原始值） → 语义化 / Semantic（功能角色） → Component / Page（最终消费）
+```
+
+- **元数据 / Primitive**：只记录未经用途修饰的原始颜色及 Light / Dark 值，例如 `gray/gray-900`、`yellow/yellow-400`。这一层不描述按钮、文字、背景或状态，不允许在业务页面直接引用。
+- **语义化 / Semantic**：按功能角色命名，例如 `colour/text/primary`、`colour/bg/base`、`colour/button/analysis`。每个语义变量通过 alias 引用元数据；页面换模式时由 alias 解析到对应的 Light / Dark 值。
+- **组件与页面**：只允许使用 `--aisee-color-semantic-*`。禁止直接写 HEX，也禁止直接使用 `--aisee-color-primitive-*`。
+- **兼容层**：现有 `--aisee-color-black` 等旧 CSS 名称会继续导出，但由生成器转接到语义变量；新代码不得继续扩展旧命名。
+- **完整清单**：`src/tokens/color-architecture.json` 是从 Figma 的“元数据 / 语义化”集合校准的机器可读快照，HTML system 内嵌同一份数据并提供层级、模式、类别和搜索筛选。
+
+> 当前 Figma 中部分语义变量仍直接保存原始白色，且 `feedback/success`、`feedback/warning` 都指向 red。System 会标记为“待校对”，在 Figma 修正前不得自行猜测替代值。
+
 ### 2.1 模块主色（随 sidebar tab 切换）
 
 ```css

@@ -37,6 +37,12 @@ npm run preview:local
 - 目录搜索、内嵌预览、独立打开和页面链接复制
 - 桌面端与移动端响应式浏览
 
+## 交给其他 AI 平台
+
+单独上传一个 HTML 时，其他 AI 通常可以读取其中直接内嵌的文字、结构、CSS 和脚本，但不一定会执行 JavaScript，也不一定能访问相对链接的字体、图片、组件子页或 React 源码。因此，**能读到 HTML 不代表会自动按 demo 精确实现**。
+
+推荐交付公开预览 URL 或完整仓库/ZIP，并同时提供 [`docs/AI_HANDOFF.md`](docs/AI_HANDOFF.md)、[`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 与 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md)。主门户 HTML 已内嵌 `#aisee-ai-contract` JSON，供支持源码解析的平台读取来源优先级和关键规则。
+
 GitHub 仓库启用 Pages 后，每次合并到 `main` 都会自动发布同一个入口页，团队成员只需要保存 Pages URL。也可以本地生成发布目录：
 
 ```bash
@@ -59,7 +65,8 @@ npm run site
 - 页面与弹窗标题统一 Karla 20px / 600
 - PlanCard 新增 v5.4 Upgrade Plan 当前版本，旧套餐卡继续作为 Legacy 保留
 - Figma 对齐 Toggle、Modal footer 和 Engage v5 页面规则
-- 73 个设计令牌由 JSON 自动生成 CSS 与 TypeScript
+- 44 个元数据颜色与 46 个语义颜色由 JSON 自动生成 CSS；旧变量通过兼容 alias 保留
+- Current 组件新增 Checkbox、Tooltip、Toast、Table、Stat Card、Chart、Score Gauge；Dropdown 覆盖单选、多选、过滤和输入建议
 
 完整迁移表见 [`docs/MIGRATION.md`](docs/MIGRATION.md)，资源状态见 [`docs/RESOURCE_INVENTORY.md`](docs/RESOURCE_INVENTORY.md)。
 
@@ -116,7 +123,7 @@ export function Example() {
 
 ## 令牌工作流
 
-只编辑 [`src/tokens/tokens.json`](src/tokens/tokens.json)，再生成 CSS / TypeScript：
+基础尺寸、字体与兼容 token 编辑 [`src/tokens/tokens.json`](src/tokens/tokens.json)；Figma 两层颜色结构编辑 [`src/tokens/color-architecture.json`](src/tokens/color-architecture.json)。颜色必须保持“元数据 → 语义化 → 组件/页面”引用链，业务代码只使用 `--aisee-color-semantic-*`。修改后生成 CSS / TypeScript 和 HTML 内嵌颜色数据：
 
 ```bash
 npm run tokens

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Input · AISEE Components</title>
   <style>
-    :root{--aisee-module-primary:#cfff29;--aisee-size-input-ring:2px;--ink:#111;--muted:#777;--line:#d9d9d9;--page:#f7f8f7}
+    :root{--aisee-module-primary:#cfff29;--aisee-size-input-ring:2px;--ink:#111;--muted:rgba(17,17,17,.6);--line:rgba(17,17,17,.05);--page:#fafafa}
     *{box-sizing:border-box}
     body{margin:0;background:var(--page);color:var(--ink);font-family:Karla,Arial,sans-serif}
     main{max-width:960px;margin:48px auto;padding:0 32px}
@@ -16,12 +16,12 @@
     .card{background:#fff;border:1px solid #e1e1e1;border-radius:12px;padding:24px}
     .interactive-card{max-width:640px}
     label{display:block;font-weight:600;margin-bottom:8px}
-    input{width:100%;height:40px;border:1px solid var(--ink);border-radius:8px;padding:0 12px;background:#fff;color:var(--ink);font:400 14px Karla,Arial,sans-serif;transition:border-color .15s,box-shadow .15s,background .15s}
-    input::placeholder{color:#999}
-    input:hover,.is-hover{border-color:var(--ink);box-shadow:0 0 0 var(--aisee-size-input-ring) var(--aisee-module-primary)}
-    input:focus,.is-focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 var(--aisee-size-input-ring) var(--aisee-module-primary)}
-    input.is-error{border-color:#ec5212;box-shadow:0 0 0 var(--aisee-size-input-ring) #ec5212}
-    input:disabled,.is-disabled{background:#f5f5f5;color:#999;border-color:#d9d9d9;box-shadow:none;cursor:not-allowed}
+    input{width:100%;height:36px;border:1px solid var(--line);border-radius:8px;padding:0 12px;background:#fff;color:var(--ink);font:400 14px Karla,Arial,sans-serif;transition:border-color .15s,box-shadow .15s,background .15s}
+    input::placeholder{color:rgba(17,17,17,.32)}
+    input:hover:not(:disabled):not(.is-error),.is-hover{border-color:var(--ink);box-shadow:0 0 0 var(--aisee-size-input-ring) var(--aisee-module-primary)}
+    input:focus:not(:disabled):not(.is-error),.is-focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 var(--aisee-size-input-ring) var(--aisee-module-primary)}
+    input.is-error{border-color:#ec5212;box-shadow:none}
+    input:disabled,.is-disabled{opacity:.5;box-shadow:none;cursor:not-allowed}
     .live-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
     .state-pill{font-size:12px;font-weight:600;border-radius:999px;background:#f1f1f1;padding:5px 9px;white-space:nowrap}
     .state-pill[data-state="error"]{background:#ffded5;color:#b7370b}.state-pill[data-state="disabled"]{color:#777}
@@ -67,7 +67,7 @@
     </div>
 
     <h2>Usage</h2><p>Use sentence-case labels and direct helper or error copy. Keep the field editable unless the flow is unavailable.</p>
-    <h2>Specs</h2><p class="specs">Height 40px · radius 8px · Karla 14px / 400 · focus ring 2px module color.</p>
+    <h2>Specs</h2><p class="specs">Height 36px · radius 8px · Karla 14px / 400 · default border 5% black · hover/focus uses a 1px black inner border plus a 2px module-color ring.</p>
   </main>
   <script>
     const input=document.querySelector('#liveInput');
