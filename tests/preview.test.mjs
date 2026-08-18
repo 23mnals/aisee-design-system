@@ -39,11 +39,15 @@ test('portal and v6 previews self-host Karla', async () => {
 
 test('input interaction follows the Figma compound module ring', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  const dialog = await readFile(new URL('../components/Dialog/Dialog.html', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   assert.match(components, /box-shadow:0 0 0 2px var\(--module,#CFFF29\)/);
   assert.match(components, /moduleThemes=\{analysis:\{primary:'#CFFF29'[^}]*\},post:\{primary:'#FFE253'[^}]*\},engage:\{primary:'#FFE253'/);
   assert.match(components, /Hover \/ focus/);
   assert.match(styles, /box-shadow: 0 0 0 var\(--aisee-size-input-ring\) var\(--aisee-module-primary\)/);
+  assert.match(dialog, /\.field input:hover:not\(:disabled\),\.field input:focus:not\(:disabled\)\{border-color:var\(--ink\);outline:none;box-shadow:0 0 0 2px var\(--module\)\}/);
+  assert.doesNotMatch(dialog, /outline:\s*(?:auto|-webkit-focus-ring-color)/);
+  assert.match(dialog, /Input height 36px; hover and focus use a 1px black inner border plus a 2px Analysis lime ring/);
   assert.match(portal, /1px black inner border plus a 2px module-color ring/);
 });
 
@@ -184,12 +188,17 @@ test('checkbox is published, documented and follows the v6 selection states', as
 
 test('current component detail pages stay aligned with the published control specs', async () => {
   const input = await readFile(new URL('../components/Input/Input.html', import.meta.url), 'utf8');
+  const dialog = await readFile(new URL('../components/Dialog/Dialog.html', import.meta.url), 'utf8');
   const toggle = await readFile(new URL('../components/Toggle/Toggle.html', import.meta.url), 'utf8');
   const tabs = await readFile(new URL('../components/Tabs/Tabs.html', import.meta.url), 'utf8');
   const card = await readFile(new URL('../components/Card/Card.html', import.meta.url), 'utf8');
   assert.match(input, /height:36px/);
   assert.match(input, /--line:rgba\(17,17,17,\.05\)/);
   assert.match(input, /input\.is-error\{border-color:#ec5212;box-shadow:none\}/);
+  assert.match(input, /Karla-VariableFont_wght\.ttf/);
+  assert.match(dialog, /Karla-VariableFont_wght\.ttf/);
+  assert.match(dialog, /\.field input\{[^}]*height:36px/);
+  assert.doesNotMatch(dialog, /<p class="result"/);
   assert.match(toggle, /width:24px;height:16px/);
   assert.match(toggle, /width:10px;height:10px/);
   assert.doesNotMatch(toggle, /Track 36×20px/);
