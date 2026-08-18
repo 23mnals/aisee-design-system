@@ -2,7 +2,7 @@
 
 > 适用范围：**aisee Web App** https://app-dev.aisee.live/
 > 设计宽度：**1440px**（desktop），向下兼容到 1280
-> 字体规则：**aisee dApp 全部统一使用 Karla**；Gotu 仅保留在官网（Homepage），不进入 dApp；弹窗标题使用 Karla SemiBold 20px / weight 600
+> 字体规则：**aisee dApp 全部统一使用 Karla**；Gotu 仅保留在官网（Homepage），不进入 dApp；标准弹窗标题使用 Karla SemiBold 20px / weight 600，二次确认弹窗按 §6.9.1 使用 Medium 500
 > 设计基调：**功能优先 · 信息密度高 · 极简数据驱动 · 与官网同源但更克制**
 > 版本：**v6** · 2026-08-11 · dApp 字体统一 Karla；Toggle 组件规范与 Figma 组件源同步；Modal 间距与文字规范补全
 
@@ -369,6 +369,7 @@ Logo mark:                      320px 320px 0 0
 **Danger**
 - 以 Figma [`button大小`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9905-214773) 为准：底 `#EC5212`，文字 `#FFFFFF`
 - 在共享按钮组中与 Primary / Secondary / Ghost 统一为 Karla Medium 14px / 500 / line-height 18px；padding `8px 16px`；高度 36；圆角 8；无描边
+- Hover：保持白字，背景使用 `color-mix(in srgb, #EC5212 90%, #111111)`；不增加描边、不改变尺寸
 - 用于 Delete / Disconnect / Discard Changes 等不可逆或高风险操作。`#FFD0D0` 仅保留给错误提示面、危险 Tag 等浅色容器
 
 ### 6.5 Inputs / Toggle / Checkbox
@@ -493,19 +494,22 @@ Logo mark:                      320px 320px 0 0
   ```
 - **内嵌错误 Tooltip**（按钮上方挑出提示）：黑底 `#111` + Karla 14 白字 + 圆角 8 + `box-shadow: 0px 10px 12px rgba(0,0,0,0.12)`，详见 6.17
 
-> **标题字体规则**：Figma 中页面一级标题与弹窗标题全部使用 Karla；弹窗标题统一 Karla SemiBold 20px / weight 600（不是 Gotu、也不是 Bold 700），参见 6.15。
+> **标题字体规则**：Figma 中页面一级标题与弹窗标题全部使用 Karla；标准弹窗标题统一 Karla SemiBold 20px / weight 600（不是 Gotu、也不是 Bold 700）。二次确认弹窗是明确例外，使用 §6.9.1 的 Karla Medium 20px / weight 500。
 
 #### 6.9.1 二次确认弹窗 / Confirmation Dialog
 > 适用于关闭未保存内容、删除、断开连接等需要用户再次确认的高风险操作。唯一参考为 Figma [`关掉弹窗时提示用户`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9905-214758)。它是独立模式，不得用带输入框的标准表单弹窗代替。
 
 - 容器：宽 512px，白底，`1px solid rgba(17,17,17,0.15)`，圆角 16；阴影 `0 20px 12px rgba(0,0,0,0.10), 0 8px 4px rgba(0,0,0,0.04)`
-- 标题区：上、左右 padding 24px；标题 Karla SemiBold 20px / 600 / line-height 30px
+- 容器内边距：上、右、下、左统一 `24px`；不得通过按钮区额外 bottom padding 叠加出 32px 或 44px 的底部空白
+- 标题区：标题 Karla Medium 20px / 500 / line-height 30px；这是针对当前二次确认弹窗的轻量层级，覆盖通用 Modal 的 600
 - 关闭按钮：右上 30×30、圆角 8，使用官方 `dialog-close.svg`；图形 13.5×13.5，stroke 1.5 / `#111`
-- 正文：与标题垂直间距 24px，左右 padding 24px；Karla Regular 16px / line-height 24px / `#111`
-- 操作区：与正文保持 24px 模块间距，按钮区上下 20px、左右 24px；两个按钮等宽，gap 12px
+- 正文：与标题垂直间距 24px；Karla Regular 16px / 400 / line-height 24px / `#111111`，不得使用 muted 灰色
+- 操作区：与正文保持 24px 模块间距，不再增加上下 padding；两个按钮等宽，gap 12px，容器底部由统一的 24px padding 提供
 - Keep Editing：高度 44px，底 `rgba(17,17,17,0.02)`，无描边，Karla Medium 16px / 24px
 - Discard Changes：高度 44px，底 `#EC5212`、白字，Karla Medium 16px / 24px；继承 Danger 语义
+- Hover：Keep Editing 背景由 2% 黑提升为 `rgba(17,17,17,0.06)`；Discard Changes 使用 Danger hover，即 `color-mix(in srgb, #EC5212 90%, #111111)`；hover 不得改变按钮尺寸或新增描边
 - 行为：点击 Keep Editing、右上关闭或 Esc 均回到编辑；只有点击 Discard Changes 才执行不可逆操作。标题需用 `aria-labelledby`，正文需用 `aria-describedby`
+- 反馈位置：弹窗内部、尤其按钮下方，禁止追加 `Changes kept`、`Saved`、`Deleted` 等结果提示文字。需要反馈时，先关闭弹窗，再由页面 Shell 的 `ToastViewport` 在页面右上角显示 Toast；Toast 不得挂载在 dialog DOM 内，也不得挤压弹窗内容
 
 ### 6.10 Tag / Badge / Chip
 - 圆角 999，padding `2px 8px`，Karla 11–12 / 500
@@ -728,7 +732,7 @@ Logo mark:                      320px 320px 0 0
 | Do ✅ | Don't ❌ |
 |---|---|
 | dApp 全站统一 Karla，包括页面一级标题与弹窗标题 | 在 dApp 任意位置加载或使用 Gotu |
-| 弹窗标题统一 Karla 600 / 20px / lh 30px | 弹窗标题用 Gotu / Bold 700 |
+| 标准弹窗标题用 Karla 600 / 20px / lh 30px；二次确认弹窗用 Karla 500 / 20px / lh 30px | 弹窗标题用 Gotu / Bold 700，或忽略二次确认弹窗的 500 例外 |
 | Score 仪表盘中心数字用 Digital Numbers | 用 Karla / Gotu 仿照数码管样式 |
 | **按模块切换主色**：Analysis = lime，Post Agent = yellow | 同一屏内同时出现 lime 和 yellow 主操作 |
 | 主背景统一 `#FAFAFA`，卡片用 `#FFFFFF` | 主背景用任何 off-white 派生值 |
@@ -1223,8 +1227,8 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 > - **Reply Panel 重写**：Required/Optional pill、Length 改为字数标注（~80/~280/500+）、Mention 改 tag pill 模式
 > - **Dashboard Your Impressions area chart**：单层渐变 `#FFD85F` gold（不是双层）
 > - **Donut 次色**：`#8C7400` 深芙末（与 keyword pill / Reddit area 同 token）
-> - **弹窗标题 weight 700 → 600**；Sync dot `#92BC01` + `rgba(146,188,1,0.2)` 光环；Reddit 平台色统一 aisee orange `#EC5212`（不用官方 `#FF4500`）。
-> - **Modal 统一规范**：四边 padding 固定为 24px；标题 20/600/30，描述 12/400/18；标题与描述间距为 0，标题区与内容区按场景使用 12px 或 16px。
+> - **标准弹窗标题 weight 700 → 600**；二次确认弹窗进一步使用 500；Sync dot `#92BC01` + `rgba(146,188,1,0.2)` 光环；Reddit 平台色统一 aisee orange `#EC5212`（不用官方 `#FF4500`）。
+> - **Modal 统一规范**：四边 padding 固定为 24px；标准标题 20/600/30，二次确认标题 20/500/30；描述按具体模式使用，并遵守各节语义色；标题区与内容区按场景使用 12px 或 16px。
 > - **Modal Footer Button 统一规范**：操作区增加 `#111 / 6%` 的 1px 顶部分割线；灰色次按钮使用 `#111 / 2%` 底色和 `#111 / 6%` 的 1px 描边，参考 Figma 节点 `9872:287453`。
 
 > **关于旧版本变更是否保留**：不建议。md 是现说明书、不是 changelog。**只保留当前版本与上一版的 diff 足够（上面 v5.x 列表）**；更早的变更什么时候发生、为什么发生必须靠 git log + commit message，不宜塞进设计规范。当前 v6 只重写 v5→v6 的差异，本节不要肥大。

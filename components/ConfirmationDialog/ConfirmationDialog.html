@@ -1,1 +1,99 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Confirmation Dialog · AISEE Components</title><style>body{margin:0;background:#f7f8f7;color:#111;font-family:Karla,Arial,sans-serif}main{max-width:960px;margin:48px auto;padding:0 32px}h1{font-size:32px;font-weight:600;margin:0 0 8px}.muted{color:#777}.surface{background:#eee;padding:32px 24px;border-radius:12px}.dialog{background:#fff;border:1px solid #e1e1e1;border-radius:16px;padding:24px;max-width:480px;margin:auto;box-shadow:0 8px 24px rgba(0,0,0,.1)}.actions{display:flex;gap:12px;margin-top:24px}.btn{flex:1;border:0;border-radius:8px;padding:10px 18px;font:500 14px Karla;cursor:pointer}.danger{background:#ec5212;color:#fff}.subtle{background:#f5f5f5}.result{color:#777}</style></head><body><main><p class="muted">Components · Feedback & Overlays · Current</p><h1>Confirmation Dialog</h1><p class="muted">Use before destructive actions or when unsaved changes would be lost.</p><div class="surface"><div class="dialog"><h2 style="font-weight:600">Discard unsaved changes?</h2><p class="muted">Your changes will be lost if you leave this page.</p><div class="actions"><button class="btn subtle" id="keep">Keep Editing</button><button class="btn danger" id="discard">Discard Changes</button></div><p class="result" aria-live="polite"></p></div></div><h2>Specs</h2><p>Title Karla 20px / 600 · actions are full-width within the dialog.</p></main><script>const r=document.querySelector('.result');document.querySelector('#keep').onclick=()=>r.textContent='Changes kept';document.querySelector('#discard').onclick=()=>r.textContent='Changes discarded';</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Confirmation Dialog · AISEE Components</title>
+  <style>
+    @font-face{font-family:Karla;src:url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
+    *{box-sizing:border-box}
+    body{margin:0;padding:32px;background:#fafafa;color:#111;font:14px/20px Karla,Arial,sans-serif}
+    button{font:inherit}
+    main{max-width:960px;margin:auto}
+    .eyebrow{margin:0 0 6px;color:rgba(17,17,17,.6);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+    h1{margin:0;font-size:28px;font-weight:600;line-height:34px}
+    h2{margin:34px 0 14px;font-size:18px;font-weight:600;line-height:24px}
+    .intro,.spec{color:rgba(17,17,17,.6)}
+    .surface{display:grid;min-height:360px;padding:32px 24px;border-radius:12px;place-items:center;background:#f2f2f2}
+    .dialog{position:relative;width:min(512px,100%);padding:24px;border:1px solid rgba(17,17,17,.15);border-radius:16px;background:#fff;box-shadow:0 20px 12px rgba(0,0,0,.1),0 8px 4px rgba(0,0,0,.04)}
+    .dialog-header{position:relative;display:flex;align-items:center}
+    .dialog-title{margin:0;padding-right:42px;font-size:20px;font-weight:500;line-height:30px}
+    .dialog-close{position:absolute;top:0;right:0;display:grid;width:30px;height:30px;padding:0;border:0;border-radius:8px;place-items:center;background:transparent;cursor:pointer;transition:background .15s}
+    .dialog-close:hover{background:rgba(17,17,17,.05)}
+    .dialog-close:focus-visible,.btn:focus-visible,.toast-close:focus-visible{outline:2px solid #111;outline-offset:2px}
+    .dialog-close img{width:13.5px;height:13.5px}
+    .dialog-description{margin:24px 0 0;color:#111;font-size:16px;font-weight:400;line-height:24px}
+    .actions{display:flex;gap:12px;margin-top:24px}
+    .btn{height:44px;flex:1 1 0;padding:8px 16px;border:0;border-radius:8px;color:#111;font:500 16px/24px Karla,Arial,sans-serif;cursor:pointer;transition:background .15s,transform .15s cubic-bezier(.2,.8,.2,1)}
+    .btn:active{transform:scale(.98)}
+    .subtle{background:rgba(17,17,17,.02)}
+    .subtle:hover{background:rgba(17,17,17,.06)}
+    .danger{color:#fff;background:#ec5212}
+    .danger:hover{background:color-mix(in srgb,#ec5212 90%,#111)}
+    .toast-viewport{position:fixed;z-index:50;top:24px;right:24px;width:min(368px,calc(100vw - 32px))}
+    .toast{--accent:#cfff29;position:relative;display:grid;width:100%;min-height:56px;grid-template-columns:40px minmax(0,1fr) 16px;align-items:center;gap:12px;overflow:hidden;padding:7px 16px;border:1px solid #111;border-radius:8px;background:#fff;box-shadow:0 20px 24px -4px rgba(16,24,40,.1),0 8px 8px -4px rgba(16,24,40,.04);animation:toast-in .25s cubic-bezier(.2,.8,.2,1)}
+    .toast[hidden]{display:none}
+    .toast-icon{width:40px;height:40px}
+    .toast-copy{font-size:14px;font-weight:500;line-height:22px}
+    .toast-close{display:grid;width:16px;height:16px;padding:0;border:0;place-items:center;background:transparent;cursor:pointer}
+    .toast-close img{width:16px;height:16px}
+    .toast-progress{position:absolute;right:-1px;bottom:-1px;left:-1px;height:4px;background:rgba(17,17,17,.08)}
+    .toast-progress span{display:block;width:100%;height:100%;background:var(--accent);transform-origin:left;animation:toast-progress 3.5s linear forwards}
+    @keyframes toast-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes toast-progress{to{transform:scaleX(0)}}
+    @media(max-width:600px){body{padding:20px}.surface{padding:24px 12px}.actions{flex-direction:column}.toast-viewport{top:16px;right:16px}}
+    @media(prefers-reduced-motion:reduce){.btn,.dialog-close{transition:none}.toast,.toast-progress span{animation:none}}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Components · Feedback &amp; Overlays · Current</p>
+    <h1>Confirmation Dialog</h1>
+    <p class="intro">Use before destructive actions or when unsaved changes would be lost.</p>
+    <h2>Interactive example</h2>
+    <section class="surface">
+      <div class="dialog" role="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+        <header class="dialog-header">
+          <h3 class="dialog-title" id="dialog-title">Discard unsaved changes?</h3>
+          <button class="dialog-close" id="close" type="button" aria-label="Close dialog"><img src="../../assets/dialog-close.svg" alt=""></button>
+        </header>
+        <p class="dialog-description" id="dialog-description">Your changes will be lost if you leave this page.</p>
+        <footer class="actions">
+          <button class="btn subtle" id="keep" type="button">Keep Editing</button>
+          <button class="btn danger" id="discard" type="button">Discard Changes</button>
+        </footer>
+      </div>
+    </section>
+    <h2>Specs</h2>
+    <p class="spec">24px padding on every side · title Karla 20 / 500 · description Karla 16 / 400 / #111 · 44px actions with visible hover states. Action feedback uses a page-level Toast, never an inline message inside the dialog.</p>
+  </main>
+
+  <div class="toast-viewport" aria-label="Notifications">
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      <img class="toast-icon" id="toast-icon" src="../../assets/toast/success.png" alt="">
+      <span class="toast-copy" id="toast-copy">Changes discarded</span>
+      <button class="toast-close" id="toast-close" type="button" aria-label="Dismiss notification"><img src="../../assets/toast/close.png" alt=""></button>
+      <span class="toast-progress" aria-hidden="true"><span></span></span>
+    </div>
+  </div>
+
+  <script>
+    const toast=document.querySelector('#toast');
+    const toastCopy=document.querySelector('#toast-copy');
+    const toastIcon=document.querySelector('#toast-icon');
+    let toastTimer;
+    function showToast(message,tone){
+      clearTimeout(toastTimer);
+      toast.hidden=true;
+      toastCopy.textContent=message;
+      toastIcon.src=tone==='agent'?'../../assets/toast/agent.svg':'../../assets/toast/success.png';
+      toast.style.setProperty('--accent',tone==='agent'?'#ffe253':'#cfff29');
+      requestAnimationFrame(()=>{toast.hidden=false;toastTimer=setTimeout(()=>{toast.hidden=true},3500)});
+    }
+    document.querySelector('#keep').addEventListener('click',()=>showToast('Editing resumed','agent'));
+    document.querySelector('#close').addEventListener('click',()=>showToast('Editing resumed','agent'));
+    document.querySelector('#discard').addEventListener('click',()=>showToast('Changes discarded','success'));
+    document.querySelector('#toast-close').addEventListener('click',()=>{clearTimeout(toastTimer);toast.hidden=true});
+  </script>
+</body>
+</html>

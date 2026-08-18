@@ -33,7 +33,7 @@
   font-weight: var(--aisee-font-weight-medium);
   line-height: 18px;
 }
-.aisee-button--danger:hover:not(:disabled) { border: 0; }
+.aisee-button--danger:hover:not(:disabled) { border: 0; background: color-mix(in srgb, var(--aisee-color-danger) 90%, var(--aisee-color-black)); }
 .aisee-button--sm { min-height: 32px; padding: 6px 12px; font-size: 12px; }
 .aisee-button--lg { min-height: 40px; font-size: 14px; }
 
@@ -268,7 +268,7 @@
 
 .aisee-confirmation-dialog {
   width: min(512px, calc(100vw - 32px));
-  padding: 0 0 12px;
+  padding: 24px;
   border: 1px solid rgba(17,17,17,.15);
   border-radius: var(--aisee-radius-modal);
   color: var(--aisee-color-black);
@@ -276,12 +276,12 @@
   box-shadow: var(--aisee-shadow-confirmation);
 }
 .aisee-confirmation-dialog::backdrop { background: var(--aisee-color-overlay); backdrop-filter: blur(3px); }
-.aisee-confirmation-dialog__header { position: relative; display: flex; align-items: center; padding: 24px 24px 0; }
-.aisee-confirmation-dialog__title { margin: 0; font-size: 20px; font-weight: 600; line-height: 30px; }
+.aisee-confirmation-dialog__header { position: relative; display: flex; align-items: center; }
+.aisee-confirmation-dialog__title { margin: 0; padding-right: 42px; font-size: 20px; font-weight: 500; line-height: 30px; }
 .aisee-confirmation-dialog__close {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 0;
+  right: 0;
   display: grid;
   width: 30px;
   height: 30px;
@@ -295,10 +295,11 @@
 .aisee-confirmation-dialog__close:hover { background: var(--aisee-color-border); }
 .aisee-confirmation-dialog__close:focus-visible { outline: 2px solid var(--aisee-color-black); outline-offset: 2px; }
 .aisee-confirmation-dialog__close img { width: 13.5px; height: 13.5px; }
-.aisee-confirmation-dialog__description { margin: 24px 0 0; padding: 0 24px; font-size: 16px; line-height: 24px; }
-.aisee-confirmation-dialog__actions { display: flex; gap: 12px; margin-top: 24px; padding: 20px 24px; }
+.aisee-confirmation-dialog__description { margin: 24px 0 0; color: var(--aisee-color-black); font-size: 16px; font-weight: 400; line-height: 24px; }
+.aisee-confirmation-dialog__actions { display: flex; gap: 12px; margin-top: 24px; padding: 0; }
 .aisee-confirmation-dialog__actions .aisee-button { width: 100%; height: 44px; flex: 1 1 0; font-size: 16px; line-height: 24px; }
 .aisee-confirmation-dialog__actions .aisee-button--secondary { border: 0; background: rgba(17,17,17,.02); }
+.aisee-confirmation-dialog__actions .aisee-button--secondary:hover:not(:disabled) { border: 0; background: rgba(17,17,17,.06); }
 
 .aisee-tooltip-trigger { position: relative; display: inline-flex; }
 .aisee-tooltip-trigger:focus-visible { outline: 2px solid var(--aisee-color-black); outline-offset: 3px; border-radius: 4px; }

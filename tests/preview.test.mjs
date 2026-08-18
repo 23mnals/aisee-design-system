@@ -229,26 +229,35 @@ test('component modal previews keep vertical breathing room inside demo surfaces
   assert.match(components, /\.confirm-demo\{min-height:360px;padding:32px 24px\}/);
 });
 
-test('all dialog titles use Karla semibold 600 rather than bold 700', async () => {
+test('standard dialogs use 600 and confirmation dialogs use the lighter 500 title', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   assert.match(components, /\.modal h3\{[^}]*font-weight:600/);
-  assert.match(components, /\.confirm-head h3\{[^}]*font-weight:600/);
+  assert.match(components, /\.confirm-head h3\{[^}]*font-weight:500/);
   assert.match(styles, /\.aisee-dialog__title \{[^}]*font-weight: 600;/);
-  assert.match(styles, /\.aisee-confirmation-dialog__title \{[^}]*font-weight: 600;/);
+  assert.match(styles, /\.aisee-confirmation-dialog__title \{[^}]*font-weight: 500;/);
   assert.doesNotMatch(components, /(?:\.modal h3|\.confirm-head h3)\{[^}]*font-weight:700/);
   assert.doesNotMatch(styles, /(?:\.aisee-dialog__title|\.aisee-confirmation-dialog__title) \{[^}]*font-weight: 700;/);
 });
 
 test('confirmation dialog follows the Figma unsaved changes pattern', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/ConfirmationDialog/ConfirmationDialog.html', import.meta.url), 'utf8');
+  const design = await readFile(new URL('../docs/aisee-dapp-design.v6.md', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   const source = await readFile(new URL('../src/components/ConfirmationDialog.tsx', import.meta.url), 'utf8');
   assert.match(components, /Confirmation Dialog/);
   assert.match(components, /Discard unsaved changes\?/);
   assert.match(components, /Keep Editing[\s\S]*?Discard Changes/);
-  assert.match(styles, /\.aisee-confirmation-dialog \{[\s\S]*?width: min\(512px/);
+  assert.match(styles, /\.aisee-confirmation-dialog \{[\s\S]*?width: min\(512px[\s\S]*?padding: 24px;/);
+  assert.match(styles, /\.aisee-confirmation-dialog__description \{[^}]*color: var\(--aisee-color-black\);/);
+  assert.match(styles, /\.aisee-confirmation-dialog__actions \.aisee-button--secondary:hover:not\(:disabled\) \{[^}]*background: rgba\(17,17,17,\.06\);/);
   assert.match(styles, /\.aisee-confirmation-dialog__actions \.aisee-button \{ width: 100%; height: 44px;/);
+  assert.match(detail, /@font-face\{font-family:Karla/);
+  assert.match(detail, /class="toast-viewport"/);
+  assert.match(detail, /showToast\('Changes discarded','success'\)/);
+  assert.doesNotMatch(detail, /class="result"/);
+  assert.match(design, /ToastViewport[\s\S]*?不得挂载在 dialog DOM 内/);
   assert.match(source, /aria-labelledby=\{titleId\}/);
   assert.match(source, /aria-describedby=\{descriptionId\}/);
   assert.match(source, /dialog-close\.svg/);

@@ -64,7 +64,7 @@ Legacy 页面继续保留：Sidebar Navigation、Badge、Stat Card、Post Card�
 | Card | 发布组件已存在；本次补齐 Current 页面和门户入口 | 已补齐 |
 | PlanCard | Current v5.4 页面和 React 实现均存在；旧版继续保留 | 已覆盖 |
 | Tag / Chip | Tag 已发布；可操作 Comparing chip 仍只属于业务模式，没有独立 API | 部分覆盖 |
-| Dialog / Confirmation Dialog | 页面与发布组件均存在 | 已覆盖 |
+| Dialog / Confirmation Dialog | 页面与发布组件均存在；Confirmation 已统一四边 24px、标题 500、正文 `#111`、按钮 hover，并规定操作结果只使用页面级 Toast | 已覆盖 |
 | Tooltip | React 组件支持 top/bottom、hover/focus 与 `role=tooltip`；有 Current 页面 | 已补齐 |
 | Toast | 已按 Figma `42:12061` 对齐：单行 368×56、双行 400×72、success/error/agent 功能色、40px 图标、4px 生命周期进度条、自动 3.5s、dismiss、status/alert | 已补齐 |
 | AppHeader / Sidebar | UI Kit 已实现当前 Shell；发布包没有独立 API，旧 Sidebar 页面是 Legacy | UI Kit 已覆盖，待定是否抽离 |
