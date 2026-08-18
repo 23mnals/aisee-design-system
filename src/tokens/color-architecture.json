@@ -88,7 +88,7 @@
     { "id": "tag-08", "name": "colour/tag/08", "scope": "tag", "light": { "ref": "green/green-46", "value": "#EBF4E7" }, "dark": { "ref": "green/green-46", "value": "#EBF4E7" } },
     { "id": "button-usual", "name": "colour/button/usual", "scope": "action", "light": { "ref": "gray/gray-900", "value": "#111111" }, "dark": { "ref": "yellow/yellow-400", "value": "#FFE253" } },
     { "id": "border-divider-hover", "name": "colour/border/分割线- hover", "scope": "border", "light": { "ref": "gray/gray-900", "value": "#111111" }, "dark": { "ref": "gray/gray-900-5", "value": "#F2F2F214" } },
-    { "id": "bg-hover", "name": "colour/bg/hover", "scope": "background", "light": { "ref": "gray/gray-900-4", "value": "#1111110A" }, "dark": { "ref": null, "value": "#FFFFFF" }, "review": "Dark 模式仍为原始白色，建议补充元数据别名。" },
+    { "id": "bg-hover", "name": "colour/bg/hover", "scope": "background", "light": { "ref": "gray/gray-900-4", "value": "#1111110A" }, "dark": { "ref": null, "value": "#FFFFFF" }, "usageVerified": true, "usage": "组件与可交互表面的 Hover 状态背景叠色。", "reviewMode": "Dark", "review": "用途已确认；Dark 模式仍为原始白色，需在 Figma 校对后发布。" },
     { "id": "tag-09", "name": "colour/tag/09", "scope": "tag", "light": { "ref": "green/green-47", "value": "#E6F0CD" }, "dark": { "ref": "green/green-46", "value": "#EBF4E7" } },
     { "id": "bg-yellow-mid", "name": "colour/bg/yellow-mid", "scope": "background", "light": { "ref": "yellow/yellow-200", "value": "#FFF2B3" }, "dark": { "ref": null, "value": "#FFFFFF" }, "review": "Dark 模式仍为原始白色，建议补充元数据别名。" },
     { "id": "bg-yellow-light", "name": "colour/bg/yellow-light", "scope": "background", "light": { "ref": "yellow/yellow-75", "value": "#FEFBE3" }, "dark": { "ref": null, "value": "#FFFFFF" }, "review": "Dark 模式仍为原始白色，建议补充元数据别名。" },

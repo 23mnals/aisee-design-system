@@ -47,6 +47,11 @@ test('Figma color architecture keeps primitive and semantic layers separate', ()
   assert.equal(verifiedTag?.review, undefined);
   assert.equal(verifiedTag?.light.value, '#FFFFFF');
   assert.equal(verifiedTag?.dark.value, '#FFFFFF');
+  const hoverBackground = colorArchitecture.semantic.find(token => token.id === 'bg-hover');
+  assert.equal(hoverBackground?.usageVerified, true);
+  assert.equal(hoverBackground?.light.value, '#1111110A');
+  assert.equal(hoverBackground?.dark.value, '#FFFFFF');
+  assert.match(hoverBackground?.review || '', /Dark 模式/);
 
   for (const token of colorArchitecture.semantic) {
     for (const mode of ['light', 'dark']) {

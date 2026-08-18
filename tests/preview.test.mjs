@@ -123,6 +123,12 @@ test('portal exposes the published Figma color architecture as a searchable tabl
   assert.equal(verifiedTag?.verified, true);
   assert.match(verifiedTag?.usage || '', /深色按钮上的文字与 Icon/);
   assert.match(portal, /已验证原始值/);
+  const hoverBackground = colors.semantic.find(token => token.id === 'bg-hover');
+  assert.equal(hoverBackground?.usageVerified, true);
+  assert.match(hoverBackground?.usage || '', /Hover 状态背景叠色/);
+  assert.equal(hoverBackground?.reviewMode, 'Dark');
+  assert.match(portal, /用途已验证/);
+  assert.ok(portal.includes('token.reviewMode ? `${token.reviewMode} 待校对`'));
   assert.match(portal, /页面和组件只能使用语义化变量/);
   assert.match(portal, /id="colorTokenRows"/);
   assert.match(portal, /data-color-layer="primitive"/);
