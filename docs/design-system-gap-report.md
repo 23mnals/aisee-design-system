@@ -66,7 +66,7 @@ Legacy 页面继续保留：Sidebar Navigation、Badge、Stat Card、Post Card�
 | Tag / Chip | Tag 已发布；可操作 Comparing chip 仍只属于业务模式，没有独立 API | 部分覆盖 |
 | Dialog / Confirmation Dialog | 页面与发布组件均存在 | 已覆盖 |
 | Tooltip | React 组件支持 top/bottom、hover/focus 与 `role=tooltip`；有 Current 页面 | 已补齐 |
-| Toast | 受控 React 组件支持 default/success/error、自动 3.5s、dismiss、status/alert；有 Current 页面 | 已补齐 |
+| Toast | 已按 Figma `42:12061` 对齐：单行 368×56、双行 400×72、success/error/agent 功能色、40px 图标、4px 生命周期进度条、自动 3.5s、dismiss、status/alert | 已补齐 |
 | AppHeader / Sidebar | UI Kit 已实现当前 Shell；发布包没有独立 API，旧 Sidebar 页面是 Legacy | UI Kit 已覆盖，待定是否抽离 |
 | StatCard | 新增通用 value/unit/delta React API 与 Current 页面；旧 Stat Card 继续标记 Legacy | 已补齐 |
 | PostCard / ChannelBadge / CalDay | UI Kit 有业务实现；门户对应旧资产仍为 Legacy | 业务组合，暂不抽离 |

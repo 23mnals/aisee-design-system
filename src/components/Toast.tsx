@@ -1,9 +1,16 @@
-import { useEffect, type HTMLAttributes, type ReactNode } from 'react';
+import { useEffect, type CSSProperties, type HTMLAttributes, type ReactNode } from 'react';
+import toastAgentIcon from '../../assets/toast/agent.svg';
+import toastCloseIcon from '../../assets/toast/close.png';
+import toastErrorIcon from '../../assets/toast/error.png';
+import toastSuccessIcon from '../../assets/toast/success.png';
+
+export type ToastTone = 'default' | 'success' | 'error' | 'agent';
 
 export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   open?: boolean;
   children: ReactNode;
-  tone?: 'default' | 'success' | 'error';
+  description?: ReactNode;
+  tone?: ToastTone;
   duration?: number;
   onDismiss?: () => void;
   dismissLabel?: string;
@@ -12,11 +19,13 @@ export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'childr
 export function Toast({
   open = true,
   children,
+  description,
   tone = 'default',
   duration = 3500,
   onDismiss,
   dismissLabel = 'Dismiss notification',
   className = '',
+  style,
   ...props
 }: ToastProps) {
   useEffect(() => {
@@ -26,14 +35,33 @@ export function Toast({
   }, [duration, onDismiss, open]);
 
   if (!open) return null;
+  const visualTone = tone === 'default' ? 'success' : tone;
+  const icon = {
+    success: toastSuccessIcon,
+    error: toastErrorIcon,
+    agent: toastAgentIcon,
+  }[visualTone];
+  const toastStyle = {
+    ...style,
+    '--aisee-toast-duration': `${Math.max(duration, 0)}ms`,
+  } as CSSProperties;
+
   return <div
     {...props}
-    className={`aisee-toast aisee-toast--${tone} ${className}`.trim()}
+    className={`aisee-toast aisee-toast--${visualTone}${description ? ' aisee-toast--two-line' : ''}${duration <= 0 ? ' aisee-toast--persistent' : ''} ${className}`.trim()}
+    style={toastStyle}
     role={tone === 'error' ? 'alert' : 'status'}
     aria-live={tone === 'error' ? 'assertive' : 'polite'}
   >
-    <span>{children}</span>
-    {onDismiss && <button type="button" className="aisee-toast__dismiss" aria-label={dismissLabel} onClick={onDismiss}>×</button>}
+    <img className="aisee-toast__icon" src={icon} alt="" aria-hidden="true" />
+    <span className="aisee-toast__content">
+      <span className="aisee-toast__title">{children}</span>
+      {description && <span className="aisee-toast__description">{description}</span>}
+    </span>
+    {onDismiss && <button type="button" className="aisee-toast__dismiss" aria-label={dismissLabel} onClick={onDismiss}>
+      <img src={toastCloseIcon} alt="" aria-hidden="true" />
+    </button>}
+    <span className="aisee-toast__progress" aria-hidden="true"><span /></span>
   </div>;
 }
 

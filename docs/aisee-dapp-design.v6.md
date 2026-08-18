@@ -587,12 +587,22 @@ Logo mark:                      320px 320px 0 0
   - 两层错位形成 lime 高亮指示，无需 outline
 - **辅助 chip**："Input More" 圆角 16，`rgba(17,17,17,0.02)` 默认 / `rgba(17,17,17,0.05)` active
 
-### 6.17 Tooltip / Toast（黑底白字）
+### 6.17 Tooltip / Toast
+
+**Tooltip**
 - 黑底 `#111`，圆角 8，padding `8px 12px`
-- 文本：**Karla 14px / 400 / `#FFFFFF` / line-height 20px**
-- 阴影：`box-shadow: 0px 10px 12px rgba(0,0,0,0.12)`
-- 出现位置：表单字段下方错误提示（"Please include at least some text or an attachment for Reddit"）、按钮 hover 提示、复制成功反馈
-- 入场：从触发点上方 4px 弹出，`opacity 0→1 + translateY(4px→0)`，120ms ease-out
+- 文本：Karla 14px / 400 / `#FFFFFF` / line-height 20px
+- 阴影：`0 10px 12px rgba(0,0,0,.12)`
+- 从触发点上方 4px 弹出，`opacity 0→1 + translateY(4px→0)`，120ms ease-out
+
+**Toast / Notification（Figma node `42:12061`）**
+- 白底、`1px solid #111`、圆角 8；左右 padding 16，内容 gap 12
+- 单行：`368×56px`；双行：`400×72px`
+- 功能图标 `40×40px`；关闭图标 `16×16px`
+- 标题：Karla 14px / 500 / line-height 22；说明：Karla 12px / 400 / line-height 18
+- 阴影：`0 20px 24px -4px rgba(16,24,40,.10), 0 8px 8px -4px rgba(16,24,40,.04)`
+- 底部进度条高 4px；Success = `#CFFF29`，Error = `#EC5212`，Agent = `#FFE253`
+- Success / Agent 使用 polite `status`；Error 使用 assertive `alert`
 
 ### 6.18 Score Gauge（**仅 Analysis**）
 > 来自 figma + 截图——Analysis Overview 的核心数据视觉。
@@ -672,7 +682,7 @@ Logo mark:                      320px 320px 0 0
 
 ### Toast / Notification
 - 从右上角滑入：`translateX(20px) → 0` + fade，0.25s
-- 自动 3.5s 后消失，反向滑出
+- 底部 4px 功能色进度条随 3.5s 生命周期线性收缩，结束后消失
 
 ### Page / Route 切换
 - 主内容容器 `opacity 0 → 1`（150ms），无位移
@@ -725,7 +735,7 @@ Logo mark:                      320px 320px 0 0
 | 主操作按钮一律 `var(--module-primary)` | 在 Analysis 里出现 yellow 按钮 / Post Agent 里出现 lime 按钮 |
 | 阴影柔和（card / dropdown / modal 三档） | 重度投影、玻璃拟态 |
 | URL Input 使用 1.5px 黑描边 + lime 3px 外环 focus | 用默认 outline 做 focus |
-| Tooltip / Toast 黑底白字 Karla 14 | tooltip 使用白底黑字 |
+| Tooltip 黑底白字；Toast 白底黑边并按功能显示 lime / error / Agent 色 | 把 Tooltip 和 Toast 混成同一个黑底组件 |
 | 动画 ≤ 300ms，仅做反馈 | 入场大动画、循环漂浮、cursor 特效 |
 | Lucide + 自有 icon 同尺寸 | 多套图标体系混用、emoji |
 | Modal 关闭只用右上角 × + Esc | 弹窗多个关闭入口 |

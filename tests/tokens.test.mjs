@@ -18,6 +18,7 @@ test('v6 layout and border rules are exact', () => {
   assert.equal(tokens.size.header, '70px');
   assert.equal(tokens.size.inputRing, '2px');
   assert.equal(tokens.shadow.confirmation, '0 20px 12px rgba(0,0,0,0.10), 0 8px 4px rgba(0,0,0,0.04)');
+  assert.equal(tokens.shadow.toast, '0 20px 24px -4px rgba(16,24,40,0.10), 0 8px 8px -4px rgba(16,24,40,0.04)');
   assert.equal(tokens.color.border, 'rgba(17,17,17,0.05)');
 });
 

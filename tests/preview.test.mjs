@@ -97,6 +97,36 @@ test('high-priority feedback and data components are publishable Current entries
   }
 });
 
+test('toast follows the Figma one-line, two-line and functional-color variants', async () => {
+  const source = await readFile(new URL('../src/components/Toast.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/TooltipToast/TooltipToast.html', import.meta.url), 'utf8');
+  await Promise.all([
+    '../assets/toast/success.png',
+    '../assets/toast/error.png',
+    '../assets/toast/agent.svg',
+    '../assets/toast/close.png',
+  ].map(path => access(new URL(path, import.meta.url))));
+
+  assert.match(source, /ToastTone = 'default' \| 'success' \| 'error' \| 'agent'/);
+  assert.match(source, /description\?: ReactNode/);
+  assert.match(source, /aisee-toast--two-line/);
+  assert.match(source, /toastSuccessIcon/);
+  assert.match(source, /toastErrorIcon/);
+  assert.match(source, /toastAgentIcon/);
+  assert.match(styles, /\.aisee-toast \{[\s\S]*?width: min\(368px, 100%\);[\s\S]*?min-height: 56px;/);
+  assert.match(styles, /\.aisee-toast--two-line \{ width: min\(400px, 100%\); min-height: 72px; \}/);
+  assert.match(styles, /--aisee-color-semantic-button-analysis/);
+  assert.match(styles, /--aisee-color-semantic-feedback-wrong/);
+  assert.match(styles, /--aisee-color-semantic-button-agent/);
+  assert.match(styles, /height: 4px;[\s\S]*?aisee-toast-progress/);
+  assert.match(detail, /368×56 one line/);
+  assert.match(detail, /400×72 two lines/);
+  assert.match(detail, /Brand details updated successfully!/);
+  assert.match(detail, /Brand details update failed!/);
+  assert.match(detail, /Switched to extension tracking/);
+});
+
 test('portal contains an explicit machine-readable AI implementation contract', async () => {
   const contractSource = portal.match(/<script type="application\/json" id="aisee-ai-contract">([\s\S]*?)<\/script>/)?.[1];
   assert.ok(contractSource, 'AI contract should be embedded in the standalone portal');
