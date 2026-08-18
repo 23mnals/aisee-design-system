@@ -93,7 +93,7 @@ Figma 与代码必须保持同一条依赖链：
 - **兼容层**：现有 `--aisee-color-black` 等旧 CSS 名称会继续导出，但由生成器转接到语义变量；新代码不得继续扩展旧命名。
 - **完整清单**：`src/tokens/color-architecture.json` 是从 Figma 的“元数据 / 语义化”集合校准的机器可读快照，HTML system 内嵌同一份数据并提供层级、模式、类别和搜索筛选。
 
-> 当前 Figma 中部分语义变量仍直接保存原始白色，且 `feedback/success`、`feedback/warning` 都指向 red。System 会标记为“待校对”，在 Figma 修正前不得自行猜测替代值。
+> 尚未应用到组件的语义变量保留在内部 token 快照中，暂不嵌入公开 System；组件开始使用并完成校对后再发布。
 
 ### 2.1 模块主色（随 sidebar tab 切换）
 

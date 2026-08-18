@@ -11,6 +11,16 @@ const portalPath = resolve(root, 'aisee-design-system-preview.html');
 const tokens = JSON.parse(await readFile(sourcePath, 'utf8'));
 const colorArchitecture = JSON.parse(await readFile(colorArchitecturePath, 'utf8'));
 const portal = await readFile(portalPath, 'utf8');
+const publishedSemanticColors = colorArchitecture.semantic.filter(token => token.published !== false);
+const publicColorArchitecture = {
+  ...colorArchitecture,
+  meta: {
+    ...colorArchitecture.meta,
+    registeredSemanticCount: colorArchitecture.semantic.length,
+    publishedSemanticCount: publishedSemanticColors.length
+  },
+  semantic: publishedSemanticColors
+};
 
 const flatten = (value, path = [], out = {}) => {
   for (const [key, child] of Object.entries(value)) {
@@ -76,7 +86,7 @@ const css = `/* Generated from tokens.json and color-architecture.json. Do not e
 const ts = `/* Generated from tokens.json. Do not edit directly. */\nimport data from './tokens.json';\nexport const tokens = data;\nexport type AiseeTokens = typeof tokens;\nexport default tokens;\n`;
 const colorDataPattern = /<script type="application\/json" id="aisee-color-architecture">[\s\S]*?<\/script>/;
 if (!colorDataPattern.test(portal)) throw new Error('Portal is missing #aisee-color-architecture.');
-const embeddedColorData = `<script type="application/json" id="aisee-color-architecture">${JSON.stringify(colorArchitecture)}</script>`;
+const embeddedColorData = `<script type="application/json" id="aisee-color-architecture">${JSON.stringify(publicColorArchitecture)}</script>`;
 const generatedPortal = portal.replace(colorDataPattern, embeddedColorData);
 
 if (process.argv.includes('--check')) {

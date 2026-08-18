@@ -109,12 +109,16 @@ test('portal contains an explicit machine-readable AI implementation contract', 
   assert.match(handoff, /docs\/TEAM_DECISIONS\.md/);
 });
 
-test('portal exposes the complete Figma color architecture as a searchable table', () => {
+test('portal exposes the published Figma color architecture as a searchable table', () => {
   const colorSource = portal.match(/<script type="application\/json" id="aisee-color-architecture">([\s\S]*?)<\/script>/)?.[1];
   assert.ok(colorSource, 'Color architecture should be embedded in the standalone portal');
   const colors = JSON.parse(colorSource);
   assert.equal(colors.primitive.length, 44);
-  assert.equal(colors.semantic.length, 46);
+  assert.equal(colors.semantic.length, 44);
+  assert.equal(colors.meta.registeredSemanticCount, 46);
+  assert.equal(colors.meta.publishedSemanticCount, 44);
+  assert.ok(!colors.semantic.some(token => token.name === 'colour/feedback/success'));
+  assert.ok(!colors.semantic.some(token => token.name === 'colour/feedback/warning'));
   assert.match(portal, /页面和组件只能使用语义化变量/);
   assert.match(portal, /id="colorTokenRows"/);
   assert.match(portal, /data-color-layer="primitive"/);

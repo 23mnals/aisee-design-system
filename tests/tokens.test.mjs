@@ -38,6 +38,10 @@ test('Figma color architecture keeps primitive and semantic layers separate', ()
   const semanticNames = new Set(colorArchitecture.semantic.map(token => token.name));
   assert.equal(primitiveNames.size, 44);
   assert.equal(semanticNames.size, 46);
+  assert.deepEqual(
+    colorArchitecture.semantic.filter(token => token.published === false).map(token => token.name),
+    ['colour/feedback/success', 'colour/feedback/warning']
+  );
 
   for (const token of colorArchitecture.semantic) {
     for (const mode of ['light', 'dark']) {
