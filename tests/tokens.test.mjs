@@ -42,6 +42,11 @@ test('Figma color architecture keeps primitive and semantic layers separate', ()
     colorArchitecture.semantic.filter(token => token.published === false).map(token => token.name),
     ['colour/feedback/success', 'colour/feedback/warning']
   );
+  const verifiedTag = colorArchitecture.semantic.find(token => token.id === 'tag-base');
+  assert.equal(verifiedTag?.verified, true);
+  assert.equal(verifiedTag?.review, undefined);
+  assert.equal(verifiedTag?.light.value, '#FFFFFF');
+  assert.equal(verifiedTag?.dark.value, '#FFFFFF');
 
   for (const token of colorArchitecture.semantic) {
     for (const mode of ['light', 'dark']) {

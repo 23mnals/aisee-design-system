@@ -119,6 +119,10 @@ test('portal exposes the published Figma color architecture as a searchable tabl
   assert.equal(colors.meta.publishedSemanticCount, 44);
   assert.ok(!colors.semantic.some(token => token.name === 'colour/feedback/success'));
   assert.ok(!colors.semantic.some(token => token.name === 'colour/feedback/warning'));
+  const verifiedTag = colors.semantic.find(token => token.id === 'tag-base');
+  assert.equal(verifiedTag?.verified, true);
+  assert.match(verifiedTag?.usage || '', /深色按钮上的文字与 Icon/);
+  assert.match(portal, /已验证原始值/);
   assert.match(portal, /页面和组件只能使用语义化变量/);
   assert.match(portal, /id="colorTokenRows"/);
   assert.match(portal, /data-color-layer="primitive"/);

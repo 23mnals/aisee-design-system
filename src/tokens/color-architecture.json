@@ -78,7 +78,7 @@
     { "id": "social-producthunt", "name": "colour/social/producthunt", "scope": "social", "light": { "ref": "red/producthunt", "value": "#EC5212" }, "dark": { "ref": "red/producthunt", "value": "#EC5212" } },
     { "id": "text-description", "name": "colour/text/description", "scope": "text", "light": { "ref": "gray/gray-800", "value": "#3D3D3A" }, "dark": { "ref": "gray/gray-900-50", "value": "#F2F2F280" } },
     { "id": "text-on-brand", "name": "colour/text/on-brand", "scope": "text", "light": { "ref": "colour/button/usual", "value": "#111111" }, "dark": { "ref": "colour/button/usual", "value": "#FFE253" } },
-    { "id": "tag-base", "name": "tag", "scope": "tag", "light": { "ref": null, "value": "#FFFFFF" }, "dark": { "ref": null, "value": "#FFFFFF" }, "review": "语义集合中使用了原始值，建议改为元数据别名。" },
+    { "id": "tag-base", "name": "tag", "scope": "tag", "light": { "ref": null, "value": "#FFFFFF" }, "dark": { "ref": null, "value": "#FFFFFF" }, "verified": true, "usage": "深色按钮上的文字与 Icon；也可作为需要纯白承载面的背景颜色。" },
     { "id": "tag-01", "name": "colour/tag/01", "scope": "tag", "light": { "ref": "yellow/yellow-45", "value": "#F0EACD" }, "dark": { "ref": "yellow/yellow-45", "value": "#5F5A41" } },
     { "id": "tag-02", "name": "colour/tag/02", "scope": "tag", "light": { "ref": "red/pink001", "value": "#FCE7E7" }, "dark": { "ref": "red/pink001", "value": "#FCE7E7" } },
     { "id": "tag-03", "name": "colour/tag/03", "scope": "tag", "light": { "ref": "blue/blue-50", "value": "#F1F7FB" }, "dark": { "ref": "blue/blue-50", "value": "#E5F1F9" } },
