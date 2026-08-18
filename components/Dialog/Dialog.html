@@ -19,14 +19,14 @@
     .launch:hover{background:var(--module-hover)}
     .launch:focus-visible,.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
     .surface{display:grid;min-height:360px;padding:32px 24px;border-radius:12px;place-items:center;background:#f2f2f2}
-    .dialog{width:min(640px,100%);padding:24px;border:1px solid rgba(17,17,17,.15);border-radius:16px;background:#fff;box-shadow:0 8px 8px rgba(0,0,0,.04),0 20px 24px rgba(0,0,0,.1)}
+    .dialog{width:min(480px,100%);padding:24px;border:1px solid rgba(17,17,17,.15);border-radius:16px;background:#fff;box-shadow:0 8px 8px rgba(0,0,0,.04),0 20px 24px rgba(0,0,0,.1)}
     .dialog-header{display:flex;flex-direction:column;gap:0}
     .dialog-title{margin:0;color:var(--ink);font-size:20px;font-weight:600;line-height:30px}
     .dialog-description{margin:0;color:var(--muted);font-size:12px;font-weight:400;line-height:18px}
     .dialog-content{margin-top:16px}
     .field{display:grid;gap:6px}
     .field label{font-size:13px;font-weight:500;line-height:18px}
-    .field input{width:100%;height:36px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;outline:none;color:var(--ink);background:#fff;font:400 14px/18px Karla,Arial,sans-serif;transition:border-color .15s,box-shadow .15s}
+    .field input{width:100%;height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;outline:none;color:var(--ink);background:#fff;font:400 14px/18px Karla,Arial,sans-serif;transition:border-color .15s,box-shadow .15s}
     .field input::placeholder{color:rgba(17,17,17,.32)}
     .field input:hover:not(:disabled),.field input:focus:not(:disabled){border-color:var(--ink);outline:none;box-shadow:0 0 0 2px var(--module)}
     .field input:disabled{opacity:.5;box-shadow:none;cursor:not-allowed}
@@ -78,7 +78,7 @@
       </div>
     </section>
     <h2>Specs</h2>
-    <p class="spec">Dialog padding 24px · title Karla 20 / 600 · radius 16px. Input height 36px; hover and focus use a 1px black inner border plus a 2px Analysis lime ring.</p>
+    <p class="spec">Compact single-field dialog width 480px · padding 24px · title Karla 20 / 600 · radius 16px. Input height 40px; hover and focus use a 1px black inner border plus a 2px Analysis lime ring.</p>
   </main>
 
   <div class="toast-viewport" aria-label="Notifications">
