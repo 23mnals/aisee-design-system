@@ -31,6 +31,26 @@ for (const entry of rootEntries) {
   });
 }
 
+// These legacy aliases still point to their former repository-root locations.
+// The real files now live in legacy/source, so materialize them in the Pages
+// artifact instead of leaving broken symlinks for tar to dereference.
+const legacySourceAliases = [
+  'aisee-tracking-eye.css',
+  'colors_and_type.css',
+  'my-account.css',
+  'my-account.main.css',
+  'my-account.usage.css',
+  'styles.css',
+  'support.js',
+  'upgrade-v2.css',
+  'upgrade-v3.css'
+];
+for (const name of legacySourceAliases) {
+  const destination = join(outputRoot, 'legacy/pages', name);
+  await rm(destination, { force: true });
+  await copyFile(join(projectRoot, 'legacy/source', name), destination);
+}
+
 // GitHub Pages opens the system portal at the repository root.
 await copyFile(portalFile, join(outputRoot, 'index.html'));
 await writeFile(join(outputRoot, '.nojekyll'), '');
