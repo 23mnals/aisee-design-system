@@ -26,6 +26,12 @@
 - 因此判断实现依据时应先定位对应功能页面，再读取黑色标题框及其下方设计；不能用 5.6 全局覆盖其他功能页面。
 - 原页面中未被最新内容替代的设计继续保留，供上下文与历史追溯。
 
+## 2026-08-18 — Figma 5.7 托管自动发布
+
+- 本地 Figma 源已更新到 **5.7**，新增“托管自动发布 / Automation”功能页。
+- Automation 是新的 WORKFLOWS 功能，必须与 INTEGRATIONS 分开，不归入 Connections / Search Console。
+- 5.7 仍是功能页版本，不是整个 Figma 文件的全局版本；其他功能继续按各自页面的黑色标题框和设计区块判断。
+
 ## 2026-08-13 — Webapp UI Kit 采用 5.5 功能布局
 
 - UI Kits — Webapp 的当前 Shell、信息架构和 Overview 排版以 Figma 5.5 功能页为准。

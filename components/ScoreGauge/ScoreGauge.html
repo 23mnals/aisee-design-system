@@ -15,11 +15,12 @@
     h2{margin:32px 0 14px;font-size:18px}
     .intro,.spec{color:rgba(17,17,17,.6)}
     .gauge{position:relative;width:min(381px,100%);aspect-ratio:381/216;overflow:hidden;border:1px solid rgba(17,17,17,.05);border-radius:16px;background:#cfff29;isolation:isolate}
-    .gauge:before{position:absolute;z-index:-1;inset:0;background:url('../../src/assets/score-gauge/score-gauge-texture.png') center/100% 100% no-repeat;content:'';opacity:.32}
+    .gauge:before{position:absolute;z-index:0;inset:0;background:url('../../src/assets/score-gauge/score-gauge-texture.png') center/100% 100% no-repeat;content:'';opacity:.32;pointer-events:none}
+    .gauge>*{z-index:1}
     .gauge h3{position:absolute;top:16px;left:16px;margin:0;font-size:18px;font-weight:500;line-height:26px}
     .container{position:absolute;top:54px;right:16px;bottom:19px;left:16px}
     .scale{position:absolute;top:6px;left:50%;width:184.545px;height:100px;overflow:hidden;transform:translateX(-50%)}
-    .guide{position:absolute;top:36px;left:50%;width:118.182px;height:59.091px;border:.659px solid #111;border-radius:50%;transform:translateX(-50%)}
+    .guide{position:absolute;top:36px;left:50%;width:118.182px;height:59.091px;border:.659px dashed #111;border-bottom:0;border-radius:100% 100% 0 0;transform:translateX(-50%)}
     .tick{position:absolute;top:0;left:50%;width:3.953px;height:18.445px;background:rgba(17,17,17,.1);transform:translateX(-50%) rotate(var(--angle));transform-origin:50% 100px}
     .tick.active{background:#111}
     .needle{position:absolute;top:48.182px;left:50%;width:3.636px;height:30px;background:#111;transform:translateX(-50%)}

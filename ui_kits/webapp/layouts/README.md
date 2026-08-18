@@ -2,7 +2,7 @@
 
 - AppHeader：70px
 - Sidebar：224px
-- Main content：24–32px padding
+- Main content：16px padding
 - Desktop baseline：1440px，向下兼容 1280px
 - Modal widths：480 / 640 / 880 / 1080 / 1394px
 - Header 使用官方完整 wordmark；不再放置旧的顶部三模块切换。

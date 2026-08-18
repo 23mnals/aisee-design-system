@@ -4,5 +4,10 @@
   "variables": "variables.json",
   "exportsDir": "exports",
   "figmaUrl": "https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/%E5%A4%87%E4%BB%BD-%E5%AE%98%E7%BD%91-dapp%E4%B8%BB%E5%8A%9F%E8%83%BD",
-  "scoreGaugeNodeId": "58:32548"
+  "scoreGaugeNodeId": "58:32548",
+  "latestFeaturePage": "5.7",
+  "latestFeatureNote": "新增托管自动发布（Automation）页面；归类于 WORKFLOWS，不属于 INTEGRATIONS。",
+  "archiveExportedAt": "2026-08-18T08:06:53.046Z",
+  "archiveSizeBytes": 321906245,
+  "archiveSha256": "8d773862b241f884a222d33205380fd1a2441e570316abe9ff3ece4a370f2d60"
 }

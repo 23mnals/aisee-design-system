@@ -2,7 +2,7 @@
 
 > 适用范围：**aisee Web App** https://app-dev.aisee.live/
 > 设计宽度：**1440px**（desktop），向下兼容到 1280
-> 字体规则：**aisee dApp 全部统一使用 Karla**；Gotu 仅保留在官网（Homepage），不进入 dApp；标准弹窗标题使用 Karla SemiBold 20px / weight 600，二次确认弹窗按 §6.9.1 使用 Medium 500
+> 字体规则：**aisee dApp 全部统一使用 Karla**；Gotu 仅保留在官网（Homepage），不进入 dApp；**所有弹窗标题统一使用 Karla Medium 20px / weight 500**（demo 与后续实现均遵循此值）
 > 设计基调：**功能优先 · 信息密度高 · 极简数据驱动 · 与官网同源但更克制**
 > 版本：**v6** · 2026-08-11 · dApp 字体统一 Karla；Toggle 组件规范与 Figma 组件源同步；Modal 间距与文字规范补全
 
@@ -40,32 +40,32 @@ Product overview 必须完整呈现六个相互连接的能力，不能只列 An
 5. **Verify**：执行后重新扫描，记录分数轨迹并验证实际提升。
 6. **Connection**：统一管理 channel、social account 与 extension 连接，供 Growth / Engage / Post 复用。
 
-主流程关系：**Analysis diagnoses → Growth prioritizes → Engage / Post execute → Verify measures**；Connection 是跨流程的底层连接能力。六项是产品能力结构，不等同于顶部模块主色切换结构。
+主流程关系：**Analysis diagnoses → Growth prioritizes → Engage / Post execute → Verify measures**；Connection 是跨流程的底层连接能力。六项是产品能力结构，不等同于侧边栏的纵向分组结构。
 
 ### ★ 双主色系统（核心规则）
 
-dApp 按 **功能模块** 划分两套主色调，**侧边栏 tab 切换时整页高亮色随之切换**：
+dApp 按 **功能模块** 划分两套主色调，**侧边栏纵向功能项切换时整页高亮色随之切换**：
 
 | 功能模块 | 主色 | hex | 范围 |
 |---|---|---|---|
 | **Analysis** | lime | `#CFFF29` | Analysis / Score / Report / Diagnostic |
 | **Post Agent** | yellow | `#FFE253` | Calendar / Channels / Models / Media |
-| **Engage**（v5 起独立） | yellow | `#FFE253`（**沿用 Post Agent 的 yellow 主色系**） | Dashboard / Signal Feed / Keywords & Accounts / Replies |
+| **Engage**（当前独立功能） | yellow | `#FFE253`（**沿用 Post Agent 的 yellow 主色系**） | Signal Feed / Keywords & Accounts / Replies |
 
-> **Engage 位置说明**（v5 修订）：Engage **不再是 Post Agent 的二级模块**——它在 Sidebar 顶部 Tab Toggle 中与 Analysis / Post Agent **平级**，是独立的第三个 tab。**色彩仍完全沿用 yellow `#FFE253` 系统**（所有 step badge、active tab、selected feed card、Generate Reply 主按钮均用 yellow），不引入新的模块主色；但 Engage 自有的 **身份色 lavender-pink `#FAE2FE`**（日常 Banner）和 **lime `#F0FFBA`**（首次配置 Banner）仅用于 Banner 容器，不参与主色切换逻辑。Engage 内置 4 个子页 Tab：**Dashboard / Signal Feed / Keywords & Accounts / Replies**——详见 §13。
+> **Engage 位置说明（当前 Figma 结构）**：Engage 位于 Sidebar 的 **GROWTH LOOP** 纵向功能列表中，与 Analysis / Growth / Post / Verify 同级；不再使用顶部横向 Tab，也不是 Post Agent 的二级模块。点击 Engage 后按功能显示其纵向子项（Signal Feed / Keywords & Accounts / Replies），不使用横向 PageTab 代替侧边栏路由。**色彩仍完全沿用 yellow `#FFE253` 系统**（step badge、active 功能项、selected feed card、Generate Reply 主按钮均用 yellow），不引入新的模块主色；Engage 自有的 **身份色 lavender-pink `#F3E7F4`**（日常 Banner）和 **lime `#F0FFBA`**（首次配置 Banner）仅用于 Banner 容器，不参与主色切换逻辑。详见 §13。
 
 | 功能模块 | 主色 | 用途 | 触发位置 |
 |---|---|---|---|
-| **Analysis**（分析报告 / 竞品对比 / Score / Report） | **`#CFFF29` lime** | "+ New Analysis" 主按钮、Score 区底色、active sidebar 项、"Latest" 徽章、Channels/Past Reports 顶部 tag、progress fill、上升数据 | 侧栏 tab 选中 "Analysis" 时 |
-| **Post Agent**（社媒帖子 / Calendar / Channels / Post Editor） | **`#FFE253` yellow** | "+ New" 主按钮、active sidebar 项底色、Post 卡片活跃高亮、Calendar 当天背景、active 平台 tab | 侧栏 tab 选中 "Post Agent" 时 |
+| **Analysis**（分析报告 / 竞品对比 / Score / Report） | **`#CFFF29` lime** | "+ New Analysis" 主按钮、Score 区底色、active sidebar 项、"Latest" 徽章、Channels/Past Reports 顶部 tag、progress fill、上升数据 | 侧栏功能项选中 "Analysis" 时 |
+| **Post Agent**（社媒帖子 / Calendar / Channels / Post Editor） | **`#FFE253` yellow** | "+ New" 主按钮、active sidebar 项底色、Post 卡片活跃高亮、Calendar 当天背景、active 平台 tab | 侧栏功能项选中 "Post" / Post Agent 区域时 |
 
 > **共享**：黑色文本、白色卡片、cream 编辑器底、orange 通知红点、green 成功 dot、red-light 错误底 —— 在两个模块下完全一致。
 > **不共享**：active 状态色、主 CTA 按钮色、关键徽章色。
 
 切换逻辑：
 ```js
-// 侧栏顶部 Tab Toggle 切换
-const moduleTheme = activeTab === 'Analysis'
+// 侧栏纵向功能项切换
+const moduleTheme = activeFunction === 'Analysis'
   ? { primary: '#CFFF29', primaryHover: '#BFEE19' }
   : { primary: '#FFE253', primaryHover: '#FCE055' };
 document.documentElement.style.setProperty('--module-primary', moduleTheme.primary);
@@ -89,7 +89,7 @@ Figma 与代码必须保持同一条依赖链：
 
 - **元数据 / Primitive**：只记录未经用途修饰的原始颜色及 Light / Dark 值，例如 `gray/gray-900`、`yellow/yellow-400`。这一层不描述按钮、文字、背景或状态，不允许在业务页面直接引用。
 - **语义化 / Semantic**：按功能角色命名，例如 `colour/text/primary`、`colour/bg/base`、`colour/button/analysis`。每个语义变量通过 alias 引用元数据；页面换模式时由 alias 解析到对应的 Light / Dark 值。
-- **组件与页面**：只允许使用 `--aisee-color-semantic-*`。禁止直接写 HEX，也禁止直接使用 `--aisee-color-primitive-*`。
+- **组件与页面**：只允许使用 `--aisee-color-semantic-`*。禁止直接写 HEX，也禁止直接使用 `--aisee-color-primitive-*`。
 - **兼容层**：现有 `--aisee-color-black` 等旧 CSS 名称会继续导出，但由生成器转接到语义变量；新代码不得继续扩展旧命名。
 - **完整清单**：`src/tokens/color-architecture.json` 是从 Figma 的“元数据 / 语义化”集合校准的机器可读快照，HTML system 内嵌同一份数据并提供层级、模式、类别和搜索筛选。
 
@@ -99,7 +99,7 @@ Figma 与代码必须保持同一条依赖链：
 
 > `colour/bg/hover` 的用途已确认：作为组件与可交互表面的 Hover 状态背景叠色。Light 使用 `#1111110A`；Dark 当前仍是原始 `#FFFFFF`，需在 Figma 校对后再标记为完整验证。
 
-### 2.1 模块主色（随 sidebar tab 切换）
+### 2.1 模块主色（随 Sidebar 纵向功能项切换）
 
 ```css
 :root {
@@ -115,7 +115,7 @@ Figma 与代码必须保持同一条依赖链：
   --postagent-primary-bg:    #FFF2B3;
   --postagent-primary-pale:  #FFFADD;
 
-  /* 由 JS 在 tab 切换时设置 */
+  /* 由 JS 在 Sidebar 纵向功能切换时设置 */
   --module-primary:       var(--analysis-primary);
   --module-primary-hover: var(--analysis-primary-hover);
   --module-primary-bg:    var(--analysis-primary-bg);
@@ -172,7 +172,7 @@ Figma 与代码必须保持同一条依赖链：
 ### 字体职责口诀
 ```
 页面一级标题    → Karla SemiBold 600（"Account Profile" / 页面顶部标题）
-弹窗标题        → Karla SemiBold 600（"Create Post" / "Edit Time Slots" / "Add Channel"）
+弹窗标题        → Karla Medium 500（"Create Post" / "Edit Time Slots" / "Add Channel"）
 其他所有文本     → Karla            （body / button / nav / table / form / tag）
 Score 仪表盘数字   → Digital Numbers （仅中心数字）
 ```
@@ -191,7 +191,7 @@ Score 仪表盘数字   → Digital Numbers （仅中心数字）
 
 body              { font-family: 'Karla', sans-serif; }
 .page-title       { font-family: 'Karla', sans-serif; font-weight: 600; }
-.dialog-title     { font-family: 'Karla', sans-serif; font-weight: 600; }
+.dialog-title     { font-family: 'Karla', sans-serif; font-weight: 500; }
 .gauge-digit      { font-family: 'Digital Numbers', monospace; }
 .mono             { font-family: 'JetBrains Mono', monospace; }
 ```
@@ -201,7 +201,7 @@ body              { font-family: 'Karla', sans-serif; }
 ```
 Page Title (Karla SemiBold):    Karla 20px / 600 / lh 24px / #111
                                   → "Account Profile" / 页面顶部一级标题
-Dialog Title (Karla SemiBold):  Karla 20px / 600 / lh 30px / #111
+Dialog Title (Karla Medium):      Karla 20px / 500 / lh 30px / #111
                                   → "Create Post" / "Edit Time Slots" / "Add Channel"
 
 Section Title:                  Karla 18–20px / 600 / lh 1.4
@@ -214,8 +214,8 @@ Micro / Tag:                    Karla 10–11px / 500 / lh 1.4
 Stat Number (Dashboard):        Karla 32–48px / 600 / lh 1.0
 Stat unit / delta:              Karla 12px / 500
 
-Score Gauge 数字（仅 Analysis）: Digital Numbers 64–80px / #111
-Score Gauge unit:               Karla 14–16px / 500
+Score Gauge 数字（仅 Analysis）: Digital Numbers 20px / 400 / #111（置于 64×26px 白色数字框）
+Score Gauge unit:               不单独显示 unit；标题与辅助文案使用 Karla
 
 Nav item / Sidebar:             Karla 14px / 400（active 500）
 Button (大):                    Karla 20px / 500（如 URL Input 内 Analysis 按钮）
@@ -242,7 +242,7 @@ figma 实测字频 — Karla 字号使用分布：14px×229、12px×195、16px×
 ├──────┬─────────────────────────────────────────────────────────┤
 │      │                                                         │
 │ Side │   Main Content Area                                     │
-│ 224  │   padding: 24px 32px                                    │
+│ 224  │   padding: 16px                                          │
 │ px   │   background: #FAFAFA                                   │
 │      │                                                         │
 └──────┴─────────────────────────────────────────────────────────┘
@@ -252,9 +252,38 @@ figma 实测字频 — Karla 字号使用分布：14px×229、12px×195、16px×
 |---|---|
 | Header 高度 | **70px** |
 | Sidebar 宽度 | **224px**（v5 由 211 调整） |
-| 主内容内边距 | 24–32px |
+| 主内容内边距 | **16px** |
 | 卡片间距（gap） | 8 / 12 / 16 / 24 / 32 / 48px（8px scale） |
 | Modal 默认宽 | 480 / 640 / 880 / 1080px（按内容深度） |
+
+### 4.1 Page Banner（所有页面必备）
+
+> 以 Figma 节点 `66:122927` 为全站 Banner 基准。**除 AppHeader 和 Sidebar 外，所有页面的主内容区第一块必须是 Banner**；新增页面不得跳过 Banner，也不得先放通用大标题再补 Banner。
+
+Banner 是页面功能入口和上下文摘要，由四部分组成：左侧功能插图/图标、标题、描述，以及按实际功能决定的右侧操作位。右侧操作位可以是按钮、Toggle、统计信息或留空；没有操作时不显示空白占位控件。
+
+| Token / 部位 | 规范 | 实现要求 |
+|---|---|---|
+| 外层尺寸 | 高 **76px**；宽度跟随主内容区（Figma 参考宽 1184px） | 不写死页面宽度；在主内容区内 `width: 100%` |
+| 外层表面 | `var(--aisee-color-semantic-bg-hover)`（当前解析约 `rgba(17,17,17,.04)`） | 白色 **4px** 呼吸描边环，圆角 **16px**；不要使用截图或低清 PNG |
+| 内容区 | `padding: 6px 16px`，`gap: 8px`，垂直居中 | 内容区高度 68px；左右内容不得贴边 |
+| 左侧图标容器 | **44×44px**，白底，圆角 **8px** | 现有页面使用 StemUI 对应功能 icon 或已确认的插图；容器内 leaf icon 固定 **24×24px** |
+| 标题 | Karla Medium **20px / 500 / 24px**，字距约 `-0.4px`，语义色 `text/primary` | 标题和描述放在同一纵向内容组中；标题不使用 700 粗体 |
+| 描述 | Karla Regular **14px / 400 / 22px**，语义色 `text/primary` | 位于标题正下方；描述可随页面文案换行，但不得改变 Banner 固定高度 |
+| 右侧操作位 | `display: flex; align-items: center; justify-content: flex-end`；参考槽位高度 **56px**，内部 gap **32px** | 按页面功能放 Button、Toggle 或统计信息；按钮/开关必须复用现有组件及语义变量 |
+
+#### Icon 与插图来源
+
+- **已有页面**：优先使用 `@stemui/icons` 中与功能语义匹配的 SVG；需要插图时使用设计稿已确认的 `illustration_`* 资源。不得用模糊截图、低分辨率位图、emoji 或临时绘制的 SVG 替代。
+- **新增页面**：在对应功能插图尚未交付前，可以使用明确标记的占位容器（保持 24×24 leaf 尺寸和 44×44 白色容器）；占位符只允许作为开发阶段替代物，发布前必须换成产品 icon / illustration。
+- 功能 icon 与 Banner 插图区分：Sidebar、按钮、输入、下拉等交互位置使用 `line_*` / `fill_*` 功能 icon；Banner 左侧可使用功能 icon 或 `illustration_*`，但不得反过来把插图当作交互 icon。
+
+#### 页面实现清单
+
+1. Banner 位于主内容区最顶部，紧接页面 Shell，不在 Banner 上方重复渲染旧式 page title bar。
+2. 标题、描述、左侧图标和右侧操作由页面配置传入；不要复制一份通用 Banner 后硬编码所有页面文案或操作。
+3. 右侧没有操作时保持标题区自然占满剩余宽度；有按钮或 Toggle 时保持垂直居中，并与 Banner 右边缘保留 16px 内边距。
+4. 页面新增或功能拆分时，先登记 Banner 的 `icon/illustration`、标题、描述和右侧操作类型，再实现下方内容区。
 
 ### Spacing Scale
 `4 / 8 / 12 / 16 / 24 / 32 / 48 / 64px` — 一律以 8px 为基础。
@@ -309,35 +338,23 @@ Logo mark:                      320px 320px 0 0
     - Post Agent 模块：`+ New`（yellow 底）
   - 头像：32×32 圆，灰底 `#E1E1E1`
 
-### 6.2 Sidebar (224px)
-> **⚠️以最新产品截图为准，figma 中 `SidebarAccount` 是旧版**。结构：
+### 6.2 Sidebar（224px 展开 / 58px 收起）
+> 以 Figma 节点 `66:122924` 的当前 Sidebar 为准。Sidebar 不再使用顶部横向 Tab Toggle；导航按功能纵向分组，选中功能后按需展开对应子项。
 
-- 顶部 **Tab Toggle**（Analysis / Post Agent / Engage，v5 起 3 项平级）
-  - 横向排布，gap 4，外层容器底 `rgba(17,17,17,0.02)`，圆角 8
-  - **⚠️ 全站描边铁律**：所有静态描边一律 `rgba(17,17,17,0.05)`（5% 透明黑）——Tab Toggle 的 active tab、卡片、输入框、chip、Banner 等全部用同一值，不要派生其他灰阶
-  - **active 项**：**显示 icon + 文字**，白底 `#FFFFFF`，描边 `1px solid rgba(17,17,17,0.05)`，文字 `#111` / Karla 14 / 500，icon `#111` 100% 不透明，padding `6px 12px`
-  - **inactive 两项**：**只显示 icon**（隐藏文字），透明底，无描边，icon `rgba(17,17,17,0.5)`（50% 黑），hover 时 icon 变 `#111`（100%）；padding `6px 10px`
-  - 切 tab 时主色随之切换：Analysis → lime，Post Agent → yellow，Engage → yellow（沿用 Post Agent 色系）
-- **主 CTA**（仅 Analysis 模块出现在 sidebar 顶部）：`+ New Analysis` 大按钮，全宽，底 lime `#CFFF29`，Karla 14 / 500
-  - Post Agent 模块下，该按钮移到 Header 右侧（"+ New" yellow）
-- **Nav Items / 项目列表**（Analysis 下）：
-  - 项目名 + 右侧 chevron，可展开查看该项目的历史 Report
-  - 项目名左侧是平台 favicon（16×16 圆形）
-  - 活跃项目底色 = `var(--module-primary)`，Analysis 下为 lime
-  - hover 底色 `rgba(17,17,17,0.05)`
-  - Karla 14px / 400（active 500）
-- 底部 Profile Card：
-  - 圆角 8 ，底 `#FAFAFA`，1px 极淡描边
-  - 头像 + 邮箱 + 计划名（Karla 11–12px）
-  - 内部分隔 `1px dashed #E5E6EC`
-  - Credits 行 + progress bar（高度 6px，圆角 4px，底 `rgba(17,17,17,0.05)`，填充 `var(--module-primary)` — sidebar 位于 profile 区，不随模块切换，默认 lime）
-
-**Engage 顶部 Tab Toggle**（跨 Analysis / Post Agent / Engage 三 tab 平级切换）：
-- 容器：宽 208，高 34，底 `rgba(17,17,17,0.02)`，圆角 8，padding 3
-- **inactive 项**：宽 59，高 20，**只显 icon**（icon `rgba(17,17,17,0.5)` 50% 黑、hover 变 `#111` 100%）
-- **active 项**：宽 82，高 28，icon + 文字，底 `#FFFFFF`，
-  **双层阴影 / 描边：`inset 0 0 0 1px rgba(17,17,17,0.05), 0 1px 2px 0 rgba(0,0,0,0.12)`**（v5 补充，原文仅写 inset border 未写外部 drop shadow）。文字 Karla 500 / 14 / `#111`
-- 切 tab 时主色同步切换：Analysis → lime，Post Agent → yellow，Engage → yellow（沿用 Post Agent）
+- 展开宽度 **224px**，白底 `#FFFFFF`，右侧 1px 极淡分隔线；顶部 padding `16px 12px`，分组之间使用约 `16px` 间距。
+- **可收起**：以 Figma 节点 `38:47504` 的 icon-only 状态为准，收起宽度 **58px**。收起态仅保留项目/账户头像、功能图标和收起/展开控制图标；隐藏项目名、更新时间、分组标题、文字标签、子项层级线、邮箱、套餐和 Credits 文本，不改变导航功能顺序。
+- 收起/展开由 Sidebar 内的 chevron 控制；必须使用 StemUI 的 `line_chevron-up.svg`（展开态旋转为向左、收起态显示向右），按钮提供 `aria-expanded`、`aria-controls` 和可见键盘焦点。宽度切换使用约 150ms 过渡，并在同一浏览器中记忆用户最后状态。
+- 顶部账户区：项目 Profile Container（高度约 32px，圆角 8px，左右 8px 内边距）+ 收起按钮；下方显示 `Last Updated`，再接一条水平分隔线。
+- **PROJECT** 分组：`Overview`。
+- **GROWTH LOOP** 分组：按功能纵向显示 `Analysis`、`Growth`、`Engage`、`Post`、`Verify`。
+  - `Analysis` 选中或展开时，子项纵向显示 `Summary`、`Full Report`，子项左侧使用 2px 分割线形成层级；不使用横向 tab 代替。
+  - `Engage` 是 Growth Loop 中的一级功能项，与 Analysis / Growth / Post / Verify 同级；进入 Engage 后，其 Signal Feed、Keywords & Accounts、Replies 作为纵向子项或对应路由显示，详见 §13。
+- **CONNECT CHANNELS** 分组：`Connections`。
+- **INTEGRATIONS** 分组：`Search Console`。
+- **WORKFLOWS** 分组：`Automation`（新功能，独立于 INTEGRATIONS）。
+- 导航行统一约 **30px 高**（`padding: 4px 8px`，圆角 8px，icon 容器 18×18，文字 Karla 14px / 400，行内 gap 4px）；同一分组内项目间距约 4px。子项增加左侧缩进和分隔线。
+- Hover 底色 `rgba(17,17,17,0.05)`；active 使用当前功能的语义主色（Analysis `#CFFF29`，Engage / Post `#FFE253`），不再使用 Tab Toggle 的双层描边规则。
+- 底部 Profile Card：圆角 8，底 `#FAFAFA`，1px 极淡描边；头像 + 邮箱 + 计划名（Karla 11–12px），内部分隔线，Credits 行 + 6px progress bar。Profile 区固定在底部，不随功能项切换结构。
 
 
 
@@ -367,21 +384,21 @@ Logo mark:                      320px 320px 0 0
 - 用于工具栏图标按钮
 
 **Danger**
-- 以 Figma [`button大小`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9905-214773) 为准：底 `#EC5212`，文字 `#FFFFFF`
+- 以 Figma `[button大小](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9905-214773)` 为准：底 `#EC5212`，文字 `#FFFFFF`
 - 在共享按钮组中与 Primary / Secondary / Ghost 统一为 Karla Medium 14px / 500 / line-height 18px；padding `8px 16px`；高度 36；圆角 8；无描边
 - Hover：保持白字，背景使用 `color-mix(in srgb, #EC5212 90%, #111111)`；不增加描边、不改变尺寸
 - 用于 Delete / Disconnect / Discard Changes 等不可逆或高风险操作。`#FFD0D0` 仅保留给错误提示面、危险 Tag 等浅色容器
 
 ### 6.5 Inputs / Toggle / Checkbox
 - Input：高度 36，圆角 8，默认描边 `1px solid rgba(17,17,17,0.05)`
-- **Input hover / focus（compound 双描边）**：内层描边切换为 `1px solid #111`，外层增加 `2px solid var(--module-primary)` 的模块色环；圆角保持 8px，不使用浏览器默认 outline。实现可使用 `box-shadow: 0 0 0 2px var(--module-primary)`，效果必须等价于 Figma [`Input hover`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9420-448029)
+- **Input hover / focus（compound 双描边）**：内层描边切换为 `1px solid #111`，外层增加 `2px solid var(--module-primary)` 的模块色环；圆角保持 8px，不使用浏览器默认 outline。实现可使用 `box-shadow: 0 0 0 2px var(--module-primary)`，效果必须等价于 Figma `[Input hover](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9420-448029)`
   - Analysis：外环 `#CFFF29`
   - Post Agent / Engage：外环 `#FFE253`
 - Error 优先级高于 hover / focus：保留 orange 错误描边并移除模块色外环；Disabled 不响应 hover
 - Select / Dropdown trigger：同 Input 样式 + 右侧 caret 图标
 - **Checkbox**：18×18，圆角 4，**未选描边 `1.5px solid #111`**（全黑实线，保持可点击感），选中底 `var(--module-primary)` + 黑色 ✓
   - **Hover 反馈**：鼠标移到承载该 checkbox 的整行（如 list row / table row）时，checkbox 底色变 `var(--module-primary)`（lime / yellow 提示即将选中）；离开恢复
-- **Toggle（唯一标准组件）**：使用 Figma [`toggle`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9708-259524)；Component Set Key `f66aa1aef1a16c844d6e08326831f72c3af7d400`
+- **Toggle（唯一标准组件）**：使用 Figma `[toggle](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9708-259524)`；Component Set Key `f66aa1aef1a16c844d6e08326831f72c3af7d400`
   - 尺寸 **24×16**；圆角约 12.7（视觉上为 full radius）；四边 padding 3px
   - thumb：**10×10**，`#111`；track：`1px solid #111`
   - Variant：`Property 1 = off | on`，默认 `off`
@@ -418,11 +435,11 @@ Logo mark:                      320px 320px 0 0
   - 背景 `#FFFFFF`
   - **内边距（默认硬规则）**：`24px`（上 / 右 / 下 / 左全部为 24px）。除非对应 Figma 节点有明确覆盖，不得拆成不同方向值，也不得改由内部容器补齐左右间距
 - **蒙层**：`rgba(17,17,17,0.4)`，可加 `backdrop-filter: blur(2–4px)`
-- **标题（Karla SemiBold 20px / 600 / lh 30px / #111）**：靠左对齐，例：“Create Post” / “Add Channel” / “Edit Time Slots” / “Compare versions”
+- **标题（Karla Medium 20px / 500 / lh 30px / #111）**：靠左对齐，例：“Create Post” / “Add Channel” / “Edit Time Slots” / “Compare versions”
   ```css
   .dialog-title {
     font-family: 'Karla', sans-serif;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 20px;
     line-height: 30px;
     color: #111;
@@ -461,7 +478,7 @@ Logo mark:                      320px 320px 0 0
 - 标题右侧可选辅助标签（Tag pill，如 "Tags ∨"、项目 chip）：Karla Medium 13–14px / `1px solid rgba(17,17,17,0.05)` / radius 999 或 8
 - **右上角操作区**：**只放关闭 X 按钮**（30×30，内含 lucide-x 24×24、`#111`，hover 底 `rgba(17,17,17,0.05)`）。
   - 不在右上角放 Export / Upload / Share 等次要操作——这类按钮迁移到**底部操作区**或卡片内 inline，避免与 Close 混淆
-- **底部操作区 / Modal Footer Button（默认硬规则）**：以 Figma [`按钮`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9872-287453) 为唯一参考；之后所有弹窗内部底部按钮均按此规则实现
+- **底部操作区 / Modal Footer Button（默认硬规则）**：以 Figma `[按钮](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9872-287453)` 为唯一参考；之后所有弹窗内部底部按钮均按此规则实现
   - 操作区顶部必须有 **1px 顶边分割线**：`#111111`、opacity `6%`，即 `rgba(17,17,17,0.06)`；只显示上边，不显示左右和底边
   - 分割线横跨弹窗内容宽度；按钮区域顶部 padding `14px`、左右 padding `24px`，按钮右对齐，按钮间距 `12px`
   - **灰色次按钮**（Cancel / Reset / Back 等）：高度 `40px`，padding `8px 12px`，圆角 `8px`；底色 `rgba(17,17,17,0.02)`；必须增加 **1px 描边**，描边为 `rgba(17,17,17,0.06)`；文字 Karla 14px / 500 / line-height 24px / `#111`
@@ -496,14 +513,14 @@ Logo mark:                      320px 320px 0 0
   ```
 - **内嵌错误 Tooltip**（按钮上方挑出提示）：黑底 `#111` + Karla 14 白字 + 圆角 8 + `box-shadow: 0px 10px 12px rgba(0,0,0,0.12)`，详见 6.17
 
-> **标题字体规则**：Figma 中页面一级标题与弹窗标题全部使用 Karla；标准弹窗标题统一 Karla SemiBold 20px / weight 600（不是 Gotu、也不是 Bold 700）。二次确认弹窗是明确例外，使用 §6.9.1 的 Karla Medium 20px / weight 500。
+> **标题字体规则**：Figma 中页面一级标题与弹窗标题全部使用 Karla；**所有弹窗标题统一 Karla Medium 20px / weight 500**（不是 Gotu、也不是 SemiBold 600 或 Bold 700）。demo 与后续弹窗规则均以此为准。
 
 #### 6.9.1 二次确认弹窗 / Confirmation Dialog
-> 适用于关闭未保存内容、删除、断开连接等需要用户再次确认的高风险操作。唯一参考为 Figma [`关掉弹窗时提示用户`](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9905-214758)。它是独立模式，不得用带输入框的标准表单弹窗代替。
+> 适用于关闭未保存内容、删除、断开连接等需要用户再次确认的高风险操作。唯一参考为 Figma `[关掉弹窗时提示用户](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9905-214758)`。它是独立模式，不得用带输入框的标准表单弹窗代替。
 
 - 容器：宽 512px，白底，`1px solid rgba(17,17,17,0.15)`，圆角 16；阴影 `0 20px 12px rgba(0,0,0,0.10), 0 8px 4px rgba(0,0,0,0.04)`
 - 容器内边距：上、右、下、左统一 `24px`；不得通过按钮区额外 bottom padding 叠加出 32px 或 44px 的底部空白
-- 标题区：标题 Karla Medium 20px / 500 / line-height 30px；这是针对当前二次确认弹窗的轻量层级，覆盖通用 Modal 的 600
+- 标题区：标题 Karla Medium 20px / 500 / line-height 30px；标准 Modal 与二次确认弹窗统一使用此值
 - 关闭按钮：右上 30×30、圆角 8，使用官方 `dialog-close.svg`；图形 13.5×13.5，stroke 1.5 / `#111`
 - 正文：与标题垂直间距 24px；Karla Regular 16px / 400 / line-height 24px / `#111111`，不得使用 muted 灰色
 - 操作区：与正文保持 24px 模块间距，不再增加上下 padding；两个按钮等宽，gap 12px，容器底部由统一的 24px padding 提供
@@ -537,7 +554,7 @@ Logo mark:                      320px 320px 0 0
 ### 6.11 Chart / Data Viz
 - **折线图**：stroke 2px `var(--module-primary)` + 下方 module-primary → 透明 fill 渐变（仅图表内允许渐变）
 - **柱状 / 进度条**：高度 6–8px，圆角 4，底 `rgba(17,17,17,0.05)`，填充 `var(--module-primary)`；多平台 / 多版本对比使用同色 opacity 区分（v1.0 0.3 → v4.0 1.0）
-- **Score 仪表盘**（Analysis 独有）：大型环形 / 弧形 gauge，底色 `#CFFF29` lime 实块，中心大数字（如 "45.0"，Karla 加粗 64–80px），背景叠加放射线装饰。Post Agent 模块下不使用 Score 组件。
+- **Score 仪表盘**（Analysis 独有）：`381×216px` lime `#CFFF29` 容器，中心使用 `Digital Numbers 20px/400` 数字框；仪表为上半圆虚线描边与刻度，背景叠加 Figma 导出的放射纹理。Post Agent 模块下不使用 Score 组件。
 - 坐标轴：浅灰 `#E1E1E1`，标签 Karla 11 / rgba(17,17,17,.5)
 - 数据点 hover：`var(--module-primary)` 圆点 + 黑色 tooltip（Karla 12 / 白字，圆角 6）
 
@@ -555,7 +572,7 @@ Logo mark:                      320px 320px 0 0
 - 平台 chips 横排，每个 chip 圆角 999 + 平台 icon + 名称
 
 ### 6.14 Iconography
-- AISEE 自有 icon 统一来自 **StemUI**：源文件与 React 组件维护在 [`qi15582378779/stemui`](https://github.com/qi15582378779/stemui)，产品端通过 npm README 页面安装与查看版本说明：[`@stemui/icons`](https://www.npmjs.com/package/@stemui/icons?activeTab=readme)
+- AISEE 自有 icon 统一来自 **StemUI**：源文件与 React 组件维护在 `[qi15582378779/stemui](https://github.com/qi15582378779/stemui)`，产品端通过 npm README 页面安装与查看版本说明：`[@stemui/icons](https://www.npmjs.com/package/@stemui/icons?activeTab=readme)`
 - 设计系统不复制整套 SVG；StemUI 是唯一资源源。Lucide 仅在 StemUI 暂无对应图标时作为补充，补充图标仍遵守 1.5px stroke、rounded linecap，并应评估后续纳入 StemUI
 - UI 尺寸：16×16（标准）/ 20×20（按钮内）/ 24×24（nav）
 - 颜色：`#111` 默认；在 lime / yellow 底上保持 `#111`；在黑底用 `#fff`
@@ -611,7 +628,7 @@ Logo mark:                      320px 320px 0 0
 - Success / Agent 使用 polite `status`；Error 使用 assertive `alert`
 
 ### 6.18 Score Gauge（**仅 Analysis**）
-> 唯一视觉基准：Figma node [`58:32548`](https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/%E5%A4%87%E4%BB%BD-%E5%AE%98%E7%BD%91-dapp%E4%B8%BB%E5%8A%9F%E8%83%BD?node-id=58-32548)。禁止用 donut / 完整圆环替代。
+> 唯一视觉基准：Figma node `[58:32548](https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/%E5%A4%87%E4%BB%BD-%E5%AE%98%E7%BD%91-dapp%E4%B8%BB%E5%8A%9F%E8%83%BD?node-id=58-32548)`。禁止用 donut / 完整圆环替代。
 
 - **容器**：`381×216px`，圆角 16，内描边 `1px rgba(17,17,17,.05)`；响应式时等比缩放，不拉伸为大卡片
 - **背景**：lime `#CFFF29` 实色铺底；Figma 导出的 `381×216px` 放射纹理以 `32%` opacity 覆盖
@@ -674,7 +691,7 @@ Logo mark:                      320px 320px 0 0
 - `opacity 0 → 1` + `transform: translateY(-4px) → 0` 0.15s
 - 关闭立即 hide 或 0.12s fade
 
-### Tab 切换
+### 页面内 Tab 切换（不用于 Sidebar 主导航）
 - Indicator 横条（`2px solid #111`）用 `transform: translateX` 滑动到新 tab 下方，0.25s `--ease`
 - 旧内容 `opacity 1 → 0`（80ms），新内容 `opacity 0 → 1`（120ms）
 
@@ -739,8 +756,8 @@ Logo mark:                      320px 320px 0 0
 | Do ✅ | Don't ❌ |
 |---|---|
 | dApp 全站统一 Karla，包括页面一级标题与弹窗标题 | 在 dApp 任意位置加载或使用 Gotu |
-| 标准弹窗标题用 Karla 600 / 20px / lh 30px；二次确认弹窗用 Karla 500 / 20px / lh 30px | 弹窗标题用 Gotu / Bold 700，或忽略二次确认弹窗的 500 例外 |
-| Score 仪表盘中心数字用 Digital Numbers | 用 Karla / Gotu 仿照数码管样式 |
+| 所有弹窗标题用 Karla 500 / 20px / lh 30px（包括二次确认） | 弹窗标题用 Karla 600、Gotu 或 Bold 700 |
+| Score 仪表盘中心数字用 Digital Numbers，仪表描边使用上半圆虚线 | 用 Karla / Gotu 仿照数码管样式，或使用完整实线椭圆 |
 | **按模块切换主色**：Analysis = lime，Post Agent = yellow | 同一屏内同时出现 lime 和 yellow 主操作 |
 | 主背景统一 `#FAFAFA`，卡片用 `#FFFFFF` | 主背景用任何 off-white 派生值 |
 | 主操作按钮一律 `var(--module-primary)` | 在 Analysis 里出现 yellow 按钮 / Post Agent 里出现 lime 按钮 |
@@ -755,39 +772,38 @@ Logo mark:                      320px 320px 0 0
 
 ---
 
-## 13. Engage 模块详解（v5 落地版 · 新前端复刻基准）
+## 13. Engage 模块详解（v6 落地版 · 新前端复刻基准）
 
-> 范围：Post Agent zone 下的 Engage 二级模块。本节为**前端 + AI 复刻设计的工作蓝本**——所有数值、颜色、间距均与 `Engage (Aisee Repo).html` + `engage-aisee/*.jsx` 实现一致，与 figma "aisee - v5.3 post-agent-engage" frame 对照实测。
+> 范围：Growth Loop 纵向 Sidebar 中的 Engage 一级功能。本节为**前端 + AI 复刻设计的工作蓝本**——所有数值、颜色、间距均应与当前 Figma Engage 区块对照校准，不再沿用“Post Agent zone 下的二级模块”或顶部横向 Tab 的旧模型。
 > 主色系：**Post Agent yellow `#FFE253`**（按钮、active、selected feed card outline、step badge）。
 > 模块身份色：**lavender-pink `#F3E7F4`**（日常 Banner、仅 Engage 专用，不要与 Channel banner 的 `#FAE2FE` 混用）/ **lime `#F0FFBA`**（initial setup Banner，仅首跑出现一次）。
 
 ### 13.1 模块结构与导航
 
-Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独立 tab**（v5 调整，v4 曾错误地描述为 Post Agent 的二级模块）。选中 Engage 后 Sidebar 下方**纵向列出 4 个子页 Tab**：
+Engage **是 Sidebar 的 GROWTH LOOP 纵向功能列表中与 Analysis / Growth / Post / Verify 同级的一级功能项**。选中或进入 Engage 后，相关页面按路由和功能**纵向显示**，不使用顶部横向 Tab：
 
-| # | Tab 名 | 路由 | 默认落地 | 顶部 Banner 变体 |
+| # | 子项 | 路由 | 默认落地 | 顶部 Banner 变体 |
 |---|---|---|---|---|
-| 1 | **Dashboard** | `/engage` | 首次进入有数据的工作区时 | lavender |
-| 2 | **Signal Feed** | `/engage/signal` | 信号流（核心交互页） | lavender |
-| 3 | **Keywords & Accounts** | `/engage/keywords` | 关键词 / 账号 / 子版块配置 | lavender |
-| 4 | **Replies** | `/engage/replies` | 已发与待审回复（含 Sent / Awaiting review 子 tab） | lavender |
+| 1 | **Signal Feed** | `/engage/signal` | 已配置工作区的默认落地页（核心交互页） | lavender |
+| 2 | **Keywords & Accounts** | `/engage/keywords` | 关键词 / 账号 / 子版块配置 | lavender |
+| 3 | **Replies** | `/engage/replies` | 已发与待审回复（含 Sent / Awaiting review 子 tab） | lavender |
 
-**Engage 子项渲染规则**（Sidebar Tab Toggle 选中 Engage 后才出现）：
+**Engage 子项渲染规则**（Sidebar 选中 Engage 后按功能显示）：
 - 项高 **30**（v5 从 36 收紧），padding `4px 8px`，圆角 8，icon 18×18 + 文字 Karla 14 / 400
 - Active 项：底 `#FFE253`（yellow，不变浅、无描边，无阴影），icon + 文字保持 `#111`；非 active 文字 `#111` / 400（依赖文本本身颜色）
 - 项右侧挂数字徽章（Replies 项上作历史提示）：圆角 12，高 16，min-w 29，padding `0 6px`，**底 `rgba(144,120,0,0.1)`**（深芙黄调透明，与 keyword pill `#8C7400` 同色系），**文字已从设计中拿掉**——徽章仅作为纯色点提示（v5 调整）
 
 **首次进入 vs 已配置**：
 - 未配置过 keywords/accounts/subs → 走 `<InitialConfig>` 路径（lime Banner + Keywords / Accounts / Subreddits 三卡 + 底部 "Start tracking posts" CTA）
-- 已配置 → 落地到 Dashboard，4 个 Tab 全部可点
+- 已配置 → 落地到 Signal Feed，3 个功能页全部可用
 
-### 13.2 Engage Banner（横贯四个 Tab 顶部）
+### 13.2 Engage Banner（横贯三个功能页顶部）
 
-> 实现：`engage-banner.jsx → EngageBanner({ variant, title, subtitle, stats })`。在每个 Tab 内都渲染一次，宽度 = 内容区宽 - 48（左右各 24 内边距）。
+> 实现：`engage-banner.jsx → EngageBanner({ variant, title, subtitle, stats })`。在每个 Engage 功能页顶部都渲染一次，宽度 = 内容区宽 - 48（左右各 24 内边距）。
 
 > **设计系统预览页应用规则（2026-08-13）**：组件与规范预览页的顶部说明区也使用 AISEE Banner 语言，不使用通用后台模板式的大标题栏。标题为 Karla 20 / 600，副标题 12 / 400，左侧使用 44–48px 白色 icon 容器，外层圆角 16px，并保留白色 4–5px 呼吸环。Analysis 使用 `#F5FFD4`，Post Agent 使用 `#FFFADD`，Engage 使用其身份色 `#F3E7F4`；组件卡标题统一 Karla 14 / 600，避免 Ant Design 式偏大、偏粗的展示层级。
 
-> **UI Kit 功能预览覆盖规则（2026-08-13）**：Web App UI Kit 不能只展示 Overview。当前侧边栏中的每个可到达功能都必须有可识别的近似页面预览，至少覆盖 Overview、Analysis、Growth、Improve Score、Build Brand Influence、Engage、Signal Feed、Keywords & Accounts、Replies、Post、Calendar、Channels、Media、Verify 与 Connection。预览无需逐像素复刻，但必须同步对应 Figma 设计区块的页面目的、主要信息结构、模块身份色和关键组件状态；不得使用空白页或通用占位卡代替。新增 Figma 功能时同步更新导航、页面注册表与自动覆盖测试。
+> **UI Kit 功能预览覆盖规则（2026-08-18）**：Web App UI Kit 不能只展示 Overview。当前侧边栏中的每个可到达功能都必须有可识别的近似页面预览，至少覆盖 Overview、Analysis、Growth、Improve Score、Build Brand Influence、Engage、Signal Feed、Keywords & Accounts、Replies、Post、Calendar、Channels、Media、Verify、Connection 与 Automation。Automation 是 5.7 新增的 WORKFLOWS 托管自动发布功能，不属于 INTEGRATIONS。预览无需逐像素复刻，但必须同步对应 Figma 设计区块的页面目的、主要信息结构、模块身份色和关键组件状态；不得使用空白页或通用占位卡代替。新增 Figma 功能时同步更新导航、页面注册表与自动覆盖测试。
 
 > **PlanCard 当前版本规则（2026-08-13）**：现行套餐卡以 Figma `v5.4-upgrade plan-页面优化 / upgrade`（node `8253:116053`）为准。页面包含 Plans / Credits 标签、Monthly / Yearly（15% off）计费切换，以及 Starter、Developer、Pro 三张 24px 圆角白色卡片。权益必须按 Analysis、Engage、Post Agent、Support 分组，并保留 Current Plan、Upgrade Plan、黑色 Primary CTA 与 Full Engage 徽章等状态。当前实现位于 `src/components/PlanCard.tsx` 与 `components/PlanCardCurrent/`；旧 `components/PlanCard/` 继续作为 Legacy 保留，不覆盖、不删除。
 
@@ -804,20 +820,20 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 | 容器高度 | **`76px`** | 固定，内容不超出 |
 | 内边距 | `15px 22px` |  |
 | Margin | `mx-6 mt-5` 即 `24px / 20px` | 与 PageTabs 紧邻 |
-| **lavender-pink 变体底** | **`#F3E7F4`**（Engage 专用身份色） | Dashboard / Signal Feed / Keywords / Replies 默认；**不要误用 Channel banner 的 `#FAE2FE`** |
+| **lavender-pink 变体底** | **`#F3E7F4`**（Engage 专用身份色） | Signal Feed / Keywords / Replies 默认；**不要误用 Channel banner 的 `#FAE2FE`** |
 | **lime 变体底** | **`#F0FFBA`**（tailwind: `bg-green-f0ffba`） | 仅 `<InitialConfig>` 使用 |
-| icon 容器 | 46×46，白底，圆角 10，`shadow: 0 1px 2px rgba(17,17,17,0.06)` | 内置 chat-bubble 28×28 黑色描边 |
-| 标题 | Karla **Bold 20** / lh 24 / `#111` | 文案固定 "Engage" / "Engage — Initial Setup" |
-| 副标题 | Karla 12.5 / lh 18 / `rgba(17,17,17,0.6)` | 例："Monitor and reply to relevant conversations across X and Reddit." |
+| icon 容器 | **44×44**，白底，圆角 8，`shadow: 0 1px 2px rgba(17,17,17,0.06)` | 遵循全站 Page Banner；内部 icon **24×24**，使用 StemUI 功能 icon 或已确认插图 |
+| 标题 | Karla **Medium 20 / 500** / lh 24 / `text/primary` | 文案固定 "Engage" / "Engage — Initial Setup"；不使用 700 粗体 |
+| 副标题 | Karla **14 / 400** / lh 22 / `text/primary` | 例："Monitor and reply to relevant conversations across X and Reddit." |
 | 右侧 stats 间距 | gap 26px | 多于 4 项时不允许换行（截断） |
 | stat label | 10px / 500 / uppercase / letter-spacing 0.04em / `rgba(17,17,17,0.55)` | 例 NEW / KEYWORDS / X ACCOUNTS / SUBREDDIT / SENT |
 | stat 数值 | Karla **Bold 19** / lh 22 / `#111` / tabular-nums | 不带千位逗号（除非 ≥4 位）|
 
-**`stats` 数组**通常 3–5 项。Dashboard / Signal Feed / Keywords / Replies **共用同一组**：`[New, Keywords, X accounts, subreddit, Sent]`——切 Tab 时数值不变（数据来自全局 store），切 Tab 时 Banner **不重新挂载**。
+**`stats` 数组**通常 3–5 项。Signal Feed / Keywords / Replies **共用同一组**：`[New, Keywords, X accounts, subreddit, Sent]`——切功能页时数值不变（数据来自全局 store），切页时 Banner **不重新挂载**。
 
 ### 13.3 Page Tabs（Banner 下的页面级 tabs）
 
-> 实现：`signal-feed.jsx → PageTabs`. **Banner 下方的真实页面内导航**——Sidebar 是路由级，PageTabs 是 Tab 内分屏（如 Replies 内的 Sent / Awaiting review，Signal Feed 内的 All / X / Reddit）。
+> 实现：`signal-feed.jsx → PageTabs`. **Banner 下方的真实页面内导航**——Sidebar 是路由级，PageTabs 只负责当前功能页内的分屏（如 Replies 内的 Sent / Awaiting review，Signal Feed 内的 All / X / Reddit）。
 
 - 容器：横向 flex，gap 28（`gap-7`），padding `16px 32px 0`（`mt-4 px-8`），底部 `1px solid rgba(17,17,17,0.05)` 作为 baseline
 - 每个 tab：`padding 12px 2px 14px`，inline-flex + gap 8
@@ -829,106 +845,11 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
   - **active 状态**：底 `#111`，文字 `#FFE253`（黑底亮黄字，注意是反白）
   - **inactive 状态**：底 `rgba(17,17,17,0.06)`，文字 `rgba(17,17,17,0.6)`
 
-### 13.4 Dashboard 页（Tab 1）
-
-> 实现来源：figma "Dashboard-engage" frame（screenshot 1）。Engage 模块的数据综合页，给运营 / PM 看的"成绩单"。
-
-**布局**：Banner → 主标题区 → 5 列 KPI strip → 2 列大图表 → 3 列下方组件。全页 padding `pt-2 px-8 pb-12`，纵向 gap 24。
-
-#### 13.4.1 主标题区
-- 单行：`"Engagement Performance"` Karla **Bold 18 / 600** + ⓘ info icon（12×12, `rgba(17,17,17,0.4)`，hover 显示 tooltip）
-- 右上角：平台过滤胶囊组 `X | Reddit`
-  - 每个 chip 高 24，padding `2px 10px`，圆角 999，gap 6
-  - **X chip**：黑底圆 + X 字形 logo + "X" 文字；激活时 `bg-yellow-ffe253` 底（图示），非激活 `bg-primary/[0.04]`
-  - **Reddit chip**：`bg-red-ec5212` 底 + 白 r/ logo + "Reddit" 文字；激活同上
-  - 多选模型（两个都可亮）
-
-#### 13.4.2 KPI Strip（5 列横向）
-**容器**：白底 `#FFFFFF`，圆角 14，padding `20px 24px`，内部 5 列等宽，**列间用 `1px solid rgba(17,17,17,0.05)` 竖分隔线**。
-
-| 顺序 | label | 数值字号 | 单位字号 | 备注 |
-|---|---|---|---|---|
-| 1 | Replies | 28px / 700 | — | 普通整数 |
-| 2 | Response rate | 28px / 700 | "%" 14 / 500 | 数值与 % 同色 #111 |
-| 3 | Total impressions | 28px / 700 | "K" 12 / 500 | K 紧贴右下、轻微抬基线 |
-| 4 | Traffic index | 28px / 700 + ⓘ | — | 数值后跟 info icon |
-| 5 | Total likes | 28px / 700 | — | — |
-
-- label 在数值下方：Karla 12 / 400 / `rgba(17,17,17,0.6)`
-- 每列内：`flex flex-col gap-1`，**居左**对齐
-- 数值用 tabular-nums，千位用半角逗号
-
-#### 13.4.3 双图表（2 列等宽，gap 24）
-
-**两张图共用的容器规格**：
-- 圆角 16，padding `20px 24px`
-- **底色 `#FBFBF3` cream**（不是白！这是 Dashboard 的标志性背景，与 KPI 白卡形成节奏）
-- 描边：无 / `1px solid rgba(17,17,17,0.05)`
-- 顶部一行：左边小 label + 大数字（label `Replies sent` / `Your Impressions`，数字 Karla **Bold 32** / `#111`）
-- 右上角：平台筛选胶囊（X / Reddit，同 13.4.1）+ **`Monthly ▾`** 周期选择 dropdown（高 28，padding `4px 12px`，圆角 8，描边 `rgba(17,17,17,0.05)`）
-
-**图 1 — `Replies sent` 柱状图**：
-- 12 根柱（按日期），颜色 `#FFE253` 实色 yellow
-- 柱宽 22，圆角顶部 4（底部直角），柱间 gap 计算到使整张图等距
-- Y 轴标签 0 / 20 / 40 / 60 / 80 / 100 / 120 / 140（Karla 11 / `rgba(17,17,17,0.5)`，左对齐）
-- Y 轴 grid line：`1px dashed rgba(17,17,17,0.05)`
-- X 轴标签：日期 `3/12` `3/13` ... Karla 11 / `rgba(17,17,17,0.5)`
-- hover 柱 → 整柱变深 yellow `#FCEB63`，弹出**白底 tooltip**：宽 132，padding `8px 10px`，圆角 8，描边 `rgba(17,17,17,0.05)`，shadow `0 8px 16px rgba(0,0,0,0.06)`
-  - tooltip 内容：第一行日期（"Mar 17" Karla 11 / 600 / `rgba(17,17,17,0.6)`）；下两行 `X 100` / `Reddit 29`（带平台 icon，数字 tabular-nums Karla 12 / 600）
-  - tooltip 上方延出一条 **dashed 1px** 黑色虚线到顶部，下方延伸到该柱柱顶
-
-**图 2 — `Your Impressions` area chart**：
-- **动位说明**（回答 "X / Reddit 指哪里"）：指这张 area chart 里的填充曲线本身。**figma 实测是单层渐变**（不是双 layer），该页上只有 X 一条曲线，需要在右上角胶囊切换才出现 Reddit；v5 中间版描述的 "双层 stroke + fill" 不准。
-- **实测渐变公式**（X 曲线底下 fill）：`linear-gradient(181.918deg, rgb(255,216,95) -27.81%, rgba(255,216,95,0) 75.69%)` ——即 **`#FFD85F` gold**，**不是 `#FFE253`**
-- 曲线 stroke：`#111` 2px（黑色）
-- Reddit 曲线（切换后出现）：同样单层渐变，stroke `#8C7400` 2px + fill `linear-gradient(…deg, #8C7400 -27%, transparent 75%)`（与 donut 深芙末色同 token 复用）
-- Y 轴标签 0 / 100K / 200K / 300K / 400K，Karla 11 / `rgba(17,17,17,0.5)`
-- Y 轴 grid：`1px dashed rgba(17,17,17,0.12)`
-- hover 显示圆点 + 白底 tooltip：圆点颜色对应平台（X 黑、Reddit 深芙），圆点 8px；tooltip 同图 1（"Mar 20" + 两行数据）
-
-#### 13.4.4 下方三组件（3 列 grid，左→右）
-
-**A. Engage traffic by platform（donut）**：
-- 容器同图表（cream `#FBFBF3` + 圆角 16）
-- 标题 `Engage traffic by platform` Karla 13 / 500
-- 大数字 `51` Karla **Bold 32** + 下方 chart
-- Donut：外径 ~160，环宽 28，二色分段：**主色 yellow `#FFE253`**（占大）+ **次色 `#8C7400` 深芙末**（v5 修订：原写 `#FCC4A0`、figma 实测是与 keyword pill / Reddit area chart 复用的 `#8C7400`）
-- 下方两行 legend：每行 = icon + 平台名 + 横向 progress bar + 数值
-  - bar 高 6，圆角 4，底 `rgba(17,17,17,0.08)`，填充 yellow / orange 实色
-  - 数值右对齐 Karla 14 / 600
-
-**B. Top engage sources（list）**：
-- 容器同 A
-- 标题 `Top engage sources` Karla 13 / 500 + 大数字 `22` + 下方 "Likes" 小标 11 / 400 / muted
-- 右上角 平台 dropdown `X ▾`（高 28）
-- 列表：3 行 entry，每行：
-  - 左：avatar 圆 28×28（lavender / pink / mint 用户头像底色）
-  - 中：handle Karla 13 / 600 + "1h ago" 灰小字
-  - 内容：3 行 body 摘录，Karla 12 / 1.5 / `rgba(17,17,17,0.65)`，超出 ellipsis
-  - 右下：分隔 progress（细 4px yellow bar）+ "10 likes" 数字
-  - 右上：外链 icon 12×12 + 平台 chip（X 黑底圆 / Reddit 橙底圆，16×16）
-  - 行间分隔：`1px dashed rgba(17,17,17,0.05)`
-
-**C. Calendar + Sent（2 列 ½ ½ 内嵌）**：
-- 容器 cream 同上，外层圆角 16；内部分两部分
-- **左半：Calendar**
-  - 顶部：← Oct 2025 → （Karla 13 / 600 居中，箭头 lucide `chevron-left/right`）
-  - 7×5 网格，cell 32×32，Karla 13 / 400
-  - **当天数字**有 `1.5px solid #111` 黑色描边圆（不填充）
-  - **有事件的日子**底色 `#FFFADD`（yellow-fffadd 弱化），圆角 8
-  - **被选中的日子**底色 `#FFE253` 实色 yellow + 黑色描边
-  - 周末数字字色不变（不区分）
-- **右半：Sent 时间块列表**
-  - 标题 `Sent` Karla 13 / 500 + 列表 3 个上下排
-  - 每个 item：圆角 12 卡片，padding `12px 14px`，白底 `#FFFFFF`，描边 `rgba(17,17,17,0.05)`
-  - 内容：上一行 "27 Oct 2025" Karla 11 / 500 / muted；中行时间 "02:00" Karla **Bold 22** / `#111`；右侧平台 icon 圆（X 黑 / Reddit 橙）
-  - 下行 "Introduction for AISee" 副标题 Karla 12 / 500
-
-### 13.5 Signal Feed 页（Tab 2 · 核心交互页）
+### 13.4 Signal Feed 页（功能页 1 · 核心交互页）
 
 > 实现：`signal-feed.jsx`. 完整三件套：**Filter Bar → Feed cards 列表 → Reply Panel 浮在右侧**。
 
-#### 13.5.1 顶部聚合行（Banner 下、PageTabs 下、FilterBar 上）
+#### 13.4.1 顶部聚合行（Banner 下、PageTabs 下、FilterBar 上）
 
 **单行布局**，padding `0 32px`，高度 32：
 - **平台 mini-tabs**（左侧）：`All 3.3k` / `X 2.1k` / `Reddit 1.2k`
@@ -938,7 +859,7 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
   - inactive：`rgba(17,17,17,0.6)`
 - **聚合行**（右侧）：`SORT BY Score ▾` + 升降序按钮（24×24，旁边那个，灰描边）
 
-#### 13.5.2 Filter Bar（次行）
+#### 13.4.2 Filter Bar（次行）
 
 > 实现：`filter-bar.jsx`. 一行 chips，使用 container query 在窄宽时降级（参见现有 css 注释）。
 
@@ -964,7 +885,7 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 
 聚合统计行（FilterBar 下方左对齐）："`3320 feeds total · 12 new since your last visit · Last sync 1m ago · Next in 23h 58m`"，Karla 12 / `rgba(17,17,17,0.6)`，加粗数字部分用 `#111` / 600。
 
-#### 13.5.3 Feed Cards（主列表）
+#### 13.4.3 Feed Cards（主列表）
 
 > 实现：`feed-card.jsx`. **每张卡片高度由内容决定**，列表 gap 18。
 
@@ -1011,7 +932,7 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
   - **已 Replied 卡上**：替换为 "View Reply" ghost 按钮（透明底，仅文字）
   - **Expired 卡上**：disabled，opacity 0.5
 
-#### 13.5.4 Reply Panel（右侧粘性面板，宽 400）
+#### 13.4.4 Reply Panel（右侧粘性面板，宽 400）
 
 > 实现：`reply-panel.jsx` v5 重写——简化为**单一 "Configure your reply" 工作区** + 底部 Continue。
 
@@ -1083,7 +1004,7 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 - 上方 `1px solid rgba(17,17,17,0.05)` 分隔
 - **`Continue`** 按钮：全宽，高 44，圆角 10，**disabled 态 = `rgba(17,17,17,0.06)` 灰底 + `rgba(17,17,17,0.5)` 文字**（v5 截图里所示状态——必填未填齐）；activated 态 = `#FFE253` 黄底 + `#111` 文字
 
-### 13.6 Keywords & Accounts 页（Tab 3）
+### 13.5 Keywords & Accounts 页（功能页 2）
 
 > 实现：`keywords-accounts.jsx`. 三段式 stepper：Keywords → X accounts → Reddit subs。
 
@@ -1129,25 +1050,25 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 - active 底 `#FFFADD`，未 active 底 `#FAFAFA`
 - + Add subreddit 弹窗：name 输入 + Find 按钮 + 验证成功后展示 members / posts per day + monitoring 切换
 
-### 13.7 Replies 页（Tab 4 · v5 重命名自 Sent）
+### 13.6 Replies 页（功能页 3 · v5 重命名自 Sent）
 
 > 实现来源：figma "Engage-Sent" + "Engage-Sent-X" + "Awaiting review" frame（screenshot 3）。**比旧 Sent tab 大幅扩充**——把已发与待审拆为两个子 tab。
 
-#### 13.7.1 顶部子 tabs
+#### 13.6.1 顶部子 tabs
 - 紧贴 Banner 下方，左对齐
 - 子 tabs：`All` / `Sent 12` / `Awaiting review` — 同 PageTabs 样式（13.3）
 - 子 tab 下方再放一组**平台筛选 chips**：`X 3` / `Reddit 2`（与 Sent 数字对应，22 高 chip + 黑底数字徽章）
 
-#### 13.7.2 KPI strip（与 Dashboard 不同）
+#### 13.6.2 KPI strip
 - 4 列：`3 X replies sent` / `100% Author replied` / `18.9K Total impressions` / `118 Total likes`
-- 容器白底卡（不同于 Dashboard cream），4 列等宽，左对齐，行内 dividers
+- 容器白底卡，4 列等宽，左对齐，行内 dividers
 - 数字 Karla **Bold 26**，label Karla 11 / 500 / uppercase / `rgba(17,17,17,0.6)`
 
-#### 13.7.3 HISTORY section
+#### 13.6.3 HISTORY section
 - 标题行：`HISTORY` Karla 11 / 500 / uppercase / muted + 右侧 "`3 replies`" 计数 Karla 11 / muted
 - 列表 gap 14
 
-#### 13.7.4 Sent 子 tab 的 ReplyCard
+#### 13.6.4 Sent 子 tab 的 ReplyCard
 - 白底，圆角 12，padding `16px 18px`，描边 `rgba(17,17,17,0.05)`
 - **头部**：
   - 行 1：用户 avatar（圆 22 + initial）+ handle Karla 13 / 600 + `→` arrow + 目标用户 avatar + `@target` handle + X 平台 chip
@@ -1168,7 +1089,7 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
   - 顶部用 dashed 1px 分隔
 - **底部一行**：左 `X Traffic Index 630`（Karla 12 / muted + 数字 600 #111）+ `Expert answer` 黄 tag + 右 `View Post ↗` 按钮（secondary）
 
-#### 13.7.5 Awaiting review 子 tab 的 ReviewRow（更紧凑）
+#### 13.6.5 Awaiting review 子 tab 的 ReviewRow（更紧凑）
 - 列表项更扁：每行只显示**一条待审记录**（不是对话 thread，是一条独立条目——v5 明确）
 - 容器同 ReplyCard 但 padding 更小 `12px 16px`
 - 单行：sender avatar + handle "ccbakala" + `→` + recipient avatar + `@viaOxgina` + 平台 chip
@@ -1179,7 +1100,7 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
   - `Expert answer` 黄 tag 并排
 - 不显示 stats grid
 
-### 13.8 Engage 专属 token 一览（v5 修订）
+### 13.7 Engage 专属 token 一览（v5 修订）
 
 > v4 列出的若干 token 与代码不一致，v5 全部以 `engage-aisee/*.jsx` 实际值为准。
 
@@ -1227,15 +1148,14 @@ Engage **是 Sidebar 顶部 Tab Toggle 上与 Analysis / Post Agent 平级的独
 > 文档版本：**v6** · 2026-08-11 · Figma 反向校对；dApp 字体统一 Karla；Toggle 与 Modal 规范修正
 >
 > **v5.x 关键变更**（护航着顶，旧版本变更在本项目仓库的 git 历史 / archive 中可查）：
-> - **Engage 独立 tab**（Sidebar Tab Toggle 与 Analysis / Post Agent 平级，不是二级子项）；主色仍 yellow `#FFE253`
-> - **Sidebar 宽度 211 → 224**；Engage 子项高 30；Active tab 三重描边 `inset 1px rgba(17,17,17,0.05) + 0 1px 2px rgba(0,0,0,0.12)`
+> - **Sidebar 改为纵向功能导航**：Engage 位于 GROWTH LOOP 分组中，与 Analysis / Growth / Post / Verify 同级；移除顶部横向 Tab Toggle，Engage 子项按功能纵向显示；主色仍 yellow `#FFE253`
+> - **Sidebar 宽度 211 → 224**；纵向导航项高约 30；当前功能项使用模块主色，页面内 Tab 保留自身 indicator 规则
 > - **Engage Banner = `#F3E7F4`**（为避免与 Channel banner `#FAE2FE` 混淆专门标记）；setup 变体 `#F0FFBA`
-> - **Engage 子页 4 件套**：Dashboard / Signal Feed / Keywords & Accounts / Replies（Sent + Awaiting review 两个子 tab）
+> - **Engage 子页 3 件套**：Signal Feed / Keywords & Accounts / Replies（Sent + Awaiting review 两个子 tab）；已移除旧 Dashboard 页
 > - **Reply Panel 重写**：Required/Optional pill、Length 改为字数标注（~80/~280/500+）、Mention 改 tag pill 模式
-> - **Dashboard Your Impressions area chart**：单层渐变 `#FFD85F` gold（不是双层）
 > - **Donut 次色**：`#8C7400` 深芙末（与 keyword pill / Reddit area 同 token）
-> - **标准弹窗标题 weight 700 → 600**；二次确认弹窗进一步使用 500；Sync dot `#92BC01` + `rgba(146,188,1,0.2)` 光环；Reddit 平台色统一 aisee orange `#EC5212`（不用官方 `#FF4500`）。
-> - **Modal 统一规范**：四边 padding 固定为 24px；标准标题 20/600/30，二次确认标题 20/500/30；描述按具体模式使用，并遵守各节语义色；标题区与内容区按场景使用 12px 或 16px。
+> - **所有弹窗标题统一为 Karla Medium weight 500**（demo 与后续规则一致）；Sync dot `#92BC01` + `rgba(146,188,1,0.2)` 光环；Reddit 平台色统一 aisee orange `#EC5212`（不用官方 `#FF4500`）。
+> - **Modal 统一规范**：四边 padding 固定为 24px；所有弹窗标题 20/500/30；描述按具体模式使用，并遵守各节语义色；标题区与内容区按场景使用 12px 或 16px。
 > - **Modal Footer Button 统一规范**：操作区增加 `#111 / 6%` 的 1px 顶部分割线；灰色次按钮使用 `#111 / 2%` 底色和 `#111 / 6%` 的 1px 描边，参考 Figma 节点 `9872:287453`。
 
 > **关于旧版本变更是否保留**：不建议。md 是现说明书、不是 changelog。**只保留当前版本与上一版的 diff 足够（上面 v5.x 列表）**；更早的变更什么时候发生、为什么发生必须靠 git log + commit message，不宜塞进设计规范。当前 v6 只重写 v5→v6 的差异，本节不要肥大。

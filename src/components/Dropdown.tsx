@@ -1,5 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
-import dropdownChevronIcon from '../../assets/stemui/action-chevron-down.svg';
+import dropdownChevronIcon from '../../assets/stemui/line_chevron-up.svg';
+import dropdownCheckIcon from '../../assets/stemui/action-check.svg';
 
 export interface DropdownItem {
   id: string;
@@ -190,7 +191,9 @@ export function Dropdown({
         onClick={() => selectItem(item)}
       >
         <span className="aisee-dropdown__option-leading">
-          {selectionMode === 'multiple' && <span className="aisee-dropdown__checkbox" aria-hidden="true" />}
+          {selectionMode === 'multiple' && <span className="aisee-dropdown__checkbox" aria-hidden="true">
+            {isSelected(item.id) && <img src={dropdownCheckIcon} alt="" />}
+          </span>}
           <span>{item.label}</span>
         </span>
       </button>) : <p className="aisee-dropdown__empty">{noResultsText}</p>}

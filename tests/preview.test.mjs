@@ -56,7 +56,7 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   const detail = await readFile(new URL('../components/Select/Select.html', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   const source = await readFile(new URL('../src/components/Dropdown.tsx', import.meta.url), 'utf8');
-  await access(new URL('../assets/stemui/action-chevron-down.svg', import.meta.url));
+  await access(new URL('../assets/stemui/line_chevron-up.svg', import.meta.url));
   assert.match(components, /Select \/ Dropdown/);
   assert.match(components, /class="select-trigger"[\s\S]*?aria-haspopup="listbox"[\s\S]*?aria-expanded="true"/);
   assert.match(components, /class="select-menu"[\s\S]*?role="listbox"/);
@@ -74,10 +74,12 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(source, /filterable\?: boolean/);
   assert.match(source, /editable\?: boolean/);
   assert.match(source, /aria-multiselectable/);
-  assert.match(source, /action-chevron-down\.svg/);
+  assert.match(source, /line_chevron-up\.svg/);
   assert.match(source, /aisee-dropdown__option-leading/);
   assert.doesNotMatch(source, /aisee-dropdown__option.*<svg/);
-  assert.match(detail, /action-chevron-down\.svg/);
+  assert.match(detail, /line_chevron-up\.svg/);
+  assert.match(styles, /\.aisee-dropdown__caret \{[^}]*transform: rotate\(90deg\)/);
+  assert.match(styles, /\.aisee-dropdown__trigger\[aria-expanded="true"\] \.aisee-dropdown__caret,[\s\S]*?transform: rotate\(-90deg\)/);
   assert.match(detail, /option-leading/);
   assert.match(detail, /\.menu-search:hover,.menu-search:focus\{border-color:var\(--black\);outline:0;box-shadow:0 0 0 2px var\(--lime\)\}/);
   assert.doesNotMatch(detail, /class="check"/);
@@ -124,6 +126,8 @@ test('score gauge follows Figma node 58:32548 instead of the legacy donut', asyn
   assert.match(styles, /aspect-ratio: 381 \/ 216/);
   assert.match(styles, /font-size: 18px; font-weight: 500; line-height: 26px/);
   assert.match(styles, /score-gauge-texture\.png/);
+  assert.match(styles, /z-index: 0; inset: 0; background: url\('\.\.\/assets\/score-gauge\/score-gauge-texture\.png'\)/);
+  assert.match(styles, /border: \.659px dashed var\(--aisee-color-black\); border-bottom: 0/);
   assert.match(styles, /font-size: 20px; font-weight: 400; line-height: 26px/);
   assert.doesNotMatch(styles, /\.aisee-score-gauge__dial/);
   assert.match(detail, /Figma node 58:32548/);
@@ -280,12 +284,12 @@ test('component modal previews keep vertical breathing room inside demo surfaces
   assert.match(components, /\.confirm-demo\{min-height:360px;padding:32px 24px\}/);
 });
 
-test('standard dialogs use 600 and confirmation dialogs use the lighter 500 title', async () => {
+test('all dialogs use the shared 500 title weight', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
-  assert.match(components, /\.modal h3\{[^}]*font-weight:600/);
+  assert.match(components, /\.modal h3\{[^}]*font-weight:500/);
   assert.match(components, /\.confirm-head h3\{[^}]*font-weight:500/);
-  assert.match(styles, /\.aisee-dialog__title \{[^}]*font-weight: 600;/);
+  assert.match(styles, /\.aisee-dialog__title \{[^}]*font-weight: 500;/);
   assert.match(styles, /\.aisee-confirmation-dialog__title \{[^}]*font-weight: 500;/);
   assert.doesNotMatch(components, /(?:\.modal h3|\.confirm-head h3)\{[^}]*font-weight:700/);
   assert.doesNotMatch(styles, /(?:\.aisee-dialog__title|\.aisee-confirmation-dialog__title) \{[^}]*font-weight: 700;/);
@@ -352,7 +356,7 @@ test('webapp UI kit follows the current Growth Loop shell and previews every fun
   assert.match(kit, /src="\.\.\/\.\.\/assets\/aisee-logo-wordmark\.svg"/);
   assert.match(kit, /src="\.\.\/\.\.\/assets\/aisee-logo-mark\.png"/);
   assert.match(kit, /Growth Loop/);
-  const destinations = ['Overview', 'Analysis', 'Growth', 'Improve Score', 'Build Brand Influence', 'Engage', 'Signal Feed', 'Keywords & Accounts', 'Replies', 'Post', 'Calendar', 'Channels', 'Media', 'Verify', 'Connection'];
+  const destinations = ['Overview', 'Analysis', 'Growth', 'Improve Score', 'Build Brand Influence', 'Engage', 'Signal Feed', 'Keywords & Accounts', 'Replies', 'Post', 'Calendar', 'Channels', 'Media', 'Verify', 'Connection', 'Automation'];
   for (const destination of destinations) {
     assert.match(kit, new RegExp(`['\"]${destination.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')}['\"]`));
   }
@@ -362,6 +366,14 @@ test('webapp UI kit follows the current Growth Loop shell and previews every fun
   assert.match(kit, /Turn insights into measurable growth/);
   assert.match(kit, /Score Improvement Plan/);
   assert.match(kit, /Content Calendar/);
+  assert.match(kit, /group:'Workflows'/);
+  assert.match(kit, /Automation runs in WORKFLOWS and stays separate from INTEGRATIONS/);
+  assert.match(kit, /id="app-sidebar"/);
+  assert.match(kit, /id="sidebarToggle"/);
+  assert.match(kit, /aria-controls="app-sidebar"/);
+  assert.match(kit, /sidebar-collapsed/);
+  assert.match(kit, /--sidebar-collapsed:58px/);
+  assert.match(kit, /line_chevron-up\.svg/);
   assert.match(kit, /assets\/stemui\/avatar-user\.svg/);
   assert.match(kit, /icon==='overview'\?'\.\.\/\.\.\/assets\/stemui\/nav-overview\.svg'/);
   assert.doesNotMatch(kit, /banner-overview\.png/);
@@ -441,10 +453,17 @@ test('sidebar subgroup chevrons keep readable spacing and vertical alignment', (
   assert.match(portal, /\.nav-subgroup-chevron \{[^}]*width: 14px;[^}]*height: 14px;[^}]*margin-right: 10px;[^}]*place-items: center;/);
 });
 
+test('current app framework uses 16px main content padding', async () => {
+  const spec = await readFile(new URL('../docs/aisee-dapp-design.v6.md', import.meta.url), 'utf8');
+  const kit = await readFile(new URL('../ui_kits/webapp/index.html', import.meta.url), 'utf8');
+  assert.match(spec, /主内容内边距 \| \*\*16px\*\*/);
+  assert.match(kit, /\.main\{min-width:0;overflow:auto;padding:16px\}/);
+});
+
 test('overview documents feature-page and specification version rules', () => {
-  assert.match(portal, /Figma feature page 5\.6/);
+  assert.match(portal, /Figma feature page 5\.7/);
   assert.match(portal, /Design Specification v6/);
-  assert.match(portal, /Page 5\.6 is the latest newly opened feature page, not a global version/);
+  assert.match(portal, /Page 5\.7 adds hosted automatic publishing \(Automation\) under WORKFLOWS; it is not a global version/);
   assert.match(portal, /Existing feature pages[\s\S]*?Living/);
   assert.match(portal, /newest design above the earlier content on that function's original page/);
   assert.match(portal, /black title frame records its update subject and date/);

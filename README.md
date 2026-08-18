@@ -1,6 +1,6 @@
 # aisee Design System
 
-aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System **增量升级**而来：旧内容完整保留。Figma **5.6 是当前最新的功能版本页面，不是整个 Figma 文件的全局版本**；最新实施规则以 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md) 为基线，后续团队决策以 [`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 为最高优先级。两条版本线的关系及 Figma 页面维护规则见 [`docs/FIGMA_SOURCES.md`](docs/FIGMA_SOURCES.md)。
+aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System **增量升级**而来：旧内容完整保留。Figma **5.7 是当前最新的功能版本页面，不是整个 Figma 文件的全局版本**；本次新增托管自动发布（Automation）页面，归入 WORKFLOWS。最新实施规则以 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md) 为基线，后续团队决策以 [`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 为最高优先级。两条版本线的关系及 Figma 页面维护规则见 [`docs/FIGMA_SOURCES.md`](docs/FIGMA_SOURCES.md)。
 
 ## 四个入口
 
@@ -59,10 +59,11 @@ npm run site
 ## v6 主要更新
 
 - Analysis = lime `#CFFF29`；Post Agent / Engage = yellow `#FFE253`
-- Analysis / Post Agent / Engage 是 Sidebar 中三个平级模块
-- Header 70px；Sidebar 224px；主内容 padding 24–32px
+- Sidebar 采用纵向功能分组：Growth Loop 包含 Analysis / Growth / Engage / Post / Verify；Engage 子项为 Signal Feed / Keywords & Accounts / Replies
+- Header 70px；Sidebar 展开 224px、可收起至 58px（收起态仅显示 icon）；主内容 padding 16px
 - 页面背景 `#FAFAFA`，卡片 `#FFFFFF`，静态描边统一 5% 黑
-- 页面与标准弹窗标题统一 Karla 20px / 600；二次确认弹窗为 Karla 20px / 500
+- 所有弹窗标题统一 Karla 20px / 500（包括二次确认）
+- Automation 属于 WORKFLOWS 分组，不归入 INTEGRATIONS
 - PlanCard 新增 v5.4 Upgrade Plan 当前版本，旧套餐卡继续作为 Legacy 保留
 - Figma 对齐 Toggle、Modal footer 和 Engage v5 页面规则
 - 44 个元数据颜色与 46 个语义颜色由 JSON 自动生成 CSS；旧变量通过兼容 alias 保留

@@ -12,7 +12,7 @@
 - Lucide 仅作为 StemUI 暂无对应资源时的补充；animated React icon 集仍在 StemUI 仓库维护
 - Engage、Analysis、Post Agent、Billing、Pricing、My Account 等历史原型和交互示例
 - v3–v6 规范与 Homepage v1–v3 历史文档
-- Figma 5.6 本地源文件元数据与版本登记：`docs/FIGMA_SOURCES.md`（275MB `.fig` 本体不进入 Git）
+- Figma 5.7 本地源文件元数据与版本登记：`docs/FIGMA_SOURCES.md`（`.fig` 本体不进入 Git）
 
 ## 资源状态
 

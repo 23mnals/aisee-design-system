@@ -5,10 +5,12 @@
   top-level "Dashboard / Calendar / Channels / Post Agent / Engage / Media" list.
   Source of truth: `engage-aisee-v2/layout-shell.jsx` (`window.Slidebar`) — also compiled
   into `_ds_bundle.js`. Structure:
-    - Top 3-tab toggle: Analysis / Post Agent / **Engage** (active tab shows icon+label
-      on white; inactive tabs show icon only at 50% opacity).
-    - When Engage is active, the nav shows sub-items: **Dashboard / Signal Feed /
-      Keywords & Accounts / Replies** (Replies carries a small mustard dot indicator).
+    - The sidebar is a vertical, function-based navigation: Growth Loop contains
+      Analysis / Growth / **Engage** / Post / Verify; Integrations and Workflows are
+      separate groups.
+    - When Engage is active, the nav shows sub-items: **Signal Feed / Keywords &
+      Accounts / Replies** (Replies carries a small mustard dot indicator); the old
+      Engage Dashboard subpage is removed.
     - Footer profile card at the bottom.
   For pages that use `engage/styles.css` (the plain-CSS React pages), use
   `engage/shell-v5.jsx` which mirrors this structure with those classes.

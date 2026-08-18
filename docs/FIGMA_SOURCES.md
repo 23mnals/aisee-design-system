@@ -10,16 +10,18 @@ Figma feature-page versions and written design specifications are tracked separa
 
 | Field | Value |
 |---|---|
-| Latest feature page | **5.6 — latest registered feature version** |
+| Latest feature page | **5.7 — latest registered feature version** |
 | Registered local source file | `design-sources/figma/备份-官网+dapp主功能.fig`（本地存在、Git 忽略） |
 | Scope | Marketing homepage + primary dApp functionality |
-| Figma export time | 2026-08-18 14:04:34 +08:00 |
-| Archive size | 320,249,468 bytes (about 305.4 MB) |
-| SHA-256 | `ec15aa202e65ccaa7751ee10589ef50f9bcc26f54e24ecb610e1eef53f852787` |
+| Figma export time | 2026-08-18 16:06:53 +08:00 |
+| Archive size | 321,906,245 bytes (about 307.0 MB) |
+| SHA-256 | `8d773862b241f884a222d33205380fd1a2441e570316abe9ff3ece4a370f2d60` |
 | Stable cloud source | [Figma file](https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/%E5%A4%87%E4%BB%BD-%E5%AE%98%E7%BD%91-dapp%E4%B8%BB%E5%8A%9F%E8%83%BD) |
 | Repository policy | Do not copy the full `.fig` archive into Git; track its metadata and version here |
 
-The current implementation specification is [`aisee-dapp-design.v6.md`](aisee-dapp-design.v6.md). Later team clarifications in [`TEAM_DECISIONS.md`](TEAM_DECISIONS.md) override conflicting content in both the specification and historical designs. Feature work must be checked against its own Figma page; 5.6 must not be treated as a global replacement for every other page.
+The current implementation specification is [`aisee-dapp-design.v6.md`](aisee-dapp-design.v6.md). Later team clarifications in [`TEAM_DECISIONS.md`](TEAM_DECISIONS.md) override conflicting content in both the specification and historical designs. Feature work must be checked against its own Figma page; 5.7 must not be treated as a global replacement for every other page.
+
+The 5.7 source adds the **托管自动发布 / Automation** feature page. It belongs to the vertical **WORKFLOWS** group in the current sidebar, separate from **INTEGRATIONS**. The local archive confirms the new page through its updated export metadata and thumbnail; exact node-level values still require a Figma export or cloud node link because `.fig` is not a stable machine-readable interchange format.
 
 ## Fixed local update path
 
@@ -35,7 +37,7 @@ Use [`../design-sources/figma/`](../design-sources/figma/README.md) as the only 
 
 | Feature page | Status | Notes |
 |---|---|---|
-| 5.6 | Latest feature page | Latest newly opened feature-version page registered on 2026-08-13; not a global file version |
+| 5.7 | Latest feature page | Latest newly opened feature-version page registered on 2026-08-18; adds 托管自动发布 / Automation; not a global file version |
 | Existing feature pages | Living | Add later requirements at the top of the original page; do not open a new page for an existing function |
 | Missing earlier feature pages | Planned | Register them as they are supplied; retain their page ownership and history |
 
@@ -59,4 +61,4 @@ Use [`../design-sources/figma/`](../design-sources/figma/README.md) as the only 
   → 页面名 / 文件名 / 导出时间仅作定位与降级参考
 ```
 
-Example: a title such as `过期plan的交互优化—8.11号` establishes both the change scope and date even if the page continues to be named `v5.6-post页面优化-post弹窗-分析选模型`.
+Example: a title such as `过期plan的交互优化—8.11号` establishes both the change scope and date even if the page continues to be named `v5.7-post页面优化-post弹窗-分析选模型`.
