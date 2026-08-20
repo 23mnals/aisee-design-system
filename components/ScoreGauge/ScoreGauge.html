@@ -8,8 +8,8 @@
     @font-face{font-family:Karla;src:url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
     @font-face{font-family:'Digital Numbers';src:url('../../fonts/DigitalNumbers-Regular 2.ttf') format('truetype');font-weight:400;font-display:swap}
     *{box-sizing:border-box}
-    body{margin:0;padding:32px;background:#fafafa;color:#111;font:14px/20px Karla,Arial,sans-serif}
-    main{max-width:820px;margin:auto}
+    body{margin:0;padding:24px;background:#fafafa;color:#111;font:14px/20px Karla,Arial,sans-serif}
+    main{max-width:820px;margin:0}
     .eyebrow{margin:0 0 6px;color:rgba(17,17,17,.6);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
     h1{margin:0;font-size:28px;line-height:34px}
     h2{margin:32px 0 14px;font-size:18px}
@@ -20,7 +20,8 @@
     .gauge h3{position:absolute;top:16px;left:16px;margin:0;font-size:18px;font-weight:500;line-height:26px}
     .container{position:absolute;top:54px;right:16px;bottom:19px;left:16px}
     .scale{position:absolute;top:6px;left:50%;width:184.545px;height:100px;overflow:hidden;transform:translateX(-50%)}
-    .guide{position:absolute;top:36px;left:50%;width:118.182px;height:59.091px;border:.659px dashed #111;border-bottom:0;border-radius:100% 100% 0 0;transform:translateX(-50%)}
+    .guide{position:absolute;top:36px;left:50%;display:block;width:118.182px;height:59.091px;overflow:visible;transform:translateX(-50%)}
+    .guide path{fill:none;stroke:#111;stroke-width:.659;stroke-dasharray:2 2;stroke-linecap:round}
     .tick{position:absolute;top:0;left:50%;width:3.953px;height:18.445px;background:rgba(17,17,17,.1);transform:translateX(-50%) rotate(var(--angle));transform-origin:50% 100px}
     .tick.active{background:#111}
     .needle{position:absolute;top:48.182px;left:50%;width:3.636px;height:30px;background:#111;transform:translateX(-50%)}
@@ -28,7 +29,7 @@
     .hub:after{position:absolute;top:50%;left:50%;width:3.636px;height:3.636px;border-radius:50%;background:#cfff29;content:'';transform:translate(-50%,-50%)}
     .value{position:absolute;top:111px;left:50%;display:grid;width:64px;height:26px;align-items:center;justify-content:center;background:#fff;font:400 20px/26px 'Digital Numbers',monospace;transform:translateX(-50%)}
     .rule{padding:12px;border-left:3px solid #ec5212;background:#fff}
-  </style>
+  /* shared component content typography */ main > .muted:first-child,main > .meta:first-child,main > .eyebrow:first-child,.page .intro .eyebrow{display:none}main > h1,.page .intro h1{margin:0;font-size:16px;font-weight:500;line-height:24px}main > h1 + p,.page .intro h1 + p{margin-top:4px;font-size:12px;font-weight:400;line-height:18px}main h2{margin-top:32px;margin-bottom:8px;font-size:16px;font-weight:500;line-height:24px}main h2 + *{margin-top:8px!important}main .card > h2,main .panel > h2,main .surface > h2{margin:0 0 8px}main .name-row h2{margin:0;font-size:18px;font-weight:400;line-height:24px}/* shared component page frame */ body{width:100%;padding:24px!important;box-sizing:border-box}main,.page,#root{width:960px!important;max-width:100%!important;box-sizing:border-box;margin-left:auto!important;margin-right:auto!important;padding:0!important}</style>
 </head>
 <body>
   <main>
@@ -40,7 +41,7 @@
       <h3>Score</h3>
       <div class="container">
         <div class="scale" role="meter" aria-valuemin="0" aria-valuemax="50" aria-valuenow="30.8">
-          <span class="guide" aria-hidden="true"></span>
+          <svg class="guide" viewBox="0 0 118.182 59.091" aria-hidden="true"><path d="M0 59.091A59.091 59.091 0 0 0 118.182 59.091"/></svg>
           <span class="tick active" style="--angle:-93.333deg"></span><span class="tick active" style="--angle:-80deg"></span><span class="tick active" style="--angle:-66.667deg"></span><span class="tick active" style="--angle:-53.334deg"></span><span class="tick active" style="--angle:-40.001deg"></span><span class="tick active" style="--angle:-26.668deg"></span><span class="tick active" style="--angle:-13.335deg"></span><span class="tick active" style="--angle:-.002deg"></span><span class="tick active" style="--angle:13.331deg"></span><span class="tick" style="--angle:26.664deg"></span><span class="tick" style="--angle:39.997deg"></span><span class="tick" style="--angle:53.33deg"></span><span class="tick" style="--angle:66.663deg"></span><span class="tick" style="--angle:79.996deg"></span><span class="tick" style="--angle:93.329deg"></span>
           <span class="needle" aria-hidden="true"></span><span class="hub" aria-hidden="true"></span>
         </div>

@@ -7,9 +7,9 @@
   <style>
     @font-face{font-family:Karla;src:url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
     *{box-sizing:border-box}
-    body{margin:0;padding:32px;background:#fafafa;color:#111;font:14px/20px Karla,Arial,sans-serif}
+    body{margin:0;padding:24px;background:#fafafa;color:#111;font:14px/20px Karla,Arial,sans-serif}
     button{font:inherit}
-    main{max-width:960px;margin:auto}
+    main{max-width:960px;margin:0}
     .eyebrow{margin:0 0 6px;color:rgba(17,17,17,.6);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
     h1{margin:0;font-size:28px;line-height:34px}
     h2{margin:32px 0 14px;font-size:18px}
@@ -47,9 +47,9 @@
     .spec-grid div{padding:12px;border-radius:8px;background:rgba(17,17,17,.04)}
     .spec-grid strong{display:block}
     .hidden{display:none}
-    @media(max-width:680px){body{padding:20px}.spec-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:680px){body{padding:24px}.spec-grid{grid-template-columns:1fr 1fr}}
     @media(prefers-reduced-motion:reduce){.tip{transition:none}}
-  </style>
+  /* shared component content typography */ main > .muted:first-child,main > .meta:first-child,main > .eyebrow:first-child,.page .intro .eyebrow{display:none}main > h1,.page .intro h1{margin:0;font-size:16px;font-weight:500;line-height:24px}main > h1 + p,.page .intro h1 + p{margin-top:4px;font-size:12px;font-weight:400;line-height:18px}main h2{margin-top:32px;margin-bottom:8px;font-size:16px;font-weight:500;line-height:24px}main h2 + *{margin-top:8px!important}main .card > h2,main .panel > h2,main .surface > h2{margin:0 0 8px}main .name-row h2{margin:0;font-size:18px;font-weight:400;line-height:24px}/* shared component page frame */ body{width:100%;padding:24px!important;box-sizing:border-box}main,.page,#root{width:960px!important;max-width:100%!important;box-sizing:border-box;margin-left:auto!important;margin-right:auto!important;padding:0!important}</style>
 </head>
 <body>
   <main>
