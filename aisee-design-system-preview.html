@@ -1038,35 +1038,35 @@
       let activeColorLayer = "semantic";
 
       const baseItems = [
-        { group: "Brand", name: "dApp v6 Foundations", path: "preview/dapp-v6-foundations.html", subtitle: "Current color, typography, layout and module-theme rules.", status: "Current" },
-        { group: "Brand", name: "AIsee Logo Animation", path: "brand/pages/logo-animation/preview.html", subtitle: "Current cursor-following eye animation with natural blinking and side glances.", status: "Current" },
-        { group: "Brand", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "328×160 looping animation: download new version → remove old → drag new package in.", status: "Legacy" },
-        { group: "Brand", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Mission option B · all six sections · design-system styling.", status: "Legacy" },
-        { group: "Brand", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Homepage animation language, word reveal, mascot and cursor.", status: "Legacy" },
-        { group: "Brand", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Gotu-led narrative page with marquee and illustration placeholders.", status: "Legacy" },
-        { group: "Brand", name: "About Us — v4", path: "legacy/pages/About Us v4.html", subtitle: "Centered hero, tracking eye, static color cards and image-trail footer.", status: "Legacy" },
-        { group: "Brand", name: "Comparison Modal", path: "legacy/pages/Comparison Modal.html", subtitle: "Analysis comparison with Full Report and By Module views.", status: "Legacy" },
-        { group: "Brand", name: "Engage Dashboard (Redesigned)", path: "legacy/pages/Engage Dashboard (Redesigned).html", subtitle: "Action-first KPIs and a focused review queue.", status: "Legacy" },
-        { group: "Brand", name: "Engage Dashboard v6 (Donut Impressions)", path: "legacy/pages/Engage Dashboard v6 (Donut Impressions).html", subtitle: "Impressions donut and rebalanced two-row dashboard.", status: "Legacy" },
-        { group: "Brand", name: "Engage Empty State (optimized)", path: "legacy/pages/Engage Empty State (optimized).html", subtitle: "Suggested chips, action-first titles and mini preview.", status: "Legacy" },
-        { group: "Brand", name: "Engage Replies (History)", path: "legacy/pages/Engage Replies (History).html", subtitle: "Generated replies with Awaiting, Sent, Dismissed and Failed filters.", status: "Legacy" },
-        { group: "Brand", name: "Engage Replies (Tracking)", path: "legacy/pages/Engage Replies (Tracking).html", subtitle: "Reply tracking, monitoring choices, status and credit spend.", status: "Legacy" },
-        { group: "Brand", name: "Engage v3 (React TSX preview)", path: "legacy/pages/Engage v3 (React TSX preview).html", subtitle: "Preview of the TSX modules in aisee-agent-test.", status: "Legacy" },
-        { group: "Brand", name: "Engage", path: "legacy/pages/Engage.html", subtitle: "Initial Setup and Signal Feed with Reply Panel.", status: "Legacy" },
-        { group: "Brand", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Animated homepage with ticker and mascot.", status: "Legacy" },
-        { group: "Brand", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
-        { group: "Brand", name: "Module Comparison v3", path: "legacy/pages/Module Comparison.html", subtitle: "By Module comparison with inline switching and delta cues.", status: "Legacy" },
-        { group: "Brand", name: "Paste Link Tutorial (preview)", path: "legacy/pages/Paste Link Tutorial (preview).html", subtitle: "Looping paste-link, save and tracking-started tutorial.", status: "Legacy" },
-        { group: "Brand", name: "Plugin Entry Options", path: "legacy/pages/Plugin Entry Options.html", subtitle: "Three browser-extension install entry placements.", status: "Legacy" },
-        { group: "Brand", name: "Post Reply Tutorial (preview)", path: "legacy/pages/Post Reply Tutorial (preview).html", subtitle: "Looping reply composition and posting tutorial.", status: "Legacy" },
-        { group: "Brand", name: "Post Reply Tutorial Reddit (preview)", path: "legacy/pages/Post Reply Tutorial Reddit (preview).html", subtitle: "Looping Reddit comment composition and posting tutorial.", status: "Legacy" },
-        { group: "Brand", name: "Logo", path: "preview/brand-logo.html", subtitle: "Real logo image, full wordmark, sizes, backgrounds and mark scale.", status: "Legacy" },
-        { group: "Brand", name: "Visual Style", path: "preview/brand-visual-style.html", subtitle: "Homepage hero geometric shapes, mascot and footer band.", status: "Legacy" },
-        { group: "Brand", name: "Color Palette", path: "preview/colors-brand.html", subtitle: "Brand, neutral and semantic color tokens.", status: "Legacy" },
-        { group: "Brand", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
-        { group: "Brand", name: "Display Type — Gotu", path: "preview/type-display.html", subtitle: "Gotu display scale from hero to body.", status: "Legacy" },
-        { group: "Brand", name: "UI Type — Karla + Mono", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
-        { group: "Brand", name: "Tracking Eye", path: "legacy/pages/Tracking Eye.html", subtitle: "AISEE character peeks out of the eye and scans sources.", status: "Legacy" },
+        { group: "Brand", category: "Automation", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "328×160 looping animation: download new version → remove old → drag new package in.", status: "Legacy" },
+        { group: "Brand", category: "Automation", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
+        { group: "Brand", category: "Automation", name: "Plugin Entry Options", path: "legacy/pages/Plugin Entry Options.html", subtitle: "Three browser-extension install entry placements.", status: "Legacy" },
+        { group: "Brand", category: "Analyze", name: "Comparison Modal", path: "legacy/pages/Comparison Modal.html", subtitle: "Analysis comparison with Full Report and By Module views.", status: "Legacy" },
+        { group: "Brand", category: "Overview", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Mission option B · all six sections · design-system styling.", status: "Legacy" },
+        { group: "Brand", category: "Overview", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Homepage animation language, word reveal, mascot and cursor.", status: "Legacy" },
+        { group: "Brand", category: "Overview", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Gotu-led narrative page with marquee and illustration placeholders.", status: "Legacy" },
+        { group: "Brand", category: "Overview", name: "About Us — v4", path: "legacy/pages/About Us v4.html", subtitle: "Centered hero, tracking eye, static color cards and image-trail footer.", status: "Legacy" },
+        { group: "Brand", category: "Overview", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Animated homepage with ticker and mascot.", status: "Legacy" },
+        { group: "Brand", category: "Growth", name: "Module Comparison v3", path: "legacy/pages/Module Comparison.html", subtitle: "By Module comparison with inline switching and delta cues.", status: "Legacy" },
+        { group: "Brand", category: "Post", name: "Post Reply Tutorial (preview)", path: "legacy/pages/Post Reply Tutorial (preview).html", subtitle: "Looping reply composition and posting tutorial.", status: "Legacy" },
+        { group: "Brand", category: "Post", name: "Post Reply Tutorial Reddit (preview)", path: "legacy/pages/Post Reply Tutorial Reddit (preview).html", subtitle: "Looping Reddit comment composition and posting tutorial.", status: "Legacy" },
+        { group: "Brand", category: "Engage", name: "Engage Dashboard (Redesigned)", path: "legacy/pages/Engage Dashboard (Redesigned).html", subtitle: "Action-first KPIs and a focused review queue.", status: "Legacy" },
+        { group: "Brand", category: "Engage", name: "Engage Dashboard v6 (Donut Impressions)", path: "legacy/pages/Engage Dashboard v6 (Donut Impressions).html", subtitle: "Impressions donut and rebalanced two-row dashboard.", status: "Legacy" },
+        { group: "Brand", category: "Engage", name: "Engage Empty State (optimized)", path: "legacy/pages/Engage Empty State (optimized).html", subtitle: "Suggested chips, action-first titles and mini preview.", status: "Legacy" },
+        { group: "Brand", category: "Engage", name: "Engage Replies (History)", path: "legacy/pages/Engage Replies (History).html", subtitle: "Generated replies with Awaiting, Sent, Dismissed and Failed filters.", status: "Legacy" },
+        { group: "Brand", category: "Engage", name: "Engage Replies (Tracking)", path: "legacy/pages/Engage Replies (Tracking).html", subtitle: "Reply tracking, monitoring choices, status and credit spend.", status: "Legacy" },
+        { group: "Brand", category: "Engage", name: "Engage v3 (React TSX preview)", path: "legacy/pages/Engage v3 (React TSX preview).html", subtitle: "Preview of the TSX modules in aisee-agent-test.", status: "Legacy" },
+        { group: "Brand", category: "Engage", name: "Engage", path: "legacy/pages/Engage.html", subtitle: "Initial Setup and Signal Feed with Reply Panel.", status: "Legacy" },
+        { group: "Brand", category: "Engage", name: "Paste Link Tutorial (preview)", path: "legacy/pages/Paste Link Tutorial (preview).html", subtitle: "Looping paste-link, save and tracking-started tutorial.", status: "Legacy" },
+        { group: "Brand", category: "Verify", name: "Tracking Eye", path: "legacy/pages/Tracking Eye.html", subtitle: "AISEE character peeks out of the eye and scans sources.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "dApp v6 Foundations", path: "preview/dapp-v6-foundations.html", subtitle: "Current color, typography, layout and module-theme rules.", status: "Current" },
+        { group: "Brand", category: "Common", name: "AIsee Logo Animation", path: "brand/pages/logo-animation/preview.html", subtitle: "Current cursor-following eye animation with natural blinking and side glances.", status: "Current" },
+        { group: "Brand", category: "Common", name: "Logo", path: "preview/brand-logo.html", subtitle: "Real logo image, full wordmark, sizes, backgrounds and mark scale.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "Visual Style", path: "preview/brand-visual-style.html", subtitle: "Homepage hero geometric shapes, mascot and footer band.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "Color Palette", path: "preview/colors-brand.html", subtitle: "Brand, neutral and semantic color tokens.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "Display Type — Gotu", path: "preview/type-display.html", subtitle: "Gotu display scale from hero to body.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "UI Type — Karla + Mono", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
 
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
         { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
@@ -1101,6 +1101,7 @@
       const groupOrder = ["Brand", "Components", "UI Kits — Webapp"];
       const groupLabels = { "Brand": "Brand", "Components": "Components", "UI Kits — Webapp": "UI Kits — Webapp" };
       const groupIcons = { "Brand": "nav-overview", "Components": "nav-analysis", "UI Kits — Webapp": "nav-overview" };
+      const brandCategoryOrder = ["Automation", "Analyze", "Overview", "Growth", "Post", "Engage", "Verify", "Common"];
       const componentCategoryOrder = ["Overview", "Inputs & Controls", "Navigation", "Content & Status", "Data Display", "Feedback & Overlays"];
       const pageIcons = {
         "dApp v6 Foundations": "nav-overview", "Overview": "nav-analysis", "dApp v6 Components": "nav-analysis", "PlanCard": "nav-growth", "PlanCard — Current": "nav-growth",
@@ -1218,7 +1219,7 @@
       function renderNav(query = "") {
         const normalized = query.trim().toLowerCase();
         const visible = normalized
-          ? items.filter(item => `${item.name} ${item.subtitle} ${item.group} ${item.status}`.toLowerCase().includes(normalized))
+          ? items.filter(item => `${item.name} ${item.subtitle} ${item.group} ${item.category || ""} ${item.status}`.toLowerCase().includes(normalized))
           : items;
         const navOpenState = readNavOpenState();
 
@@ -1231,7 +1232,19 @@
               <span class="nav-label">${escapeHtml(item.name)}</span>
               ${item.status === "Legacy" ? '<span class="item-tag">Legacy</span>' : item.kind === "brand-output" ? '<span class="item-tag">Brand</span>' : ""}
             </button>`;
-          const itemMarkup = group === "Components"
+          const itemMarkup = group === "Brand"
+            ? (() => {
+                const categorized = brandCategoryOrder.map(category => {
+                  const categoryItems = groupItems.filter(item => item.category === category);
+                  if (!categoryItems.length) return "";
+                  const categoryStateKey = `subgroup:${group}:${category}`;
+                  const categoryOpen = navOpenState[categoryStateKey] !== false;
+                  return `<details class="nav-subgroup" data-nav-state-key="${escapeHtml(categoryStateKey)}"${categoryOpen ? " open" : ""}><summary class="nav-subgroup-toggle"><span class="nav-subgroup-chevron" aria-hidden="true">${stemuiIcon("line_chevron-up")}</span><span>${escapeHtml(category)}</span></summary><div class="nav-subgroup-items">${categoryItems.map(renderItem).join("")}</div></details>`;
+                }).join("");
+                const uncategorized = groupItems.filter(item => !item.category).map(renderItem).join("");
+                return `${categorized}${uncategorized}`;
+              })()
+            : group === "Components"
             ? (() => {
                 const renderCategory = category => {
                 const categoryItems = groupItems.filter(item => item.category === category);
@@ -1356,6 +1369,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
             .filter(page => page && typeof page.name === "string" && typeof page.html === "string")
             .map(page => ({
               group: "Brand",
+              category: page.category || "Common",
               kind: "brand-output",
               name: page.name,
               path: page.html,

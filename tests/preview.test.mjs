@@ -13,6 +13,20 @@ test('system portal preserves the four required sections', () => {
   assert.match(portal, />UI Kits — Webapp</);
 });
 
+test('Brand catalog is grouped by AIsee functional modules', () => {
+  const expectedOrder = ['Automation', 'Analyze', 'Overview', 'Growth', 'Post', 'Engage', 'Verify', 'Common'];
+  assert.match(portal, new RegExp(`const brandCategoryOrder = \\[${expectedOrder.map(category => `"${category}"`).join(', ')}\\];`));
+
+  const brandEntries = [...portal.matchAll(/\{ group: "Brand",([^}]+)\}/g)].map(match => match[1]);
+  assert.ok(brandEntries.length > 0, 'Brand entries should exist');
+  assert.ok(brandEntries.every(entry => /category: "[^"]+"/.test(entry)), 'every Brand entry must declare a category');
+
+  const categories = new Set(brandEntries.map(entry => entry.match(/category: "([^"]+)"/)?.[1]));
+  assert.deepEqual([...categories].sort(), [...expectedOrder].sort());
+  assert.match(portal, /group === "Brand"[\s\S]*?brandCategoryOrder\.map/);
+  assert.match(portal, /item\.category \|\| ""/);
+});
+
 test('every catalog preview exists and paths are unique', async () => {
   const paths = [...portal.matchAll(/path: "([^"]+)"/g)].map(match => match[1]);
   // Three duplicate legacy Engage pages were intentionally removed from the catalog.
@@ -451,7 +465,7 @@ test('sidebar uses compact 14px navigation typography', () => {
 test('sidebar subgroup chevrons keep readable spacing and vertical alignment', () => {
   assert.match(portal, /\.nav-subgroup-toggle \{[^}]*align-items: center;/);
   assert.match(portal, /\.nav-subgroup-toggle > span:last-child \{[^}]*align-items: center;[^}]*line-height: 18px;/);
-  assert.match(portal, /\.nav-subgroup-chevron \{[^}]*width: 14px;[^}]*height: 14px;[^}]*margin-right: 10px;[^}]*place-items: center;/);
+  assert.match(portal, /\.nav-subgroup-chevron \{[^}]*width: 16px;[^}]*height: 16px;[^}]*margin-right: 8px;[^}]*align-items: center;[^}]*justify-content: center;/);
 });
 
 test('current app framework uses 16px main content padding', async () => {
