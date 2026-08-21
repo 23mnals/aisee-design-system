@@ -6,14 +6,15 @@ Brand 是 Design System 的官网与品牌入口，字体允许 **Karla + Gotu**
 
 团队预览中的 Brand 页面按产品功能查找，固定顺序为：
 
-1. **Automation**：安装、更新和插件入口等自动化工作流素材
-2. **Analyze**：分析结果与比较视图
-3. **Overview**：官网、About 与品牌叙事页面
-4. **Growth**：跨模块增长和效果比较
-5. **Post**：发帖与回复发布教程
-6. **Engage**：信号、回复、追踪和 Engage 仪表盘
-7. **Verify**：验证与追踪相关视觉素材
-8. **Common**：跨模块共用的 Logo、颜色、字体、间距和 Foundations
+1. **Homepage**：官网、About 与品牌叙事页面
+2. **Common**：跨模块共用的 Logo、颜色、字体、间距和 Foundations
+3. **Overview**：产品总体概览页面（如有）
+4. **Analyze**：分析结果与比较视图
+5. **Growth**：跨模块增长和效果比较
+6. **Post**：发帖与回复发布教程
+7. **Engage**：信号、回复、追踪和 Engage 仪表盘
+8. **Verify**：验证与追踪相关视觉素材
+9. **Automation**：安装、更新和插件入口等自动化工作流素材
 
 分类只改变预览导航的信息架构，不移动或删除历史文件；Legacy 状态也保持不变。新增 Brand 页面时必须填写所属功能模块，跨模块基础规范归入 Common。
 
