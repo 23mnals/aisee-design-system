@@ -6,6 +6,16 @@
       "html": "brand/pages/logo-animation/preview.html",
       "subtitle": "Page-wide cursor-following eye animation with natural blinking and side glances.",
       "source": "codex"
+    },
+    {
+      "name": "Managed Automation",
+      "html": "brand/pages/managed-automation/preview.html",
+      "image": "brand/pages/managed-automation/preview.png",
+      "subtitle": "Managed publishing and reply automation overview.",
+      "category": "Automation",
+      "source": "ChatGPT",
+      "surface": "Web",
+      "designStatus": "Draft"
     }
   ]
 }
