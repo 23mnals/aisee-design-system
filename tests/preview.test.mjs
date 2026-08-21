@@ -14,7 +14,7 @@ test('system portal preserves the four required sections', () => {
 });
 
 test('Brand catalog is grouped by AIsee functional modules', () => {
-  const expectedOrder = ['Automation', 'Analyze', 'Overview', 'Growth', 'Post', 'Engage', 'Verify', 'Common'];
+  const expectedOrder = ['Homepage', 'Common', 'Overview', 'Analyze', 'Growth', 'Post', 'Engage', 'Verify', 'Automation'];
   assert.match(portal, new RegExp(`const brandCategoryOrder = \\[${expectedOrder.map(category => `"${category}"`).join(', ')}\\];`));
 
   const brandEntries = [...portal.matchAll(/\{ group: "Brand",([^}]+)\}/g)].map(match => match[1]);
@@ -22,9 +22,24 @@ test('Brand catalog is grouped by AIsee functional modules', () => {
   assert.ok(brandEntries.every(entry => /category: "[^"]+"/.test(entry)), 'every Brand entry must declare a category');
 
   const categories = new Set(brandEntries.map(entry => entry.match(/category: "([^"]+)"/)?.[1]));
-  assert.deepEqual([...categories].sort(), [...expectedOrder].sort());
+  // Overview remains a reserved slot in the taxonomy; the current Brand
+  // catalog has no Overview page after Homepage content is moved out.
+  assert.deepEqual([...categories].sort(), expectedOrder.filter(category => category !== 'Overview').sort());
+  assert.match(portal, /category: "Homepage", name: "About Us — Design Faithful"/);
+  assert.doesNotMatch(portal, /category: "Overview", name: "About Us/);
   assert.match(portal, /group === "Brand"[\s\S]*?brandCategoryOrder\.map/);
   assert.match(portal, /item\.category \|\| ""/);
+});
+
+test('legacy labels stay out of the sidebar and use a lightweight inline title status', () => {
+  assert.doesNotMatch(portal, /item\.status === "Legacy" \? '<span class="item-tag">Legacy<\/span>'/);
+  assert.match(portal, /id="previewTitleTag" hidden/);
+  assert.match(portal, /\.preview-title-tag \{[\s\S]*font: 500 10px\/14px Karla/);
+  assert.match(portal, /\.preview-meta\.has-inline-tag h1 \{[\s\S]*display: flex/);
+  assert.match(portal, /previewMeta\.classList\.toggle\("has-inline-tag", isLegacy\)/);
+  assert.match(portal, /previewTitleTag\.textContent = isLegacy \? "legacy" : ""/);
+  assert.match(portal, /previewTag\.textContent = isBrandOutput \? "Brand" : ""/);
+  assert.match(portal, /previewTag\.hidden = !isBrandOutput/);
 });
 
 test('every catalog preview exists and paths are unique', async () => {

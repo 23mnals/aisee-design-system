@@ -6,7 +6,7 @@
 
 - 维护并持续更新 AISEE Design System，内容来源包括最新 `v6` 设计文档、Figma 文件、现有设计资产和产品预览。
 - 保留原有四个主要板块：README、Brand、Components、UI Kits — Webapp；暂不凭空增加 Foundations、Patterns、Archive 等一级板块。
-- 让团队可以通过私有 GitHub 仓库协作维护，并准备一个可公开访问的在线预览地址。
+- 让团队可以通过私有 GitHub 仓库协作维护，并通过已部署的 GitHub Pages 提供公开在线预览。
 - Components 当前优先整理为可快速查找的组件级信息架构，而不是旧的综合 HTML 文件列表。
 
 ## 2. 项目与仓库路径
@@ -14,7 +14,7 @@
 - 本地仓库：`/Users/ccbakala/ChatGPT Work/aisee workspace/aisee design systerm`
 - 主预览文件：`aisee-design-system-preview.html`
 - Git 远程：`https://github.com/23mnals/aisee-design-system.git`
-- 当前分支：`main`
+- Git 分支规则：`main` 是正式、稳定、已确认并供团队查看的版本；`ai/desktop/design-system-current` 是桌面端长期开发分支，桌面日常任务默认基于该分支继续。
 - 最新设计文档：`docs/aisee-dapp-design.v6.md`
 - 原始压缩包：`/Users/ccbakala/Downloads/aisee Design System.zip`
 - Figma 源文件：`design-sources/figma/备份-官网+dapp主功能.fig`（当前本地登记版本为 5.7，新增托管自动发布 / Automation）
@@ -22,18 +22,18 @@
 
 ## 3. 当前 Git 状态
 
-- 在创建本交接文件前，执行 `git status --short` 为空，工作区干净。
+- 历史记录：创建本交接文件前曾执行 `git status --short` 并确认工作区干净；当前状态以实时 `git status` 和下方刷新记录为准。
 - `origin` 已指向 `23mnals/aisee-design-system` 的 `main` 分支。
-- 本文件创建后是新的未提交文件；继续工作前先执行：
+- 继续工作前先执行 `git status --short`、`git branch --show-current` 和 `git log -1 --oneline`，确认当前分支与未提交修改；日常修改在 `ai/desktop/design-system-current` 上完成。
 
 ~~~bash
 cd "/Users/ccbakala/ChatGPT Work/aisee workspace/aisee design systerm"
 git status --short
-git add handoff-context.md
-git commit -m "docs: add continuation handoff context"
-git push origin main
+git branch --show-current
+git log -1 --oneline
 ~~~
 
+- 确认无误后，提交到 `ai/desktop/design-system-current`，再创建 PR 合并到 `main`；不要直接 push `main`。
 - 不要把 `stemui` 开发库的代码或预览推回 AISEE Design System；也不要修改 `https://github.com/qi15582378779/stemui`。
 
 ## 4. 已完成或已落地的主要方向
@@ -141,15 +141,15 @@ python3 -m http.server 8000
 ~~~
 
 然后访问 `http://localhost:8000/aisee-design-system-preview.html`。发布给团队时，应部署整个仓库静态站点，而不是只发送某一个 HTML 文件。
-- GitHub Pages 之前出现过部署失败/空白风险；部署后必须打开线上 URL 验证资源、字体、SVG、视频和交互。
+- 历史记录：GitHub Pages 曾出现部署失败/空白风险；当前 GitHub Pages 已部署并恢复正常。每次 `main` 合并后都必须检查 Actions / Pages 是否发布成功，并实际打开线上 Demo 验证资源、字体、SVG、视频和交互。
 - GitHub 私有仓库本身不等于公开在线预览；要让同事和其他 AI 通过链接访问，预览站点必须公开，仓库仍可保持私有。
 - HTML 是可视化交互预览，Markdown 是文字规范和规则来源；HTML 不会自动完整包含 Markdown，AI 能否读取线上 HTML 取决于对方平台是否允许网页访问。向 AI 交付时最好同时提供公开预览 URL 和 `docs/aisee-dapp-design.v6.md` / GitHub 仓库文件。
 - 不要使用外部图片替代本地真实 SVG；不要把随机 icon、临时插图或 Overview 截图复制到每个功能页面。
 
 ## 11. 尚未完成事项
 
-- 将本交接文件提交并推送到 `23mnals/aisee-design-system`。
-- 部署一个非 localhost、可公开访问的在线预览地址（用户希望使用 `chatgpt.site` 尾缀）。当前尚未确认已成功部署；需要验证域名、HTTPS、资源路径和访问权限。
+- 将本交接文件更新提交到 `ai/desktop/design-system-current`，确认后通过 PR 合并到 `main`。
+- GitHub Pages 已部署并恢复正常；后续每次 `main` 合并后检查 Actions / Pages 发布状态，并实际打开线上 Demo 验证域名、HTTPS、资源路径、字体、SVG、视频和交互。
 - 完成 Components 级别的最终整理：移除空分类/空页面入口，确认真实组件清单，确保 Overview 和详情页面使用同一份组件示例。
 - 完成 Button 深色样式及正确的模块色 hover；补齐 Select / Dropdown 的单选、多选、Filter、Input 示例及交互。
 - 修复 UI Kit 每个功能页面的 banner 插图，改用设计稿对应的清晰 SVG/视频资源。
@@ -160,13 +160,13 @@ python3 -m http.server 8000
 
 ## 12. 下一步直接执行顺序
 
-1. 提交 `handoff-context.md` 并推送到远程仓库。
+1. 在 `ai/desktop/design-system-current` 提交 `handoff-context.md` 更新并推送该分支；确认后通过 PR 合并到 `main`。
 2. 用 `git status`、`git log -1`、资源检查脚本确认仓库完整性。
 3. 在不改 README、Brand、UI Kits 的前提下，完成 Components 最终导航和页面交互修复。
 4. 检查 `docs/aisee-dapp-design.v6.md` 与 Figma/预览的漏项，输出一份差异表给用户确认。
 5. 修复/验证所有 SVG、字体、动画、相对路径，并通过 `python3 -m http.server 8000` 做本地验收。
-6. 配置并验证公开线上预览；确认同事和支持网页读取的 AI 可以访问。
-7. 只在验收通过后提交变更并推送 `origin/main`，同时告诉用户提交号、预览 URL、以及 Markdown 源文件位置。
+6. 每次 `main` 合并后检查 Actions / Pages 是否发布成功，并实际打开线上 Demo 验证资源、字体、SVG、视频和交互。
+7. 所有正式发布统一走 `ai/desktop/design-system-current → PR → main`，不直接推送 `main`；同时记录提交号、预览 URL 和 Markdown 源文件位置。
 
 ## 13. 交付说明
 
@@ -220,11 +220,12 @@ python3 -m http.server 8000
 - 为避免其他 AI 改动字体、颜色或间距，交付必须同时提供 canonical Markdown、明确 token/组件契约、真实本地 SVG 路径、可访问的完整预览站点与关键截图/参考节点；不要只发送单个 HTML。
 - 用其他 AI 验证时，要求其先读取规则和资产清单，再实现；先对照 tokens/路径做静态检查，再看视觉结果。
 
-### 当前验证与 Git 状态
+### 当前验证与 Git 状态（2026-08-21 刷新）
 
-- 本轮只更新了本交接文档；不修改代码、不提交、不推送。
-- 当前工作区存在大量先前累计 staged/unstaged 修改及删除，包括旧产物清理、组件样式、legacy/preview、logo animation 和 EventDialog；后续提交前必须先 `git status --short`，区分已确认删除与未确认改动，避免 reset/checkout 覆盖他人工作。
-- 远程协作仍按 `origin/main` 处理；本轮没有进行远程同步。
+- 当前分支为 `ai/desktop/design-system-current`；当前 HEAD 为 `6cd7ad8`（与已同步的远端 current/main 基线一致）。
+- 当前工作区没有 staged 或 untracked 文件，有 4 个 unstaged 修改：`aisee-design-system-preview.html`、`brand/README.md`、`tests/preview.test.mjs`、`handoff-context.md`。这些修改需在提交前逐项核对，不得 reset、restore 或覆盖。
+- 当前未把这些修改提交或推送；后续按任务拆分提交到 `ai/desktop/design-system-current`，确认后创建 PR 合并 `main`。
+- GitHub Pages 已部署并恢复正常；每次 `main` 合并后检查 Actions / Pages 发布，并实际打开线上 Demo 验证。
 - EventDialog React API 已加入入口，但静态 demo/registry 尚未确认；后续完成后执行仓库已有 typecheck/test 或等价检查，再决定是否提交。
 
 ### 下一次会话建议顺序
@@ -233,11 +234,11 @@ python3 -m http.server 8000
 2. 检查 `git status --short` 与当前分支，保护已有 staged/unstaged 改动。
 3. 补齐 EventDialog 静态预览/registry（如需），并统一检查 Dialog/Confirmation Dialog/Toast 的共同规范。
 4. 对所有 Components 页面回归：固定 960px 内容宽度、24px padding、标题 16/500、描述 14/400、8px 间距、次要文字色、统一卡片描边。
-5. 通过 HTTP 服务验证 SVG、字体、动画、交互和刷新持久化；确认后再提交并推送 `origin/main`。
+5. 通过 HTTP 服务验证 SVG、字体、动画、交互和刷新持久化；确认后提交到 `ai/desktop/design-system-current`，再通过 PR 合并 `main`。
 
 ### Git 交接说明
 
-本 turn 没有执行 commit/push。由于当前 worktree 有大量待处理改动，下一次提交前需要先逐项核对 staging；不要把未确认删除或未确认样式改动混入发布。
+本节中的历史交接记录不代表当前工作区状态；当前状态以“当前验证与 Git 状态（2026-08-21 刷新）”及实时 `git status` 为准。提交前需要逐项核对 staging，不要把未确认修改混入发布。
 
 ## 15. 交接文档与新会话提醒机制（长期约定）
 
@@ -246,3 +247,135 @@ python3 -m http.server 8000
 - 出现首次自动压缩提示时，应先完成当前阶段的交接摘要（已完成、待确认、未推送、下一步），再提醒用户新建对话，避免上下文丢失。
 - 新对话开始时先读取 `handoff-context.md`；如果发现文档已超过当前阶段或与工作区不一致，先刷新交接内容再继续实现。
 - 提醒是协作流程提示，不代表自动提交、推送或删除；Git 操作仍需按用户明确要求执行。
+
+## 16. 新会话延续与协作硬规则
+
+以下规则优先级高于普通任务说明，用于避免新 Codex 会话因为上下文不足而重新设计、回退旧实现、丢失已有工作或自行改变工作流。
+
+### 16.1 新会话不是新项目
+
+- 新建 Codex 对话只代表 AI 上下文重新开始，不代表项目重新开始。
+- 不允许因为换了对话，就重新搭建、重新设计或重新实现已经存在的页面、组件、交互和视觉。
+- 接手任务时必须先理解当前仓库状态，再在已有实现上增量修改。
+- 如果旧会话中的实现已经存在于 Git 文件或提交中，以仓库中的当前实现为准，不重新生成另一套平行版本。
+
+### 16.2 开始任何任务前必须先检查真实状态
+
+新会话开始处理任务前，必须先：
+
+1. 阅读 handoff-context.md。
+2. 检查当前 Git 分支。
+3. 执行 git status，确认是否存在 staged / unstaged / untracked 文件。
+4. 查看最近提交记录。
+5. 打开与当前任务相关的已有页面、组件和文件。
+6. 确认当前实现后再修改。
+
+不得仅凭聊天记忆或 main 中较旧的实现判断当前设计状态。
+
+### 16.3 当前 Git 分支规则
+
+- main = 正式、稳定、已经确认并供团队查看的版本。
+- ai/desktop/design-system-current = 桌面 Codex 日常持续开发分支。
+- 桌面端日常任务默认基于 ai/desktop/design-system-current 继续。
+- 不直接在 main 上进行普通设计开发。
+- 一批修改确认无误后，由 design-system-current 创建 PR 合并到 main。
+- PR 合并后，应将最新 main 同步回 design-system-current，再继续下一批任务。
+
+### 16.4 ChatGPT Web 与 Desktop 协作规则
+
+- ChatGPT Web 的修改使用独立短期分支，例如：
+  ai/web/<task-name>
+- Web 分支应基于最新 ai/desktop/design-system-current 创建。
+- Web 任务完成后，优先合入 design-system-current，再由 design-system-current 统一进入 main。
+- Web 与 Desktop 可以并行处理不同文件或不同模块。
+- 如果两个任务都会修改同一核心文件、导航 registry、aisee-design-system-preview.html 或同一组件，应暂停其中一方，避免同时修改造成冲突。
+- 不允许 Web 和 Desktop 各自长期维护两套不同的 Design System 状态。
+
+### 16.5 保护已有实现
+
+没有用户明确要求时：
+
+- 不得 reset、restore、clean 或丢弃已有修改。
+- 不得用 main、Legacy 或历史文件中的旧 UI 覆盖当前新版实现。
+- 不得为了让代码“更简单”而删除已有交互、状态、动画或视觉细节。
+- 不得看到实现复杂就重新写一个简化版本。
+- 修改已有页面前必须先阅读当前文件和相关实现。
+- 能增量修改时，不允许无理由整页重写。
+
+### 16.6 上下文不足时禁止猜测
+
+如果不清楚之前为什么这样设计：
+
+优先顺序必须是：
+
+1. 查看当前代码
+2. 查看 handoff-context.md
+3. 查看 Git commit / diff
+4. 查看已有设计文档、截图、Figma 或用户明确确认
+5. 如果仍无法确定，再询问用户
+
+不得因为缺少旧聊天上下文而自行创造新的产品逻辑、视觉方向或交互规则。
+
+### 16.7 不允许未经要求自行做设计决策
+
+- 用户已经明确确认的方案具有最高优先级。
+- 已有 Figma、设计文档、截图或用户确认规则时，按已有规则实现。
+- 用户没有要求探索方案时，不主动替换为“我认为更合理”的设计。
+- 不自行增加页面、状态、模块、字段、交互或视觉元素。
+- 如发现现有方案存在明显问题，可以指出，但未经用户确认不得直接改变产品方向。
+
+### 16.8 大任务不得因为复杂而停止
+
+遇到以下情况不得直接放弃、跳过或建议以后再做：
+
+- 文件数量很多
+- 修改范围较大
+- 上下文很长
+- 历史实现复杂
+- 任务来自旧会话
+
+正确做法是：
+
+检查依赖 → 拆成安全步骤 → 逐步修改 → 每步验证 → 继续完成。
+
+复杂度本身不是停止任务的理由。
+
+### 16.9 提交前必须检查回归
+
+每次准备 commit / push 前至少确认：
+
+- git status 与 git diff 是否只包含本任务相关修改。
+- 是否意外覆盖已有新版 UI。
+- 是否修改了无关文件。
+- 现有交互是否仍可使用。
+- SVG、字体、资源路径是否正常。
+- 能运行的测试、typecheck、build、npm run check 应执行。
+- Design System 相关修改必须至少做一次实际页面预览验证。
+
+不得为了成功提交而忽略视觉回退。
+
+### 16.10 任务和 Commit 尽量一一对应
+
+- 一个独立任务尽量对应一个明确 commit。
+- 不把多个无关任务长期堆在同一个未提交工作区。
+- 不把未确认修改混入另一个任务的 commit。
+- commit message 应能说明本次实际做了什么。
+- 阶段结束后及时更新 handoff-context.md。
+
+### 16.11 上下文压缩与换对话
+
+- 第一次出现自动压缩上下文提示时，不继续堆大量新任务。
+- 优先完成当前小阶段。
+- 更新 handoff-context.md，包括：
+  - 已完成
+  - 当前分支
+  - 最新 commit
+  - 尚未提交内容
+  - 已确认设计决策
+  - 下一步
+- 确认 Git 中已有可恢复状态后，再新建对话。
+- 不允许把聊天窗口本身当作项目唯一记忆来源。
+
+核心原则：
+
+“Git + handoff-context.md 才是项目记忆，聊天上下文只是临时工作空间。”

@@ -686,6 +686,25 @@
         font-weight: 500;
         line-height: 24px;
       }
+      .preview-meta.has-inline-tag h1 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .preview-title-tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 18px;
+        border-radius: 999px;
+        background: #f1f2f3;
+        color: rgba(17,17,17,.48);
+        padding: 2px 6px;
+        font: 500 10px/14px Karla, Arial, sans-serif;
+        letter-spacing: .02em;
+        text-transform: lowercase;
+        white-space: nowrap;
+      }
+      .preview-actions .item-tag[hidden] { display: none !important; }
       .preview-toolbar {
         padding: 12px 24px;
       }
@@ -987,7 +1006,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <div class="preview-meta">
-              <h1 id="previewTitle">Preview</h1>
+              <h1 id="previewTitle"><span id="previewTitleLabel">Preview</span><span class="preview-title-tag" id="previewTitleTag" hidden></span></h1>
               <p id="previewDescription"></p>
             </div>
             <div class="preview-actions">
@@ -1042,11 +1061,11 @@
         { group: "Brand", category: "Automation", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
         { group: "Brand", category: "Automation", name: "Plugin Entry Options", path: "legacy/pages/Plugin Entry Options.html", subtitle: "Three browser-extension install entry placements.", status: "Legacy" },
         { group: "Brand", category: "Analyze", name: "Comparison Modal", path: "legacy/pages/Comparison Modal.html", subtitle: "Analysis comparison with Full Report and By Module views.", status: "Legacy" },
-        { group: "Brand", category: "Overview", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Mission option B · all six sections · design-system styling.", status: "Legacy" },
-        { group: "Brand", category: "Overview", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Homepage animation language, word reveal, mascot and cursor.", status: "Legacy" },
-        { group: "Brand", category: "Overview", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Gotu-led narrative page with marquee and illustration placeholders.", status: "Legacy" },
-        { group: "Brand", category: "Overview", name: "About Us — v4", path: "legacy/pages/About Us v4.html", subtitle: "Centered hero, tracking eye, static color cards and image-trail footer.", status: "Legacy" },
-        { group: "Brand", category: "Overview", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Animated homepage with ticker and mascot.", status: "Legacy" },
+        { group: "Brand", category: "Homepage", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Mission option B · all six sections · design-system styling.", status: "Legacy" },
+        { group: "Brand", category: "Homepage", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Homepage animation language, word reveal, mascot and cursor.", status: "Legacy" },
+        { group: "Brand", category: "Homepage", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Gotu-led narrative page with marquee and illustration placeholders.", status: "Legacy" },
+        { group: "Brand", category: "Homepage", name: "About Us — v4", path: "legacy/pages/About Us v4.html", subtitle: "Centered hero, tracking eye, static color cards and image-trail footer.", status: "Legacy" },
+        { group: "Brand", category: "Homepage", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Animated homepage with ticker and mascot.", status: "Legacy" },
         { group: "Brand", category: "Growth", name: "Module Comparison v3", path: "legacy/pages/Module Comparison.html", subtitle: "By Module comparison with inline switching and delta cues.", status: "Legacy" },
         { group: "Brand", category: "Post", name: "Post Reply Tutorial (preview)", path: "legacy/pages/Post Reply Tutorial (preview).html", subtitle: "Looping reply composition and posting tutorial.", status: "Legacy" },
         { group: "Brand", category: "Post", name: "Post Reply Tutorial Reddit (preview)", path: "legacy/pages/Post Reply Tutorial Reddit (preview).html", subtitle: "Looping Reddit comment composition and posting tutorial.", status: "Legacy" },
@@ -1101,7 +1120,7 @@
       const groupOrder = ["Brand", "Components", "UI Kits — Webapp"];
       const groupLabels = { "Brand": "Brand", "Components": "Components", "UI Kits — Webapp": "UI Kits — Webapp" };
       const groupIcons = { "Brand": "nav-overview", "Components": "nav-analysis", "UI Kits — Webapp": "nav-overview" };
-      const brandCategoryOrder = ["Automation", "Analyze", "Overview", "Growth", "Post", "Engage", "Verify", "Common"];
+      const brandCategoryOrder = ["Homepage", "Common", "Overview", "Analyze", "Growth", "Post", "Engage", "Verify", "Automation"];
       const componentCategoryOrder = ["Overview", "Inputs & Controls", "Navigation", "Content & Status", "Data Display", "Feedback & Overlays"];
       const pageIcons = {
         "dApp v6 Foundations": "nav-overview", "Overview": "nav-analysis", "dApp v6 Components": "nav-analysis", "PlanCard": "nav-growth", "PlanCard — Current": "nav-growth",
@@ -1114,7 +1133,9 @@
       const homeView = document.getElementById("homeView");
       const previewView = document.getElementById("previewView");
       const previewFrame = document.getElementById("previewFrame");
-      const previewTitle = document.getElementById("previewTitle");
+      const previewMeta = document.querySelector(".preview-meta");
+      const previewTitleLabel = document.getElementById("previewTitleLabel");
+      const previewTitleTag = document.getElementById("previewTitleTag");
       const previewDescription = document.getElementById("previewDescription");
       const previewTag = document.getElementById("previewTag");
       const openStandalone = document.getElementById("openStandalone");
@@ -1230,7 +1251,7 @@
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
               <span class="nav-label">${escapeHtml(item.name)}</span>
-              ${item.status === "Legacy" ? '<span class="item-tag">Legacy</span>' : item.kind === "brand-output" ? '<span class="item-tag">Brand</span>' : ""}
+              ${item.kind === "brand-output" ? '<span class="item-tag">Brand</span>' : ""}
             </button>`;
           const itemMarkup = group === "Brand"
             ? (() => {
@@ -1310,14 +1331,16 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         saveActivePath(path);
         homeView.hidden = true;
         previewView.hidden = false;
-        previewTitle.textContent = item.name;
+        previewTitleLabel.textContent = item.name;
         previewDescription.textContent = `${item.group} · ${item.subtitle}`;
         const isBrandOutput = item.kind === "brand-output";
         const isLegacy = item.status === "Legacy";
-        previewTag.textContent = isLegacy ? "Legacy" : "";
-        if (isBrandOutput) previewTag.textContent = "Brand";
+        previewMeta.classList.toggle("has-inline-tag", isLegacy);
+        previewTitleTag.textContent = isLegacy ? "legacy" : "";
+        previewTitleTag.hidden = !isLegacy;
+        previewTag.textContent = isBrandOutput ? "Brand" : "";
         previewTag.className = "item-tag";
-        previewTag.hidden = !(isLegacy || isBrandOutput);
+        previewTag.hidden = !isBrandOutput;
         const previewPath = isBrandOutput ? item.html : item.path;
         previewFrame.src = `${previewPath}${previewPath.includes("?") ? "&" : "?"}preview=20260820-portal`;
         openStandalone.href = previewPath;
