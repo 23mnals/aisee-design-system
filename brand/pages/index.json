@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "pages": [
+    {
+      "name": "AIsee Logo Animation",
+      "html": "brand/pages/logo-animation/preview.html",
+      "subtitle": "Page-wide cursor-following eye animation with natural blinking and side glances.",
+      "source": "codex"
+    }
+  ]
+}

@@ -29,7 +29,9 @@ export function ScoreGauge({
     <h3>{label}</h3>
     <div className="aisee-score-gauge__container">
       <div className="aisee-score-gauge__scale" role="meter" aria-valuemin={0} aria-valuemax={safeMax} aria-valuenow={clampedValue}>
-        <span className="aisee-score-gauge__guide" aria-hidden="true" />
+        <svg className="aisee-score-gauge__guide" viewBox="0 0 118.182 59.091" aria-hidden="true">
+          <path d="M0 59.091A59.091 59.091 0 0 0 118.182 59.091" />
+        </svg>
         {ticks.map(({ angle, active }, index) => <span
           aria-hidden="true"
           className={`aisee-score-gauge__tick${active ? ' is-active' : ''}`}

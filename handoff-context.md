@@ -120,6 +120,7 @@ Components
 - 功能 icon 使用 `line_`、`fill_` 等真实功能图标；`illustration` 资源只用于 banner、空状态或需要呼吸感的插图区域，不能拿插图充当侧边栏功能 icon。
 - 用户提供的 loading 原视频：`/Users/ccbakala/Documents/ui/aisee/Component/gif/1_1080_N.mp4`，目前只有绿色版本；Engage/Post 若需要黄色版本，应以同一动画逻辑制作颜色变体，不要改变原视频文件。
 - 预览中加载动画优先使用 SVG/CSS 动画或清晰视频资源；不要把低清缩略图当成 SVG。
+- Logo 动画资产必须保持透明背景；白色只属于眼白路径，预览容器或宿主页面背景由调用方决定，禁止在 SVG 中加入外层白色背景矩形。
 - Gotu、Karla、DigitalNumbers 等字体应保存在仓库 `fonts/` 或明确的 `uploads/` 资源目录；核对字体文件是否已经提交。
 
 ## 9. 设计文档与版本规则
@@ -173,3 +174,75 @@ python3 -m http.server 8000
 - 本交接 Markdown：`handoff-context.md`。
 - 主 HTML 预览：`aisee-design-system-preview.html`。
 - 新会话接手时，先读本文件、`README.md`、`docs/aisee-dapp-design.v6.md`、`docs/TEAM_DECISIONS.md` 和 `docs/design-system-gap-report.md`，再开始修改。
+
+## 14. 2026-08-21 对话总结与续接说明（以本节为准）
+
+> 本节覆盖前文中与当前工作区状态不一致的历史记录；下一次会话先读本节，再回看第 1–13 节。
+
+### 本轮新增：Event Dialog
+
+当前新增 `src/components/EventDialog.tsx`，统一以下事件弹窗：
+
+- `success`：页面分析成功
+- `error`：页面分析失败
+- `subscribe`：订阅/解锁
+- `upgrade`：升级套餐
+- `insufficient-balance`：余额/积分不足
+- `locked`：开启开关后提示当前页面/流程不能关闭
+
+统一结构：顶部事件类别 icon、标题、描述、操作按钮区。默认不显示右上角关闭 icon；通过 Cancel、Maybe later 等按钮关闭。勾选、额度信息、说明信息等特殊内容按场景放到内容区扩展。
+
+标题使用 Karla 20px/500，描述使用 14px/400 和 `rgba(17,17,17,.6)`，弹窗内边距 24px，按钮间距 8px。React 入口为 `src/components/EventDialog.tsx`，统一导出已加入 `src/index.ts`，样式在 `src/styles/components.css`。图标必须引用本地 `assets/stemui/` SVG，不得使用模糊位图或临时绘制图标。Figma 参考为 node 72:57420（完整链接见前文）。
+
+当前未确认静态 `components/EventDialog/EventDialog.html`、registry 和详情页已补齐；后续如需在 System demo 中展示，必须补齐这些入口。
+
+### 当前统一视觉规则
+
+- 主内容固定宽度 960px（不是只设 max-width），居中，左右内边距 24px。
+- 页面/组件标题和下方内容左对齐；页面内容统一居中容器。预览标题栏 padding 12px 24px。
+- 区块标题（Overview / Examples、States、Usage、Specs 等）统一 16px / 500；下面描述统一 14px / 400、`rgba(17,17,17,.6)`；标题与描述间距 8px。
+- 卡片描边统一 `rgba(17,17,17,.05)`；主文本 `#111111`；次要文字 `rgba(17,17,17,.6)`；Usage 与 Specs 说明同色。
+- 搜索框 hover/focus 使用 Aisee lime `#CFFF29`；输入框/下拉框 hover 应沿用同一设计规范。
+- Sidebar 展开 224px、收起 58px；收起只显示 icon；刷新后保留当前页面、分组展开状态、收起状态。
+- 每个功能页面顶部固定 Page Banner：icon、标题、描述，右侧按功能显示按钮/Toggle/统计或留空。Banner icon 优先 `draw-*`；`platform-*` 只作平台标识；侧边栏和按钮操作优先真实 `line-*`，侧边栏允许动画。
+- Dialog/Confirmation Dialog/Toast 统一使用真实 SVG、明确的事件语义，避免自定义模糊 icon。
+
+### 资产与页面归档规则
+
+- `brand/` 只展示 Codex 与 ChatGPT 网页端产出；页面按英文功能名组织。旧 Claude/旧版本页面归入 `legacy/` 或删除范围，默认不作为当前设计系统入口。
+- System demo 当前不应把旧产物以 PNG/HTML 双卡片形式展示；需要展示时以当前有效页面/组件为准。
+- 不要删除尚未获得用户明确确认的 Legacy 文件；当前工作区已有一批用户确认过的旧产物删除改动，需在提交前逐项核对。
+- Icon 约定：banner 使用 `draw-*`，`platform-*` 仅平台标识，侧边栏/按钮优先真实 `line-*`，禁止模糊截图、低分辨率 PNG 或临时绘制 SVG。
+
+### AI 交付约束
+
+- HTML 能否被其他 AI 读取取决于页面和依赖资源是否可访问；HTML 本身不会自动带出 Figma 变量、设计意图或完整规范。
+- 为避免其他 AI 改动字体、颜色或间距，交付必须同时提供 canonical Markdown、明确 token/组件契约、真实本地 SVG 路径、可访问的完整预览站点与关键截图/参考节点；不要只发送单个 HTML。
+- 用其他 AI 验证时，要求其先读取规则和资产清单，再实现；先对照 tokens/路径做静态检查，再看视觉结果。
+
+### 当前验证与 Git 状态
+
+- 本轮只更新了本交接文档；不修改代码、不提交、不推送。
+- 当前工作区存在大量先前累计 staged/unstaged 修改及删除，包括旧产物清理、组件样式、legacy/preview、logo animation 和 EventDialog；后续提交前必须先 `git status --short`，区分已确认删除与未确认改动，避免 reset/checkout 覆盖他人工作。
+- 远程协作仍按 `origin/main` 处理；本轮没有进行远程同步。
+- EventDialog React API 已加入入口，但静态 demo/registry 尚未确认；后续完成后执行仓库已有 typecheck/test 或等价检查，再决定是否提交。
+
+### 下一次会话建议顺序
+
+1. 先读本节、README.md、docs/aisee-dapp-design.v6.md、docs/TEAM_DECISIONS.md、docs/design-system-gap-report.md。
+2. 检查 `git status --short` 与当前分支，保护已有 staged/unstaged 改动。
+3. 补齐 EventDialog 静态预览/registry（如需），并统一检查 Dialog/Confirmation Dialog/Toast 的共同规范。
+4. 对所有 Components 页面回归：固定 960px 内容宽度、24px padding、标题 16/500、描述 14/400、8px 间距、次要文字色、统一卡片描边。
+5. 通过 HTTP 服务验证 SVG、字体、动画、交互和刷新持久化；确认后再提交并推送 `origin/main`。
+
+### Git 交接说明
+
+本 turn 没有执行 commit/push。由于当前 worktree 有大量待处理改动，下一次提交前需要先逐项核对 staging；不要把未确认删除或未确认样式改动混入发布。
+
+## 15. 交接文档与新会话提醒机制（长期约定）
+
+- 每次完成一批可交付修改后，同步更新根目录 `handoff-context.md`；不要只在聊天里记录。
+- 当一次工作接近阶段性收尾、距离上次交接更新较久，或系统首次出现“自动压缩上下文”的提示时，主动提醒用户：**“该更新交接文档并新建对话了。”**
+- 出现首次自动压缩提示时，应先完成当前阶段的交接摘要（已完成、待确认、未推送、下一步），再提醒用户新建对话，避免上下文丢失。
+- 新对话开始时先读取 `handoff-context.md`；如果发现文档已超过当前阶段或与工作区不一致，先刷新交接内容再继续实现。
+- 提醒是协作流程提示，不代表自动提交、推送或删除；Git 操作仍需按用户明确要求执行。

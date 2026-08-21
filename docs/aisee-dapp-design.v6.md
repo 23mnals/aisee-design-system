@@ -223,6 +223,8 @@ Button (中):                    Karla 14px / 500
 Button (小):                    Karla 12px / 500
 ```
 
+**组件文档标题与分区（Current component pages）**：页面内容标题及 `Overview / Examples`、`States`、`Usage`、`Specs` 等分区标题统一使用 Karla **16px / 500 / line-height 24px**；标题下的说明文字统一使用 Karla **14px / 400 / line-height 20px**，颜色为次要文字色 `rgba(17,17,17,.6)`，与标题间距固定 **8px**。该规则优先于通用 Section Title 的字号建议，所有组件页面必须保持一致。
+
 figma 实测字频 — Karla 字号使用分布：14px×229、12px×195、16px×111、13px×47、10px×33、18px×8。**14px 是绝对主力**。
 
 ### 字重使用
@@ -267,16 +269,17 @@ Banner 是页面功能入口和上下文摘要，由四部分组成：左侧功�
 | 外层尺寸 | 高 **76px**；宽度跟随主内容区（Figma 参考宽 1184px） | 不写死页面宽度；在主内容区内 `width: 100%` |
 | 外层表面 | `var(--aisee-color-semantic-bg-hover)`（当前解析约 `rgba(17,17,17,.04)`） | 白色 **4px** 呼吸描边环，圆角 **16px**；不要使用截图或低清 PNG |
 | 内容区 | `padding: 6px 16px`，`gap: 8px`，垂直居中 | 内容区高度 68px；左右内容不得贴边 |
-| 左侧图标容器 | **44×44px**，白底，圆角 **8px** | 现有页面使用 StemUI 对应功能 icon 或已确认的插图；容器内 leaf icon 固定 **24×24px** |
+| 左侧图标容器 | **44×44px**，白底，圆角 **8px** | Banner 统一使用 `draw_*` 系列图标；容器内 leaf icon 固定 **24×24px** |
 | 标题 | Karla Medium **20px / 500 / 24px**，字距约 `-0.4px`，语义色 `text/primary` | 标题和描述放在同一纵向内容组中；标题不使用 700 粗体 |
 | 描述 | Karla Regular **14px / 400 / 22px**，语义色 `text/primary` | 位于标题正下方；描述可随页面文案换行，但不得改变 Banner 固定高度 |
 | 右侧操作位 | `display: flex; align-items: center; justify-content: flex-end`；参考槽位高度 **56px**，内部 gap **32px** | 按页面功能放 Button、Toggle 或统计信息；按钮/开关必须复用现有组件及语义变量 |
 
 #### Icon 与插图来源
 
-- **已有页面**：优先使用 `@stemui/icons` 中与功能语义匹配的 SVG；需要插图时使用设计稿已确认的 `illustration_`* 资源。不得用模糊截图、低分辨率位图、emoji 或临时绘制的 SVG 替代。
-- **新增页面**：在对应功能插图尚未交付前，可以使用明确标记的占位容器（保持 24×24 leaf 尺寸和 44×44 白色容器）；占位符只允许作为开发阶段替代物，发布前必须换成产品 icon / illustration。
-- 功能 icon 与 Banner 插图区分：Sidebar、按钮、输入、下拉等交互位置使用 `line_*` / `fill_*` 功能 icon；Banner 左侧可使用功能 icon 或 `illustration_*`，但不得反过来把插图当作交互 icon。
+- **已有页面**：banner 左侧图标只能使用 `@stemui/icons` 的 `draw-*` 系列（仓库文件名通常写作 `draw_*.svg`）；非 banner 场景按功能语义优先 `line_*`，必要时 `fill_*`。
+- **新增页面**：banner 插图未交付前可使用明确标记的占位容器（保持 24×24 leaf 尺寸和 44×44 白色容器）；占位符仅作开发期代替，发布前须换成对应 `draw_*` 或已确认图形。
+- **平台标识**：`platform-*`（仓库文件名通常写作 `platform_*.svg`）仅限用于平台标识（如平台 chip / 外链 / 平台卡片标头），不得用于 banner 或通用功能按钮。
+- **功能 icon 与 Banner 插图区分**：Sidebar、按钮、输入、下拉等交互位置默认优先使用 `line_*`（不作硬性必须，可根据场景例外）；侧边栏图标允许或要求有动画。Banner 左侧不允许使用 `line_*`、`fill_*`、`platform_*`。
 
 #### 页面实现清单
 
@@ -352,7 +355,7 @@ Logo mark:                      320px 320px 0 0
 - **CONNECT CHANNELS** 分组：`Connections`。
 - **INTEGRATIONS** 分组：`Search Console`。
 - **WORKFLOWS** 分组：`Automation`（新功能，独立于 INTEGRATIONS）。
-- 导航行统一约 **30px 高**（`padding: 4px 8px`，圆角 8px，icon 容器 18×18，文字 Karla 14px / 400，行内 gap 4px）；同一分组内项目间距约 4px。子项增加左侧缩进和分隔线。
+- 导航行统一约 **30px 高**（`padding: 4px 8px`，圆角 8px，icon 容器 18×18，文字 Karla 14px / 400，行内 gap 4px）；同一分组内项目间距约 4px。侧边栏导航图标默认使用 `line_*`，子项增加左侧缩进和分隔线。
 - Hover 底色 `rgba(17,17,17,0.05)`；active 使用当前功能的语义主色（Analysis `#CFFF29`，Engage / Post `#FFE253`），不再使用 Tab Toggle 的双层描边规则。
 - 底部 Profile Card：圆角 8，底 `#FAFAFA`，1px 极淡描边；头像 + 邮箱 + 计划名（Karla 11–12px），内部分隔线，Credits 行 + 6px progress bar。Profile 区固定在底部，不随功能项切换结构。
 
@@ -801,7 +804,7 @@ Engage **是 Sidebar 的 GROWTH LOOP 纵向功能列表中与 Analysis / Growth 
 
 > 实现：`engage-banner.jsx → EngageBanner({ variant, title, subtitle, stats })`。在每个 Engage 功能页顶部都渲染一次，宽度 = 内容区宽 - 48（左右各 24 内边距）。
 
-> **设计系统预览页应用规则（2026-08-13）**：组件与规范预览页的顶部说明区也使用 AISEE Banner 语言，不使用通用后台模板式的大标题栏。标题为 Karla 20 / 600，副标题 12 / 400，左侧使用 44–48px 白色 icon 容器，外层圆角 16px，并保留白色 4–5px 呼吸环。Analysis 使用 `#F5FFD4`，Post Agent 使用 `#FFFADD`，Engage 使用其身份色 `#F3E7F4`；组件卡标题统一 Karla 14 / 600，避免 Ant Design 式偏大、偏粗的展示层级。
+> **设计系统预览页应用规则（2026-08-13）**：组件与规范预览页的顶部说明区也使用 AISEE Banner 语言，不使用通用后台模板式的大标题栏。标题为 Karla 20 / 500，副标题 12 / 400，左侧使用 44–48px 白色 `draw-*` icon 容器，外层圆角 16px，并保留白色 4–5px 呼吸环。Analysis 使用 `#F5FFD4`，Post Agent 使用 `#FFFADD`，Engage 使用其身份色 `#F3E7F4`；组件卡标题统一 Karla 14 / 600，避免 Ant Design 式偏大、偏粗的展示层级。
 
 > **UI Kit 功能预览覆盖规则（2026-08-18）**：Web App UI Kit 不能只展示 Overview。当前侧边栏中的每个可到达功能都必须有可识别的近似页面预览，至少覆盖 Overview、Analysis、Growth、Improve Score、Build Brand Influence、Engage、Signal Feed、Keywords & Accounts、Replies、Post、Calendar、Channels、Media、Verify、Connection 与 Automation。Automation 是 5.7 新增的 WORKFLOWS 托管自动发布功能，不属于 INTEGRATIONS。预览无需逐像素复刻，但必须同步对应 Figma 设计区块的页面目的、主要信息结构、模块身份色和关键组件状态；不得使用空白页或通用占位卡代替。新增 Figma 功能时同步更新导航、页面注册表与自动覆盖测试。
 
@@ -822,7 +825,7 @@ Engage **是 Sidebar 的 GROWTH LOOP 纵向功能列表中与 Analysis / Growth 
 | Margin | `mx-6 mt-5` 即 `24px / 20px` | 与 PageTabs 紧邻 |
 | **lavender-pink 变体底** | **`#F3E7F4`**（Engage 专用身份色） | Signal Feed / Keywords / Replies 默认；**不要误用 Channel banner 的 `#FAE2FE`** |
 | **lime 变体底** | **`#F0FFBA`**（tailwind: `bg-green-f0ffba`） | 仅 `<InitialConfig>` 使用 |
-| icon 容器 | **44×44**，白底，圆角 8，`shadow: 0 1px 2px rgba(17,17,17,0.06)` | 遵循全站 Page Banner；内部 icon **24×24**，使用 StemUI 功能 icon 或已确认插图 |
+| icon 容器 | **44×44**，白底，圆角 8，`shadow: 0 1px 2px rgba(17,17,17,0.06)` | 遵循全站 Page Banner；内部 icon **24×24**，只能使用 StemUI `draw-*` 系列（未交付时使用占位符） |
 | 标题 | Karla **Medium 20 / 500** / lh 24 / `text/primary` | 文案固定 "Engage" / "Engage — Initial Setup"；不使用 700 粗体 |
 | 副标题 | Karla **14 / 400** / lh 22 / `text/primary` | 例："Monitor and reply to relevant conversations across X and Reddit." |
 | 右侧 stats 间距 | gap 26px | 多于 4 项时不允许换行（截断） |

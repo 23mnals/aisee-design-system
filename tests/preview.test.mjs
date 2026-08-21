@@ -13,6 +13,20 @@ test('system portal preserves the four required sections', () => {
   assert.match(portal, />UI Kits — Webapp</);
 });
 
+test('Brand catalog is grouped by AIsee functional modules', () => {
+  const expectedOrder = ['Automation', 'Analyze', 'Overview', 'Growth', 'Post', 'Engage', 'Verify', 'Common'];
+  assert.match(portal, new RegExp(`const brandCategoryOrder = \\[${expectedOrder.map(category => `"${category}"`).join(', ')}\\];`));
+
+  const brandEntries = [...portal.matchAll(/\{ group: "Brand",([^}]+)\}/g)].map(match => match[1]);
+  assert.ok(brandEntries.length > 0, 'Brand entries should exist');
+  assert.ok(brandEntries.every(entry => /category: "[^"]+"/.test(entry)), 'every Brand entry must declare a category');
+
+  const categories = new Set(brandEntries.map(entry => entry.match(/category: "([^"]+)"/)?.[1]));
+  assert.deepEqual([...categories].sort(), [...expectedOrder].sort());
+  assert.match(portal, /group === "Brand"[\s\S]*?brandCategoryOrder\.map/);
+  assert.match(portal, /item\.category \|\| ""/);
+});
+
 test('every catalog preview exists and paths are unique', async () => {
   const paths = [...portal.matchAll(/path: "([^"]+)"/g)].map(match => match[1]);
   // Three duplicate legacy Engage pages were intentionally removed from the catalog.
@@ -127,7 +141,8 @@ test('score gauge follows Figma node 58:32548 instead of the legacy donut', asyn
   assert.match(styles, /font-size: 18px; font-weight: 500; line-height: 26px/);
   assert.match(styles, /score-gauge-texture\.png/);
   assert.match(styles, /z-index: 0; inset: 0; background: url\('\.\.\/assets\/score-gauge\/score-gauge-texture\.png'\)/);
-  assert.match(styles, /border: \.659px dashed var\(--aisee-color-black\); border-bottom: 0/);
+  assert.match(styles, /\.aisee-score-gauge__guide path \{ fill: none; stroke: var\(--aisee-color-black\); stroke-width: \.659px; stroke-dasharray: 2 2/);
+  assert.match(source, /M0 59\.091A59\.091 59\.091 0 0 0 118\.182 59\.091/);
   assert.match(styles, /font-size: 20px; font-weight: 400; line-height: 26px/);
   assert.doesNotMatch(styles, /\.aisee-score-gauge__dial/);
   assert.match(detail, /Figma node 58:32548/);
@@ -450,7 +465,7 @@ test('sidebar uses compact 14px navigation typography', () => {
 test('sidebar subgroup chevrons keep readable spacing and vertical alignment', () => {
   assert.match(portal, /\.nav-subgroup-toggle \{[^}]*align-items: center;/);
   assert.match(portal, /\.nav-subgroup-toggle > span:last-child \{[^}]*align-items: center;[^}]*line-height: 18px;/);
-  assert.match(portal, /\.nav-subgroup-chevron \{[^}]*width: 14px;[^}]*height: 14px;[^}]*margin-right: 10px;[^}]*place-items: center;/);
+  assert.match(portal, /\.nav-subgroup-chevron \{[^}]*width: 16px;[^}]*height: 16px;[^}]*margin-right: 8px;[^}]*align-items: center;[^}]*justify-content: center;/);
 });
 
 test('current app framework uses 16px main content padding', async () => {

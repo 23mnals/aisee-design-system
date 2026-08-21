@@ -2,6 +2,21 @@
 
 Brand 是 Design System 的官网与品牌入口，字体允许 **Karla + Gotu**。
 
+## 按 AIsee 功能模块分类
+
+团队预览中的 Brand 页面按产品功能查找，固定顺序为：
+
+1. **Automation**：安装、更新和插件入口等自动化工作流素材
+2. **Analyze**：分析结果与比较视图
+3. **Overview**：官网、About 与品牌叙事页面
+4. **Growth**：跨模块增长和效果比较
+5. **Post**：发帖与回复发布教程
+6. **Engage**：信号、回复、追踪和 Engage 仪表盘
+7. **Verify**：验证与追踪相关视觉素材
+8. **Common**：跨模块共用的 Logo、颜色、字体、间距和 Foundations
+
+分类只改变预览导航的信息架构，不移动或删除历史文件；Legacy 状态也保持不变。新增 Brand 页面时必须填写所属功能模块，跨模块基础规范归入 Common。
+
 ## 页面产出约定
 
 当用户提出新的页面需求，并要求依据设计规范或 Figma 设计稿实现时，页面原型、静态 HTML、页面专用视觉资源和对应说明默认归档到本目录。每个页面应放在独立子目录中，并同时记录：
@@ -27,6 +42,7 @@ Brand 是 Design System 的官网与品牌入口，字体允许 **Karla + Gotu**
 
 - [`foundations/`](foundations/)：颜色、字体、间距、圆角、阴影与视觉原则索引
 - [`homepage/`](homepage/)：Homepage v1–v3 规范与 About / Homepage 原型索引
+- [`pages/`](pages/)：网页端 / AI 生成的功能页面 PNG + HTML 产出，以及 Brand 门户登记表
 - [`assets/`](assets/)：Logo、纹理、插画、GIF 与品牌资产索引
 
 原有文件路径为保证历史 HTML 可运行而保留在仓库根目录、`preview/`、`assets/` 和 `fonts/`。本目录提供稳定导航，不复制二进制资源。
