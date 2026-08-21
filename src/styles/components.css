@@ -269,6 +269,27 @@
 .aisee-dialog__footer { display: flex; justify-content: flex-end; gap: 12px; margin: 20px -24px 0; padding: 14px 24px 0; border-top: 1px solid rgba(17,17,17,.06); }
 .aisee-dialog__footer .aisee-button--secondary { min-height: 40px; border-color: rgba(17,17,17,.06); background: rgba(17,17,17,.02); }
 
+/* Event dialogs share one calm, action-led layout across success, failure,
+   subscription, upgrade, quota and locked-state messaging. */
+.aisee-event-dialog__header { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+.aisee-event-dialog__icon { display: grid; width: 48px; height: 48px; place-items: center; margin-bottom: 16px; border-radius: 14px; background: rgba(17,17,17,.06); }
+.aisee-event-dialog__icon img { width: 24px; height: 24px; object-fit: contain; }
+.aisee-event-dialog--success .aisee-event-dialog__icon { background: rgba(165,213,0,.16); }
+.aisee-event-dialog--error .aisee-event-dialog__icon,
+.aisee-event-dialog--insufficient-balance .aisee-event-dialog__icon { background: rgba(236,82,18,.12); }
+.aisee-event-dialog--subscribe .aisee-event-dialog__icon,
+.aisee-event-dialog--upgrade .aisee-event-dialog__icon { background: rgba(255,226,83,.24); }
+.aisee-event-dialog--locked .aisee-event-dialog__icon { background: rgba(17,17,17,.08); }
+.aisee-event-dialog__copy { min-width: 0; }
+.aisee-event-dialog__title { margin: 0; font-size: 20px; font-weight: 500; line-height: 30px; }
+.aisee-event-dialog__description { margin-top: 8px; color: rgba(17,17,17,.6); font-size: 14px; font-weight: 400; line-height: 22px; }
+.aisee-event-dialog .aisee-dialog__close { position: absolute; top: 0; right: 0; }
+.aisee-event-dialog__content { margin-top: 24px; }
+.aisee-event-dialog__footer { display: flex; justify-content: flex-end; gap: 8px; margin: 24px 0 0; padding: 0; border-top: 0; }
+.aisee-event-dialog__footer .aisee-button { min-height: 40px; }
+.aisee-event-dialog__detail { display: grid; gap: 8px; padding: 12px; border-radius: 8px; background: rgba(17,17,17,.04); color: rgba(17,17,17,.6); font-size: 14px; line-height: 22px; }
+.aisee-event-dialog__check { display: flex; align-items: flex-start; gap: 8px; color: rgba(17,17,17,.6); font-size: 14px; line-height: 22px; }
+
 .aisee-confirmation-dialog {
   width: min(512px, calc(100vw - 32px));
   padding: 24px;
@@ -403,7 +424,8 @@
 .aisee-score-gauge h3 { position: absolute; top: 16px; left: 16px; margin: 0; font-size: 18px; font-weight: 500; line-height: 26px; }
 .aisee-score-gauge__container { position: absolute; top: 54px; right: 16px; bottom: 19px; left: 16px; }
 .aisee-score-gauge__scale { position: absolute; top: 6px; left: 50%; width: 184.545px; height: 100px; overflow: hidden; transform: translateX(-50%); }
-.aisee-score-gauge__guide { position: absolute; top: 36px; left: 50%; width: 118.182px; height: 59.091px; border: .659px dashed var(--aisee-color-black); border-bottom: 0; border-radius: 100% 100% 0 0; transform: translateX(-50%); }
+.aisee-score-gauge__guide { position: absolute; top: 36px; left: 50%; display: block; width: 118.182px; height: 59.091px; overflow: visible; transform: translateX(-50%); }
+.aisee-score-gauge__guide path { fill: none; stroke: var(--aisee-color-black); stroke-width: .659px; stroke-dasharray: 2 2; stroke-linecap: round; }
 .aisee-score-gauge__tick { position: absolute; top: 0; left: 50%; width: 3.953px; height: 18.445px; background: rgba(17,17,17,.1); transform: translateX(-50%) rotate(var(--aisee-score-tick-angle)); transform-origin: 50% 100px; }
 .aisee-score-gauge__tick.is-active { background: var(--aisee-color-black); }
 .aisee-score-gauge__needle { position: absolute; top: 48.182px; left: 50%; width: 3.636px; height: 30px; background: var(--aisee-color-black); transform: translateX(-50%); }

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>aisee Logo Animation Preview</title>
+    <style>
+      :root { color-scheme: light; font-family: Karla, Inter, system-ui, sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f7f7f7; color: #111; }
+      main { display: grid; gap: 20px; justify-items: center; padding: 32px; }
+      .stage { width: min(72vw, 400px); aspect-ratio: 1; display: grid; place-items: center; background: #fff; border: 1px solid rgba(17,17,17,.08); border-radius: 24px; box-shadow: 0 16px 48px rgba(17,17,17,.08); }
+      iframe { width: 100%; height: 100%; border: 0; border-radius: inherit; }
+      h1 { margin: 0; font-size: 20px; font-weight: 600; }
+      p { margin: 0; color: #666; font-size: 14px; text-align: center; }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: #444; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>aisee Logo Animation</h1>
+      <div class="stage" aria-label="Logo animation preview">
+        <svg id="preview-logo" width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="aisee animated logo">
+          <path d="M0 200C0 89.5431 89.5431 0 200 0C310.457 0 400 89.5431 400 200V400H0V200Z" fill="#C9FE12"/>
+          <defs>
+            <clipPath id="preview-eye-clip"><path d="M85.603 134.409C161.565 67.1981 237.528 67.1981 313.49 134.409C237.528 201.62 161.565 201.62 85.603 134.409Z"/></clipPath>
+          </defs>
+          <path d="M85.603 134.409C161.565 67.1981 237.528 67.1981 313.49 134.409C237.528 201.62 161.565 201.62 85.603 134.409Z" fill="white"/>
+          <g id="preview-pupil-layer" clip-path="url(#preview-eye-clip)"><circle cx="199.5465" cy="134.409" r="34" fill="#111111"/></g>
+          <path id="preview-eyelids" clip-path="url(#preview-eye-clip)" d="M0 0H400V134.409C237.528 67.1981 161.565 67.1981 85.603 134.409Z M0 400H400V134.409C237.528 201.62 161.565 201.62 85.603 134.409Z" fill="#C9FE12"/>
+        </svg>
+      </div>
+      <p>页面任意位置移动鼠标，瞳孔会以约 100ms 延迟跟随方向；无操作时会自然左右查看并眨眼。</p>
+      <code>brand/assets/logo-animated.svg</code>
+    </main>
+    <script>
+      const pupil = document.getElementById('preview-pupil-layer');
+      const eyelids = document.getElementById('preview-eyelids');
+      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+      const smooth = (value) => value * value * (3 - 2 * value);
+      const pupilState = { active: false, lastMove: 0, targetX: 0, targetY: 0, currentX: 0, currentY: 0 };
+      // Match the reference's strong side glances while staying inside the fitted pupil range.
+      const lookKeys = [[0, 0], [.12, -24], [.28, -40], [.45, 0], [.62, 30], [.78, 40], [.92, 8], [1, 0]];
+      function idleLook(phase) {
+        for (let i = 1; i < lookKeys.length; i += 1) {
+          if (phase <= lookKeys[i][0]) {
+            const [a, ax] = lookKeys[i - 1]; const [b, bx] = lookKeys[i];
+            const t = smooth((phase - a) / (b - a)); return ax + (bx - ax) * t;
+          }
+        }
+        return 0;
+      }
+      function setPointerTarget(event) {
+        const nx = (event.clientX / window.innerWidth) * 2 - 1;
+        const ny = (event.clientY / window.innerHeight) * 2 - 1;
+        pupilState.active = true;
+        pupilState.lastMove = performance.now();
+        const desiredX = Math.sign(nx) * Math.pow(Math.abs(nx), 0.7) * 44;
+        const desiredY = Math.sign(ny) * Math.pow(Math.abs(ny), 0.8) * 5;
+        const ellipseRadius = Math.hypot(desiredX / 44, desiredY / 5);
+        const scale = ellipseRadius > 1 ? 1 / ellipseRadius : 1;
+        pupilState.targetX = desiredX * scale;
+        pupilState.targetY = desiredY * scale;
+      }
+      document.addEventListener('pointermove', setPointerTarget, { passive: true });
+      document.addEventListener('mousemove', setPointerTarget, { passive: true });
+      document.addEventListener('mouseleave', () => { pupilState.active = false; pupilState.targetX = 0; pupilState.targetY = 0; });
+      let nextBlink = performance.now() + 2000 + Math.random() * 800;
+      let blinkStart = -1;
+      let lastFrame = performance.now();
+      function renderBlink(now) {
+        if (blinkStart < 0 && now >= nextBlink) { blinkStart = now; pupilState.currentX = 0; pupilState.currentY = 0; }
+        if (blinkStart < 0) return;
+        const elapsed = now - blinkStart; const closeMs = 45; const holdMs = 15; const openMs = 80;
+        let p;
+        if (elapsed <= closeMs) p = smooth(elapsed / closeMs);
+        else if (elapsed <= closeMs + holdMs) p = 1;
+        else if (elapsed <= closeMs + holdMs + openMs) p = 1 - smooth((elapsed - closeMs - holdMs) / openMs);
+        else { p = 0; blinkStart = -1; nextBlink = now + 3000 + Math.random() * 1500; }
+        const seam = 0.8 * p;
+        const topY = 67.1981 + (134.409 - 67.1981) * p + seam;
+        const bottomY = 201.62 + (134.409 - 201.62) * p - seam;
+        eyelids.setAttribute('d', `M0 0H400V134.409C237.528 ${topY} 161.565 ${topY} 85.603 134.409Z M0 400H400V134.409C237.528 ${bottomY} 161.565 ${bottomY} 85.603 134.409Z`);
+      }
+      function frame(now) {
+        const delta = Math.min(64, now - lastFrame);
+        lastFrame = now;
+        const idle = !pupilState.active || now - pupilState.lastMove > 2000;
+        const targetX = idle ? idleLook((now % 3500) / 3500) : pupilState.targetX;
+        const targetY = idle ? Math.sin(now / 2300) * 1.5 : pupilState.targetY;
+        if (blinkStart < 0) {
+          const alpha = 1 - Math.exp(-delta / 82);
+          pupilState.currentX += (targetX - pupilState.currentX) * alpha;
+          pupilState.currentY += (targetY - pupilState.currentY) * alpha;
+          pupil.setAttribute('transform', `translate(${pupilState.currentX.toFixed(3)} ${pupilState.currentY.toFixed(3)})`);
+        }
+        renderBlink(now);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    </script>
+  </body>
+</html>

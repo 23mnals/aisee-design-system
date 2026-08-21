@@ -9,7 +9,7 @@
 <style>
   @font-face {
     font-family: "Karla";
-    src: url("fonts/Karla-VariableFont_wght.ttf") format("truetype");
+    src: url("../../fonts/Karla-VariableFont_wght.ttf") format("truetype");
     font-weight: 200 800;
     font-style: normal;
     font-display: swap;
@@ -88,11 +88,13 @@
     </svg>
   </template>
 
-  <div id="root"></div>
+  <!-- Use the checked-in compiled legacy bundle; the original source shims were
+       removed during legacy cleanup, which made this preview render blank. -->
+  <script src="../source/_ds_bundle.js"></script>
 
-  <script type="text/babel" data-presets="env,react" src="engage-aisee/ui-shims.jsx"></script>
-  <script type="text/babel" data-presets="env,react" src="engage-aisee/icons.jsx"></script>
-  <script type="text/babel" data-presets="env,react" src="engage-aisee/paste-link-tutorial.jsx"></script>
+  <!-- Mount after loading the bundle so its legacy page auto-mount hooks do not
+       claim this container before the tutorial component is rendered. -->
+  <div id="root"></div>
 
   <script type="text/babel" data-presets="env,react">
     const { createRoot } = ReactDOM;

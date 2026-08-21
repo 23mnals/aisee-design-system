@@ -102,6 +102,8 @@
         width: min(340px, 34vw);
       }
       .search svg { position: absolute; left: 13px; top: 13px; width: 18px; height: 18px; color: var(--muted); }
+      .search:hover svg,
+      .search:focus-within svg { color: var(--ink); }
       .search input {
         width: 100%;
         height: 44px;
@@ -110,8 +112,19 @@
         background: var(--surface-subtle);
         color: var(--ink);
         padding: 0 14px 0 40px;
+        transition: border-color .15s, box-shadow .15s, background .15s;
       }
-      .search input:focus { border-color: var(--focus); background: var(--surface); outline: none; box-shadow: 0 0 0 3px rgba(91,69,255,.12); }
+      .search input:hover {
+        border-color: var(--ink);
+        background: var(--surface);
+        box-shadow: 0 0 0 2px #CFFF29;
+      }
+      .search input:focus {
+        border-color: var(--ink);
+        background: var(--surface);
+        outline: none;
+        box-shadow: 0 0 0 2px #CFFF29;
+      }
       .icon-button, .action-button {
         min-height: 44px;
         border: 1px solid var(--line);
@@ -188,9 +201,28 @@
       .nav-subgroup-toggle::-webkit-details-marker { display: none; }
       .nav-subgroup-toggle:hover { background: var(--surface-subtle); color: #111; }
       .nav-subgroup-toggle > span:last-child { display: flex; min-height: 18px; align-items: center; line-height: 18px; }
-      .nav-subgroup-chevron { width: 14px; height: 14px; display: grid; flex: 0 0 14px; margin-right: 10px; place-items: center; transform-origin: center; transition: transform 150ms ease; }
-      .nav-subgroup-chevron::before { width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; content: ""; transform: rotate(-45deg); transform-origin: center; }
-      .nav-subgroup[open] .nav-subgroup-chevron { transform: rotate(90deg); }
+.nav-group-chevron,
+.nav-subgroup-chevron {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin-right: 8px;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(0deg);
+  transform-origin: center;
+  transition: transform 150ms ease;
+}
+.nav-group-chevron img,
+.nav-subgroup-chevron img {
+  display: block;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+.nav-group[open] > summary .nav-group-chevron,
+.nav-subgroup[open] > summary .nav-subgroup-chevron { transform: rotate(90deg); }
       .nav-subgroup-items { display: grid; gap: 4px; padding: 2px 0 0 15px; }
       .nav-item { position: relative; display: flex; min-height: 32px; align-items: center; gap: 8px; padding: 0 72px 0 13px; color: #565960; font-size: 14px; line-height: 1.2; white-space: nowrap; }
       .nav-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -527,6 +559,16 @@
       .nav-group-title { padding: 8px 12px; }
       .nav-subgroup-title { min-height: 30px; padding: 0 12px; }
       .item-tag { font-size: 10px; }
+      /* Keep the sidebar hierarchy visually calm and consistent. */
+      .sidebar .nav-home,
+      .sidebar .nav-item,
+      .sidebar .nav-group summary,
+      .sidebar .nav-subgroup-toggle,
+      .sidebar .nav-home .nav-label,
+      .sidebar .nav-group-label,
+      .sidebar .nav-subgroup-toggle > span:last-child {
+        font-weight: 500;
+      }
       .home {
         max-width: 960px;
         padding: 32px 36px 72px;
@@ -631,8 +673,38 @@
         font-size: 13px;
       }
       .preview-frame-wrap {
-        background: #f7f7f7;
-        padding: 16px 20px 24px;
+        background: var(--canvas);
+        padding: 0;
+      }
+      .preview-frame {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .preview-meta h1 {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+      }
+      .preview-toolbar {
+        padding: 12px 24px;
+      }
+      #backButton {
+        display: none;
+      }
+      .preview-meta p {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 18px;
+      }
+      #openStandalone {
+        min-height: 40px;
+        height: 40px;
+      }
+      @media (max-width: 900px) {
+        .preview-toolbar {
+          padding: 12px 24px;
+        }
       }
       @media (max-width: 900px) {
         .home { max-width: 100%; padding: 28px 24px 64px; }
@@ -965,8 +1037,9 @@
       const colorArchitecture = JSON.parse(document.getElementById("aisee-color-architecture").textContent);
       let activeColorLayer = "semantic";
 
-      const items = [
+      const baseItems = [
         { group: "Brand", name: "dApp v6 Foundations", path: "preview/dapp-v6-foundations.html", subtitle: "Current color, typography, layout and module-theme rules.", status: "Current" },
+        { group: "Brand", name: "AIsee Logo Animation", path: "brand/pages/logo-animation/preview.html", subtitle: "Current cursor-following eye animation with natural blinking and side glances.", status: "Current" },
         { group: "Brand", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "328×160 looping animation: download new version → remove old → drag new package in.", status: "Legacy" },
         { group: "Brand", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Mission option B · all six sections · design-system styling.", status: "Legacy" },
         { group: "Brand", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Homepage animation language, word reveal, mascot and cursor.", status: "Legacy" },
@@ -980,7 +1053,6 @@
         { group: "Brand", name: "Engage Replies (Tracking)", path: "legacy/pages/Engage Replies (Tracking).html", subtitle: "Reply tracking, monitoring choices, status and credit spend.", status: "Legacy" },
         { group: "Brand", name: "Engage v3 (React TSX preview)", path: "legacy/pages/Engage v3 (React TSX preview).html", subtitle: "Preview of the TSX modules in aisee-agent-test.", status: "Legacy" },
         { group: "Brand", name: "Engage", path: "legacy/pages/Engage.html", subtitle: "Initial Setup and Signal Feed with Reply Panel.", status: "Legacy" },
-        { group: "Brand", name: "Engage Initial Setup — Plan Limits", path: "legacy/pages/engage初始页 (Plan Limits).html", subtitle: "Starter-plan limits for keywords, channels and subreddits.", status: "Legacy" },
         { group: "Brand", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Animated homepage with ticker and mascot.", status: "Legacy" },
         { group: "Brand", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
         { group: "Brand", name: "Module Comparison v3", path: "legacy/pages/Module Comparison.html", subtitle: "By Module comparison with inline switching and delta cues.", status: "Legacy" },
@@ -1021,6 +1093,10 @@
 
         { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Interactive 15-page Growth Loop preview covering Analysis, Growth, Engage, Post, Verify and Connection.", status: "Current" }
       ];
+      // Keep historical pages available in the portal; only the separate PNG/HTML
+      // output comparison cards are omitted from the preview surface.
+      const maintainedBaseItems = [...baseItems];
+      let items = [...maintainedBaseItems];
 
       const groupOrder = ["Brand", "Components", "UI Kits — Webapp"];
       const groupLabels = { "Brand": "Brand", "Components": "Components", "UI Kits — Webapp": "UI Kits — Webapp" };
@@ -1053,8 +1129,42 @@
       const colorReferenceHeading = document.getElementById("colorReferenceHeading");
       let activePath = "";
       let toastTimer;
+      const activePathStorageKey = "aisee.design-system.activePath";
+      const navOpenStateStorageKey = "aisee.design-system.navOpenState";
 
-      document.getElementById("pageCount").textContent = `${items.length + 1} pages`;
+      function saveActivePath(path) {
+        try {
+          if (path) localStorage.setItem(activePathStorageKey, path);
+          else localStorage.removeItem(activePathStorageKey);
+        } catch (error) {
+          // The URL hash remains the fallback when storage is unavailable.
+        }
+      }
+
+      function readNavOpenState() {
+        try {
+          const raw = localStorage.getItem(navOpenStateStorageKey);
+          const state = raw ? JSON.parse(raw) : {};
+          return state && typeof state === "object" ? state : {};
+        } catch (error) {
+          return {};
+        }
+      }
+
+      function saveNavOpenState(key, open) {
+        try {
+          const state = readNavOpenState();
+          state[key] = open;
+          localStorage.setItem(navOpenStateStorageKey, JSON.stringify(state));
+        } catch (error) {
+          // Navigation state is a convenience; the page remains usable if storage is unavailable.
+        }
+      }
+
+      function updatePageCount() {
+        document.getElementById("pageCount").textContent = `${items.length + 1} pages`;
+      }
+      updatePageCount();
       document.getElementById("primitiveColorCount").textContent = String(colorArchitecture.primitive.length);
       document.getElementById("semanticColorCount").textContent = String(colorArchitecture.semantic.length);
 
@@ -1110,15 +1220,16 @@
         const visible = normalized
           ? items.filter(item => `${item.name} ${item.subtitle} ${item.group} ${item.status}`.toLowerCase().includes(normalized))
           : items;
+        const navOpenState = readNavOpenState();
 
-        navGroups.innerHTML = groupOrder.map(group => {
-          const groupItems = visible.filter(item => item.group === group);
-          if (!groupItems.length) return "";
-          const renderItem = item => `
+          navGroups.innerHTML = groupOrder.map(group => {
+            const groupItems = visible.filter(item => item.group === group);
+            if (!groupItems.length) return "";
+            const renderItem = item => `
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
               <span class="nav-label">${escapeHtml(item.name)}</span>
-              ${item.status === "Legacy" ? '<span class="item-tag">Legacy</span>' : ""}
+              ${item.status === "Legacy" ? '<span class="item-tag">Legacy</span>' : item.kind === "brand-output" ? '<span class="item-tag">Brand</span>' : ""}
             </button>`;
           const itemMarkup = group === "Components"
             ? (() => {
@@ -1128,7 +1239,9 @@
                 // A category is useful only when it groups multiple real components.
                 // Singletons (for example Overview and Button) stay as direct entries.
                 if (categoryItems.length === 1) return categoryItems.map(renderItem).join("");
-                return `<details class="nav-subgroup" open><summary class="nav-subgroup-toggle"><span class="nav-subgroup-chevron" aria-hidden="true"></span><span>${escapeHtml(category)}</span></summary><div class="nav-subgroup-items">${categoryItems.map(renderItem).join("")}</div></details>`;
+                const categoryStateKey = `subgroup:${group}:${category}`;
+                const categoryOpen = navOpenState[categoryStateKey] !== false;
+return `<details class="nav-subgroup" data-nav-state-key="${escapeHtml(categoryStateKey)}"${categoryOpen ? " open" : ""}><summary class="nav-subgroup-toggle"><span class="nav-subgroup-chevron" aria-hidden="true">${stemuiIcon("line_chevron-up")}</span><span>${escapeHtml(category)}</span></summary><div class="nav-subgroup-items">${categoryItems.map(renderItem).join("")}</div></details>`;
                 };
                 // Overview remains first; ungrouped real components (for example
                 // Button) follow it as direct entries, without a synthetic category.
@@ -1138,11 +1251,16 @@
                 return `${overview}${uncategorized}${remaining}`;
               })()
             : groupItems.map(renderItem).join("");
-          return `<details class="nav-group" open><summary><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span><span class="nav-group-label">${escapeHtml(groupLabels[group])}</span><span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
+          const groupStateKey = `group:${group}`;
+          const groupOpen = navOpenState[groupStateKey] !== false;
+return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKey)}"${groupOpen ? " open" : ""}><summary><span class="nav-group-chevron" aria-hidden="true">${stemuiIcon("line_chevron-up")}</span><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span><span class="nav-group-label">${escapeHtml(groupLabels[group])}</span><span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
         }).join("") || `<p class="empty-search">No pages match “${escapeHtml(query)}”.</p>`;
 
         navGroups.querySelectorAll("[data-path]").forEach(button => {
           button.addEventListener("click", () => openItem(button.dataset.path));
+        });
+        navGroups.querySelectorAll("details[data-nav-state-key]").forEach(detail => {
+          detail.addEventListener("toggle", () => saveNavOpenState(detail.dataset.navStateKey, detail.open));
         });
       }
 
@@ -1161,6 +1279,7 @@
 
       function openHome(updateHash = true) {
         activePath = "";
+        saveActivePath("");
         previewFrame.removeAttribute("src");
         previewView.hidden = true;
         homeView.hidden = false;
@@ -1175,17 +1294,21 @@
         const item = items.find(entry => entry.path === path);
         if (!item) return;
         activePath = path;
+        saveActivePath(path);
         homeView.hidden = true;
         previewView.hidden = false;
         previewTitle.textContent = item.name;
         previewDescription.textContent = `${item.group} · ${item.subtitle}`;
+        const isBrandOutput = item.kind === "brand-output";
         const isLegacy = item.status === "Legacy";
         previewTag.textContent = isLegacy ? "Legacy" : "";
+        if (isBrandOutput) previewTag.textContent = "Brand";
         previewTag.className = "item-tag";
-        previewTag.hidden = !isLegacy;
-        previewFrame.src = `${item.path}${item.path.includes("?") ? "&" : "?"}preview=20260813-stemui`;
+        previewTag.hidden = !(isLegacy || isBrandOutput);
+        const previewPath = isBrandOutput ? item.html : item.path;
+        previewFrame.src = `${previewPath}${previewPath.includes("?") ? "&" : "?"}preview=20260820-portal`;
+        openStandalone.href = previewPath;
         previewFrame.title = `${item.name} preview`;
-        openStandalone.href = item.path;
         if (updateHash) history.pushState(null, "", `#page=${encodeURIComponent(item.path)}`);
         updateActiveNav();
         closeNavigation();
@@ -1196,7 +1319,16 @@
       function readHash() {
         const match = location.hash.match(/^#page=(.+)$/);
         if (!match) {
+          let savedPath = "";
+          try { savedPath = localStorage.getItem(activePathStorageKey) || ""; } catch (error) { savedPath = ""; }
+          if (savedPath && items.some(item => item.path === savedPath)) {
+            openItem(savedPath, false);
+            return;
+          }
           openHome(false);
+          // Brand outputs are registered asynchronously; keep a saved path
+          // available for the second read after their manifest is loaded.
+          if (savedPath) saveActivePath(savedPath);
           const anchor = location.hash.match(/^#([a-z0-9-]+)$/i);
           if (anchor) requestAnimationFrame(() => document.getElementById(anchor[1])?.scrollIntoView({ behavior: "smooth", block: "start" }));
           return;
@@ -1210,6 +1342,36 @@
         toast.textContent = message;
         toast.classList.add("show");
         toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+      }
+
+      async function loadBrandOutputs() {
+        try {
+          const response = await fetch("brand/pages/index.json", { cache: "no-store" });
+          if (!response.ok) return;
+          const payload = await response.json();
+          const pages = Array.isArray(payload) ? payload : payload.pages;
+          if (!Array.isArray(pages)) return;
+          const registered = new Set(maintainedBaseItems.map(item => item.path));
+          const brandItems = pages
+            .filter(page => page && typeof page.name === "string" && typeof page.html === "string")
+            .map(page => ({
+              group: "Brand",
+              kind: "brand-output",
+              name: page.name,
+              path: page.html,
+              html: page.html,
+              image: page.image,
+              subtitle: page.subtitle || "Web-generated design output.",
+              status: "Brand"
+            }))
+            .filter(item => !registered.has(item.path));
+          items = [...maintainedBaseItems, ...brandItems];
+          updatePageCount();
+          renderNav(searchInput.value);
+          readHash();
+        } catch (error) {
+          console.warn("Brand output manifest unavailable", error);
+        }
       }
 
       async function sharePage() {
@@ -1266,6 +1428,7 @@
       window.addEventListener("keydown", event => {
         if (event.key === "Escape") closeNavigation();
       });
+      loadBrandOutputs();
     </script>
   </body>
 </html>

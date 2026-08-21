@@ -127,7 +127,8 @@ test('score gauge follows Figma node 58:32548 instead of the legacy donut', asyn
   assert.match(styles, /font-size: 18px; font-weight: 500; line-height: 26px/);
   assert.match(styles, /score-gauge-texture\.png/);
   assert.match(styles, /z-index: 0; inset: 0; background: url\('\.\.\/assets\/score-gauge\/score-gauge-texture\.png'\)/);
-  assert.match(styles, /border: \.659px dashed var\(--aisee-color-black\); border-bottom: 0/);
+  assert.match(styles, /\.aisee-score-gauge__guide path \{ fill: none; stroke: var\(--aisee-color-black\); stroke-width: \.659px; stroke-dasharray: 2 2/);
+  assert.match(source, /M0 59\.091A59\.091 59\.091 0 0 0 118\.182 59\.091/);
   assert.match(styles, /font-size: 20px; font-weight: 400; line-height: 26px/);
   assert.doesNotMatch(styles, /\.aisee-score-gauge__dial/);
   assert.match(detail, /Figma node 58:32548/);

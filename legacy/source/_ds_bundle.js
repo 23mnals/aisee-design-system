@@ -8949,7 +8949,7 @@ const {
 } = React;
 const PHASE_MS_IT = [2800, 3000, 1800];
 const STAGE_BG = "rgba(144, 120, 0, 0.10)"; // #907800 @ 10%
-const LOGO_SRC = "engage-aisee-v2/aisee-logo.png";
+const LOGO_SRC = "../../assets/aisee-logo-mark.png";
 
 // Pure state-at-time function for the MP4 recorder. Mirrors the timer
 // choreography below but is fully deterministic.
@@ -11367,7 +11367,7 @@ function ReplyLinkedIcon({
   size = 64
 }) {
   return /*#__PURE__*/React.createElement("img", {
-    src: "assets/reply-linked-icon.svg",
+    src: "../../assets/reply-linked-icon.svg",
     width: size,
     height: size,
     alt: "",
@@ -14604,7 +14604,7 @@ const {
 } = React;
 const UT_TOTAL = 11400; // 2800 + 4000 + 2800 + 1800
 const UT_STAGE_BG = "rgba(144, 120, 0, 0.10)"; // #907800 @ 10%
-const UT_LOGO = "engage-aisee-v2/aisee-logo.png";
+const UT_LOGO = "../../assets/aisee-logo-mark.png";
 function _eo(p) {
   return 1 - Math.pow(1 - p, 3);
 }
@@ -18283,7 +18283,7 @@ function ReplyLinkedIcon({
   size = 64
 }) {
   return /*#__PURE__*/React.createElement("img", {
-    src: "assets/reply-linked-icon.svg",
+    src: "../../assets/reply-linked-icon.svg",
     width: size,
     height: size,
     alt: "",

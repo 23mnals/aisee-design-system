@@ -1,0 +1,205 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logo-title logo-desc" pointer-events="all">
+  <title id="logo-title">aisee animated logo</title>
+  <desc id="logo-desc">The aisee logo blinks naturally and follows page-wide pointer movement.</desc>
+
+  <!-- The green brand mark is the original path and is never transformed. -->
+  <path id="logo-shell" d="M0 200C0 89.5431 89.5431 0 200 0C310.457 0 400 89.5431 400 200V400H0V200Z" fill="#C9FE12"/>
+
+  <!-- This is the original almond-shaped eye path. It never changes. -->
+  <defs>
+    <clipPath id="eye-clip">
+      <path d="M85.603 134.409C161.565 67.1981 237.528 67.1981 313.49 134.409C237.528 201.62 161.565 201.62 85.603 134.409Z"/>
+    </clipPath>
+  </defs>
+  <path id="eye-white" d="M85.603 134.409C161.565 67.1981 237.528 67.1981 313.49 134.409C237.528 201.62 161.565 201.62 85.603 134.409Z" fill="white"/>
+
+  <!-- The pupil is sized to remain completely inside the eye while preserving the uploaded Logo's visual proportion. -->
+  <g id="pupil-layer" clip-path="url(#eye-clip)">
+    <circle id="pupil" cx="199.5465" cy="134.409" r="34" fill="#111111"/>
+  </g>
+
+  <!-- Eyelids are clipped to the original eye, so blinking cannot alter the green Logo shell. -->
+  <path id="eyelids" clip-path="url(#eye-clip)" d="M0 0H400V134.409C237.528 67.1981 161.565 67.1981 85.603 134.409Z M0 400H400V134.409C237.528 201.62 161.565 201.62 85.603 134.409Z" fill="#C9FE12"/>
+
+  <script><![CDATA[
+    (() => {
+      const svg = document.documentElement;
+      const eyeWhite = document.getElementById('eye-white');
+      const pupil = document.getElementById('pupil-layer');
+      const eyelids = document.getElementById('eyelids');
+      const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+      const easeInOut = (value) => value < 0.5 ? 2 * value * value : 1 - Math.pow(-2 * value + 2, 2) / 2;
+      const smooth = (value) => value * value * (3 - 2 * value);
+      const pointer = { hasMotion: false, lastMove: 0, targetX: 0, targetY: 0, currentX: 0, currentY: 0 };
+      const eyeBox = eyeWhite.getBBox();
+      const pupilRadius = Number(document.getElementById('pupil').getAttribute('r'));
+      const centerX = eyeBox.x + eyeBox.width / 2;
+      const centerY = eyeBox.y + eyeBox.height / 2;
+      const safety = Math.min(eyeBox.width, eyeBox.height) * 0.04;
+
+      // Sample the real eye path and use it to test whether a complete pupil circle fits.
+      const boundary = [];
+      const pathLength = eyeWhite.getTotalLength();
+      for (let i = 0; i < 720; i += 1) {
+        const point = eyeWhite.getPointAtLength((pathLength * i) / 720);
+        boundary.push([point.x, point.y]);
+      }
+      function insideEye(x, y) {
+        let inside = false;
+        for (let i = 0, j = boundary.length - 1; i < boundary.length; j = i += 1) {
+          const [xi, yi] = boundary[i];
+          const [xj, yj] = boundary[j];
+          if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+        }
+        return inside;
+      }
+      function circleFits(offsetX, offsetY) {
+        const radius = pupilRadius + safety;
+        for (let i = 0; i < 360; i += 1) {
+          const angle = (Math.PI * 2 * i) / 360;
+          if (!insideEye(centerX + offsetX + radius * Math.cos(angle), centerY + offsetY + radius * Math.sin(angle))) return false;
+        }
+        return true;
+      }
+      function findSafeMove(axis) {
+        let low = 0;
+        let high = axis === 'x' ? eyeBox.width / 2 : eyeBox.height / 2;
+        for (let i = 0; i < 18; i += 1) {
+          const mid = (low + high) / 2;
+          if (circleFits(axis === 'x' ? mid : 0, axis === 'y' ? mid : 0)) low = mid;
+          else high = mid;
+        }
+        return low;
+      }
+      const availableWidth = Math.max(0, eyeBox.width - 2 * (pupilRadius + safety));
+      const availableHeight = Math.max(0, eyeBox.height - 2 * (pupilRadius + safety));
+      // Horizontal and vertical ranges are widened, then capped by the real-path fit test.
+      const maxMoveX = Math.min(availableWidth * 0.42, findSafeMove('x') * 0.99);
+      const maxMoveY = Math.min(availableHeight * 0.20, findSafeMove('y') * 0.9);
+      function constrainTarget(x, y) {
+        // The independent axis limits form an inscribed ellipse; this radial guard keeps diagonals safe too.
+        const radius = Math.hypot(maxMoveX ? x / maxMoveX : 0, maxMoveY ? y / maxMoveY : 0);
+        if (radius <= 1) return { x, y };
+        return { x: x / radius, y: y / radius };
+      }
+      const viewportDirection = (x, y) => {
+        const normalizedX = clamp(x, -1, 1);
+        const normalizedY = clamp(y, -1, 1);
+        return {
+          x: Math.sign(normalizedX) * Math.pow(Math.abs(normalizedX), 0.7),
+          y: Math.sign(normalizedY) * Math.pow(Math.abs(normalizedY), 0.8)
+        };
+      };
+      function setPointerDirection(normalizedX, normalizedY) {
+        const direction = viewportDirection(normalizedX, normalizedY);
+        const safeTarget = constrainTarget(direction.x * maxMoveX, direction.y * maxMoveY);
+        pointer.hasMotion = true;
+        pointer.lastMove = performance.now();
+        pointer.targetX = safeTarget.x;
+        pointer.targetY = safeTarget.y;
+      }
+      function updateViewportPointer(event) {
+        setPointerDirection((event.clientX / window.innerWidth) * 2 - 1, (event.clientY / window.innerHeight) * 2 - 1);
+      }
+      function resetPointer() {
+        pointer.hasMotion = false;
+        pointer.lastMove = 0;
+        pointer.targetX = 0;
+        pointer.targetY = 0;
+      }
+
+      // Match the reference's strong side glances while staying inside the fitted pupil range.
+      const lookKeys = [[0, 0], [.12, -24], [.28, -40], [.45, 0], [.62, 30], [.78, 40], [.92, 8], [1, 0]];
+      function idleLook(phase) {
+        for (let i = 1; i < lookKeys.length; i += 1) {
+          if (phase <= lookKeys[i][0]) {
+            const [a, ax] = lookKeys[i - 1];
+            const [b, bx] = lookKeys[i];
+            const t = smooth((phase - a) / (b - a));
+            return ax + (bx - ax) * t;
+          }
+        }
+        return 0;
+      }
+
+      // Inline SVG: listen to the whole host viewport, not just the Logo hit area.
+      window.addEventListener('pointermove', updateViewportPointer, { passive: true });
+      window.addEventListener('mousemove', updateViewportPointer, { passive: true });
+      window.addEventListener('blur', resetPointer);
+      window.addEventListener('mouseleave', resetPointer);
+      // Preview iframe: the parent forwards normalized viewport coordinates.
+      window.addEventListener('message', (event) => {
+        if (!event.data || event.data.type !== 'aisee-pointer') return;
+        if (event.data.leave) resetPointer();
+        else setPointerDirection(event.data.normalizedX, event.data.normalizedY);
+      });
+
+      let lastFrame = performance.now();
+      let nextBlink = lastFrame + 2000 + Math.random() * 800;
+      let blinkStart = -1;
+      function renderBlink(now) {
+        if (reducedMotion) return;
+        if (blinkStart < 0 && now >= nextBlink) {
+          blinkStart = now;
+          // Follow is paused and the pupil is returned to centre before the lids close.
+          pointer.currentX = 0;
+          pointer.currentY = 0;
+          pupil.setAttribute('transform', 'translate(0 0)');
+        }
+        if (blinkStart < 0) return;
+        const elapsed = now - blinkStart;
+        const closeMs = 45;
+        const holdMs = 15;
+        const openMs = 80;
+        let progress;
+        if (elapsed <= closeMs) progress = smooth(elapsed / closeMs);
+        else if (elapsed <= closeMs + holdMs) progress = 1;
+        else if (elapsed <= closeMs + holdMs + openMs) progress = 1 - smooth((elapsed - closeMs - holdMs) / openMs);
+        else {
+          progress = 0;
+          blinkStart = -1;
+          nextBlink = now + 3000 + Math.random() * 1500;
+        }
+        const seam = 0.8 * progress;
+        const upperCurveY = 67.1981 + (134.409 - 67.1981) * progress + seam;
+        const lowerCurveY = 201.62 + (134.409 - 201.62) * progress - seam;
+        eyelids.setAttribute('d', `M0 0H400V134.409C237.528 ${upperCurveY} 161.565 ${upperCurveY} 85.603 134.409Z M0 400H400V134.409C237.528 ${lowerCurveY} 161.565 ${lowerCurveY} 85.603 134.409Z`);
+      }
+      function frame(now) {
+        const delta = Math.min(64, now - lastFrame);
+        lastFrame = now;
+        if (document.hidden) return;
+        const idle = !pointer.hasMotion || now - pointer.lastMove > 2000;
+        if (blinkStart < 0 && !idle) {
+          const alpha = 1 - Math.exp(-delta / 82);
+          pointer.currentX += (pointer.targetX - pointer.currentX) * alpha;
+          pointer.currentY += (pointer.targetY - pointer.currentY) * alpha;
+          pupil.setAttribute('transform', `translate(${pointer.currentX.toFixed(3)} ${pointer.currentY.toFixed(3)})`);
+        } else if (blinkStart < 0 && idle) {
+          const idleX = idleLook((now % 3500) / 3500);
+          const idleY = Math.sin(now / 2300) * 1.5;
+          const alpha = 1 - Math.exp(-delta / 220);
+          pointer.currentX += (idleX - pointer.currentX) * alpha;
+          pointer.currentY += (idleY - pointer.currentY) * alpha;
+          pupil.setAttribute('transform', `translate(${pointer.currentX.toFixed(3)} ${pointer.currentY.toFixed(3)})`);
+        }
+        renderBlink(now);
+        requestAnimationFrame(frame);
+      }
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          resetPointer();
+          pointer.currentX = 0;
+          pointer.currentY = 0;
+          blinkStart = -1;
+          eyelids.setAttribute('d', 'M0 0H400V134.409C237.528 67.1981 161.565 67.1981 85.603 134.409Z M0 400H400V134.409C237.528 201.62 161.565 201.62 85.603 134.409Z');
+          pupil.setAttribute('transform', 'translate(0 0)');
+        } else requestAnimationFrame(frame);
+      });
+      requestAnimationFrame(frame);
+      if (window.parent !== window) window.parent.postMessage({ type: 'aisee-logo-ready' }, '*');
+    })();
+  ]]></script>
+</svg>
