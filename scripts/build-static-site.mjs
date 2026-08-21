@@ -1,4 +1,4 @@
-import { copyFile, cp, mkdir, readdir, rename, rm, writeFile } from 'node:fs/promises';
+import { copyFile, cp, mkdir, readdir, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -6,26 +6,37 @@ import { fileURLToPath } from 'node:url';
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 const outputRoot = join(projectRoot, 'site');
 const portalFile = join(projectRoot, 'aisee-design-system-preview.html');
-const excludedRootEntries = new Set([
-  '.git',
-  '.github',
-  '.DS_Store',
-  'dist',
-  'node_modules',
-  'site'
-]);
+const publishedRootEntries = [
+  'aisee-agent-test',
+  'aisee-design-system-preview.html',
+  'aisee-tracking-eye.png',
+  'aisee-tracking-eye.svg',
+  'animated',
+  'assets',
+  'brand',
+  'components',
+  'docs',
+  'engage',
+  'engage-v3',
+  'fonts',
+  'legacy',
+  'preview',
+  'public',
+  'screenshots',
+  'ui_kits',
+  'uploads'
+];
 
 await run('npm', ['run', 'tokens']);
+await rm(outputRoot, { recursive: true, force: true });
 await run('npx', ['vite', 'build', '--mode', 'docs']);
 await rename(join(outputRoot, 'index.html'), join(outputRoot, 'docs-preview.html'));
 
 // Keep the generated docs assets, then add the preserved standalone previews.
 await mkdir(outputRoot, { recursive: true });
 
-const rootEntries = await readdir(projectRoot, { withFileTypes: true });
-for (const entry of rootEntries) {
-  if (excludedRootEntries.has(entry.name) || entry.name.startsWith('.env')) continue;
-  await cp(join(projectRoot, entry.name), join(outputRoot, entry.name), {
+for (const name of publishedRootEntries) {
+  await cp(join(projectRoot, name), join(outputRoot, name), {
     recursive: true,
     force: true
   });
@@ -51,6 +62,12 @@ for (const name of legacySourceAliases) {
   await copyFile(join(projectRoot, 'legacy/source', name), destination);
 }
 
+const artifactCleanup = await cleanArtifactTree(outputRoot);
+if (artifactCleanup.danglingSymlinks.length) {
+  console.log(`Removed ${artifactCleanup.danglingSymlinks.length} dangling symlink(s) from the Pages artifact:`);
+  artifactCleanup.danglingSymlinks.forEach(name => console.log(`- ${name}`));
+}
+
 // GitHub Pages opens the system portal at the repository root.
 await copyFile(portalFile, join(outputRoot, 'index.html'));
 await writeFile(join(outputRoot, '.nojekyll'), '');
@@ -70,4 +87,33 @@ function run(command, args) {
       else reject(new Error(`${command} ${args.join(' ')} exited with code ${code}`));
     });
   });
+}
+
+async function cleanArtifactTree(root) {
+  const danglingSymlinks = [];
+  const metadataFiles = [];
+
+  async function visit(directory) {
+    const entries = await readdir(directory, { withFileTypes: true });
+    for (const entry of entries) {
+      const entryPath = join(directory, entry.name);
+      if (entry.name === '.DS_Store') {
+        await rm(entryPath, { force: true });
+        metadataFiles.push(entryPath.slice(root.length + 1));
+      } else if (entry.isSymbolicLink()) {
+        try {
+          await stat(entryPath);
+        } catch (error) {
+          if (error?.code !== 'ENOENT') throw error;
+          await rm(entryPath, { force: true });
+          danglingSymlinks.push(entryPath.slice(root.length + 1));
+        }
+      } else if (entry.isDirectory()) {
+        await visit(entryPath);
+      }
+    }
+  }
+
+  await visit(root);
+  return { danglingSymlinks, metadataFiles };
 }
