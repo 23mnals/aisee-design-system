@@ -222,7 +222,13 @@ export function AiseeLogoAnimation({
     };
   }, [disabled]);
 
-  const mergedStyle: CSSProperties = { width: size, height: size, ...style };
+  const mergedStyle: CSSProperties = {
+    width: size,
+    height: size,
+    display: 'block',
+    backgroundColor: 'transparent',
+    ...style,
+  };
   return <svg
     ref={svgRef}
     width={size}
@@ -249,4 +255,3 @@ export function AiseeLogoAnimation({
     <path ref={eyelidsRef} clipPath={`url(#${clipId})`} d={OPEN_EYELIDS} fill="#C9FE12" />
   </svg>;
 }
-

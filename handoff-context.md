@@ -120,6 +120,7 @@ Components
 - 功能 icon 使用 `line_`、`fill_` 等真实功能图标；`illustration` 资源只用于 banner、空状态或需要呼吸感的插图区域，不能拿插图充当侧边栏功能 icon。
 - 用户提供的 loading 原视频：`/Users/ccbakala/Documents/ui/aisee/Component/gif/1_1080_N.mp4`，目前只有绿色版本；Engage/Post 若需要黄色版本，应以同一动画逻辑制作颜色变体，不要改变原视频文件。
 - 预览中加载动画优先使用 SVG/CSS 动画或清晰视频资源；不要把低清缩略图当成 SVG。
+- Logo 动画资产必须保持透明背景；白色只属于眼白路径，预览容器或宿主页面背景由调用方决定，禁止在 SVG 中加入外层白色背景矩形。
 - Gotu、Karla、DigitalNumbers 等字体应保存在仓库 `fonts/` 或明确的 `uploads/` 资源目录；核对字体文件是否已经提交。
 
 ## 9. 设计文档与版本规则
