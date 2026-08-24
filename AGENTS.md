@@ -42,9 +42,12 @@ git log -5 --oneline --decorate
 - Web ChatGPT 与 Desktop Codex 共用 `ai/desktop/design-system-current`，不要长期维护两套 Design System 状态。
 - 开始工作及 commit/push 前都要重新检查 branch、`git status`、diff、最近 commits，以及能运行的测试、构建和实际预览。
 - 一个独立任务尽量对应一个明确 commit，不把无关或未确认的修改混入同一提交。
-- 一般情况下不自动执行 commit、push、merge、PR、删除分支或其他 Git 发布动作；但“Web ChatGPT 设计产物同步到 AISEE Design System”适用下方的明确授权例外。
+- 一般情况下不自动执行 commit、push、merge、PR、删除分支或其他 Git 发布动作；但“Web ChatGPT 设计产物同步到 AISEE Design System”以及用户明确要求同步到 `main` 时，适用本文件规定的授权例外。
 - Web 产物成功 push 后，必须提醒用户在本地检查工作区并 pull 最新开发分支。
-- 以下操作无论如何都禁止自动执行：修改或 push `main`、创建 PR、merge PR、删除分支、force push，以及删除用户未明确要求删除的已有产物。
+- `main` 不允许自动发布，也不直接 push；正式同步统一通过 `ai/desktop/design-system-current → main` PR。
+- 当用户明确说“发布正式版”“同步到 main”“这版可以进 main”或同等明确意思时，视为授权创建上述 PR，无需再次确认。
+- PR 不自动 merge；只有用户同时明确要求合并时，才视为授权执行 merge。
+- 以下操作无论如何都禁止自动执行：删除分支、force push，以及删除用户未明确要求删除的已有产物。
 
 ## 4. Web 设计产物契约
 
