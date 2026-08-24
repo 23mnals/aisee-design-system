@@ -10,7 +10,6 @@
     {
       "name": "Managed Automation",
       "html": "brand/pages/managed-automation/preview.html",
-      "image": "brand/pages/managed-automation/preview.png",
       "subtitle": "Managed publishing and reply automation overview.",
       "category": "Automation",
       "source": "ChatGPT",
