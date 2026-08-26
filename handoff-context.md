@@ -5,15 +5,15 @@
 ## 当前 Git 状态
 
 - 当前开发分支：`ai/desktop/design-system-current`。
-- 当前本地 HEAD、`origin/ai/desktop/design-system-current` 与 `origin/main` 均为 `7bf67eea6c675e019bc514f504daf3a47deb51aa`（PR #4 merge commit）。
+- 当前本地 HEAD 与 `origin/ai/desktop/design-system-current` 为 `d0b7c57 feat(brand): package logo animation delivery`；`origin/main` 仍为 `7bf67eea6c675e019bc514f504daf3a47deb51aa`（PR #4 merge commit）。
 - 最新 Managed Automation 内容提交：`f6e4341 fix(brand): sync Managed Automation eye demo`，已包含在当前开发分支历史中。
 - 本地 `main` 仍停在 `2358f97`，不是当前正式版本判断依据；需要先核对远端再更新本地指针。
 - PR #4 已合并，合并后的 GitHub CI 已通过。
-- 工作区当前有尚未提交的 Logo Animation 交付入口、动画节奏、空白状态标签修复、教程分类、测试与交接文档修改；未 push、未创建新 PR。
+- 本地工作区已干净；Logo Animation 交付入口、动画节奏、空白状态标签修复、教程分类、测试与交接文档已推送到开发分支 commit `d0b7c57`，未创建新的 main 发布 PR。
 
 ## 当前正在做
 
-- Logo Animation 交付入口与节奏优化已在本地完成，等待用户确认是否提交并 push 开发分支。
+- Logo Animation 交付入口与节奏优化已提交并 push 到开发分支；等待用户在本地 pull 验收。
 - 本地 Demo 运行于 `http://127.0.0.1:4174/`。
 
 ## 最近已完成
@@ -23,6 +23,7 @@
 - Logo 闲置左右查看加快到约 2.6 秒一轮，眨眼加快到约 2.2–3.2 秒；TSX、HTML、SVG 已同步。
 - Logo Animation Demo 头部提供 TSX 复制按钮，开发交付区提供包含三份真实文件的 ZIP 一键下载和三个独立下载入口；按钮文字居中并使用 5% 黑色描边，本地浏览器实测通过。
 - 全局共用的 Update / Install 插件教程已从 Automation 调整到 `Brand → Common`，本地刷新后分类正确。
+- 交付功能与相关修复已通过 `d0b7c57` 推送到 `ai/desktop/design-system-current`。
 - `npm test` 已通过：41 项测试；`npm run site` 已成功构建，并将 Logo Animation 的 canonical TSX 交付源放入静态站点。
 - 用户已确认并提交旧累加式交接向“工作纪律 + 当前仪表盘 + 长期决策 + 独立 session 历史”四层结构的迁移。
 - 已将远端 `f6e4341` 同步到本地，并在 `Brand → Automation → Managed Automation` 验证最新 Keep-open / eye demo 正常显示、控制台无错误。
@@ -43,7 +44,7 @@
 
 ## 当前未完成
 
-- 本轮 Logo Animation 与空白状态标签修复尚未 commit / push；没有新的 main 发布 PR。
+- 本轮修改已 commit / push；没有新的 main 发布 PR。
 - 线上 Pages 的 Logo Animation 新交付入口需等本轮修改后续发布到 `main` 才会更新。
 - `Plugin Entry Options` 外层可加载，但三个内嵌 Engage 页面仍请求已不存在的 `legacy/pages/engage-aisee-v2/*.jsx`，React 根节点未挂载而呈现空白；本轮只诊断，尚未改动该 Legacy 页面。
 - Components 后续仍需完成真实组件清单与导航收尾、Button 模块色 hover、Select / Dropdown 示例与交互、功能页 Banner 清晰资产替换。
@@ -53,7 +54,7 @@
 ## 下一步
 
 1. 用户要求修复时，先决定 `Plugin Entry Options` 是恢复旧 JSX、改接现有 bundle，还是替换为当前可运行的 Engage 预览；不直接重建 Legacy UI。
-2. 用户确认后提交并 push 本轮 Logo Animation、状态标签和教程分类调整到开发分支。
+2. 用户在本地工作区检查 `git status` 后 pull `ai/desktop/design-system-current`，刷新 Demo 验收本轮交付。
 3. 只有用户明确授权正式发布时，创建新的 `ai/desktop/design-system-current → main` PR；不自动 merge。
 
 ## 最近一次 Session

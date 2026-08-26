@@ -50,10 +50,10 @@
 
 - PR #4：已合并。
 - 正式版 merge commit：`7bf67eea6c675e019bc514f504daf3a47deb51aa`。
-- 本轮 Logo Animation、状态标签修复与教程分类调整目前只在本地工作区，尚未 commit、push 或创建新的 main 发布 PR。
+- 本轮修改已提交为 `d0b7c57 feat(brand): package logo animation delivery` 并推送到 `ai/desktop/design-system-current`；尚未创建新的 main 发布 PR。
 
 ## 下一步
 
 - 用户要求修复时，先决定 `Plugin Entry Options` 是恢复旧 JSX、改接现有 bundle，还是替换为当前可运行的 Engage 预览；不直接重建 Legacy UI。
-- 用户确认后，将本轮本地修改整理为开发分支 commit 并 push。
+- 用户在本地工作区检查 `git status` 后 pull `ai/desktop/design-system-current`，刷新 Demo 验收本轮交付。
 - 只有用户再次明确要求“发布正式版 / 同步到 main / 这版可以进 main”时，才创建新的开发分支到 main 的 PR；不自动 merge。
