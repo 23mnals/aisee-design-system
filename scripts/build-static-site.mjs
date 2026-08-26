@@ -62,6 +62,13 @@ for (const name of legacySourceAliases) {
   await copyFile(join(projectRoot, 'legacy/source', name), destination);
 }
 
+// The Logo Animation preview and portal delivery actions fetch this canonical
+// TSX source at runtime; publish only that requested delivery file instead of
+// copying the entire development source tree into Pages.
+const logoAnimationSource = join(outputRoot, 'src/components/AiseeLogoAnimation.tsx');
+await mkdir(dirname(logoAnimationSource), { recursive: true });
+await copyFile(join(projectRoot, 'src/components/AiseeLogoAnimation.tsx'), logoAnimationSource);
+
 const artifactCleanup = await cleanArtifactTree(outputRoot);
 if (artifactCleanup.danglingSymlinks.length) {
   console.log(`Removed ${artifactCleanup.danglingSymlinks.length} dangling symlink(s) from the Pages artifact:`);

@@ -92,6 +92,7 @@
 ## 2026-08-24 — Brand 当前分类与 Web 产物
 
 - Brand 当前按 AIsee 功能模块组织：Homepage、Common、Overview、Analyze、Growth、Post、Engage、Verify、Automation。
+- 全局共用的插件安装与更新教程归入 Common；只有 Automation 功能自身的页面、流程和说明归入 Automation。
 - Legacy 页面在页面标题旁使用轻量灰色小写 `legacy`；侧边栏不重复显示 Legacy 标签，标题栏右侧不再显示重复的大写 `LEGACY`。
 - Automation 是独立 WORKFLOWS 功能，与 INTEGRATIONS 分开，不归入 Connections / Search Console。
 - Web 产物默认元数据为 `source: "ChatGPT"`、`surface: "Web"`、`designStatus: "Draft"`；`designStatus` 只允许 `Draft` 或 `Selected`，未经用户明确确认不得改为 `Selected`。

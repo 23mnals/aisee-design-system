@@ -137,7 +137,7 @@
       });
 
       let lastFrame = performance.now();
-      let nextBlink = lastFrame + 2000 + Math.random() * 800;
+      let nextBlink = lastFrame + 1400 + Math.random() * 600;
       let blinkStart = -1;
       function renderBlink(now) {
         if (reducedMotion) return;
@@ -160,7 +160,7 @@
         else {
           progress = 0;
           blinkStart = -1;
-          nextBlink = now + 3000 + Math.random() * 1500;
+          nextBlink = now + 2200 + Math.random() * 1000;
         }
         const seam = 0.8 * progress;
         const upperCurveY = 67.1981 + (134.409 - 67.1981) * progress + seam;
@@ -178,9 +178,9 @@
           pointer.currentY += (pointer.targetY - pointer.currentY) * alpha;
           pupil.setAttribute('transform', `translate(${pointer.currentX.toFixed(3)} ${pointer.currentY.toFixed(3)})`);
         } else if (blinkStart < 0 && idle) {
-          const idleX = idleLook((now % 3500) / 3500);
+          const idleX = idleLook((now % 2600) / 2600);
           const idleY = Math.sin(now / 2300) * 1.5;
-          const alpha = 1 - Math.exp(-delta / 220);
+          const alpha = 1 - Math.exp(-delta / 170);
           pointer.currentX += (idleX - pointer.currentX) * alpha;
           pointer.currentY += (idleY - pointer.currentY) * alpha;
           pupil.setAttribute('transform', `translate(${pointer.currentX.toFixed(3)} ${pointer.currentY.toFixed(3)})`);

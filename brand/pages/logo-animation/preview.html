@@ -11,14 +11,41 @@
         --preview-background: #f7f7f7;
       }
       * { box-sizing: border-box; }
-      body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--preview-background); color: #111; }
-      main { display: grid; gap: 20px; justify-items: center; padding: 32px; }
+      body { margin: 0; min-height: 100vh; background: var(--preview-background); color: #111; }
+      main { width: min(100%, 720px); display: grid; gap: 20px; justify-items: center; margin: 0 auto; padding: 32px 24px 48px; }
       .stage { width: min(72vw, 400px); aspect-ratio: 1; display: grid; place-items: center; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
       #preview-logo { display: block; background: transparent; }
       iframe { width: 100%; height: 100%; border: 0; }
       h1 { margin: 0; font-size: 20px; font-weight: 600; }
       p { margin: 0; color: #666; font-size: 14px; text-align: center; }
       code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: #444; }
+      .delivery { width: 100%; margin-top: 12px; padding: 20px; border: 1px solid rgba(17,17,17,.05); border-radius: 16px; background: #fff; }
+      .delivery-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+      .delivery-copy { display: grid; gap: 4px; }
+      .delivery-eyebrow { color: #666; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-align: left; text-transform: uppercase; }
+      .delivery h2 { margin: 0; font-size: 18px; line-height: 24px; }
+      .delivery-description { margin-top: 8px; line-height: 20px; text-align: left; }
+      .delivery-action { min-height: 44px; border: 1px solid rgba(17,17,17,.05); border-radius: 10px; color: #111; background: #fff; font: 600 14px/20px Karla, Inter, system-ui, sans-serif; cursor: pointer; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease; }
+      .delivery-action:hover { border-color: #111; background: #f3f3f3; }
+      .delivery-action:focus-visible { outline: 3px solid #c9fe12; outline-offset: 2px; }
+      .delivery-action svg { width: 18px; height: 18px; flex: none; }
+      .bundle-action { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 152px; padding: 10px 14px; border-color: #111; color: #fff; background: #111; }
+      .bundle-action:hover { color: #111; background: #c9fe12; }
+      .bundle-action:disabled { cursor: wait; opacity: .65; }
+      .download-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+      .download-action { display: flex; align-items: center; justify-content: center; gap: 10px; min-width: 0; padding: 11px 12px; text-align: center; text-decoration: none; }
+      .download-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .copy-status { min-height: 20px; margin-top: 10px; color: #444; font-size: 13px; line-height: 20px; text-align: left; }
+      @media (max-width: 640px) {
+        main { padding: 24px 16px 40px; }
+        .stage { width: min(84vw, 400px); }
+        .delivery-header { align-items: stretch; flex-direction: column; }
+        .bundle-action { width: 100%; }
+        .download-grid { grid-template-columns: 1fr; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .delivery-action { transition: none; }
+      }
     </style>
   </head>
   <body>
@@ -37,13 +64,45 @@
       </div>
       <p>页面任意位置移动鼠标，瞳孔会以约 100ms 延迟跟随方向；无操作时会自然左右查看并眨眼。</p>
       <code>brand/assets/logo-animated.svg</code>
+      <section class="delivery" aria-labelledby="delivery-title">
+        <div class="delivery-header">
+          <div class="delivery-copy">
+            <span class="delivery-eyebrow">Developer handoff</span>
+            <h2 id="delivery-title">开发交付</h2>
+            <p class="delivery-description">在页面头部复制 TSX，或下载完整三件套。</p>
+          </div>
+          <button class="delivery-action bundle-action" id="download-bundle" type="button">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="bundle-label">下载交付包</span>
+          </button>
+        </div>
+        <div class="download-grid" aria-label="交付文件下载">
+          <a class="delivery-action download-action" href="../../../src/components/AiseeLogoAnimation.tsx" download="AiseeLogoAnimation.tsx">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="download-label">AiseeLogoAnimation.tsx</span>
+          </a>
+          <a class="delivery-action download-action" href="preview.html" download="preview.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="download-label">preview.html</span>
+          </a>
+          <a class="delivery-action download-action" href="README.md" download="README.md">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 20h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="download-label">README.md</span>
+          </a>
+        </div>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+      </section>
     </main>
     <script>
       const pupil = document.getElementById('preview-pupil-layer');
       const eyelids = document.getElementById('preview-eyelids');
+      const bundleButton = document.getElementById('download-bundle');
+      const bundleLabel = document.getElementById('bundle-label');
+      const copyStatus = document.getElementById('copy-status');
       const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
       const smooth = (value) => value * value * (3 - 2 * value);
       const pupilState = { active: false, lastMove: 0, targetX: 0, targetY: 0, currentX: 0, currentY: 0 };
+      const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
       // Match the reference's strong side glances while staying inside the fitted pupil range.
       const lookKeys = [[0, 0], [.12, -24], [.28, -40], [.45, 0], [.62, 30], [.78, 40], [.92, 8], [1, 0]];
       function idleLook(phase) {
@@ -67,10 +126,7 @@
         pupilState.targetX = desiredX * scale;
         pupilState.targetY = desiredY * scale;
       }
-      document.addEventListener('pointermove', setPointerTarget, { passive: true });
-      document.addEventListener('mousemove', setPointerTarget, { passive: true });
-      document.addEventListener('mouseleave', () => { pupilState.active = false; pupilState.targetX = 0; pupilState.targetY = 0; });
-      let nextBlink = performance.now() + 2000 + Math.random() * 800;
+      let nextBlink = performance.now() + 1400 + Math.random() * 600;
       let blinkStart = -1;
       let lastFrame = performance.now();
       function renderBlink(now) {
@@ -81,7 +137,7 @@
         if (elapsed <= closeMs) p = smooth(elapsed / closeMs);
         else if (elapsed <= closeMs + holdMs) p = 1;
         else if (elapsed <= closeMs + holdMs + openMs) p = 1 - smooth((elapsed - closeMs - holdMs) / openMs);
-        else { p = 0; blinkStart = -1; nextBlink = now + 3000 + Math.random() * 1500; }
+        else { p = 0; blinkStart = -1; nextBlink = now + 2200 + Math.random() * 1000; }
         const seam = 0.8 * p;
         const topY = 67.1981 + (134.409 - 67.1981) * p + seam;
         const bottomY = 201.62 + (134.409 - 201.62) * p - seam;
@@ -91,10 +147,10 @@
         const delta = Math.min(64, now - lastFrame);
         lastFrame = now;
         const idle = !pupilState.active || now - pupilState.lastMove > 2000;
-        const targetX = idle ? idleLook((now % 3500) / 3500) : pupilState.targetX;
+        const targetX = idle ? idleLook((now % 2600) / 2600) : pupilState.targetX;
         const targetY = idle ? Math.sin(now / 2300) * 1.5 : pupilState.targetY;
         if (blinkStart < 0) {
-          const alpha = 1 - Math.exp(-delta / 82);
+          const alpha = 1 - Math.exp(-delta / (idle ? 170 : 82));
           pupilState.currentX += (targetX - pupilState.currentX) * alpha;
           pupilState.currentY += (targetY - pupilState.currentY) * alpha;
           pupil.setAttribute('transform', `translate(${pupilState.currentX.toFixed(3)} ${pupilState.currentY.toFixed(3)})`);
@@ -102,7 +158,82 @@
         renderBlink(now);
         requestAnimationFrame(frame);
       }
-      requestAnimationFrame(frame);
+      const zipEncoder = new TextEncoder();
+      const zipBytes = value => new Uint8Array(value);
+      const zipU16 = value => zipBytes([value & 255, (value >>> 8) & 255]);
+      const zipU32 = value => zipBytes([value & 255, (value >>> 8) & 255, (value >>> 16) & 255, (value >>> 24) & 255]);
+      const concatBytes = chunks => {
+        const result = new Uint8Array(chunks.reduce((total, chunk) => total + chunk.length, 0));
+        let offset = 0;
+        chunks.forEach(chunk => { result.set(chunk, offset); offset += chunk.length; });
+        return result;
+      };
+      function crc32(bytes) {
+        let crc = 0xffffffff;
+        for (const byte of bytes) {
+          crc ^= byte;
+          for (let bit = 0; bit < 8; bit += 1) crc = (crc >>> 1) ^ (crc & 1 ? 0xedb88320 : 0);
+        }
+        return (crc ^ 0xffffffff) >>> 0;
+      }
+      function makeZip(files) {
+        const localParts = [];
+        const centralParts = [];
+        let offset = 0;
+        files.forEach(file => {
+          const name = zipEncoder.encode(file.name);
+          const data = zipEncoder.encode(file.content);
+          const crc = crc32(data);
+          const local = concatBytes([zipU32(0x04034b50), zipU16(20), zipU16(0), zipU16(0), zipU16(0), zipU16(0), zipU32(crc), zipU32(data.length), zipU32(data.length), zipU16(name.length), zipU16(0), name, data]);
+          const central = concatBytes([zipU32(0x02014b50), zipU16(20), zipU16(20), zipU16(0), zipU16(0), zipU16(0), zipU16(0), zipU32(crc), zipU32(data.length), zipU32(data.length), zipU16(name.length), zipU16(0), zipU16(0), zipU16(0), zipU16(0), zipU32(0), zipU32(offset), name]);
+          localParts.push(local);
+          centralParts.push(central);
+          offset += local.length;
+        });
+        const central = concatBytes(centralParts);
+        const end = concatBytes([zipU32(0x06054b50), zipU16(0), zipU16(0), zipU16(files.length), zipU16(files.length), zipU32(central.length), zipU32(offset), zipU16(0)]);
+        return concatBytes([...localParts, central, end]);
+      }
+      async function downloadBundle() {
+        bundleButton.disabled = true;
+        bundleLabel.textContent = '打包中…';
+        copyStatus.textContent = '';
+        try {
+          const sources = await Promise.all([
+            ['AiseeLogoAnimation.tsx', '../../../src/components/AiseeLogoAnimation.tsx'],
+            ['preview.html', 'preview.html'],
+            ['README.md', 'README.md'],
+          ].map(async ([name, url]) => {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return { name, content: await response.text() };
+          }));
+          const blob = new Blob([makeZip(sources)], { type: 'application/zip' });
+          const objectUrl = URL.createObjectURL(blob);
+          const anchor = document.createElement('a');
+          anchor.href = objectUrl;
+          anchor.download = 'aisee-logo-animation-delivery.zip';
+          anchor.click();
+          URL.revokeObjectURL(objectUrl);
+          bundleLabel.textContent = '已下载交付包';
+          copyStatus.textContent = '三份交付文档已打包下载。';
+        } catch (error) {
+          bundleLabel.textContent = '下载失败';
+          copyStatus.textContent = '无法生成压缩包，请分别下载下方三个文件。';
+        } finally {
+          window.setTimeout(() => {
+            bundleButton.disabled = false;
+            bundleLabel.textContent = '下载交付包';
+          }, 1600);
+        }
+      }
+      bundleButton.addEventListener('click', downloadBundle);
+      if (!reducedMotion) {
+        document.addEventListener('pointermove', setPointerTarget, { passive: true });
+        document.addEventListener('mousemove', setPointerTarget, { passive: true });
+        document.addEventListener('mouseleave', () => { pupilState.active = false; pupilState.targetX = 0; pupilState.targetY = 0; });
+        requestAnimationFrame(frame);
+      }
     </script>
   </body>
 </html>

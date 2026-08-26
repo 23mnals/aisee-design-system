@@ -26,6 +26,9 @@ test('Brand catalog is grouped by AIsee functional modules', () => {
   // catalog has no Overview page after Homepage content is moved out.
   assert.deepEqual([...categories].sort(), expectedOrder.filter(category => category !== 'Overview').sort());
   assert.match(portal, /category: "Homepage", name: "About Us — Design Faithful"/);
+  assert.match(portal, /category: "Common", name: "Update Tutorial Preview"/);
+  assert.match(portal, /category: "Common", name: "Install Tutorial Preview"/);
+  assert.doesNotMatch(portal, /category: "Automation", name: "(?:Update|Install) Tutorial Preview"/);
   assert.doesNotMatch(portal, /category: "Overview", name: "About Us/);
   assert.match(portal, /group === "Brand"[\s\S]*?brandCategoryOrder\.map/);
   assert.match(portal, /item\.category \|\| ""/);
@@ -35,6 +38,7 @@ test('legacy labels stay out of the sidebar and use a lightweight inline title s
   assert.doesNotMatch(portal, /item\.status === "Legacy" \? '<span class="item-tag">Legacy<\/span>'/);
   assert.match(portal, /id="previewTitleTag" hidden/);
   assert.match(portal, /\.preview-title-tag \{[\s\S]*font: 500 10px\/14px Karla/);
+  assert.match(portal, /\.preview-title-tag\[hidden\] \{ display: none !important; \}/);
   assert.match(portal, /\.preview-meta\.has-inline-tag h1 \{[\s\S]*display: flex/);
   assert.match(portal, /previewMeta\.classList\.toggle\("has-inline-tag", isLegacy\)/);
   assert.match(portal, /previewTitleTag\.textContent = isLegacy \? "legacy" : ""/);
@@ -48,6 +52,45 @@ test('every catalog preview exists and paths are unique', async () => {
   assert.ok(paths.length >= 37, `expected at least 37 previews, found ${paths.length}`);
   assert.equal(new Set(paths).size, paths.length, 'catalog paths must be unique');
   await Promise.all(paths.map(path => access(new URL(path, projectUrl))));
+});
+
+test('Logo animation exposes faster idle motion and the three real delivery files', async () => {
+  const preview = await readFile(new URL('../brand/pages/logo-animation/preview.html', import.meta.url), 'utf8');
+  const component = await readFile(new URL('../src/components/AiseeLogoAnimation.tsx', import.meta.url), 'utf8');
+  const svg = await readFile(new URL('../brand/assets/logo-animated.svg', import.meta.url), 'utf8');
+  const readme = await readFile(new URL('../brand/pages/logo-animation/README.md', import.meta.url), 'utf8');
+
+  assert.match(component, /const IDLE_LOOK_CYCLE_MS = 2600/);
+  assert.match(component, /const BLINK_INTERVAL_MIN_MS = 2200/);
+  assert.match(component, /const BLINK_INTERVAL_JITTER_MS = 1000/);
+  assert.match(preview, /idleLook\(\(now % 2600\) \/ 2600\)/);
+  assert.match(preview, /nextBlink = now \+ 2200 \+ Math\.random\(\) \* 1000/);
+  assert.match(svg, /idleLook\(\(now % 2600\) \/ 2600\)/);
+  assert.match(svg, /nextBlink = now \+ 2200 \+ Math\.random\(\) \* 1000/);
+  assert.match(readme, /2\.2–3\.2 秒/);
+
+  assert.doesNotMatch(preview, /id="copy-tsx"/);
+  assert.match(portal, /id="copyTsxHeader"[^>]*hidden/);
+  assert.match(portal, /copyTsxHeader\.hidden = item\.path !== logoAnimationPath/);
+  assert.match(portal, /fetch\("src\/components\/AiseeLogoAnimation\.tsx"/);
+  assert.match(preview, /id="download-bundle"/);
+  assert.match(preview, /application\/zip/);
+  assert.match(preview, /aisee-logo-animation-delivery\.zip/);
+  assert.match(preview, /在页面头部复制 TSX，或下载完整三件套。/);
+  assert.match(preview, /id="copy-status"[^>]*role="status"[^>]*aria-live="polite"/);
+  assert.match(preview, /href="\.\.\/\.\.\/\.\.\/src\/components\/AiseeLogoAnimation\.tsx" download="AiseeLogoAnimation\.tsx"/);
+  assert.match(preview, /href="preview\.html" download="preview\.html"/);
+  assert.match(preview, /href="README\.md" download="README\.md"/);
+  assert.match(preview, /rgba\(17,17,17,\.05\)/);
+  assert.match(preview, /\.download-action \{ display: flex; align-items: center; justify-content: center/);
+  assert.match(preview, /\.delivery-action:focus-visible/);
+  assert.match(preview, /min-height: 44px/);
+});
+
+test('static site build publishes the canonical Logo Animation TSX delivery source', async () => {
+  const builder = await readFile(new URL('../scripts/build-static-site.mjs', import.meta.url), 'utf8');
+  assert.match(builder, /src\/components\/AiseeLogoAnimation\.tsx/);
+  assert.match(builder, /logoAnimationSource/);
 });
 
 test('standalone portal script is syntactically valid', () => {
