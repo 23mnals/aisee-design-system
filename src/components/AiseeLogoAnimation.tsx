@@ -4,6 +4,12 @@ import type { CSSProperties, SVGAttributes } from 'react';
 const SHELL_PATH = 'M0 200C0 89.5431 89.5431 0 200 0C310.457 0 400 89.5431 400 200V400H0V200Z';
 const EYE_PATH = 'M85.603 134.409C161.565 67.1981 237.528 67.1981 313.49 134.409C237.528 201.62 161.565 201.62 85.603 134.409Z';
 const OPEN_EYELIDS = 'M0 0H400V134.409C237.528 67.1981 161.565 67.1981 85.603 134.409Z M0 400H400V134.409C237.528 201.62 161.565 201.62 85.603 134.409Z';
+const IDLE_LOOK_CYCLE_MS = 2600;
+const IDLE_EASING_MS = 170;
+const INITIAL_BLINK_MIN_MS = 1400;
+const INITIAL_BLINK_JITTER_MS = 600;
+const BLINK_INTERVAL_MIN_MS = 2200;
+const BLINK_INTERVAL_JITTER_MS = 1000;
 
 export interface AiseeLogoAnimationProps extends Omit<SVGAttributes<SVGSVGElement>, 'viewBox' | 'width' | 'height'> {
   /** Rendered size in CSS pixels (the internal coordinate system remains 400 × 400). */
@@ -144,7 +150,7 @@ export function AiseeLogoAnimation({
     let frameId = 0;
     let lastFrame = performance.now();
     let blinkStart = -1;
-    let nextBlink = lastFrame + 2000 + Math.random() * 800;
+    let nextBlink = lastFrame + INITIAL_BLINK_MIN_MS + Math.random() * INITIAL_BLINK_JITTER_MS;
 
     const renderBlink = (now: number) => {
       if (blinkStart < 0 && now >= nextBlink) {
@@ -166,7 +172,7 @@ export function AiseeLogoAnimation({
       else {
         progress = 0;
         blinkStart = -1;
-        nextBlink = now + 3000 + Math.random() * 1500;
+        nextBlink = now + BLINK_INTERVAL_MIN_MS + Math.random() * BLINK_INTERVAL_JITTER_MS;
       }
       setEyelids(progress);
     };
@@ -177,9 +183,9 @@ export function AiseeLogoAnimation({
       lastFrame = now;
       const idle = !pointer.active || now - pointer.lastMove > 2000;
       if (blinkStart < 0) {
-        const targetX = idle ? idleLook((now % 3500) / 3500) : pointer.targetX;
+        const targetX = idle ? idleLook((now % IDLE_LOOK_CYCLE_MS) / IDLE_LOOK_CYCLE_MS) : pointer.targetX;
         const targetY = idle ? Math.sin(now / 2300) * 1.5 : pointer.targetY;
-        const alpha = 1 - Math.exp(-delta / (idle ? 220 : 82));
+        const alpha = 1 - Math.exp(-delta / (idle ? IDLE_EASING_MS : 82));
         pointer.currentX += (targetX - pointer.currentX) * alpha;
         pointer.currentY += (targetY - pointer.currentY) * alpha;
         pupil.setAttribute('transform', `translate(${pointer.currentX.toFixed(3)} ${pointer.currentY.toFixed(3)})`);

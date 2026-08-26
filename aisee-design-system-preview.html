@@ -135,6 +135,7 @@
       .icon-button { width: 44px; display: grid; place-items: center; }
       .icon-button svg { width: 19px; height: 19px; }
       .action-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 0 14px; font-weight: 650; text-decoration: none; }
+      .action-button:disabled { cursor: wait; opacity: .65; }
       .action-button.primary { border-color: var(--ink); background: var(--ink); color: white; }
       .icon-button:hover, .action-button:hover { border-color: var(--line-strong); background: var(--surface-subtle); }
       .action-button.primary:hover { background: #343538; }
@@ -704,7 +705,9 @@
         text-transform: lowercase;
         white-space: nowrap;
       }
+      .preview-title-tag[hidden] { display: none !important; }
       .preview-actions .item-tag[hidden] { display: none !important; }
+      .preview-actions .action-button[hidden] { display: none !important; }
       .preview-toolbar {
         padding: 12px 24px;
       }
@@ -1011,6 +1014,10 @@
             </div>
             <div class="preview-actions">
               <span class="item-tag" id="previewTag"></span>
+              <button class="action-button" id="copyTsxHeader" type="button" hidden aria-label="Copy AiseeLogoAnimation TSX">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 8.75A2.75 2.75 0 0 1 10.75 6h7.5A2.75 2.75 0 0 1 21 8.75v7.5A2.75 2.75 0 0 1 18.25 19h-7.5A2.75 2.75 0 0 1 8 16.25v-7.5Z"/><path d="M16 6V5.75A2.75 2.75 0 0 0 13.25 3h-7.5A2.75 2.75 0 0 0 3 5.75v7.5A2.75 2.75 0 0 0 5.75 16H8"/></svg>
+                <span id="copyTsxHeaderLabel">复制 TSX</span>
+              </button>
               <a class="action-button" id="openStandalone" href="#" target="_blank" rel="noopener">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M13 5h6v6M19 5l-8 8"/><path d="M18 13v6H5V6h6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Open HTML</span>
@@ -1057,8 +1064,6 @@
       let activeColorLayer = "semantic";
 
       const baseItems = [
-        { group: "Brand", category: "Automation", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "328×160 looping animation: download new version → remove old → drag new package in.", status: "Legacy" },
-        { group: "Brand", category: "Automation", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
         { group: "Brand", category: "Automation", name: "Plugin Entry Options", path: "legacy/pages/Plugin Entry Options.html", subtitle: "Three browser-extension install entry placements.", status: "Legacy" },
         { group: "Brand", category: "Analyze", name: "Comparison Modal", path: "legacy/pages/Comparison Modal.html", subtitle: "Analysis comparison with Full Report and By Module views.", status: "Legacy" },
         { group: "Brand", category: "Homepage", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Mission option B · all six sections · design-system styling.", status: "Legacy" },
@@ -1086,6 +1091,8 @@
         { group: "Brand", category: "Common", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "Display Type — Gotu", path: "preview/type-display.html", subtitle: "Gotu display scale from hero to body.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "UI Type — Karla + Mono", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "328×160 looping animation: download new version → remove old → drag new package in.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
 
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
         { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
@@ -1138,6 +1145,8 @@
       const previewTitleTag = document.getElementById("previewTitleTag");
       const previewDescription = document.getElementById("previewDescription");
       const previewTag = document.getElementById("previewTag");
+      const copyTsxHeader = document.getElementById("copyTsxHeader");
+      const copyTsxHeaderLabel = document.getElementById("copyTsxHeaderLabel");
       const openStandalone = document.getElementById("openStandalone");
       const homeButton = document.getElementById("homeButton");
       const searchInput = document.getElementById("searchInput");
@@ -1151,6 +1160,7 @@
       const colorReferenceHeading = document.getElementById("colorReferenceHeading");
       let activePath = "";
       let toastTimer;
+      const logoAnimationPath = "brand/pages/logo-animation/preview.html";
       const activePathStorageKey = "aisee.design-system.activePath";
       const navOpenStateStorageKey = "aisee.design-system.navOpenState";
 
@@ -1315,6 +1325,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         activePath = "";
         saveActivePath("");
         previewFrame.removeAttribute("src");
+        copyTsxHeader.hidden = true;
         previewView.hidden = true;
         homeView.hidden = false;
         if (updateHash && location.hash) history.pushState(null, "", location.pathname + location.search);
@@ -1341,6 +1352,9 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         previewTag.textContent = isBrandOutput ? "Brand" : "";
         previewTag.className = "item-tag";
         previewTag.hidden = !isBrandOutput;
+        copyTsxHeader.hidden = item.path !== logoAnimationPath;
+        copyTsxHeaderLabel.textContent = "复制 TSX";
+        copyTsxHeader.disabled = false;
         const previewPath = isBrandOutput ? item.html : item.path;
         previewFrame.src = `${previewPath}${previewPath.includes("?") ? "&" : "?"}preview=20260820-portal`;
         openStandalone.href = previewPath;
@@ -1428,6 +1442,37 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         }
       }
 
+      async function copyLogoTsx() {
+        copyTsxHeader.disabled = true;
+        copyTsxHeaderLabel.textContent = "复制中…";
+        try {
+          const response = await fetch("src/components/AiseeLogoAnimation.tsx", { cache: "no-store" });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const source = await response.text();
+          if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(source);
+          else {
+            const temporary = document.createElement("textarea");
+            temporary.value = source;
+            temporary.style.position = "fixed";
+            temporary.style.opacity = "0";
+            document.body.appendChild(temporary);
+            temporary.select();
+            if (!document.execCommand("copy")) throw new Error("copy unavailable");
+            temporary.remove();
+          }
+          copyTsxHeaderLabel.textContent = "已复制";
+          showToast("AiseeLogoAnimation.tsx 已复制");
+        } catch (error) {
+          copyTsxHeaderLabel.textContent = "复制失败";
+          showToast("TSX 复制失败，请下载交付包");
+        } finally {
+          window.setTimeout(() => {
+            copyTsxHeader.disabled = false;
+            copyTsxHeaderLabel.textContent = "复制 TSX";
+          }, 1600);
+        }
+      }
+
       renderNav();
       refreshColorScopeOptions();
       renderColorTokens();
@@ -1453,6 +1498,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       colorMode.addEventListener("change", () => renderColorTokens());
       colorScope.addEventListener("change", () => renderColorTokens());
       document.getElementById("shareButton").addEventListener("click", sharePage);
+      copyTsxHeader.addEventListener("click", copyLogoTsx);
       menuButton.addEventListener("click", () => {
         const opening = !document.body.classList.contains("nav-open");
         document.body.classList.toggle("nav-open", opening);
