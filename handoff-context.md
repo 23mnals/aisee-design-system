@@ -5,16 +5,16 @@
 ## 当前 Git 状态
 
 - 当前开发分支：`ai/desktop/design-system-current`。
-- 当前本地 HEAD 与 `origin/ai/desktop/design-system-current` 为 `d0b7c57 feat(brand): package logo animation delivery`；`origin/main` 仍为 `7bf67eea6c675e019bc514f504daf3a47deb51aa`（PR #4 merge commit）。
+- 当前本地 HEAD 与 `origin/ai/desktop/design-system-current` 为 `d36322d docs: record main release pull request`；`origin/main` 已更新为 `72b53d3973230d20246a378bd6f1233c036f696e`（PR #5 merge commit）。
 - 最新 Managed Automation 内容提交：`f6e4341 fix(brand): sync Managed Automation eye demo`，已包含在当前开发分支历史中。
 - 本地 `main` 仍停在 `2358f97`，不是当前正式版本判断依据；需要先核对远端再更新本地指针。
 - PR #4 已合并，合并后的 GitHub CI 已通过。
 - 本地工作区已干净；Logo Animation 交付入口、动画节奏、空白状态标签修复、教程分类与测试已推送到开发分支，最新开发分支 commit 为 `368320b`。
-- 正式版 PR #5 已创建：`ai/desktop/design-system-current → main`，等待审阅，未合并。
+- 正式版 PR #5 已合并到 `main`；合并后 CI 与 GitHub Pages 部署均成功。
 
 ## 当前正在做
 
-- Logo Animation 交付入口与节奏优化已提交并 push 到开发分支；PR #5 等待审阅。
+- Logo Animation 交付入口与节奏优化已提交并 push 到开发分支，随后通过 PR #5 发布到 main。
 - 本地 Demo 运行于 `http://127.0.0.1:4174/`。
 
 ## 最近已完成
@@ -25,7 +25,8 @@
 - Logo Animation Demo 头部提供 TSX 复制按钮，开发交付区提供包含三份真实文件的 ZIP 一键下载和三个独立下载入口；按钮文字居中并使用 5% 黑色描边，本地浏览器实测通过。
 - 全局共用的 Update / Install 插件教程已从 Automation 调整到 `Brand → Common`，本地刷新后分类正确。
 - 交付功能与相关修复已通过 `d0b7c57` 推送到 `ai/desktop/design-system-current`。
-- 正式版 PR #5 已创建，按规则不自动 merge。
+- 正式版 PR #5 已按用户明确指令合并；merge commit 为 `72b53d3`。
+- GitHub Pages 已成功部署到 `https://23mnals.github.io/aisee-design-system/`。
 - `npm test` 已通过：41 项测试；`npm run site` 已成功构建，并将 Logo Animation 的 canonical TSX 交付源放入静态站点。
 - 用户已确认并提交旧累加式交接向“工作纪律 + 当前仪表盘 + 长期决策 + 独立 session 历史”四层结构的迁移。
 - 已将远端 `f6e4341` 同步到本地，并在 `Brand → Automation → Managed Automation` 验证最新 Keep-open / eye demo 正常显示、控制台无错误。
@@ -46,7 +47,7 @@
 
 ## 当前未完成
 
-- 本轮修改已 commit / push；PR #5 尚未合并到 main。
+- 本轮修改已 commit / push，并已合并到 main。
 - 线上 Pages 的 Logo Animation 新交付入口需等本轮修改后续发布到 `main` 才会更新。
 - `Plugin Entry Options` 外层可加载，但三个内嵌 Engage 页面仍请求已不存在的 `legacy/pages/engage-aisee-v2/*.jsx`，React 根节点未挂载而呈现空白；本轮只诊断，尚未改动该 Legacy 页面。
 - Components 后续仍需完成真实组件清单与导航收尾、Button 模块色 hover、Select / Dropdown 示例与交互、功能页 Banner 清晰资产替换。
@@ -57,8 +58,8 @@
 
 1. 用户要求修复时，先决定 `Plugin Entry Options` 是恢复旧 JSX、改接现有 bundle，还是替换为当前可运行的 Engage 预览；不直接重建 Legacy UI。
 2. 用户在本地工作区检查 `git status` 后 pull `ai/desktop/design-system-current`，刷新 Demo 验收本轮交付。
-3. PR #5 等待审阅；只有用户明确要求合并时，才执行 merge。
+3. PR #5 已合并；后续 main 发布仍遵循先创建 PR、用户明确要求后再 merge。
 
 ## 最近一次 Session
 
-- [`handoff/sessions/2026-08-26-main-pr.md`](handoff/sessions/2026-08-26-main-pr.md)
+- [`handoff/sessions/2026-08-26-main-pr-merge.md`](handoff/sessions/2026-08-26-main-pr-merge.md)
