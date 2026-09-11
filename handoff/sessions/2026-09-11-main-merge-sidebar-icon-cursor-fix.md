@@ -28,10 +28,10 @@
 - PR #6：Merged。
 - `main` 最新合并 commit：`b2c83b0`。
 - Sidebar Navigation 完整功能已提交为 `7a494bd feat: add interactive sidebar navigation`。
-- 两次明确的 `git push` 重试均因无法连接 `github.com:443` 超时失败；截至本轮交接，远端开发分支仍停留在 `9ea0491`，不得声称已推送成功。
+- 前两次 `git push` 因无法连接 `github.com:443` 超时失败；第三次重试成功，功能提交 `7a494bd` 与交接提交 `d832d8d` 均已推送到 `origin/ai/desktop/design-system-current`。
 
 ## 下一步
 
-1. GitHub 网络恢复后，将 `7a494bd` 与本次交接 commit 推送到开发分支。
-2. 推送后重新核对 `origin/ai/desktop/design-system-current` 是否与本地 HEAD 一致。
-3. 如需正式发布 Sidebar，再另建开发分支到 `main` 的 PR。
+1. 如需正式发布 Sidebar，再从开发分支创建到 `main` 的新 PR。
+2. 单独推进 Figma `10374:435175` 的 Card 业务变体。
+3. 修复 `Plugin Entry Options` 的三个 Legacy Engage 内嵌页面引用。

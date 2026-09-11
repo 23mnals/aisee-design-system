@@ -7,11 +7,11 @@
 - 当前开发分支：`ai/desktop/design-system-current`。
 - 最新功能批次 commit：`7a494bd feat: add interactive sidebar navigation`。
 - [PR #6](https://github.com/23mnals/aisee-design-system/pull/6) 已合并到 `main`；远端合并 commit 为 `b2c83b0 Merge pull request #6 from 23mnals/ai/desktop/design-system-current`。
-- Sidebar Navigation 已完成本地提交；当前工作区除本次交接记录外无功能代码改动。推送 GitHub 时连续遇到 `github.com:443` 连接超时，远端开发分支暂未收到该 commit。
+- Sidebar Navigation 功能与交接记录已推送到 `origin/ai/desktop/design-system-current`；本轮没有未推送的功能代码。
 
 ## 当前正在做
 
-- Sidebar Navigation 已同步本地主 Demo，并提交为 `7a494bd`；等待 GitHub 网络恢复后推送到 `origin/ai/desktop/design-system-current`。
+- Sidebar Navigation 已同步本地主 Demo，功能提交为 `7a494bd`，交接提交为 `d832d8d`，均已进入远端开发分支。
 - 顶部开合按钮已恢复使用 Figma 导出的 `assets/sidebar-v6/sidebar-close.svg`，展开与收起状态保持同一设计稿 icon。
 - 用户已确认最终 cursor 方向方案：不使用自绘 SVG；展开态顶部按钮 hover 使用平台原生 CSS `w-resize` 强调向左收起，收起态 56px 整条 rail 使用 `e-resize` 强调向右展开；`Close sidebar` / `Open sidebar` tooltip 保留。
 - Sidebar 单色功能 icon 改为以 SVG 轮廓作 mask 并继承条目 `currentColor`，确保默认 icon / 文字均为 `#3D3D3A`，hover / selected 均精确切换为 `#111111`；Google、Bing 品牌 Logo 保持原色。
@@ -40,16 +40,16 @@
 
 ## 当前未完成
 
-- Sidebar 本地提交已完成；远端推送因 GitHub 443 连接超时尚未完成，需要网络恢复后重试。
+- Sidebar 已提交并推送开发分支；尚未创建进入 `main` 的正式发布 PR。
 - Tabs 回弹已同步 Demo 与 React 组件；后续只需继续产品侧视觉验收。
 - 用户提供的 Figma `10374:435175` 倾向归入 `Data Display → Card` 的业务 Card 变体，尚未实现；现有 Default / Elevated 示例仍是通用占位。
 - `Plugin Entry Options` 的三个 Legacy Engage 内嵌页面仍引用已不存在的 JSX 路径，问题尚未修复。
 
 ## 下一步
 
-1. 网络恢复后重试推送本地 Sidebar commit 与本次交接 commit 到 `origin/ai/desktop/design-system-current`。
-2. 单独评估并实现 Figma `10374:435175` 的 Card 业务变体。
-3. Sidebar 成功推送后，如需进入 `main`，再创建新的正式发布 PR；不与已合并的 PR #6 混用。
+1. 单独评估并实现 Figma `10374:435175` 的 Card 业务变体。
+2. 修复 `Plugin Entry Options` 的三个 Legacy Engage 内嵌页面引用。
+3. 如需将 Sidebar 发布到 `main`，再创建新的正式发布 PR；不与已合并的 PR #6 混用。
 
 ## 最近一次 Session
 
