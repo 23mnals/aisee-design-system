@@ -1,0 +1,105 @@
+{
+  "figmaFile": "LLvI9vd66VLNuAltAWJFJw",
+  "nodeId": "42:11679",
+  "exported": "2026-09-11",
+  "icons": [
+    {
+      "name": "no-event",
+      "nodeId": "42:11681",
+      "label": "No event",
+      "feature": "yellow",
+      "file": "no-event.svg"
+    },
+    {
+      "name": "no-account",
+      "nodeId": "42:11795",
+      "label": "No account",
+      "feature": "yellow",
+      "file": "no-account.svg"
+    },
+    {
+      "name": "no-time-slot",
+      "nodeId": "42:11856",
+      "label": "No time slot",
+      "feature": "yellow",
+      "file": "no-time-slot.svg"
+    },
+    {
+      "name": "nothing",
+      "nodeId": "42:11878",
+      "label": "Nothing",
+      "feature": "analysis",
+      "file": "nothing.svg"
+    },
+    {
+      "name": "no-report",
+      "nodeId": "42:11895",
+      "label": "No report",
+      "feature": "analysis",
+      "file": "no-report.svg"
+    },
+    {
+      "name": "no-credit",
+      "nodeId": "42:11925",
+      "label": "No credit",
+      "feature": "credit",
+      "file": "no-credit.svg"
+    },
+    {
+      "name": "no-media",
+      "nodeId": "42:11835",
+      "label": "No media",
+      "feature": "yellow",
+      "file": "no-media.svg"
+    },
+    {
+      "name": "free-use",
+      "nodeId": "42:11941",
+      "label": "Free use",
+      "feature": "post agent",
+      "file": "free-use.svg"
+    },
+    {
+      "name": "bound",
+      "nodeId": "42:11820",
+      "label": "Bound",
+      "feature": "analysis",
+      "file": "bound.svg"
+    },
+    {
+      "name": "nobody",
+      "nodeId": "42:11777",
+      "label": "Nobody",
+      "feature": "yellow",
+      "file": "nobody.svg"
+    },
+    {
+      "name": "link",
+      "nodeId": "42:11696",
+      "label": "Link",
+      "feature": "yellow",
+      "file": "link.svg"
+    },
+    {
+      "name": "plugin",
+      "nodeId": "42:11727",
+      "label": "Plugin",
+      "feature": "yellow",
+      "file": "plugin.svg"
+    },
+    {
+      "name": "successful",
+      "nodeId": "42:11910",
+      "label": "Successful",
+      "feature": "subscription",
+      "file": "successful.svg"
+    },
+    {
+      "name": "unlock",
+      "nodeId": "42:11965",
+      "label": "Unlock",
+      "feature": "subscription",
+      "file": "unlock.svg"
+    }
+  ]
+}

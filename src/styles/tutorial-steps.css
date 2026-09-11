@@ -1,0 +1,23 @@
+/* Figma 38:83251. Titles and descriptions stay on one line and truncate within their step. */
+.aisee-tutorial-steps { container-type: inline-size; width: 100%; min-width: 0; font-family: var(--aisee-font-family-ui); color: var(--aisee-color-black); }
+.aisee-tutorial-steps__list { display: flex; margin: 0; padding: 0; border: 1px solid var(--aisee-color-border); border-radius: 16px; list-style: none; }
+.aisee-tutorial-steps__item { display: flex; flex: 1 1 0; min-width: 0; align-items: center; }
+.aisee-tutorial-steps__item:not(:last-child)::after { content: ''; display: block; flex: 0 0 24px; width: 24px; height: 24px; background: url('../../assets/tutorial-steps/connector.svg') center/contain no-repeat; transform: scaleX(-1); }
+.aisee-tutorial-steps__content { display: flex; flex: 1; min-width: 0; align-items: center; gap: 11px; padding: 12px 16px; }
+.aisee-tutorial-steps__icon { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 36px; border-radius: 10px; background: rgba(144,120,0,.1); font-size: 14px; font-weight: 600; }
+.aisee-tutorial-steps__icon > img, .aisee-tutorial-steps__icon > svg { display: block; width: 22px; height: 22px; object-fit: contain; }
+.aisee-tutorial-steps__copy { min-width: 0; flex: 1; }
+.aisee-tutorial-steps__title, .aisee-tutorial-steps__description { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aisee-tutorial-steps__title { font-size: 14px; font-weight: 600; line-height: 22px; letter-spacing: -.125px; }
+.aisee-tutorial-steps__description { color: var(--aisee-color-text-muted); font-size: 12px; font-weight: 400; line-height: 14px; }
+.aisee-tutorial-steps__action { margin-top: 8px; }
+.aisee-tutorial-steps[data-orientation="horizontal"] { overflow-x: auto; }
+.aisee-tutorial-steps[data-orientation="horizontal"] .aisee-tutorial-steps__list { min-width: 680px; }
+.aisee-tutorial-steps[data-orientation="vertical"] .aisee-tutorial-steps__list { flex-direction: column; }
+.aisee-tutorial-steps[data-orientation="vertical"] .aisee-tutorial-steps__item { flex-direction: column; align-items: stretch; }
+.aisee-tutorial-steps[data-orientation="vertical"] .aisee-tutorial-steps__item::after { margin-left: 22px; transform: rotate(90deg) scaleX(-1); }
+@container (max-width: 560px) {
+  .aisee-tutorial-steps[data-orientation="auto"] .aisee-tutorial-steps__list { flex-direction: column; }
+  .aisee-tutorial-steps[data-orientation="auto"] .aisee-tutorial-steps__item { flex-direction: column; align-items: stretch; }
+  .aisee-tutorial-steps[data-orientation="auto"] .aisee-tutorial-steps__item::after { margin-left: 22px; transform: rotate(90deg) scaleX(-1); }
+}

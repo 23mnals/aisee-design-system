@@ -1,20 +1,8 @@
-@font-face {
-  font-family: 'Karla';
-  src: url('/fonts/Karla-VariableFont_wght.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Digital Numbers';
-  src: url('/fonts/DigitalNumbers-Regular 2.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
+@import '../../fonts/karla-face.css';
 
 *, *::before, *::after { box-sizing: border-box; }
+
+.aisee-root, .aisee-root *, [class^="aisee-"], [class*=" aisee-"] { font-family: Karla, sans-serif; }
 
 .aisee-root {
   color: var(--aisee-color-black);

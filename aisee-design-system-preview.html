@@ -752,7 +752,8 @@
         .home { max-width: 100%; padding: 28px 24px 64px; }
       }
 </style>
-  </head>
+  <link rel="stylesheet" href="fonts/karla.css" data-aisee-typography="karla">
+</head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="topbar">
@@ -838,7 +839,7 @@
               <table class="overview-table">
                 <thead><tr><th>Surface</th><th>Purpose</th><th>Design baseline</th><th>Typography</th></tr></thead>
                 <tbody>
-                  <tr><td>Marketing homepage</td><td>Public brand story, product value, FAQ and pricing.</td><td>1440px desktop with responsive mobile states</td><td>Karla + Gotu</td></tr>
+                  <tr><td>Marketing homepage</td><td>Public brand story, product value, FAQ and pricing.</td><td>1440px desktop with responsive mobile states</td><td>Karla only</td></tr>
                   <tr><td>dApp / Webapp</td><td>Analysis, Growth, Engage, Post Agent, Verify, Connection and account workflows.</td><td>1440px application shell; 224px sidebar; 70px header</td><td>Karla only</td></tr>
                   <tr><td>Mobile references</td><td>Responsive and compact product flows where present in Figma.</td><td>Frame-specific; document each added version</td><td>Karla only</td></tr>
                 </tbody>
@@ -918,7 +919,7 @@
             </div>
 
             <h3 class="subheading">Typography</h3>
-            <div class="table-wrap"><table class="overview-table"><thead><tr><th>Surface</th><th>Family</th><th>Roles</th><th>Rule</th></tr></thead><tbody><tr><td>Homepage / Brand</td><td>Karla + Gotu</td><td>Gotu for selected display moments; Karla for UI and body</td><td>Self-host both fonts</td></tr><tr><td>dApp / App / Webapp</td><td>Karla + Digital Numbers</td><td>Karla for all UI; Digital Numbers only for the Score Gauge value</td><td>No Gotu or JetBrains Mono; self-host the gauge font</td></tr></tbody></table></div>
+            <div class="table-wrap"><table class="overview-table"><thead><tr><th>Surface</th><th>Family</th><th>Roles</th><th>Rule</th></tr></thead><tbody><tr><td>Homepage / Brand</td><td>Karla only</td><td>Karla for display, UI and body</td><td>Self-host Karla</td></tr><tr><td>dApp / App / Webapp</td><td>Karla only</td><td>Karla for all UI, code hints and Score Gauge values</td><td>Self-host Karla; no secondary UI font</td></tr></tbody></table></div>
 
             <h3 class="subheading">Layout, spacing and surfaces</h3>
             <div class="spec-grid">
@@ -1017,7 +1018,7 @@
           <section class="home-section" aria-labelledby="rules-title">
             <div class="section-heading"><h2 id="rules-title">Current product rules</h2><p>Use these when old and new conflict</p></div>
             <div class="rules">
-              <article class="rule"><h3>Typography</h3><p>Homepage and Brand use Karla + Gotu. dApp, App and Webapp use Karla only.</p><span class="code-pill">font-family: Karla</span></article>
+              <article class="rule"><h3>Typography</h3><p>Homepage and Brand use Karla only. dApp, App and Webapp use Karla only.</p><span class="code-pill">font-family: Karla</span></article>
               <article class="rule"><h3>Migration</h3><p>Matching legacy rules are replaced by v6. Non-overlapping legacy files remain available and are labeled Legacy.</p><span class="code-pill">v6 wins on conflict</span></article>
             </div>
           </section>
@@ -1096,7 +1097,7 @@
         { group: "Brand", category: "Analyze", name: "Comparison Modal", path: "legacy/pages/Comparison Modal.html", subtitle: "Analysis comparison with Full Report and By Module views.", status: "Legacy" },
         { group: "Brand", category: "Homepage", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Mission option B · all six sections · design-system styling.", status: "Legacy" },
         { group: "Brand", category: "Homepage", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Homepage animation language, word reveal, mascot and cursor.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Gotu-led narrative page with marquee and illustration placeholders.", status: "Legacy" },
+        { group: "Brand", category: "Homepage", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Narrative page with marquee and illustration placeholders.", status: "Legacy" },
         { group: "Brand", category: "Homepage", name: "About Us — v4", path: "legacy/pages/About Us v4.html", subtitle: "Centered hero, tracking eye, static color cards and image-trail footer.", status: "Legacy" },
         { group: "Brand", category: "Homepage", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Animated homepage with ticker and mascot.", status: "Legacy" },
         { group: "Brand", category: "Growth", name: "Module Comparison v3", path: "legacy/pages/Module Comparison.html", subtitle: "By Module comparison with inline switching and delta cues.", status: "Legacy" },
@@ -1117,8 +1118,8 @@
         { group: "Brand", category: "Common", name: "Visual Style", path: "preview/brand-visual-style.html", subtitle: "Homepage hero geometric shapes, mascot and footer band.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "Color Palette", path: "preview/colors-brand.html", subtitle: "Brand, neutral and semantic color tokens.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Display Type — Gotu", path: "preview/type-display.html", subtitle: "Gotu display scale from hero to body.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "UI Type — Karla + Mono", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "Display Type — Karla", path: "preview/type-display.html", subtitle: "Karla display scale from hero to body.", status: "Legacy" },
+        { group: "Brand", category: "Common", name: "UI Type — Karla", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "328×160 looping animation: download new version → remove old → drag new package in.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
 
@@ -1129,12 +1130,13 @@
         { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter and input-assisted dropdown with complete states.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with fluid hover, press and spring-like state transitions.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Tag Input", path: "components/TagInput/TagInput.html", subtitle: "Current token input that previews, commits and removes inline tags.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Toggle Selection Group", path: "components/ToggleSelectionGroup/ToggleSelectionGroup.html", subtitle: "Enable option groups while preserving selection across off and on states.", status: "Current", updated: true },
         { group: "Components", category: "Navigation", name: "Tabs", path: "components/Tabs/Tabs.html", subtitle: "Current underline and segmented tabs with text, icon and count compositions.", status: "Current", updated: true },
         { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "Current grouped product navigation with nested destinations and account status.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
-        { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Current solid, dot and colour badges using the AISEE palette.", status: "Current", updated: true },
-        { group: "Components", category: "Content & Status", name: "Tag", path: "components/Tag/Tag.html", subtitle: "Legacy contextual tag specimen retained for reference.", status: "Legacy" },
-        { group: "Components", category: "Content & Status", name: "Badge — Legacy", path: "legacy/pages/Badge Legacy.html", subtitle: "Legacy compact status and notification badge specimens.", status: "Legacy" },
+        { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Solid, dot, colour, source and semantic status badges with icon and label.", status: "Current", updated: true },
+        { group: "Components", category: "Content & Status", name: "Steps", path: "components/Steps/Steps.html", subtitle: "Static workflows, animated progress, thinking activity and feature tutorials.", status: "Current", updated: true },
+        { group: "Components", category: "Content & Status", name: "Empty State", path: "components/EmptyState/EmptyState.html", subtitle: "Composable empty states with optional illustration, title, description and actions.", status: "Current", updated: true },
         { group: "Components", category: "Data Display", name: "Card", path: "components/Card/Card.html", subtitle: "Current neutral content surface with optional minimal elevation.", status: "Current" },
         { group: "Components", category: "Data Display", name: "Stat Card — Current", path: "components/StatCardCurrent/StatCardCurrent.html", subtitle: "Current dashboard metric with value, unit and semantic delta.", status: "Current" },
         { group: "Components", category: "Data Display", name: "Table", path: "components/Table/Table.html", subtitle: "Current semantic data table with compact rows and numeric alignment.", status: "Current" },
@@ -1163,7 +1165,7 @@
         "dApp v6 Foundations": "nav-overview", "Overview": "nav-analysis", "dApp v6 Components": "nav-analysis", "PlanCard": "nav-growth", "PlanCard — Current": "nav-growth",
         "IntentTag": "nav-signal-feed", "StatusBadge": "nav-replies", "Web App UI Kit": "nav-overview", "Logo": "nav-overview", "Visual Style": "nav-overview",
         "Color Palette": "nav-overview", "Buttons & Badges": "action-check", "Cards & Data": "nav-signal-feed", "Nav, Inputs & Toggles": "nav-overview",
-        "Spacing, Radii & Shadows": "nav-overview", "Display Type — Gotu": "nav-overview", "UI Type — Karla + Mono": "nav-overview", "Tracking Eye": "nav-verify"
+        "Spacing, Radii & Shadows": "nav-overview", "Display Type — Karla": "nav-overview", "UI Type — Karla": "nav-overview", "Tracking Eye": "nav-verify"
       };
       const stemuiIcon = name => `<img src="assets/stemui/${name}.svg" alt="" aria-hidden="true">`;
       const navGroups = document.getElementById("navGroups");

@@ -1,0 +1,29 @@
+/* Figma 9551:122351, 9191:263484 and 10236:177226. */
+.aisee-empty-state-illustration { display: block; flex: 0 0 auto; object-fit: contain; }
+.aisee-empty-state {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: var(--aisee-color-black);
+  font-family: var(--aisee-font-family-ui);
+  text-align: center;
+}
+.aisee-empty-state *, .aisee-empty-state *::before, .aisee-empty-state *::after { box-sizing: border-box; }
+.aisee-empty-state__illustration { display: flex; width: 48px; height: 48px; flex: 0 0 auto; align-items: center; justify-content: center; }
+.aisee-empty-state__illustration > img, .aisee-empty-state__illustration > svg { display: block; width: 100%; height: 100%; object-fit: contain; }
+.aisee-empty-state__copy { display: flex; width: 372px; max-width: 100%; min-width: 0; flex-direction: column; align-items: center; gap: 8px; overflow-wrap: anywhere; }
+.aisee-empty-state .aisee-empty-state__title { width: 100%; margin: 0; font-size: 18px; font-weight: 600; line-height: 22px; }
+.aisee-empty-state__description { width: 100%; font-size: 14px; font-weight: 400; line-height: 22px; }
+.aisee-empty-state__description p { margin: 0; }
+.aisee-empty-state__action { display: flex; max-width: 100%; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+.aisee-empty-state__action > * { max-width: 100%; overflow-wrap: anywhere; }
+.aisee-empty-state--compact { padding: 16px 0 24px; }
+.aisee-empty-state--compact .aisee-empty-state__copy { width: 471px; }
+.aisee-empty-state--compact .aisee-empty-state__title { font-size: 14px; }
+.aisee-empty-state--compact .aisee-empty-state__description { font-size: 12px; line-height: 18px; }
+.aisee-empty-state--inset { gap: 8px; padding: 40px 16px; border: 1px dashed var(--aisee-color-border); border-radius: 10px; background: var(--aisee-color-card-warm); }
+.aisee-empty-state--inset .aisee-empty-state__illustration { width: 42.5px; height: 42.5px; }
+.aisee-empty-state--inset .aisee-empty-state__description { color: var(--aisee-color-text-muted); line-height: 18px; }

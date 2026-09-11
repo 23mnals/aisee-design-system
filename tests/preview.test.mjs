@@ -105,7 +105,7 @@ test('portal and v6 previews self-host Karla', async () => {
   for (const html of [portal, foundations, components]) {
     assert.match(html, /Karla-VariableFont_wght\.ttf/);
   }
-  assert.match(foundations, /Homepage \/ Brand.*Karla \+ Gotu/);
+  assert.match(foundations, /Homepage \/ Brand.*Karla/);
   assert.match(foundations, /dApp.*Karla/);
 });
 
@@ -449,7 +449,9 @@ test('updated component content uses explicit Campaigns-style NEW labels', async
   assert.ok(updatedPaths.length >= 7, `expected updated Current components, found ${updatedPaths.length}`);
   for (const path of updatedPaths) {
     const html = await readFile(new URL(`../${path}`, import.meta.url), 'utf8');
-    assert.match(html, /aisee-content-new/, `${path} should explicitly identify its new or updated content headings`);
+    const demoSource = /<script src="\.\/(?:steps|empty-state|toggle-selection)-demo\.js"/.test(html)
+      ? await readFile(new URL(`../${path.replace(/\.html$/, '.demo.tsx')}`, import.meta.url), 'utf8') : html;
+    assert.match(demoSource, /aisee-content-new/, `${path} should explicitly identify its new or updated content headings`);
   }
 });
 
@@ -749,8 +751,8 @@ test('overview contains the complete documentation sections', () => {
   for (const id of ['product-overview', 'sources', 'content', 'visual', 'interaction', 'assets', 'components-overview', 'versions']) {
     assert.match(portal, new RegExp(`id="${id}"`));
   }
-  assert.match(portal, /Homepage \/ Brand[\s\S]*?Karla \+ Gotu/);
-  assert.match(portal, /dApp \/ App \/ Webapp[\s\S]*?Karla \+ Digital Numbers/);
+  assert.match(portal, /Homepage \/ Brand[\s\S]*?Karla/);
+  assert.match(portal, /dApp \/ App \/ Webapp[\s\S]*?Karla only/);
   assert.match(portal, /Never redraw the eye or wordmark with CSS/);
 });
 
@@ -762,7 +764,7 @@ test('product overview contains the complete six-capability loop', () => {
   assert.match(portal, /Analysis, Growth, Engage, Post Agent, Verify, Connection and account workflows/);
 });
 
-test('brand and the scoped Score Gauge font are self-hosted', async () => {
+test('brand and Score Gauge use shared self-hosted Karla', async () => {
   const displayType = await readFile(new URL('../preview/type-display.html', import.meta.url), 'utf8');
   const logoPreview = await readFile(new URL('../preview/brand-logo.html', import.meta.url), 'utf8');
   for (const html of [displayType, logoPreview]) {
@@ -775,6 +777,6 @@ test('brand and the scoped Score Gauge font are self-hosted', async () => {
   const foundations = await readFile(new URL('../preview/dapp-v6-foundations.html', import.meta.url), 'utf8');
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
   assert.doesNotMatch(foundations, /DigitalNumbers-Regular|font-family:\s*(?:'|")?Digital Numbers/i);
-  assert.match(components, /DigitalNumbers-Regular 2\.ttf/);
-  assert.match(components, /font:400 20px\/26px 'Digital Numbers',monospace/);
+  assert.doesNotMatch(components, /DigitalNumbers-Regular 2\.ttf/);
+  assert.match(components, /font:400 20px\/26px Karla,Arial,sans-serif/);
 });

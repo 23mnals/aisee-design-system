@@ -1,4 +1,6 @@
 /* Shared layout for Current component documentation pages. Legacy specimens do not load this file. */
+@import '../fonts/karla.css';
+
 body {
   width: 100%;
   padding: 24px !important;
@@ -82,4 +84,26 @@ main .table-wrap { max-width: 100%; overflow-x: auto; }
   main > h2 + article,
   main > h2 + figure { padding: 16px !important; }
   main table { min-width: 520px; }
+}
+
+/* Usage/scenario callouts share the Score Gauge scope-rule treatment. */
+main .aisee-usage-note {
+  position: relative;
+  margin: 16px 0;
+  padding: 12px;
+  border: 1px solid var(--aisee-color-border, rgba(17,17,17,.06));
+  border-radius: 0;
+  background: #fff;
+  color: #111;
+  font: 400 14px/22px Karla, sans-serif;
+}
+
+main .aisee-usage-note::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: #ec5212;
+  content: '';
 }
