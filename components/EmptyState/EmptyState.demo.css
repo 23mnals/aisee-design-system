@@ -1,0 +1,25 @@
+.empty-specimen { padding-block: 48px !important; }
+.demo-notice { margin: 16px 0 0; text-align: center; font-size: 12px; }
+.demo-notice:empty { display: none; }
+.composition-controls { display: flex; flex-direction: column; gap: 16px; padding-bottom: 24px; }
+.composition-slots, .composition-selects { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.composition-slots .aisee-checkbox { align-items: center; text-transform: capitalize; }
+.composition-select { display: flex; min-width: 0; align-items: center; gap: 8px; font-size: 14px; }
+.composition-select .aisee-dropdown { min-width: 120px; }
+.composition-select .aisee-dropdown__trigger { padding-inline: 12px; }
+.composition-preview { min-width: 0; }
+.search-control { display: grid; gap: 8px; margin-bottom: 24px; font-size: 12px; }
+.search-control input { min-width: 0; width: 100%; height: 36px; padding: 8px 12px; border: 1px solid var(--aisee-color-border); border-radius: 8px; font: inherit; }
+.search-control input:focus { outline: 2px solid #ffe253; border-color: #111; }
+.illustration-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px; }
+.illustration-choice { display: flex; min-width: 0; flex-direction: column; align-items: center; gap: 12px; padding: 16px 8px; border: 1px solid transparent; border-radius: 8px; color: inherit; background: transparent; font: 400 12px/18px Karla, sans-serif; cursor: pointer; }
+.illustration-choice:hover { background: rgba(17,17,17,.04); }
+.illustration-choice[aria-pressed="true"] { border-color: #111; background: #fffadd; }
+.illustration-choice:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
+
+.empty-example-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 32px 0 8px; }
+.empty-example-heading h2 { margin: 0; }
+.empty-example-heading > .aisee-dropdown { flex: 0 1 180px; min-width: 0; max-width: 100%; }
+.empty-example-heading .aisee-dropdown__trigger { padding-inline: 12px; }
+main > .empty-example-heading + section { padding: 24px; border: 1px solid rgba(17,17,17,.05); border-radius: 12px; background: #fff; }
+@media(max-width:520px) { main > .empty-example-heading + section { padding: 16px; } }

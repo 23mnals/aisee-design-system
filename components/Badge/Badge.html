@@ -45,13 +45,15 @@
       main .card,main .panel,main .state-card,main figure,main .wrap,main .demo,main .gauge{border-color:var(--border)!important}
       main h2 + p,main .usage-copy,main .spec,main .specs,main .state-note{margin-top:8px!important;font-size:14px!important;font-weight:400!important;line-height:20px!important;color:var(--secondary)!important}
     </style>
-  </head>
+  <link rel="stylesheet" href="../../fonts/karla.css" data-aisee-typography="karla">
+</head>
+  <link rel="stylesheet" href="./badge-demo.css">
   <link rel="stylesheet" href="../component-doc-layout.css">
 <body>
     <main>
       <p class="muted">Components · Content &amp; Status · Current</p>
       <h1>Badge</h1>
-      <p class="muted">Compact labels for status, category and metadata in three AISEE appearances.</p>
+      <p class="muted">Compact labels for status, category and metadata in five AISEE appearances.</p>
 
       <h2 class="aisee-content-heading">Solid <span class="aisee-content-new" aria-label="New or updated content">NEW</span></h2>
       <div class="preview row">
@@ -85,8 +87,11 @@
         <span class="badge colour mint">Mint</span>
       </div>
 
+      <div id="badge-icon-demo"></div>
+      <script src="./badge-demo.js" defer></script>
+
       <h2 class="aisee-content-heading">API <span class="aisee-content-new" aria-label="New or updated content">NEW</span></h2>
-      <p><code>variant</code> accepts <code>solid</code>, <code>dot</code> or <code>colour</code>. <code>color</code> accepts only the published AISEE palette shown above.</p>
+      <p><code>variant</code> accepts <code>solid</code>, <code>dot</code>, <code>colour</code>, <code>source</code> or <code>status</code>. <code>color</code> accepts only the published AISEE palette shown above.</p>
 
       <h2 class="aisee-content-heading">Specs <span class="aisee-content-new" aria-label="New or updated content">NEW</span></h2>
       <p>Pill radius · minimum height 22px · Karla 11px / 500 · 8px horizontal padding · 6px dot.</p>

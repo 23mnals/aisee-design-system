@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "docs"]
+  "include": ["src", "docs", "components/Steps/Steps.demo.tsx", "components/Badge/Badge.demo.tsx", "components/EmptyState/EmptyState.demo.tsx", "components/ToggleSelectionGroup/ToggleSelectionGroup.demo.tsx"]
 }

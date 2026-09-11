@@ -1,57 +1,81 @@
 # AISEE Design System 当前交接
 
-> 本文件只表示项目此刻的最新状态，采用覆盖更新，不作为历史日志追加。工作纪律见 [`AGENTS.md`](AGENTS.md)，长期决策见 [`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md)，历史记录见 [`handoff/sessions/`](handoff/sessions/)。
+> 当前状态覆盖更新；工作纪律见 [AGENTS.md](AGENTS.md)，长期决策见 [docs/TEAM_DECISIONS.md](docs/TEAM_DECISIONS.md)，历史见 [handoff/sessions/](handoff/sessions/)。
 
-## 当前 Git 状态
+## 当前 Git
 
-- 当前开发分支：`ai/desktop/design-system-current`。
-- 最新功能批次 commit：`7a494bd feat: add interactive sidebar navigation`。
-- [PR #6](https://github.com/23mnals/aisee-design-system/pull/6) 已合并到 `main`；远端合并 commit 为 `b2c83b0 Merge pull request #6 from 23mnals/ai/desktop/design-system-current`。
-- Sidebar Navigation 功能与交接记录已推送到 `origin/ai/desktop/design-system-current`；本轮没有未推送的功能代码。
-- [PR #7](https://github.com/23mnals/aisee-design-system/pull/7) 已创建，用于将 Sidebar Navigation 正式同步到 `main`；尚未获得合并授权，当前保持开放。
+- 开发分支：`ai/desktop/design-system-current`，本轮功能提交：`f5344f9 feat: add composable status components`。
+- PR #7 已合并，origin/main 关键合并提交 `993d2a6`。当前本轮代码尚未进入 main。
+- 用户已授权并完成当前开发分支推送；远端 `origin/ai/desktop/design-system-current` 已包含功能提交 `f5344f9`、交接提交 `cf968ef` 与网络故障记录 `92bcffe`。
+- [PR #8](https://github.com/23mnals/aisee-design-system/pull/8) 已创建，将当前开发分支同步到 `main`；PR 保持开放，尚未获得明确合并授权。
 
-## 当前正在做
+## 正在做
 
-- Sidebar Navigation 已同步本地主 Demo，功能提交为 `7a494bd`，交接提交为 `d832d8d`，均已进入远端开发分支。
-- 顶部开合按钮已恢复使用 Figma 导出的 `assets/sidebar-v6/sidebar-close.svg`，展开与收起状态保持同一设计稿 icon。
-- 用户已确认最终 cursor 方向方案：不使用自绘 SVG；展开态顶部按钮 hover 使用平台原生 CSS `w-resize` 强调向左收起，收起态 56px 整条 rail 使用 `e-resize` 强调向右展开；`Close sidebar` / `Open sidebar` tooltip 保留。
-- Sidebar 单色功能 icon 改为以 SVG 轮廓作 mask 并继承条目 `currentColor`，确保默认 icon / 文字均为 `#3D3D3A`，hover / selected 均精确切换为 `#111111`；Google、Bing 品牌 Logo 保持原色。
-- 收起态维持 56px，点击空白 rail 展开；点击带子项的功能 icon 仍打开 flyout，不被整栏展开点击覆盖。
+- 本轮组件实现和技术验收完成，等待用户检查视觉及场景是否遗漏。
+- 本地预览服务曾停止，现已重新启动为独立后台进程：`http://127.0.0.1:4173`，PID 94710（运行时值，使用前检查端口），日志 `/tmp/aisee-preview-4173.log`；无待发布动作。
 
-## 最近已完成并已提交
+## 最近完成
 
-- 实测并采用 Fluid Functionalism 的静态 `NEW` 规则：点击、选中或刷新不会消失，不使用 localStorage，也不按组件版本记录已读。
-- Current 组件详情页统一为 640px 居中内容区，并补齐内容框、窄屏换行与横向滚动。
-- 组件标题区新增 32×32 上一项 / 下一项导航，图标 16×16；随标题滚动且不与描述重叠，hover / focus 显示相邻组件名称。
-- 新增可复用 Tag Input：虚线输入预览、Enter / Add 提交、空输入 Backspace 删除最后一项；Add 的 `+` 与文字同色。
-- Toggle 补齐 hover、press、checked 弹性反馈和 reduced-motion。
-- Tabs 补齐 underline、三类 segmented 与平台 Logo + 文字组合；正式 Demo 的 segmented 已同步 520ms 拉伸、越位、轻压回弹动效。
-- Badge 已拆为 Current 通用组件，旧 Tag / Badge 保留 Legacy；Dropdown 选项统一 Karla 14px / 20px。
-- 本次不含 Sidebar 的远端提交快照已通过 `npm test` 48/48、`npm run build` 与 `git diff --check --cached`。
-- Sidebar Navigation 已升级为 Current 可复用交互组件，包含嵌套展开、整体收起、收起态 flyout、原生方向 cursor、统一 icon 颜色和内容占位区；本地 commit `7a494bd` 已通过 `npm test` 49/49、`npm run build` 与 `git diff --check`。
+- 最新视觉反馈：EmptyState 删除重复 No event alternate，14 个独立 SVG；完整/无 action 示例各有独立下拉选择，联动插图、标题、描述和对应 action，图库联动 composer 文案。
+- TutorialSteps 第二/三步修正为原始循环箭头/评论气泡 SVG；整块 Figma context 错误解析实例交换，需要读取确切子节点。标题/描述仍各自单行省略，首个眼睛动效保留。
+- 使用场景说明复用白底和示例卡片同色完整灰色描边；3px #EC5212 强调线贴合卡片内部左侧并贯穿上下边缘，偏移均为 0px，共享 aisee-usage-note。
+- ToggleSelectionGroup 修正基础 Checkbox 样式覆盖：SVG 不旋转，勾选框黑底白勾，选项底色 #CFFF29，左右 padding 13px；关闭恢复行为保留。
+- Tag Input 标签与输入框同排，窄容器内容可横向滚动，按钮保持可见。React 样式和 HTML Demo 同步。
 
-## 当前关键决策
+- Tag 与 Badge Legacy 独立页面及门户入口按用户要求删除，Tag React API 保留。
+- Steps：纯静态流程、动态进度（初始/进行中/完成/错误）、思考明细；进行中闪烁，支持关闭及 reduced-motion。教程 `TutorialSteps` 在同页展示，支持图标/标题/描述/action 与窄容器纵排。
+- EmptyState：四个槽位自由组合，14 个 Figma 原始插图可选，自定义插图优先；composer 用共享 Dropdown/Checkbox。
+- ToggleSelectionGroup：首次开启全选，关闭只禁用并保留，再次开启恢复，空选不重置；支持受控/非受控、All 半选、不可用/只读/空列表。
+- Badge：新增来源灰底无边和状态低饱和底+灰边的 icon + label；保留原三类。
+- 全设计系统统一本地 Karla，包括 Brand、Legacy、Score Gauge、代码提示。Table 原本已用 Karla，本轮进一步统一入口和规范。
+- 下拉箭头与 Sidebar 同款，按钮左右 padding 12px。
+- 新 Demo 由真实 React 源组件构建，门户 57 页；`npm run build:component-demos` 更新生成的 JS/CSS，不手改 bundle。
+- 前一批 Sidebar Navigation 已通过 PR #7 进入 main；Tabs 520ms 回弹、Tag Input、基础 Toggle/Dropdown 等保留。
 
-- 日常开发统一在 `ai/desktop/design-system-current`；正式版通过该分支到 `main` 的 PR，未经同时授权不 merge。
-- `NEW` 是静态发布清单标记，由显式 `updated: true` 控制，不是个人已读提示。
-- Current 组件页内容宽度统一为 640px；Legacy 页面保持原样。
-- Tag Input 是 `Inputs & Controls` 的独立组件，不扩张基础 Input API。
-- Tabs 同时维护 underline 与 segmented；下划线 hover 只改变文字，segmented hover 使用 4% 黑色填充。
-- Sidebar Navigation 必须是数据驱动、可复用、带完整交互的 Current 组件；当前版本已获用户确认并推送远端开发分支，正通过 PR #7 等待同步到 `main`。
+## 验收证据
 
-## 当前未完成
+- 最终 `npm test` 60/60，typecheck、build、site、tokens:check、git diff --check 全通过。
+- 浏览器已验证联动选择首开全选、部分/空选恢复、关闭禁用和键盘 Space；Steps 每步状态与 active 动画；EmptyState 14 图标和槽位组合；Badge 图标与背景/边框。
+- 390px 容器八个代表页面均无页面横向溢出、真实 Karla 已加载、可见文字计算字体无异项；教程自动纵排。Steps 内部保留流程横向滚动。
+- 最新四页（TagInput、EmptyState、Steps、ToggleSelectionGroup）390px 浏览器复验 scrollWidth=390；Tag Input 控件仍 40px，标签与输入框垂直居中同排。
+- 浏览器确认两下拉均 14 项、独立选择无互相覆盖、无 action 示例无按钮、图库改图同步 composer 文案；图片均 SVG 且成功加载。教程两个 SVG 正确，场景说明计算样式白底/3px 橙边/12px padding。
+- 联动多选浏览器确认 #CFFF29、#111、transform none，关闭禁用和重开恢复部分选中通过。
+- 临时字体/窄屏检查页面已删除，不在交付中。
 
-- Sidebar 已提交并推送开发分支，进入 `main` 的正式发布 PR #7 已创建，待用户确认后合并。
-- Tabs 回弹已同步 Demo 与 React 组件；后续只需继续产品侧视觉验收。
-- 用户提供的 Figma `10374:435175` 倾向归入 `Data Display → Card` 的业务 Card 变体，尚未实现；现有 Default / Elevated 示例仍是通用占位。
-- `Plugin Entry Options` 的三个 Legacy Engage 内嵌页面仍引用已不存在的 JSX 路径，问题尚未修复。
+## 关键决策
 
-## 下一步
+- 普通开发在当前开发分支；未经授权不做 Git 发布。同步 main 通过 PR，merge 需明确授权。
+- Current 内容宽度 640px；variants / states 放同组件页，NEW 为静态 updated:true。
+- 字体全部 Karla，覆盖早期 Gotu / Digital Numbers 例外；原字体资产无需删除。
+- Steps 静态模式不展示任务状态；动态由业务传入状态；TutorialSteps 用于新功能说明。
+- 空状态四槽位独立可选，不产生空白占位；联动多选区分首次 undefined 与已保存空数组。
+- 用户已明确授权删 Tag/Badge Legacy，未授权删除其他 Legacy 资产。
+- 组件持久化、网络请求和教程显示/隐藏由业务负责，通用组件不自行触发。
 
-1. 单独评估并实现 Figma `10374:435175` 的 Card 业务变体。
-2. 修复 `Plugin Entry Options` 的三个 Legacy Engage 内嵌页面引用。
-3. 用户确认 PR #7 后再执行合并；未经明确授权不自动 merge。
+## 待确认 / 未完成
+
+- 用户视觉验收：Steps/TutorialSteps、EmptyState、ToggleSelectionGroup、Badge；联动组件八场景查漏见 [场景说明](docs/TOGGLE_SELECTION_GROUP_SCENARIOS.md)。
+- Card 业务变体 Figma `10374:435175` 尚未实现。
+- Plugin Entry Options 的三个 Legacy Engage 内嵌页面仍引用不存在的 JSX 路径，尚未修复。
+
+## 发布状态 / 下一步
+
+- 本轮组件、资产、字体统一、页面删除、测试、Demo bundle 与文档已提交并推送，功能提交为 `f5344f9`；本轮未创建 PR、未同步 `main`。
+- 正式同步 `main` 使用 `ai/desktop/design-system-current → main` 的 PR #8；当前未合并。只在用户明确说“合并 PR”后执行 merge。
+- 新对话读取 AGENTS.md 与本文件，检查 branch/status/log，再读直接相关源码。
+- API 与设计来源见 [COMPOSABLE_COMPONENTS.md](docs/COMPOSABLE_COMPONENTS.md)。
 
 ## 最近一次 Session
 
-- [`handoff/sessions/2026-09-11-sidebar-main-sync-pr.md`](handoff/sessions/2026-09-11-sidebar-main-sync-pr.md)
+- [2026-09-11-composable-components-main-pr.md](handoff/sessions/2026-09-11-composable-components-main-pr.md)
+
+- [2026-09-11-composable-components-remote-sync.md](handoff/sessions/2026-09-11-composable-components-remote-sync.md)
+
+- [2026-09-11-component-visual-feedback.md](handoff/sessions/2026-09-11-component-visual-feedback.md)
+
+- [2026-09-11-tutorial-single-line.md](handoff/sessions/2026-09-11-tutorial-single-line.md)
+
+- [2026-09-11-preview-recovery.md](handoff/sessions/2026-09-11-preview-recovery.md)
+
+- [2026-09-11-composable-components.md](handoff/sessions/2026-09-11-composable-components.md)
+- 页面删除记录：[2026-09-11-remove-tag-and-legacy-badge.md](handoff/sessions/2026-09-11-remove-tag-and-legacy-badge.md)

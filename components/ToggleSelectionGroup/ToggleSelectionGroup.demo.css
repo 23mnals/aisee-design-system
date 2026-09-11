@@ -1,0 +1,4 @@
+.selection-summary { display: grid; gap: 4px; margin-top: 16px; font-size: 12px; line-height: 18px; }
+.selection-summary p { margin: 0; }
+.selection-summary strong { font-weight: 500; }
+.scenario-preview { margin-top: 24px; }

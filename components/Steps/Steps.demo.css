@@ -1,0 +1,31 @@
+@font-face { font-family: Karla; src: url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--aisee-color-black); background: #fafafa; font: 400 14px/22px Karla, Arial, sans-serif; }
+main { margin: 0 auto; }
+h1 { margin: 0; font-size: 16px; font-weight: 500; line-height: 24px; }
+h2 { margin: 32px 0 8px; font-size: 16px; font-weight: 500; line-height: 24px; }
+.intro { margin: 8px 0 0; color: rgba(17,17,17,.6); }
+.specimen { min-width: 0; }
+.specimen--thinking { background: #fafafa !important; }
+.demo-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 24px; }
+.demo-controls button { font-family: inherit; }
+.animation-control { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; cursor: pointer; }
+.animation-control input { accent-color: #111; }
+.note { margin: 8px 0 0; color: rgba(17,17,17,.6); font-size: 12px; line-height: 18px; }
+.usage p { margin: 0 0 12px; }
+.usage p:last-child { margin-bottom: 0; }
+code { font: 12px/20px Karla, Arial, sans-serif; }
+pre { overflow-x: auto; padding: 12px; border-radius: 8px; background: #fafafa; }
+a { color: inherit; text-underline-offset: 3px; }
+
+.tutorial-eye { display: grid; place-items: center; width: 22px; height: 22px; }
+.tutorial-eye__shape { position: relative; width: 18.058px; height: 10.955px; }
+.tutorial-eye img { position: absolute; display: block; }
+.tutorial-eye__white { width: 100%; height: 100%; left: 0; top: 0; }
+.tutorial-eye__iris { width: 8.217px; height: 8.217px; left: 6.77px; top: 1.88px; }
+.tutorial-eye__pupil { width: 5.478px; height: 5.478px; left: 8.65px; top: 3.77px; }
+.tutorial-eye--animated .tutorial-eye__shape { animation: tutorial-eye-blink 2s infinite; }
+.tutorial-eye--animated .tutorial-eye__iris, .tutorial-eye--animated .tutorial-eye__pupil { animation: tutorial-eye-look 2s infinite; }
+@keyframes tutorial-eye-blink { 0%,15%,100% { transform: scaleY(1); animation-timing-function: cubic-bezier(.4,0,.2,1); } 7.5% { transform: scaleY(.07); animation-timing-function: cubic-bezier(.4,0,.2,1); } }
+@keyframes tutorial-eye-look { 0%,20% { transform: translateX(0); animation-timing-function: ease-in-out; } 60%,95% { transform: translateX(-1.55px); animation-timing-function: linear; } 99.95% { transform: translateX(-1.5px); } 99.96% { transform: translateX(.242px); } 99.97%,99.98% { transform: translateX(1.55px); } 99.99%,100% { transform: translateX(0); } }
+@media(prefers-reduced-motion:reduce) { .tutorial-eye--animated .tutorial-eye__shape, .tutorial-eye--animated .tutorial-eye__iris, .tutorial-eye--animated .tutorial-eye__pupil { animation: none; } }

@@ -1,0 +1,7 @@
+@import './karla-face.css';
+
+/* Demo-wide typography policy confirmed on 2026-09-11, including legacy previews. */
+html:root body,
+html:root body * {
+  font-family: Karla, Arial, sans-serif !important;
+}

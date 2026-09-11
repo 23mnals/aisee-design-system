@@ -1,3 +1,8 @@
+@import './tutorial-steps.css';
+@import './steps.css';
+@import './empty-state.css';
+@import './toggle-selection-group.css';
+
 .aisee-button {
   display: inline-flex;
   min-height: 36px;
@@ -76,7 +81,7 @@
 .aisee-tag-input:hover:not([aria-disabled="true"]),
 .aisee-tag-input:focus-within { border-color: var(--aisee-color-black); box-shadow: 0 0 0 3px var(--aisee-color-post-agent-primary); }
 .aisee-tag-input[aria-disabled="true"] { opacity: .5; }
-.aisee-tag-input__content { display: flex; min-width: 0; flex: 1; flex-wrap: wrap; align-items: center; gap: 4px; }
+.aisee-tag-input__content { display: flex; min-width: 0; flex: 1; flex-wrap: nowrap; align-items: center; gap: 4px; overflow-x: auto; }
 .aisee-tag-input__draft,
 .aisee-tag-input__tag {
   display: inline-flex;
@@ -92,7 +97,7 @@
 }
 .aisee-tag-input__draft { order: -1; border: 1px dashed rgba(17,17,17,.06); color: var(--aisee-color-text-muted); }
 .aisee-tag-input__tag { background: var(--aisee-color-semantic-brand-primary-tint); }
-.aisee-tag-input__input { min-width: 80px; flex: 1 1 100px; height: 24px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--aisee-color-black); font: 400 12px/18px Karla, sans-serif; }
+.aisee-tag-input__input { min-width: 64px; flex: 1 0 64px; height: 24px; padding: 0; border: 0; outline: 0; background: transparent; color: var(--aisee-color-black); font: 400 12px/18px Karla, sans-serif; }
 .aisee-tag-input__input::placeholder { color: var(--aisee-color-text-muted); }
 .aisee-tag-input__remove { display: grid; width: 16px; height: 16px; padding: 0; border: 0; border-radius: 4px; background: transparent; cursor: pointer; place-items: center; }
 .aisee-tag-input__remove:hover { background: rgba(17,17,17,.06); }
@@ -438,6 +443,21 @@
 .aisee-badge--green { --aisee-badge-accent: var(--aisee-color-semantic-status-success-font); --aisee-badge-soft: var(--aisee-color-semantic-status-success-bg); }
 .aisee-badge--mint { --aisee-badge-accent: color-mix(in srgb, var(--aisee-color-semantic-tag-07) 45%, var(--aisee-color-semantic-status-success-font)); --aisee-badge-soft: var(--aisee-color-semantic-tag-07); }
 
+/* Icon + label variants from Figma 75:31848. */
+.aisee-badge__icon { display: inline-grid; place-items: center; width: 12px; height: 12px; flex: 0 0 12px; }
+.aisee-badge__icon > img, .aisee-badge__icon > svg { display: block; width: 100%; height: 100%; object-fit: contain; }
+.aisee-badge__glyph { display: block; width: 100%; height: 100%; background: currentColor; mask-position: center; mask-size: contain; mask-repeat: no-repeat; }
+.aisee-badge--source { gap: 4px; min-height: 24px; padding: 3px 8px; border: 0; border-radius: 8px; background: #f5f5f5; color: var(--aisee-color-semantic-text-primary); font-size: 14px; font-weight: 400; line-height: 18px; }
+.aisee-badge--source .aisee-badge__icon { width: 16px; height: 16px; flex-basis: 16px; }
+.aisee-badge--status { gap: 2px; min-height: 26px; padding: 5px 8px; border: 1px solid var(--aisee-color-border); border-radius: 12px; font-size: 12px; font-weight: 500; line-height: 14px; }
+.aisee-badge--status-scheduled { background: #e7ddcb; color: #83580a; }
+.aisee-badge--status-published { background: #bbe7b2; color: var(--aisee-color-semantic-status-success-font); }
+.aisee-badge--status-draft { background: #e5e6ec; color: var(--aisee-color-semantic-text-blue-gray); }
+.aisee-badge--status-failed, .aisee-badge--status-removed { background: var(--aisee-color-semantic-tag-02); color: var(--aisee-color-semantic-feedback-wrong); }
+.aisee-badge--status-scheduled .aisee-badge__glyph { mask-size: 74.5% 78.75%; }
+.aisee-badge--status-draft .aisee-badge__glyph { mask-size: 78.38% 78.38%; }
+.aisee-badge--status-failed .aisee-badge__glyph, .aisee-badge--status-removed .aisee-badge__glyph { mask-size: 90.83% 90.83%; }
+
 .aisee-module-toggle { display: inline-flex; min-height: 34px; gap: 4px; padding: 3px; border-radius: 8px; background: rgba(17,17,17,.02); }
 .aisee-module-toggle__item { display: inline-flex; min-width: 36px; align-items: center; justify-content: center; gap: 7px; padding: 6px 10px; border: 0; border-radius: 6px; color: rgba(17,17,17,.5); background: transparent; cursor: pointer; }
 .aisee-module-toggle__item span:last-child { display: none; }
@@ -678,3 +698,5 @@
 .aisee-plan-card__check { display: grid; width: 18px; height: 18px; place-items: center; border-radius: 6px; background: #cfff29; font-size: 11px; font-weight: 700; }
 .aisee-plan-card__section li.is-disabled .aisee-plan-card__check { background: rgba(17,17,17,.04); }
 .aisee-plan-card__section small { padding: 3px 8px; border-radius: 6px; background: rgba(17,17,17,.05); font-size: 11px; line-height: 16px; white-space: nowrap; }
+
+.aisee-tag-input__tag, .aisee-tag-input__draft { flex: 0 0 auto; }
