@@ -9,6 +9,7 @@ export * from './components/TagInput';
 export * from './components/Checkbox';
 export * from './components/Toggle';
 export * from './components/Tabs';
+export * from './components/SidebarNavigation';
 export * from './components/Card';
 export * from './components/Badge';
 export * from './components/Tag';
