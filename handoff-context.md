@@ -6,7 +6,7 @@
 
 - 当前开发分支：`ai/desktop/design-system-current`。
 - 最新功能批次 commit：`d475f36 feat: refresh component docs and tab interactions`。
-- 本轮组件批次与交接记录已推送到 `origin/ai/desktop/design-system-current`；未创建或更新 `main` PR。
+- 本轮组件批次与交接记录已推送到 `origin/ai/desktop/design-system-current`；已创建 `ai/desktop/design-system-current → main` 的 [PR #6](https://github.com/23mnals/aisee-design-system/pull/6)，GitHub CI `verify` 已通过，等待用户明确授权后再 merge。
 - 工作区仍不干净：Sidebar Navigation 新版实现、规范、测试和资产按用户要求保留为本地未提交修改，等待视觉确认。
 
 ## 当前正在做
@@ -46,8 +46,8 @@
 
 1. 用户确认 Sidebar 后，对本地 Sidebar 文件重新跑完整测试与浏览器验收，再单独提交并推送。
 2. 单独评估并实现 Figma `10374:435175` 的 Card 业务变体。
-3. 用户明确要求正式发布时，再创建 `ai/desktop/design-system-current → main` PR；不自动 merge。
+3. 用户确认需要正式发布时，再明确授权合并 [PR #6](https://github.com/23mnals/aisee-design-system/pull/6)；当前不自动 merge。
 
 ## 最近一次 Session
 
-- [`handoff/sessions/2026-09-11-component-batch-remote-checkpoint.md`](handoff/sessions/2026-09-11-component-batch-remote-checkpoint.md)
+- [`handoff/sessions/2026-09-11-main-sync-pr.md`](handoff/sessions/2026-09-11-main-sync-pr.md)
