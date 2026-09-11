@@ -53,7 +53,7 @@
 - Components 导航只负责查找真实存在的组件；Default、Hover、Focus、Disabled、Loading、Primary、Secondary、Size、Spacing 等 variants/states/specs 放在组件详情页内部。
 - `dApp v6 Components` 是 Overview，不与具体组件页处在完全相同的层级；Overview 与详情页必须使用同一套真实组件样式和交互。
 - `Button` 是独立组件入口，不再包一层 Actions。只有多个真实组件时才显示分类；不创建 AISEE 中不存在的组件或空分类。
-- Inputs & Controls 可包含 Input、Tag Input、Select / Dropdown、Toggle；Navigation 可包含 Tabs、Sidebar Navigation (Legacy)；Content & Status 可包含 PlanCard、Badge 与明确标记的 Legacy 状态组件。
+- Inputs & Controls 可包含 Input、Tag Input、Select / Dropdown、Toggle；Navigation 可包含 Tabs、Sidebar Navigation；Content & Status 可包含 PlanCard、Badge 与明确标记的 Legacy 状态组件。
 - Current 组件默认不显示醒目的 `CURRENT`；历史组件标记 `Legacy — use the current component instead.`。Legacy 可以从当前导航隐藏，但未经用户确认不得删除文件和历史内容。
 - 组件详情页按实际资料使用：组件名与描述 → Examples → Variants → States → Usage → Do / Don't → Specs → Product Preview。资料缺失时写 `Not documented yet`，不编造 token 或规范。
 - Button、Input、Dropdown、Toggle、Tabs、Dialog 等真实示例必须可点击、聚焦、切换并查看状态，不能只使用静态截图代替交互。
@@ -112,6 +112,10 @@
 - Web Brand registry 允许使用相同的 `updated: true` 字段；未声明时不显示，避免旧内容和仅重建文件被误标为更新。
 - 组件内页 640px 标题区右侧提供上一项 / 下一项箭头，顺序与完整侧边栏目录一致；hover/focus 提示目标条目名称，边界方向禁用。Portal 外层页头不重复放置。
 - Tabs 保留原下划线型，并新增 Figma 对应的图文、纯文字（可带数量）、纯图标 segmented 组合，以及平台 Logo + 文字的下划线组合；默认 API 保持向后兼容。
+- Sidebar Navigation 是 Current、数据驱动的可复用组件；必须覆盖条目 hover / selected、单项子树展开收起、整个侧边栏展开收起、键盘与 ARIA 状态，不能只提供设计稿的一次性静态切图。
+- Sidebar Navigation 的父级功能通过整行点击展开/收起，不显示行尾下拉箭头；收起态点击功能 icon 继续使用 flyout 显示子功能。
+- Sidebar Navigation 不使用自绘 cursor：展开态仅在开合按钮 hover 时使用平台原生 `w-resize`，强调向左收起；收起态整条 rail 使用平台原生 `e-resize`，强调向右展开。按钮视觉继续使用已确认的 Figma icon。
+- Sidebar Navigation 的单色功能 icon 与文字共用 `currentColor`：默认均为 `#3D3D3A`，hover / selected 均为 `#111111`；Google、Bing 等多色品牌 Logo 保持官方颜色，不参与统一染色。
 - Current 页面中新增或更新的内容区块标题紧邻显示 Campaigns 同款 `NEW` 胶囊；内容级标记必须显式添加，不能把所有标题按时间自动标记。
 - Dropdown trigger 与所有菜单选项统一使用 Karla 14px / 20px；选项字号不依赖外围页面继承。
 - Tag Input 是独立 Inputs & Controls 组件，不扩张基础 Input API；输入时在最前方显示虚线预览，Enter 或 Add 提交为输入框内标签，空输入时 Backspace 删除最后一个标签。

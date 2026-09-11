@@ -429,7 +429,13 @@ Logo mark:                      320px 320px 0 0
 - 组合支持图文（14px icon）、纯文字（可带 16px 数量胶囊）与纯图标（28×28px item、16px icon，selected 使用 `#FFFADD`）；纯图标必须有可访问名称。
 - 平台型支持 Logo + 文字组合：默认仅显示 80% 透明度 Logo；hover 时 Logo 上移 3px 并变为 100%；选中后展开平台名称并显示 3px 下划线。
 
-### 6.7.1 Tag Input
+### 6.7.1 Sidebar Navigation
+- Sidebar Navigation 是数据驱动的 Current 通用组件；示例名称可使用业务语义或通用组件名，不能把设计稿文案固化为组件 API。
+- 必须支持条目 hover / selected、单项子树展开收起、整个侧边栏展开收起，并保留键盘按钮语义与 `aria-current` / `aria-expanded`。
+- 有子项的父级行通过点击整行展开/收起，不在行尾显示额外下拉箭头；侧边栏收起后点击功能 icon 仍通过 flyout 展示子项。
+- 展开宽度 224px，收起宽度 56px；展开收起使用约 160ms 过渡，`prefers-reduced-motion` 下取消位移动画。
+
+### 6.7.2 Tag Input
 - Tag Input 是独立组件，归入 Inputs & Controls，不并入基础 Input。
 - 外框高度至少 40px、圆角 8px、默认 6% 黑描边；hover / focus 使用 1px 黑色内描边与 3px `#FFE253` 外环。
 - Add 按钮 hover 使用 `#FCE055`；加号必须继承 `currentColor`，与按钮文字在 default / hover / disabled 状态下保持同色。

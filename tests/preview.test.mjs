@@ -446,7 +446,7 @@ test('updated component content uses explicit Campaigns-style NEW labels', async
   const layout = await readFile(new URL('../components/component-doc-layout.css', import.meta.url), 'utf8');
   assert.match(layout, /\.aisee-content-new \{[\s\S]*?color: #82006c;[\s\S]*?background: #fbd1ef;/);
   const updatedPaths = [...portal.matchAll(/\{ group: "Components",[^\n]+path: "([^"]+)"[^\n]+updated: true/g)].map(match => match[1]);
-  assert.ok(updatedPaths.length >= 6, `expected updated Current components, found ${updatedPaths.length}`);
+  assert.ok(updatedPaths.length >= 7, `expected updated Current components, found ${updatedPaths.length}`);
   for (const path of updatedPaths) {
     const html = await readFile(new URL(`../${path}`, import.meta.url), 'utf8');
     assert.match(html, /aisee-content-new/, `${path} should explicitly identify its new or updated content headings`);
@@ -472,6 +472,60 @@ test('component title area navigates to adjacent sidebar entries and names each 
   assert.match(portal, /const nextItem = itemIndex >= 0 && itemIndex < items\.length - 1 \? items\[itemIndex \+ 1\] : null/);
   assert.match(portal, /if \(framePreviousItem\) openItem\(framePreviousItem\.path\)/);
   assert.match(portal, /if \(frameNextItem\) openItem\(frameNextItem\.path\)/);
+});
+
+test('Sidebar Navigation is a reusable interactive current component', async () => {
+  const source = await readFile(new URL('../src/components/SidebarNavigation.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/SidebarNavigation/SidebarNavigation.html', import.meta.url), 'utf8');
+  const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
+  assert.match(source, /groups: SidebarNavigationGroup\[\]/);
+  assert.match(source, /collapsed\?: boolean/);
+  assert.match(source, /openItemIds\?: string\[\]/);
+  assert.match(source, /collapsedMenuId/);
+  assert.match(source, /aria-haspopup=\{isCollapsed && hasChildren \? 'menu' : undefined\}/);
+  assert.match(source, /role="menuitem"/);
+  assert.match(source, /onValueChange\?: \(value: string\) => void/);
+  assert.match(source, /iconSrc\?: string/);
+  assert.match(source, /iconTone\?: 'monochrome' \| 'brand'/);
+  assert.match(source, /className="aisee-sidebar__icon-mask"/);
+  assert.match(source, /aria-expanded=\{hasChildren \? \(isCollapsed \? isFlyoutOpen : isOpen\) : undefined\}/);
+  assert.match(source, /const toggleLabel = isCollapsed \? 'Open sidebar' : 'Close sidebar'/);
+  assert.match(source, /function SidebarToggleIcon\(\)/);
+  assert.match(source, /expandIcon \?\? <SidebarToggleIcon \/>/);
+  assert.match(source, /collapseIcon \?\? <SidebarToggleIcon \/>/);
+  assert.match(source, /role="tooltip">\{toggleLabel\}/);
+  assert.match(source, /closest\('button, a, input, select, textarea, \[role="menu"\]'\)/);
+  assert.doesNotMatch(source, /aisee-sidebar__chevron/);
+  assert.match(styles, /\.aisee-sidebar--collapsed \{ width: 56px; \}/);
+  assert.match(styles, /\.aisee-sidebar__sub\[data-open="true"\]/);
+  assert.match(styles, /\.aisee-sidebar__collapse:hover \{[^}]*cursor: w-resize;/);
+  assert.match(styles, /\.aisee-sidebar--collapsed, \.aisee-sidebar--collapsed \* \{ cursor: e-resize; \}/);
+  assert.doesNotMatch(styles, /sidebar-cursor-(?:collapse|expand)\.svg/);
+  assert.match(styles, /\.aisee-sidebar__collapse-tooltip/);
+  assert.doesNotMatch(styles, /cursor: col-resize/);
+  assert.match(styles, /\.aisee-sidebar__flyout/);
+  assert.match(styles, /\.aisee-sidebar__item:hover:not\(:disabled\)/);
+  assert.match(styles, /\.aisee-sidebar__icon-mask \{[^}]*background: currentColor;[^}]*mask: var\(--aisee-sidebar-icon\)/);
+  assert.doesNotMatch(styles, /aisee-sidebar__chevron/);
+  assert.match(detail, /const openIds=new Set\(\['engage'\]\)/);
+  assert.match(detail, /every other primary item can expand independently/);
+  assert.match(detail, /class="workspace" aria-label="Example content area"/);
+  assert.match(detail, /sidebar\.classList\.toggle\('is-collapsed',collapsed\)/);
+  assert.match(detail, /\.collapse:hover\{[^}]*cursor:w-resize\}/);
+  assert.match(detail, /\.sidebar\.is-collapsed,\.sidebar\.is-collapsed \*\{cursor:e-resize\}/);
+  assert.doesNotMatch(detail, /sidebar-cursor-(?:collapse|expand)\.svg/);
+  assert.match(detail, /class="collapse-icon" src="\.\.\/\.\.\/assets\/sidebar-v6\/sidebar-close\.svg"/);
+  assert.match(detail, /role="tooltip">Close sidebar/);
+  assert.match(detail, /const label=collapsed\?'Open sidebar':'Close sidebar'/);
+  assert.doesNotMatch(detail, /cursor:col-resize/);
+  assert.match(detail, /function showFlyout\(item,wrap\)/);
+  assert.match(detail, /const iconMarkup=item=>item\.brand/);
+  assert.match(detail, /\.nav-icon-mask\{background:currentColor;mask:var\(--nav-icon\)/);
+  assert.doesNotMatch(detail, /toggle-marker/);
+  assert.match(exports, /components\/SidebarNavigation/);
+  assert.match(portal, /name: "Sidebar Navigation"[^\n]+status: "Current", updated: true/);
+  await Promise.all(['sidebar-close.svg', 'dashboard.svg', 'analysis.svg', 'growth.svg', 'engage.svg', 'keywords.svg', 'replies.svg', 'post.svg', 'campaign.svg', 'google.svg', 'bing.svg'].map(file => access(new URL(`../assets/sidebar-v6/${file}`, import.meta.url))));
 });
 
 test('component preview uses the AISEE banner shell and compact type hierarchy', async () => {
