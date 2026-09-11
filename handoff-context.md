@@ -6,7 +6,7 @@
 
 - 开发分支：`ai/desktop/design-system-current`，本轮功能提交：`f5344f9 feat: add composable status components`。
 - PR #7 已合并，origin/main 关键合并提交 `993d2a6`。当前本轮代码尚未进入 main。
-- 用户已授权推送当前开发分支；功能提交完成，交接记录提交后推送至 `origin/ai/desktop/design-system-current`。
+- 用户已授权推送当前开发分支；本地功能与交接提交完成。GitHub HTTPS 连续返回空响应、接收超时及 443 连接超时，独立 `curl` 检查同样 30 秒无响应；SSH 无可用密钥。当前分支待网络恢复后重试 push。
 
 ## 正在做
 
@@ -59,7 +59,7 @@
 
 ## 发布状态 / 下一步
 
-- 本轮组件、资产、字体统一、页面删除、测试、Demo bundle 与文档已提交为 `f5344f9`，推送开发分支后通知用户更新本地工作区。
+- 本轮组件、资产、字体统一、页面删除、测试、Demo bundle 与文档已提交为 `f5344f9`，交接提交为 `cf968ef`；当前仍待推送开发分支。
 - 正式同步 `main` 仍须通过 `ai/desktop/design-system-current → main` PR；本轮未创建 PR、未合并。
 - 新对话读取 AGENTS.md 与本文件，检查 branch/status/log，再读直接相关源码。
 - API 与设计来源见 [COMPOSABLE_COMPONENTS.md](docs/COMPOSABLE_COMPONENTS.md)。
