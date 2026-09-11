@@ -4,9 +4,9 @@
 
 ## 当前 Git
 
-- 开发分支：`ai/desktop/design-system-current`，HEAD / 远端开发分支最近提交：`ee2891a docs: record sidebar main sync PR`。
+- 开发分支：`ai/desktop/design-system-current`，本轮功能提交：`f5344f9 feat: add composable status components`。
 - PR #7 已合并，origin/main 关键合并提交 `993d2a6`。当前本轮代码尚未进入 main。
-- 工作区有原有 `AGENTS.md` 估时规则、之前 session / 交接，以及本轮页面删除、组件、字体、Demo、文档、测试等未提交修改。全部未 commit / push；不要覆盖。
+- 用户已授权推送当前开发分支；功能提交完成，交接记录提交后推送至 `origin/ai/desktop/design-system-current`。
 
 ## 正在做
 
@@ -57,14 +57,16 @@
 - Card 业务变体 Figma `10374:435175` 尚未实现。
 - Plugin Entry Options 的三个 Legacy Engage 内嵌页面仍引用不存在的 JSX 路径，尚未修复。
 
-## 未提交 / 下一步
+## 发布状态 / 下一步
 
-- 所有本轮组件、资产、字体统一、页面删除、测试、Demo bundle 与文档均只在本地；没有自动提交、推送、PR。
-- 继续按用户视觉反馈增量调整；授权后按独立任务整理提交，不混入原有无关改动。
+- 本轮组件、资产、字体统一、页面删除、测试、Demo bundle 与文档已提交为 `f5344f9`，推送开发分支后通知用户更新本地工作区。
+- 正式同步 `main` 仍须通过 `ai/desktop/design-system-current → main` PR；本轮未创建 PR、未合并。
 - 新对话读取 AGENTS.md 与本文件，检查 branch/status/log，再读直接相关源码。
 - API 与设计来源见 [COMPOSABLE_COMPONENTS.md](docs/COMPOSABLE_COMPONENTS.md)。
 
 ## 最近一次 Session
+
+- [2026-09-11-composable-components-remote-sync.md](handoff/sessions/2026-09-11-composable-components-remote-sync.md)
 
 - [2026-09-11-component-visual-feedback.md](handoff/sessions/2026-09-11-component-visual-feedback.md)
 
