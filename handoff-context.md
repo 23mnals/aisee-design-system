@@ -5,9 +5,9 @@
 ## 当前 Git
 
 - 开发分支：`ai/desktop/design-system-current`，本轮功能提交：`f5344f9 feat: add composable status components`。
-- PR #7 已合并，origin/main 关键合并提交 `993d2a6`。当前本轮代码尚未进入 main。
+- PR #7 已合并；本轮 [PR #8](https://github.com/23mnals/aisee-design-system/pull/8) 也已合并，`origin/main` 最新关键提交为 `13cf93e`。
 - 用户已授权并完成当前开发分支推送；远端 `origin/ai/desktop/design-system-current` 已包含功能提交 `f5344f9`、交接提交 `cf968ef` 与网络故障记录 `92bcffe`。
-- [PR #8](https://github.com/23mnals/aisee-design-system/pull/8) 已创建，将当前开发分支同步到 `main`；PR 保持开放，尚未获得明确合并授权。
+- 用户已明确授权合并 PR #8；GitHub 返回 `merged: true`，功能代码已进入 `main`。
 
 ## 正在做
 
@@ -60,8 +60,8 @@
 
 ## 发布状态 / 下一步
 
-- 本轮组件、资产、字体统一、页面删除、测试、Demo bundle 与文档已提交并推送，功能提交为 `f5344f9`；本轮未创建 PR、未同步 `main`。
-- 正式同步 `main` 使用 `ai/desktop/design-system-current → main` 的 PR #8；当前未合并。只在用户明确说“合并 PR”后执行 merge。
+- 本轮组件、资产、字体统一、页面删除、测试、Demo bundle 与文档已通过 PR #8 同步到 `main`；合并提交为 `13cf93e`。
+- 当前开发分支继续保留，未删除；后续普通开发仍在 `ai/desktop/design-system-current` 进行。
 - 新对话读取 AGENTS.md 与本文件，检查 branch/status/log，再读直接相关源码。
 - API 与设计来源见 [COMPOSABLE_COMPONENTS.md](docs/COMPOSABLE_COMPONENTS.md)。
 
