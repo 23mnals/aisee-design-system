@@ -151,8 +151,14 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.doesNotMatch(source, /aisee-dropdown__option.*<svg/);
   assert.match(detail, /line_chevron-up\.svg/);
   assert.match(styles, /\.aisee-dropdown__caret \{[^}]*transform: rotate\(90deg\)/);
+  assert.match(styles, /\.aisee-dropdown__trigger \{[\s\S]*?font-size: 14px;[\s\S]*?line-height: 20px;/);
+  assert.match(styles, /\.aisee-dropdown__option \{[\s\S]*?font-size: 14px;[\s\S]*?line-height: 20px;/);
+  assert.match(styles, /\.aisee-dropdown__empty \{[^}]*font-size: 14px; line-height: 20px;/);
   assert.match(styles, /\.aisee-dropdown__trigger\[aria-expanded="true"\] \.aisee-dropdown__caret,[\s\S]*?transform: rotate\(-90deg\)/);
   assert.match(detail, /option-leading/);
+  assert.match(detail, /\.option\{[^}]*font-size:14px;line-height:20px/);
+  assert.match(detail, /\.suggestion\{[^}]*font-size:14px;line-height:20px/);
+  assert.match(detail, /\.clear\{[^}]*font-size:14px;line-height:20px/);
   assert.match(detail, /\.menu-search:hover,.menu-search:focus\{border-color:var\(--black\);outline:0;box-shadow:0 0 0 2px var\(--lime\)\}/);
   assert.doesNotMatch(detail, /class="check"/);
   assert.match(portal, /dropdown menus keep an 8px gap below the trigger/);
@@ -309,6 +315,12 @@ test('current component detail pages stay aligned with the published control spe
   const tabs = await readFile(new URL('../components/Tabs/Tabs.html', import.meta.url), 'utf8');
   const card = await readFile(new URL('../components/Card/Card.html', import.meta.url), 'utf8');
   assert.match(input, /height:36px/);
+  assert.match(input, /label\{display:block;margin-bottom:8px;font-size:12px;font-weight:600;line-height:18px\}/);
+  assert.match(input, /\.content-frame,\.card\{width:640px;max-width:100%/);
+  assert.match(input, /main,\.page,#root\{width:640px!important;max-width:100%!important/);
+  assert.match(input, /<section class="content-frame" aria-label="Input state examples">/);
+  assert.match(input, /<h2 class="aisee-content-heading">Usage[\s\S]*?<\/h2><div class="content-frame">/);
+  assert.match(input, /<h2 class="aisee-content-heading">Specs[\s\S]*?<\/h2><div class="content-frame">/);
   assert.match(input, /--line:rgba\(17,17,17,\.05\)/);
   assert.match(input, /input\.is-error\{border-color:#ec5212;box-shadow:none\}/);
   assert.match(input, /Karla-VariableFont_wght\.ttf/);
@@ -325,6 +337,141 @@ test('current component detail pages stay aligned with the published control spe
   assert.match(tabs, /padding:8px 0/);
   assert.match(card, /Current neutral content surface|A neutral surface/);
   assert.match(portal, /components\/Card\/Card\.html/);
+});
+
+test('updated components use a static Figma-aligned NEW label', async () => {
+  const source = await readFile(new URL('../src/components/Toggle.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/Toggle/Toggle.html', import.meta.url), 'utf8');
+  const overview = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  assert.match(source, /className="aisee-toggle__label"/);
+  assert.match(styles, /cubic-bezier\(\.34, 1\.56, \.64, 1\)/);
+  assert.match(styles, /scaleX\(1\.2\)/);
+  assert.match(styles, /scaleX\(1\.4\) scaleY\(\.6\)/);
+  assert.match(detail, /<h2 class="aisee-content-heading">Motion[\s\S]*?aisee-content-new[\s\S]*?<\/h2>/);
+  assert.match(detail, /@media\(prefers-reduced-motion:reduce\)/);
+  assert.match(overview, /class="toggle-label"/);
+  assert.match(portal, /name: "Toggle"[^\n]+updated: true/);
+  assert.match(portal, /\.nav-new-label \{[\s\S]*min-width: 33px;[\s\S]*height: 16px;/);
+  assert.match(portal, /color: #82006c;[\s\S]*background: #fbd1ef;/);
+  assert.match(portal, /hasUpdate \? '<span class="nav-new-label" aria-hidden="true">NEW<\/span>'/);
+  assert.match(portal, /const hasUpdate = item\.updated === true/);
+  assert.match(portal, /updated: page\.updated === true/);
+  assert.doesNotMatch(portal, /readUpdatesStorageKey|hasUnreadUpdate|markUpdateRead/);
+});
+
+test('Tabs exposes underline, three segmented compositions and the platform composition', async () => {
+  const source = await readFile(new URL('../src/components/Tabs.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/Tabs/Tabs.html', import.meta.url), 'utf8');
+  assert.match(source, /TabsVariant = 'underline' \| 'segmented'/);
+  assert.match(source, /TabsLayout = 'text' \| 'icon-text' \| 'icon' \| 'platform'/);
+  assert.match(styles, /\.aisee-tabs--segmented/);
+  assert.match(styles, /\.aisee-tabs--icon-text/);
+  assert.match(styles, /\.aisee-tabs--icon/);
+  assert.match(styles, /\.aisee-tab:hover:not\(:disabled\) \{ color: var\(--aisee-color-black\); \}/);
+  assert.match(styles, /\.aisee-tabs--segmented \.aisee-tab:hover:not\(:disabled\) \{ background: rgba\(17,17,17,\.04\); \}/);
+  assert.match(detail, /\.tab:hover:not\(:disabled\)\{color:#111\}/);
+  assert.match(detail, /\.segmented \.tab:hover:not\(:disabled\)\{background:rgba\(17,17,17,\.04\)\}/);
+  assert.match(detail, /Segmented · Icon \+ text/);
+  assert.match(detail, /Segmented · Text only/);
+  assert.match(detail, /Segmented · Icon only/);
+  assert.match(detail, /Underline · Platform logo \+ text/);
+  assert.match(detail, /class="tab-indicator" aria-hidden="true"/);
+  assert.match(detail, /indicator\.animate\(\[/);
+  assert.match(detail, /scaleX\(1\.055\) scaleY\(\.95\)/);
+  assert.match(detail, /scaleX\(\.975\) scaleY\(1\.025\)/);
+  assert.match(detail, /duration:520,easing:'cubic-bezier\(\.22,\.72,\.18,1\)'/);
+  assert.match(detail, /prefers-reduced-motion: reduce/);
+  assert.match(detail, /\.platform \.tab\{position:relative\}/);
+  assert.match(detail, /translateY\(-3px\)/);
+  assert.match(styles, /\.aisee-tabs--platform/);
+  assert.match(styles, /opacity: \.8/);
+  await Promise.all(['write.svg', 'rewrite.svg', 'day.svg', 'week.svg', 'calendar.svg', 'y.svg', 'quora.svg', 'substack.svg'].map(file => access(new URL(`../assets/tabs/${file}`, import.meta.url))));
+});
+
+test('Tabs motion study stays standalone until the user approves it', async () => {
+  const motion = await readFile(new URL('../components/Tabs/TabsMotionPreview.html', import.meta.url), 'utf8');
+  assert.match(motion, /Preview only · not synced to the production Tabs component/);
+  assert.match(motion, /class="indicator"/);
+  assert.match(motion, /indicator\.animate\(\[/);
+  assert.match(motion, /scaleX\(1\.055\) scaleY\(\.95\)/);
+  assert.match(motion, /scaleX\(\.975\) scaleY\(1\.025\)/);
+  assert.match(motion, /duration:520,easing:'cubic-bezier\(\.22,\.72,\.18,1\)'/);
+  assert.match(motion, /stretch \+ overshoot \+ soft squash · fixed 7px corner radius/);
+  assert.doesNotMatch(motion, /segmented\.is-moving \.indicator/);
+  assert.doesNotMatch(motion, /border-radius 180ms/);
+  assert.match(motion, /ResizeObserver/);
+  assert.match(motion, /prefers-reduced-motion:reduce/);
+  assert.doesNotMatch(portal, /TabsMotionPreview\.html/);
+});
+
+test('Tag Input previews a draft and commits or removes tags with the expected keyboard rules', async () => {
+  const source = await readFile(new URL('../src/components/TagInput.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/TagInput/TagInput.html', import.meta.url), 'utf8');
+  const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
+  assert.match(source, /event\.key === 'Enter'/);
+  assert.match(source, /event\.key === 'Backspace'/);
+  assert.match(source, /aisee-tag-input__draft/);
+  assert.match(styles, /border: 1px dashed rgba\(17,17,17,\.06\)/);
+  assert.match(styles, /box-shadow: 0 0 0 3px var\(--aisee-color-post-agent-primary\)/);
+  assert.match(styles, /\.aisee-tag-input:hover:not\(\[aria-disabled="true"\]\)/);
+  assert.match(styles, /\.aisee-tag-input__add:hover:not\(:disabled\) \{ background: var\(--aisee-color-post-agent-primary-hover\); \}/);
+  assert.match(styles, /\.aisee-tag-input__add-icon \{[^}]*color: currentColor;/);
+  assert.match(styles, /\.aisee-tag-input__add-icon::before \{ content: '\+'; \}/);
+  assert.match(detail, /\.control:hover:not\(:has\(input:disabled\)\),\.control:focus-within/);
+  assert.match(detail, /\.add:hover:not\(:disabled\)\{background:#fce055\}/);
+  assert.match(detail, /\.add::before\{[^}]*color:currentColor;content:"\+"/);
+  assert.match(detail, /Enter or click to add/);
+  assert.match(exports, /components\/TagInput/);
+  assert.match(portal, /name: "Tag Input"[^\n]+updated: true/);
+  await Promise.all(['add.svg', 'close.svg'].map(file => access(new URL(`../assets/tag-input/${file}`, import.meta.url))));
+});
+
+test('Current component pages use the shared 640px framed documentation layout', async () => {
+  const layout = await readFile(new URL('../components/component-doc-layout.css', import.meta.url), 'utf8');
+  assert.match(layout, /width: 640px !important/);
+  assert.match(layout, /max-width: 100% !important/);
+  assert.match(layout, /main > h2 \+ section/);
+  const currentPaths = [...portal.matchAll(/\{ group: "Components",[^\n]+path: "([^"]+)"[^\n]+status: "Current"/g)].map(match => match[1]).filter(path => path.startsWith('components/'));
+  assert.ok(currentPaths.length >= 17, `expected at least 17 Current component pages, found ${currentPaths.length}`);
+  for (const path of currentPaths) {
+    const html = await readFile(new URL(`../${path}`, import.meta.url), 'utf8');
+    assert.match(html, /component-doc-layout\.css/, `${path} should load the shared Current-page layout`);
+  }
+});
+
+test('updated component content uses explicit Campaigns-style NEW labels', async () => {
+  const layout = await readFile(new URL('../components/component-doc-layout.css', import.meta.url), 'utf8');
+  assert.match(layout, /\.aisee-content-new \{[\s\S]*?color: #82006c;[\s\S]*?background: #fbd1ef;/);
+  const updatedPaths = [...portal.matchAll(/\{ group: "Components",[^\n]+path: "([^"]+)"[^\n]+updated: true/g)].map(match => match[1]);
+  assert.ok(updatedPaths.length >= 6, `expected updated Current components, found ${updatedPaths.length}`);
+  for (const path of updatedPaths) {
+    const html = await readFile(new URL(`../${path}`, import.meta.url), 'utf8');
+    assert.match(html, /aisee-content-new/, `${path} should explicitly identify its new or updated content headings`);
+  }
+});
+
+test('component title area navigates to adjacent sidebar entries and names each hover target', () => {
+  assert.match(portal, /id="contentStepperTemplate"/);
+  assert.match(portal, /data-aisee-doc-stepper/);
+  assert.match(portal, /data-direction="previous"/);
+  assert.match(portal, /data-direction="next"/);
+  assert.match(portal, /data-tooltip/);
+  assert.match(portal, /\.preview-frame-wrap \{[^}]*position: relative;[^}]*isolation: isolate;/);
+  assert.match(portal, /\.preview-frame \{[\s\S]*position: relative;[\s\S]*z-index: 1;/);
+  assert.match(portal, /\.aisee-doc-stepper\{position:absolute;[^}]*top:0;right:0/);
+  assert.match(portal, /\.aisee-doc-stepper button\{[^}]*width:32px;height:32px;[^}]*border-radius:8px/);
+  assert.match(portal, /\.aisee-doc-stepper button>span\{[^}]*width:16px;height:16px/);
+  assert.match(portal, /description\.style\.paddingRight = "84px"/);
+  assert.match(portal, /previewFrame\.addEventListener\("load", mountFrameStepper\)/);
+  assert.match(portal, /<span aria-hidden="true">&#8592;<\/span>/);
+  assert.match(portal, /<span aria-hidden="true">&#8594;<\/span>/);
+  assert.match(portal, /const previousItem = itemIndex > 0 \? items\[itemIndex - 1\] : null/);
+  assert.match(portal, /const nextItem = itemIndex >= 0 && itemIndex < items\.length - 1 \? items\[itemIndex \+ 1\] : null/);
+  assert.match(portal, /if \(framePreviousItem\) openItem\(framePreviousItem\.path\)/);
+  assert.match(portal, /if \(frameNextItem\) openItem\(frameNextItem\.path\)/);
 });
 
 test('component preview uses the AISEE banner shell and compact type hierarchy', async () => {

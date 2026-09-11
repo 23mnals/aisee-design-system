@@ -1,0 +1,85 @@
+/* Shared layout for Current component documentation pages. Legacy specimens do not load this file. */
+body {
+  width: 100%;
+  padding: 24px !important;
+  box-sizing: border-box;
+}
+
+main,
+.page,
+#root {
+  width: 640px !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  overflow-wrap: anywhere;
+}
+
+.aisee-content-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.aisee-content-new {
+  display: inline-grid;
+  min-width: 31px;
+  height: 16px;
+  padding: 0 6px;
+  place-items: center;
+  border-radius: 999px;
+  color: #82006c;
+  background: #fbd1ef;
+  font: 500 10px/16px Karla, Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+main > h2 + p,
+main > h2 + div,
+main > h2 + section,
+main > h2 + article,
+main > h2 + figure {
+  width: 100%;
+  max-width: 100% !important;
+  padding: 24px !important;
+  border: 1px solid rgba(17,17,17,.05) !important;
+  border-radius: 12px !important;
+  background: #fff;
+}
+
+main .grid,
+main .row,
+main .state-grid,
+main .state-row,
+main .cards,
+main .spec-list,
+main .spec-grid,
+main .data-patterns {
+  min-width: 0;
+}
+
+main .grid,
+main .state-grid,
+main .cards,
+main .spec-list,
+main .spec-grid,
+main .data-patterns {
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)) !important;
+}
+
+main table { min-width: 560px; }
+main .wrap,
+main .table-wrap { max-width: 100%; overflow-x: auto; }
+
+@media (max-width: 520px) {
+  body { padding: 16px !important; }
+  main > h2 + p,
+  main > h2 + div,
+  main > h2 + section,
+  main > h2 + article,
+  main > h2 + figure { padding: 16px !important; }
+  main table { min-width: 520px; }
+}

@@ -227,6 +227,23 @@
       .nav-subgroup-items { display: grid; gap: 4px; padding: 2px 0 0 15px; }
       .nav-item { position: relative; display: flex; min-height: 32px; align-items: center; gap: 8px; padding: 0 72px 0 13px; color: #565960; font-size: 14px; line-height: 1.2; white-space: nowrap; }
       .nav-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .nav-item-label { display: inline-flex; align-items: center; gap: 6px; }
+      .nav-label-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+      .nav-new-label {
+        display: inline-flex;
+        min-width: 33px;
+        height: 16px;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        padding: 0 8px;
+        border-radius: 999px;
+        color: #82006c;
+        background: #fbd1ef;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 16px;
+      }
       .nav-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; color: currentColor; }
       .nav-icon img { width: 15px; height: 15px; object-fit: contain; }
       .nav-group-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; }
@@ -428,11 +445,14 @@
       }
       .back-button { flex: 0 0 auto; }
       .preview-meta { min-width: 0; }
+      .preview-title-row { min-width: 0; }
       .preview-meta h1 { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; letter-spacing: -.015em; }
       .preview-meta p { margin: 2px 0 0; overflow: hidden; color: var(--muted); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
       .preview-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-      .preview-frame-wrap { min-height: 0; background: #e9eaec; padding: 12px; }
+      .preview-frame-wrap { position: relative; isolation: isolate; min-height: 0; background: #e9eaec; padding: 12px; }
       .preview-frame {
+        position: relative;
+        z-index: 1;
         width: 100%;
         height: calc(100vh - var(--topbar) - 96px);
         min-height: 560px;
@@ -938,7 +958,7 @@
             <div class="component-map">
               <article><h3>Actions</h3><p>Button.</p></article>
               <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown and Toggle. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.</p></article>
-              <article><h3>Navigation</h3><p>Tabs and the retained Legacy Sidebar Navigation specimen.</p></article>
+              <article><h3>Navigation</h3><p>Current Tabs and the retained Legacy Sidebar Navigation specimen.</p></article>
               <article><h3>Content &amp; Status</h3><p>PlanCard — Current, Tag and Legacy Badge.</p></article>
               <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart and Analysis-only Score Gauge; Legacy Post Card and Credit Bar remain for reference.</p></article>
               <article><h3>Feedback &amp; Overlays</h3><p>Dialog, Confirmation Dialog, Tooltip and Toast.</p></article>
@@ -1009,7 +1029,9 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <div class="preview-meta">
-              <h1 id="previewTitle"><span id="previewTitleLabel">Preview</span><span class="preview-title-tag" id="previewTitleTag" hidden></span></h1>
+              <div class="preview-title-row">
+                <h1 id="previewTitle"><span id="previewTitleLabel">Preview</span><span class="preview-title-tag" id="previewTitleTag" hidden></span></h1>
+              </div>
               <p id="previewDescription"></p>
             </div>
             <div class="preview-actions">
@@ -1025,6 +1047,12 @@
             </div>
           </div>
           <div class="preview-frame-wrap">
+            <template id="contentStepperTemplate">
+              <nav class="aisee-doc-stepper" data-aisee-doc-stepper aria-label="Page navigation">
+                <button data-direction="previous" type="button" aria-label="Previous page"><span aria-hidden="true">&#8592;</span></button>
+                <button data-direction="next" type="button" aria-label="Next page"><span aria-hidden="true">&#8594;</span></button>
+              </nav>
+            </template>
             <iframe class="preview-frame" id="previewFrame" title="Design system page preview"></iframe>
           </div>
         </section>
@@ -1096,15 +1124,17 @@
 
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
         { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
-        { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current" },
+        { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Checkbox", path: "components/Checkbox/Checkbox.html", subtitle: "Current independent selection control with module-color hover and selected states.", status: "Current" },
-        { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter and input-assisted dropdown with complete states.", status: "Current" },
-        { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with on and off states.", status: "Current" },
-        { group: "Components", category: "Navigation", name: "Tabs", path: "components/Tabs/Tabs.html", subtitle: "Current page tabs with active indicator and module context.", status: "Current" },
+        { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter and input-assisted dropdown with complete states.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with fluid hover, press and spring-like state transitions.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Tag Input", path: "components/TagInput/TagInput.html", subtitle: "Current token input that previews, commits and removes inline tags.", status: "Current", updated: true },
+        { group: "Components", category: "Navigation", name: "Tabs", path: "components/Tabs/Tabs.html", subtitle: "Current underline and segmented tabs with text, icon and count compositions.", status: "Current", updated: true },
         { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "Legacy sidebar navigation specimen retained for reference.", status: "Legacy" },
         { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
-        { group: "Components", category: "Content & Status", name: "Tag", path: "components/Tag/Tag.html", subtitle: "Current intent and context tags used for module labels and filters.", status: "Current" },
-        { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Legacy compact status and notification badge specimens.", status: "Legacy" },
+        { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Current solid, dot and colour badges using the AISEE palette.", status: "Current", updated: true },
+        { group: "Components", category: "Content & Status", name: "Tag", path: "components/Tag/Tag.html", subtitle: "Legacy contextual tag specimen retained for reference.", status: "Legacy" },
+        { group: "Components", category: "Content & Status", name: "Badge — Legacy", path: "legacy/pages/Badge Legacy.html", subtitle: "Legacy compact status and notification badge specimens.", status: "Legacy" },
         { group: "Components", category: "Data Display", name: "Card", path: "components/Card/Card.html", subtitle: "Current neutral content surface with optional minimal elevation.", status: "Current" },
         { group: "Components", category: "Data Display", name: "Stat Card — Current", path: "components/StatCardCurrent/StatCardCurrent.html", subtitle: "Current dashboard metric with value, unit and semantic delta.", status: "Current" },
         { group: "Components", category: "Data Display", name: "Table", path: "components/Table/Table.html", subtitle: "Current semantic data table with compact rows and numeric alignment.", status: "Current" },
@@ -1140,6 +1170,7 @@
       const homeView = document.getElementById("homeView");
       const previewView = document.getElementById("previewView");
       const previewFrame = document.getElementById("previewFrame");
+      const contentStepperTemplate = document.getElementById("contentStepperTemplate");
       const previewMeta = document.querySelector(".preview-meta");
       const previewTitleLabel = document.getElementById("previewTitleLabel");
       const previewTitleTag = document.getElementById("previewTitleTag");
@@ -1159,11 +1190,14 @@
       const colorResults = document.getElementById("colorResults");
       const colorReferenceHeading = document.getElementById("colorReferenceHeading");
       let activePath = "";
+      let framePreviousItem = null;
+      let frameNextItem = null;
+      let framePreviousButton = null;
+      let frameNextButton = null;
       let toastTimer;
       const logoAnimationPath = "brand/pages/logo-animation/preview.html";
       const activePathStorageKey = "aisee.design-system.activePath";
       const navOpenStateStorageKey = "aisee.design-system.navOpenState";
-
       function saveActivePath(path) {
         try {
           if (path) localStorage.setItem(activePathStorageKey, path);
@@ -1257,12 +1291,15 @@
           navGroups.innerHTML = groupOrder.map(group => {
             const groupItems = visible.filter(item => item.group === group);
             if (!groupItems.length) return "";
-            const renderItem = item => `
-            <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}">
+            const renderItem = item => {
+              const hasUpdate = item.updated === true;
+              return `
+            <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}" aria-label="${escapeHtml(`${item.name}${hasUpdate ? ", new" : ""}`)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
-              <span class="nav-label">${escapeHtml(item.name)}</span>
+              <span class="nav-label nav-item-label"><span class="nav-label-text">${escapeHtml(item.name)}</span>${hasUpdate ? '<span class="nav-new-label" aria-hidden="true">NEW</span>' : ""}</span>
               ${item.kind === "brand-output" ? '<span class="item-tag">Brand</span>' : ""}
             </button>`;
+            };
           const itemMarkup = group === "Brand"
             ? (() => {
                 const categorized = brandCategoryOrder.map(category => {
@@ -1301,7 +1338,10 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         }).join("") || `<p class="empty-search">No pages match “${escapeHtml(query)}”.</p>`;
 
         navGroups.querySelectorAll("[data-path]").forEach(button => {
-          button.addEventListener("click", () => openItem(button.dataset.path));
+          button.addEventListener("click", () => {
+            const path = button.dataset.path;
+            openItem(path);
+          });
         });
         navGroups.querySelectorAll("details[data-nav-state-key]").forEach(detail => {
           detail.addEventListener("toggle", () => saveNavOpenState(detail.dataset.navStateKey, detail.open));
@@ -1321,6 +1361,53 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         menuButton.setAttribute("aria-label", "Open navigation");
       }
 
+      function mountFrameStepper() {
+        const frameDocument = previewFrame.contentDocument;
+        if (!frameDocument?.body || !contentStepperTemplate) return;
+        const contentRoot = frameDocument.querySelector("main, .page, #root") || frameDocument.body;
+        frameDocument.querySelector("[data-aisee-doc-stepper]")?.remove();
+        frameDocument.getElementById("aisee-doc-stepper-style")?.remove();
+
+        const style = frameDocument.createElement("style");
+        style.id = "aisee-doc-stepper-style";
+        style.textContent = `
+          .aisee-doc-stepper{position:absolute;z-index:20;top:0;right:0;display:inline-flex;align-items:center;gap:4px}
+          .aisee-doc-stepper button{position:relative;display:grid;width:32px;height:32px;padding:0;border:0;border-radius:8px;color:rgba(17,17,17,.6);background:transparent;cursor:pointer;font:400 16px/16px Karla,Arial,sans-serif;place-items:center;transition:color 120ms ease,background 120ms ease}
+          .aisee-doc-stepper button>span{display:grid;width:16px;height:16px;place-items:center}
+          .aisee-doc-stepper button:hover:not(:disabled){color:#111;background:rgba(17,17,17,.04)}
+          .aisee-doc-stepper button:focus-visible{outline:2px solid #111;outline-offset:2px}
+          .aisee-doc-stepper button:disabled{opacity:.25;cursor:default}
+          .aisee-doc-stepper button[data-tooltip]:not(:disabled)::after{position:absolute;z-index:21;top:calc(100% + 7px);left:50%;width:max-content;max-width:220px;padding:5px 8px;border-radius:6px;color:#fff;background:#111;content:attr(data-tooltip);font:500 11px/16px Karla,Arial,sans-serif;opacity:0;pointer-events:none;transform:translate(-50%,-3px);transition:opacity 120ms ease,transform 120ms ease}
+          .aisee-doc-stepper button[data-tooltip]:not(:disabled):hover::after,.aisee-doc-stepper button[data-tooltip]:not(:disabled):focus-visible::after{opacity:1;transform:translate(-50%,0)}
+        `;
+        frameDocument.head.append(style);
+        contentRoot.style.position = "relative";
+        const title = contentRoot.querySelector("h1");
+        const description = title?.nextElementSibling;
+        const FrameHTMLElement = frameDocument.defaultView?.HTMLElement;
+        if (FrameHTMLElement && description instanceof FrameHTMLElement) {
+          description.style.boxSizing = "border-box";
+          description.style.paddingRight = "84px";
+        }
+
+        const stepper = contentStepperTemplate.content.firstElementChild.cloneNode(true);
+        framePreviousButton = stepper.querySelector('[data-direction="previous"]');
+        frameNextButton = stepper.querySelector('[data-direction="next"]');
+        framePreviousButton.disabled = !framePreviousItem;
+        frameNextButton.disabled = !frameNextItem;
+        framePreviousButton.setAttribute("aria-label", framePreviousItem ? `Previous page: ${framePreviousItem.name}` : "No previous page");
+        frameNextButton.setAttribute("aria-label", frameNextItem ? `Next page: ${frameNextItem.name}` : "No next page");
+        if (framePreviousItem) framePreviousButton.dataset.tooltip = `Previous · ${framePreviousItem.name}`;
+        if (frameNextItem) frameNextButton.dataset.tooltip = `Next · ${frameNextItem.name}`;
+        framePreviousButton.addEventListener("click", () => {
+          if (framePreviousItem) openItem(framePreviousItem.path);
+        });
+        frameNextButton.addEventListener("click", () => {
+          if (frameNextItem) openItem(frameNextItem.path);
+        });
+        contentRoot.append(stepper);
+      }
+
       function openHome(updateHash = true) {
         activePath = "";
         saveActivePath("");
@@ -1338,6 +1425,9 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       function openItem(path, updateHash = true) {
         const item = items.find(entry => entry.path === path);
         if (!item) return;
+        const itemIndex = items.indexOf(item);
+        const previousItem = itemIndex > 0 ? items[itemIndex - 1] : null;
+        const nextItem = itemIndex >= 0 && itemIndex < items.length - 1 ? items[itemIndex + 1] : null;
         activePath = path;
         saveActivePath(path);
         homeView.hidden = true;
@@ -1349,6 +1439,8 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         previewMeta.classList.toggle("has-inline-tag", isLegacy);
         previewTitleTag.textContent = isLegacy ? "legacy" : "";
         previewTitleTag.hidden = !isLegacy;
+        framePreviousItem = previousItem;
+        frameNextItem = nextItem;
         previewTag.textContent = isBrandOutput ? "Brand" : "";
         previewTag.className = "item-tag";
         previewTag.hidden = !isBrandOutput;
@@ -1365,6 +1457,8 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         document.title = `${item.name} · AISEE Design System`;
         window.scrollTo({ top: 0, behavior: "auto" });
       }
+
+      previewFrame.addEventListener("load", mountFrameStepper);
 
       function readHash() {
         const match = location.hash.match(/^#page=(.+)$/);
@@ -1413,7 +1507,9 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
               html: page.html,
               image: page.image,
               subtitle: page.subtitle || "Web-generated design output.",
-              status: "Brand"
+              status: "Brand",
+              updated: page.updated === true,
+              updateId: page.updateId || page.updatedAt || "updated"
             }))
             .filter(item => !registered.has(item.path));
           items = [...maintainedBaseItems, ...brandItems];

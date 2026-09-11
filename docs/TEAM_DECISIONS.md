@@ -53,7 +53,7 @@
 - Components 导航只负责查找真实存在的组件；Default、Hover、Focus、Disabled、Loading、Primary、Secondary、Size、Spacing 等 variants/states/specs 放在组件详情页内部。
 - `dApp v6 Components` 是 Overview，不与具体组件页处在完全相同的层级；Overview 与详情页必须使用同一套真实组件样式和交互。
 - `Button` 是独立组件入口，不再包一层 Actions。只有多个真实组件时才显示分类；不创建 AISEE 中不存在的组件或空分类。
-- Inputs & Controls 可包含 Input、Select / Dropdown、Toggle；Navigation 可包含 Tabs、Sidebar Navigation (Legacy)；Content & Status 可包含 PlanCard、Tag 与明确标记的 Legacy 状态组件。
+- Inputs & Controls 可包含 Input、Tag Input、Select / Dropdown、Toggle；Navigation 可包含 Tabs、Sidebar Navigation (Legacy)；Content & Status 可包含 PlanCard、Badge 与明确标记的 Legacy 状态组件。
 - Current 组件默认不显示醒目的 `CURRENT`；历史组件标记 `Legacy — use the current component instead.`。Legacy 可以从当前导航隐藏，但未经用户确认不得删除文件和历史内容。
 - 组件详情页按实际资料使用：组件名与描述 → Examples → Variants → States → Usage → Do / Don't → Specs → Product Preview。资料缺失时写 `Not documented yet`，不编造 token 或规范。
 - Button、Input、Dropdown、Toggle、Tabs、Dialog 等真实示例必须可点击、聚焦、切换并查看状态，不能只使用静态截图代替交互。
@@ -61,7 +61,7 @@
 ## 2026-08-21 — 组件与页面统一视觉规则
 
 - app / dApp / webapp UI 只使用 Karla；Homepage / Brand 可使用 Karla + Gotu。
-- 组件页主内容固定宽度 960px、居中、左右内边距 24px；页面/组件标题与内容左对齐，预览标题栏 padding 为 12px 24px。
+- Current 组件页主内容固定宽度 640px、居中，窄屏使用 `max-width: 100%`；页面/组件标题与内容左对齐，所有 Examples、States、Usage、Specs 等内容区使用 5% 黑色描边的内容框，排列不下时自动换行或横向滚动。Legacy 页面保持原样。
 - 区块标题使用 Karla 16px / 500；说明文字使用 14px / 400、`rgba(17,17,17,.6)`；标题与说明间距 8px。
 - 常规卡片描边使用 `rgba(17,17,17,.05)`；主文本使用 `#111111`；次要文本使用 `rgba(17,17,17,.6)`。
 - Sidebar 展开宽度 224px、收起宽度 58px；收起时只显示 icon，并保留当前页面、分组展开和收起状态。导航文字单行显示，不换行。
@@ -104,3 +104,15 @@
 - 发布团队预览时部署完整静态站点，不只发送单个 HTML；AI 交付同时提供 canonical Markdown、明确 token/组件契约、真实本地 SVG 路径和可访问预览。
 - 私有 GitHub 仓库不等于公开在线预览；团队预览站点需可访问，同时仓库仍可保持私有。
 - 每次 `main` 更新后检查 Actions / GitHub Pages，并实际打开线上 Demo 验证域名、HTTPS、相对路径、字体、SVG、视频与交互。
+
+## 2026-09-10 — 组件更新提示、组件导航与新增控件
+
+- Design System 目录中本轮有内容更新的具体功能条目，在标题紧邻位置显示 Figma Campaigns 同款 `NEW` 胶囊；标记只由条目 `updated: true` 显式控制，不根据 Git 提交时间推断。
+- `NEW` 采用 Fluid Functionalism 的静态清单行为：点击条目后不消失、当前选中页仍显示、刷新后仍显示，不使用 localStorage 或按用户/组件版本记录已读；仅在后续代码移除 `updated` 标记时消失。
+- Web Brand registry 允许使用相同的 `updated: true` 字段；未声明时不显示，避免旧内容和仅重建文件被误标为更新。
+- 组件内页 640px 标题区右侧提供上一项 / 下一项箭头，顺序与完整侧边栏目录一致；hover/focus 提示目标条目名称，边界方向禁用。Portal 外层页头不重复放置。
+- Tabs 保留原下划线型，并新增 Figma 对应的图文、纯文字（可带数量）、纯图标 segmented 组合，以及平台 Logo + 文字的下划线组合；默认 API 保持向后兼容。
+- Current 页面中新增或更新的内容区块标题紧邻显示 Campaigns 同款 `NEW` 胶囊；内容级标记必须显式添加，不能把所有标题按时间自动标记。
+- Dropdown trigger 与所有菜单选项统一使用 Karla 14px / 20px；选项字号不依赖外围页面继承。
+- Tag Input 是独立 Inputs & Controls 组件，不扩张基础 Input API；输入时在最前方显示虚线预览，Enter 或 Add 提交为输入框内标签，空输入时 Backspace 删除最后一个标签。
+- Toggle 保持 AISEE 唯一标准 24×16px track、10×10px 黑色 thumb 与模块主色，不替换成外部组件尺寸；交互采用弹性位移、hover 横向伸展、press 压缩和 label 状态过渡，并尊重 reduced motion。

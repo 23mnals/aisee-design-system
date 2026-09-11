@@ -225,6 +225,8 @@ Button (小):                    Karla 12px / 500
 
 **组件文档标题与分区（Current component pages）**：页面内容标题及 `Overview / Examples`、`States`、`Usage`、`Specs` 等分区标题统一使用 Karla **16px / 500 / line-height 24px**；标题下的说明文字统一使用 Karla **14px / 400 / line-height 20px**，颜色为次要文字色 `rgba(17,17,17,.6)`，与标题间距固定 **8px**。该规则优先于通用 Section Title 的字号建议，所有组件页面必须保持一致。
 
+**Current 组件文档布局**：主内容宽度固定 **640px** 并居中，窄屏使用 `max-width: 100%`。Examples、States、Usage、Specs 等内容区统一放入白色内容框，描边 `rgba(17,17,17,.05)`、圆角 12px；内部网格放不下时换行，表格允许在内容框中横向滚动。Legacy 页面不套用该布局。
+
 figma 实测字频 — Karla 字号使用分布：14px×229、12px×195、16px×111、13px×47、10px×33、18px×8。**14px 是绝对主力**。
 
 ### 字重使用
@@ -398,7 +400,7 @@ Logo mark:                      320px 320px 0 0
   - Analysis：外环 `#CFFF29`
   - Post Agent / Engage：外环 `#FFE253`
 - Error 优先级高于 hover / focus：保留 orange 错误描边并移除模块色外环；Disabled 不响应 hover
-- Select / Dropdown trigger：同 Input 样式 + 右侧 caret 图标
+- Select / Dropdown trigger：同 Input 样式 + 右侧 caret 图标；控件内容与 placeholder 使用 Karla 14px / 20px，字段标签保持 12px
 - **Checkbox**：18×18，圆角 4，**未选描边 `1.5px solid #111`**（全黑实线，保持可点击感），选中底 `var(--module-primary)` + 黑色 ✓
   - **Hover 反馈**：鼠标移到承载该 checkbox 的整行（如 list row / table row）时，checkbox 底色变 `var(--module-primary)`（lime / yellow 提示即将选中）；离开恢复
 - **Toggle（唯一标准组件）**：使用 Figma `[toggle](https://www.figma.com/design/tv7gTsQn6OipGVwHG8z0mX/aisee?node-id=9708-259524)`；Component Set Key `f66aa1aef1a16c844d6e08326831f72c3af7d400`
@@ -406,13 +408,15 @@ Logo mark:                      320px 320px 0 0
   - thumb：**10×10**，`#111`；track：`1px solid #111`
   - Variant：`Property 1 = off | on`，默认 `off`
   - off：`rgba(17,17,17,0.04)`；on：`var(--module-primary)`（Analysis = lime，Post Agent / Engage = yellow）
+  - Motion：状态切换使用约 250ms 的弹性位移动画；hover 时 thumb 横向伸展约 20%，press 时横向伸展约 40% 并纵向压缩约 40%；label 随状态在 muted / black 与 400 / 500 字重之间过渡
+  - 必须尊重 `prefers-reduced-motion`；键盘焦点保留 2px black outline + 2px offset；disabled 不响应 hover / press
   - 必须按节点 ID / Component Key 复用并保留实例变量绑定；禁止仅凭名称搜索同名 Toggle、禁止手工重画
 
 ### 6.6 Dropdown
 - Trigger 高度 36，白底，默认描边 `1px solid rgba(17,17,17,0.05)`，圆角 8，padding `8px 12px`，右侧 16×16 caret；hover / focus / 展开态沿用 Input 的黑色内边 + 2px 模块色外环
 - 展开层白底，描边 `1px solid #000`，圆角 8，padding 8，与 trigger 保持 **8px** 可见间距；不得覆盖 trigger
 - `box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1)`
-- item 高度 32–36，padding `6px 12px`，圆角 6；**hover / focus / selected 均使用 `rgba(17,17,17,0.05)`**；单选项不显示尾部对勾；多选项在文字左侧显示 20×20 复选框，选中时仅使用模块色填充，不在右侧追加对勾；文字可使用 500 字重
+- item 高度 32–36，padding `6px 12px`，圆角 6；所有下拉选项统一使用 Karla 14px / 20px；**hover / focus / selected 均使用 `rgba(17,17,17,0.05)`**；单选项不显示尾部对勾；多选项在文字左侧显示 20×20 复选框，选中时仅使用模块色填充，不在右侧追加对勾；文字可使用 500 字重
 - Filterable 下拉中的搜索框沿用 Input 的交互规则：默认 5% 黑描边，hover / focus 使用 `1px #111` 内描边 + `2px` 模块色外环，禁止浏览器默认蓝色 focus ring
 - 展开时 caret 旋转 180°；菜单 `opacity 0 → 1` + `translateY(-4px) → 0`，150ms
 - 语义使用 button trigger + `role="listbox"` / `role="option"`，支持 Enter、Space、↑、↓、Home、End 与 Escape
@@ -420,6 +424,17 @@ Logo mark:                      320px 320px 0 0
 ### 6.7 Tabs（页面级）
 - 横向 tabs：每个 tab padding `8px 0`，下方 active indicator 为 `2px solid #111`
 - 文字：Karla 14 / 500，inactive 颜色 `rgba(17,17,17,0.6)`，active `#111`
+- Hover：下划线型只把文字切换为 100% `#111111`，不增加背景填充；segmented 使用 `rgba(17,17,17,.04)` 填充并把文字切换为 100% `#111111`；disabled 不响应 hover。
+- Segmented tabs：外框圆角 8px、padding 3px、浅黑透明底；item 高 24px、圆角 6px，selected 使用白底与 `0 1px 1px rgba(17,17,17,.08)`。
+- 组合支持图文（14px icon）、纯文字（可带 16px 数量胶囊）与纯图标（28×28px item、16px icon，selected 使用 `#FFFADD`）；纯图标必须有可访问名称。
+- 平台型支持 Logo + 文字组合：默认仅显示 80% 透明度 Logo；hover 时 Logo 上移 3px 并变为 100%；选中后展开平台名称并显示 3px 下划线。
+
+### 6.7.1 Tag Input
+- Tag Input 是独立组件，归入 Inputs & Controls，不并入基础 Input。
+- 外框高度至少 40px、圆角 8px、默认 6% 黑描边；hover / focus 使用 1px 黑色内描边与 3px `#FFE253` 外环。
+- Add 按钮 hover 使用 `#FCE055`；加号必须继承 `currentColor`，与按钮文字在 default / hover / disabled 状态下保持同色。
+- 输入中的 draft 在内容最前方用 1px dashed 6% 黑描边、4px 圆角预显示；Enter 或 Add 提交为 primary tint 标签，标签内提供 Close；输入为空时 Backspace 删除最后一项。
+- label 与输入文字均使用 Karla 12px；helper 使用 11px。
 
 ### 6.8 Cards（信息卡）
 - 白底，圆角 12，无阴影或仅 `--shadow-card`

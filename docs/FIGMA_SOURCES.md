@@ -13,15 +13,29 @@ Figma feature-page versions and written design specifications are tracked separa
 | Latest feature page | **5.7 — latest registered feature version** |
 | Registered local source file | `design-sources/figma/备份-官网+dapp主功能.fig`（本地存在、Git 忽略） |
 | Scope | Marketing homepage + primary dApp functionality |
-| Figma export time | 2026-08-18 16:06:53 +08:00 |
-| Archive size | 321,906,245 bytes (about 307.0 MB) |
-| SHA-256 | `8d773862b241f884a222d33205380fd1a2441e570316abe9ff3ece4a370f2d60` |
+| Figma export time | 2026-09-09 09:38:19 +08:00 |
+| Archive size | 349,878,632 bytes (about 333.7 MB) |
+| SHA-256 | `75b8f417f21ec7841d1b30a4c4f89a597bd3ede4ec3d318519a5fbb052bd087f` |
 | Stable cloud source | [Figma file](https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/%E5%A4%87%E4%BB%BD-%E5%AE%98%E7%BD%91-dapp%E4%B8%BB%E5%8A%9F%E8%83%BD) |
 | Repository policy | Do not copy the full `.fig` archive into Git; track its metadata and version here |
 
 The current implementation specification is [`aisee-dapp-design.v6.md`](aisee-dapp-design.v6.md). Later team clarifications in [`TEAM_DECISIONS.md`](TEAM_DECISIONS.md) override conflicting content in both the specification and historical designs. Feature work must be checked against its own Figma page; 5.7 must not be treated as a global replacement for every other page.
 
-The 5.7 source adds the **托管自动发布 / Automation** feature page. It belongs to the vertical **WORKFLOWS** group in the current sidebar, separate from **INTEGRATIONS**. The local archive confirms the new page through its updated export metadata and thumbnail; exact node-level values still require a Figma export or cloud node link because `.fig` is not a stable machine-readable interchange format.
+The latest archive still contains 10 pages; no new Figma page was added. The 2026-09-09 update adds design blocks inside existing pages, including **Automation**, **Post**, **Task Center** and **Engage**. The original 5.7 **托管自动发布 / Automation** feature remains in the vertical **WORKFLOWS** group, separate from **INTEGRATIONS**.
+
+## 2026-09-09 detected additions
+
+The current archive was compared against the local 2026-08-21 export (`322,033,174` bytes, SHA-256 `cb276eca6ee428c80ed2dbf448f30ad3a64f27a0119771deb9d6458b1186a24e`). Offline node-GUID comparison detected `20,752` added nodes and `75` removed nodes.
+
+| Existing page | Added nodes | Detected design blocks |
+|---|---:|---|
+| `v5.7-新增托管自动发布` | 1,165 | Automation running/minimized state, normal runner message, top-pinned minimized message, empty state |
+| `v5.6-post页面优化- post弹窗-分析选模型` | 8,014 | Create Post popup and account selection, Calendar/table views, rewrite-from-source workflow, source/strategy/length/thread controls, notification states, brand analysis flow |
+| `v5.5-新增任务中心-geo控制台页面` | 609 | Task Center cycle/platform views and Upcoming/Missed/Failed states |
+| `v5.3-post agent-新增engage功能` | 3,451 | Generate Reply/Post flows, reply-to-post conversion, single/thread variants, subreddit rules and warnings, Sent filters and status states |
+| `Internal Only Canvas` | 7,513 | Supporting shared components, animation keyframes and eight typography/spacing variables |
+
+The archive also contains 18 new image entries and removes 9 previous entries. The new entries resolve into nine visual groups with large/thumbnail variants, including AI/technology, finance, night-bus, inspiration, convenience-store and Automation runner imagery.
 
 ## Fixed local update path
 

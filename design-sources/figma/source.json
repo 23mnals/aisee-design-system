@@ -6,8 +6,26 @@
   "figmaUrl": "https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/%E5%A4%87%E4%BB%BD-%E5%AE%98%E7%BD%91-dapp%E4%B8%BB%E5%8A%9F%E8%83%BD",
   "scoreGaugeNodeId": "58:32548",
   "latestFeaturePage": "5.7",
-  "latestFeatureNote": "新增托管自动发布（Automation）页面；归类于 WORKFLOWS，不属于 INTEGRATIONS。",
-  "archiveExportedAt": "2026-08-18T08:06:53.046Z",
-  "archiveSizeBytes": 321906245,
-  "archiveSha256": "8d773862b241f884a222d33205380fd1a2441e570316abe9ff3ece4a370f2d60"
+  "latestFeatureNote": "2026-09-09 导出仍为 10 个既有页面；新增内容集中在 v5.7 Automation、v5.6 Post、v5.5 Task Center、v5.3 Engage 以及 Internal Only Canvas。",
+  "archiveExportedAt": "2026-09-09T01:38:19.750Z",
+  "archiveModifiedAt": "2026-09-09T09:38:56+08:00",
+  "archiveSizeBytes": 349878632,
+  "archiveSha256": "75b8f417f21ec7841d1b30a4c4f89a597bd3ede4ec3d318519a5fbb052bd087f",
+  "detectedUpdate": {
+    "baselineExportedAt": "2026-08-21T02:04:43.983Z",
+    "baselineSizeBytes": 322033174,
+    "baselineSha256": "cb276eca6ee428c80ed2dbf448f30ad3a64f27a0119771deb9d6458b1186a24e",
+    "pageCount": 10,
+    "addedNodes": 20752,
+    "removedNodes": 75,
+    "addedImageEntries": 18,
+    "removedImageEntries": 9,
+    "updatedPages": [
+      "Internal Only Canvas",
+      "v5.7-新增托管自动发布",
+      "v5.6-post页面优化- post弹窗-分析选模型",
+      "v5.5-新增任务中心-geo控制台页面",
+      "v5.3-post agent-新增engage功能"
+    ]
+  }
 }
