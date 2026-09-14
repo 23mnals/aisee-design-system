@@ -7,7 +7,7 @@
 - 开发分支：`ai/desktop/design-system-current`。
 - 最新功能提交：`45e4803 feat: refine current component system`，已推送到 `origin/ai/desktop/design-system-current`。
 - 本轮组件、Demo、Overview、文档与测试已经同步远端开发分支。
-- 本轮未创建 PR、未合并到 `main`。
+- 已创建 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9)：`ai/desktop/design-system-current → main`；当前未合并。
 
 ## 正在做
 
@@ -52,10 +52,10 @@
 
 ## 发布状态 / 下一步
 
-- 本轮修改已提交并推送到远端开发分支；其他工作区可拉取 `ai/desktop/design-system-current` 查看。
-- 如需进入 `main`，按用户明确指令创建 `ai/desktop/design-system-current → main` PR；PR 不自动合并。
+- 本轮修改已提交并推送到远端开发分支；[PR #9](https://github.com/23mnals/aisee-design-system/pull/9) 已创建，等待检查或用户明确授权合并。
+- PR 不自动合并；只有用户明确要求合并 PR #9 时才执行。
 - 新对话先读 `AGENTS.md` 与本文件，再检查 branch/status/log，并从当前工作区继续。
 
 ## 最近一次 Session
 
-- [2026-09-14-component-motion-tabs-and-overview.md](handoff/sessions/2026-09-14-component-motion-tabs-and-overview.md)
+- [2026-09-14-current-components-main-pr.md](handoff/sessions/2026-09-14-current-components-main-pr.md)
