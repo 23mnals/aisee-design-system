@@ -7,11 +7,11 @@
 - 开发分支：`ai/desktop/design-system-current`。
 - 最新功能提交：`45e4803 feat: refine current component system`，已推送到 `origin/ai/desktop/design-system-current`。
 - 本轮组件、Demo、Overview、文档与测试已经同步远端开发分支。
-- 已创建 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9)：`ai/desktop/design-system-current → main`；当前未合并。
+- [PR #9](https://github.com/23mnals/aisee-design-system/pull/9) 已合并到 `main`；远端合并提交为 `5e7e424`。
 
 ## 正在做
 
-- 本轮新增 Dialog 分类、Platform Tabs 名称模式与 Overview 快捷入口行为已实现并通过完整构建；等待用户查看实际预览。
+- 本轮 Current 组件批次已通过完整构建并正式进入 `main`。
 - 本地预览入口为 `http://127.0.0.1:4173`；浏览器接管接口本轮无法读取标签页，但构建、结构测试和类型检查均通过。
 
 ## 最近完成
@@ -45,15 +45,13 @@
 
 ## 待确认 / 未完成
 
-- 待用户视觉确认 Tabs 的 icon/count 两个演示开关、Platform 自适应名称模式、Dialog 分类示例与 Overview 快捷跳转。
-- 待用户在正式 Steps Demo 中确认波浪文字节奏；技术实现已同步。
 - Card 业务变体 Figma `10374:435175` 尚未实现。
 - Plugin Entry Options 的三个 Legacy Engage 内嵌页面仍引用不存在的 JSX 路径，尚未修复。
 
 ## 发布状态 / 下一步
 
-- 本轮修改已提交并推送到远端开发分支；[PR #9](https://github.com/23mnals/aisee-design-system/pull/9) 已创建，等待检查或用户明确授权合并。
-- PR 不自动合并；只有用户明确要求合并 PR #9 时才执行。
+- 本轮修改已通过 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9) 合并到远端 `main`。
+- 后续新工作继续在 `ai/desktop/design-system-current` 开发，正式同步仍通过新的 PR。
 - 新对话先读 `AGENTS.md` 与本文件，再检查 branch/status/log，并从当前工作区继续。
 
 ## 最近一次 Session

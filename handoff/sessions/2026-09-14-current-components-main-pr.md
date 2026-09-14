@@ -10,13 +10,15 @@
 - 刷新远端 `main` 与开发分支，确认没有同源开放 PR。
 - 使用只读 merge-tree 检查两分支内容，没有发现文件冲突标记。
 - 创建 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9)：`ai/desktop/design-system-current → main`。
+- 用户明确要求合并后执行 merge；GitHub 返回 `MERGED`。
 
 ## Git / PR
 
 - 功能提交：`45e4803 feat: refine current component system`
 - 交接提交：`3ab6ce8 docs: record component system sync`
 - PR：[#9 Update current component system interactions and demos](https://github.com/23mnals/aisee-design-system/pull/9)
-- PR 当前保持开放，未合并；合并需要用户明确授权。
+- 合并提交：`5e7e424 Merge pull request #9 from 23mnals/ai/desktop/design-system-current`
+- 状态：已合并到远端 `main`。
 
 ## 验收
 
@@ -27,4 +29,4 @@
 
 ## 下一步
 
-- 查看 PR #9 检查结果；用户明确要求合并后再执行 merge。
+- 后续新工作继续从当前开发分支增量进行；进入 `main` 时创建新的 PR。
