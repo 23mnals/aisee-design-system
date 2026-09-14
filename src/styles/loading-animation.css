@@ -1,0 +1,41 @@
+.aisee-loading-animation {
+  --aisee-loading-size: 80px;
+  display: inline-flex;
+  width: var(--aisee-loading-size);
+  max-width: 100%;
+  flex: 0 0 auto;
+  color: var(--aisee-color-analysis-primary, #cfff29);
+  aspect-ratio: 80 / 56;
+}
+.aisee-loading-animation[data-tone="post-agent"],
+[data-aisee-theme="post-agent"] .aisee-loading-animation[data-tone="auto"] {
+  color: var(--aisee-color-post-agent-primary, #ffe253);
+}
+.aisee-loading-animation[data-tone="analysis"] { color: var(--aisee-color-analysis-primary, #cfff29); }
+.aisee-loading-animation > svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.aisee-loading-animation__eye-white,
+.aisee-loading-animation__iris-blink {
+  transform-origin: 40.14px 24.43px;
+  transform-box: view-box;
+}
+.aisee-loading-animation[data-animated="true"] .aisee-loading-animation__eye-white,
+.aisee-loading-animation[data-animated="true"] .aisee-loading-animation__iris-blink {
+  animation: aisee-loading-blink 7s linear infinite;
+}
+.aisee-loading-animation[data-animated="true"] .aisee-loading-animation__iris-look {
+  animation: aisee-loading-look 7s ease-in-out infinite;
+}
+@keyframes aisee-loading-blink {
+  0%, 25.7%, 31.4%, 68.6%, 74.3%, 100% { transform: scaleY(1); }
+  28.6%, 71.4% { transform: scaleY(0); }
+}
+@keyframes aisee-loading-look {
+  0%, 50%, 100% { transform: translateX(0); }
+  25% { transform: translateX(3.5px); }
+  75% { transform: translateX(-3.5px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aisee-loading-animation__eye-white,
+  .aisee-loading-animation__iris-blink,
+  .aisee-loading-animation__iris-look { animation: none !important; }
+}

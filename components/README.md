@@ -9,7 +9,7 @@
 - **Inputs & Controls**：Input、Checkbox、Select / Dropdown、Toggle、Tag Input、Toggle Selection Group（Current）。
 - **Navigation**：Tabs（Current）、Sidebar Navigation（Current）。
 - **Content & Status**：PlanCard — Current、Badge、Steps（含 TutorialSteps）、Empty State（Current）。
-- **Data Display**：Card、Stat Card — Current、Table、Chart、Score Gauge（Current）；Stat Card、Post Card、Credit Bar（Legacy）。
+- **Data Display**：Card、Stat Card — Current、Table、Chart、Score Gauge、Credit Bar（Current）；Post Card（Legacy）。
 - **Feedback & Overlays**：Dialog、Confirmation Dialog、Tooltip / Toast（Current）。
 
 旧的 `Buttons & Badges`、`Nav, Inputs & Toggles`、`Cards & Data` 仍保留在 `preview/` 作为历史页面，但不再作为组件入口。`IntentTag` 与 `StatusBadge` 的源文件也保留，但因当前门户预览为空/未验证，不再显示在 Components 导航中。完整业务页面继续留在 UI Kits 或原有业务页面目录中。

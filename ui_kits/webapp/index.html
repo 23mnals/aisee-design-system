@@ -53,34 +53,21 @@
     .account{padding-top:16px}
   </style>
 <link rel="stylesheet" href="../../fonts/karla.css" data-aisee-typography="karla">
+<link rel="stylesheet" href="./webapp-sidebar.css">
 </head>
 <body>
   <div class="app">
     <header class="topbar"><img class="brand-logo" src="../../assets/aisee-logo-wordmark.svg" alt="aisee"><div class="top-actions" aria-label="Account controls"><span class="platform-link">X</span><span class="platform-link">in</span><span class="platform-link">Me</span><div class="progress"><i class="progress-ring"></i><strong>0% 0/89</strong></div><button class="icon-button" aria-label="Notifications"><img src="../../assets/stemui/action-bell.svg" alt=""></button></div></header>
     <div class="shell">
-      <aside class="sidebar" id="app-sidebar"><div class="project"><img src="../../assets/aisee-logo-mark.png" alt=""><div><strong>aisee</strong><small>Last Updated: Aug 12, 2026</small></div><button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="收起侧边栏" aria-expanded="true" aria-controls="app-sidebar"><img src="../../assets/stemui/line_chevron-up.svg" alt=""></button></div><div class="sidebar-rule"></div><nav class="nav" id="navigation" aria-label="Product navigation"></nav><div class="account"><div class="account-card"><img src="../../assets/stemui/avatar-user.svg" alt="User avatar"><div><strong>projects5@gmail.com</strong><small>Growth-Loop Plan</small></div></div><div class="credits"><strong>6840 Credits</strong><div class="credit-track"><span></span></div></div><button class="logout"><img src="../../assets/stemui/action-logout.svg" alt=""><span class="logout-label">Log out</span></button></div></aside>
+      <div class="webapp-sidebar-host" id="webapp-sidebar"></div>
       <main class="main"><div class="page" id="screen" aria-live="polite"></div></main>
     </div>
   </div>
   <script>
     const stemuiBase='../../assets/stemui/';
     const stemui=(name,className='')=>`<img${className?` class="${className}"`:''} src="${stemuiBase}${name}.svg" alt="" aria-hidden="true">`;
-    const nav=[
-      {group:'Project',items:[['Overview','nav-overview']]},
-      {group:'Growth Loop',items:[['Analysis','nav-analysis'],['Growth','nav-growth'],['Improve Score','nav-improve-score',1],['Build Brand Influence','nav-brand-influence',1],['Engage','nav-engage'],['Signal Feed','nav-signal-feed',1],['Keywords & Accounts','nav-keywords',1],['Replies','nav-replies',1],['Post','nav-post'],['Calendar','nav-calendar',1],['Channels','nav-channels',1],['Media','nav-media',1],['Verify','nav-verify'],['Connection','nav-connection']]},
-      {group:'Workflows',items:[['Automation','nav-automation']]}
-    ];
-    const navigation=document.getElementById('navigation');navigation.innerHTML=nav.map(group=>`<p class="nav-label">${group.group}</p>${group.items.map(([label,icon,child])=>`${child?'<div class="nav-children">':''}<button class="nav-item" data-screen="${label}"><span class="nav-icon">${stemui(icon)}</span><span class="nav-item-label">${label}</span></button>${child?'</div>':''}`).join('')}`).join('');
     const app=document.querySelector('.app');
-    const sidebarToggle=document.getElementById('sidebarToggle');
-    const setSidebarCollapsed=(collapsed,{persist=true}={})=>{
-      app.classList.toggle('is-sidebar-collapsed',collapsed);
-      sidebarToggle.setAttribute('aria-expanded',String(!collapsed));
-      sidebarToggle.setAttribute('aria-label',collapsed?'展开侧边栏':'收起侧边栏');
-      if(persist){try{localStorage.setItem('aisee-sidebar-collapsed',collapsed?'1':'0')}catch(error){/* storage is optional */}}
-    };
-    sidebarToggle.addEventListener('click',()=>setSidebarCollapsed(!app.classList.contains('is-sidebar-collapsed')));
-    try{setSidebarCollapsed(localStorage.getItem('aisee-sidebar-collapsed')==='1',{persist:false})}catch(error){setSidebarCollapsed(false,{persist:false})}
+    window.addEventListener('aisee:sidebar-collapsed',event=>app.classList.toggle('is-sidebar-collapsed',event.detail));
     // Each feature keeps a distinct illustration so the banner communicates the destination's job.
     const bannerArt={overview:'build-optimize',analysis:'build-analyze',growth:'build-score',improve:'build-boost',influence:'build-recommend',engage:'build-track',signal:'build-scan',keywords:'build-recommend',replies:'build-measure',post:'build-execute',calendar:'build-measure',channels:'build-track',media:'build-boost',verify:'build-verify',connection:'build-measure',automation:'build-execute'};
     const bannerIcon=(title,icon)=>{
@@ -124,10 +111,11 @@
     };
     const screen=document.getElementById('screen');
     const screenSlug=(name)=>name.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-    const openScreen=(name,{updateHash=true}={})=>{const current=screens[name]?name:'Overview';screen.innerHTML=screens[current]();screen.className=`page screen-${screenSlug(current)}`;document.querySelectorAll('[data-screen]').forEach(x=>{const active=x.dataset.screen===current;x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});screen.dataset.current=current;document.title=`${current} · AISEE Web App UI Kit`;if(updateHash)history.replaceState(null,'',`#${encodeURIComponent(current)}`);document.querySelector('.main').scrollTo({top:0,behavior:'smooth'})};
-    navigation.addEventListener('click',event=>{const item=event.target.closest('[data-screen]');if(item)openScreen(item.dataset.screen)});
+    const openScreen=(name,{updateHash=true}={})=>{const current=screens[name]?name:'Overview';screen.innerHTML=screens[current]();screen.className=`page screen-${screenSlug(current)}`;screen.dataset.current=current;document.title=`${current} · AISEE Web App UI Kit`;if(updateHash)history.replaceState(null,'',`#${encodeURIComponent(current)}`);window.dispatchEvent(new CustomEvent('aisee:screen-opened',{detail:current}));document.querySelector('.main').scrollTo({top:0,behavior:'smooth'})};
+    window.addEventListener('aisee:navigate',event=>openScreen(event.detail));
     window.addEventListener('hashchange',()=>openScreen(decodeURIComponent(location.hash.slice(1)),{updateHash:false}));
     openScreen(decodeURIComponent(location.hash.slice(1))||'Overview',{updateHash:false});
   </script>
+  <script src="./webapp-sidebar.js" defer></script>
 </body>
 </html>

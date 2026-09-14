@@ -20,6 +20,7 @@ async function loadComponent(name, exportName = name) {
   return module.exports[exportName];
 }
 const Steps = await loadComponent('Steps');
+const AiseeLoadingAnimation = await loadComponent('AiseeLoadingAnimation');
 const EmptyState = await loadComponent('EmptyState');
 const updateSelection = await loadComponent('ToggleSelectionGroup', 'updateToggleSelection');
 const resolveSelection = await loadComponent('ToggleSelectionGroup', 'resolveToggleSelection');
@@ -50,6 +51,33 @@ test('Steps accepts thinking-only content, escapes text and does not create an e
   assert.doesNotMatch(render(Steps, { items: [], thinkingSteps: [] }), /<ol|<ul/);
 });
 
+test('Steps wave title is opt-in, readable and follows the shared animation switch', () => {
+  const animated = render(Steps, {
+    items: [],
+    thinkingSteps: [{ id: 'log', content: 'Working', status: 'active' }],
+    title: 'Analyzing...',
+    titleMotion: 'wave',
+    animated: true,
+  });
+  assert.match(animated, /data-animated="true"/);
+  assert.match(animated, /class="aisee-steps__wave-title" aria-label="Analyzing\.\.\."/);
+  assert.equal((animated.match(/aisee-steps__wave-character/g) || []).length, 12);
+  assert.match(animated, /--aisee-wave-delay:35ms/);
+
+  const plain = render(Steps, { items: [], title: 'Complete', titleMotion: 'none' });
+  assert.doesNotMatch(plain, /aisee-steps__wave/);
+});
+
+test('AISEE loading animation defaults to automatic green and supports explicit Post yellow', () => {
+  const automatic = render(AiseeLoadingAnimation, { size: 64, animated: false });
+  assert.match(automatic, /data-tone="auto" data-animated="false"/);
+  assert.match(automatic, /--aisee-loading-size:64px/);
+  assert.match(automatic, /aria-hidden="true"/);
+  const post = render(AiseeLoadingAnimation, { tone: 'post-agent', label: 'Publishing', animated: true });
+  assert.match(post, /data-tone="post-agent" data-animated="true"/);
+  assert.match(post, /role="img" aria-label="Publishing"/);
+});
+
 test('EmptyState supports all 16 slot combinations without empty wrappers', () => {
   const slots = ['illustration', 'title', 'description', 'action'];
   const contents = [createElement('img', { src: '/illustration.svg', alt: '' }), 'Nothing here', 'Try again later', createElement('button', { disabled: true }, 'Create')];
@@ -78,17 +106,22 @@ test('EmptyState handles empty slots, long text, semantic heading overrides and 
 test('built-in empty illustrations cover all 14 Figma variants and allow custom overrides', async () => {
   const manifest = JSON.parse(await readFile(new URL('../assets/empty-state/library/manifest.json', import.meta.url), 'utf8'));
   assert.equal(manifest.icons.length, 14);
+  const tones = { 'light-yellow': 'post-agent', lime: 'analysis', other: 'neutral' };
   for (const icon of manifest.icons) {
     const svg = await readFile(new URL(`../assets/empty-state/library/${icon.file}`, import.meta.url), 'utf8');
     assert.match(svg, /<svg/);
     const html = render(EmptyState, { illustrationName: icon.name, illustrationAlt: icon.label });
     assert.match(html, /aisee-empty-state-illustration/);
     assert.ok(html.includes(`alt="${icon.label}"`));
+    assert.match(icon.backgroundTone, /^(light-yellow|lime|other)$/);
+    assert.ok(html.includes(`data-aisee-action-tone="${tones[icon.backgroundTone]}"`));
   }
   assert.equal(render(EmptyState, { illustrationName: 'no-event', illustration: null }), '');
   const custom = render(EmptyState, { illustrationName: 'no-event', illustration: createElement('span', null, 'Custom art') });
   assert.match(custom, /Custom art/);
+  assert.match(custom, /data-aisee-action-tone="neutral"/);
   assert.doesNotMatch(custom, /aisee-empty-state-illustration/);
+  assert.match(render(EmptyState, { title: 'Override', actionTone: 'analysis' }), /data-aisee-action-tone="analysis"/);
 });
 
 const options = [{ id: 'a', label: 'A' }, { id: 'b', label: 'B' }, { id: 'locked', label: 'Locked', disabled: true }];
@@ -139,6 +172,12 @@ test('every registered Demo loads the common Karla policy through a valid relati
   const face = await readFile(new URL('fonts/karla-face.css', root), 'utf8');
   assert.match(face, /Karla-VariableFont_wght\.ttf/);
   assert.match(face, /font-weight: 100 900/);
+});
+
+test('portal keeps only the current Stat Card entry', async () => {
+  const portal = await readFile(new URL('../aisee-design-system-preview.html', import.meta.url), 'utf8');
+  assert.match(portal, /components\/StatCardCurrent\/StatCardCurrent\.html/);
+  assert.doesNotMatch(portal, /components\/StatCard\/StatCard\.html/);
 });
 
 test('static workflow suppresses task states and motion even when status data is supplied', () => {

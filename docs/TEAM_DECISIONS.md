@@ -13,7 +13,7 @@
 - Tag Input 标签和输入框横向同排；空间不足在内容区域横向滚动，保留添加按钮。
 - 联动多选使用 Figma #CFFF29 选项底色、#111 勾选框及原始白色 SVG 对勾，不继承基础 Checkbox 的旋转和模块色。
 - Demo 下拉沿用 Sidebar 同形箭头，并保持左右 padding 一致。
-- 用户明确授权删除 Tag 与 Badge Legacy 独立页面；其余 Legacy 资产不在删除范围内。
+- 用户明确授权删除 Tag、Badge 与 Stat Card 的 Legacy 独立页面；其余 Legacy 资产不在删除范围内。
 - 上述为用户确认的需求规则，新增视觉实现仍待用户验收，不等于已批准发布 main。
 
 ## 2026-08-13 — 字体分域
@@ -134,3 +134,10 @@
 - Dropdown trigger 与所有菜单选项统一使用 Karla 14px / 20px；选项字号不依赖外围页面继承。
 - Tag Input 是独立 Inputs & Controls 组件，不扩张基础 Input API；输入时在最前方显示虚线预览，Enter 或 Add 提交为输入框内标签，空输入时 Backspace 删除最后一个标签。
 - Toggle 保持 AISEE 唯一标准 24×16px track、10×10px 黑色 thumb 与模块主色，不替换成外部组件尺寸；交互采用弹性位移、hover 横向伸展、press 压缩和 label 状态过渡，并尊重 reduced motion。
+
+## 2026-09-14 — Dialog、Tabs 与 Overview 快捷入口
+
+- Dialog 以结构作为组件分类：Shell 为 Standard、Centered、Split；内容为 Form、Choice、Details、Summary；Create、Edit、Upgrade、Manage 等功能名只用于场景示例与业务文案。
+- Split Dialog 只用于同一项短任务内的局部多区段；需要持续导航或长时间编辑时使用页面或 Drawer。破坏性的二选一操作继续使用 Confirmation Dialog。
+- 平台 Tabs 提供 `platformLabelDisplay="auto" | "active" | "all"`，默认 `auto`：全部 Logo + name 的真实宽度能放下时全部显示，空间不足时只展开当前项名称，不能把名称压缩或切断。`active` 与 `all` 只用于需要固定策略的特殊页面，显式 `all` 在不足时横向滚动。
+- Components Overview 的 Current 标签是完整组件页的快捷入口。嵌入门户时在当前 Design System 内打开目标页并同步侧边栏；通过侧边栏 Overview 或浏览器返回键回到总览。

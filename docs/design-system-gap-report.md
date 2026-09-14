@@ -37,7 +37,7 @@
 | Data Display | Card、Stat Card — Current、Table、Chart、Score Gauge |
 | Feedback & Overlays | Dialog、Confirmation Dialog、Tooltip / Toast |
 
-Legacy 页面继续保留：Sidebar Navigation、Badge、Stat Card、Post Card、Credit Bar。`IntentTag`、`StatusBadge` 和旧 PlanCard 的源资产仍在仓库中，没有删除。
+Legacy 页面继续保留：Post Card。`IntentTag`、`StatusBadge` 和旧 PlanCard 的源资产仍在仓库中；Tag、Badge 与 Stat Card 的重复独立页面已按用户授权删除。Sidebar Navigation 与 Credit Bar 已升级为 Current。
 
 ### 可发布 React + TypeScript 组件
 
@@ -68,7 +68,7 @@ Legacy 页面继续保留：Sidebar Navigation、Badge、Stat Card、Post Card�
 | Tooltip | React 组件支持 top/bottom、hover/focus 与 `role=tooltip`；有 Current 页面 | 已补齐 |
 | Toast | 已按 Figma `42:12061` 对齐：单行 368×56、双行 400×72、success/error/agent 功能色、40px 图标、4px 生命周期进度条、自动 3.5s、dismiss、status/alert | 已补齐 |
 | AppHeader / Sidebar | UI Kit 已实现当前 Shell；发布包没有独立 API，旧 Sidebar 页面是 Legacy | UI Kit 已覆盖，待定是否抽离 |
-| StatCard | 新增通用 value/unit/delta React API 与 Current 页面；旧 Stat Card 继续标记 Legacy | 已补齐 |
+| StatCard | 新增通用 value/unit/delta React API 与 Current 页面；重复的旧 Stat Card 页面已删除 | 已补齐 |
 | PostCard / ChannelBadge / CalDay | UI Kit 有业务实现；门户对应旧资产仍为 Legacy | 业务组合，暂不抽离 |
 | Table | 新增泛型 columns/rows/rowKey API，语义 table、空状态与数值对齐 | 已补齐 |
 | Chart / Score Gauge | 新增 LineChart 与 Analysis-only ScoreGauge API、Current 页面和模块边界 | 已补齐 |
@@ -92,4 +92,4 @@ Legacy 页面继续保留：Sidebar Navigation、Badge、Stat Card、Post Card�
 3. 为数据组件补充真实产品数据下的格式化、排序、tooltip 和响应式验收案例。
 4. 持续维护 Current 组件状态矩阵和自动覆盖测试，区分“静态示例”“发布 API”“业务模式”。
 
-本次没有删除 Legacy 资产、没有修改 StemUI 仓库，也没有更改未确认的 v6 规则。
+本次仅删除用户明确确认不再需要的重复 Legacy 页面，没有修改 StemUI 仓库，也没有更改未确认的 v6 规则。

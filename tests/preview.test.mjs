@@ -54,6 +54,23 @@ test('every catalog preview exists and paths are unique', async () => {
   await Promise.all(paths.map(path => access(new URL(path, projectUrl))));
 });
 
+test('Components Overview indexes every Current component page', async () => {
+  const overview = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+  const currentPaths = [...portal.matchAll(/\{ group: "Components",[^\n]+?path: "([^"]+)"[^\n]+?status: "Current"[^\n]*\}/g)]
+    .map(match => match[1])
+    .filter(path => path !== 'preview/dapp-v6-components.html')
+    .sort();
+  const overviewPaths = [...overview.matchAll(/data-current-component href="\.\.\/([^"]+)"/g)]
+    .map(match => match[1])
+    .sort();
+  assert.deepEqual(overviewPaths, currentPaths);
+  assert.match(overview, /Quick links open the complete component page in this Design System/);
+  assert.match(overview, /Use Overview in the left navigation or your browser Back button to return/);
+  assert.match(overview, /window\.parent\.location\.hash=`page=\$\{encodeURIComponent\(componentPath\)\}`/);
+  assert.match(overview, /Dialog structures/);
+  assert.match(overview, /Standard · form, choice, details/);
+});
+
 test('Logo animation exposes faster idle motion and the three real delivery files', async () => {
   const preview = await readFile(new URL('../brand/pages/logo-animation/preview.html', import.meta.url), 'utf8');
   const component = await readFile(new URL('../src/components/AiseeLogoAnimation.tsx', import.meta.url), 'utf8');
@@ -112,15 +129,38 @@ test('portal and v6 previews self-host Karla', async () => {
 test('input interaction follows the Figma compound module ring', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
   const dialog = await readFile(new URL('../components/Dialog/Dialog.html', import.meta.url), 'utf8');
+  const dialogDemo = await readFile(new URL('../components/Dialog/Dialog.demo.tsx', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   assert.match(components, /box-shadow:0 0 0 2px var\(--module,#CFFF29\)/);
   assert.match(components, /moduleThemes=\{analysis:\{primary:'#CFFF29'[^}]*\},post:\{primary:'#FFE253'[^}]*\},engage:\{primary:'#FFE253'/);
   assert.match(components, /Hover \/ focus/);
   assert.match(styles, /box-shadow: 0 0 0 var\(--aisee-size-input-ring\) var\(--aisee-module-primary\)/);
-  assert.match(dialog, /\.field input:hover:not\(:disabled\),\.field input:focus:not\(:disabled\)\{border-color:var\(--ink\);outline:none;box-shadow:0 0 0 2px var\(--module\)\}/);
+  assert.match(dialogDemo, /<Input ref=\{inputRef\}/);
+  assert.match(styles, /\.aisee-input:hover:not\(:disabled\):not\(\[aria-invalid="true"\]\),[\s\S]*?box-shadow: 0 0 0 var\(--aisee-size-input-ring\) var\(--aisee-module-primary\)/);
   assert.doesNotMatch(dialog, /outline:\s*(?:auto|-webkit-focus-ring-color)/);
-  assert.match(dialog, /Input height 40px; hover and focus use a 1px black inner border plus a 2px Analysis lime ring/);
+  assert.match(dialogDemo, /Short form/);
+  assert.match(dialogDemo, /Standard · Form/);
   assert.match(portal, /1px black inner border plus a 2px module-color ring/);
+});
+
+test('Dialog composes reusable structures instead of business-specific component variants', async () => {
+  const source = await readFile(new URL('../src/components/Dialog.tsx', import.meta.url), 'utf8');
+  const demo = await readFile(new URL('../components/Dialog/Dialog.demo.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  assert.match(source, /DialogLayout = 'standard' \| 'centered' \| 'split'/);
+  assert.match(source, /DialogFooterLayout = 'inline' \| 'stacked' \| 'split'/);
+  assert.match(source, /illustration\?: ReactNode/);
+  assert.match(source, /notice\?: ReactNode/);
+  assert.match(source, /sidebar\?: ReactNode/);
+  assert.match(source, /export function DialogNotice/);
+  assert.match(source, /export function DialogDetails/);
+  assert.match(source, /export function DialogSummary/);
+  assert.match(demo, /Standard · Form/);
+  assert.match(demo, /Centered · Decision/);
+  assert.match(demo, /Split · Form/);
+  assert.match(demo, /Destructive yes\/no decisions continue to use Confirmation Dialog/);
+  assert.match(styles, /\.aisee-dialog--centered/);
+  assert.match(styles, /\.aisee-dialog__split/);
 });
 
 test('dropdown follows the Figma trigger, menu and selection pattern', async () => {
@@ -168,6 +208,8 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
 test('high-priority feedback and data components are publishable Current entries', async () => {
   const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const statStyles = await readFile(new URL('../src/styles/stat-card.css', import.meta.url), 'utf8');
+  const creditStyles = await readFile(new URL('../src/styles/credit-bar.css', import.meta.url), 'utf8');
   const componentFiles = [
     ['Tooltip', '../src/components/Tooltip.tsx', '../components/TooltipToast/TooltipToast.html'],
     ['Toast', '../src/components/Toast.tsx', '../components/TooltipToast/TooltipToast.html'],
@@ -175,6 +217,7 @@ test('high-priority feedback and data components are publishable Current entries
     ['Table', '../src/components/Table.tsx', '../components/Table/Table.html'],
     ['ScoreGauge', '../src/components/ScoreGauge.tsx', '../components/ScoreGauge/ScoreGauge.html'],
     ['Chart', '../src/components/Chart.tsx', '../components/Chart/Chart.html'],
+    ['CreditBar', '../src/components/CreditBar.tsx', '../components/CreditBar/CreditBar.html'],
   ];
   for (const [name, sourcePath, detailPath] of componentFiles) {
     await access(new URL(sourcePath, import.meta.url));
@@ -182,11 +225,12 @@ test('high-priority feedback and data components are publishable Current entries
     assert.match(exports, new RegExp(`components/${name}`));
   }
   assert.match(styles, /\.aisee-toast-viewport/);
-  assert.match(styles, /\.aisee-stat-card/);
+  assert.match(statStyles, /\.aisee-stat-card/);
+  assert.match(creditStyles, /\.aisee-credit-bar/);
   assert.match(styles, /\.aisee-table/);
   assert.match(styles, /\.aisee-score-gauge/);
   assert.match(styles, /\.aisee-chart/);
-  for (const path of ['TooltipToast/TooltipToast.html', 'StatCardCurrent/StatCardCurrent.html', 'Table/Table.html', 'ScoreGauge/ScoreGauge.html', 'Chart/Chart.html']) {
+  for (const path of ['TooltipToast/TooltipToast.html', 'StatCardCurrent/StatCardCurrent.html', 'Table/Table.html', 'ScoreGauge/ScoreGauge.html', 'Chart/Chart.html', 'CreditBar/CreditBar.html']) {
     assert.match(portal, new RegExp(`components/${path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`));
   }
 });
@@ -324,9 +368,9 @@ test('current component detail pages stay aligned with the published control spe
   assert.match(input, /--line:rgba\(17,17,17,\.05\)/);
   assert.match(input, /input\.is-error\{border-color:#ec5212;box-shadow:none\}/);
   assert.match(input, /Karla-VariableFont_wght\.ttf/);
-  assert.match(dialog, /Karla-VariableFont_wght\.ttf/);
-  assert.match(dialog, /\.dialog\{[^}]*width:min\(480px,100%\)/);
-  assert.match(dialog, /\.field input\{[^}]*height:40px/);
+  assert.match(dialog, /fonts\/karla\.css/);
+  assert.match(dialog, /id="dialog-demo"/);
+  assert.match(dialog, /dialog-demo\.js/);
   assert.match(styles, /\.aisee-dialog \{[^}]*width: min\(480px, calc\(100vw - 32px\)\)/);
   assert.match(styles, /\.aisee-dialog \.aisee-input \{ min-height: 40px; \}/);
   assert.doesNotMatch(dialog, /<p class="result"/);
@@ -366,9 +410,15 @@ test('Tabs exposes underline, three segmented compositions and the platform comp
   const detail = await readFile(new URL('../components/Tabs/Tabs.html', import.meta.url), 'utf8');
   assert.match(source, /TabsVariant = 'underline' \| 'segmented'/);
   assert.match(source, /TabsLayout = 'text' \| 'icon-text' \| 'icon' \| 'platform'/);
+  assert.match(source, /PlatformLabelDisplay = 'auto' \| 'active' \| 'all'/);
+  assert.match(source, /platformLabelDisplay = 'auto'/);
+  assert.match(source, /ResizeObserver\(measure\)/);
+  assert.match(source, /scrollWidth <= list\.clientWidth \+ 1/);
   assert.match(styles, /\.aisee-tabs--segmented/);
   assert.match(styles, /\.aisee-tabs--icon-text/);
   assert.match(styles, /\.aisee-tabs--icon/);
+  assert.match(styles, /\.aisee-tabs--platform \.aisee-tab \{[^}]*flex: 0 0 auto;/);
+  assert.match(styles, /\.aisee-tabs--platform-measure-all \.aisee-tab__label/);
   assert.match(styles, /\.aisee-tab:hover:not\(:disabled\) \{ color: var\(--aisee-color-black\); \}/);
   assert.match(styles, /\.aisee-tabs--segmented \.aisee-tab:hover:not\(:disabled\) \{ background: rgba\(17,17,17,\.04\); \}/);
   assert.match(detail, /\.tab:hover:not\(:disabled\)\{color:#111\}/);
@@ -382,10 +432,22 @@ test('Tabs exposes underline, three segmented compositions and the platform comp
   assert.match(detail, /scaleX\(1\.055\) scaleY\(\.95\)/);
   assert.match(detail, /scaleX\(\.975\) scaleY\(1\.025\)/);
   assert.match(detail, /duration:520,easing:'cubic-bezier\(\.22,\.72,\.18,1\)'/);
+  assert.match(detail, /id="showIcons" type="checkbox" checked/);
+  assert.match(detail, /id="showCounts" type="checkbox" checked/);
+  assert.match(detail, /id="platformModeStatus" aria-live="polite"/);
+  assert.match(detail, /hide-demo-icons/);
+  assert.match(detail, /hide-demo-counts/);
+  assert.match(detail, /show-all-platform-names/);
+  assert.match(detail, /measure-all-platform-names/);
+  assert.match(detail, /scrollWidth<=platformDemo\.clientWidth\+1/);
+  assert.match(detail, /\.platform \.tab\{min-width:40px;flex:0 0 auto;/);
+  assert.doesNotMatch(detail, /id="showAllPlatformNames"/);
+  assert.match(detail, /dataset\.focusOrigin='pointer'/);
   assert.match(detail, /prefers-reduced-motion: reduce/);
   assert.match(detail, /\.platform \.tab\{position:relative\}/);
   assert.match(detail, /translateY\(-3px\)/);
   assert.match(styles, /\.aisee-tabs--platform/);
+  assert.match(styles, /\.aisee-tabs--platform-labels-all/);
   assert.match(styles, /opacity: \.8/);
   await Promise.all(['write.svg', 'rewrite.svg', 'day.svg', 'week.svg', 'calendar.svg', 'y.svg', 'quora.svg', 'substack.svg'].map(file => access(new URL(`../assets/tabs/${file}`, import.meta.url))));
 });
@@ -449,7 +511,7 @@ test('updated component content uses explicit Campaigns-style NEW labels', async
   assert.ok(updatedPaths.length >= 7, `expected updated Current components, found ${updatedPaths.length}`);
   for (const path of updatedPaths) {
     const html = await readFile(new URL(`../${path}`, import.meta.url), 'utf8');
-    const demoSource = /<script src="\.\/(?:steps|empty-state|toggle-selection)-demo\.js"/.test(html)
+    const demoSource = /<script src="\.\/[^"]+-demo\.js"/.test(html)
       ? await readFile(new URL(`../${path.replace(/\.html$/, '.demo.tsx')}`, import.meta.url), 'utf8') : html;
     assert.match(demoSource, /aisee-content-new/, `${path} should explicitly identify its new or updated content headings`);
   }
@@ -499,7 +561,7 @@ test('Sidebar Navigation is a reusable interactive current component', async () 
   assert.match(source, /role="tooltip">\{toggleLabel\}/);
   assert.match(source, /closest\('button, a, input, select, textarea, \[role="menu"\]'\)/);
   assert.doesNotMatch(source, /aisee-sidebar__chevron/);
-  assert.match(styles, /\.aisee-sidebar--collapsed \{ width: 56px; \}/);
+  assert.match(styles, /\.aisee-sidebar--collapsed \{ width: var\(--aisee-size-sidebar-collapsed\); \}/);
   assert.match(styles, /\.aisee-sidebar__sub\[data-open="true"\]/);
   assert.match(styles, /\.aisee-sidebar__collapse:hover \{[^}]*cursor: w-resize;/);
   assert.match(styles, /\.aisee-sidebar--collapsed, \.aisee-sidebar--collapsed \* \{ cursor: e-resize; \}/);
@@ -546,7 +608,7 @@ test('danger button follows the Figma destructive action style', async () => {
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   assert.match(components, /\.row \.danger\{[^}]*padding:8px 16px[^}]*font:500 14px\/18px Karla/);
-  assert.match(styles, /\.aisee-button--danger \{[\s\S]*?color: var\(--aisee-color-white\);[\s\S]*?background: var\(--aisee-color-danger\);[\s\S]*?font-size: 14px;/);
+  assert.match(styles, /\.aisee-button--danger \{[\s\S]*?--aisee-button-background: var\(--aisee-color-danger\);[\s\S]*?--aisee-button-foreground: var\(--aisee-color-white\);[\s\S]*?--aisee-button-motion-border: transparent;[\s\S]*?font-size: 14px;/);
   const colorSource = portal.match(/<script type="application\/json" id="aisee-color-architecture">([\s\S]*?)<\/script>/)?.[1];
   const colors = JSON.parse(colorSource);
   const wrong = colors.semantic.find(token => token.name === 'colour/feedback/wrong');
@@ -628,9 +690,10 @@ test('StemUI preview snapshot is read-only, versioned and complete', async () =>
 test('webapp UI kit follows the current Growth Loop shell and previews every functional destination', async () => {
   const kit = await readFile(new URL('../ui_kits/webapp/index.html', import.meta.url), 'utf8');
   const shared = await readFile(new URL('../ui_kits/webapp/Components.jsx', import.meta.url), 'utf8');
+  const sidebar = await readFile(new URL('../ui_kits/webapp/WebAppSidebar.demo.tsx', import.meta.url), 'utf8');
   const dna = JSON.parse(await readFile(new URL('../ui_kits/webapp/design-dna-v5.5.json', import.meta.url), 'utf8'));
   assert.match(kit, /src="\.\.\/\.\.\/assets\/aisee-logo-wordmark\.svg"/);
-  assert.match(kit, /src="\.\.\/\.\.\/assets\/aisee-logo-mark\.png"/);
+  assert.match(sidebar, /src="\.\.\/\.\.\/assets\/aisee-logo-mark\.png"/);
   assert.match(kit, /Growth Loop/);
   const destinations = ['Overview', 'Analysis', 'Growth', 'Improve Score', 'Build Brand Influence', 'Engage', 'Signal Feed', 'Keywords & Accounts', 'Replies', 'Post', 'Calendar', 'Channels', 'Media', 'Verify', 'Connection', 'Automation'];
   for (const destination of destinations) {
@@ -642,16 +705,15 @@ test('webapp UI kit follows the current Growth Loop shell and previews every fun
   assert.match(kit, /Turn insights into measurable growth/);
   assert.match(kit, /Score Improvement Plan/);
   assert.match(kit, /Content Calendar/);
-  assert.match(kit, /group:'Workflows'/);
+  assert.match(sidebar, /id: 'workflows', label: 'Workflows'/);
   assert.match(kit, /Automation runs in WORKFLOWS and stays separate from INTEGRATIONS/);
-  assert.match(kit, /id="app-sidebar"/);
-  assert.match(kit, /id="sidebarToggle"/);
-  assert.match(kit, /aria-controls="app-sidebar"/);
+  assert.match(kit, /id="webapp-sidebar"/);
+  assert.match(sidebar, /import \{ SidebarNavigation/);
+  assert.match(sidebar, /<SidebarNavigation/);
   assert.match(kit, /sidebar-collapsed/);
   assert.match(kit, /--sidebar-collapsed:58px/);
-  assert.match(kit, /line_chevron-up\.svg/);
-  assert.match(kit, /assets\/stemui\/avatar-user\.svg/);
-  assert.match(kit, /icon==='overview'\?'\.\.\/\.\.\/assets\/stemui\/nav-overview\.svg'/);
+  assert.match(sidebar, /avatar-user/);
+  assert.match(sidebar, /nav-overview/);
   assert.doesNotMatch(kit, /banner-overview\.png/);
   assert.doesNotMatch(kit, /const navSvg=/);
   assert.match(kit, /avatar-social-/);

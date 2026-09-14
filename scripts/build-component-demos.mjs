@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 
 // Bundle the actual React component for the existing static preview server and Pages.
 // Keep generated files beside the HTML so a checkout opens without a separate dev server.
-for (const [component, bundle] of [['Badge', 'badge-demo'], ['Steps', 'steps-demo'], ['EmptyState', 'empty-state-demo'], ['ToggleSelectionGroup', 'toggle-selection-demo']]) {
+for (const [component, bundle] of [['Button', 'button-demo'], ['Badge', 'badge-demo'], ['Steps', 'steps-demo'], ['EmptyState', 'empty-state-demo'], ['ToggleSelectionGroup', 'toggle-selection-demo'], ['StatCardCurrent', 'stat-card-demo'], ['CreditBar', 'credit-bar-demo'], ['Dialog', 'dialog-demo']]) {
 await build({
   configFile: false,
   publicDir: false,
@@ -22,3 +22,20 @@ await build({
 });
 
 }
+
+await build({
+  configFile: false,
+  publicDir: false,
+  define: { 'process.env.NODE_ENV': JSON.stringify('production') },
+  build: {
+    emptyOutDir: false,
+    outDir: fileURLToPath(new URL('../ui_kits/webapp/', import.meta.url)),
+    lib: {
+      entry: fileURLToPath(new URL('../ui_kits/webapp/WebAppSidebar.demo.tsx', import.meta.url)),
+      name: 'AiseeWebAppSidebar',
+      formats: ['iife'],
+      fileName: () => 'webapp-sidebar.js',
+      cssFileName: 'webapp-sidebar',
+    },
+  },
+});

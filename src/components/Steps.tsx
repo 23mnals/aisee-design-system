@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 
 export type StepStatus = 'pending' | 'active' | 'complete' | 'error';
 
@@ -20,6 +20,8 @@ export interface StepsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
   items: readonly StepItem[];
   thinkingSteps?: readonly ThinkingStepItem[];
   title?: ReactNode;
+  /** Optional loading-title motion. Wave is intended for short, active progress labels. */
+  titleMotion?: 'none' | 'wave';
   description?: ReactNode;
   illustration?: ReactNode;
   /** Static shows the workflow only; progress adds task states. */
@@ -28,6 +30,19 @@ export interface StepsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
   stepsLabel?: string;
   thinkingLabel?: string;
   statusLabels?: Partial<Record<StepStatus, string>>;
+}
+
+type WaveStyle = CSSProperties & { '--aisee-wave-delay': string };
+
+function WaveTitle({ text }: { text: string }) {
+  return <span className="aisee-steps__wave-title" aria-label={text}>
+    {[...text].map((character, index) => <span
+      aria-hidden="true"
+      className="aisee-steps__wave-character"
+      key={`${character}-${index}`}
+      style={{ '--aisee-wave-delay': `${index * 35}ms` } as WaveStyle}
+    >{character === ' ' ? '\u00a0' : character}</span>)}
+  </span>;
 }
 
 const defaultStatusLabels: Record<StepStatus, string> = {
@@ -39,6 +54,7 @@ export function Steps({
   items,
   thinkingSteps,
   title,
+  titleMotion = 'none',
   description,
   illustration,
   mode = 'progress',
@@ -54,7 +70,7 @@ export function Steps({
   return <div {...props} className={`aisee-steps ${className}`.trim()} data-mode={mode} data-animated={mode === 'progress' && animated} data-variant={hasThinkingSteps ? 'thinking' : 'basic'}>
     {(illustration || title || description) && <div className="aisee-steps__header">
       {illustration && <div className="aisee-steps__illustration">{illustration}</div>}
-      {title && <div className="aisee-steps__title">{title}</div>}
+      {title && <div className="aisee-steps__title">{titleMotion === 'wave' && typeof title === 'string' ? <WaveTitle text={title} /> : title}</div>}
       {description && <div className="aisee-steps__description">{description}</div>}
     </div>}
     {items.length > 0 && <div className="aisee-steps__viewport" role="region" aria-label={stepsLabel} tabIndex={0}>

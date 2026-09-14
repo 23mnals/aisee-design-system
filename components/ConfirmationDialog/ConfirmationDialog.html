@@ -33,12 +33,15 @@
     .toast-viewport{position:fixed;z-index:50;top:24px;right:24px;width:min(368px,calc(100vw - 32px))}
     .toast{--accent:#cfff29;position:relative;display:grid;width:100%;min-height:56px;grid-template-columns:40px minmax(0,1fr) 16px;align-items:center;gap:12px;overflow:hidden;padding:7px 16px;border:1px solid #111;border-radius:8px;background:#fff;box-shadow:0 20px 24px -4px rgba(16,24,40,.1),0 8px 8px -4px rgba(16,24,40,.04);animation:toast-in .25s cubic-bezier(.2,.8,.2,1)}
     .toast[hidden]{display:none}
-    .toast-icon{width:40px;height:40px}
+    .toast-icon{display:grid;width:40px;height:40px;border-radius:50%;background:color-mix(in srgb,var(--accent) 20%,transparent);place-items:center}
+    .toast-icon>span{position:relative;display:grid;width:32px;height:32px;border-radius:50%;background:color-mix(in srgb,var(--accent) 80%,transparent);place-items:center}
+    .toast-icon>span:before{position:absolute;width:24px;height:24px;border-radius:50%;background:#111;content:""}
+    .toast-icon img{position:relative;display:block;width:16px;height:16px;filter:invert(1)}
     .toast-copy{font-size:14px;font-weight:500;line-height:22px}
     .toast-close{display:grid;width:16px;height:16px;padding:0;border:0;place-items:center;background:transparent;cursor:pointer}
     .toast-close img{width:16px;height:16px}
     .toast-progress{position:absolute;right:-1px;bottom:-1px;left:-1px;height:4px;background:rgba(17,17,17,.08)}
-    .toast-progress span{display:block;width:100%;height:100%;background:var(--accent);transform-origin:left;animation:toast-progress 3.5s linear forwards}
+    .toast-progress span{display:block;width:100%;height:100%;background:var(--accent);transform-origin:left;animation:toast-progress 5s linear forwards}
     @keyframes toast-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
     @keyframes toast-progress{to{transform:scaleX(0)}}
     @media(max-width:600px){body{padding:24px}.surface{padding:24px 12px}.actions{flex-direction:column}.toast-viewport{top:16px;right:16px}}
@@ -73,9 +76,9 @@
 
   <div class="toast-viewport" aria-label="Notifications">
     <div class="toast" id="toast" role="status" aria-live="polite" hidden>
-      <img class="toast-icon" id="toast-icon" src="../../assets/toast/success.png" alt="">
+      <span class="toast-icon" aria-hidden="true"><span><img src="../../assets/stemui/action-check.svg" alt=""></span></span>
       <span class="toast-copy" id="toast-copy">Changes discarded</span>
-      <button class="toast-close" id="toast-close" type="button" aria-label="Dismiss notification"><img src="../../assets/toast/close.png" alt=""></button>
+      <button class="toast-close" id="toast-close" type="button" aria-label="Dismiss notification"><img src="../../assets/stemui/action-close.svg" alt=""></button>
       <span class="toast-progress" aria-hidden="true"><span></span></span>
     </div>
   </div>
@@ -83,15 +86,13 @@
   <script>
     const toast=document.querySelector('#toast');
     const toastCopy=document.querySelector('#toast-copy');
-    const toastIcon=document.querySelector('#toast-icon');
     let toastTimer;
     function showToast(message,tone){
       clearTimeout(toastTimer);
       toast.hidden=true;
       toastCopy.textContent=message;
-      toastIcon.src=tone==='agent'?'../../assets/toast/agent.svg':'../../assets/toast/success.png';
       toast.style.setProperty('--accent',tone==='agent'?'#ffe253':'#cfff29');
-      requestAnimationFrame(()=>{toast.hidden=false;toastTimer=setTimeout(()=>{toast.hidden=true},3500)});
+      requestAnimationFrame(()=>{toast.hidden=false;toastTimer=setTimeout(()=>{toast.hidden=true},5000)});
     }
     document.querySelector('#keep').addEventListener('click',()=>showToast('Editing resumed','agent'));
     document.querySelector('#close').addEventListener('click',()=>showToast('Editing resumed','agent'));

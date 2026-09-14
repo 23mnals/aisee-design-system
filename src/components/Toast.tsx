@@ -19,7 +19,7 @@ export function Toast({
   children,
   description,
   tone = 'default',
-  duration = 3500,
+  duration = 5000,
   onDismiss,
   dismissLabel = 'Dismiss notification',
   className = '',
