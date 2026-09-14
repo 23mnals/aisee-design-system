@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Button Motion Preview · AISEE</title>
+  <style>
+    @font-face{font-family:Karla;src:url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
+    :root{--ink:#111;--muted:rgba(17,17,17,.6);--line:rgba(17,17,17,.06);--lime:#cfff29;--orange:#ec5212;--page:#f5f5f5;--ease:cubic-bezier(.2,.8,.2,1)}
+    *{box-sizing:border-box}
+    body{margin:0;padding:40px 24px;background:var(--page);color:var(--ink);font:14px/20px Karla,Arial,sans-serif}
+    button{font:inherit}
+    .page{width:640px;max-width:100%;margin:auto}
+    .eyebrow{margin:0 0 6px;color:#7a7600;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+    h1{margin:0;font-size:22px;font-weight:500;line-height:30px}
+    h2{margin:0 0 16px;font-size:16px;font-weight:500;line-height:24px}
+    .intro{max-width:560px;margin:8px 0 0;color:var(--muted)}
+    .note{display:inline-flex;margin-top:14px;padding:4px 8px;border-radius:999px;background:#fffadd;color:#6f6500;font-size:11px}
+    .stack{display:grid;gap:20px;margin-top:32px}
+    .card{padding:24px;border:1px solid rgba(17,17,17,.07);border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(17,17,17,.03)}
+    .row{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+    .caption{margin:16px 0 0;color:rgba(17,17,17,.48);font-size:12px}
+
+    .motion-button{
+      --button-bg:#cfff29;
+      --button-fg:#111;
+      --button-border:transparent;
+      --motion-bg:#111;
+      --motion-fg:#fff;
+      --motion-border:var(--motion-bg);
+      position:relative;
+      isolation:isolate;
+      display:inline-flex;
+      min-height:36px;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      overflow:hidden;
+      padding:8px 16px;
+      border:1px solid var(--button-border);
+      border-radius:8px;
+      background:var(--button-bg);
+      color:var(--button-fg);
+      font-weight:500;
+      line-height:18px;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+      transition:border-color 150ms ease,transform 150ms var(--ease);
+    }
+    .motion-button::before,
+    .motion-button::after{
+      position:absolute;
+      z-index:-1;
+      inset:-1px;
+      border-radius:inherit;
+      background:var(--motion-bg);
+      content:"";
+      pointer-events:none;
+      transform:translateX(-101%);
+      transition:transform 220ms var(--ease);
+      will-change:transform;
+    }
+    .motion-button::after{transform:translateX(101%)}
+    .motion-button__content{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;color:inherit;transition:color 120ms ease}
+    .motion-button:is(:hover,:focus-visible):not(:disabled)::before,
+    .motion-button:is(:hover,:focus-visible):not(:disabled)::after,
+    .motion-button.is-previewing:not(:disabled)::before,
+    .motion-button.is-previewing:not(:disabled)::after{transform:translateX(0)}
+    .motion-button:is(:hover,:focus-visible):not(:disabled),
+    .motion-button.is-previewing:not(:disabled){border-color:var(--motion-border);color:var(--motion-fg)}
+    .motion-button:active:not(:disabled){transform:scale(.98)}
+    .motion-button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+    .motion-button:disabled{opacity:.45;cursor:not-allowed}
+    .motion-button svg{display:block;width:14px;height:14px}
+    .motion-button--secondary{--button-bg:#fff;--button-border:rgba(17,17,17,.08);--motion-bg:rgba(17,17,17,.04);--motion-fg:#111;--motion-border:var(--button-border)}
+    .motion-button--dark{--button-bg:#111;--button-fg:#fff;--motion-bg:#cfff29;--motion-fg:#111}
+    .motion-button--dark[data-aisee-theme="post-agent"]{--motion-bg:#ffe253}
+    .motion-button--danger{--button-bg:#ec5212;--button-fg:#fff;--motion-bg:color-mix(in srgb,#ec5212 96%,#111 4%);--motion-fg:#fff}
+    .motion-button--sm{min-height:32px;padding:6px 12px;font-size:12px}
+    .motion-button--lg{min-height:40px;font-size:14px}
+
+    .demo-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .demo-toolbar h2{margin:0}
+    .replay{min-height:32px;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#111;font:500 12px/18px Karla;cursor:pointer}
+    .replay:hover{border-color:rgba(17,17,17,.2)}
+    .spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .spec span{padding:10px;border-radius:8px;background:#fafafa;color:rgba(17,17,17,.58);font-size:11px;line-height:16px}
+    .spec strong{display:block;color:#111;font-weight:500}
+    @media(max-width:520px){body{padding:24px 16px}.card{padding:18px}.spec{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){.motion-button,.motion-button::before,.motion-button::after,.motion-button__content{transition-duration:.01ms}.motion-button:active:not(:disabled){transform:none}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <p class="eyebrow">Motion study</p>
+    <h1>Button hover motion</h1>
+    <p class="intro">Two surfaces slide in from opposite sides on hover or keyboard focus. The button keeps the current AISEE size, radius, typography and interaction states.</p>
+    <span class="note">Preview only · not synced to the Button component or Demo</span>
+
+    <div class="stack">
+      <section class="card" aria-labelledby="recommended-title">
+        <div class="demo-toolbar">
+          <h2 id="recommended-title">Recommended · primary action</h2>
+          <button class="replay" type="button" data-replay>Replay</button>
+        </div>
+        <div class="row">
+          <button class="motion-button motion-button--lg" type="button" data-motion-button>
+            <span class="motion-button__content">Start analysis</span>
+          </button>
+          <button class="motion-button" type="button" data-motion-button>
+            <span class="motion-button__content">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.25v11.5M2.25 8h11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Add account
+            </span>
+          </button>
+          <button class="motion-button motion-button--sm" type="button" data-motion-button>
+            <span class="motion-button__content">Continue</span>
+          </button>
+        </div>
+        <p class="caption">Hover, focus with Tab, or press Replay. The lime button changes to black while the label stays readable.</p>
+      </section>
+
+      <section class="card" aria-labelledby="variants-title">
+        <h2 id="variants-title">Other current variants</h2>
+        <div class="row">
+          <button class="motion-button motion-button--secondary" type="button" data-motion-button><span class="motion-button__content">Secondary</span></button>
+          <button class="motion-button motion-button--dark" data-aisee-theme="analysis" type="button" data-motion-button><span class="motion-button__content">Dark · Analysis</span></button>
+          <button class="motion-button motion-button--dark" data-aisee-theme="post-agent" type="button" data-motion-button><span class="motion-button__content">Dark · Post</span></button>
+          <button class="motion-button motion-button--danger" type="button" data-motion-button><span class="motion-button__content">Delete</span></button>
+          <button class="motion-button" type="button" disabled><span class="motion-button__content">Disabled</span></button>
+        </div>
+        <p class="caption">Secondary uses a 4% black overlay. Dark uses the current function colour. Danger adds a 4% black overlay to its red fill. Disabled buttons remain still.</p>
+      </section>
+
+      <section class="card" aria-labelledby="details-title">
+        <h2 id="details-title">Motion details</h2>
+        <div class="spec">
+          <span><strong>Timing</strong>220ms transform with the existing AISEE easing curve.</span>
+          <span><strong>Scope</strong>Hover and keyboard focus only; active still scales to 98%.</span>
+          <span><strong>Accessible</strong>Reduced-motion keeps the colour response and removes travel.</span>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script>
+    const buttons=[...document.querySelectorAll('[data-motion-button]')];
+    const replay=document.querySelector('[data-replay]');
+    let replayTimer;
+    replay.addEventListener('click',()=>{
+      clearTimeout(replayTimer);
+      buttons.forEach(button=>button.classList.remove('is-previewing'));
+      requestAnimationFrame(()=>{
+        buttons.forEach(button=>button.classList.add('is-previewing'));
+        replayTimer=setTimeout(()=>buttons.forEach(button=>button.classList.remove('is-previewing')),900);
+      });
+    });
+  </script>
+</body>
+</html>

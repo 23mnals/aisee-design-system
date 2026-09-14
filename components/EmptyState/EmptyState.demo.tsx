@@ -36,7 +36,7 @@ function App() {
     <h1>Empty State</h1>
     <p className="intro">Compose illustration, title, description and actions to fit the space and the next useful step.</p>
     <div className="empty-example-heading"><h2 className="aisee-content-heading">Full composition <span className="aisee-content-new">NEW</span></h2><Dropdown ariaLabel="Full composition illustration" items={illustrationChoices} value={fullIllustration} onValueChange={value => { setFullIllustration(value as EmptyStateIllustrationName); setNotice(''); }} /></div>
-    <section className="empty-specimen" data-aisee-theme="post-agent" aria-label="Full empty state example">
+    <section className="empty-specimen" aria-label="Full empty state example">
       <EmptyState illustrationName={fullIllustration} title={fullCopy.title} description={fullCopy.description} action={<ExampleActions name={fullIllustration} onAction={label => setNotice(`Demo: ${label} selected.`)} />} />
       <p className="demo-notice" role="status">{notice}</p>
     </section>
@@ -60,7 +60,7 @@ function App() {
           <div className="composition-select"><span>Surface</span><Dropdown ariaLabel="Surface" items={[{ id: 'plain', label: 'Plain' }, { id: 'inset', label: 'Inset' }]} value={variant} onValueChange={value => setVariant(value as typeof variant)} /></div>
         </div>
       </div>
-      <div className="composition-preview" data-aisee-theme="post-agent">
+      <div className="composition-preview">
         <EmptyState size={size} variant={variant} illustrationName={slots.illustration ? illustrationName : undefined} title={slots.title ? compositionCopy.title : undefined} description={slots.description ? compositionCopy.description : undefined} action={slots.action ? <ExampleActions name={illustrationName} onAction={label => setCompositionNotice(`Demo: ${label} selected.`)} /> : undefined} />
       </div>
       <p className="demo-notice" role="status">{compositionNotice}</p>
@@ -85,6 +85,7 @@ function App() {
 
     <h2>Usage &amp; situations</h2>
     <div className="usage">
+      <p className="aisee-usage-note"><strong>Action colour is automatic:</strong> a light-yellow illustration background uses Publishing yellow, a lime background uses Analysis lime, and every other or custom illustration uses #111111. Selecting another built-in illustration updates the primary action colour without an extra control.</p>
       <p className="aisee-usage-note"><strong>First use:</strong> explain what is missing and offer an action the user can take. <strong>No results:</strong> describe the filter and offer to clear it. <strong>Waiting for data:</strong> explain the wait; omit the action if there is nothing useful to do. <strong>Limited permissions:</strong> explain access without showing an unusable action.</p>
       <p className="aisee-usage-note">A small panel can use illustration + description, or description alone. Titles are optional where the surrounding section already provides context. Keep loading and request failures in their own status components instead of presenting them as empty data.</p>
       <pre><code>{`<EmptyState
@@ -97,7 +98,7 @@ function App() {
 <EmptyState description="No activity yet." />`}</code></pre>
       <p><code>illustration</code>, <code>title</code>, <code>description</code> and <code>action</code> accept React content independently. <code>size</code> sets default or compact typography; <code>variant</code> sets plain or inset surfaces. <code>titleAs</code> controls heading level. Parent layouts own page centering and height.</p>
       <p>Use <code>illustrationName</code> for built-in artwork, or pass <code>illustration</code> for custom content. An explicit custom slot takes priority; <code>illustration=null</code> hides even a selected built-in illustration. <code>EmptyStateIllustration</code> also works independently with configurable size and alt text.</p>
-      <p>Use existing Button components for actions, including their disabled state. Empty State never invents an action or triggers one itself. Decorative illustrations use empty alt text; meaningful illustrations should provide descriptive alt text.</p>
+      <p>Use existing Button components for actions, including their disabled state. The built-in illustration background determines the primary Button colour automatically; custom illustrations and illustration-free states default to black. Use <code>actionTone</code> only for an intentional business override. Empty State never invents an action or triggers one itself. Decorative illustrations use empty alt text; meaningful illustrations should provide descriptive alt text.</p>
       <p>Default: 48px illustration, 18px / 600 title, 14px / 22px description. Compact: 14px title, 12px / 18px description. Inset: 42.5px illustration, 40px vertical padding, dashed outline and warm surface.</p>
     </div>
   </main>;

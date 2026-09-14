@@ -938,10 +938,10 @@
             <div class="spec-grid">
               <article class="spec-card"><h3>Hover and active</h3><p>Use subtle fill or border changes. Module navigation uses its theme accent for active context.</p></article>
               <article class="spec-card"><h3>Focus</h3><p>All keyboard targets require visible focus. Interactive targets remain at least 44×44px.</p></article>
-              <article class="spec-card"><h3>Motion</h3><p>120–300ms transitions with the shared easing curve. Respect reduced-motion preferences.</p></article>
+              <article class="spec-card"><h3>Motion</h3><p>Controls use short shared transitions; active Steps can pulse, thinking titles can wave, and all motion respects reduced-motion preferences.</p></article>
               <article class="spec-card"><h3>Loading</h3><p>Preserve layout with skeletons or stable placeholders; disable repeated submissions.</p></article>
               <article class="spec-card"><h3>Empty states</h3><p>Explain what is missing, why it matters and the single next action.</p></article>
-              <article class="spec-card"><h3>Toast and tooltip</h3><p>Black surface, white text, short duration and no critical information hidden only on hover.</p></article>
+              <article class="spec-card"><h3>Toast and tooltip</h3><p>Toast uses a white bordered surface with a five-second countdown; Tooltip remains a compact black hover or focus label.</p></article>
             </div>
           </section>
 
@@ -958,10 +958,10 @@
             <p>Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.</p>
             <div class="component-map">
               <article><h3>Actions</h3><p>Button.</p></article>
-              <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown and Toggle. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.</p></article>
-              <article><h3>Navigation</h3><p>Current Tabs and product Sidebar Navigation patterns.</p></article>
-              <article><h3>Content &amp; Status</h3><p>PlanCard — Current, Tag and Legacy Badge.</p></article>
-              <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart and Analysis-only Score Gauge; Legacy Post Card and Credit Bar remain for reference.</p></article>
+              <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.</p></article>
+              <article><h3>Navigation</h3><p>Current Tabs and product Sidebar Navigation patterns. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.</p></article>
+              <article><h3>Content &amp; Status</h3><p>Current PlanCard, Badge, Steps and Empty State.</p></article>
+              <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.</p></article>
               <article><h3>Feedback &amp; Overlays</h3><p>Dialog, Confirmation Dialog, Tooltip and Toast.</p></article>
             </div>
           </section>
@@ -1138,14 +1138,13 @@
         { group: "Components", category: "Content & Status", name: "Steps", path: "components/Steps/Steps.html", subtitle: "Static workflows, animated progress, thinking activity and feature tutorials.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Empty State", path: "components/EmptyState/EmptyState.html", subtitle: "Composable empty states with optional illustration, title, description and actions.", status: "Current", updated: true },
         { group: "Components", category: "Data Display", name: "Card", path: "components/Card/Card.html", subtitle: "Current neutral content surface with optional minimal elevation.", status: "Current" },
-        { group: "Components", category: "Data Display", name: "Stat Card — Current", path: "components/StatCardCurrent/StatCardCurrent.html", subtitle: "Current dashboard metric with value, unit and semantic delta.", status: "Current" },
+        { group: "Components", category: "Data Display", name: "Stat Card — Current", path: "components/StatCardCurrent/StatCardCurrent.html", subtitle: "Compact overview metrics with optional units, baseline badges and responsive grouping.", status: "Current", updated: true },
         { group: "Components", category: "Data Display", name: "Table", path: "components/Table/Table.html", subtitle: "Current semantic data table with compact rows and numeric alignment.", status: "Current" },
         { group: "Components", category: "Data Display", name: "Chart", path: "components/Chart/Chart.html", subtitle: "Current module-aware line chart with accessible point values.", status: "Current" },
         { group: "Components", category: "Data Display", name: "Score Gauge", path: "components/ScoreGauge/ScoreGauge.html", subtitle: "Current Analysis-only lime score visualization.", status: "Current" },
-        { group: "Components", category: "Data Display", name: "Stat Card", path: "components/StatCard/StatCard.html", subtitle: "Legacy metric card specimen retained from Cards & Data.", status: "Legacy" },
         { group: "Components", category: "Data Display", name: "Post Card", path: "components/PostCard/PostCard.html", subtitle: "Legacy social post card specimen retained from Cards & Data.", status: "Legacy" },
-        { group: "Components", category: "Data Display", name: "Credit Bar", path: "components/CreditBar/CreditBar.html", subtitle: "Legacy credits progress specimen retained from Cards & Data.", status: "Legacy" },
-        { group: "Components", category: "Feedback & Overlays", name: "Dialog", path: "components/Dialog/Dialog.html", subtitle: "Current create-analysis dialog with URL input and actions.", status: "Current" },
+        { group: "Components", category: "Data Display", name: "Credit Bar", path: "components/CreditBar/CreditBar.html", subtitle: "Current remaining-credit balance with Subscription and Top-up breakdown.", status: "Current", updated: true },
+        { group: "Components", category: "Feedback & Overlays", name: "Dialog", path: "components/Dialog/Dialog.html", subtitle: "Composable standard, centered and split dialog structures for forms, choices, details and decisions.", status: "Current", updated: true },
         { group: "Components", category: "Feedback & Overlays", name: "Confirmation Dialog", path: "components/ConfirmationDialog/ConfirmationDialog.html", subtitle: "Current destructive confirmation pattern for unsaved changes.", status: "Current" },
         { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "Figma-aligned white Toast notifications with one-line, two-line and functional-color variants; black Tooltip remains separate.", status: "Current" },
 

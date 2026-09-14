@@ -8,6 +8,7 @@
       "nodeId": "42:11681",
       "label": "No event",
       "feature": "yellow",
+      "backgroundTone": "light-yellow",
       "file": "no-event.svg"
     },
     {
@@ -15,6 +16,7 @@
       "nodeId": "42:11795",
       "label": "No account",
       "feature": "yellow",
+      "backgroundTone": "light-yellow",
       "file": "no-account.svg"
     },
     {
@@ -22,6 +24,7 @@
       "nodeId": "42:11856",
       "label": "No time slot",
       "feature": "yellow",
+      "backgroundTone": "light-yellow",
       "file": "no-time-slot.svg"
     },
     {
@@ -29,6 +32,7 @@
       "nodeId": "42:11878",
       "label": "Nothing",
       "feature": "analysis",
+      "backgroundTone": "other",
       "file": "nothing.svg"
     },
     {
@@ -36,6 +40,7 @@
       "nodeId": "42:11895",
       "label": "No report",
       "feature": "analysis",
+      "backgroundTone": "lime",
       "file": "no-report.svg"
     },
     {
@@ -43,6 +48,7 @@
       "nodeId": "42:11925",
       "label": "No credit",
       "feature": "credit",
+      "backgroundTone": "other",
       "file": "no-credit.svg"
     },
     {
@@ -50,6 +56,7 @@
       "nodeId": "42:11835",
       "label": "No media",
       "feature": "yellow",
+      "backgroundTone": "light-yellow",
       "file": "no-media.svg"
     },
     {
@@ -57,6 +64,7 @@
       "nodeId": "42:11941",
       "label": "Free use",
       "feature": "post agent",
+      "backgroundTone": "other",
       "file": "free-use.svg"
     },
     {
@@ -64,6 +72,7 @@
       "nodeId": "42:11820",
       "label": "Bound",
       "feature": "analysis",
+      "backgroundTone": "lime",
       "file": "bound.svg"
     },
     {
@@ -71,6 +80,7 @@
       "nodeId": "42:11777",
       "label": "Nobody",
       "feature": "yellow",
+      "backgroundTone": "light-yellow",
       "file": "nobody.svg"
     },
     {
@@ -78,6 +88,7 @@
       "nodeId": "42:11696",
       "label": "Link",
       "feature": "yellow",
+      "backgroundTone": "light-yellow",
       "file": "link.svg"
     },
     {
@@ -85,6 +96,7 @@
       "nodeId": "42:11727",
       "label": "Plugin",
       "feature": "yellow",
+      "backgroundTone": "light-yellow",
       "file": "plugin.svg"
     },
     {
@@ -92,6 +104,7 @@
       "nodeId": "42:11910",
       "label": "Successful",
       "feature": "subscription",
+      "backgroundTone": "lime",
       "file": "successful.svg"
     },
     {
@@ -99,6 +112,7 @@
       "nodeId": "42:11965",
       "label": "Unlock",
       "feature": "subscription",
+      "backgroundTone": "other",
       "file": "unlock.svg"
     }
   ]

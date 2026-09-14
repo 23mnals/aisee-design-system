@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Steps, type StepItem, type ThinkingStepItem } from '../../src/components/Steps';
+import { AiseeLoadingAnimation } from '../../src/components/AiseeLoadingAnimation';
 import { TutorialSteps } from '../../src/components/TutorialSteps';
 import { Button } from '../../src/components/Button';
 import '../../src/tokens/tokens.css';
@@ -10,7 +11,6 @@ import './Steps.demo.css';
 import reportIcon from '../../assets/steps/report.svg';
 import growthIcon from '../../assets/steps/growth.svg';
 import planIcon from '../../assets/steps/plan.svg';
-import thinkingImage from '../../assets/steps/thinking.png';
 
 import eyeWhite from '../../assets/tutorial-steps/eye-white.svg';
 import eyeIris from '../../assets/tutorial-steps/eye-iris.svg';
@@ -67,7 +67,7 @@ function App() {
     <section className="specimen" aria-label="Static workflow example">
       <Steps items={route} mode="static" stepsLabel="Workflow overview" />
     </section>
-    <p className="aisee-usage-note">Explain the sequence only. No task status, progress controls or blinking.</p>
+    <p className="aisee-usage-note">Explain the sequence only. No task status, progress controls or blinking. Icons shown here are examples; choose each icon from the actual step meaning.</p>
 
     <h2 className="aisee-content-heading">Animated progress <span className="aisee-content-new">NEW</span></h2>
     <section className="specimen" aria-label="Animated progress example">
@@ -84,7 +84,7 @@ function App() {
     <section className="specimen" aria-label="Feature tutorial example">
       <TutorialSteps items={tutorialItems} aria-label="Signal Feed tutorial" />
     </section>
-    <p className="aisee-usage-note">Introduce a new feature using an icon, title and optional description per step. Automatically stacks in narrow containers.</p>
+    <p className="aisee-usage-note">Introduce a new feature using an icon, title and optional description per step. Demo icons are placeholders, not prescribed assets; use the icon that matches each real feature. Automatically stacks in narrow containers.</p>
 
     <h2 className="aisee-content-heading">Thinking steps <span className="aisee-content-new">NEW</span></h2>
     <section className="specimen specimen--thinking" aria-label="Thinking steps example">
@@ -92,8 +92,9 @@ function App() {
         items={thinkingRoute}
         thinkingSteps={thinking}
         title={complete ? 'Brand analysis complete' : errorIndex >= 0 ? 'Analysis needs attention' : 'Analyzing your brand...'}
+        titleMotion={!complete && errorIndex < 0 ? 'wave' : 'none'}
         description={complete ? 'The analysis is ready for the next step.' : errorIndex >= 0 ? 'Retry the failed step to continue.' : "This takes about a minute. Your report opens the moment it’s ready."}
-        illustration={<img width="78" height="56" src={thinkingImage} alt="" />}
+        illustration={<AiseeLoadingAnimation animated={animated && !complete && errorIndex < 0} />}
         animated={animated}
       />
       <div className="demo-controls">
@@ -103,16 +104,18 @@ function App() {
         <label className="animation-control"><input type="checkbox" checked={animated} onChange={event => setAnimated(event.target.checked)} /> Animate active step</label>
       </div>
     </section>
-    <p className="aisee-usage-note">Demo data only. Use the controls to advance, fail or retry a step; no analysis request is sent.</p>
+    <p className="aisee-usage-note">Demo data only. Use the controls to advance, fail or retry a step; no analysis request is sent. The loading mascot is green by default and switches to yellow automatically inside a <code>data-aisee-theme="post-agent"</code> surface.</p>
 
     <h2>Usage</h2>
     <div className="usage">
-      <p>Use mode="static" for an overview, or mode="progress" for task states. Provide any number of steps with stable IDs, labels and optional icons. Add <code>thinkingSteps</code> for the activity panel.</p>
+      <p>Use mode="static" for an overview, or mode="progress" for task states. Provide any number of steps with stable IDs, labels and optional icons. The sample report and task icons only demonstrate the slot: callers and AI-generated screens must choose semantically matching approved icons for the real workflow, and should reuse a sample icon only when the business meaning is the same. Add <code>thinkingSteps</code> for the activity panel.</p>
       <pre><code>{`<Steps
   items={steps}
   thinkingSteps={activity}
   title="Analyzing your brand..."
+  titleMotion="wave"
   description="Your report opens when it is ready."
+  illustration={<AiseeLoadingAnimation />}
   animated
 />`}</code></pre>
       <p>Set each status to <code>pending</code>, <code>active</code>, <code>complete</code> or <code>error</code>. Task logic stays in the calling app; this component has no timers or network requests.</p>
@@ -122,11 +125,11 @@ function App() {
   items={[{ id: 'watch', title: 'Add what to watch',
     description: 'Topics, people or communities', icon: <FeatureIcon /> }]}
   orientation="auto"
-/>`}</code></pre><p>For feature introductions, setup instructions and onboarding. Each item accepts an icon, title, optional description and optional action. Without an icon, a step number is shown. The host app controls whether the tutorial is visible and where actions navigate.</p><p>Figma: 36px icon tile / 22px icon · title Karla 14/600/22 · description 12/400/14 · 16px border radius. The first eye keeps the original 2-second blink/look motion; reduced motion disables it.</p><p><a href="https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/?node-id=38-83251" target="_blank" rel="noreferrer">Feature tutorial in Figma</a></p></div>
+/>`}</code></pre><p>For feature introductions, setup instructions and onboarding. Each item accepts an icon, title, optional description and optional action. Demo icons communicate structure and style only; replace them with approved icons that match the generated feature content. Without an icon, a step number is shown. The host app controls whether the tutorial is visible and where actions navigate.</p><p>Figma: 36px icon tile / 22px icon · title Karla 14/600/22 · description 12/400/14 · 16px border radius. The first eye keeps the original 2-second blink/look motion; reduced motion disables it.</p><p><a href="https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/?node-id=38-83251" target="_blank" rel="noreferrer">Feature tutorial in Figma</a></p></div>
     <h2>Specs &amp; behavior</h2>
     <div className="usage">
       <p>32px step pills · 22px icon tiles · Karla 16px / 500 · 8px corner radius. Thinking rows use Karla 14px / 22px inside a 12px rounded panel.</p>
-      <p>Only the active step pulses: 1.6 seconds, 100% → 45% → 100% opacity. Its loading icon rotates smoothly. Completed, waiting and failed steps remain still. Reduced motion or <code>animated=false</code> turns both animations off.</p>
+      <p>Only the active step pulses: 1.6 seconds, 100% → 45% → 100% opacity. Its loading icon rotates smoothly. Use <code>titleMotion="wave"</code> for a short active loading title; characters travel 3px up and 1.5px down over 1.45 seconds. Completed, waiting and failed steps remain still. Reduced motion or <code>animated=false</code> turns every animation off.</p>
       <p>Progress uses ordered list semantics and <code>aria-current="step"</code>. Thinking updates are announced politely; status labels can be translated with <code>statusLabels</code>.</p>
       <p><a href="https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/?node-id=75-26072" target="_blank" rel="noreferrer">Basic steps in Figma</a> · <a href="https://www.figma.com/design/LLvI9vd66VLNuAltAWJFJw/?node-id=38-42672" target="_blank" rel="noreferrer">Thinking steps in Figma</a></p>
     </div>

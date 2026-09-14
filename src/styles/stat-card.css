@@ -1,0 +1,101 @@
+/* Figma 38:65908. Compact dashboard metrics and their optional overview group. */
+.aisee-stat-card-group {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 16px 18px;
+  border: 5px solid var(--aisee-color-primitive-white-0, #fff);
+  border-radius: 16px;
+  background: var(--aisee-color-page, #fafafa);
+  color: var(--aisee-color-black, #111);
+}
+.aisee-stat-card-group__title {
+  width: 100%;
+  margin: 0;
+  font: 500 18px/24px var(--aisee-font-family-ui, Karla, sans-serif);
+}
+.aisee-stat-card-group__grid {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+  gap: 8px;
+}
+.aisee-stat-card {
+  display: flex;
+  min-width: 0;
+  min-height: 60px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  padding: 13px;
+  border: 1px solid var(--aisee-color-primitive-gray-900-5, rgba(17,17,17,.06));
+  border-radius: var(--aisee-radius-card, 12px);
+  background: var(--aisee-color-white, #fff);
+  color: var(--aisee-color-black, #111);
+  font-family: var(--aisee-font-family-ui, Karla, sans-serif);
+}
+.aisee-stat-card__metric {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.aisee-stat-card__metric strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 24px;
+  text-overflow: ellipsis;
+}
+.aisee-stat-card__unit { flex: 0 0 auto; font-size: 12px; font-weight: 500; line-height: 16px; }
+.aisee-stat-card__badge {
+  display: inline-flex;
+  min-height: 16px;
+  flex: 0 0 auto;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: var(--aisee-radius-pill, 9999px);
+  background: var(--aisee-color-semantic-button-usual, #111);
+  color: var(--aisee-color-semantic-tag-base, #fff);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+}
+.aisee-stat-card__label {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  color: var(--aisee-color-semantic-text-blue-gray, #5c6d7a);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.aisee-stat-card__footer {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  color: var(--aisee-color-text-muted);
+  font-size: 11px;
+  line-height: 16px;
+}
+.aisee-stat-card__helper { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aisee-stat-card__delta { flex: 0 0 auto; font-weight: 500; }
+.aisee-stat-card__delta--positive { color: var(--aisee-color-green-dark); }
+.aisee-stat-card__delta--negative { color: var(--aisee-color-orange); }
+@media (max-width: 420px) {
+  .aisee-stat-card-group { padding: 12px; }
+  .aisee-stat-card-group__grid { grid-template-columns: 1fr 1fr; }
+}

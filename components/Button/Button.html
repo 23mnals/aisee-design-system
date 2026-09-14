@@ -4,62 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Button · AISEE Components</title>
-  <style>
-    @font-face{font-family:Karla;src:url('../../fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
-    :root{--black:#111;--muted:rgba(17,17,17,.6);--line:rgba(17,17,17,.06);--lime:#CFFF29;--orange:#EC5212;--page:#F5F5F5;--ease:cubic-bezier(.2,.8,.2,1)}
-    *{box-sizing:border-box} body{margin:0;padding:24px;background:var(--page);color:var(--black);font:14px/1.5 Karla,Arial,sans-serif}
-    main{max-width:960px;margin:0}.eyebrow{margin:0 0 6px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-    h1{margin:0;font-size:28px;font-weight:600;line-height:34px}h2{margin:34px 0 14px;font-size:18px;font-weight:600;line-height:24px}
-    .muted{color:var(--muted)}.intro{max-width:680px;margin:8px 0 0;font-size:16px;color:var(--muted)}
-    .panel{padding:20px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.62)}
-        .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.btn{min-height:36px;padding:8px 16px;border:1px solid transparent;border-radius:8px;background:#fff;color:#111;font:500 14px Karla;cursor:pointer;transition:background .15s,border-color .15s,transform .15s var(--ease)}
-        .btn:hover{border-color:rgba(17,17,17,.18)}.btn:active{transform:scale(.98)}.btn:focus-visible{outline:2px solid #111;outline-offset:2px}.primary{background:var(--lime)}.secondary{border-color:var(--line)}.subtle{border-color:var(--line);color:var(--black)}.dark{background:var(--black);border-color:var(--black);color:#fff}.danger{background:var(--orange);border-color:var(--orange);color:#fff}.danger:hover{border-color:transparent;background:color-mix(in srgb,var(--orange) 90%,var(--black))}.btn.active{box-shadow:0 0 0 2px var(--lime)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.state-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.state-card{padding:14px;border:1px solid var(--line);border-radius:10px;background:#fff}.state-card small{display:block;margin-bottom:10px;color:var(--muted);font-size:12px}
-    .status{margin-top:14px;color:var(--muted);font-size:12px}.specs{color:var(--muted)}.usage-copy{color:rgba(17,17,17,.6)!important}
-  /* shared component content typography */ main > .muted:first-child,main > .meta:first-child,main > .eyebrow:first-child,.page .intro .eyebrow{display:none}main > h1,.page .intro h1{margin:0;font-size:16px;font-weight:500;line-height:24px}main > h1 + p,.page .intro h1 + p{margin-top:8px;font-size:14px;font-weight:400;line-height:20px;color:rgba(17,17,17,.6)!important}main h2{margin-top:32px;margin-bottom:8px;font-size:16px;font-weight:500;line-height:24px}main h2 + *{margin-top:8px!important}main > h2 + p{color:var(--muted)!important}main .card > h2,main .panel > h2,main .surface > h2{margin:0 0 8px}main .name-row h2{margin:0;font-size:18px;font-weight:400;line-height:24px}/* shared component page frame */ body{width:100%;padding:24px!important;box-sizing:border-box}main,.page,#root{width:960px!important;max-width:100%!important;box-sizing:border-box;margin:0 auto!important;padding:0!important}main .card,main .panel,main .state-card,main figure,main .wrap,main .demo,main .gauge{border-color:rgba(17,17,17,.05)!important}</style>
-<style>
-main > h1 + p.intro{margin-top:8px!important;font-size:14px!important;font-weight:400!important;line-height:20px!important;color:rgba(17,17,17,.6)!important}
-</style>
-<link rel="stylesheet" href="../../fonts/karla.css" data-aisee-typography="karla">
+  <link rel="stylesheet" href="./button-demo.css">
+  <link rel="stylesheet" href="../component-doc-layout.css">
+  <link rel="stylesheet" href="../../fonts/karla.css" data-aisee-typography="karla">
 </head>
-<style>main h2 + p,main .usage-copy,main .spec,main .specs,main .state-note{margin-top:8px!important;font-size:14px!important;font-weight:400!important;line-height:20px!important;color:rgba(17,17,17,.6)!important}</style>
-<link rel="stylesheet" href="../component-doc-layout.css">
 <body>
-  <main>
-    <p class="eyebrow">Components · Button</p>
-    <h1>Button</h1>
-    <p class="intro">A reusable action control for primary, secondary, subtle and destructive actions.</p>
-
-    <h2>Overview / Examples</h2>
-    <section class="panel" aria-label="Button appearances">
-      <div class="row">
-        <button class="btn primary active" data-variant="Primary">Primary</button>
-        <button class="btn secondary" data-variant="Secondary">Secondary</button>
-            <button class="btn subtle" data-variant="Subtle">Subtle</button>
-            <button class="btn dark" data-variant="Dark">Dark</button>
-            <button class="btn danger" data-variant="Danger">Danger</button>
-      </div>
-      <div class="status" aria-live="polite">Selected appearance: Primary</div>
-    </section>
-
-        <h2>States</h2>
-        <section class="state-grid" aria-label="Button states">
-          <div class="state-card"><small>Default</small><button class="btn secondary">Continue</button></div>
-          <div class="state-card"><small>Disabled</small><button class="btn secondary" disabled>Continue</button></div>
-          <div class="state-card"><small>Loading</small><button class="btn dark" disabled>Loading…</button></div>
-        </section>
-        <p class="muted">Hover and focus use the same lime focus ring shown in the examples above.</p>
-    <h2>Usage</h2>
-    <p class="usage-copy">Use a concise verb. Keep one primary action per surface.</p>
-    <h2>Specs</h2>
-    <p class="specs">Height 36px · radius 8px · Karla 14px / 500 · 8px horizontal spacing.</p>
-  </main>
-  <script>
-    const buttons=[...document.querySelectorAll('[data-variant]')];
-    const status=document.querySelector('.status');
-    buttons.forEach(button=>button.addEventListener('click',()=>{
-      buttons.forEach(item=>item.classList.toggle('active',item===button));
-      status.textContent='Selected appearance: '+button.dataset.variant;
-    }));
-  </script>
+  <div id="button-demo"></div>
+  <noscript>This interactive component demo requires JavaScript.</noscript>
+  <script src="./button-demo.js" defer></script>
 </body>
 </html>

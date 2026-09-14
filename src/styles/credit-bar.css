@@ -1,0 +1,56 @@
+/* Figma 51:214469. Subscription and top-up are the only current credit sources. */
+.aisee-credit-bar {
+  --aisee-credit-subscription: #a5d500;
+  --aisee-credit-top-up: #8d57ea;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 16px 20px;
+  border: 1px solid var(--aisee-color-primitive-gray-900-5, rgba(17,17,17,.06));
+  border-radius: 16px;
+  background: #f6f6f6;
+  color: var(--aisee-color-black, #111);
+  font-family: var(--aisee-font-family-ui, Karla, sans-serif);
+}
+.aisee-credit-bar__header,
+.aisee-credit-bar__summary,
+.aisee-credit-bar__balance,
+.aisee-credit-bar__legend,
+.aisee-credit-bar__legend-item { display: flex; align-items: center; }
+.aisee-credit-bar__header { min-height: 24px; gap: 8px; justify-content: space-between; }
+.aisee-credit-bar__title { overflow: hidden; color: var(--aisee-color-semantic-text-description, #3d3d3a); font-size: 14px; font-weight: 400; line-height: 24px; text-overflow: ellipsis; white-space: nowrap; }
+.aisee-credit-bar__purchase {
+  min-height: 24px;
+  flex: 0 0 auto;
+  padding: 1px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--aisee-color-semantic-button-usual, #111);
+  color: var(--aisee-color-semantic-tag-base, #fff);
+  font: 500 14px/22px var(--aisee-font-family-ui, Karla, sans-serif);
+  cursor: pointer;
+}
+.aisee-credit-bar__purchase:hover { opacity: .88; }
+.aisee-credit-bar__purchase:focus-visible { outline: 2px solid var(--aisee-color-black, #111); outline-offset: 2px; }
+.aisee-credit-bar__summary { min-width: 0; gap: 24px; justify-content: space-between; }
+.aisee-credit-bar__balance { min-width: 0; gap: 4px; white-space: nowrap; }
+.aisee-credit-bar__illustration { display: grid; width: 24px; height: 24px; flex: 0 0 24px; place-items: center; }
+.aisee-credit-bar__illustration > img,
+.aisee-credit-bar__illustration > svg { display: block; width: 19px; height: 19px; }
+.aisee-credit-bar__balance strong { overflow: hidden; font-size: 24px; font-weight: 700; line-height: 32px; text-overflow: ellipsis; }
+.aisee-credit-bar__unit { flex: 0 0 auto; color: var(--aisee-color-semantic-text-secondary, rgba(17,17,17,.5)); font-size: 14px; font-weight: 400; line-height: 22px; }
+.aisee-credit-bar__legend { min-width: 0; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.aisee-credit-bar__legend-item { gap: 4px; padding: 4px 8px; border-radius: 6px; background: rgba(17,17,17,.03); font-size: 12px; font-weight: 400; line-height: 16px; white-space: nowrap; }
+.aisee-credit-bar__legend-item i { width: 4px; height: 10px; border-radius: 8px; background: var(--aisee-credit-subscription); }
+.aisee-credit-bar__legend-item[data-kind="top-up"] i { background: var(--aisee-credit-top-up); }
+.aisee-credit-bar__legend-item strong { font-weight: 600; }
+.aisee-credit-bar__track { display: flex; width: 100%; height: 10px; overflow: hidden; border-radius: 5px; background: rgba(17,17,17,.05); }
+.aisee-credit-bar__track > span { display: block; height: 100%; }
+.aisee-credit-bar__track > span[data-kind="subscription"] { background: var(--aisee-credit-subscription); }
+.aisee-credit-bar__track > span[data-kind="top-up"] { background: var(--aisee-credit-top-up); }
+@media (max-width: 560px) {
+  .aisee-credit-bar__summary { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .aisee-credit-bar__legend { justify-content: flex-start; }
+}
