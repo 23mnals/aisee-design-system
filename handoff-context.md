@@ -5,9 +5,9 @@
 ## 当前 Git
 
 - 开发分支：`ai/desktop/design-system-current`。
-- 当前 HEAD：`9fe4b23 docs: record PR 8 merge`，与 `origin/ai/desktop/design-system-current` 一致。
-- 工作区包含本轮尚未提交、尚未推送的组件与 Demo 更新；不要用旧版本覆盖，也不要把无关改动拆走。
-- 本轮未执行 commit、push、PR 或 merge。
+- 最新功能提交：`45e4803 feat: refine current component system`，已推送到 `origin/ai/desktop/design-system-current`。
+- 本轮组件、Demo、Overview、文档与测试已经同步远端开发分支。
+- 本轮未创建 PR、未合并到 `main`。
 
 ## 正在做
 
@@ -23,7 +23,7 @@
 - Components Overview：Current 标签已成为组件详情页快捷入口；点击后在门户内打开目标页并同步左侧选中项，页面说明可从左侧 Overview 或浏览器返回键返回。
 - Dialog：改为结构优先的通用 API，提供 Standard、Centered、Split Shell，以及 Form、Choice、Details、Summary 内容组合和 7 个真实交互场景。
 - Tabs：Platform 模式默认 `platformLabelDisplay="auto"`，按全部 Logo + name 的真实宽度自适应；能放下时全部显示，空间不足时仅当前项显示名称，且不再压缩或切断名称。`active` / `all` 保留为显式覆盖。
-- 同一批未提交改动还包含已确认的 Button 动效正式同步、Stat Card Current、Credit Bar、Dialog、Toast、Empty State、Badge、Toggle Selection Group 与 Web App UI Kit 侧边栏更新。
+- 同一批更新还包含已确认的 Button 动效正式同步、Stat Card Current、Credit Bar、Dialog、Toast、Empty State、Badge、Toggle Selection Group 与 Web App UI Kit 侧边栏更新。
 
 ## 验收证据
 
@@ -52,8 +52,8 @@
 
 ## 发布状态 / 下一步
 
-- 本轮全部修改仍在本地工作区，尚未 commit 或 push。
-- 用户确认视觉后，再按明确指令整理提交并推送开发分支；如需进入 `main`，创建 `ai/desktop/design-system-current → main` PR。
+- 本轮修改已提交并推送到远端开发分支；其他工作区可拉取 `ai/desktop/design-system-current` 查看。
+- 如需进入 `main`，按用户明确指令创建 `ai/desktop/design-system-current → main` PR；PR 不自动合并。
 - 新对话先读 `AGENTS.md` 与本文件，再检查 branch/status/log，并从当前工作区继续。
 
 ## 最近一次 Session

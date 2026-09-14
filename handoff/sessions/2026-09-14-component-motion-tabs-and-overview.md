@@ -34,9 +34,9 @@
 ## Git / 发布
 
 - 分支：`ai/desktop/design-system-current`
-- 当前 HEAD：`9fe4b23 docs: record PR 8 merge`
-- 本轮修改均未提交、未推送；没有创建或合并 PR。
-- 工作区中包含此前同一批组件更新，后续提交时应整体复核，避免混入无关修改或遗漏生成 bundle。
+- 功能提交：`45e4803 feat: refine current component system`
+- 已推送到 `origin/ai/desktop/design-system-current`；没有创建或合并 PR。
+- 提交包含本轮组件源码、静态与 React Demo、Overview、文档、测试和生成 bundle。
 
 ## 本轮确认的设计决策
 
@@ -61,5 +61,5 @@
 ## 未完成 / 下一步
 
 - 用户视觉确认 Tabs 的 icon/count 两个演示开关、平台自适应名称模式及 Dialog 分类示例。
-- 用户确认本批后，再按指令 commit / push；同步 `main` 时走 PR，merge 仍需明确授权。
+- 本批已同步远端开发分支；同步 `main` 时走 PR，merge 仍需明确授权。
 - 后续继续处理 Card 业务变体及仍失效的 Legacy Engage 内嵌引用。
