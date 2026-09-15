@@ -46,7 +46,10 @@
 .aisee-credit-bar__legend-item i { width: 4px; height: 10px; border-radius: 8px; background: var(--aisee-credit-subscription); }
 .aisee-credit-bar__legend-item[data-kind="top-up"] i { background: var(--aisee-credit-top-up); }
 .aisee-credit-bar__legend-item strong { font-weight: 600; }
+.aisee-credit-bar__legend-item[data-zero="true"] { color: var(--aisee-color-semantic-text-secondary, rgba(17,17,17,.5)); background: rgba(17,17,17,.02); }
+.aisee-credit-bar__legend-item[data-zero="true"] i { opacity: .35; }
 .aisee-credit-bar__track { display: flex; width: 100%; height: 10px; overflow: hidden; border-radius: 5px; background: rgba(17,17,17,.05); }
+.aisee-credit-bar__track[data-empty="true"] { box-shadow: inset 0 0 0 1px rgba(17,17,17,.03); }
 .aisee-credit-bar__track > span { display: block; height: 100%; }
 .aisee-credit-bar__track > span[data-kind="subscription"] { background: var(--aisee-credit-subscription); }
 .aisee-credit-bar__track > span[data-kind="top-up"] { background: var(--aisee-credit-top-up); }

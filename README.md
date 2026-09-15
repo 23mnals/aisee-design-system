@@ -72,15 +72,15 @@ npm run site
 ## v6 主要更新
 
 - Analysis = lime `#CFFF29`；Post Agent / Engage = yellow `#FFE253`
-- Sidebar 采用纵向功能分组：Growth Loop 包含 Analysis / Growth / Engage / Post / Verify；Engage 子项为 Signal Feed / Keywords & Accounts / Replies
+- Sidebar 采用纵向功能分组：Growth Loop 包含 Analysis / Growth / Engage / Post / Verify；Engage 子项为 Signal Feed / Keywords & Accounts / Replies；Verify 子项为 Compare / Google Search Data / Bing Webmaster Data
 - Header 70px；Sidebar 展开 224px、可收起至 58px（收起态仅显示 icon）；主内容 padding 16px
 - 页面背景 `#FAFAFA`，卡片 `#FFFFFF`，静态描边统一 5% 黑
 - 所有弹窗标题统一 Karla 20px / 500（包括二次确认）
-- Automation 属于 WORKFLOWS 分组，不归入 INTEGRATIONS
+- Automation 属于 WORKFLOWS 分组；Google Search Data 与 Bing Webmaster Data 归入 Verify，不再单列 INTEGRATIONS
 - PlanCard 新增 v5.4 Upgrade Plan 当前版本，旧套餐卡继续作为 Legacy 保留
 - Figma 对齐 Toggle、Modal footer 和 Engage v5 页面规则
 - 44 个元数据颜色与 46 个语义颜色由 JSON 自动生成 CSS；旧变量通过兼容 alias 保留
-- Current 组件新增 Checkbox、Tooltip、Toast、Table、Stat Card、Chart、Score Gauge；Dropdown 覆盖单选、多选、过滤和输入建议
+- Current 组件新增 Checkbox、Tooltip、Toast、Table、Stat Card、Chart、Score Gauge；Credit Bar 覆盖 Subscription、Top-up、任一来源为 0 及两者都为 0；Dropdown 覆盖单选、多选、过滤和输入建议，并同步流畅的 Fluid Hover 与按需出现的富选项行操作，在 Variant Playground 中切换、操作搜索、筛选面板和分组账号等组合形态
 
 完整迁移表见 [`docs/MIGRATION.md`](docs/MIGRATION.md)，资源状态见 [`docs/RESOURCE_INVENTORY.md`](docs/RESOURCE_INVENTORY.md)。
 

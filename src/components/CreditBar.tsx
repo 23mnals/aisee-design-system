@@ -54,17 +54,17 @@ export function CreditBar({
         {unit && <span className="aisee-credit-bar__unit">{unit}</span>}
       </div>
       <div className="aisee-credit-bar__legend" aria-label={breakdown}>
-        <span className="aisee-credit-bar__legend-item" data-kind="subscription">
+        <span className="aisee-credit-bar__legend-item" data-kind="subscription" data-zero={subscription === 0 ? 'true' : undefined}>
           <i aria-hidden="true" /><span>{subscriptionLabel}</span><strong>{subscriptionValue}</strong>
         </span>
-        <span className="aisee-credit-bar__legend-item" data-kind="top-up">
+        <span className="aisee-credit-bar__legend-item" data-kind="top-up" data-zero={topUp === 0 ? 'true' : undefined}>
           <i aria-hidden="true" /><span>{topUpLabel}</span><strong>{topUp}</strong>
         </span>
       </div>
     </div>
-    <div className="aisee-credit-bar__track" role="img" aria-label={breakdown}>
-      <span data-kind="subscription" style={{ width: `${subscriptionPercent}%` }} />
-      <span data-kind="top-up" style={{ width: `${topUpPercent}%` }} />
+    <div className="aisee-credit-bar__track" data-empty={total === 0 ? 'true' : undefined} role="img" aria-label={breakdown}>
+      <span data-kind="subscription" data-zero={subscription === 0 ? 'true' : undefined} style={{ width: `${subscriptionPercent}%` }} />
+      <span data-kind="top-up" data-zero={topUp === 0 ? 'true' : undefined} style={{ width: `${topUpPercent}%` }} />
     </div>
   </section>;
 }

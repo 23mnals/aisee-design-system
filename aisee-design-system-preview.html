@@ -246,6 +246,7 @@
         font-weight: 500;
         line-height: 16px;
       }
+      .readme-updated-title { display: flex; align-items: center; gap: 8px; }
       .nav-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; color: currentColor; }
       .nav-icon img { width: 15px; height: 15px; object-fit: contain; }
       .nav-group-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; }
@@ -311,13 +312,14 @@
         overflow: hidden;
       }
       .quick-card:hover { border-color: var(--line-strong); box-shadow: var(--shadow); transform: translateY(-1px); }
-      .quick-card .preview-art { height: 82px; display: flex; gap: 8px; align-items: flex-end; margin: -2px -2px 20px; }
-      .swatch { flex: 1; min-width: 28px; border: 1px solid rgba(0,0,0,.08); border-radius: 8px; }
-      .swatch:nth-child(1) { height: 54px; background: #f1c4b9; }
-      .swatch:nth-child(2) { height: 72px; background: #d8d0ff; }
-      .swatch:nth-child(3) { height: 46px; background: #8edee2; }
-      .swatch:nth-child(4) { height: 64px; background: #d7ff3f; }
-      .component-art { height: 82px; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 20px; }
+      .quick-card > .item-tag { align-self: flex-start; margin-bottom: 12px; }
+      .quick-card .preview-art { width: 100%; height: 72px; flex: 0 0 72px; display: flex; gap: 8px; align-items: stretch; margin: 0 0 20px; }
+      .swatch { height: 100%; flex: 1; min-width: 28px; border: 1px solid rgba(0,0,0,.08); border-radius: 8px; }
+      .swatch:nth-child(1) { background: #f1c4b9; }
+      .swatch:nth-child(2) { background: #d8d0ff; }
+      .swatch:nth-child(3) { background: #8edee2; }
+      .swatch:nth-child(4) { background: #d7ff3f; }
+      .component-art { width: 100%; height: 72px; flex: 0 0 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 0 0 20px; }
       .component-art span { display: grid; place-items: center; border: 1px solid var(--line); border-radius: 9px; background: var(--surface-subtle); font-size: 12px; font-weight: 700; }
       .component-art span:first-child { border-color: #191a1c; background: #191a1c; color: white; }
       .quick-card h3 { margin: auto 0 5px; font-size: 20px; letter-spacing: -.02em; }
@@ -406,6 +408,9 @@
       .color-control { display: grid; gap: 5px; }
       .color-control span { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
       .color-control input, .color-control select { width: 100%; height: 36px; border: 1px solid var(--line-strong); border-radius: 7px; background: white; color: var(--ink); padding: 0 10px; font: inherit; font-size: 13px; }
+      .color-control--select { position: relative; }
+      .color-control--select::after { position: absolute; right: 12px; bottom: 10px; width: 16px; height: 16px; background: url("assets/stemui/line_chevron-up.svg") center / 16px 16px no-repeat; content: ""; pointer-events: none; transform: rotate(90deg); }
+      .color-control--select select { appearance: none; padding-right: 40px; }
       .color-table-wrap { overflow-x: auto; }
       .color-table { width: 100%; min-width: 840px; border-collapse: collapse; }
       .color-table th, .color-table td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: middle; }
@@ -792,7 +797,7 @@
       <aside class="sidebar" id="sidebar" aria-label="Design system navigation">
         <button class="nav-home active" id="homeButton" type="button">
           <span class="nav-icon"><img src="assets/stemui/nav-overview.svg" alt="" aria-hidden="true"></span>
-          <span class="nav-label">README</span>
+          <span class="nav-label nav-item-label"><span class="nav-label-text">README</span><span class="nav-new-label" aria-hidden="true">NEW</span></span>
         </button>
         <nav id="navGroups"></nav>
       </aside>
@@ -865,13 +870,13 @@
           </section>
 
           <section class="overview-section" id="sources" aria-labelledby="sources-title">
-            <h2 id="sources-title">Sources and authority</h2>
+            <h2 class="readme-updated-title" id="sources-title">Sources and authority <span class="nav-new-label" aria-hidden="true">NEW</span></h2>
             <p>Design files and written specifications serve different roles. The Figma file is the visual product source; the specification and team decisions make implementation rules explicit.</p>
             <div class="source-panel">
               <article class="source-card current">
                 <span class="source-label">Registered Figma archive</span>
                 <h3>Figma feature page 5.7 <span class="version-badge">Latest feature</span></h3>
-                <p><code>备份-官网+dapp主功能.fig</code> contains the homepage and main dApp flows. Page 5.7 adds hosted automatic publishing (Automation) under WORKFLOWS; it is not a global version of the complete file.</p>
+                <p><code>AISEE dApp design archive.fig</code> contains the homepage and main dApp flows. Page 5.7 adds hosted automatic publishing (Automation) under WORKFLOWS; it is not a global version of the complete file.</p>
                 <ul class="source-meta"><li><span>Exported</span><strong>2026-08-18 16:06:53 +08:00</strong></li><li><span>Archive size</span><strong>307 MB</strong></li><li><span>Repository policy</span><strong>Reference only; not copied into Git</strong></li></ul>
               </article>
               <article class="source-card">
@@ -900,30 +905,30 @@
           </section>
 
           <section class="overview-section" id="visual" aria-labelledby="visual-title">
-            <h2 id="visual-title">Visual foundations</h2>
+            <h2 class="readme-updated-title" id="visual-title">Visual foundations <span class="nav-new-label" aria-hidden="true">NEW</span></h2>
             <p>Functional hierarchy comes first. Module color establishes location and action context; neutral surfaces carry the majority of the interface.</p>
             <h3 class="subheading">Color variables</h3>
             <div class="color-rule">
               <span class="color-rule-mark" aria-hidden="true">!</span>
-              <div><strong>页面和组件只能使用语义化变量</strong><p>元数据只保存未经功能修饰的原始颜色；语义化变量根据文字、背景、边框、状态和模块功能引用元数据。禁止在业务页面直接写 HEX 或引用 <code>--aisee-color-primitive-*</code>。</p></div>
+              <div><strong>Pages and components use semantic variables only</strong><p>Primitive variables store raw colours without functional meaning; semantic variables reference them for text, surfaces, borders, states and module context. Do not write HEX or use <code>--aisee-color-primitive-*</code> in product pages.</p></div>
             </div>
             <div class="color-flow" aria-label="Color token dependency flow">
-              <article class="color-flow-step"><span class="color-flow-kicker">Layer 1 · source</span><strong>元数据 / Primitive</strong><p>44 个原始颜色，只有名称、Light / Dark 值，不附加功能含义。</p></article>
+              <article class="color-flow-step"><span class="color-flow-kicker">Layer 1 · source</span><strong>Primitive layer</strong><p>44 raw colours with names and Light / Dark values, without functional meaning.</p></article>
               <span class="color-flow-arrow" aria-hidden="true">→</span>
-              <article class="color-flow-step current"><span class="color-flow-kicker">Layer 2 · contract</span><strong>语义化 / Semantic</strong><p>44 个已应用功能角色，通过 alias 引用元数据；未应用变量暂不公开展示。</p></article>
+              <article class="color-flow-step current"><span class="color-flow-kicker">Layer 2 · contract</span><strong>Semantic layer</strong><p>44 published functional roles reference primitive variables through aliases; unpublished variables stay hidden.</p></article>
               <span class="color-flow-arrow" aria-hidden="true">→</span>
-              <article class="color-flow-step"><span class="color-flow-kicker">Layer 3 · consumer</span><strong>组件与页面</strong><p>只消费 <code>--aisee-color-semantic-*</code>；换主题时无需修改组件内部颜色。</p></article>
+              <article class="color-flow-step"><span class="color-flow-kicker">Layer 3 · consumer</span><strong>Components and pages</strong><p>Consume <code>--aisee-color-semantic-*</code> only, so themes can change without editing component colours.</p></article>
             </div>
             <div class="color-browser" aria-label="Color variable browser">
               <div class="color-browser-head">
                 <div class="color-layer-tabs" role="tablist" aria-label="Color variable layer">
-                  <button class="color-layer-tab" id="primitiveColorTab" type="button" role="tab" aria-selected="false" data-color-layer="primitive">元数据 <span id="primitiveColorCount">44</span></button>
-                  <button class="color-layer-tab" id="semanticColorTab" type="button" role="tab" aria-selected="true" data-color-layer="semantic">语义化 <span id="semanticColorCount">44</span></button>
+                  <button class="color-layer-tab" id="primitiveColorTab" type="button" role="tab" aria-selected="false" data-color-layer="primitive">Primitive <span id="primitiveColorCount">44</span></button>
+                  <button class="color-layer-tab" id="semanticColorTab" type="button" role="tab" aria-selected="true" data-color-layer="semantic">Semantic <span id="semanticColorCount">44</span></button>
                 </div>
                 <div class="color-controls">
-                  <label class="color-control"><span>Search variable</span><input id="colorSearch" type="search" placeholder="搜索变量名、引用或 HEX" autocomplete="off"></label>
-                  <label class="color-control"><span>Mode</span><select id="colorMode"><option value="light">Light</option><option value="dark">Dark</option></select></label>
-                  <label class="color-control"><span>Category</span><select id="colorScope"><option value="all">全部类别</option></select></label>
+                  <label class="color-control"><span>Search variable</span><input id="colorSearch" type="search" placeholder="Search variable name, reference or HEX" autocomplete="off"></label>
+                  <label class="color-control color-control--select"><span>Mode</span><select id="colorMode"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+                  <label class="color-control color-control--select"><span>Category</span><select id="colorScope"><option value="all">All categories</option></select></label>
                 </div>
               </div>
               <div class="color-table-wrap">
@@ -971,11 +976,11 @@
           </section>
 
           <section class="overview-section" id="components-overview" aria-labelledby="components-title">
-            <h2 id="components-title">Component library</h2>
+            <h2 class="readme-updated-title" id="components-title">Component library <span class="nav-new-label" aria-hidden="true">NEW</span></h2>
             <p>Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.</p>
             <div class="component-map">
               <article><h3>Actions</h3><p>Button.</p></article>
-              <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.</p></article>
+              <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.</p></article>
               <article><h3>Navigation</h3><p>Current Tabs and product Sidebar Navigation patterns. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.</p></article>
               <article><h3>Content &amp; Status</h3><p>Current PlanCard, Badge, Steps and Empty State.</p></article>
               <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.</p></article>
@@ -1116,7 +1121,8 @@
           "staticBorder": "rgba(17,17,17,0.05)",
           "colorArchitecture": "Pages and components must consume semantic color variables only; primitive colors are raw token-layer values.",
           "implementation": "Reuse Current exported components and tokens; do not copy Legacy styling when a Current equivalent exists.",
-          "componentPrompt": "Every Current component detail page exposes a scoped Copy for AI prompt. Overview, Legacy, Brand and UI Kit pages do not expose it."
+          "componentPrompt": "Every Current component detail page exposes a scoped Copy for AI prompt. Overview, Legacy, Brand and UI Kit pages do not expose it.",
+          "avatarAssignment": "Use the exported Avatar component. Registered website users use the 22 approved square account avatars with a stable user seed. Missing social-media profile images use the 24 approved circular gray-outline social avatars with a stable social-account seed. Generated preview extensions are excluded until explicitly approved."
         },
         "handoffGuide": "docs/AI_HANDOFF.md"
       }
@@ -1179,6 +1185,11 @@
         ["Examples", "示例"],
         ["Visual foundations", "视觉基础"], ["Functional hierarchy comes first. Module color establishes location and action context; neutral surfaces carry the majority of the interface.", "功能层级优先。模块色用于表达位置与操作语境，大部分界面由中性色承载。"],
         ["Color variables", "颜色变量"], ["Search variable", "搜索变量"], ["Mode", "模式"], ["Category", "类别"], ["Color", "颜色"], ["Figma variable", "Figma 变量"], ["Alias reference", "别名引用"], ["Resolved value", "解析值"], ["CSS variable", "CSS 变量"], ["Audit", "校验"],
+        ["Pages and components use semantic variables only", "页面和组件只能使用语义化变量"],
+        ["Primitive variables store raw colours without functional meaning; semantic variables reference them for text, surfaces, borders, states and module context. Do not write HEX or use", "元数据只保存未经功能修饰的原始颜色；语义化变量根据文字、背景、边框、状态和模块功能引用元数据。禁止在业务页面直接写 HEX 或引用"],
+        ["Primitive layer", "元数据 / Primitive"], ["Primitive", "元数据"], ["44 raw colours with names and Light / Dark values, without functional meaning.", "44 个原始颜色，只有名称、Light / Dark 值，不附加功能含义。"],
+        ["Semantic layer", "语义化 / Semantic"], ["Semantic", "语义化"], ["44 published functional roles reference primitive variables through aliases; unpublished variables stay hidden.", "44 个已应用功能角色，通过 alias 引用元数据；未应用变量暂不公开展示。"],
+        ["Components and pages", "组件与页面"], ["Consume", "只消费"], ["only, so themes can change without editing component colours.", "；换主题时无需修改组件内部颜色。"], ["in product pages.", "。"],
         ["Family", "字族"], ["Roles", "用途"], ["Rule", "规则"], ["Karla for display, UI and body", "展示、界面与正文均使用 Karla"], ["Self-host Karla", "自托管 Karla"], ["Karla for all UI, code hints and Score Gauge values", "所有界面、代码提示与 Score Gauge 数值均使用 Karla"], ["Self-host Karla; no secondary UI font", "自托管 Karla；不使用第二套界面字体"],
         ["Layout, spacing and surfaces", "布局、间距与表面"], ["Application shell", "应用框架"], ["70px fixed header, 224px sidebar and 24–32px main content padding.", "70px 固定顶栏、224px 侧边栏、24–32px 主内容内边距。"],
         ["Spacing", "间距"], ["4, 8, 12, 16, 24, 32, 48 and 64px scale. Prefer adjacent steps.", "采用 4、8、12、16、24、32、48、64px 间距阶梯，优先使用相邻级别。"],
@@ -1202,7 +1213,8 @@
         ["No icon fonts and no emoji UI icons; use SVG or typed React icon components.", "不使用图标字体或 emoji 界面图标；使用 SVG 或带类型的 React 图标组件。"], ["Social platform marks keep their official form and brand color at small badge sizes.", "社交平台标志在小尺寸 Badge 中保留官方形态和品牌色。"],
         ["Component library", "组件库"], ["Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.", "组件按“类别 → 组件”组织。Current 条目是实施事实来源；Legacy 条目仅作历史参考并有清晰标识。"],
         ["Actions", "操作"], ["Inputs & Controls", "输入与控件"], ["Navigation", "导航"], ["Content & Status", "内容与状态"], ["Data Display", "数据展示"], ["Feedback & Overlays", "反馈与浮层"],
-        ["Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.", "Input、Checkbox、Select / Dropdown、Toggle、Tag Input 与 Toggle Selection Group。Input 和下拉触发器使用 1px 黑色内描边加 2px 模块色环；下拉菜单与触发器保持 8px 间距，Hover、Focus 与 Selected 项使用 5% 黑色填充。"],
+        ["Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.", "Input、Checkbox、Select / Dropdown、Toggle、Tag Input 与 Toggle Selection Group。Input 和下拉触发器使用 1px 黑色内描边加 2px 模块色环；下拉菜单与触发器保持 8px 间距，选项间距为 4px。单一共享的 5% 黑色 Fluid Hover 高亮会连续跟随最近的可用选项，已选项仍保持可见。Dropdown 的复合变体可在 Variant Playground 中切换并直接测试。"],
+        ["AISEE dApp design archive.fig", "备份-官网+dapp主功能.fig"],
         ["Current Tabs and product Sidebar Navigation patterns. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.", "Current Tabs 与产品 Sidebar Navigation 模式。平台 Tabs 在所有名称都能容纳时自动完整显示；空间不足时只显示当前项名称。"],
         ["Current PlanCard, Badge, Steps and Empty State.", "Current PlanCard、Badge、Steps 与 Empty State。"], ["Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.", "Current Card、Stat Card、Table、Chart、仅限 Analysis 的 Score Gauge 与 Credit Bar；Legacy Post Card 继续保留参考。"],
         ["Dialog, Confirmation Dialog, Tooltip and Toast.", "Dialog、Confirmation Dialog、Tooltip 与 Toast。"],
@@ -1245,9 +1257,11 @@
         document.querySelectorAll("[data-readme-language]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.readmeLanguage === readmeLanguage)));
         const languageGroup = document.querySelector(".readme-language");
         if (languageGroup) languageGroup.setAttribute("aria-label", readmeLanguage === "zh" ? "README 语言" : "README language");
+        colorSearch.placeholder = readmeLanguage === "zh" ? "搜索变量名、引用或 HEX" : "Search variable name, reference or HEX";
         if (persist) {
           try { localStorage.setItem(readmeLanguageStorageKey, readmeLanguage); } catch (error) {}
         }
+        refreshColorScopeOptions();
         renderColorTokens();
       }
 
@@ -1283,10 +1297,14 @@
         },
         "components/Select/Select.html": {
           name: "Select / Dropdown",
-          intent: "Choose from a bounded option set using the appropriate single, multiple, filter or input-assisted pattern.",
+          intent: "Choose from a bounded option set using the appropriate simple or composed dropdown pattern.",
           rules: [
             "Choose the documented variant from the data and task; do not combine filtering, free input and multi-select unless the workflow requires them.",
-            "Keep the trigger, menu, 8px menu gap, equal padding, chevron state and 5% black hover/focus/selected surface from the Current component.",
+            "Keep the trigger, menu, 8px trigger-to-menu gap, 4px option gap, equal padding, chevron state and 5% black hover/focus/selected surface from the Current component.",
+            "Use the Variant playground to choose and test Compact menu, Search + action, Filter panel or Grouped account before implementation.",
+            "Use leading media, supporting text, trailing status, groups, headers or footer actions only when the option content requires them; keep the simple menu compact.",
+            "Keep Fluid Hover enabled by default: one shared 5% black highlight follows the nearest enabled row across 4px gaps, follows keyboard focus, skips disabled rows, supports gap clicks and honors prefers-reduced-motion.",
+            "For an independent row action, use item.action. Keep its 24px control hidden until the row is hovered or keyboard-focused; reveal a gray fill with a gray border, and use Post yellow only while the action itself is hovered.",
             "For multi-select, use the leading Checkbox state and preserve selection while filtering. Support keyboard navigation, Escape and the correct aria-expanded/selected semantics."
           ]
         },
@@ -1332,7 +1350,9 @@
           intent: "Navigate the product's grouped destinations and nested views with a stable expanded or collapsed shell.",
           rules: [
             "Reuse the Current vertical product grouping and information architecture. Choose real destination icons from StemUI; Demo icons are structural examples.",
+            "Keep Verify as the Growth Loop parent. Its current child order is Compare, Google Search Data, then Bing Webmaster Data; do not recreate a separate Integrations group for those sources.",
             "Support 224px expanded and 58px collapsed states. Collapsed state shows icons only; labels remain available to assistive technology and tooltips.",
+            "Render the footer account identity with the Avatar component. Use kind account and a stable account seed so the same account resolves to one of the 22 approved square avatars across pages and sessions.",
             "Preserve nested active states, keyboard navigation, aria-current, the native resize cursor and same-browser width/state memory where implemented."
           ]
         },
@@ -1343,6 +1363,17 @@
             "Keep plan name, price, billing cadence, grouped benefits and action hierarchy scannable. Use real entitlement and price data.",
             "Represent current, recommended, available and disabled states explicitly; never present the current plan as a primary purchase action.",
             "Use Post yellow for purchase/publishing actions and semantic status tokens for supporting labels."
+          ]
+        },
+        "preview/avatar.html": {
+          name: "Avatar",
+          intent: "Render AISEE account identity consistently from the approved website-account and social-fallback avatar libraries.",
+          rules: [
+            "Use kind account for registered website users and assign one of the 22 approved square avatars from a stable user seed. The same user must keep the same avatar across pages and sessions.",
+            "Use kind social only when a social-media profile image cannot be fetched. Assign one of the 24 approved circular avatars with the gray outline from a stable social-account seed.",
+            "Never use the generated extension previews for automatic assignment until product or design explicitly approves them for the source pool.",
+            "Use SocialAccountAvatar with postOrigin plan for a dashed platform-logo outline and manual for a solid outline. Render exactly one outline.",
+            "When animated is enabled, keep the original eye geometry, blink inside the eye mask, follow the pointer within the eye boundary and respect reduced-motion preferences."
           ]
         },
         "components/Badge/Badge.html": {
@@ -1370,6 +1401,7 @@
           rules: [
             "Compose illustration, title, description and actions according to need; do not force every slot into every empty state.",
             "Choose the matching SVG illustration from the supplied library and update title, description and action copy together. Never rasterize or reuse an unrelated illustration.",
+            "Treat the No report data illustration as an empty analysis state, not a success state: explain that no report records exist yet and offer Add product URL to start analysis.",
             "Resolve primary action colour from the containing surface: pale yellow uses Post yellow, lime uses Analysis lime, and other backgrounds use #111111.",
             "Use one clear recovery action where possible and distinguish first-use, no-results, permission and error cases."
           ]
@@ -1424,7 +1456,7 @@
           intent: "Show remaining credit balance split into Subscription and Top-up categories.",
           rules: [
             "Use only the two current categories: Subscription and Top-up. Match the Current typography, progress colours and legend treatment.",
-            "Calculate widths from real totals, display the numeric balance and handle zero, full and overflow values without misleading proportions.",
+            "Calculate widths from real totals, display the numeric balance and handle zero, full and overflow values without misleading proportions. When either source is zero, keep its 0 value visible, mute its legend marker and give the full track to the remaining source. When both sources are zero, show 0 Credits, keep both muted zero-value legends, leave the neutral track visible and expose Purchase only when a real purchase flow exists.",
             "Expose each bar as an accessible progress value with its category and maximum."
           ]
         },
@@ -1465,6 +1497,10 @@
         const rules = guidance.rules.map(rule => `- ${rule}`).join("\n");
         return `Use the Current ${guidance.name} component from the AISEE Design System in the requested product context.
 
+Canonical reference:
+- Detail and rendered Demo: ${path}
+- Open the reference before implementation and reuse the exported Current component when its source is available. Do not approximate it from memory or replace it with visually unstyled browser UI.
+
 Component intent:
 ${guidance.intent}
 
@@ -1477,7 +1513,8 @@ Shared implementation rules:
 - Preserve the target page's information architecture and surrounding product behavior. Do not rebuild unrelated areas or import Legacy styling over Current components.
 - dApp interfaces use Karla. Product colours consume semantic tokens; do not hardcode primitive colour values in the page.
 - Implement applicable default, hover, focus, active, disabled, loading, error, empty and responsive states, plus keyboard and screen-reader behavior.
-- After implementation, list the reused component, tokens and any intentional deviation from the Current reference.`;
+- Match the Demo's geometry, spacing, radii, typography, icon weight, colours, states and motion at the same viewport. If the reference or exported source is unavailable, ask for access instead of inventing a replacement.
+- After implementation, compare the rendered result against the reference, then list the reused component, tokens and every intentional deviation.`;
       }
 
       const baseItems = [
@@ -1503,7 +1540,6 @@ Shared implementation rules:
         { group: "Brand", category: "Common", name: "dApp v6 Foundations", path: "preview/dapp-v6-foundations.html", subtitle: "Current color, typography, layout and module-theme rules.", status: "Current" },
         { group: "Brand", category: "Common", name: "AIsee Logo Animation", path: "brand/pages/logo-animation/preview.html", subtitle: "Current cursor-following eye animation with natural blinking and side glances.", status: "Current" },
         { group: "Brand", category: "Common", name: "Logo", path: "preview/brand-logo.html", subtitle: "Real logo image, full wordmark, sizes, backgrounds and mark scale.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Visual Style", path: "preview/brand-visual-style.html", subtitle: "Homepage hero geometric shapes, mascot and footer band.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "Color Palette", path: "preview/colors-brand.html", subtitle: "Brand, neutral and semantic color tokens.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "Display Type — Karla", path: "preview/type-display.html", subtitle: "Karla display scale from hero to body.", status: "Legacy" },
@@ -1515,13 +1551,14 @@ Shared implementation rules:
         { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
         { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Checkbox", path: "components/Checkbox/Checkbox.html", subtitle: "Current independent selection control with module-color hover and selected states.", status: "Current" },
-        { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter and input-assisted dropdown with complete states.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter, input-assisted and rich composition dropdown patterns.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with fluid hover, press and spring-like state transitions.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Tag Input", path: "components/TagInput/TagInput.html", subtitle: "Current token input that previews, commits and removes inline tags.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Toggle Selection Group", path: "components/ToggleSelectionGroup/ToggleSelectionGroup.html", subtitle: "Enable option groups while preserving selection across off and on states.", status: "Current", updated: true },
         { group: "Components", category: "Navigation", name: "Tabs", path: "components/Tabs/Tabs.html", subtitle: "Current underline and segmented tabs with text, icon and count compositions.", status: "Current", updated: true },
-        { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "Current grouped product navigation with nested destinations and account status.", status: "Current", updated: true },
+        { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "Current grouped product navigation with Verify-owned Compare and search-data destinations.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
+        { group: "Components", category: "Content & Status", name: "Avatar", path: "preview/avatar.html", subtitle: "Approved account and missing-social-profile avatar libraries with stable assignment, motion and post-origin variants.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Solid, dot, colour, source and semantic status badges with icon and label.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Steps", path: "components/Steps/Steps.html", subtitle: "Static workflows, animated progress, thinking activity and feature tutorials.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Empty State", path: "components/EmptyState/EmptyState.html", subtitle: "Composable empty states with optional illustration, title, description and actions.", status: "Current", updated: true },
@@ -1546,11 +1583,12 @@ Shared implementation rules:
       const groupOrder = ["Brand", "Components", "UI Kits — Webapp"];
       const groupLabels = { "Brand": "Brand", "Components": "Components", "UI Kits — Webapp": "UI Kits — Webapp" };
       const groupIcons = { "Brand": "nav-overview", "Components": "nav-analysis", "UI Kits — Webapp": "nav-overview" };
-      const brandCategoryOrder = ["Homepage", "Common", "Overview", "Analyze", "Growth", "Post", "Engage", "Verify", "Automation"];
-      const componentCategoryOrder = ["Overview", "Inputs & Controls", "Navigation", "Content & Status", "Data Display", "Feedback & Overlays"];
+      const brandCategoryOrder = ["Analyze", "Automation", "Common", "Engage", "Growth", "Homepage", "Overview", "Post", "Verify"];
+      const componentCategoryOrder = ["Overview", "Content & Status", "Data Display", "Feedback & Overlays", "Inputs & Controls", "Navigation"];
+      const compareNavItems = (left, right) => left.name.localeCompare(right.name, "en", { sensitivity: "base" });
       const pageIcons = {
         "dApp v6 Foundations": "nav-overview", "Overview": "nav-analysis", "dApp v6 Components": "nav-analysis", "PlanCard": "nav-growth", "PlanCard — Current": "nav-growth",
-        "IntentTag": "nav-signal-feed", "StatusBadge": "nav-replies", "Web App UI Kit": "nav-overview", "Logo": "nav-overview", "Visual Style": "nav-overview",
+        "IntentTag": "nav-signal-feed", "StatusBadge": "nav-replies", "Web App UI Kit": "nav-overview", "Logo": "nav-overview",
         "Color Palette": "nav-overview", "Buttons & Badges": "action-check", "Cards & Data": "nav-signal-feed", "Nav, Inputs & Toggles": "nav-overview",
         "Spacing, Radii & Shadows": "nav-overview", "Display Type — Karla": "nav-overview", "UI Type — Karla": "nav-overview", "Tracking Eye": "nav-verify"
       };
@@ -1629,6 +1667,25 @@ Shared implementation rules:
         return String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
       }
 
+      const colorEnglishLabels = new Map([
+        ["草绿", "grass-green"],
+        ["lime/line-分数辅助", "lime/line-score-assist"],
+        ["colour/border/描边- hover", "colour/border/stroke-hover"],
+        ["colour/border/描边", "colour/border/stroke"],
+        ["colour/border/分割线- hover", "colour/border/divider-hover"],
+        ["colour/border/分割线", "colour/border/divider"],
+        ["colour/bg/⚠️警告", "colour/bg/warning"],
+        ["深色按钮上的文字与 Icon；也可作为需要纯白承载面的背景颜色。", "Text and icons on dark buttons; also usable as a pure-white supporting surface."],
+        ["组件与可交互表面的 Hover 状态背景叠色。", "Hover overlay for components and interactive surfaces."],
+        ["用途已确认；Dark 模式仍为原始白色，需在 Figma 校对后发布。", "Usage confirmed; the Dark value remains raw white and requires Figma review before publishing."],
+        ["Dark 模式仍为原始白色，建议补充元数据别名。", "The Dark value remains raw white; add a primitive alias after review."]
+      ]);
+
+      function colorDisplayText(value) {
+        if (value === null || value === undefined) return "";
+        return readmeLanguage === "zh" ? String(value) : (colorEnglishLabels.get(String(value)) || String(value));
+      }
+
       function colorCategory(token) {
         if (activeColorLayer === "semantic") return token.scope || "other";
         return token.name.includes("/") ? token.name.split("/")[0] : "base";
@@ -1637,7 +1694,8 @@ Shared implementation rules:
       function refreshColorScopeOptions() {
         const current = colorScope.value;
         const categories = [...new Set(colorArchitecture[activeColorLayer].map(colorCategory))].sort();
-        colorScope.innerHTML = `<option value="all">全部类别</option>${categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}`;
+        const allCategoriesLabel = readmeLanguage === "zh" ? "全部类别" : "All categories";
+        colorScope.innerHTML = `<option value="all">${allCategoriesLabel}</option>${categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}`;
         colorScope.value = categories.includes(current) ? current : "all";
       }
 
@@ -1662,15 +1720,17 @@ Shared implementation rules:
           const cssName = `--aisee-color-${activeColorLayer === "semantic" ? "semantic" : "primitive"}-${token.id}`;
           const reference = activeColorLayer === "semantic"
             ? (modeData.ref
-              ? `<span class="color-reference">→ ${escapeHtml(modeData.ref)}</span>`
-              : (token.verified ? '<span class="color-reference verified">已验证原始值</span>' : '<span class="color-reference raw">原始值 · 待改 alias</span>'))
-            : '<span class="color-reference raw">无功能语义</span>';
+              ? `<span class="color-reference">→ ${escapeHtml(colorDisplayText(modeData.ref))}</span>`
+              : (token.verified
+                ? `<span class="color-reference verified">${readmeLanguage === "zh" ? "已验证原始值" : "Verified raw value"}</span>`
+                : `<span class="color-reference raw">${readmeLanguage === "zh" ? "原始值 · 待改 alias" : "Raw value · alias pending"}</span>`))
+            : `<span class="color-reference raw">${readmeLanguage === "zh" ? "无功能语义" : "No functional meaning"}</span>`;
           const audit = token.review
-            ? `<span class="color-audit">${token.usageVerified ? '<span class="color-ok">用途已验证</span>' : ""}<span class="color-review" title="${escapeHtml(token.review)}">${escapeHtml(token.reviewMode ? `${token.reviewMode} 待校对` : "待校对")}</span></span>`
-            : (token.verified ? '<span class="color-ok">已验证</span>' : (activeColorLayer === "semantic" ? '<span class="color-ok">Alias OK</span>' : '<span class="color-ok">Source</span>'));
-          const usage = token.usage ? `<span class="color-usage">${escapeHtml(token.usage)}</span>` : "";
-          return `<tr><td><span class="color-swatch" style="--swatch:${escapeHtml(modeData.value)}" title="${escapeHtml(modeData.value)}"></span></td><td><span class="color-variable">${escapeHtml(token.name)}</span>${usage}</td><td>${reference}</td><td><code>${escapeHtml(modeData.value)}</code></td><td><code>${escapeHtml(cssName)}</code></td><td>${audit}</td></tr>`;
-        }).join("") : '<tr><td class="color-empty" colspan="6">没有匹配的颜色变量</td></tr>';
+            ? `<span class="color-audit">${token.usageVerified ? `<span class="color-ok">${readmeLanguage === "zh" ? "用途已验证" : "Usage verified"}</span>` : ""}<span class="color-review" title="${escapeHtml(colorDisplayText(token.review))}">${escapeHtml(token.reviewMode ? `${token.reviewMode} ${readmeLanguage === "zh" ? "待校对" : "review pending"}` : (readmeLanguage === "zh" ? "待校对" : "Review pending"))}</span></span>`
+            : (token.verified ? `<span class="color-ok">${readmeLanguage === "zh" ? "已验证" : "Verified"}</span>` : (activeColorLayer === "semantic" ? '<span class="color-ok">Alias OK</span>' : '<span class="color-ok">Source</span>'));
+          const usage = token.usage ? `<span class="color-usage">${escapeHtml(colorDisplayText(token.usage))}</span>` : "";
+          return `<tr><td><span class="color-swatch" style="--swatch:${escapeHtml(modeData.value)}" title="${escapeHtml(modeData.value)}"></span></td><td><span class="color-variable">${escapeHtml(colorDisplayText(token.name))}</span>${usage}</td><td>${reference}</td><td><code>${escapeHtml(modeData.value)}</code></td><td><code>${escapeHtml(cssName)}</code></td><td>${audit}</td></tr>`;
+        }).join("") : `<tr><td class="color-empty" colspan="6">${readmeLanguage === "zh" ? "没有匹配的颜色变量" : "No matching color variables"}</td></tr>`;
         colorResults.textContent = readmeLanguage === "zh"
           ? `显示 ${visible.length} / ${source.length} 个${activeColorLayer === "semantic" ? "语义化" : "元数据"}颜色 · ${mode === "light" ? "Light" : "Dark"} 模式`
           : `Showing ${visible.length} / ${source.length} ${activeColorLayer === "semantic" ? "semantic" : "primitive"} colours · ${mode === "light" ? "Light" : "Dark"} mode`;
@@ -1698,19 +1758,19 @@ Shared implementation rules:
           const itemMarkup = group === "Brand"
             ? (() => {
                 const categorized = brandCategoryOrder.map(category => {
-                  const categoryItems = groupItems.filter(item => item.category === category);
+                  const categoryItems = groupItems.filter(item => item.category === category).sort(compareNavItems);
                   if (!categoryItems.length) return "";
                   const categoryStateKey = `subgroup:${group}:${category}`;
                   const categoryOpen = navOpenState[categoryStateKey] !== false;
                   return `<details class="nav-subgroup" data-nav-state-key="${escapeHtml(categoryStateKey)}"${categoryOpen ? " open" : ""}><summary class="nav-subgroup-toggle"><span class="nav-subgroup-chevron" aria-hidden="true">${stemuiIcon("line_chevron-up")}</span><span>${escapeHtml(category)}</span></summary><div class="nav-subgroup-items">${categoryItems.map(renderItem).join("")}</div></details>`;
                 }).join("");
-                const uncategorized = groupItems.filter(item => !item.category).map(renderItem).join("");
+                const uncategorized = groupItems.filter(item => !item.category).sort(compareNavItems).map(renderItem).join("");
                 return `${categorized}${uncategorized}`;
               })()
             : group === "Components"
             ? (() => {
                 const renderCategory = category => {
-                const categoryItems = groupItems.filter(item => item.category === category);
+                const categoryItems = groupItems.filter(item => item.category === category).sort(compareNavItems);
                 if (!categoryItems.length) return "";
                 // A category is useful only when it groups multiple real components.
                 // Singletons (for example Overview and Button) stay as direct entries.
@@ -1722,11 +1782,11 @@ return `<details class="nav-subgroup" data-nav-state-key="${escapeHtml(categoryS
                 // Overview remains first; ungrouped real components (for example
                 // Button) follow it as direct entries, without a synthetic category.
                 const overview = renderCategory("Overview");
-                const uncategorized = groupItems.filter(item => !item.category).map(renderItem).join("");
+                const uncategorized = groupItems.filter(item => !item.category).sort(compareNavItems).map(renderItem).join("");
                 const remaining = componentCategoryOrder.filter(category => category !== "Overview").map(renderCategory).join("");
                 return `${overview}${uncategorized}${remaining}`;
               })()
-            : groupItems.map(renderItem).join("");
+            : [...groupItems].sort(compareNavItems).map(renderItem).join("");
           const groupStateKey = `group:${group}`;
           const groupOpen = navOpenState[groupStateKey] !== false;
 return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKey)}"${groupOpen ? " open" : ""}><summary><span class="nav-group-chevron" aria-hidden="true">${stemuiIcon("line_chevron-up")}</span><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span><span class="nav-group-label">${escapeHtml(groupLabels[group])}</span><span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
@@ -1759,7 +1819,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       function mountFrameStepper() {
         const frameDocument = previewFrame.contentDocument;
         if (!frameDocument?.body || !contentStepperTemplate) return;
-        const contentRoot = frameDocument.querySelector("main, .page, #root") || frameDocument.body;
+        const contentRoot = frameDocument.querySelector(".aisee-common-document, main, .page, #root") || frameDocument.body;
         frameDocument.querySelector("[data-aisee-doc-stepper]")?.remove();
         frameDocument.getElementById("aisee-doc-stepper-style")?.remove();
 

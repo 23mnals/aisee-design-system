@@ -2,6 +2,20 @@
 
 此文件记录团队对基础规范的后续澄清。发生冲突时，顺序为：本文件最新决策 → 当前 dApp spec → 历史文件。
 
+## 2026-09-15 — Common 文档与 Dropdown 精确样式
+
+- Brand / Common 的现行文档内容使用与 Current 组件页一致的 640px 居中结构：标题和描述在白色详情卡上方，详情卡内展示 Overview / Examples 等具体内容；上一项 / 下一项箭头位于标题区右上角，不能压在卡片内容或元信息上。
+- Dropdown 菜单中相邻选项的垂直间距统一为 4px；组件源码与详情页全部示例必须同步，不能只修其中一处。
+- Filter 组合以 Figma `38:82016` 为权威：面板约 320px 宽、1px `#111` 描边、16px 圆角、白底；面板内垂直间距 12px，上 17px、左右 17px、下 25px；分隔线为 8% 黑。
+- Filter 未选项高 24px、圆角 8px、背景 `#FAFAFA`、1px `rgba(17,17,17,.06)` 描边、Karla 12px / 500、文字 `#3D3D3A`；选中项为 `#111` 背景和白字。不得改成胶囊形或自行替换颜色。
+- Dropdown 详情页上半区用于展示 Single、Multi、Filter、Input 四种基础交互模式；下半区用单一 Variant Playground 切换 Compact menu、Search + action、Filter panel 与 Grouped account 等 Figma 组合，并保留当前变体的真实交互和参数说明，避免平铺成两套重复示例。
+- Dropdown Demo 的 Composition 选择器使用项目自定义触发器与菜单，不使用浏览器原生 `select`；箭头复用 Sidebar 的 `line_chevron-up.svg` 线性图标并随展开状态旋转。
+- Dropdown 的 Fluid Hover 已从预览同步为 Current 默认行为：菜单内只使用一个共享的 5% 黑色高亮层，跨 4px 间隙连续跟随最近可用选项；指针停留在同一项时不重复测量或重启动画，空隙命中按动画帧合并；禁用项不参与，键盘焦点同步，点击间隙选择当前高亮项，并遵循 reduced-motion。React API 可用 `fluidHover={false}` 关闭，用 `gapClick` 控制间隙点击。
+- Dropdown 富选项的独立行操作使用 `item.action`。24px 操作按钮不常驻：默认隐藏，行 hover 或 `focus-within` 时以灰底灰描边出现，按钮自身 hover 后才使用 Post 黄色；不得把黄色 hover 状态当默认样式。
+- Common 页面中的说明卡使用完整灰色描边和左侧品牌强调线；Logo 示例按用途拆成独立有描边的样本卡，避免无分组的松散排版。
+- Components / Content & Status / Avatar 分为两套不可混用的头像库：22 个方形头像用于网站用户注册时按稳定用户 seed 分配；24 个带灰色描边的圆形头像仅在发布 Post 且无法抓取用户社交媒体头像时按稳定社交账号 seed 兜底。资产以 Figma `98:180630` 为权威；Generated extensions 未确认前不进入自动分配资源池。
+- Empty State 插图节点 `42:11910` 表示“暂无报告记录”，名称统一为 `No report data`，不能作为成功状态使用；对应示例说明当前没有报告数据，并以 `Add product URL` 引导用户发起分析。
+
 ## 2026-09-11 — 用户追加的通用组件与字体规则
 
 - 设计系统所有页面统一 Karla，包括 Brand、Legacy 展示、控件、表格、代码提示与 Score Gauge。覆盖下方早期字体分域及 Digital Numbers 例外；保留历史字体资产不代表继续使用。

@@ -1,0 +1,715 @@
+<svg width="1072" height="64" viewBox="0 0 1072 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1072" height="64" fill="#F5F5F5"/>
+<g id="avatar">
+<rect width="2328" height="128" transform="translate(-32 -32)" fill="white"/>
+<g id="avatar_dapp_&#230;&#150;&#185;&#229;&#157;&#151;">
+<rect x="0.5" y="0.5" width="1071" height="63" rx="4.5" stroke="#9747FF" stroke-dasharray="10 5"/>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=001" clip-path="url(#clip0_42_10093)">
+<rect id="Rectangle 3473156" x="20" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group">
+<mask id="mask0_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="20" y="20" width="24" height="24">
+<path id="Rectangle 3473157" d="M20 26C20 22.6863 22.6863 20 26 20H38C41.3137 20 44 22.6863 44 26V44H20V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask0_42_10093)">
+<g id="Background">
+<path d="M20 34C20 27.3726 25.3726 22 32 22C38.6274 22 44 27.3726 44 34V46H20V34Z" fill="#FFDD06"/>
+<g id="Mask Group">
+<mask id="mask1_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="25" y="26" width="14" height="7">
+<g id="Mask" clip-path="url(#clip1_42_10093)">
+<path id="Vector" d="M25.1625 29.5544C29.7176 25.5242 34.2726 25.5242 38.8277 29.5544C34.2726 33.5847 29.7176 33.5847 25.1625 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask1_42_10093)">
+<g id="Background_2">
+<rect width="13.6595" height="6.06619" transform="translate(25.1626 26.5317)" fill="white"/>
+<rect id="Background_3" x="31" y="27.9995" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=022" clip-path="url(#clip2_42_10093)">
+<rect id="Rectangle 3473156_2" x="1028" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_2">
+<mask id="mask2_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1028" y="20" width="24" height="24">
+<path id="Rectangle 3473157_2" d="M1028 26C1028 22.6863 1030.69 20 1034 20H1046C1049.31 20 1052 22.6863 1052 26V44H1028V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask2_42_10093)">
+<g id="Background_4">
+<path d="M1028 34C1028 27.3726 1033.37 22 1040 22C1046.63 22 1052 27.3726 1052 34V46H1028V34Z" fill="#C9FE12"/>
+<g id="Mask Group_2">
+<mask id="mask3_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1033" y="26" width="14" height="7">
+<g id="Mask_2" clip-path="url(#clip3_42_10093)">
+<path id="Vector_2" d="M1033.16 29.5544C1037.72 25.5242 1042.27 25.5242 1046.83 29.5544C1042.27 33.5847 1037.72 33.5847 1033.16 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask3_42_10093)">
+<g id="Background_5">
+<rect width="13.6595" height="6.06619" transform="translate(1033.16 26.5317)" fill="white"/>
+<rect id="Background_6" x="1041.4" y="26.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=002" clip-path="url(#clip4_42_10093)">
+<rect id="Rectangle 3473156_3" x="68" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_3">
+<mask id="mask4_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="68" y="20" width="24" height="24">
+<path id="Rectangle 3473157_3" d="M68 26C68 22.6863 70.6863 20 74 20H86C89.3137 20 92 22.6863 92 26V44H68V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask4_42_10093)">
+<g id="Background_7">
+<path d="M68 34C68 27.3726 73.3726 22 80 22C86.6274 22 92 27.3726 92 34V46H68V34Z" fill="#FFB9B9"/>
+<g id="Mask Group_3">
+<mask id="mask5_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="73" y="26" width="14" height="7">
+<g id="Mask_3" clip-path="url(#clip5_42_10093)">
+<path id="Vector_3" d="M73.1626 29.5544C77.7176 25.5242 82.2727 25.5242 86.8277 29.5544C82.2727 33.5847 77.7176 33.5847 73.1626 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask5_42_10093)">
+<g id="Background_8">
+<rect width="13.6595" height="6.06619" transform="translate(73.1626 26.5317)" fill="white"/>
+<rect id="Background_9" x="77" y="24.9995" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=003" clip-path="url(#clip6_42_10093)">
+<rect id="Rectangle 3473156_4" x="116" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_4">
+<mask id="mask6_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="116" y="20" width="24" height="24">
+<path id="Rectangle 3473157_4" d="M116 26C116 22.6863 118.686 20 122 20H134C137.314 20 140 22.6863 140 26V44H116V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask6_42_10093)">
+<g id="Background_10">
+<path d="M116 34C116 27.3726 121.373 22 128 22C134.627 22 140 27.3726 140 34V46H116V34Z" fill="#D3F6A8"/>
+<g id="Mask Group_4">
+<mask id="mask7_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="121" y="26" width="14" height="7">
+<g id="Mask_4" clip-path="url(#clip7_42_10093)">
+<path id="Vector_4" d="M121.163 29.5544C125.718 25.5242 130.273 25.5242 134.828 29.5544C130.273 33.5847 125.718 33.5847 121.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask7_42_10093)">
+<g id="Background_11">
+<rect width="13.6595" height="6.06619" transform="translate(121.163 26.5317)" fill="white"/>
+<rect id="Background_12" x="125" y="27.9995" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=004" clip-path="url(#clip8_42_10093)">
+<rect id="Rectangle 3473156_5" x="164" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_5">
+<mask id="mask8_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="164" y="20" width="24" height="24">
+<path id="Rectangle 3473157_5" d="M164 26C164 22.6863 166.686 20 170 20H182C185.314 20 188 22.6863 188 26V44H164V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask8_42_10093)">
+<g id="Background_13">
+<path d="M164 34C164 27.3726 169.373 22 176 22C182.627 22 188 27.3726 188 34V46H164V34Z" fill="#EC5212"/>
+<g id="Mask Group_5">
+<mask id="mask9_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="169" y="26" width="14" height="7">
+<g id="Mask_5" clip-path="url(#clip9_42_10093)">
+<path id="Vector_5" d="M169.163 29.5544C173.718 25.5242 178.273 25.5242 182.828 29.5544C178.273 33.5847 173.718 33.5847 169.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask9_42_10093)">
+<g id="Background_14">
+<rect width="13.6595" height="6.06619" transform="translate(169.163 26.5317)" fill="white"/>
+<rect id="Background_15" x="170.402" y="27.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=005" clip-path="url(#clip10_42_10093)">
+<rect id="Rectangle 3473156_6" x="212" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_6">
+<mask id="mask10_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="212" y="20" width="24" height="24">
+<path id="Rectangle 3473157_6" d="M212 26C212 22.6863 214.686 20 218 20H230C233.314 20 236 22.6863 236 26V44H212V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask10_42_10093)">
+<g id="Background_16">
+<path d="M212 34C212 27.3726 217.373 22 224 22C230.627 22 236 27.3726 236 34V46H212V34Z" fill="#4353FF"/>
+<g id="Mask Group_6">
+<mask id="mask11_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="217" y="26" width="14" height="7">
+<g id="Mask_6" clip-path="url(#clip11_42_10093)">
+<path id="Vector_6" d="M217.163 29.5544C221.718 25.5242 226.273 25.5242 230.828 29.5544C226.273 33.5847 221.718 33.5847 217.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask11_42_10093)">
+<g id="Background_17">
+<rect width="13.6595" height="6.06619" transform="translate(217.163 26.5317)" fill="white"/>
+<rect id="Background_18" x="221" y="28.9995" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=006" clip-path="url(#clip12_42_10093)">
+<rect id="Rectangle 3473156_7" x="260" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_7">
+<mask id="mask12_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="260" y="20" width="24" height="24">
+<path id="Rectangle 3473157_7" d="M260 26C260 22.6863 262.686 20 266 20H278C281.314 20 284 22.6863 284 26V44H260V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask12_42_10093)">
+<g id="Background_19">
+<path d="M260 34C260 27.3726 265.373 22 272 22C278.627 22 284 27.3726 284 34V46H260V34Z" fill="#C9FE12"/>
+<g id="Mask Group_7">
+<mask id="mask13_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="265" y="26" width="14" height="7">
+<g id="Mask_7" clip-path="url(#clip13_42_10093)">
+<path id="Vector_7" d="M265.163 29.5544C269.718 25.5242 274.273 25.5242 278.828 29.5544C274.273 33.5847 269.718 33.5847 265.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask13_42_10093)">
+<g id="Background_20">
+<rect width="13.6595" height="6.06619" transform="translate(265.163 26.5317)" fill="white"/>
+<rect id="Background_21" x="270.402" y="28.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=007" clip-path="url(#clip14_42_10093)">
+<rect id="Rectangle 3473156_8" x="308" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_8">
+<mask id="mask14_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="308" y="20" width="24" height="24">
+<path id="Rectangle 3473157_8" d="M308 26C308 22.6863 310.686 20 314 20H326C329.314 20 332 22.6863 332 26V44H308V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask14_42_10093)">
+<g id="Background_22">
+<path d="M308 34C308 27.3726 313.373 22 320 22C326.627 22 332 27.3726 332 34V46H308V34Z" fill="#A7ACF6"/>
+<g id="Mask Group_8">
+<mask id="mask15_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="313" y="26" width="14" height="7">
+<g id="Mask_8" clip-path="url(#clip15_42_10093)">
+<path id="Vector_8" d="M313.163 29.5544C317.718 25.5242 322.273 25.5242 326.828 29.5544C322.273 33.5847 317.718 33.5847 313.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask15_42_10093)">
+<g id="Background_23">
+<rect width="13.6595" height="6.06619" transform="translate(313.163 26.5317)" fill="white"/>
+<rect id="Background_24" x="316.402" y="23.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=008" clip-path="url(#clip16_42_10093)">
+<rect id="Rectangle 3473156_9" x="356" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_9">
+<mask id="mask16_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="356" y="20" width="24" height="24">
+<path id="Rectangle 3473157_9" d="M356 26C356 22.6863 358.686 20 362 20H374C377.314 20 380 22.6863 380 26V44H356V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask16_42_10093)">
+<g id="Background_25">
+<path d="M356 34C356 27.3726 361.373 22 368 22C374.627 22 380 27.3726 380 34V46H356V34Z" fill="#43C65D"/>
+<g id="Mask Group_9">
+<mask id="mask17_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="361" y="26" width="14" height="7">
+<g id="Mask_9" clip-path="url(#clip17_42_10093)">
+<path id="Vector_9" d="M361.163 29.5544C365.718 25.5242 370.273 25.5242 374.828 29.5544C370.273 33.5847 365.718 33.5847 361.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask17_42_10093)">
+<g id="Background_26">
+<rect width="13.6595" height="6.06619" transform="translate(361.163 26.5317)" fill="white"/>
+<rect id="Background_27" x="363.402" y="27.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=009" clip-path="url(#clip18_42_10093)">
+<rect id="Rectangle 3473156_10" x="404" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_10">
+<mask id="mask18_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="404" y="20" width="24" height="24">
+<path id="Rectangle 3473157_10" d="M404 26C404 22.6863 406.686 20 410 20H422C425.314 20 428 22.6863 428 26V44H404V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask18_42_10093)">
+<g id="Background_28">
+<path d="M404 34C404 27.3726 409.373 22 416 22C422.627 22 428 27.3726 428 34V46H404V34Z" fill="#FC594C"/>
+<g id="Mask Group_10">
+<mask id="mask19_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="409" y="26" width="14" height="7">
+<g id="Mask_10" clip-path="url(#clip19_42_10093)">
+<path id="Vector_10" d="M409.163 29.5544C413.718 25.5242 418.273 25.5242 422.828 29.5544C418.273 33.5847 413.718 33.5847 409.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask19_42_10093)">
+<g id="Background_29">
+<rect width="13.6595" height="6.06619" transform="translate(409.163 26.5317)" fill="white"/>
+<rect id="Background_30" x="414.402" y="29.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=010" clip-path="url(#clip20_42_10093)">
+<rect id="Rectangle 3473156_11" x="452" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_11">
+<mask id="mask20_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="452" y="20" width="24" height="24">
+<path id="Rectangle 3473157_11" d="M452 26C452 22.6863 454.686 20 458 20H470C473.314 20 476 22.6863 476 26V44H452V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask20_42_10093)">
+<g id="Background_31">
+<path d="M452 34C452 27.3726 457.373 22 464 22C470.627 22 476 27.3726 476 34V46H452V34Z" fill="#A7CBF6"/>
+<g id="Mask Group_11">
+<mask id="mask21_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="457" y="26" width="14" height="7">
+<g id="Mask_11" clip-path="url(#clip21_42_10093)">
+<path id="Vector_11" d="M457.163 29.5544C461.718 25.5242 466.273 25.5242 470.828 29.5544C466.273 33.5847 461.718 33.5847 457.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask21_42_10093)">
+<g id="Background_32">
+<rect width="13.6595" height="6.06619" transform="translate(457.163 26.5317)" fill="white"/>
+<rect id="Background_33" x="459.402" y="25.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=011" clip-path="url(#clip22_42_10093)">
+<rect id="Rectangle 3473156_12" x="500" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_12">
+<mask id="mask22_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="500" y="20" width="24" height="24">
+<path id="Rectangle 3473157_12" d="M500 26C500 22.6863 502.686 20 506 20H518C521.314 20 524 22.6863 524 26V44H500V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask22_42_10093)">
+<g id="Background_34">
+<path d="M500 34C500 27.3726 505.373 22 512 22C518.627 22 524 27.3726 524 34V46H500V34Z" fill="#FCEB63"/>
+<g id="Mask Group_12">
+<mask id="mask23_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="505" y="26" width="14" height="7">
+<g id="Mask_12" clip-path="url(#clip23_42_10093)">
+<path id="Vector_12" d="M505.163 29.5544C509.718 25.5242 514.273 25.5242 518.828 29.5544C514.273 33.5847 509.718 33.5847 505.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask23_42_10093)">
+<g id="Background_35">
+<rect width="13.6595" height="6.06619" transform="translate(505.163 26.5317)" fill="white"/>
+<rect id="Background_36" x="511.402" y="27.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=012" clip-path="url(#clip24_42_10093)">
+<rect id="Rectangle 3473156_13" x="548" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_13">
+<mask id="mask24_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="548" y="20" width="24" height="24">
+<path id="Rectangle 3473157_13" d="M548 26C548 22.6863 550.686 20 554 20H566C569.314 20 572 22.6863 572 26V44H548V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask24_42_10093)">
+<g id="Background_37">
+<path d="M548 34C548 27.3726 553.373 22 560 22C566.627 22 572 27.3726 572 34V46H548V34Z" fill="#426746"/>
+<g id="Mask Group_13">
+<mask id="mask25_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="553" y="26" width="14" height="7">
+<g id="Mask_13" clip-path="url(#clip25_42_10093)">
+<path id="Vector_13" d="M553.163 29.5544C557.718 25.5242 562.273 25.5242 566.828 29.5544C562.273 33.5847 557.718 33.5847 553.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask25_42_10093)">
+<g id="Background_38">
+<rect width="13.6595" height="6.06619" transform="translate(553.163 26.5317)" fill="white"/>
+<rect id="Background_39" x="557.402" y="26.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=013" clip-path="url(#clip26_42_10093)">
+<rect id="Rectangle 3473156_14" x="596" y="20" width="24" height="24" fill="#CFFF29"/>
+<g id="Mask group_14">
+<mask id="mask26_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="596" y="20" width="24" height="24">
+<path id="Rectangle 3473157_14" d="M596 26C596 22.6863 598.686 20 602 20H614C617.314 20 620 22.6863 620 26V44H596V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask26_42_10093)">
+<g id="Background_40">
+<path d="M596 34C596 27.3726 601.373 22 608 22C614.627 22 620 27.3726 620 34V46H596V34Z" fill="#111111"/>
+<g id="Mask Group_14">
+<mask id="mask27_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="601" y="26" width="14" height="7">
+<g id="Mask_14" clip-path="url(#clip27_42_10093)">
+<path id="Vector_14" d="M601.163 29.5544C605.718 25.5242 610.273 25.5242 614.828 29.5544C610.273 33.5847 605.718 33.5847 601.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask27_42_10093)">
+<g id="Background_41">
+<rect width="13.6595" height="6.06619" transform="translate(601.163 26.5317)" fill="white"/>
+<rect id="Background_42" x="606.402" y="27.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=014" clip-path="url(#clip28_42_10093)">
+<rect id="Rectangle 3473156_15" x="644" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_15">
+<mask id="mask28_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="644" y="20" width="24" height="24">
+<path id="Rectangle 3473157_15" d="M644 26C644 22.6863 646.686 20 650 20H662C665.314 20 668 22.6863 668 26V44H644V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask28_42_10093)">
+<g id="Background_43">
+<path d="M644 34C644 27.3726 649.373 22 656 22C662.627 22 668 27.3726 668 34V46H644V34Z" fill="#FF7A06"/>
+<g id="Mask Group_15">
+<mask id="mask29_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="649" y="26" width="14" height="7">
+<g id="Mask_15" clip-path="url(#clip29_42_10093)">
+<path id="Vector_15" d="M649.163 29.5544C653.718 25.5242 658.273 25.5242 662.828 29.5544C658.273 33.5847 653.718 33.5847 649.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask29_42_10093)">
+<g id="Background_44">
+<rect width="13.6595" height="6.06619" transform="translate(649.163 26.5317)" fill="white"/>
+<rect id="Background_45" x="656.402" y="28.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=015" clip-path="url(#clip30_42_10093)">
+<rect id="Rectangle 3473156_16" x="692" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_16">
+<mask id="mask30_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="692" y="20" width="24" height="24">
+<path id="Rectangle 3473157_16" d="M692 26C692 22.6863 694.686 20 698 20H710C713.314 20 716 22.6863 716 26V44H692V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask30_42_10093)">
+<g id="Background_46">
+<path d="M692 34C692 27.3726 697.373 22 704 22C710.627 22 716 27.3726 716 34V46H692V34Z" fill="#E93A2C"/>
+<g id="Mask Group_16">
+<mask id="mask31_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="697" y="26" width="14" height="7">
+<g id="Mask_16" clip-path="url(#clip31_42_10093)">
+<path id="Vector_16" d="M697.163 29.5544C701.718 25.5242 706.273 25.5242 710.828 29.5544C706.273 33.5847 701.718 33.5847 697.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask31_42_10093)">
+<g id="Background_47">
+<rect width="13.6595" height="6.06619" transform="translate(697.163 26.5317)" fill="white"/>
+<rect id="Background_48" x="698.402" y="23.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=016" clip-path="url(#clip32_42_10093)">
+<rect id="Rectangle 3473156_17" x="740" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_17">
+<mask id="mask32_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="740" y="20" width="24" height="24">
+<path id="Rectangle 3473157_17" d="M740 26C740 22.6863 742.686 20 746 20H758C761.314 20 764 22.6863 764 26V44H740V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask32_42_10093)">
+<g id="Background_49">
+<path d="M740 34C740 27.3726 745.373 22 752 22C758.627 22 764 27.3726 764 34V46H740V34Z" fill="#FF88B5"/>
+<g id="Mask Group_17">
+<mask id="mask33_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="745" y="26" width="14" height="7">
+<g id="Mask_17" clip-path="url(#clip33_42_10093)">
+<path id="Vector_17" d="M745.163 29.5544C749.718 25.5242 754.273 25.5242 758.828 29.5544C754.273 33.5847 749.718 33.5847 745.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask33_42_10093)">
+<g id="Background_50">
+<rect width="13.6595" height="6.06619" transform="translate(745.163 26.5317)" fill="white"/>
+<rect id="Background_51" x="753.402" y="27.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=017" clip-path="url(#clip34_42_10093)">
+<rect id="Rectangle 3473156_18" x="788" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_18">
+<mask id="mask34_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="788" y="20" width="24" height="24">
+<path id="Rectangle 3473157_18" d="M788 26C788 22.6863 790.686 20 794 20H806C809.314 20 812 22.6863 812 26V44H788V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask34_42_10093)">
+<g id="Background_52">
+<path d="M788 34C788 27.3726 793.373 22 800 22C806.627 22 812 27.3726 812 34V46H788V34Z" fill="#A5D500"/>
+<g id="Mask Group_18">
+<mask id="mask35_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="793" y="26" width="14" height="7">
+<g id="Mask_18" clip-path="url(#clip35_42_10093)">
+<path id="Vector_18" d="M793.163 29.5544C797.718 25.5242 802.273 25.5242 806.828 29.5544C802.273 33.5847 797.718 33.5847 793.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask35_42_10093)">
+<g id="Background_53">
+<rect width="13.6595" height="6.06619" transform="translate(793.163 26.5317)" fill="white"/>
+<rect id="Background_54" x="792.402" y="26.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=018" clip-path="url(#clip36_42_10093)">
+<rect id="Rectangle 3473156_19" x="836" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_19">
+<mask id="mask36_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="836" y="20" width="24" height="24">
+<path id="Rectangle 3473157_19" d="M836 26C836 22.6863 838.686 20 842 20H854C857.314 20 860 22.6863 860 26V44H836V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask36_42_10093)">
+<g id="Background_55">
+<path d="M836 34C836 27.3726 841.373 22 848 22C854.627 22 860 27.3726 860 34V46H836V34Z" fill="#8D57EA"/>
+<g id="Mask Group_19">
+<mask id="mask37_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="841" y="26" width="14" height="7">
+<g id="Mask_19" clip-path="url(#clip37_42_10093)">
+<path id="Vector_19" d="M841.163 29.5544C845.718 25.5242 850.273 25.5242 854.828 29.5544C850.273 33.5847 845.718 33.5847 841.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask37_42_10093)">
+<g id="Background_56">
+<rect width="13.6595" height="6.06619" transform="translate(841.163 26.5317)" fill="white"/>
+<rect id="Background_57" x="846.402" y="27.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=019" clip-path="url(#clip38_42_10093)">
+<rect id="Rectangle 3473156_20" x="884" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_20">
+<mask id="mask38_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="884" y="20" width="24" height="24">
+<path id="Rectangle 3473157_20" d="M884 26C884 22.6863 886.686 20 890 20H902C905.314 20 908 22.6863 908 26V44H884V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask38_42_10093)">
+<g id="Background_58">
+<path d="M884 34C884 27.3726 889.373 22 896 22C902.627 22 908 27.3726 908 34V46H884V34Z" fill="#A7CBF6"/>
+<g id="Mask Group_20">
+<mask id="mask39_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="889" y="26" width="14" height="7">
+<g id="Mask_20" clip-path="url(#clip39_42_10093)">
+<path id="Vector_20" d="M889.163 29.5544C893.718 25.5242 898.273 25.5242 902.828 29.5544C898.273 33.5847 893.718 33.5847 889.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask39_42_10093)">
+<g id="Background_59">
+<rect width="13.6595" height="6.06619" transform="translate(889.163 26.5317)" fill="white"/>
+<rect id="Background_60" x="892.402" y="25.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=020" clip-path="url(#clip40_42_10093)">
+<rect id="Rectangle 3473156_21" x="932" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_21">
+<mask id="mask40_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="932" y="20" width="24" height="24">
+<path id="Rectangle 3473157_21" d="M932 26C932 22.6863 934.686 20 938 20H950C953.314 20 956 22.6863 956 26V44H932V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask40_42_10093)">
+<g id="Background_61">
+<path d="M932 34C932 27.3726 937.373 22 944 22C950.627 22 956 27.3726 956 34V46H932V34Z" fill="#90F4F8"/>
+<g id="Mask Group_21">
+<mask id="mask41_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="937" y="26" width="14" height="7">
+<g id="Mask_21" clip-path="url(#clip41_42_10093)">
+<path id="Vector_21" d="M937.163 29.5544C941.718 25.5242 946.273 25.5242 950.828 29.5544C946.273 33.5847 941.718 33.5847 937.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask41_42_10093)">
+<g id="Background_62">
+<rect width="13.6595" height="6.06619" transform="translate(937.163 26.5317)" fill="white"/>
+<rect id="Background_63" x="940.402" y="25.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="&#229;&#186;&#143;&#229;&#143;&#183;=021" clip-path="url(#clip42_42_10093)">
+<rect id="Rectangle 3473156_22" x="980" y="20" width="24" height="24" fill="#111111"/>
+<g id="Mask group_22">
+<mask id="mask42_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="980" y="20" width="24" height="24">
+<path id="Rectangle 3473157_22" d="M980 26C980 22.6863 982.686 20 986 20H998C1001.31 20 1004 22.6863 1004 26V44H980V26Z" fill="#C9FE12"/>
+</mask>
+<g mask="url(#mask42_42_10093)">
+<g id="Background_64">
+<path d="M980 34C980 27.3726 985.373 22 992 22C998.627 22 1004 27.3726 1004 34V46H980V34Z" fill="#EFF2F6"/>
+<g id="Mask Group_22">
+<mask id="mask43_42_10093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="985" y="26" width="14" height="7">
+<g id="Mask_22" clip-path="url(#clip43_42_10093)">
+<path id="Vector_22" d="M985.163 29.5544C989.718 25.5242 994.273 25.5242 998.828 29.5544C994.273 33.5847 989.718 33.5847 985.163 29.5544Z" fill="black"/>
+</g>
+</mask>
+<g mask="url(#mask43_42_10093)">
+<g id="Background_65">
+<rect width="13.6595" height="6.06619" transform="translate(985.163 26.5317)" fill="white"/>
+<rect id="Background_66" x="989.402" y="22.4414" width="6.11909" height="6.06619" rx="3.0331" fill="#111111"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(20 20)"/>
+</clipPath>
+<clipPath id="clip1_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(25.1626 26.5317)"/>
+</clipPath>
+<clipPath id="clip2_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(1028 20)"/>
+</clipPath>
+<clipPath id="clip3_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(1033.16 26.5317)"/>
+</clipPath>
+<clipPath id="clip4_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(68 20)"/>
+</clipPath>
+<clipPath id="clip5_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(73.1626 26.5317)"/>
+</clipPath>
+<clipPath id="clip6_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(116 20)"/>
+</clipPath>
+<clipPath id="clip7_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(121.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip8_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(164 20)"/>
+</clipPath>
+<clipPath id="clip9_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(169.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip10_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(212 20)"/>
+</clipPath>
+<clipPath id="clip11_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(217.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip12_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(260 20)"/>
+</clipPath>
+<clipPath id="clip13_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(265.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip14_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(308 20)"/>
+</clipPath>
+<clipPath id="clip15_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(313.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip16_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(356 20)"/>
+</clipPath>
+<clipPath id="clip17_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(361.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip18_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(404 20)"/>
+</clipPath>
+<clipPath id="clip19_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(409.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip20_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(452 20)"/>
+</clipPath>
+<clipPath id="clip21_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(457.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip22_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(500 20)"/>
+</clipPath>
+<clipPath id="clip23_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(505.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip24_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(548 20)"/>
+</clipPath>
+<clipPath id="clip25_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(553.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip26_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(596 20)"/>
+</clipPath>
+<clipPath id="clip27_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(601.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip28_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(644 20)"/>
+</clipPath>
+<clipPath id="clip29_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(649.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip30_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(692 20)"/>
+</clipPath>
+<clipPath id="clip31_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(697.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip32_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(740 20)"/>
+</clipPath>
+<clipPath id="clip33_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(745.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip34_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(788 20)"/>
+</clipPath>
+<clipPath id="clip35_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(793.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip36_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(836 20)"/>
+</clipPath>
+<clipPath id="clip37_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(841.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip38_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(884 20)"/>
+</clipPath>
+<clipPath id="clip39_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(889.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip40_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(932 20)"/>
+</clipPath>
+<clipPath id="clip41_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(937.163 26.5317)"/>
+</clipPath>
+<clipPath id="clip42_42_10093">
+<rect width="24" height="24" fill="white" transform="translate(980 20)"/>
+</clipPath>
+<clipPath id="clip43_42_10093">
+<rect width="13.6595" height="6.06619" fill="white" transform="translate(985.163 26.5317)"/>
+</clipPath>
+</defs>
+</svg>

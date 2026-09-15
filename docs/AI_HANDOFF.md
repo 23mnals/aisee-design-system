@@ -56,6 +56,9 @@
 - 主内容区第一块必须是 Page Banner（Figma `66:122927` 基准：76px 高、16px 圆角、4px 白色描边环、44×44 图标容器、24×24 leaf icon、Karla 20/500 标题、14/400 描述）；右侧按功能放按钮、Toggle、统计信息或留空；
 - Sidebar 遵循当前 Figma 结构：展开宽度 224px；支持收起为 58px，收起态只显示 icon。收起/展开必须使用 `assets/stemui/line_chevron-up.svg`，并提供 `aria-expanded`、`aria-controls`、键盘焦点与同浏览器状态记忆；不得恢复旧版横向 Tab Toggle；
 - 已有页面的 Banner 图标优先复用 `@stemui/icons` / 已确认插图；新页面可暂用明确标记的占位符，但发布前必须替换为对应资源；不得使用模糊截图、emoji 或临时绘制 SVG；
+- 账户、个人资料和侧边栏身份必须复用导出的 `Avatar` 组件：网站注册用户使用 22 个已确认方形头像，并用稳定用户 seed 固定匹配结果；抓取不到社交媒体头像时，才使用 24 个带灰色描边的圆形兜底头像，并用稳定社交账号 seed 固定匹配结果；不得使用通用占位头像；
+- 社交账号来源标识必须复用 `SocialAccountAvatar`：Plan 生成的 Post 使用 `postOrigin="plan"` 虚线描边，用户手动打开弹窗创建的 Post 使用 `postOrigin="manual"` 实线描边，每个标识只显示一层描边；
+- Avatar 页面中的 Generated extensions 仅为待确认预览，不进入自动分配资源池；
 - 实现 default、hover、focus、disabled、error、loading、empty 等适用状态；
 - 不把 Legacy 样式覆盖到 Current 组件；
 - 完成后列出复用的组件、使用的 tokens、与规范的任何偏差；

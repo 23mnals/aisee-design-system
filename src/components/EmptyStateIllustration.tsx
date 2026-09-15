@@ -11,7 +11,7 @@ import illustration8 from '../../assets/empty-state/library/bound.svg';
 import illustration9 from '../../assets/empty-state/library/nobody.svg';
 import illustration10 from '../../assets/empty-state/library/link.svg';
 import illustration12 from '../../assets/empty-state/library/plugin.svg';
-import illustration13 from '../../assets/empty-state/library/successful.svg';
+import illustration13 from '../../assets/empty-state/library/no-report-data.svg';
 import illustration14 from '../../assets/empty-state/library/unlock.svg';
 
 export const emptyStateIllustrations = {
@@ -27,7 +27,7 @@ export const emptyStateIllustrations = {
   'nobody': { src: illustration9, label: "Nobody", feature: "yellow", backgroundTone: 'light-yellow', nodeId: '42:11777' },
   'link': { src: illustration10, label: "Link", feature: "yellow", backgroundTone: 'light-yellow', nodeId: '42:11696' },
   'plugin': { src: illustration12, label: "Plugin", feature: "yellow", backgroundTone: 'light-yellow', nodeId: '42:11727' },
-  'successful': { src: illustration13, label: "Successful", feature: "subscription", backgroundTone: 'lime', nodeId: '42:11910' },
+  'no-report-data': { src: illustration13, label: "No report data", feature: "analysis", backgroundTone: 'lime', nodeId: '42:11910' },
   'unlock': { src: illustration14, label: "Unlock", feature: "subscription", backgroundTone: 'other', nodeId: '42:11965' },
 } as const;
 

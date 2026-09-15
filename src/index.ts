@@ -33,3 +33,4 @@ export * from './components/ScoreGauge';
 export * from './components/AiseeLogoAnimation';
 export * from './components/Chart';
 export * from './components/PlanCard';
+export * from './components/Avatar';
