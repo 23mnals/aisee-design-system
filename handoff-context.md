@@ -5,8 +5,8 @@
 ## 当前 Git
 
 - 开发分支：`ai/desktop/design-system-current`。
-- 当前 HEAD：`4aa32b1 docs: record PR 9 merge`；本地分支在本轮开始时已领先 `origin/ai/desktop/design-system-current` 1 个提交。
-- 本轮 Copy for AI、README 中英切换、文档、Overview、测试和交接文件均在本地，尚未 commit 或 push。
+- 最新功能提交：`e0aac7d feat: add component AI prompts and bilingual readme`，已推送到 `origin/ai/desktop/design-system-current`。
+- 本轮 Copy for AI、README 中英切换、文档、Overview、测试和交接记录均已同步远端开发分支。
 - `main` 最近一次正式同步为已合并的 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9)。
 
 ## 正在做
@@ -48,7 +48,7 @@
 
 ## 发布状态 / 下一步
 
-- 本轮改动未提交、未推送；用户明确要求同步后再 commit 并 push 到 `ai/desktop/design-system-current`。
+- 本轮改动已提交并推送到 `ai/desktop/design-system-current`。
 - 如需正式同步 `main`，创建 `ai/desktop/design-system-current → main` PR；只有用户明确要求时才 merge。
 - 新对话先读 `AGENTS.md` 与本文件，再检查 branch/status/log，并从当前工作区继续。
 
