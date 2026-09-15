@@ -35,13 +35,26 @@ npm run preview:local
 - v6 Foundations 与 Components 当前规范页
 - 所有保留的旧版 HTML 预览，并以 `Legacy` 标识（页面文件位于 `legacy/pages/`）
 - 目录搜索、内嵌预览、独立打开和页面链接复制
+- README 全页 English / 中文切换
+- 每个 Current 组件详情页的 `Copy for AI`，用于复制该组件的用途、交互、视觉边界与通用实施规则
 - 桌面端与移动端响应式浏览
+
+## 非开发人员如何使用组件
+
+不需要把整套 Design System Demo 交给 AI，也不需要自己从 HTML 中寻找 CSS。单组件任务按以下方式使用：
+
+1. 在门户的 **Components** 中打开需要的 `Current` 组件，先查看页面里的状态、动画和使用说明。
+2. 点击页面右上角双星图标的 **Copy for AI**。复制内容已经包含组件用途、关键交互、视觉边界、无障碍与 AISEE 通用规则。
+3. 把复制的 Prompt 连同目标页面、真实文案、真实数据和预期行为一起发给 AI。Demo 中的图标、插图、文案和数据都只是参考，AI 应根据实际功能替换。
+4. 生成后对照 Current Demo 验收适用的 default、hover、focus、disabled、loading、empty、响应式与无障碍状态。
+
+`Open HTML` 适合需要查看完整渲染实现或源码结构的开发者和 AI。`Overview` 与 `Legacy` 页面不会显示 `Copy for AI`，避免把汇总页或历史样式误当成单个 Current 组件规范。
 
 ## 交给其他 AI 平台
 
 单独上传一个 HTML 时，其他 AI 通常可以读取其中直接内嵌的文字、结构、CSS 和脚本，但不一定会执行 JavaScript，也不一定能访问相对链接的字体、图片、组件子页或 React 源码。因此，**能读到 HTML 不代表会自动按 demo 精确实现**。
 
-推荐交付公开预览 URL 或完整仓库/ZIP，并同时提供 [`docs/AI_HANDOFF.md`](docs/AI_HANDOFF.md)、[`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 与 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md)。主门户 HTML 已内嵌 `#aisee-ai-contract` JSON，供支持源码解析的平台读取来源优先级和关键规则。
+只使用一个组件时，优先复制该 Current 组件页的 `Copy for AI`，再补充目标页面需求。需要实现完整页面或跨多个组件时，推荐交付公开预览 URL 或完整仓库/ZIP，并同时提供 [`docs/AI_HANDOFF.md`](docs/AI_HANDOFF.md)、[`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 与 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md)。主门户 HTML 已内嵌 `#aisee-ai-contract` JSON，供支持源码解析的平台读取来源优先级和关键规则。
 
 GitHub 仓库启用 Pages 后，每次合并到 `main` 都会自动发布同一个入口页，团队成员只需要保存 Pages URL。也可以本地生成发布目录：
 

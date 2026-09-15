@@ -134,11 +134,13 @@
       }
       .icon-button { width: 44px; display: grid; place-items: center; }
       .icon-button svg { width: 19px; height: 19px; }
-      .action-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 0 14px; font-weight: 650; text-decoration: none; }
+      .action-button { display: inline-flex; height: 44px; min-height: 44px; align-items: center; justify-content: center; gap: 7px; padding: 0 14px; font-weight: 650; text-decoration: none; }
       .action-button:disabled { cursor: wait; opacity: .65; }
       .action-button.primary { border-color: var(--ink); background: var(--ink); color: white; }
+      .action-button.ai-copy { border-color: rgba(127,164,0,.42); background: rgba(207,255,41,.18); }
       .icon-button:hover, .action-button:hover { border-color: var(--line-strong); background: var(--surface-subtle); }
       .action-button.primary:hover { background: #343538; }
+      .action-button.ai-copy:hover { border-color: rgba(127,164,0,.68); background: rgba(207,255,41,.3); }
       .mobile-menu { display: none; }
 
       .shell { min-height: 100vh; padding-top: var(--topbar); }
@@ -333,6 +335,12 @@
       .overview-nav a { min-height: 36px; flex: 0 0 auto; display: inline-flex; align-items: center; white-space: nowrap; border-radius: 7px; color: var(--muted); padding: 0 11px; font-size: 13px; font-weight: 600; text-decoration: none; }
       .overview-nav a:hover { background: var(--surface-subtle); color: var(--ink); }
       .overview-nav a.active { background: var(--accent-soft); color: #293000; }
+      .readme-tools { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+      .readme-language { display: inline-flex; min-height: 44px; align-items: center; gap: 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 4px; }
+      .readme-language-label { color: var(--muted); padding: 0 8px; font-size: 12px; font-weight: 650; }
+      .readme-language button { min-width: 52px; min-height: 34px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); font: inherit; font-size: 13px; font-weight: 650; cursor: pointer; }
+      .readme-language button:hover { background: var(--surface-subtle); color: var(--ink); }
+      .readme-language button[aria-pressed="true"] { background: var(--accent-soft); color: #293000; box-shadow: inset 0 0 0 1px rgba(127,164,0,.28); }
       .overview-section { scroll-margin-top: calc(var(--topbar) + 74px); margin-top: 60px; border-top: 1px solid var(--line); padding-top: 34px; }
       .overview-section h2 { margin: 0; font-size: 28px; letter-spacing: -.03em; }
       .overview-section > p { max-width: 790px; margin: 10px 0 0; color: var(--muted); font-size: 16px; }
@@ -739,7 +747,8 @@
         font-weight: 400;
         line-height: 18px;
       }
-      #openStandalone {
+      #openStandalone,
+      #copyAiHeader {
         min-height: 40px;
         height: 40px;
       }
@@ -791,6 +800,13 @@
 
       <main class="main" id="main-content">
         <section class="home" id="homeView">
+          <div class="readme-tools">
+            <div class="readme-language" role="group" aria-label="README language">
+              <span class="readme-language-label">README</span>
+              <button type="button" data-readme-language="en" aria-pressed="true">EN</button>
+              <button type="button" data-readme-language="zh" aria-pressed="false">中文</button>
+            </div>
+          </div>
           <div class="hero">
             <p class="eyebrow">Latest feature page 5.7 · Design Spec v6 · Shared source of truth</p>
             <h1>Build every AISEE experience from the same system.</h1>
@@ -816,6 +832,7 @@
             <a href="#interaction">Interaction</a>
             <a href="#assets">Assets</a>
             <a href="#components-overview">Components</a>
+            <a href="#component-use">Using components</a>
             <a href="#ai-handoff">AI handoff</a>
             <a href="#versions">Versions</a>
           </nav>
@@ -966,6 +983,18 @@
             </div>
           </section>
 
+          <section class="overview-section" id="component-use" aria-labelledby="component-use-title">
+            <h2 id="component-use-title">Use components without writing code</h2>
+            <p>Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.</p>
+            <div class="principles-grid">
+              <article class="principle"><strong>1. Choose a Current component</strong><p>Open the component under Components and review its live states, motion and usage notes. Legacy pages are historical references.</p></article>
+              <article class="principle"><strong>2. Copy for AI</strong><p>Use the two-star button beside Open HTML. It copies the component intent, interaction rules, visual boundaries and AISEE-wide implementation rules.</p></article>
+              <article class="principle"><strong>3. Add the real task</strong><p>Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI should replace Demo copy, data, icons and illustrations.</p></article>
+              <article class="principle"><strong>4. Compare the result</strong><p>Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.</p></article>
+            </div>
+            <div class="priority-note"><strong>When to use Open HTML:</strong> open it when the receiving AI or developer needs the complete rendered implementation. For one-component work, Copy for AI is the fastest starting point. Overview and Legacy pages do not expose this button.</div>
+          </section>
+
           <section class="overview-section" id="ai-handoff" aria-labelledby="ai-handoff-title">
             <h2 id="ai-handoff-title">AI implementation handoff</h2>
             <p>This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.</p>
@@ -1037,6 +1066,10 @@
             </div>
             <div class="preview-actions">
               <span class="item-tag" id="previewTag"></span>
+              <button class="action-button ai-copy" id="copyAiHeader" type="button" hidden aria-label="Copy component guidance for AI" title="Copy for AI">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 4 1.2 3.1L19 8.3l-2.8 1.2L15 13l-1.2-3.5L11 8.3l2.8-1.2L15 4Z"/><path d="m7 12 .8 2.2L10 15l-2.2.8L7 18l-.8-2.2L4 15l2.2-.8L7 12Z"/></svg>
+                <span id="copyAiHeaderLabel">Copy for AI</span>
+              </button>
               <button class="action-button" id="copyTsxHeader" type="button" hidden aria-label="Copy AiseeLogoAnimation TSX">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 8.75A2.75 2.75 0 0 1 10.75 6h7.5A2.75 2.75 0 0 1 21 8.75v7.5A2.75 2.75 0 0 1 18.25 19h-7.5A2.75 2.75 0 0 1 8 16.25v-7.5Z"/><path d="M16 6V5.75A2.75 2.75 0 0 0 13.25 3h-7.5A2.75 2.75 0 0 0 3 5.75v7.5A2.75 2.75 0 0 0 5.75 16H8"/></svg>
                 <span id="copyTsxHeaderLabel">复制 TSX</span>
@@ -1082,7 +1115,8 @@
           "dialogRadius": "16px",
           "staticBorder": "rgba(17,17,17,0.05)",
           "colorArchitecture": "Pages and components must consume semantic color variables only; primitive colors are raw token-layer values.",
-          "implementation": "Reuse Current exported components and tokens; do not copy Legacy styling when a Current equivalent exists."
+          "implementation": "Reuse Current exported components and tokens; do not copy Legacy styling when a Current equivalent exists.",
+          "componentPrompt": "Every Current component detail page exposes a scoped Copy for AI prompt. Overview, Legacy, Brand and UI Kit pages do not expose it."
         },
         "handoffGuide": "docs/AI_HANDOFF.md"
       }
@@ -1091,6 +1125,360 @@
     <script>
       const colorArchitecture = JSON.parse(document.getElementById("aisee-color-architecture").textContent);
       let activeColorLayer = "semantic";
+      const readmeLanguageStorageKey = "aisee.design-system.readmeLanguage";
+      let readmeLanguage = (() => {
+        try { return localStorage.getItem(readmeLanguageStorageKey) === "zh" ? "zh" : "en"; }
+        catch (error) { return "en"; }
+      })();
+      const readmeTextSources = new WeakMap();
+      const readmeZhTranslations = new Map([
+        ["Latest feature page 5.7 · Design Spec v6 · Shared source of truth", "最新功能页 5.7 · Design Spec v6 · 统一事实来源"],
+        ["Build every AISEE experience from the same system.", "使用同一套系统构建每一个 AISEE 体验。"],
+        ["Foundations, reusable components and preserved product previews—updated from the latest dApp design specification while keeping unmatched legacy work available.", "这里汇集基础规范、可复用组件和产品预览；内容跟随最新 dApp 设计规范更新，同时保留尚未迁移的历史方案。"],
+        ["Latest registered feature page: 5.7", "最新登记功能页：5.7"],
+        ["Figma versions belong to feature pages; 5.7 adds hosted automatic publishing (Automation) under WORKFLOWS. Implementation rules follow Design Specification v6 and the latest team decisions.", "Figma 版本归属于具体功能页；5.7 在 WORKFLOWS 下新增托管自动发布（Automation）。实施规则遵循 Design Specification v6 和最新团队决策。"],
+        ["Use this system", "开始使用"],
+        ["Product", "产品"], ["Sources", "来源"], ["Content", "内容"], ["Visual", "视觉"], ["Interaction", "交互"], ["Assets", "资源"], ["Components", "组件"],
+        ["Using components", "使用组件"], ["AI handoff", "AI 交付"], ["Versions", "版本"],
+        ["Product overview", "产品概览"],
+        ["AISEE is an AI visibility and social engagement platform. Six connected capabilities form a continuous diagnose → grow → execute → verify loop, supported by reusable channel and account connections.", "AISEE 是一个 AI 可见度与社交互动平台。六项相互连接的能力形成“诊断 → 增长 → 执行 → 验证”的持续闭环，并由可复用的渠道与账号连接提供支持。"],
+        ["Measures AI visibility, citation performance, rankings and prompt coverage across generative search platforms.", "衡量各生成式搜索平台中的 AI 可见度、引用表现、排名和提示词覆盖。"],
+        ["Turns diagnostic gaps into prioritized improvement plans, key steps and measurable score-growth tasks.", "把诊断差距转化为有优先级的改进计划、关键步骤和可衡量的分数增长任务。"],
+        ["Finds relevant conversations, manages keywords and accounts, drafts replies and tracks response outcomes.", "发现相关讨论，管理关键词与账号，生成回复草稿并追踪互动结果。"],
+        ["Plans, generates, schedules and publishes social content through connected channels and calendar workflows.", "通过已连接的渠道和日历流程规划、生成、排期并发布社交内容。"],
+        ["Re-scans live visibility after execution, records score changes and verifies whether planned actions created measurable gains.", "执行后重新扫描线上可见度，记录分数变化，并验证计划行动是否带来可衡量的提升。"],
+        ["Manages the channels, social accounts and extension connections required by Growth, Engage and Post workflows.", "管理 Growth、Engage 与 Post 流程所需的渠道、社交账号和扩展连接。"],
+        ["Capability relationship:", "能力关系："],
+        ["Analysis diagnoses → Growth prioritizes → Engage and Post execute → Verify measures the result. Connection supplies the reusable account and channel layer across the loop.", "Analysis 负责诊断 → Growth 排定优先级 → Engage 与 Post 执行 → Verify 衡量结果。Connection 为整个闭环提供可复用的账号与渠道层。"],
+        ["“The future of discoverability.”", "“可发现性的未来。”"],
+        ["Products and surfaces", "产品与界面"], ["Surface", "界面"], ["Purpose", "用途"], ["Design baseline", "设计基准"], ["Typography", "字体"],
+        ["Marketing homepage", "营销官网"], ["Public brand story, product value, FAQ and pricing.", "公开品牌叙事、产品价值、常见问题与价格。"],
+        ["1440px desktop with responsive mobile states", "1440px 桌面端，并包含响应式移动状态"],
+        ["Analysis, Growth, Engage, Post Agent, Verify, Connection and account workflows.", "Analysis、Growth、Engage、Post Agent、Verify、Connection 与账号流程。"],
+        ["1440px application shell; 224px sidebar; 70px header", "1440px 应用框架；224px 侧边栏；70px 顶栏"],
+        ["Mobile references", "移动端参考"], ["Responsive and compact product flows where present in Figma.", "Figma 中已有的响应式与紧凑产品流程。"],
+        ["Frame-specific; document each added version", "按画板确定；每次新增版本都需记录"], ["Karla only", "仅使用 Karla"],
+        ["Sources and authority", "来源与优先级"],
+        ["Design files and written specifications serve different roles. The Figma file is the visual product source; the specification and team decisions make implementation rules explicit.", "设计稿与文字规范承担不同职责。Figma 是产品视觉来源；设计规范与团队决策把实施规则明确下来。"],
+        ["Registered Figma archive", "已登记 Figma 归档"], ["Latest feature", "最新功能"],
+        ["contains the homepage and main dApp flows. Page 5.7 adds hosted automatic publishing (Automation) under WORKFLOWS; it is not a global version of the complete file.", "包含官网与主要 dApp 流程。5.7 在 WORKFLOWS 下新增托管自动发布（Automation）；它不是整个文件的全局版本号。"],
+        ["Exported", "导出时间"], ["Archive size", "归档大小"], ["Repository policy", "仓库规则"], ["Reference only; not copied into Git", "仅作参考；不复制进 Git"],
+        ["Current implementation source", "当前实施来源"],
+        ["Defines tokens, layout, components, motion and content behavior. Team Decisions overrides it when a later clarification exists.", "定义令牌、布局、组件、动效和内容行为；出现更新的澄清时，以 Team Decisions 为准。"],
+        ["Spec", "规范"], ["Color tokens", "颜色令牌"], ["Current package", "当前包"],
+        ["Conflict priority:", "冲突优先级："],
+        ["latest Team Decisions → current Design Spec v6 → the relevant feature page's dated black title frame and its design block → preserved content below. Read update subject and date from the black title frame; page and file names are location aids, not freshness evidence. Page 5.7 must not globally override unrelated feature pages.", "最新 Team Decisions → 当前 Design Spec v6 → 相关功能页中带日期的黑色标题框及其设计区块 → 下方保留内容。更新主题与日期以黑色标题框为准；页面名和文件名只用于定位，不能证明新旧。5.7 不得全局覆盖无关功能页。"],
+        ["Content fundamentals", "内容基础"],
+        ["AISEE copy should feel precise and helpful: technical enough to be trustworthy, but never dense or theatrical.", "AISEE 文案应准确、实用，并具备足够的专业可信度，同时避免密集和夸张。"],
+        ["Minimal and confident", "简洁而明确"], ["Use direct language, clear nouns and active verbs. Remove filler and unsupported claims.", "使用直接表达、明确名词和主动动词，删除空话与无依据的承诺。"],
+        ["Product first, user second", "先说产品，再说用户"], ["Prefer “Create analysis”, “Your report” and “Connect channel” over abstract system language.", "优先使用“Create analysis”“Your report”“Connect channel”等具体表达，避免抽象的系统术语。"],
+        ["Lowercase brand name", "品牌名使用小写"], ["Write “aisee” in product copy. Use “AISEE” only where an all-caps system label is intentionally styled.", "产品文案写作“aisee”；只有刻意使用全大写系统标签时才写“AISEE”。"],
+        ["No emoji in UI", "界面中不使用 emoji"], ["Use text labels and SVG icons. Keep labels short, recognizable and sentence case.", "使用文字标签与 SVG 图标；标签保持简短、易识别，并采用句式大小写。"],
+        ["Numbers stay readable", "数字保持易读"], ["Show data without decorative formatting; pair unfamiliar metrics with labels or tooltips.", "数据不使用装饰性格式；陌生指标应配标签或 Tooltip。"],
+        ["Errors explain the fix", "错误信息说明解决办法"], ["State what happened and the next action. Avoid blame, jokes or generic “Something went wrong”.", "说明发生了什么以及下一步怎么做，避免责备、玩笑或泛泛的“Something went wrong”。"],
+        ["Examples", "示例"],
+        ["Visual foundations", "视觉基础"], ["Functional hierarchy comes first. Module color establishes location and action context; neutral surfaces carry the majority of the interface.", "功能层级优先。模块色用于表达位置与操作语境，大部分界面由中性色承载。"],
+        ["Color variables", "颜色变量"], ["Search variable", "搜索变量"], ["Mode", "模式"], ["Category", "类别"], ["Color", "颜色"], ["Figma variable", "Figma 变量"], ["Alias reference", "别名引用"], ["Resolved value", "解析值"], ["CSS variable", "CSS 变量"], ["Audit", "校验"],
+        ["Family", "字族"], ["Roles", "用途"], ["Rule", "规则"], ["Karla for display, UI and body", "展示、界面与正文均使用 Karla"], ["Self-host Karla", "自托管 Karla"], ["Karla for all UI, code hints and Score Gauge values", "所有界面、代码提示与 Score Gauge 数值均使用 Karla"], ["Self-host Karla; no secondary UI font", "自托管 Karla；不使用第二套界面字体"],
+        ["Layout, spacing and surfaces", "布局、间距与表面"], ["Application shell", "应用框架"], ["70px fixed header, 224px sidebar and 24–32px main content padding.", "70px 固定顶栏、224px 侧边栏、24–32px 主内容内边距。"],
+        ["Spacing", "间距"], ["4, 8, 12, 16, 24, 32, 48 and 64px scale. Prefer adjacent steps.", "采用 4、8、12、16、24、32、48、64px 间距阶梯，优先使用相邻级别。"],
+        ["Radius", "圆角"], ["8px controls, 12px cards, 16px large surfaces and dialogs, 9999px pills.", "控件 8px、卡片 12px、大型表面与弹窗 16px、胶囊 9999px。"],
+        ["Borders", "描边"], ["Static UI uses 5% black; hover rises to 18%. Modal footer uses the documented 6% exception.", "静态界面使用 5% 黑；Hover 提升到 18%。Modal footer 使用规范中记录的 6% 例外。"],
+        ["Shadows", "阴影"], ["Cards remain subtle. Dropdown and modal layers use defined elevation tokens.", "卡片阴影保持克制；Dropdown 与 Modal 层使用规定的层级令牌。"],
+        ["Backgrounds", "背景"], ["Page #FAFAFA, cards #FFFFFF, warm supporting surfaces only where specified.", "页面为 #FAFAFA，卡片为 #FFFFFF；暖色辅助表面只在明确指定时使用。"],
+        ["Interaction and feedback", "交互与反馈"], ["Motion clarifies hierarchy and state change. It should never distract from data or delay a primary task.", "动效用于说明层级和状态变化，不应干扰数据阅读或延迟主要任务。"],
+        ["Hover and active", "Hover 与 Active"], ["Use subtle fill or border changes. Module navigation uses its theme accent for active context.", "使用轻微填充或描边变化；模块导航用主题强调色表达当前语境。"],
+        ["Focus", "焦点"], ["All keyboard targets require visible focus. Interactive targets remain at least 44×44px.", "所有键盘目标都必须有可见焦点；交互目标至少保持 44×44px。"],
+        ["Motion", "动效"], ["Controls use short shared transitions; active Steps can pulse, thinking titles can wave, and all motion respects reduced-motion preferences.", "控件使用短促统一的过渡；活动 Steps 可脉动，思考标题可做波浪动画；所有动效都遵循减少动态效果偏好。"],
+        ["Loading", "加载"], ["Preserve layout with skeletons or stable placeholders; disable repeated submissions.", "使用骨架或稳定占位保留布局，并阻止重复提交。"],
+        ["Empty states", "空状态"], ["Explain what is missing, why it matters and the single next action.", "说明缺少什么、为什么重要，以及一个明确的下一步操作。"],
+        ["Toast and tooltip", "Toast 与 Tooltip"], ["Toast uses a white bordered surface with a five-second countdown; Tooltip remains a compact black hover or focus label.", "Toast 使用白色描边表面与五秒倒计时；Tooltip 保持为紧凑的黑色 Hover/Focus 标签。"],
+        ["Imagery, logo and iconography", "图片、Logo 与图标"], ["Product UI stays data-led and clean. Brand pages can use geometric shapes, texture and the cyclops mascot, while product interfaces avoid decorative photography.", "产品界面保持数据主导与整洁；品牌页面可使用几何形状、纹理与独眼吉祥物，产品界面避免装饰性摄影。"],
+        ["Use official logo assets", "使用官方 Logo 资源"], ["Never redraw the eye or wordmark with CSS. Preserve proportions and keep a clear safety area. The mark can stand alone; the wordmark should use the supplied artwork.", "不要用 CSS 重画眼睛或字标；保持比例与安全留白。图形标可单独使用，字标必须使用提供的正式资源。"],
+        ["Icon rules", "图标规则"], ["Single source of truth:", "唯一事实来源："], ["the", ""], [". SVG sources and generated React components are maintained there.", "。SVG 源文件与生成的 React 组件都在那里维护。"],
+        ["Product projects install", "产品项目通过 npm 安装"], ["from npm", ""], ["; the npm README is the team entry for installation, exports and published-version guidance. The design-system repository does not duplicate the full SVG library.", "；npm README 是团队查看安装、导出与发布版本说明的入口。设计系统仓库不重复保存整套 SVG。"],
+        ["Use 16×16px in standard controls, 20×20px inside buttons and 24×24px for larger navigation or actions.", "标准控件使用 16×16px，按钮内使用 20×20px，大型导航或操作使用 24×24px。"],
+        ["AISEE icons use the", "AISEE 图标使用"], ["outline family or", "描边系列，或"], ["solid family. Lucide is a fallback only when StemUI has no matching icon.", "实心系列。只有 StemUI 没有匹配图标时才使用 Lucide 兜底。"],
+        ["No icon fonts and no emoji UI icons; use SVG or typed React icon components.", "不使用图标字体或 emoji 界面图标；使用 SVG 或带类型的 React 图标组件。"], ["Social platform marks keep their official form and brand color at small badge sizes.", "社交平台标志在小尺寸 Badge 中保留官方形态和品牌色。"],
+        ["Component library", "组件库"], ["Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.", "组件按“类别 → 组件”组织。Current 条目是实施事实来源；Legacy 条目仅作历史参考并有清晰标识。"],
+        ["Actions", "操作"], ["Inputs & Controls", "输入与控件"], ["Navigation", "导航"], ["Content & Status", "内容与状态"], ["Data Display", "数据展示"], ["Feedback & Overlays", "反馈与浮层"],
+        ["Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.", "Input、Checkbox、Select / Dropdown、Toggle、Tag Input 与 Toggle Selection Group。Input 和下拉触发器使用 1px 黑色内描边加 2px 模块色环；下拉菜单与触发器保持 8px 间距，Hover、Focus 与 Selected 项使用 5% 黑色填充。"],
+        ["Current Tabs and product Sidebar Navigation patterns. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.", "Current Tabs 与产品 Sidebar Navigation 模式。平台 Tabs 在所有名称都能容纳时自动完整显示；空间不足时只显示当前项名称。"],
+        ["Current PlanCard, Badge, Steps and Empty State.", "Current PlanCard、Badge、Steps 与 Empty State。"], ["Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.", "Current Card、Stat Card、Table、Chart、仅限 Analysis 的 Score Gauge 与 Credit Bar；Legacy Post Card 继续保留参考。"],
+        ["Dialog, Confirmation Dialog, Tooltip and Toast.", "Dialog、Confirmation Dialog、Tooltip 与 Toast。"],
+        ["Use components without writing code", "无需写代码也能使用组件"], ["Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.", "设计师、产品经理和其他非开发人员无需上传整套 Design System Demo，也能把单个组件准确交给 AI。"],
+        ["1. Choose a Current component", "1. 选择 Current 组件"], ["Open the component under Components and review its live states, motion and usage notes. Legacy pages are historical references.", "在 Components 中打开组件，查看实时状态、动效和使用说明。Legacy 页面仅作历史参考。"],
+        ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. It copies the component intent, interaction rules, visual boundaries and AISEE-wide implementation rules.", "点击 Open HTML 旁的双星按钮，复制组件用途、交互规则、视觉边界和 AISEE 通用实施规则。"],
+        ["3. Add the real task", "3. 补充真实任务"], ["Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI should replace Demo copy, data, icons and illustrations.", "把 Prompt 连同目标页面、真实内容和预期行为交给 AI。AI 应替换 Demo 文案、数据、图标和插图。"],
+        ["4. Compare the result", "4. 对照验收"], ["Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.", "对照 Current Demo 检查生成页面，包括适用的 Hover、Focus、Disabled、Loading、Empty、响应式和无障碍状态。"],
+        ["When to use Open HTML:", "何时使用 Open HTML："], ["open it when the receiving AI or developer needs the complete rendered implementation. For one-component work, Copy for AI is the fastest starting point. Overview and Legacy pages do not expose this button.", "当接收方 AI 或开发者需要完整渲染实现时再打开它。单组件任务优先使用 Copy for AI。Overview 与 Legacy 页面不显示该按钮。"],
+        ["AI implementation handoff", "AI 实施交付"], ["This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.", "本门户是可读参考资料，但不能保证其他 AI 会执行链接页面或推断出全部实施规则。应把已部署门户或仓库、权威规范文件，以及“复用 Current 组件”的明确要求一起交给 AI。"],
+        ["Minimum input", "最少输入"], ["Share this HTML,", "提供本 HTML、"], ["and the target-page requirements.", "以及目标页面需求。"], ["Reliable assets", "可靠资源"], ["Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.", "优先提供公开 HTTPS 预览或仓库/ZIP。单个本地 HTML 无法携带不可访问的相对字体、图片、源文件或链接子页。"],
+        ["Implementation order", "实施顺序"], ["Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.", "Team Decisions → Design Spec v6 → Current 组件实现 → 带日期的 Figma 功能区块 → Legacy 参考。"], ["Verification", "验收"], ["Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.", "要求接收方 AI 列出复用组件、说明偏差，并把最终页面与 Current Demo 对照。"],
+        ["Machine-readable contract:", "机器可读契约："], ["this HTML embeds", "本 HTML 内嵌"], ["as JSON. Full instructions and a copyable prompt are in", "JSON。完整说明与可复制 Prompt 位于"],
+        ["Versions and maintenance", "版本与维护"], ["Figma versions belong to feature pages. Open a new page for a new feature or independent new requirement; when an existing function gains a requirement, add its newest design above the earlier content on that function's original page. Every design block's black title frame records its update subject and date, and is authoritative even when the page or file name stays unchanged.", "Figma 版本归属于功能页。新功能或独立新需求新开页面；已有功能增加需求时，在原功能页旧内容上方加入最新设计。每个设计区块的黑色标题框记录更新主题和日期，即使页面名或文件名未变也以它为准。"],
+        ["Version / source", "版本 / 来源"], ["Status", "状态"], ["Scope", "范围"], ["Maintenance rule", "维护规则"], ["Living", "持续维护"], ["Planned", "计划中"], ["Legacy", "历史版本"],
+        ["Latest newly opened feature-version page; adds Automation under WORKFLOWS", "最新新开的功能版本页；在 WORKFLOWS 下新增 Automation"], ["Do not treat it as the global version of the complete Figma file", "不要把它当作整个 Figma 文件的全局版本"],
+        ["Existing feature pages", "现有功能页"], ["Original functions and their later requirements", "原有功能及其后续需求"], ["Add the newest requirement above earlier content on the same page", "在同一页面的旧内容上方加入最新需求"],
+        ["Tokens, components, interaction and implementation rules", "令牌、组件、交互与实施规则"], ["Team Decisions overrides conflicts", "发生冲突时以 Team Decisions 为准"],
+        ["Missing earlier feature pages", "尚未登记的早期功能页"], ["Feature history not yet registered here", "尚未在这里登记的功能历史"], ["Add and retain each page; do not overwrite it with 5.7", "逐页补充并保留；不要用 5.7 覆盖"],
+        ["Legacy HTML previews", "历史 HTML 预览"], ["Unmatched components, flows, assets and experiments", "尚未匹配的组件、流程、资源与实验"], ["Retain unless a separate deprecation review approves removal", "保留，除非另行通过废弃评审"],
+        ["Start with Design Spec v6", "从 Design Spec v6 开始"], ["Current product rules", "当前产品规则"], ["Color, typography, layout, spacing and module themes.", "颜色、字体、布局、间距与模块主题。"], ["Interactive states and reusable product patterns.", "交互状态与可复用产品模式。"],
+        ["System architecture", "系统架构"], ["Four maintained sections", "四个维护分区"], ["How the system is structured, maintained and shared.", "系统的结构、维护与共享方式。"], ["Brand language and all preserved visual foundations.", "品牌语言与全部保留的视觉基础。"], ["Reusable interface patterns and tested component states.", "可复用界面模式与已验证组件状态。"], ["Complete screens for real implementation reference.", "供真实实施参考的完整页面。"],
+        ["Use these when old and new conflict", "新旧冲突时以这些规则为准"], ["Homepage and Brand use Karla only. dApp, App and Webapp use Karla only.", "Homepage 与 Brand 只使用 Karla；dApp、App 与 Webapp 也只使用 Karla。"], ["Migration", "迁移"], ["Matching legacy rules are replaced by v6. Non-overlapping legacy files remain available and are labeled Legacy.", "与 v6 重合的历史规则由 v6 替代；不重合的历史文件继续保留并标记为 Legacy。"], ["v6 wins on conflict", "冲突时以 v6 为准"]
+      ]);
+
+      function setReadmeLanguage(language, persist = true) {
+        readmeLanguage = language === "zh" ? "zh" : "en";
+        const walker = document.createTreeWalker(homeView, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) {
+          if (!readmeTextSources.has(node)) readmeTextSources.set(node, node.nodeValue);
+          const source = readmeTextSources.get(node);
+          const core = source.trim();
+          const translated = readmeLanguage === "zh" ? readmeZhTranslations.get(core) : null;
+          node.nodeValue = translated === undefined || translated === null
+            ? source
+            : `${source.match(/^\s*/)[0]}${translated}${source.match(/\s*$/)[0]}`;
+        }
+        homeView.lang = readmeLanguage === "zh" ? "zh-CN" : "en";
+        document.querySelectorAll("[data-readme-language]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.readmeLanguage === readmeLanguage)));
+        const languageGroup = document.querySelector(".readme-language");
+        if (languageGroup) languageGroup.setAttribute("aria-label", readmeLanguage === "zh" ? "README 语言" : "README language");
+        if (persist) {
+          try { localStorage.setItem(readmeLanguageStorageKey, readmeLanguage); } catch (error) {}
+        }
+        renderColorTokens();
+      }
+
+      const componentAiGuidance = {
+        "components/Button/Button.html": {
+          name: "Button",
+          intent: "Trigger one clear action with the correct hierarchy, functional colour and feedback state.",
+          rules: [
+            "Choose primary, secondary, ghost, dark or danger from the action hierarchy; do not choose a variant only because it looks prominent.",
+            "Resolve functional colour from context: pale yellow surfaces use Post yellow, lime surfaces use Analysis lime, and other surfaces use #111111 unless a semantic token supersedes it.",
+            "Preserve the approved fill sweep motion, hover colours, focus visibility, disabled state and loading behavior. A fill-only button must not reveal a border during the sweep; a bordered button may retain its border.",
+            "Keep the button label short and action-led. Use a real semantic icon only when it improves recognition."
+          ]
+        },
+        "components/Input/Input.html": {
+          name: "Input",
+          intent: "Collect one typed value with a visible label, appropriate native input semantics and useful feedback.",
+          rules: [
+            "Compose a sentence-case label, the field, and optional helper or error text. Replace Demo labels, values and helper text with copy for the real task.",
+            "Choose the native type that matches the data, such as text, url, email, search or password.",
+            "Support Default, Hover, Focus, Disabled and Error states. Keep the 36px height, 8px radius, subtle default border and the 1px dark border plus 2px module-colour ring on hover and focus. Error uses the semantic danger colour without the module ring.",
+            "Associate the label with the field, connect helper or error text with aria-describedby and set aria-invalid for errors."
+          ]
+        },
+        "components/Checkbox/Checkbox.html": {
+          name: "Checkbox",
+          intent: "Let users independently include or exclude one or more options.",
+          rules: [
+            "Use Checkbox for independent multi-selection, not for an immediate on/off setting or a mutually exclusive choice.",
+            "Preserve the Current 18px control, correct check direction, module-colour selected state, row hover and indeterminate state where a parent controls children.",
+            "Make the whole label row clickable, keep keyboard focus visible and expose checked, mixed and disabled states semantically."
+          ]
+        },
+        "components/Select/Select.html": {
+          name: "Select / Dropdown",
+          intent: "Choose from a bounded option set using the appropriate single, multiple, filter or input-assisted pattern.",
+          rules: [
+            "Choose the documented variant from the data and task; do not combine filtering, free input and multi-select unless the workflow requires them.",
+            "Keep the trigger, menu, 8px menu gap, equal padding, chevron state and 5% black hover/focus/selected surface from the Current component.",
+            "For multi-select, use the leading Checkbox state and preserve selection while filtering. Support keyboard navigation, Escape and the correct aria-expanded/selected semantics."
+          ]
+        },
+        "components/Toggle/Toggle.html": {
+          name: "Toggle",
+          intent: "Change one immediate binary setting while clearly showing on, off and unavailable states.",
+          rules: [
+            "Use Toggle only when the change applies immediately; use Checkbox when the value is submitted with a form.",
+            "Preserve the Current compact geometry, functional-colour on state, hover/press response and spring-like thumb motion, with reduced-motion support.",
+            "Use a persistent label, expose aria-checked and do not rely on colour alone to communicate state."
+          ]
+        },
+        "components/TagInput/TagInput.html": {
+          name: "Tag Input",
+          intent: "Collect repeatable values as removable inline tags without expanding the base Input API.",
+          rules: [
+            "Keep committed tags and the text cursor in one horizontal flow; never stack the tag above the input inside the field.",
+            "Support typing preview, Enter or Add to commit, remove controls, duplicate prevention and Backspace removal when the input is empty.",
+            "Use real task values and define overflow behavior for narrow containers without clipping a focused tag."
+          ]
+        },
+        "components/ToggleSelectionGroup/ToggleSelectionGroup.html": {
+          name: "Toggle Selection Group",
+          intent: "Enable an option group, edit its active selection and pause the group without losing saved choices.",
+          rules: [
+            "On first activation select every available option. Users may then deselect individual options.",
+            "When switched off, disable every option but preserve the saved selection. Restore that exact selection when switched on again.",
+            "Use the Current selection colours and Checkbox artwork, expose the saved and active counts, and exclude unavailable options from select-all."
+          ]
+        },
+        "components/Tabs/Tabs.html": {
+          name: "Tabs",
+          intent: "Switch between peer views or display modes within the same context.",
+          rules: [
+            "Choose underline, segmented, icon-only, icon-and-text or count composition from the information architecture.",
+            "Use semantic icons that match the real view; Demo icons are placeholders. Counts are optional and must update with their content.",
+            "For platform tabs, show all names only when every item fits. Otherwise show the active name and keep inactive items logo-only. Never clip labels.",
+            "Preserve roving keyboard focus, selected semantics and a stable active indicator."
+          ]
+        },
+        "components/SidebarNavigation/SidebarNavigation.html": {
+          name: "Sidebar Navigation",
+          intent: "Navigate the product's grouped destinations and nested views with a stable expanded or collapsed shell.",
+          rules: [
+            "Reuse the Current vertical product grouping and information architecture. Choose real destination icons from StemUI; Demo icons are structural examples.",
+            "Support 224px expanded and 58px collapsed states. Collapsed state shows icons only; labels remain available to assistive technology and tooltips.",
+            "Preserve nested active states, keyboard navigation, aria-current, the native resize cursor and same-browser width/state memory where implemented."
+          ]
+        },
+        "components/PlanCardCurrent/PlanCardCurrent.html": {
+          name: "PlanCard — Current",
+          intent: "Compare plans, billing cycles, benefits and the current or recommended purchase action.",
+          rules: [
+            "Keep plan name, price, billing cadence, grouped benefits and action hierarchy scannable. Use real entitlement and price data.",
+            "Represent current, recommended, available and disabled states explicitly; never present the current plan as a primary purchase action.",
+            "Use Post yellow for purchase/publishing actions and semantic status tokens for supporting labels."
+          ]
+        },
+        "components/Badge/Badge.html": {
+          name: "Badge",
+          intent: "Display compact source, status or classification metadata.",
+          rules: [
+            "Use source badges as icon plus label on a solid grey fill with no border.",
+            "Use status badges as icon plus label with a low-saturation semantic fill and grey border. Choose the status icon and colour from the real meaning.",
+            "Keep badges compact and non-interactive unless the surrounding product explicitly defines them as a filter. Do not copy Demo labels as product data."
+          ]
+        },
+        "components/Steps/Steps.html": {
+          name: "Steps",
+          intent: "Explain a sequence, report live progress, show longer thinking activity or teach a new feature.",
+          rules: [
+            "Choose Static workflow for sequence-only content, Animated progress for waiting/in-progress/completed task states, Thinking steps for longer processing, and Feature tutorial for onboarding.",
+            "Select icons from each real step's meaning; every Demo icon is a placeholder and is not prescribed by the component.",
+            "For Thinking steps, use the approved wave animation only on the active loading title and respect reduced motion. Use yellow loading artwork for Post and green for every other module.",
+            "Keep the rail on one line where specified and use horizontal overflow or truncation rather than wrapping labels unexpectedly."
+          ]
+        },
+        "components/EmptyState/EmptyState.html": {
+          name: "Empty State",
+          intent: "Explain missing content and guide the user to the next useful action.",
+          rules: [
+            "Compose illustration, title, description and actions according to need; do not force every slot into every empty state.",
+            "Choose the matching SVG illustration from the supplied library and update title, description and action copy together. Never rasterize or reuse an unrelated illustration.",
+            "Resolve primary action colour from the containing surface: pale yellow uses Post yellow, lime uses Analysis lime, and other backgrounds use #111111.",
+            "Use one clear recovery action where possible and distinguish first-use, no-results, permission and error cases."
+          ]
+        },
+        "components/Card/Card.html": {
+          name: "Card",
+          intent: "Group related content and actions on a neutral reusable surface.",
+          rules: [
+            "Use the Current card radius, padding, border and optional minimal elevation from semantic tokens.",
+            "Build hierarchy from the card's real content instead of copying Demo headings or metrics. Avoid nesting cards without a clear information boundary.",
+            "If the whole card is interactive, provide one semantic target, a visible focus state and no competing nested click targets."
+          ]
+        },
+        "components/StatCardCurrent/StatCardCurrent.html": {
+          name: "Stat Card — Current",
+          intent: "Show a compact overview metric with its label and optional unit, baseline or trend context.",
+          rules: [
+            "Use real metric names, values and comparison periods; keep the metric value visually dominant.",
+            "Use optional units, baseline badges and trends only when they change interpretation. Never imply improvement from colour alone.",
+            "Keep responsive groups aligned and apply the Current grey card border so every boundary remains visible."
+          ]
+        },
+        "components/Table/Table.html": {
+          name: "Table",
+          intent: "Compare structured records across shared columns.",
+          rules: [
+            "Use semantic table markup with clear headers, row labels where needed and right-aligned comparable numbers.",
+            "Keep the Current compact row rhythm and borders. Use horizontal overflow for essential columns rather than crushing or clipping content.",
+            "Define loading, empty and error treatments outside the body rows, and make sorting/filtering controls keyboard accessible."
+          ]
+        },
+        "components/Chart/Chart.html": {
+          name: "Chart",
+          intent: "Communicate a data trend or comparison with module-aware colour and accessible values.",
+          rules: [
+            "Choose a chart form that fits the data; the Demo line chart is an example, not a mandatory shape.",
+            "Use semantic module colours, readable axes/labels and tooltips for exact values. Do not rely on colour alone for multiple series.",
+            "Provide a text summary or accessible point values and preserve legibility in responsive layouts."
+          ]
+        },
+        "components/ScoreGauge/ScoreGauge.html": {
+          name: "Score Gauge",
+          intent: "Display the compact Analysis score visualization.",
+          rules: [
+            "Use this gauge only in Analysis contexts. Use a Stat Card matrix for other modules or general KPI collections.",
+            "Preserve the Current lime field, texture, tick geometry, needle, title and readable numeric value while mapping the needle to the real scale.",
+            "Expose the value with meter semantics and an accessible label."
+          ]
+        },
+        "components/CreditBar/CreditBar.html": {
+          name: "Credit Bar",
+          intent: "Show remaining credit balance split into Subscription and Top-up categories.",
+          rules: [
+            "Use only the two current categories: Subscription and Top-up. Match the Current typography, progress colours and legend treatment.",
+            "Calculate widths from real totals, display the numeric balance and handle zero, full and overflow values without misleading proportions.",
+            "Expose each bar as an accessible progress value with its category and maximum."
+          ]
+        },
+        "components/Dialog/Dialog.html": {
+          name: "Dialog",
+          intent: "Run a focused form, choice, detail, summary or bounded multi-section task above the current page.",
+          rules: [
+            "Choose structure first: Standard for forms/choices/details, Centered for decisions/summaries, and Split only for a bounded multi-section task that truly needs a sidebar.",
+            "Compose icon, fields and actions from the actual workflow. Do not classify or clone dialogs only by feature name.",
+            "Implement a real trigger, overlay, close behavior, initial focus, focus trap, Escape handling and focus return. Preserve balanced footer spacing.",
+            "Use Confirmation Dialog for destructive or unsaved-change decisions."
+          ]
+        },
+        "components/ConfirmationDialog/ConfirmationDialog.html": {
+          name: "Confirmation Dialog",
+          intent: "Confirm a destructive action or protect unsaved changes before data is lost.",
+          rules: [
+            "State the exact consequence in the title and description. Keep the safe action available and label the danger action with the real operation.",
+            "Use the semantic danger button and preserve close, Escape, focus trap and focus-return behavior.",
+            "Show completion feedback with the page-level Toast component rather than an inline success message inside the dialog."
+          ]
+        },
+        "components/TooltipToast/TooltipToast.html": {
+          name: "Tooltip / Toast",
+          intent: "Use Tooltip for brief contextual labels and Toast for temporary page-level feedback.",
+          rules: [
+            "Tooltip remains a compact black hover/focus label and must not contain required instructions or interactive controls.",
+            "Toast uses the Current white bordered one-line or two-line structure, the matching semantic SVG icon and success, error or Agent progress colour.",
+            "For auto-dismiss Toasts, animate the bottom countdown for five seconds, then remove the line and close the Toast. Manual close cancels the timer; restarting a Toast restarts it cleanly.",
+            "Announce feedback with the appropriate live-region semantics without repeatedly interrupting the user."
+          ]
+        }
+      };
+
+      function buildComponentAiPrompt(path) {
+        const guidance = componentAiGuidance[path];
+        if (!guidance) return "";
+        const rules = guidance.rules.map(rule => `- ${rule}`).join("\n");
+        return `Use the Current ${guidance.name} component from the AISEE Design System in the requested product context.
+
+Component intent:
+${guidance.intent}
+
+Component rules:
+${rules}
+
+Shared implementation rules:
+- Reuse the exported Current component, its existing motion and current AISEE semantic tokens when they are available in the project.
+- Treat the Design System Demo as a structural and interaction reference. Replace all sample copy, data, icons and illustrations with content that matches the real task.
+- Preserve the target page's information architecture and surrounding product behavior. Do not rebuild unrelated areas or import Legacy styling over Current components.
+- dApp interfaces use Karla. Product colours consume semantic tokens; do not hardcode primitive colour values in the page.
+- Implement applicable default, hover, focus, active, disabled, loading, error, empty and responsive states, plus keyboard and screen-reader behavior.
+- After implementation, list the reused component, tokens and any intentional deviation from the Current reference.`;
+      }
 
       const baseItems = [
         { group: "Brand", category: "Automation", name: "Plugin Entry Options", path: "legacy/pages/Plugin Entry Options.html", subtitle: "Three browser-extension install entry placements.", status: "Legacy" },
@@ -1177,6 +1565,8 @@
       const previewTitleTag = document.getElementById("previewTitleTag");
       const previewDescription = document.getElementById("previewDescription");
       const previewTag = document.getElementById("previewTag");
+      const copyAiHeader = document.getElementById("copyAiHeader");
+      const copyAiHeaderLabel = document.getElementById("copyAiHeaderLabel");
       const copyTsxHeader = document.getElementById("copyTsxHeader");
       const copyTsxHeaderLabel = document.getElementById("copyTsxHeaderLabel");
       const openStandalone = document.getElementById("openStandalone");
@@ -1263,7 +1653,9 @@
           return (category === "all" || colorCategory(token) === category) && (!query || haystack.includes(query));
         });
 
-        colorReferenceHeading.textContent = activeColorLayer === "semantic" ? "Alias reference" : "Layer rule";
+        colorReferenceHeading.textContent = readmeLanguage === "zh"
+          ? (activeColorLayer === "semantic" ? "别名引用" : "层级规则")
+          : (activeColorLayer === "semantic" ? "Alias reference" : "Layer rule");
         document.querySelectorAll("[data-color-layer]").forEach(tab => tab.setAttribute("aria-selected", String(tab.dataset.colorLayer === activeColorLayer)));
         colorTokenRows.innerHTML = visible.length ? visible.map(token => {
           const modeData = activeColorLayer === "semantic" ? token[mode] : { value: token[mode], ref: null };
@@ -1279,7 +1671,9 @@
           const usage = token.usage ? `<span class="color-usage">${escapeHtml(token.usage)}</span>` : "";
           return `<tr><td><span class="color-swatch" style="--swatch:${escapeHtml(modeData.value)}" title="${escapeHtml(modeData.value)}"></span></td><td><span class="color-variable">${escapeHtml(token.name)}</span>${usage}</td><td>${reference}</td><td><code>${escapeHtml(modeData.value)}</code></td><td><code>${escapeHtml(cssName)}</code></td><td>${audit}</td></tr>`;
         }).join("") : '<tr><td class="color-empty" colspan="6">没有匹配的颜色变量</td></tr>';
-        colorResults.textContent = `显示 ${visible.length} / ${source.length} 个${activeColorLayer === "semantic" ? "语义化" : "元数据"}颜色 · ${mode === "light" ? "Light" : "Dark"} 模式`;
+        colorResults.textContent = readmeLanguage === "zh"
+          ? `显示 ${visible.length} / ${source.length} 个${activeColorLayer === "semantic" ? "语义化" : "元数据"}颜色 · ${mode === "light" ? "Light" : "Dark"} 模式`
+          : `Showing ${visible.length} / ${source.length} ${activeColorLayer === "semantic" ? "semantic" : "primitive"} colours · ${mode === "light" ? "Light" : "Dark"} mode`;
       }
 
       function renderNav(query = "") {
@@ -1413,6 +1807,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         activePath = "";
         saveActivePath("");
         previewFrame.removeAttribute("src");
+        copyAiHeader.hidden = true;
         copyTsxHeader.hidden = true;
         previewView.hidden = true;
         homeView.hidden = false;
@@ -1445,6 +1840,11 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         previewTag.textContent = isBrandOutput ? "Brand" : "";
         previewTag.className = "item-tag";
         previewTag.hidden = !isBrandOutput;
+        const aiPrompt = buildComponentAiPrompt(item.path);
+        copyAiHeader.hidden = !aiPrompt;
+        copyAiHeader.setAttribute("aria-label", aiPrompt ? `Copy ${item.name} guidance for AI` : "Copy component guidance for AI");
+        copyAiHeaderLabel.textContent = "Copy for AI";
+        copyAiHeader.disabled = false;
         copyTsxHeader.hidden = item.path !== logoAnimationPath;
         copyTsxHeaderLabel.textContent = "复制 TSX";
         copyTsxHeader.disabled = false;
@@ -1539,6 +1939,43 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         }
       }
 
+      async function writeClipboard(text) {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+        const temporary = document.createElement("textarea");
+        temporary.value = text;
+        temporary.style.position = "fixed";
+        temporary.style.opacity = "0";
+        document.body.appendChild(temporary);
+        temporary.select();
+        const copied = document.execCommand("copy");
+        temporary.remove();
+        if (!copied) throw new Error("copy unavailable");
+      }
+
+      async function copyAiPrompt() {
+        const item = items.find(entry => entry.path === activePath);
+        const aiPrompt = item ? buildComponentAiPrompt(item.path) : "";
+        if (!item || !aiPrompt) return;
+        copyAiHeader.disabled = true;
+        copyAiHeaderLabel.textContent = "Copying…";
+        try {
+          await writeClipboard(aiPrompt);
+          copyAiHeaderLabel.textContent = "Copied";
+          showToast(`${item.name} prompt copied`);
+        } catch (error) {
+          copyAiHeaderLabel.textContent = "Copy failed";
+          showToast("Prompt copy failed");
+        } finally {
+          window.setTimeout(() => {
+            copyAiHeader.disabled = false;
+            copyAiHeaderLabel.textContent = "Copy for AI";
+          }, 1600);
+        }
+      }
+
       async function copyLogoTsx() {
         copyTsxHeader.disabled = true;
         copyTsxHeaderLabel.textContent = "复制中…";
@@ -1573,6 +2010,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       renderNav();
       refreshColorScopeOptions();
       renderColorTokens();
+      setReadmeLanguage(readmeLanguage, false);
       readHash();
       const overviewLinks = [...document.querySelectorAll(".overview-nav a")];
       const overviewSections = overviewLinks.map(link => document.getElementById(link.hash.slice(1))).filter(Boolean);
@@ -1585,6 +2023,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       homeButton.addEventListener("click", () => openHome());
       document.getElementById("backButton").addEventListener("click", () => openHome());
       document.getElementById("openFoundations").addEventListener("click", () => openItem("preview/dapp-v6-foundations.html"));
+      document.querySelectorAll("[data-readme-language]").forEach(button => button.addEventListener("click", () => setReadmeLanguage(button.dataset.readmeLanguage)));
       document.querySelectorAll("[data-quick-path]").forEach(button => button.addEventListener("click", () => openItem(button.dataset.quickPath)));
       searchInput.addEventListener("input", event => renderNav(event.target.value));
       document.querySelectorAll("[data-color-layer]").forEach(tab => tab.addEventListener("click", () => {
@@ -1595,6 +2034,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       colorMode.addEventListener("change", () => renderColorTokens());
       colorScope.addEventListener("change", () => renderColorTokens());
       document.getElementById("shareButton").addEventListener("click", sharePage);
+      copyAiHeader.addEventListener("click", copyAiPrompt);
       copyTsxHeader.addEventListener("click", copyLogoTsx);
       menuButton.addEventListener("click", () => {
         const opening = !document.body.classList.contains("nav-open");

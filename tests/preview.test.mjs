@@ -116,6 +116,48 @@ test('standalone portal script is syntactically valid', () => {
   assert.doesNotThrow(() => new Function(script));
 });
 
+test('every Current component detail page offers a scoped Copy for AI prompt', () => {
+  const currentComponentEntries = [...portal.matchAll(/\{ group: "Components",([^}]+)status: "Current"([^}]*)\}/g)]
+    .map(match => `${match[1]}${match[2]}`)
+    .map(entry => ({
+      name: entry.match(/name: "([^"]+)"/)?.[1],
+      path: entry.match(/path: "([^"]+)"/)?.[1]
+    }))
+    .filter(entry => entry.path?.startsWith('components/'));
+  const guidancePaths = new Set([...portal.matchAll(/^\s+"(components\/[^"]+\.html)": \{/gm)].map(match => match[1]));
+
+  assert.equal(currentComponentEntries.length, 22);
+  for (const entry of currentComponentEntries) {
+    assert.ok(guidancePaths.has(entry.path), `${entry.name} should have AI guidance`);
+  }
+  assert.ok(!guidancePaths.has('preview/dapp-v6-components.html'));
+  assert.ok(!guidancePaths.has('components/PostCard/PostCard.html'));
+  assert.match(portal, /id="copyAiHeader"[^>]*hidden[^>]*aria-label="Copy component guidance for AI"/);
+  assert.match(portal, /const aiPrompt = buildComponentAiPrompt\(item\.path\)/);
+  assert.match(portal, /copyAiHeader\.hidden = !aiPrompt/);
+  assert.match(portal, /#openStandalone,\s*#copyAiHeader\s*\{\s*min-height: 40px;\s*height: 40px;/);
+  assert.match(portal, /Treat the Design System Demo as a structural and interaction reference/);
+  assert.match(portal, /Demo icon is a placeholder|Demo icons are placeholders/);
+  assert.match(portal, /Associate the label with the field/);
+  assert.match(portal, /copyAiHeader\.addEventListener\("click", copyAiPrompt\)/);
+});
+
+test('README portal supports a persistent full-page English and Chinese switch', async () => {
+  const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8');
+  const overview = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+
+  assert.match(portal, /data-readme-language="en"[^>]*aria-pressed="true"/);
+  assert.match(portal, /data-readme-language="zh"[^>]*aria-pressed="false"/);
+  assert.match(portal, /const readmeLanguageStorageKey = "aisee\.design-system\.readmeLanguage"/);
+  assert.match(portal, /function setReadmeLanguage\(language, persist = true\)/);
+  assert.match(portal, /Use components without writing code/);
+  assert.match(portal, /无需写代码也能使用组件/);
+  assert.match(portal, /setReadmeLanguage\(readmeLanguage, false\)/);
+  assert.match(readme, /## 非开发人员如何使用组件/);
+  assert.match(readme, /双星图标的 \*\*Copy for AI\*\*/);
+  assert.match(overview, /Every Current detail page includes Copy for AI/);
+});
+
 test('portal and v6 previews self-host Karla', async () => {
   const foundations = await readFile(new URL('../preview/dapp-v6-foundations.html', import.meta.url), 'utf8');
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');

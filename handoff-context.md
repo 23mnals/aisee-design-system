@@ -5,55 +5,53 @@
 ## 当前 Git
 
 - 开发分支：`ai/desktop/design-system-current`。
-- 最新功能提交：`45e4803 feat: refine current component system`，已推送到 `origin/ai/desktop/design-system-current`。
-- 本轮组件、Demo、Overview、文档与测试已经同步远端开发分支。
-- [PR #9](https://github.com/23mnals/aisee-design-system/pull/9) 已合并到 `main`；远端合并提交为 `5e7e424`。
+- 当前 HEAD：`4aa32b1 docs: record PR 9 merge`；本地分支在本轮开始时已领先 `origin/ai/desktop/design-system-current` 1 个提交。
+- 本轮 Copy for AI、README 中英切换、文档、Overview、测试和交接文件均在本地，尚未 commit 或 push。
+- `main` 最近一次正式同步为已合并的 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9)。
 
 ## 正在做
 
-- 本轮 Current 组件批次已通过完整构建并正式进入 `main`。
-- 本地预览入口为 `http://127.0.0.1:4173`；浏览器接管接口本轮无法读取标签页，但构建、结构测试和类型检查均通过。
+- 用户已要求把 Input 页试用的 `Copy for AI` 同步到其余组件，并更新 README 与中文切换；实现和本地验收已经完成，等待用户查看。
+- 本地预览入口：`http://127.0.0.1:4173`；当前交付预览停留在 README 中文版。
 
 ## 最近完成
 
-- Tabs：在 `Segmented · Icon + text` 标题右侧加入 `Show icons` 开关，在 `Segmented · Text only` 标题右侧加入 `Show counts` 开关；默认显示，关闭后布局和选中指示器会跟随内容宽度重新计算。组件本身仍通过可选 `icon` / `count` 数据控制，Demo 开关只用于演示组合能力。
-- Steps：将已确认的加载中文字波浪效果同步到正式通用组件，新增 `titleMotion="wave"`；仅处理中使用，完成与错误状态保持静止，并遵循 `animated=false` 与 reduced-motion。
-- Stat Card：按用户明确要求删除重复的 Legacy `components/StatCard/StatCard.html` 及门户入口，保留 `components/StatCardCurrent/`。
-- Components Overview：补齐所有 Current 组件的分组索引，并增加测试，保证门户 Current 条目与 Overview 索引保持一致；同步更新 Motion、Toast、Inputs、Content/Status、Data Display 的当前说明。
-- Components Overview：Current 标签已成为组件详情页快捷入口；点击后在门户内打开目标页并同步左侧选中项，页面说明可从左侧 Overview 或浏览器返回键返回。
-- Dialog：改为结构优先的通用 API，提供 Standard、Centered、Split Shell，以及 Form、Choice、Details、Summary 内容组合和 7 个真实交互场景。
-- Tabs：Platform 模式默认 `platformLabelDisplay="auto"`，按全部 Logo + name 的真实宽度自适应；能放下时全部显示，空间不足时仅当前项显示名称，且不再压缩或切断名称。`active` / `all` 保留为显式覆盖。
-- 同一批更新还包含已确认的 Button 动效正式同步、Stat Card Current、Credit Bar、Dialog、Toast、Empty State、Badge、Toggle Selection Group 与 Web App UI Kit 侧边栏更新。
+- 22 个 Current 组件详情页均接入双星 `Copy for AI`，每个组件有独立用途、交互、视觉边界和无障碍规则。
+- Overview、Legacy、Brand 与 UI Kit 不显示组件复制入口，避免把汇总页或历史页面当成单一 Current 组件规范。
+- Prompt 明确 Demo 的文案、数据、图标和插图是可替换参考；Steps 等组件继续要求根据真实业务语义选择图标。
+- 双星按钮与 `Open HTML` 统一为 40px 高，使用更明显的浅柠檬绿表面。
+- 门户 README 增加持久化 English / 中文切换，并完成整页主要章节的中文内容。
+- README 新增“无需写代码也能使用组件”流程；根 `README.md` 和 `docs/AI_HANDOFF.md` 同步说明单组件使用方式。
+- Components Overview 同步加入 Current 详情页 Copy for AI 说明，遵守组件更新时 Overview 一并更新的规则。
+- 之前已进入 `main` 的 Current 组件批次包括 Tabs 自适应名称、Steps 波浪标题、Stat Card Current、Credit Bar、Dialog、Toast、Empty State、Badge、Toggle Selection Group 与 Button 动效等。
 
 ## 验收证据
 
-- `npm run build:component-demos` 通过，生成 9 组组件 bundle 与 Web App UI Kit bundle。
-- `npm test` 65/65 通过。
-- `npm run typecheck` 通过。
-- `npm run build` 通过，生产包与全部组件 Demo 已重新生成。
+- `npm run check` 通过：token outputs current、TypeScript 通过、67/67 测试通过、组件 Demo 与生产构建通过。
 - `git diff --check` 通过。
-- 结构测试覆盖 Tabs 两个开关、Steps 波浪标题可访问性、Legacy Stat Card 移除，以及 Overview 与全部 Current 组件条目的同步。
+- 浏览器验证：README 中文版可见；Current Tabs 显示 `Copy Tabs guidance for AI`；Copy 与 Open HTML 均为 40px；README 隐藏复制按钮。
+- 自动测试核对门户中的 22 个 Current 组件路径与 22 份组件指引一一对应。
 
 ## 关键决策
 
-- 组件页有更新时，Components Overview 必须同步；测试会自动比较门户 Current 页面与 Overview 索引，防止以后再次不一致。
-- Tabs 的图标和数字属于每个 Tab 项目的可选内容；Demo 控制开关用于展示有/无内容两种组合，不扩张生产 API。
-- Platform Tabs 的名称显示策略属于通用组件 API，默认 `auto`；Dialog 按结构分类，功能名仅作使用场景。
-- Overview 的 Current 标签是组件页快捷入口，不是页内锚点；返回方式为左侧 Overview 或浏览器返回键。
-- Steps 图标是结构示例，实际业务应按步骤语义传入对应图标；波浪文字是可选的加载状态动效。
+- 非开发人员做单组件任务时，优先使用详情页 `Copy for AI`，无需上传整套 Design System Demo。
+- 完整页面或跨组件任务仍应提供门户/仓库与权威规范；`Open HTML` 用于需要完整渲染实现或源码结构的场景。
+- 组件 Demo 负责展示结构、状态和交互，不规定真实业务的文案、数据、图标或插图。
+- 组件页有更新时，Components Overview 与相关 README 必须同步，避免上下内容不一致。
 - 普通开发继续使用 `ai/desktop/design-system-current`；正式同步 `main` 通过 PR，merge 需要用户明确授权。
 
 ## 待确认 / 未完成
 
+- 等待用户确认各 Current 组件的 Copy for AI 文案和 README 中英切换效果。
 - Card 业务变体 Figma `10374:435175` 尚未实现。
-- Plugin Entry Options 的三个 Legacy Engage 内嵌页面仍引用不存在的 JSX 路径，尚未修复。
+- Plugin Entry Options 的三个 Legacy Engage 内嵌页面仍引用不存在的 JSX 路径。
 
 ## 发布状态 / 下一步
 
-- 本轮修改已通过 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9) 合并到远端 `main`。
-- 后续新工作继续在 `ai/desktop/design-system-current` 开发，正式同步仍通过新的 PR。
+- 本轮改动未提交、未推送；用户明确要求同步后再 commit 并 push 到 `ai/desktop/design-system-current`。
+- 如需正式同步 `main`，创建 `ai/desktop/design-system-current → main` PR；只有用户明确要求时才 merge。
 - 新对话先读 `AGENTS.md` 与本文件，再检查 branch/status/log，并从当前工作区继续。
 
 ## 最近一次 Session
 
-- [2026-09-14-current-components-main-pr.md](handoff/sessions/2026-09-14-current-components-main-pr.md)
+- [2026-09-15-copy-for-ai-readme-localization.md](handoff/sessions/2026-09-15-copy-for-ai-readme-localization.md)
