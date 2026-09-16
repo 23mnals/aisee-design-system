@@ -56,7 +56,7 @@ npm run preview:local
 
 只使用一个组件时，优先复制该 Current 组件页的 `Copy for AI`，再补充目标页面需求。需要实现完整页面或跨多个组件时，推荐交付公开预览 URL 或完整仓库/ZIP，并同时提供 [`docs/AI_HANDOFF.md`](docs/AI_HANDOFF.md)、[`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 与 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md)。主门户 HTML 已内嵌 `#aisee-ai-contract` JSON，供支持源码解析的平台读取来源优先级和关键规则。
 
-GitHub 仓库启用 Pages 后，每次合并到 `main` 都会自动发布同一个入口页，团队成员只需要保存 Pages URL。也可以本地生成发布目录：
+GitHub Pages 由共享开发分支 `ai/desktop/design-system-current` 自动发布；每次推送先运行完整检查，通过后更新同一个公开入口。`main` 保留为经过 PR 确认的正式稳定代码，团队成员只需要保存 Pages URL。也可以本地生成发布目录：
 
 ```bash
 npm run site
@@ -69,6 +69,20 @@ npm run site
 
 旧历史文件如果仍内嵌其他字体定义，可继续用于追溯；进入现行组件或 UI Kit 时必须按以上边界升级。
 
+## 最近更新
+
+### 2026-09-15 ～ 2026-09-16
+
+- **Avatar**：22 个网站注册方形头像与 24 个社媒缺失圆形兜底头像进入 Components；头像随机取值后保持稳定；眼睛动画直接作用于原头像并限制瞳孔范围；颜色、眼睛尺寸和位置增加差异
+- **账号与平台标识**：Sidebar 账号入口同步组件头像库，套餐名更新为 `Growth Loop Plan`，额度说明 icon 改为细描边；Plan-generated Post 的平台 logo 使用单层虚线描边，Manual-create Post 使用单层实线描边，并缩小 logo 与外圈间距
+- **Sidebar Navigation**：原 Verify 页面更名为 Compare；Google Search Data 与 Bing Webmaster Data 移入 Verify 子级；账号入口随机展示组件库头像
+- **组件发现与 AI 交付**：Avatar 移入 Components；分类内按 A–Z 排序；README、页面更新位置与新增组件显示 `NEW`；22 个 Current 组件详情页提供经过同一规则约束的 `Copy for AI`
+- **Credit Bar**：补齐 Subscription 为 0、Top-up 为 0、两者同时为 0 的展示状态
+- **Empty State**：原 Successful 插图语义修正为 `No report data`，表示暂无报告记录，并引导用户添加产品 URL 发起分析
+- **Dropdown**：同步单选、多选、过滤、输入建议、Compact、Search + action、Filter panel 与 Grouped account；Fluid Hover 改为缓存几何信息并缩短动画；行操作加号为 24px、默认隐藏、行 hover / focus 后显示灰底灰边、按钮自身 hover 才变黄
+- **Dropdown 参数与布局**：Grouped account 增加真实 `Show icons` 开关；关闭后只显示文字；所有下拉菜单以浮层展开，不改变 Playground、后续内容或文档高度
+- **在线 Demo**：GitHub About 保留固定 Pages 地址，Pages 改由 `ai/desktop/design-system-current` 在完整检查通过后自动发布；`main` 继续作为 PR 确认后的稳定代码
+
 ## v6 主要更新
 
 - Analysis = lime `#CFFF29`；Post Agent / Engage = yellow `#FFE253`
@@ -80,7 +94,11 @@ npm run site
 - PlanCard 新增 v5.4 Upgrade Plan 当前版本，旧套餐卡继续作为 Legacy 保留
 - Figma 对齐 Toggle、Modal footer 和 Engage v5 页面规则
 - 44 个元数据颜色与 46 个语义颜色由 JSON 自动生成 CSS；旧变量通过兼容 alias 保留
-- Current 组件新增 Checkbox、Tooltip、Toast、Table、Stat Card、Chart、Score Gauge；Credit Bar 覆盖 Subscription、Top-up、任一来源为 0 及两者都为 0；Dropdown 覆盖单选、多选、过滤和输入建议，并同步流畅的 Fluid Hover 与按需出现的富选项行操作，在 Variant Playground 中切换、操作搜索、筛选面板和分组账号等组合形态
+- Current 组件补齐 Avatar、Badge、Checkbox、Empty State、Steps、Tooltip / Toast、Table、Stat Card、Chart、Score Gauge、Credit Bar、Dropdown、Tag Input 与 Toggle Selection Group；组件目录按分类内 A–Z 排列
+- Avatar 统一进入 Components：网站注册账号使用方形头像库，社媒头像缺失时使用圆形灰描边兜底库；Sidebar 等账号入口从组件库随机取值并保持稳定；Plan-generated Post 的平台 logo 只用虚线描边，Manual-create Post 只用实线描边
+- Credit Bar 覆盖 Subscription、Top-up、任一来源为 0 及两者都为 0；Empty State 的 `No report data` 表示暂无报告记录，主操作为添加产品 URL 并开始分析
+- Dropdown 覆盖单选、多选、过滤、输入建议与分组账号等组合形态；Fluid Hover 使用缓存几何信息平滑跟随，行操作默认隐藏、在 hover / focus 时按需出现；Grouped account 提供 `Show icons` 开关；所有菜单作为浮层打开，不改变外围内容高度
+- README、组件页面、Overview、`Copy for AI` 与 `NEW` 标识随 Current 组件更新同步维护，方便用户识别新增内容并把同一套规则交给 AI
 
 完整迁移表见 [`docs/MIGRATION.md`](docs/MIGRATION.md)，资源状态见 [`docs/RESOURCE_INVENTORY.md`](docs/RESOURCE_INVENTORY.md)。
 

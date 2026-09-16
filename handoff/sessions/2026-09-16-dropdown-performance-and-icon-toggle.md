@@ -43,9 +43,11 @@
 - 实现提交：`9c887ba fix: refine dropdown interactions`
 - 实现提交已推送至 `origin/ai/desktop/design-system-current`。
 - 已创建 [PR #10](https://github.com/23mnals/aisee-design-system/pull/10)：`ai/desktop/design-system-current → main`。
-- GitHub Pages 仍由 `main` 的 push 触发；右侧在线 Demo 要显示本轮最新版，需要在用户明确授权后合并 PR #10。
+- 用户确认采用开发预览发布方案：GitHub Pages 改由 `ai/desktop/design-system-current` 的 push 触发，完整检查通过后更新右侧公开 Demo；`main` 继续作为 PR 确认后的正式稳定代码。
+- README 的 v6 主要更新已补齐 Avatar、Empty State、Dropdown 图标开关与浮层高度、组件目录 A–Z、NEW 与 Copy for AI 同步规则。
+- README 新增按日期维护的“最近更新”，完整列出 9 月 15～16 日的用户可见变更；长期决策明确以后每个批次都必须逐项同步，v6 摘要不能替代更新清单。
 
 ## 下一步
 
 - 用户复查 Dropdown hover 手感、Show icons 开关和浮层高度稳定性。
-- 等待用户明确授权合并 PR #10；合并后等待 GitHub Pages 发布，右侧链接地址保持不变并显示最新版。
+- 推送 README 与 Pages 工作流更新，随后确认 GitHub Actions 检查及公开 Demo 部署结果；PR #10 保持开启，后续仅在用户明确授权时合并。

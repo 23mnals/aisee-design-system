@@ -2,7 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - ai/desktop/design-system-current
   pull_request:
 
 permissions:
@@ -21,9 +23,12 @@ jobs:
       - run: npm run check
 
   pages:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/ai/desktop/design-system-current' && github.event_name == 'push'
     needs: verify
     runs-on: ubuntu-latest
+    concurrency:
+      group: github-pages
+      cancel-in-progress: true
     permissions:
       contents: read
       pages: write

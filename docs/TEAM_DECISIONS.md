@@ -133,7 +133,8 @@
 - 本地 HTML 预览通过 HTTP 服务打开，不以 `file://` 双击结果判断内容是否丢失。
 - 发布团队预览时部署完整静态站点，不只发送单个 HTML；AI 交付同时提供 canonical Markdown、明确 token/组件契约、真实本地 SVG 路径和可访问预览。
 - 私有 GitHub 仓库不等于公开在线预览；团队预览站点需可访问，同时仓库仍可保持私有。
-- 每次 `main` 更新后检查 Actions / GitHub Pages，并实际打开线上 Demo 验证域名、HTTPS、相对路径、字体、SVG、视频与交互。
+- GitHub Pages 由共享开发分支 `ai/desktop/design-system-current` 自动部署，作为团队始终可访问的最新 Demo；每次推送必须先通过完整检查，再发布到固定 Pages URL。`main` 继续作为通过 PR 确认的正式稳定代码，不直接承担开发预览更新。
+- 每次开发预览部署后检查 Actions / GitHub Pages，并实际打开线上 Demo 验证域名、HTTPS、相对路径、字体、SVG、视频与交互。
 
 ## 2026-09-10 — 组件更新提示、组件导航与新增控件
 
@@ -147,6 +148,7 @@
 - Sidebar Navigation 不使用自绘 cursor：展开态仅在开合按钮 hover 时使用平台原生 `w-resize`，强调向左收起；收起态整条 rail 使用平台原生 `e-resize`，强调向右展开。按钮视觉继续使用已确认的 Figma icon。
 - Sidebar Navigation 的单色功能 icon 与文字共用 `currentColor`：默认均为 `#3D3D3A`，hover / selected 均为 `#111111`；Google、Bing 等多色品牌 Logo 保持官方颜色，不参与统一染色。
 - Current 页面中新增或更新的内容区块标题紧邻显示 Campaigns 同款 `NEW` 胶囊；内容级标记必须显式添加，不能把所有标题按时间自动标记。
+- 每次完成一批用户可见更新，必须在根 README 的“最近更新”中按日期逐项记录本批所有功能、交互、文案、资源、导航与发布变化；“v6 主要更新”只保存长期摘要，不能替代批次更新清单。对应组件页、Overview、`Copy for AI` 与 `NEW` 标识同时维护。
 - Dropdown trigger 与所有菜单选项统一使用 Karla 14px / 20px；选项字号不依赖外围页面继承。
 - Tag Input 是独立 Inputs & Controls 组件，不扩张基础 Input API；输入时在最前方显示虚线预览，Enter 或 Add 提交为输入框内标签，空输入时 Backspace 删除最后一个标签。
 - Toggle 保持 AISEE 唯一标准 24×16px track、10×10px 黑色 thumb 与模块主色，不替换成外部组件尺寸；交互采用弹性位移、hover 横向伸展、press 压缩和 label 状态过渡，并尊重 reduced motion。

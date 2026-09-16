@@ -45,11 +45,11 @@
 ## 远端 Demo
 
 - GitHub About / Website 已设置为 [AISEE Design System HTML Demo](https://23mnals.github.io/aisee-design-system/)。
-- GitHub Pages 从 `main` 部署；开发分支的本轮新改动需在后续 PR 合并后才会进入正式 Pages。
+- GitHub Pages 改为从 `ai/desktop/design-system-current` 自动部署；每次推送先执行完整检查，通过后更新公开 Demo。`main` 继续作为经过 PR 确认的正式稳定代码。
 
 ## 未完成 / 下一步
 
-- 等待用户明确授权合并 PR #10。合并后 GitHub Pages 才会部署最新版，右侧链接地址保持不变。
+- 等待本轮 README 与 Pages 工作流提交完成并推送；推送后公开 Demo 会由开发分支自动部署，右侧链接地址保持不变。PR #10 继续用于将已确认代码同步到 `main`，不影响开发预览更新。
 - Figma `38:208828` 的复杂 Filter 尚未完整进入 Dropdown；当前仅有简化版 Status / Difficulty。
 - Card 业务变体 Figma `10374:435175` 尚未实现。
 - Plugin Entry Options 的三个 Legacy Engage 内嵌页面仍引用不存在的 JSX 路径。
