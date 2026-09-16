@@ -5,17 +5,17 @@
 ## 当前 Git
 
 - 开发分支：`ai/desktop/design-system-current`，跟踪 `origin/ai/desktop/design-system-current`。
-- 最新关键实现提交：`9c887ba fix: refine dropdown interactions`，已推送至 `origin/ai/desktop/design-system-current`。
+- 最新关键实现提交：`07d9554 fix: smooth long dropdown hover`，等待与本轮交接文档一起推送至 `origin/ai/desktop/design-system-current`。
 - Pages 发布提交：`a004798 ci: publish current design system preview`；更新记录规则提交：`84889b7 docs: standardize recent update records`。
-- Dropdown 性能、Show icons 开关和浮层高度修复已同步到远端开发分支。
+- Dropdown 长列表 hover、Show icons 开关和浮层高度修复已完成。
 - `main` 未直接修改；已创建 [PR #10](https://github.com/23mnals/aisee-design-system/pull/10)，尚未合并。
 - `main` 最近一次正式同步为已合并的 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9)。
 
 ## 当前状态
 
-- Dropdown Fluid Hover 已同步到 React 组件、正式 Select / Dropdown Demo 与独立预览；菜单打开或尺寸变化时缓存选项几何信息，指针移动只读取缓存。
+- Dropdown Fluid Hover 已同步到 React 组件、正式 Select / Dropdown Demo 与独立预览；菜单打开或尺寸变化时缓存选项几何信息，指针移动只读取缓存并直接移动共享高亮层，不重绘整列选项。
 - Dropdown 行操作加号为 24px，默认隐藏；行 hover / focus-within 时显示灰底灰边，按钮自身 hover 才变黄。
-- Fluid Hover 高亮移动为 110ms，尺寸变化 80ms；跨间隙计算使用 `requestAnimationFrame`，同一项内移动不再查询 DOM 或读取布局。
+- Fluid Hover 高亮移动与尺寸变化均为 72ms，透明度为 50ms；跨间隙计算使用 `requestAnimationFrame`，同一项内移动不再查询 DOM、读取布局或触发 React 状态更新。
 - Variant Playground 参数为只读说明；Grouped account 提供真实 `Show icons` Toggle，关闭后仅隐藏 leading avatar / platform icon。
 - Dropdown 菜单保持绝对定位浮层；展开或收起不改变 Playground、后续内容或文档高度。
 - Credit Bar 已包含 Subscription 与 Top-up 同时为 0 的状态。
@@ -26,6 +26,7 @@
 
 - `npm run check` 已通过 token 检查、TypeScript、72/72 测试和完整构建。
 - `git diff --check` 已通过。
+- 回归检查确认 Empty State 14 项菜单的指针热路径只移动共享高亮层，键盘路径仍同步活动项状态。
 - 浏览器实测组合选择器展开前后 Playground 高度、Summary 位置、Composition 位置和文档总高度完全一致。
 - 浏览器实测 Grouped account 的 Show icons 开关：开启 8 个 icon 可见，关闭 0 个可见并保留文本内容。
 - 浏览器检查正式 Grouped account Dropdown：默认加号为 24×24px、`opacity: 0`、灰底灰边；行 hover / 键盘聚焦时出现，按钮 hover 变黄。
@@ -59,4 +60,4 @@
 
 ## 最近一次 Session
 
-- [2026-09-16-dropdown-performance-and-icon-toggle.md](handoff/sessions/2026-09-16-dropdown-performance-and-icon-toggle.md)
+- [2026-09-16-empty-state-dropdown-hover.md](handoff/sessions/2026-09-16-empty-state-dropdown-hover.md)
