@@ -77,8 +77,7 @@ npm run site
 - **账号与平台标识**：Sidebar 账号入口同步组件头像库，套餐名更新为 `Growth Loop Plan`，额度说明 icon 改为细描边；Plan-generated Post 的平台 logo 使用单层虚线描边，Manual-create Post 使用单层实线描边，并缩小 logo 与外圈间距
 - **Sidebar Navigation**：原 Verify 页面更名为 Compare；Google Search Data 与 Bing Webmaster Data 移入 Verify 子级；账号入口随机展示组件库头像
 - **组件发现与 AI 交付**：Avatar 移入 Components；分类内按 A–Z 排序；README、页面更新位置与新增组件显示 `NEW`；22 个 Current 组件详情页提供经过同一规则约束的 `Copy for AI`
-- **Credit Bar**：补齐 Subscription 为 0、Top-up 为 0、两者同时为 0 的展示状态
-- **Empty State**：原 Successful 插图语义修正为 `No report data`，表示暂无报告记录，并引导用户添加产品 URL 发起分析
+- **Credit Bar 与 Empty State**：补齐 Subscription 为 0、Top-up 为 0、两者同时为 0 的额度状态；原 Successful 插图语义修正为 `No report data`，表示暂无报告记录，并引导用户添加产品 URL 发起分析
 - **Dropdown**：同步单选、多选、过滤、输入建议、Compact、Search + action、Filter panel 与 Grouped account；Fluid Hover 改为缓存几何信息并缩短动画；行操作加号为 24px、默认隐藏、行 hover / focus 后显示灰底灰边、按钮自身 hover 才变黄
 - **Dropdown 参数与布局**：Grouped account 增加真实 `Show icons` 开关；关闭后只显示文字；所有下拉菜单以浮层展开，不改变 Playground、后续内容或文档高度
 - **在线 Demo**：GitHub About 保留固定 Pages 地址，Pages 改由 `ai/desktop/design-system-current` 在完整检查通过后自动发布；`main` 继续作为 PR 确认后的稳定代码

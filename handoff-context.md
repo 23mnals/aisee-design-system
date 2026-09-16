@@ -40,6 +40,7 @@
 - Avatar 两套资源不可混用：方形用于网站注册用户；圆形灰描边用于无法获取社媒头像时的兜底。
 - Plan-generated Post 的社媒 logo 只使用虚线描边，Manual-create Post 只使用实线描边。
 - 组件更新必须同步 Overview、README、Copy for AI 与 NEW 标识；分类内按 A–Z 排序。
+- 每批用户可见更新必须在 README“最近更新”中按日期记录 3–8 条，只保留最近 3 批，更早记录进入 `CHANGELOG.md`；v6 区域只保留长期版本规则。
 - 普通开发使用 `ai/desktop/design-system-current`；正式同步 `main` 通过 PR，merge 需要用户明确授权。
 
 ## 远端 Demo

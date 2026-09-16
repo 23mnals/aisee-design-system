@@ -148,7 +148,7 @@
 - Sidebar Navigation 不使用自绘 cursor：展开态仅在开合按钮 hover 时使用平台原生 `w-resize`，强调向左收起；收起态整条 rail 使用平台原生 `e-resize`，强调向右展开。按钮视觉继续使用已确认的 Figma icon。
 - Sidebar Navigation 的单色功能 icon 与文字共用 `currentColor`：默认均为 `#3D3D3A`，hover / selected 均为 `#111111`；Google、Bing 等多色品牌 Logo 保持官方颜色，不参与统一染色。
 - Current 页面中新增或更新的内容区块标题紧邻显示 Campaigns 同款 `NEW` 胶囊；内容级标记必须显式添加，不能把所有标题按时间自动标记。
-- 每次完成一批用户可见更新，必须在根 README 的“最近更新”中按日期逐项记录本批所有功能、交互、文案、资源、导航与发布变化；“v6 主要更新”只保存长期摘要，不能替代批次更新清单。对应组件页、Overview、`Copy for AI` 与 `NEW` 标识同时维护。
+- 每次完成一批用户可见更新，必须在根 README 的“最近更新”中按日期使用 3–8 条简洁内容说明更新内容与用户可见结果；README 只保留最近 3 批，更早记录归档到 `CHANGELOG.md`。“v6 主要更新”只保存长期有效的版本级变化，不能替代批次更新清单。影响当前规范时，同步维护组件页、Overview、`Copy for AI`、`NEW` 标识、相关设计资源和交付文档；纯重构、格式化、内部测试等不可见调整不进入 README。
 - Dropdown trigger 与所有菜单选项统一使用 Karla 14px / 20px；选项字号不依赖外围页面继承。
 - Tag Input 是独立 Inputs & Controls 组件，不扩张基础 Input API；输入时在最前方显示虚线预览，Enter 或 Add 提交为输入框内标签，空输入时 Backspace 删除最后一个标签。
 - Toggle 保持 AISEE 唯一标准 24×16px track、10×10px 黑色 thumb 与模块主色，不替换成外部组件尺寸；交互采用弹性位移、hover 横向伸展、press 压缩和 label 状态过渡，并尊重 reduced motion。
