@@ -33,7 +33,7 @@
 
 - 分支：`ai/desktop/design-system-current`
 - 实现提交：`07d9554 fix: smooth long dropdown hover`
-- 等待交接文档提交后一起推送至 `origin/ai/desktop/design-system-current`，由 current Pages 工作流发布公开 Demo。
+- 已推送至 `origin/ai/desktop/design-system-current`，由 current Pages 工作流发布公开 Demo。
 
 ## 下一步
 

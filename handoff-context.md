@@ -5,9 +5,9 @@
 ## 当前 Git
 
 - 开发分支：`ai/desktop/design-system-current`，跟踪 `origin/ai/desktop/design-system-current`。
-- 最新关键实现提交：`07d9554 fix: smooth long dropdown hover`，等待与本轮交接文档一起推送至 `origin/ai/desktop/design-system-current`。
+- 最新关键实现提交：`07d9554 fix: smooth long dropdown hover`，已推送至 `origin/ai/desktop/design-system-current`。
 - Pages 发布提交：`a004798 ci: publish current design system preview`；更新记录规则提交：`84889b7 docs: standardize recent update records`。
-- Dropdown 长列表 hover、Show icons 开关和浮层高度修复已完成。
+- Dropdown 长列表 hover、Show icons 开关和浮层高度修复已同步到远端开发分支。
 - `main` 未直接修改；已创建 [PR #10](https://github.com/23mnals/aisee-design-system/pull/10)，尚未合并。
 - `main` 最近一次正式同步为已合并的 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9)。
 
