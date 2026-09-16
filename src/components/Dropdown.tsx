@@ -70,6 +70,8 @@ export function Dropdown({
   const menuRef = useRef<HTMLDivElement>(null);
   const highlightRef = useRef<HTMLSpanElement>(null);
   const itemRefs = useRef(new Map<string, HTMLButtonElement>());
+  const itemGeometryRef = useRef(new Map<string, { x: number; y: number; width: number; height: number; centerY: number }>());
+  const highlightSizeRef = useRef({ width: 0, height: 0 });
   const activeIndexRef = useRef(0);
   const pointerFrameRef = useRef<number | null>(null);
   const [open, setOpen] = useState(false);
@@ -86,25 +88,53 @@ export function Dropdown({
   }, [editable, filterable, items, query]);
   const enabledItems = useMemo(() => visibleItems.filter((item) => !item.disabled), [visibleItems]);
 
+  const measureItems = useCallback(() => {
+    const menu = menuRef.current;
+    if (!menu) return;
+    const menuRect = menu.getBoundingClientRect();
+    const nextGeometry = new Map<string, { x: number; y: number; width: number; height: number; centerY: number }>();
+    enabledItems.forEach((item) => {
+      const element = itemRefs.current.get(item.id);
+      if (!element) return;
+      const itemRect = (element.closest<HTMLElement>('.aisee-dropdown__option-shell') ?? element).getBoundingClientRect();
+      nextGeometry.set(item.id, {
+        x: itemRect.left - menuRect.left - menu.clientLeft,
+        y: itemRect.top - menuRect.top - menu.clientTop,
+        width: itemRect.width,
+        height: itemRect.height,
+        centerY: itemRect.top + itemRect.height / 2,
+      });
+    });
+    itemGeometryRef.current = nextGeometry;
+  }, [enabledItems]);
+
   const positionHighlight = useCallback((index: number, instant = false) => {
     if (!fluidHover) return;
-    const menu = menuRef.current;
     const highlight = highlightRef.current;
     const item = enabledItems[index];
-    const element = item ? itemRefs.current.get(item.id) : undefined;
-    if (!menu || !highlight || !element) {
+    if (!highlight || !item) {
       highlight?.removeAttribute('data-visible');
       return;
     }
-    const menuRect = menu.getBoundingClientRect();
-    const itemRect = (element.closest<HTMLElement>('.aisee-dropdown__option-shell') ?? element).getBoundingClientRect();
+    if (!itemGeometryRef.current.has(item.id)) measureItems();
+    const geometry = itemGeometryRef.current.get(item.id);
+    if (!geometry) {
+      highlight.removeAttribute('data-visible');
+      return;
+    }
     if (instant) highlight.setAttribute('data-instant', 'true');
-    highlight.style.width = `${itemRect.width}px`;
-    highlight.style.height = `${itemRect.height}px`;
-    highlight.style.transform = `translate3d(${itemRect.left - menuRect.left - menu.clientLeft}px, ${itemRect.top - menuRect.top - menu.clientTop}px, 0)`;
+    if (highlightSizeRef.current.width !== geometry.width) {
+      highlight.style.width = `${geometry.width}px`;
+      highlightSizeRef.current.width = geometry.width;
+    }
+    if (highlightSizeRef.current.height !== geometry.height) {
+      highlight.style.height = `${geometry.height}px`;
+      highlightSizeRef.current.height = geometry.height;
+    }
+    highlight.style.transform = `translate3d(${geometry.x}px, ${geometry.y}px, 0)`;
     highlight.setAttribute('data-visible', 'true');
     if (instant) requestAnimationFrame(() => highlight.removeAttribute('data-instant'));
-  }, [enabledItems, fluidHover]);
+  }, [enabledItems, fluidHover, measureItems]);
 
   const activateIndex = useCallback((index: number) => {
     const nextIndex = Math.max(0, Math.min(index, enabledItems.length - 1));
@@ -125,7 +155,11 @@ export function Dropdown({
 
   useEffect(() => {
     activeIndexRef.current = activeIndex;
-    if (activeIndex >= enabledItems.length) setActiveIndex(Math.max(0, enabledItems.length - 1));
+    if (activeIndex >= enabledItems.length) {
+      const nextIndex = Math.max(0, enabledItems.length - 1);
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+    }
   }, [activeIndex, enabledItems.length]);
 
   useEffect(() => () => {
@@ -134,14 +168,20 @@ export function Dropdown({
 
   useEffect(() => {
     if (!open || !fluidHover) return;
-    const frame = requestAnimationFrame(() => positionHighlight(activeIndex));
-    const remeasure = () => positionHighlight(activeIndex, true);
+    const frame = requestAnimationFrame(() => {
+      measureItems();
+      positionHighlight(activeIndexRef.current);
+    });
+    const remeasure = () => {
+      measureItems();
+      positionHighlight(activeIndexRef.current, true);
+    };
     window.addEventListener('resize', remeasure);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', remeasure);
     };
-  }, [activeIndex, fluidHover, open, positionHighlight, visibleItems]);
+  }, [fluidHover, measureItems, open, positionHighlight, visibleItems]);
 
   const isSelected = (itemId: string) => selectionMode === 'multiple'
     ? selectedValues.includes(itemId)
@@ -185,10 +225,11 @@ export function Dropdown({
       selectItem(enabledItems[activeIndex] ?? enabledItems[0]);
       return;
     }
-    setActiveIndex((current) => event.key === 'Home' ? 0
+    const nextIndex = event.key === 'Home' ? 0
       : event.key === 'End' ? enabledItems.length - 1
-        : event.key === 'ArrowUp' ? (current - 1 + enabledItems.length) % enabledItems.length
-          : (current + 1) % enabledItems.length);
+        : event.key === 'ArrowUp' ? (activeIndex - 1 + enabledItems.length) % enabledItems.length
+          : (activeIndex + 1) % enabledItems.length;
+    activateIndex(nextIndex);
   };
 
   const triggerCopy = selectionMode === 'multiple'
@@ -197,6 +238,7 @@ export function Dropdown({
   const activeItemId = enabledItems[activeIndex] ? `${id}-option-${enabledItems[activeIndex].id}` : undefined;
   const handleEditableChange = (event: ChangeEvent<HTMLInputElement>) => {
     updateInputValue(event.target.value);
+    activeIndexRef.current = 0;
     setActiveIndex(0);
     setOpen(true);
   };
@@ -216,10 +258,9 @@ export function Dropdown({
     pointerFrameRef.current = requestAnimationFrame(() => {
       pointerFrameRef.current = null;
       const nearest = enabledItems.reduce<{ index: number; distance: number } | null>((closest, item, index) => {
-        const element = itemRefs.current.get(item.id);
-        if (!element) return closest;
-        const rect = (element.closest<HTMLElement>('.aisee-dropdown__option-shell') ?? element).getBoundingClientRect();
-        const distance = Math.abs(rect.top + rect.height / 2 - pointerY);
+        const geometry = itemGeometryRef.current.get(item.id);
+        if (!geometry) return closest;
+        const distance = Math.abs(geometry.centerY - pointerY);
         return !closest || distance < closest.distance ? { index, distance } : closest;
       }, null);
       if (nearest && nearest.index !== activeIndexRef.current) activateIndex(nearest.index);
@@ -286,7 +327,7 @@ export function Dropdown({
         placeholder={filterPlaceholder}
         aria-label={filterPlaceholder}
         autoFocus
-        onChange={(event) => { setFilterQuery(event.target.value); setActiveIndex(0); }}
+        onChange={(event) => { setFilterQuery(event.target.value); activeIndexRef.current = 0; setActiveIndex(0); }}
         onKeyDown={handleKeyDown}
       />}
       {visibleItems.length ? visibleItems.map((item, index) => <Fragment key={item.id}>

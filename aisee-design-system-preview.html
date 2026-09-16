@@ -1304,7 +1304,9 @@
             "Use the Variant playground to choose and test Compact menu, Search + action, Filter panel or Grouped account before implementation.",
             "Use leading media, supporting text, trailing status, groups, headers or footer actions only when the option content requires them; keep the simple menu compact.",
             "Keep Fluid Hover enabled by default: one shared 5% black highlight follows the nearest enabled row across 4px gaps, follows keyboard focus, skips disabled rows, supports gap clicks and honors prefers-reduced-motion.",
+            "Render the menu as an overlay outside normal document flow so opening or closing it never changes the surrounding content height or position.",
             "For an independent row action, use item.action. Keep its 24px control hidden until the row is hovered or keyboard-focused; reveal a gray fill with a gray border, and use Post yellow only while the action itself is hovered.",
+            "For grouped account menus, expose a Show icons toggle when users need to compare density. When off, omit each item's leading avatar or platform icon while preserving labels, supporting text, trailing status and row actions.",
             "For multi-select, use the leading Checkbox state and preserve selection while filtering. Support keyboard navigation, Escape and the correct aria-expanded/selected semantics."
           ]
         },

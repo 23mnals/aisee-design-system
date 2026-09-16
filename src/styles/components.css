@@ -327,8 +327,9 @@
   opacity: 0;
   pointer-events: none;
   transform: translate3d(0,0,0);
-  transition: transform 170ms cubic-bezier(.22,1,.36,1), width 120ms cubic-bezier(.22,1,.36,1), height 120ms cubic-bezier(.22,1,.36,1), opacity 70ms;
+  transition: transform 110ms cubic-bezier(.16,1,.3,1), width 80ms cubic-bezier(.16,1,.3,1), height 80ms cubic-bezier(.16,1,.3,1), opacity 60ms;
   will-change: transform, width, height;
+  backface-visibility: hidden;
 }
 .aisee-dropdown__fluid-highlight[data-visible="true"] { opacity: 1; }
 .aisee-dropdown__fluid-highlight[data-instant="true"] { opacity: 0; transition: none; }

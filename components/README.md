@@ -30,7 +30,7 @@
 
 现行可发布 React + TypeScript 组件位于 [`../src/components/`](../src/components/)：Button、Input、TagInput、Checkbox、Toggle、ToggleSelectionGroup、Tabs、SidebarNavigation、Badge、Steps、TutorialSteps、EmptyState、EmptyStateIllustration、Card、PlanCard、Tag、ModuleToggle、Dialog、ConfirmationDialog、Dropdown、Tooltip、Toast、StatCard、Table、ScoreGauge、LineChart。
 
-`Dropdown` 的 Current API 覆盖单选、多选、菜单过滤和可输入建议；静态详情页与发布 API 使用同一 36px trigger、8px 菜单间距、4px 选项间距、黑色内边与模块色 focus ring。Fluid Hover 默认开启：一个共享高亮层只在最近可用选项变化时更新，键盘焦点同步移动，禁用项会跳过，点击选项间隙会选择当前高亮项，并遵循 reduced-motion。富选项可通过 `action` 提供独立行操作；24px 操作按钮默认隐藏，行 hover 或键盘聚焦时以灰底灰描边出现，按钮自身 hover 后才切换为黄色。多选菜单项在文字左侧显示复选框，不使用右侧尾部对勾。
+`Dropdown` 的 Current API 覆盖单选、多选、菜单过滤和可输入建议；静态详情页与发布 API 使用同一 36px trigger、8px 菜单间距、4px 选项间距、黑色内边与模块色 focus ring。菜单作为绝对定位浮层覆盖在后续内容上方，展开或收起不改变页面内容高度。Fluid Hover 默认开启：打开或尺寸变化时缓存选项位置，移动期间只更新共享高亮层；键盘焦点同步移动，禁用项会跳过，点击选项间隙会选择当前高亮项，并遵循 reduced-motion。富选项可通过 `action` 提供独立行操作；24px 操作按钮默认隐藏，行 hover 或键盘聚焦时以灰底灰描边出现，按钮自身 hover 后才切换为黄色。Grouped account Demo 提供真实的 `Show icons` Toggle：关闭后只显示文字，打开后恢复头像和平台图标。多选菜单项在文字左侧显示复选框，不使用右侧尾部对勾。
 
 其中 `ModuleToggle` 仅保留给仍使用旧三模块切换的历史/兼容场景；当前 5.5 Growth Loop Shell 不把它作为主导航入口。
 

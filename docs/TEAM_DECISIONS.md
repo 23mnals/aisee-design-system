@@ -10,7 +10,9 @@
 - Filter 未选项高 24px、圆角 8px、背景 `#FAFAFA`、1px `rgba(17,17,17,.06)` 描边、Karla 12px / 500、文字 `#3D3D3A`；选中项为 `#111` 背景和白字。不得改成胶囊形或自行替换颜色。
 - Dropdown 详情页上半区用于展示 Single、Multi、Filter、Input 四种基础交互模式；下半区用单一 Variant Playground 切换 Compact menu、Search + action、Filter panel 与 Grouped account 等 Figma 组合，并保留当前变体的真实交互和参数说明，避免平铺成两套重复示例。
 - Dropdown Demo 的 Composition 选择器使用项目自定义触发器与菜单，不使用浏览器原生 `select`；箭头复用 Sidebar 的 `line_chevron-up.svg` 线性图标并随展开状态旋转。
-- Dropdown 的 Fluid Hover 已从预览同步为 Current 默认行为：菜单内只使用一个共享的 5% 黑色高亮层，跨 4px 间隙连续跟随最近可用选项；指针停留在同一项时不重复测量或重启动画，空隙命中按动画帧合并；禁用项不参与，键盘焦点同步，点击间隙选择当前高亮项，并遵循 reduced-motion。React API 可用 `fluidHover={false}` 关闭，用 `gapClick` 控制间隙点击。
+- Dropdown 的 Fluid Hover 已从预览同步为 Current 默认行为：菜单内只使用一个共享的 5% 黑色高亮层，跨 4px 间隙连续跟随最近可用选项；打开或尺寸变化时一次缓存选项位置，指针移动期间不再反复查询 DOM 或读取布局，空隙命中按动画帧合并；禁用项不参与，键盘焦点同步，点击间隙选择当前高亮项，并遵循 reduced-motion。React API 可用 `fluidHover={false}` 关闭，用 `gapClick` 控制间隙点击。
+- Dropdown Variant Playground 顶部的参数为“当前预览说明”，不得伪装成可点击按钮；Grouped account 中 `Show icons` 是真实 Toggle，打开显示头像和平台图标，关闭后只保留文字、状态和行操作。
+- Dropdown 菜单必须作为浮层脱离文档流；展开和收起不得改变 Variant Playground、组件卡片或后续内容的高度与位置。Fluid Hover 容器不得覆盖菜单自身的绝对定位。
 - Dropdown 富选项的独立行操作使用 `item.action`。24px 操作按钮不常驻：默认隐藏，行 hover 或 `focus-within` 时以灰底灰描边出现，按钮自身 hover 后才使用 Post 黄色；不得把黄色 hover 状态当默认样式。
 - Common 页面中的说明卡使用完整灰色描边和左侧品牌强调线；Logo 示例按用途拆成独立有描边的样本卡，避免无分组的松散排版。
 - Components / Content & Status / Avatar 分为两套不可混用的头像库：22 个方形头像用于网站用户注册时按稳定用户 seed 分配；24 个带灰色描边的圆形头像仅在发布 Post 且无法抓取用户社交媒体头像时按稳定社交账号 seed 兜底。资产以 Figma `98:180630` 为权威；Generated extensions 未确认前不进入自动分配资源池。

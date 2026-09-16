@@ -412,7 +412,8 @@ test('Fluid Hover is synchronized to the Current Dropdown implementation and dem
   }
   assert.match(preview, /fluid-highlight/);
   assert.match(preview, /pointermove/);
-  assert.match(preview, /transition:transform 170ms/);
+  assert.match(preview, /transition:transform 110ms/);
+  assert.match(preview, /cachedGeometry/);
   assert.match(preview, /\.row-shell:hover \.row-action/);
   assert.match(preview, /background:rgba\(17,17,17,\.04\)/);
   assert.match(preview, /width:24px;height:16px/);
@@ -420,6 +421,15 @@ test('Fluid Hover is synchronized to the Current Dropdown implementation and dem
   assert.match(detail, /installFluidHover/);
   assert.match(detail, /fluid-hover-highlight/);
   assert.match(detail, /pointermove/);
+  assert.match(detail, /Current preview · Read only/);
+  assert.match(detail, /id="variantIcons"/);
+  assert.match(detail, /data-show-icons/);
+  assert.match(detail, /geometry=new Map/);
+  assert.match(detail, /availableSet/);
+  assert.match(detail, /transition:transform 110ms/);
+  assert.match(detail, /\.variant-select__menu\{position:absolute/);
+  assert.match(detail, /\.fluid-hover-surface\{isolation:isolate\}/);
+  assert.match(detail, /\.menu\.static\.fluid-hover-surface\{position:relative\}/);
   assert.match(detail, /surface\.clientLeft/);
   assert.match(detail, /account-row-action/);
   assert.match(detail, /data-account-action/);
@@ -427,6 +437,8 @@ test('Fluid Hover is synchronized to the Current Dropdown implementation and dem
   assert.match(source, /gapClick\?: boolean \| \{ maxDistance\?: number \}/);
   assert.match(source, /action\?: \{/);
   assert.match(source, /pointerFrameRef/);
+  assert.match(source, /itemGeometryRef/);
+  assert.match(source, /measureItems/);
   assert.match(source, /aisee-dropdown__fluid-highlight/);
   assert.match(source, /menu\.clientLeft/);
   assert.match(styles, /\.aisee-dropdown__fluid-highlight/);
