@@ -7,7 +7,7 @@
 - 开发分支：`ai/desktop/design-system-current`，跟踪 `origin/ai/desktop/design-system-current`。
 - 最新关键实现提交：`9c887ba fix: refine dropdown interactions`，已推送至 `origin/ai/desktop/design-system-current`。
 - Dropdown 性能、Show icons 开关和浮层高度修复已同步到远端开发分支。
-- `main` 未直接修改，未创建或合并 PR。
+- `main` 未直接修改；已创建 [PR #10](https://github.com/23mnals/aisee-design-system/pull/10)，尚未合并。
 - `main` 最近一次正式同步为已合并的 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9)。
 
 ## 当前状态
@@ -49,7 +49,7 @@
 
 ## 未完成 / 下一步
 
-- 创建 `ai/desktop/design-system-current → main` PR；项目规则要求用户明确授权后才合并。合并后 GitHub Pages 才会部署最新版，右侧链接地址保持不变。
+- 等待用户明确授权合并 PR #10。合并后 GitHub Pages 才会部署最新版，右侧链接地址保持不变。
 - Figma `38:208828` 的复杂 Filter 尚未完整进入 Dropdown；当前仅有简化版 Status / Difficulty。
 - Card 业务变体 Figma `10374:435175` 尚未实现。
 - Plugin Entry Options 的三个 Legacy Engage 内嵌页面仍引用不存在的 JSX 路径。

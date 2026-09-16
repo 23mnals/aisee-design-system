@@ -42,9 +42,10 @@
 - 分支：`ai/desktop/design-system-current`
 - 实现提交：`9c887ba fix: refine dropdown interactions`
 - 实现提交已推送至 `origin/ai/desktop/design-system-current`。
-- GitHub Pages 仍由 `main` 的 push 触发；右侧在线 Demo 要显示本轮最新版，仍需通过开发分支到 `main` 的 PR 并在明确授权后合并。
+- 已创建 [PR #10](https://github.com/23mnals/aisee-design-system/pull/10)：`ai/desktop/design-system-current → main`。
+- GitHub Pages 仍由 `main` 的 push 触发；右侧在线 Demo 要显示本轮最新版，需要在用户明确授权后合并 PR #10。
 
 ## 下一步
 
 - 用户复查 Dropdown hover 手感、Show icons 开关和浮层高度稳定性。
-- 创建 `ai/desktop/design-system-current → main` PR；合并后等待 GitHub Pages 发布，右侧链接地址保持不变并显示最新版。
+- 等待用户明确授权合并 PR #10；合并后等待 GitHub Pages 发布，右侧链接地址保持不变并显示最新版。
