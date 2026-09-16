@@ -47,8 +47,10 @@
 - README 的 v6 主要更新已补齐 Avatar、Empty State、Dropdown 图标开关与浮层高度、组件目录 A–Z、NEW 与 Copy for AI 同步规则。
 - README 新增按日期维护的“最近更新”，完整列出 9 月 15～16 日的用户可见变更；长期决策明确以后每个批次都必须逐项同步，v6 摘要不能替代更新清单。
 - 用户进一步明确更新记录格式：每批 3–8 条、README 保留最近 3 批、更早内容归档到 `CHANGELOG.md`、不写内部实现与测试细节；规则已同步到 `AGENTS.md` 与团队长期决策。
+- Pages 环境原先只允许 `main`，已新增 `ai/desktop/design-system-current` 分支策略；失败任务重跑成功，后续 current push 可直接更新固定公开 Demo。
+- 线上 Select / Dropdown 已确认包含 `Show icons`、`Current preview · Read only` 与 `Text-only rows` 最新内容。
 
 ## 下一步
 
 - 用户复查 Dropdown hover 手感、Show icons 开关和浮层高度稳定性。
-- 推送 README 与 Pages 工作流更新，随后确认 GitHub Actions 检查及公开 Demo 部署结果；PR #10 保持开启，后续仅在用户明确授权时合并。
+- PR #10 保持开启，后续仅在用户明确授权时合并；日常 current 更新继续自动发布公开 Demo。

@@ -6,6 +6,7 @@
 
 - 开发分支：`ai/desktop/design-system-current`，跟踪 `origin/ai/desktop/design-system-current`。
 - 最新关键实现提交：`9c887ba fix: refine dropdown interactions`，已推送至 `origin/ai/desktop/design-system-current`。
+- Pages 发布提交：`a004798 ci: publish current design system preview`；更新记录规则提交：`84889b7 docs: standardize recent update records`。
 - Dropdown 性能、Show icons 开关和浮层高度修复已同步到远端开发分支。
 - `main` 未直接修改；已创建 [PR #10](https://github.com/23mnals/aisee-design-system/pull/10)，尚未合并。
 - `main` 最近一次正式同步为已合并的 [PR #9](https://github.com/23mnals/aisee-design-system/pull/9)。
@@ -47,10 +48,11 @@
 
 - GitHub About / Website 已设置为 [AISEE Design System HTML Demo](https://23mnals.github.io/aisee-design-system/)。
 - GitHub Pages 改为从 `ai/desktop/design-system-current` 自动部署；每次推送先执行完整检查，通过后更新公开 Demo。`main` 继续作为经过 PR 确认的正式稳定代码。
+- current 分支首次 Pages 发布已成功，线上 Select / Dropdown 已确认包含 `Show icons`、只读参数说明和文字模式。
 
 ## 未完成 / 下一步
 
-- 等待本轮 README 与 Pages 工作流提交完成并推送；推送后公开 Demo 会由开发分支自动部署，右侧链接地址保持不变。PR #10 继续用于将已确认代码同步到 `main`，不影响开发预览更新。
+- PR #10 继续用于将已确认代码同步到 `main`，不影响开发预览更新；仅在用户明确授权时合并。
 - Figma `38:208828` 的复杂 Filter 尚未完整进入 Dropdown；当前仅有简化版 Status / Difficulty。
 - Card 业务变体 Figma `10374:435175` 尚未实现。
 - Plugin Entry Options 的三个 Legacy Engage 内嵌页面仍引用不存在的 JSX 路径。
