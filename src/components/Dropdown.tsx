@@ -136,11 +136,13 @@ export function Dropdown({
     if (instant) requestAnimationFrame(() => highlight.removeAttribute('data-instant'));
   }, [enabledItems, fluidHover, measureItems]);
 
-  const activateIndex = useCallback((index: number) => {
+  const activateIndex = useCallback((index: number, syncReactState = true) => {
     const nextIndex = Math.max(0, Math.min(index, enabledItems.length - 1));
     if (activeIndexRef.current === nextIndex && highlightRef.current?.getAttribute('data-visible') === 'true') return;
     activeIndexRef.current = nextIndex;
-    setActiveIndex(nextIndex);
+    // Pointer hover only moves the shared highlight layer. Keeping that hot path
+    // outside React avoids re-rendering every option in long menus on each row.
+    if (syncReactState) setActiveIndex(nextIndex);
     positionHighlight(nextIndex);
   }, [enabledItems.length, positionHighlight]);
 
@@ -222,13 +224,13 @@ export function Dropdown({
     }
     if (!enabledItems.length) return;
     if (event.key === 'Enter' || event.key === ' ') {
-      selectItem(enabledItems[activeIndex] ?? enabledItems[0]);
+      selectItem(enabledItems[activeIndexRef.current] ?? enabledItems[0]);
       return;
     }
     const nextIndex = event.key === 'Home' ? 0
       : event.key === 'End' ? enabledItems.length - 1
-        : event.key === 'ArrowUp' ? (activeIndex - 1 + enabledItems.length) % enabledItems.length
-          : (activeIndex + 1) % enabledItems.length;
+        : event.key === 'ArrowUp' ? (activeIndexRef.current - 1 + enabledItems.length) % enabledItems.length
+          : (activeIndexRef.current + 1) % enabledItems.length;
     activateIndex(nextIndex);
   };
 
@@ -250,7 +252,7 @@ export function Dropdown({
     const direct = target.closest<HTMLButtonElement>('.aisee-dropdown__option:not(:disabled)');
     if (direct && event.currentTarget.contains(direct)) {
       const directIndex = enabledItems.findIndex((item) => item.id === direct.dataset.dropdownItem);
-      if (directIndex >= 0 && directIndex !== activeIndexRef.current) activateIndex(directIndex);
+      if (directIndex >= 0 && directIndex !== activeIndexRef.current) activateIndex(directIndex, false);
       return;
     }
     const pointerY = event.clientY;
@@ -263,7 +265,7 @@ export function Dropdown({
         const distance = Math.abs(geometry.centerY - pointerY);
         return !closest || distance < closest.distance ? { index, distance } : closest;
       }, null);
-      if (nearest && nearest.index !== activeIndexRef.current) activateIndex(nearest.index);
+      if (nearest && nearest.index !== activeIndexRef.current) activateIndex(nearest.index, false);
     });
   };
 
@@ -279,7 +281,7 @@ export function Dropdown({
       const distance = Math.max(rect.top - event.clientY, event.clientY - rect.bottom, 0);
       if (distance > maxDistance) return;
     }
-    selectItem(enabledItems[activeIndex]);
+    selectItem(enabledItems[activeIndexRef.current]);
   };
 
   return <div ref={rootRef} className={`aisee-dropdown${fluidHover ? ' aisee-dropdown--fluid' : ''} ${className}`.trim()}>

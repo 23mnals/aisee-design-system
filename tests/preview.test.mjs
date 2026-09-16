@@ -439,9 +439,13 @@ test('Fluid Hover is synchronized to the Current Dropdown implementation and dem
   assert.match(source, /pointerFrameRef/);
   assert.match(source, /itemGeometryRef/);
   assert.match(source, /measureItems/);
+  assert.match(source, /activateIndex\(directIndex, false\)/);
+  assert.match(source, /activateIndex\(nearest\.index, false\)/);
+  assert.match(source, /if \(syncReactState\) setActiveIndex\(nextIndex\)/);
   assert.match(source, /aisee-dropdown__fluid-highlight/);
   assert.match(source, /menu\.clientLeft/);
   assert.match(styles, /\.aisee-dropdown__fluid-highlight/);
+  assert.match(styles, /transform 72ms cubic-bezier\(\.2,\.8,\.2,1\)/);
   assert.match(styles, /\.aisee-dropdown__option-action/);
   assert.match(styles, /\.aisee-dropdown__option-shell:hover \.aisee-dropdown__option-action/);
   assert.match(styles, /prefers-reduced-motion: reduce[\s\S]*?\.aisee-dropdown__fluid-highlight/);
