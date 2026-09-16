@@ -250,6 +250,11 @@
   transform: translateY(-1px) rotate(-45deg) scale(.7);
   transition: opacity var(--aisee-motion-micro), transform var(--aisee-motion-micro) var(--aisee-motion-ease);
 }
+.aisee-checkbox__burst { position: absolute; top: 50%; left: 50%; width: 0; height: 0; pointer-events: none; }
+.aisee-checkbox__burst-dot { --aisee-checkbox-burst-angle: calc(var(--aisee-checkbox-burst-index) * 45deg); position: absolute; top: -2px; left: -2px; width: 4px; height: 4px; border: 1px solid var(--aisee-color-black); border-radius: 50%; opacity: 0; transform: rotate(var(--aisee-checkbox-burst-angle)) translateY(-5px) scale(.25); }
+.aisee-checkbox__burst-dot:nth-child(2n) { width: 3px; height: 3px; border: 0; background: var(--aisee-module-primary); }
+.aisee-checkbox__control[data-celebrating="true"] { animation: aisee-checkbox-pop 420ms cubic-bezier(.2,.9,.3,1.2); }
+.aisee-checkbox__control[data-celebrating="true"] .aisee-checkbox__burst-dot { animation: aisee-checkbox-burst 560ms cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--aisee-checkbox-burst-index) * 12ms); }
 .aisee-checkbox:hover .aisee-checkbox__control,
 .aisee-checkbox-row:hover .aisee-checkbox__control { background: var(--aisee-module-primary); }
 .aisee-checkbox input:checked + .aisee-checkbox__control { background: var(--aisee-module-primary); }
@@ -261,6 +266,9 @@
 .aisee-checkbox__copy { display: grid; gap: 2px; }
 .aisee-checkbox__label { font-size: 14px; line-height: 18px; }
 .aisee-checkbox__description { color: var(--aisee-color-text-muted); font-size: 12px; line-height: 18px; }
+@keyframes aisee-checkbox-pop { 0%,100% { transform: scale(1); } 36% { transform: scale(.82); } 68% { transform: scale(1.12); } }
+@keyframes aisee-checkbox-burst { 0% { opacity: 0; transform: rotate(var(--aisee-checkbox-burst-angle)) translateY(-5px) scale(.25); } 24% { opacity: 1; } 100% { opacity: 0; transform: rotate(var(--aisee-checkbox-burst-angle)) translateY(-19px) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .aisee-checkbox__control[data-celebrating="true"], .aisee-checkbox__control[data-celebrating="true"] .aisee-checkbox__burst-dot { animation: none; } }
 
 .aisee-dropdown { position: relative; display: grid; gap: 6px; }
 .aisee-dropdown__trigger {
@@ -532,6 +540,28 @@
 .aisee-tabs--platform-measure-all .aisee-tab__label { max-width: 999px; opacity: 1; }
 .aisee-tabs--platform-measure-all .aisee-tab__label { transition: none; }
 
+.aisee-tree-nav { position: relative; display: grid; gap: 2px; font-family: Karla, sans-serif; }
+.aisee-tree-nav[data-root-rail="true"] { padding-left: 18px; }
+.aisee-tree-nav[data-root-rail="true"]::before { position: absolute; top: 4px; bottom: 4px; left: 8px; border-left: 2px solid rgba(17,17,17,.08); content: ""; }
+.aisee-tree-nav__item-wrap { position: relative; }
+.aisee-tree-nav__item { display: flex; width: 100%; min-height: 30px; align-items: center; gap: 4px; padding: 4px 8px; border: 0; border-radius: 8px; color: #3d3d3a; background: transparent; text-align: left; cursor: pointer; transition: color var(--aisee-motion-fast), background var(--aisee-motion-fast); }
+.aisee-tree-nav__item:hover:not(:disabled), .aisee-tree-nav__item[aria-current="page"] { color: var(--aisee-color-black); background: rgba(17,17,17,.04); }
+.aisee-tree-nav__item:focus-visible { outline: 2px solid var(--aisee-color-black); outline-offset: 2px; }
+.aisee-tree-nav__item:disabled { opacity: .4; cursor: not-allowed; }
+.aisee-tree-nav__icon { display: grid; width: 18px; height: 18px; flex: 0 0 18px; place-items: center; }
+.aisee-tree-nav__icon > svg, .aisee-tree-nav__icon > img { display: block; width: 14px; height: 14px; }
+.aisee-tree-nav__icon-mask { display: block; width: 14px; height: 14px; background: currentColor; mask: var(--aisee-tree-nav-icon) center / contain no-repeat; -webkit-mask: var(--aisee-tree-nav-icon) center / contain no-repeat; }
+.aisee-tree-nav__label { min-width: 0; flex: 1; overflow: hidden; font-size: 14px; line-height: 22px; text-overflow: ellipsis; white-space: nowrap; }
+.aisee-tree-nav__badge, .aisee-tree-nav__status { flex: 0 0 auto; }
+.aisee-tree-nav__disclosure { width: 7px; height: 7px; flex: 0 0 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translate(-1px,-1px); transition: transform 160ms cubic-bezier(.2,.8,.2,1); }
+.aisee-tree-nav__item[aria-expanded="true"] > .aisee-tree-nav__disclosure { transform: rotate(225deg) translate(-1px,-1px); }
+.aisee-tree-nav__children { display: grid; max-height: 0; grid-template-columns: 18px minmax(0,1fr); overflow: hidden; opacity: 0; transition: max-height 160ms cubic-bezier(.2,.8,.2,1), opacity 80ms ease; }
+.aisee-tree-nav__children[data-open="true"] { max-height: 640px; opacity: 1; }
+.aisee-tree-nav__rail { margin-left: 8px; border-left: 2px solid rgba(17,17,17,.08); }
+.aisee-tree-nav__children-list { display: grid; gap: 2px; }
+.aisee-tree-nav__item-wrap[data-depth]:not([data-depth="0"]) > .aisee-tree-nav__item { padding-left: 6px; }
+.aisee-tree-nav__item-wrap[data-depth]:not([data-depth="0"]) > .aisee-tree-nav__item .aisee-tree-nav__label { font-size: 12px; line-height: 18px; }
+
 .aisee-sidebar { display: flex; width: 224px; min-height: 640px; flex-direction: column; gap: 16px; padding: 16px 12px; border-right: 1px solid var(--aisee-color-border); background: var(--aisee-color-white); font-family: Karla, sans-serif; transition: width 160ms cubic-bezier(.2,.8,.2,1); }
 .aisee-sidebar--collapsed { width: var(--aisee-size-sidebar-collapsed); }
 .aisee-sidebar__header { position: relative; min-height: 32px; padding-right: 36px; }
@@ -580,6 +610,7 @@
 .aisee-sidebar--collapsed .aisee-sidebar__flyout .aisee-sidebar__label, .aisee-sidebar--collapsed .aisee-sidebar__flyout .aisee-sidebar__badge, .aisee-sidebar--collapsed .aisee-sidebar__flyout .aisee-sidebar__status { display: block; }
 
 @media (prefers-reduced-motion: reduce) { .aisee-sidebar, .aisee-sidebar__collapse-tooltip, .aisee-sidebar__sub { transition-duration: 0ms; } }
+@media (prefers-reduced-motion: reduce) { .aisee-tree-nav__children, .aisee-tree-nav__disclosure { transition-duration: 0ms; } }
 
 .aisee-card { padding: 20px; border: 1px solid var(--aisee-color-border); border-radius: var(--aisee-radius-card); background: var(--aisee-color-card); }
 .aisee-card--shadow { box-shadow: var(--aisee-shadow-card); }

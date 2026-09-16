@@ -980,8 +980,8 @@
             <p>Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.</p>
             <div class="component-map">
               <article><h3>Actions</h3><p>Button.</p></article>
-              <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.</p></article>
-              <article><h3>Navigation</h3><p>Current Tabs and product Sidebar Navigation patterns. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.</p></article>
+              <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.</p></article>
+              <article><h3>Navigation</h3><p>Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.</p></article>
               <article><h3>Content &amp; Status</h3><p>Current PlanCard, Badge, Steps and Empty State.</p></article>
               <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.</p></article>
               <article><h3>Feedback &amp; Overlays</h3><p>Dialog, Confirmation Dialog, Tooltip and Toast.</p></article>
@@ -1213,9 +1213,9 @@
         ["No icon fonts and no emoji UI icons; use SVG or typed React icon components.", "不使用图标字体或 emoji 界面图标；使用 SVG 或带类型的 React 图标组件。"], ["Social platform marks keep their official form and brand color at small badge sizes.", "社交平台标志在小尺寸 Badge 中保留官方形态和品牌色。"],
         ["Component library", "组件库"], ["Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.", "组件按“类别 → 组件”组织。Current 条目是实施事实来源；Legacy 条目仅作历史参考并有清晰标识。"],
         ["Actions", "操作"], ["Inputs & Controls", "输入与控件"], ["Navigation", "导航"], ["Content & Status", "内容与状态"], ["Data Display", "数据展示"], ["Feedback & Overlays", "反馈与浮层"],
-        ["Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.", "Input、Checkbox、Select / Dropdown、Toggle、Tag Input 与 Toggle Selection Group。Input 和下拉触发器使用 1px 黑色内描边加 2px 模块色环；下拉菜单与触发器保持 8px 间距，选项间距为 4px。单一共享的 5% 黑色 Fluid Hover 高亮会连续跟随最近的可用选项，已选项仍保持可见。Dropdown 的复合变体可在 Variant Playground 中切换并直接测试。"],
+        ["Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.", "Input、Checkbox、Select / Dropdown、Toggle、Tag Input 与 Toggle Selection Group。Checkbox 在新选中时播放一次简短的 bubble 扩散动画，并兼容 reduced motion。Input 和下拉触发器使用 1px 黑色内描边加 2px 模块色环；下拉菜单与触发器保持 8px 间距，选项间距为 4px。单一共享的 5% 黑色 Fluid Hover 高亮会连续跟随最近的可用选项，已选项仍保持可见。Dropdown 的复合变体可在 Variant Playground 中切换并直接测试。"],
         ["AISEE dApp design archive.fig", "备份-官网+dapp主功能.fig"],
-        ["Current Tabs and product Sidebar Navigation patterns. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.", "Current Tabs 与产品 Sidebar Navigation 模式。平台 Tabs 在所有名称都能容纳时自动完整显示；空间不足时只显示当前项名称。"],
+        ["Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.", "Current Tabs、可复用 Tree Nav 与产品 Sidebar Navigation 模式。Sidebar Navigation 展开态直接组合 Tree Nav。平台 Tabs 在所有名称都能容纳时自动完整显示；空间不足时只显示当前项名称。"],
         ["Current PlanCard, Badge, Steps and Empty State.", "Current PlanCard、Badge、Steps 与 Empty State。"], ["Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.", "Current Card、Stat Card、Table、Chart、仅限 Analysis 的 Score Gauge 与 Credit Bar；Legacy Post Card 继续保留参考。"],
         ["Dialog, Confirmation Dialog, Tooltip and Toast.", "Dialog、Confirmation Dialog、Tooltip 与 Toast。"],
         ["Use components without writing code", "无需写代码也能使用组件"], ["Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.", "设计师、产品经理和其他非开发人员无需上传整套 Design System Demo，也能把单个组件准确交给 AI。"],
@@ -1292,7 +1292,8 @@
           rules: [
             "Use Checkbox for independent multi-selection, not for an immediate on/off setting or a mutually exclusive choice.",
             "Preserve the Current 18px control, correct check direction, module-colour selected state, row hover and indeterminate state where a parent controls children.",
-            "Make the whole label row clickable, keep keyboard focus visible and expose checked, mixed and disabled states semantically."
+            "Make the whole label row clickable, keep keyboard focus visible and expose checked, mixed and disabled states semantically.",
+            "When the value changes from unchecked to checked, play one short bubble burst around the control. Do not replay on initial render or when clearing the value, and disable the celebration for reduced motion."
           ]
         },
         "components/Select/Select.html": {
@@ -1355,7 +1356,18 @@
             "Keep Verify as the Growth Loop parent. Its current child order is Compare, Google Search Data, then Bing Webmaster Data; do not recreate a separate Integrations group for those sources.",
             "Support 224px expanded and 58px collapsed states. Collapsed state shows icons only; labels remain available to assistive technology and tooltips.",
             "Render the footer account identity with the Avatar component. Use kind account and a stable account seed so the same account resolves to one of the 22 approved square avatars across pages and sessions.",
+            "Compose the standalone Tree Nav component for expanded nested destinations instead of recreating its hierarchy, rail, selected state or disclosure behavior.",
             "Preserve nested active states, keyboard navigation, aria-current, the native resize cursor and same-browser width/state memory where implemented."
+          ]
+        },
+        "components/TreeNav/TreeNav.html": {
+          name: "Tree Nav",
+          intent: "Navigate one focused local list of related destinations without recreating the full Sidebar shell.",
+          rules: [
+            "Use one Tree Nav instance for one focused local list. The surrounding page supplies the section title; do not repeat it inside the standalone list.",
+            "Show a subtle hierarchy rail and compact leaf rows. A parent disclosure is optional when the Tree Nav must own its group label; Sidebar Navigation may hide the disclosure to preserve its product-shell pattern.",
+            "Selecting a leaf updates aria-current without moving or closing the list.",
+            "Support controlled or uncontrolled selected and open states, visible keyboard focus, disabled items and reduced motion."
           ]
         },
         "components/PlanCardCurrent/PlanCardCurrent.html": {
@@ -1552,13 +1564,14 @@ Shared implementation rules:
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
         { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
         { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current", updated: true },
-        { group: "Components", category: "Inputs & Controls", name: "Checkbox", path: "components/Checkbox/Checkbox.html", subtitle: "Current independent selection control with module-color hover and selected states.", status: "Current" },
+        { group: "Components", category: "Inputs & Controls", name: "Checkbox", path: "components/Checkbox/Checkbox.html", subtitle: "Current independent selection control with a short bubble confirmation when selected.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter, input-assisted and rich composition dropdown patterns.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with fluid hover, press and spring-like state transitions.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Tag Input", path: "components/TagInput/TagInput.html", subtitle: "Current token input that previews, commits and removes inline tags.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Toggle Selection Group", path: "components/ToggleSelectionGroup/ToggleSelectionGroup.html", subtitle: "Enable option groups while preserving selection across off and on states.", status: "Current", updated: true },
         { group: "Components", category: "Navigation", name: "Tabs", path: "components/Tabs/Tabs.html", subtitle: "Current underline and segmented tabs with text, icon and count compositions.", status: "Current", updated: true },
         { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "Current grouped product navigation with Verify-owned Compare and search-data destinations.", status: "Current", updated: true },
+        { group: "Components", category: "Navigation", name: "Tree Nav", path: "components/TreeNav/TreeNav.html", subtitle: "Focused local navigation with a hierarchy rail, leaf selection and optional parent disclosure.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
         { group: "Components", category: "Content & Status", name: "Avatar", path: "preview/avatar.html", subtitle: "Approved account and missing-social-profile avatar libraries with stable assignment, motion and post-origin variants.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Solid, dot, colour, source and semantic status badges with icon and label.", status: "Current", updated: true },

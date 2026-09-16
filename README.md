@@ -71,6 +71,13 @@ npm run site
 
 ## 最近更新
 
+### 2026-09-16 · Tree Nav 与 Checkbox 动效
+
+- **Tree Nav**：新增独立 Current 组件页，默认直接展示约 6 个相关选项，不重复外围标题，并支持层级引导线、叶子选中与禁用状态
+- **Sidebar Navigation**：展开态直接组合 Tree Nav，侧栏自身继续负责功能分组、收起态、账号入口与收起后的子级浮层
+- **Checkbox**：从未选中切换到选中时播放一次短促的 bubble 扩散与回弹反馈；取消选中、初始选中和禁用态不触发，并兼容 reduced motion
+- **发现与交付**：Components Overview、A–Z 导航、`NEW` 标识和 Tree Nav / Checkbox 的 `Copy for AI` 已同步更新
+
 ### 2026-09-15 ～ 2026-09-16
 
 - **Avatar**：22 个网站注册方形头像与 24 个社媒缺失圆形兜底头像进入 Components；头像随机取值后保持稳定；眼睛动画直接作用于原头像并限制瞳孔范围；颜色、眼睛尺寸和位置增加差异
@@ -93,10 +100,12 @@ npm run site
 - PlanCard 新增 v5.4 Upgrade Plan 当前版本，旧套餐卡继续作为 Legacy 保留
 - Figma 对齐 Toggle、Modal footer 和 Engage v5 页面规则
 - 44 个元数据颜色与 46 个语义颜色由 JSON 自动生成 CSS；旧变量通过兼容 alias 保留
-- Current 组件补齐 Avatar、Badge、Checkbox、Empty State、Steps、Tooltip / Toast、Table、Stat Card、Chart、Score Gauge、Credit Bar、Dropdown、Tag Input 与 Toggle Selection Group；组件目录按分类内 A–Z 排列
+- Current 组件补齐 Avatar、Badge、Checkbox、Empty State、Steps、Tooltip / Toast、Table、Stat Card、Chart、Score Gauge、Credit Bar、Dropdown、Tag Input、Toggle Selection Group 与 Tree Nav；组件目录按分类内 A–Z 排列
 - Avatar 统一进入 Components：网站注册账号使用方形头像库，社媒头像缺失时使用圆形灰描边兜底库；Sidebar 等账号入口从组件库随机取值并保持稳定；Plan-generated Post 的平台 logo 只用虚线描边，Manual-create Post 只用实线描边
 - Credit Bar 覆盖 Subscription、Top-up、任一来源为 0 及两者都为 0；Empty State 的 `No report data` 表示暂无报告记录，主操作为添加产品 URL 并开始分析
 - Dropdown 覆盖单选、多选、过滤、输入建议与分组账号等组合形态；Fluid Hover 使用缓存几何信息平滑跟随，行操作默认隐藏、在 hover / focus 时按需出现；Grouped account 提供 `Show icons` 开关；所有菜单作为浮层打开，不改变外围内容高度
+- Tree Nav 作为独立层级导航组件默认直接展示本地相关选项、子级引导线与叶子选中；只有需要自行命名分组时才使用父级展开。Sidebar Navigation 展开态组合 Tree Nav，并单独维护多分组、侧栏收起与浮层职责
+- Checkbox 新选中时使用短促 bubble 扩散反馈，保留原有选中语义、键盘路径并遵循 reduced motion
 - README、组件页面、Overview、`Copy for AI` 与 `NEW` 标识随 Current 组件更新同步维护，方便用户识别新增内容并把同一套规则交给 AI
 
 完整迁移表见 [`docs/MIGRATION.md`](docs/MIGRATION.md)，资源状态见 [`docs/RESOURCE_INVENTORY.md`](docs/RESOURCE_INVENTORY.md)。

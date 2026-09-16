@@ -136,7 +136,7 @@ test('every Current component detail page offers a scoped Copy for AI prompt', (
     .filter(entry => entry.path && entry.path !== 'preview/dapp-v6-components.html');
   const guidancePaths = new Set([...portal.matchAll(/^\s+"((?:components\/[^"]+|preview\/avatar)\.html)": \{/gm)].map(match => match[1]));
 
-  assert.equal(currentComponentEntries.length, 23);
+  assert.equal(currentComponentEntries.length, 24);
   for (const entry of currentComponentEntries) {
     assert.ok(guidancePaths.has(entry.path), `${entry.name} should have AI guidance`);
   }
@@ -613,9 +613,16 @@ test('checkbox is published, documented and follows the v6 selection states', as
   const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
   assert.match(source, /export const Checkbox/);
   assert.match(source, /type="checkbox"/);
+  assert.match(source, /data-celebrating=\{celebrating \|\| undefined\}/);
+  assert.match(source, /event\.currentTarget\.checked && !event\.currentTarget\.disabled/);
+  assert.match(source, /Array\.from\(\{ length: 8 \}/);
   assert.match(exports, /components\/Checkbox/);
   assert.match(styles, /\.aisee-checkbox__control \{[\s\S]*?width: 18px;[\s\S]*?height: 18px;[\s\S]*?border: 1\.5px solid/);
   assert.match(styles, /\.aisee-checkbox-row:hover \.aisee-checkbox__control \{ background: var\(--aisee-module-primary\); \}/);
+  assert.match(styles, /@keyframes aisee-checkbox-burst/);
+  assert.match(styles, /prefers-reduced-motion: reduce[^}]+\.aisee-checkbox__control\[data-celebrating="true"\]/);
+  assert.match(detail, /class="burst"/);
+  assert.match(detail, /classList\.add\('is-celebrating'\)/);
   for (const state of ['Default', 'Row hover', 'Selected', 'Disabled']) assert.match(detail, new RegExp(state));
   assert.match(overview, /<h2>Checkbox<\/h2>/);
   assert.match(portal, /components\/Checkbox\/Checkbox\.html/);
@@ -810,6 +817,7 @@ test('component title area navigates to adjacent sidebar entries and names each 
 
 test('Sidebar Navigation is a reusable interactive current component', async () => {
   const source = await readFile(new URL('../src/components/SidebarNavigation.tsx', import.meta.url), 'utf8');
+  const treeSource = await readFile(new URL('../src/components/TreeNav.tsx', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   const detail = await readFile(new URL('../components/SidebarNavigation/SidebarNavigation.html', import.meta.url), 'utf8');
   const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
@@ -820,10 +828,13 @@ test('Sidebar Navigation is a reusable interactive current component', async () 
   assert.match(source, /aria-haspopup=\{isCollapsed && hasChildren \? 'menu' : undefined\}/);
   assert.match(source, /role="menuitem"/);
   assert.match(source, /onValueChange\?: \(value: string\) => void/);
-  assert.match(source, /iconSrc\?: string/);
-  assert.match(source, /iconTone\?: 'monochrome' \| 'brand'/);
+  assert.match(source, /SidebarNavigationItem extends TreeNavItem/);
+  assert.match(treeSource, /iconSrc\?: string/);
+  assert.match(treeSource, /iconTone\?: 'monochrome' \| 'brand'/);
   assert.match(source, /className="aisee-sidebar__icon-mask"/);
-  assert.match(source, /aria-expanded=\{hasChildren \? \(isCollapsed \? isFlyoutOpen : isOpen\) : undefined\}/);
+  assert.match(source, /aria-expanded=\{hasChildren \? isFlyoutOpen : undefined\}/);
+  assert.match(source, /<TreeNav/);
+  assert.match(source, /className="aisee-sidebar__tree"/);
   assert.match(source, /const toggleLabel = isCollapsed \? 'Open sidebar' : 'Close sidebar'/);
   assert.match(source, /function SidebarToggleIcon\(\)/);
   assert.match(source, /expandIcon \?\? <SidebarToggleIcon \/>/);
@@ -849,6 +860,7 @@ test('Sidebar Navigation is a reusable interactive current component', async () 
   assert.match(detail, /label:'Bing Webmaster Data',icon:'bing\.svg',brand:true/);
   assert.doesNotMatch(detail, /label:'Integrations'/);
   assert.match(detail, /every other primary item can expand independently/);
+  assert.match(detail, /composes the standalone Tree Nav component/);
   assert.match(detail, /class="workspace" aria-label="Example content area"/);
   assert.match(detail, /sidebar\.classList\.toggle\('is-collapsed',collapsed\)/);
   assert.match(detail, /\.collapse:hover\{[^}]*cursor:w-resize\}/);
@@ -869,6 +881,31 @@ test('Sidebar Navigation is a reusable interactive current component', async () 
   assert.match(exports, /components\/SidebarNavigation/);
   assert.match(portal, /name: "Sidebar Navigation"[^\n]+status: "Current", updated: true/);
   await Promise.all(['sidebar-close.svg', 'dashboard.svg', 'analysis.svg', 'growth.svg', 'engage.svg', 'keywords.svg', 'replies.svg', 'post.svg', 'campaign.svg', 'compare.svg', 'google.svg', 'bing.svg'].map(file => access(new URL(`../assets/sidebar-v6/${file}`, import.meta.url))));
+});
+
+test('Tree Nav is a standalone reusable hierarchy and the expanded Sidebar composes it', async () => {
+  const source = await readFile(new URL('../src/components/TreeNav.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/TreeNav/TreeNav.html', import.meta.url), 'utf8');
+  const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
+  assert.match(source, /export interface TreeNavItem/);
+  assert.match(source, /items: TreeNavItem\[\]/);
+  assert.match(source, /openItemIds\?: string\[\]/);
+  assert.match(source, /defaultOpenItemIds\?: string\[\]/);
+  assert.match(source, /showDisclosure\?: boolean/);
+  assert.match(source, /showRootRail\?: boolean/);
+  assert.match(source, /aria-expanded=\{hasChildren \? isOpen : undefined\}/);
+  assert.match(source, /aria-current=\{!hasChildren && activeValue === item\.id \? 'page' : undefined\}/);
+  assert.match(source, /item\.children\?\.map\(\(child\) => renderItem\(child, depth \+ 1\)\)/);
+  assert.match(styles, /\.aisee-tree-nav__children\[data-open="true"\]/);
+  assert.match(styles, /\.aisee-tree-nav__rail/);
+  assert.match(detail, /The standalone preview starts directly with leaf options/);
+  assert.match(detail, /Saved views/);
+  assert.doesNotMatch(detail, /label:'Engage'/);
+  assert.match(detail, /Sidebar Navigation uses this component in its expanded state/);
+  assert.match(exports, /components\/TreeNav/);
+  assert.match(portal, /name: "Tree Nav"[^\n]+status: "Current", updated: true/);
+  assert.match(portal, /"components\/TreeNav\/TreeNav\.html": \{/);
 });
 
 test('component preview uses the AISEE banner shell and compact type hierarchy', async () => {

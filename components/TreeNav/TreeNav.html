@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tree Nav · AISEE Components</title>
+  <link rel="stylesheet" href="../../fonts/karla.css" data-aisee-typography="karla">
+  <link rel="stylesheet" href="../component-doc-layout.css">
+  <style>
+    :root{--ink:#111;--text:#3d3d3a;--muted:rgba(17,17,17,.6);--line:rgba(17,17,17,.05);--lime:#cfff29;--page:#fafafa}
+    *{box-sizing:border-box}body{margin:0;padding:24px!important;background:var(--page);color:var(--ink);font:14px/20px Karla,Arial,sans-serif}button{font:inherit}
+    main{width:640px!important;max-width:100%!important;margin:0 auto!important;padding:0!important}h1{margin:0;font-size:16px;font-weight:500;line-height:24px}.intro{margin:8px 0 0;color:var(--muted)}h2{margin:32px 0 8px;font-size:16px;font-weight:500;line-height:24px}
+    .panel{padding:32px;border:1px solid var(--line);border-radius:14px;background:#fff}.demo{position:relative;width:320px;max-width:100%;margin:0 auto;padding-left:18px}.demo:before{position:absolute;top:5px;bottom:5px;left:8px;border-left:2px solid rgba(17,17,17,.08);content:""}.tree{display:grid;gap:2px}.node{position:relative}.item{display:flex;width:100%;min-height:36px;align-items:center;gap:6px;padding:7px 10px;border:0;border-radius:8px;color:var(--text);background:transparent;text-align:left;cursor:pointer;transition:color .12s,background .12s}.item:hover:not(:disabled),.item[aria-current=page]{color:var(--ink);background:rgba(17,17,17,.04)}.item:focus-visible{outline:2px solid var(--ink);outline-offset:2px}.item:disabled{opacity:.4;cursor:not-allowed}.label{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.spec-list{margin:8px 0 0;padding-left:20px;color:var(--muted)}.spec-list li+li{margin-top:6px}.note{margin:8px 0 0;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Tree Nav</h1>
+    <p class="intro">A focused local navigation list with a hierarchy rail, leaf selection and disabled states. Sidebar Navigation uses this component in its expanded state.</p>
+
+    <h2>Interactive preview <span class="aisee-content-new" aria-label="New or updated content">NEW</span></h2>
+    <section class="panel">
+      <nav class="demo tree" aria-label="Example tree navigation" id="tree"></nav>
+    </section>
+
+    <h2>Interaction</h2>
+    <section class="panel">
+      <ul class="spec-list">
+        <li>The standalone preview starts directly with leaf options; the surrounding page supplies any section title.</li>
+        <li>Keep each Tree Nav instance focused on one local list instead of reproducing the complete product sidebar.</li>
+        <li>The rail communicates hierarchy; the selected leaf uses the same subtle surface as hover.</li>
+        <li>Disabled items remain visible but cannot be selected.</li>
+      </ul>
+    </section>
+
+    <h2>Usage</h2>
+    <section class="panel"><p class="note">Use Tree Nav for a focused local list of related destinations. Add a parent disclosure only when the surrounding context does not already provide the group title. Use Sidebar Navigation for the complete application rail, multiple product groups, collapse behavior, account footer and collapsed flyouts.</p></section>
+  </main>
+  <script>
+    const items=[
+      {id:'overview',label:'Overview'},
+      {id:'activity',label:'Activity'},
+      {id:'accounts',label:'Accounts'},
+      {id:'reports',label:'Reports'},
+      {id:'saved-views',label:'Saved views'},
+      {id:'settings',label:'Settings',disabled:true}
+    ];
+    let selected='overview';
+    function render(){tree.innerHTML=items.map(item=>`<div class="node"><button class="item" type="button" data-id="${item.id}" ${item.disabled?'disabled':''} ${selected===item.id?'aria-current="page"':''}><span class="label">${item.label}</span></button></div>`).join('');tree.querySelectorAll('.item').forEach(button=>button.addEventListener('click',()=>{selected=button.dataset.id;render()}))}
+    render();
+  </script>
+</body>
+</html>

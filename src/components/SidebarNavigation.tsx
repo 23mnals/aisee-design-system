@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { TreeNav, type TreeNavItem } from './TreeNav';
 
 function SidebarToggleIcon() {
   return <svg className="aisee-sidebar__toggle-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -6,17 +7,7 @@ function SidebarToggleIcon() {
   </svg>;
 }
 
-export interface SidebarNavigationItem {
-  id: string;
-  label: string;
-  icon?: ReactNode;
-  iconSrc?: string;
-  iconTone?: 'monochrome' | 'brand';
-  badge?: ReactNode;
-  status?: ReactNode;
-  disabled?: boolean;
-  children?: SidebarNavigationItem[];
-}
+export interface SidebarNavigationItem extends TreeNavItem {}
 
 export interface SidebarNavigationGroup {
   id: string;
@@ -81,12 +72,6 @@ export function SidebarNavigation({
     if (collapsed === undefined) setInternalCollapsed(next);
     onCollapsedChange?.(next);
   };
-  const toggleItem = (id: string) => {
-    const next = activeOpenIds.includes(id) ? activeOpenIds.filter((itemId) => itemId !== id) : [...activeOpenIds, id];
-    if (openItemIds === undefined) setInternalOpenIds(next);
-    onOpenItemIdsChange?.(next);
-  };
-
   useEffect(() => {
     if (!isCollapsed || !collapsedMenuId) return;
     const closeOnOutsidePress = (event: PointerEvent) => {
@@ -115,24 +100,22 @@ export function SidebarNavigation({
     return item.icon ? <span className="aisee-sidebar__icon" aria-hidden="true">{item.icon}</span> : null;
   };
 
-  const renderItem = (item: SidebarNavigationItem, nested = false) => {
+  const renderCollapsedItem = (item: SidebarNavigationItem) => {
     const hasChildren = Boolean(item.children?.length);
-    const isOpen = activeOpenIds.includes(item.id);
     const isFlyoutOpen = isCollapsed && collapsedMenuId === item.id;
-    return <div className={`aisee-sidebar__item-wrap${nested ? ' aisee-sidebar__item-wrap--nested' : ''}`} key={item.id}>
+    return <div className="aisee-sidebar__item-wrap" key={item.id}>
       <button
         className="aisee-sidebar__item"
         type="button"
         aria-current={!hasChildren && activeValue === item.id ? 'page' : undefined}
-        aria-expanded={hasChildren ? (isCollapsed ? isFlyoutOpen : isOpen) : undefined}
-        aria-controls={hasChildren ? (isCollapsed ? `aisee-sidebar-menu-${item.id}` : `aisee-sidebar-sub-${item.id}`) : undefined}
+        aria-expanded={hasChildren ? isFlyoutOpen : undefined}
+        aria-controls={hasChildren ? `aisee-sidebar-menu-${item.id}` : undefined}
         aria-haspopup={isCollapsed && hasChildren ? 'menu' : undefined}
         title={isCollapsed ? item.label : undefined}
         disabled={item.disabled}
         onClick={() => {
           if (hasChildren) {
-            if (isCollapsed) setCollapsedMenuId((current) => current === item.id ? undefined : item.id);
-            else toggleItem(item.id);
+            setCollapsedMenuId((current) => current === item.id ? undefined : item.id);
           } else {
             setCollapsedMenuId(undefined);
             select(item.id);
@@ -144,7 +127,6 @@ export function SidebarNavigation({
         {item.badge && <span className="aisee-sidebar__badge">{item.badge}</span>}
         {item.status && <span className="aisee-sidebar__status">{item.status}</span>}
       </button>
-      {hasChildren && <div className="aisee-sidebar__sub" id={`aisee-sidebar-sub-${item.id}`} data-open={isOpen} aria-hidden={!isOpen}><div className="aisee-sidebar__rail" aria-hidden="true" /><div className="aisee-sidebar__sub-items">{item.children?.map((child) => renderItem(child, true))}</div></div>}
       {hasChildren && isFlyoutOpen && <div className="aisee-sidebar__flyout" id={`aisee-sidebar-menu-${item.id}`} role="menu" aria-label={item.label}>
         <div className="aisee-sidebar__flyout-label">{item.label}</div>
         {item.children?.map((child) => <button
@@ -175,7 +157,21 @@ export function SidebarNavigation({
     }}
   >
     <div className="aisee-sidebar__header">{header}<button className="aisee-sidebar__collapse" type="button" aria-label={toggleLabel} aria-expanded={!isCollapsed} onClick={toggleCollapsed}>{isCollapsed ? (expandIcon ?? <SidebarToggleIcon />) : (collapseIcon ?? <SidebarToggleIcon />)}<span className="aisee-sidebar__collapse-tooltip" role="tooltip">{toggleLabel}</span></button></div>
-    <nav className="aisee-sidebar__nav">{groups.map((group) => <section className="aisee-sidebar__group" key={group.id}>{group.label && <div className="aisee-sidebar__group-label">{group.label}</div>}{group.items.map((item) => renderItem(item))}</section>)}</nav>
+    <div className="aisee-sidebar__nav">{groups.map((group) => <section className="aisee-sidebar__group" key={group.id}>{group.label && <div className="aisee-sidebar__group-label">{group.label}</div>}{isCollapsed
+      ? group.items.map((item) => renderCollapsedItem(item))
+      : <TreeNav
+        className="aisee-sidebar__tree"
+        items={group.items}
+        value={activeValue}
+        onValueChange={select}
+        openItemIds={activeOpenIds}
+        onOpenItemIdsChange={(ids) => {
+          if (openItemIds === undefined) setInternalOpenIds(ids);
+          onOpenItemIdsChange?.(ids);
+        }}
+        ariaLabel={group.label ? `${group.label} navigation` : ariaLabel}
+        showDisclosure={false}
+      />}</section>)}</div>
     {footer && <div className="aisee-sidebar__footer">{footer}</div>}
   </aside>;
 }
