@@ -71,11 +71,14 @@ npm run site
 
 ## 最近更新
 
-### 2026-09-16 · Tree Nav 与 Checkbox 动效
+### 2026-09-16 · Current 组件与交互更新
 
 - **Tree Nav**：新增独立 Current 组件页，默认直接展示约 6 个相关选项，不重复外围标题，并支持层级引导线、叶子选中与禁用状态
 - **Sidebar Navigation**：展开态直接组合 Tree Nav，侧栏自身继续负责功能分组、收起态、账号入口与收起后的子级浮层
 - **Checkbox**：从未选中切换到选中时播放一次短促的 bubble 扩散与回弹反馈；取消选中、初始选中和禁用态不触发，并兼容 reduced motion
+- **Dialog**：打开使用轻微上移与缩放建立层级，内容短暂延后进入；关闭使用更短的退场时间，并兼容 reduced motion
+- **Tabs**：`Show icons` 与 `Show counts` 使用正式 Toggle 组件的轨道、滑块和动效参数
+- **Quantity Stepper**：按 Figma 结构更新数量组件，左右按钮贴合外框并使用 StemUI 图标；中间整块数值区均可点击并在原位输入，同时支持 AISEE 黄色文本选区、长按加速、数字滚动、边界抖动和窄容器自动隐藏单位字段
 - **发现与交付**：Components Overview、A–Z 导航、`NEW` 标识和 Tree Nav / Checkbox 的 `Copy for AI` 已同步更新
 
 ### 2026-09-15 ～ 2026-09-16

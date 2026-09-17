@@ -980,7 +980,7 @@
             <p>Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.</p>
             <div class="component-map">
               <article><h3>Actions</h3><p>Button.</p></article>
-              <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.</p></article>
+              <article><h3>Inputs &amp; Controls</h3><p>Checkbox, Input, Quantity Stepper, Select / Dropdown, Tag Input, Toggle and Toggle Selection Group. Quantity Stepper supports direct entry or buttons-only control, three sizes, bounded values and boundary feedback. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.</p></article>
               <article><h3>Navigation</h3><p>Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.</p></article>
               <article><h3>Content &amp; Status</h3><p>Current PlanCard, Badge, Steps and Empty State.</p></article>
               <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.</p></article>
@@ -993,11 +993,11 @@
             <p>Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.</p>
             <div class="principles-grid">
               <article class="principle"><strong>1. Choose a Current component</strong><p>Open the component under Components and review its live states, motion and usage notes. Legacy pages are historical references.</p></article>
-              <article class="principle"><strong>2. Copy for AI</strong><p>Use the two-star button beside Open HTML. It copies the component intent, interaction rules, visual boundaries and AISEE-wide implementation rules.</p></article>
+              <article class="principle"><strong>2. Copy for AI</strong><p>Use the two-star button beside Open HTML. It copies a self-contained implementation brief, including component intent, integration path, public API, interaction rules and visual boundaries. It is a prompt, not an installable component bundle.</p></article>
               <article class="principle"><strong>3. Add the real task</strong><p>Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI should replace Demo copy, data, icons and illustrations.</p></article>
               <article class="principle"><strong>4. Compare the result</strong><p>Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.</p></article>
             </div>
-            <div class="priority-note"><strong>When to use Open HTML:</strong> open it when the receiving AI or developer needs the complete rendered implementation. For one-component work, Copy for AI is the fastest starting point. Overview and Legacy pages do not expose this button.</div>
+            <div class="priority-note"><strong>Which handoff to use:</strong> give Copy for AI to an AI coding tool. Give a human developer the package or source files; when they do not have the Design System, also use Open HTML as the runnable implementation reference. Overview and Legacy pages do not expose this button.</div>
           </section>
 
           <section class="overview-section" id="ai-handoff" aria-labelledby="ai-handoff-title">
@@ -1220,10 +1220,10 @@
         ["Dialog, Confirmation Dialog, Tooltip and Toast.", "Dialog、Confirmation Dialog、Tooltip 与 Toast。"],
         ["Use components without writing code", "无需写代码也能使用组件"], ["Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.", "设计师、产品经理和其他非开发人员无需上传整套 Design System Demo，也能把单个组件准确交给 AI。"],
         ["1. Choose a Current component", "1. 选择 Current 组件"], ["Open the component under Components and review its live states, motion and usage notes. Legacy pages are historical references.", "在 Components 中打开组件，查看实时状态、动效和使用说明。Legacy 页面仅作历史参考。"],
-        ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. It copies the component intent, interaction rules, visual boundaries and AISEE-wide implementation rules.", "点击 Open HTML 旁的双星按钮，复制组件用途、交互规则、视觉边界和 AISEE 通用实施规则。"],
+        ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. It copies a self-contained implementation brief, including component intent, integration path, public API, interaction rules and visual boundaries. It is a prompt, not an installable component bundle.", "点击 Open HTML 旁的双星按钮，复制一份可独立阅读的实施提示词，包括组件用途、接入方式、公开 API、交互规则和视觉边界。它是提示词，不是可安装的组件包。"],
         ["3. Add the real task", "3. 补充真实任务"], ["Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI should replace Demo copy, data, icons and illustrations.", "把 Prompt 连同目标页面、真实内容和预期行为交给 AI。AI 应替换 Demo 文案、数据、图标和插图。"],
         ["4. Compare the result", "4. 对照验收"], ["Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.", "对照 Current Demo 检查生成页面，包括适用的 Hover、Focus、Disabled、Loading、Empty、响应式和无障碍状态。"],
-        ["When to use Open HTML:", "何时使用 Open HTML："], ["open it when the receiving AI or developer needs the complete rendered implementation. For one-component work, Copy for AI is the fastest starting point. Overview and Legacy pages do not expose this button.", "当接收方 AI 或开发者需要完整渲染实现时再打开它。单组件任务优先使用 Copy for AI。Overview 与 Legacy 页面不显示该按钮。"],
+        ["Which handoff to use:", "如何选择交付方式："], ["give Copy for AI to an AI coding tool. Give a human developer the package or source files; when they do not have the Design System, also use Open HTML as the runnable implementation reference. Overview and Legacy pages do not expose this button.", "Copy for AI 适合交给 AI 编码工具。人类开发者需要组件包或源码；没有 Design System 时，同时使用 Open HTML 作为可运行的实现参考。Overview 与 Legacy 页面不显示该按钮。"],
         ["AI implementation handoff", "AI 实施交付"], ["This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.", "本门户是可读参考资料，但不能保证其他 AI 会执行链接页面或推断出全部实施规则。应把已部署门户或仓库、权威规范文件，以及“复用 Current 组件”的明确要求一起交给 AI。"],
         ["Minimum input", "最少输入"], ["Share this HTML,", "提供本 HTML、"], ["and the target-page requirements.", "以及目标页面需求。"], ["Reliable assets", "可靠资源"], ["Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.", "优先提供公开 HTTPS 预览或仓库/ZIP。单个本地 HTML 无法携带不可访问的相对字体、图片、源文件或链接子页。"],
         ["Implementation order", "实施顺序"], ["Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.", "Team Decisions → Design Spec v6 → Current 组件实现 → 带日期的 Figma 功能区块 → Legacy 参考。"], ["Verification", "验收"], ["Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.", "要求接收方 AI 列出复用组件、说明偏差，并把最终页面与 Current Demo 对照。"],
@@ -1284,6 +1284,25 @@
             "Choose the native type that matches the data, such as text, url, email, search or password.",
             "Support Default, Hover, Focus, Disabled and Error states. Keep the 36px height, 8px radius, subtle default border and the 1px dark border plus 2px module-colour ring on hover and focus. Error uses the semantic danger colour without the module ring.",
             "Associate the label with the field, connect helper or error text with aria-describedby and set aria-invalid for errors."
+          ]
+        },
+        "components/QuantityStepper/QuantityStepper.html": {
+          name: "Quantity Stepper",
+          intent: "Adjust a bounded numeric value through direct entry, minus and plus buttons, or a buttons-only compact control.",
+          implementation: [
+            "Preferred repository or workspace usage: import { QuantityStepper } from '@aisee/design-system' and import '@aisee/design-system/styles.css'. Example: <QuantityStepper defaultValue={4} min={1} max={10} unit=\"replies/day\" onValueChange={setQuantity} />.",
+            "The package is currently a private workspace package. If it is not available, use Open HTML for a runnable reference or vendor src/components/QuantityStepper.tsx, the Quantity Stepper block from src/styles/components.css, and the approved StemUI icon assets.",
+            "Standalone icon dependency: @stemui/icons@0.1.40. Use the official sources line_line_nochange.svg and line_plus_add.svg; do not substitute text minus/plus glyphs or hand-drawn SVGs.",
+            "Public props: value/defaultValue, min, max, step, size (sm/md/lg), inputMode (editable/buttons-only), unit, disabled, onValueChange, ariaLabel and className."
+          ],
+          rules: [
+            "Use editable mode when users may need an exact value, and buttons-only mode when the range is short and each step is predictable.",
+            "Set an explicit minimum, maximum and step. Clamp typed values to the valid range, disable the unavailable direction and keep the current value visible.",
+            "Choose the documented 32px, 40px or 48px size from the surrounding control density. The 40px default is 388px wide with 40px edge controls, a 3px section gap, 8px radius and controls touching the outer outline.",
+            "Keep the unit outside the editable numeric value and hide it automatically below 260px available width so the number remains readable.",
+            "Treat the complete middle value cell as the editable hit target, including its whitespace and unit label, while keeping the visible number and input in the same position. Never limit activation to the number glyph, and never render an input and a duplicate static number at the same time. Use AISEE semantic yellow for selected input text.",
+            "Animate value changes with a 12px vertical roll. Press scales a control to 0.85. Hold starts after 400ms, repeats every 80ms and accelerates to 40ms after 10 repeats.",
+            "When a user attempts to move past a bound, keep the value unchanged and shake only the value area through 0, -4, 4, -2, 2, 0px over 300ms. Preserve keyboard stepping and reduced-motion behavior."
           ]
         },
         "components/Checkbox/Checkbox.html": {
@@ -1509,6 +1528,9 @@
         const guidance = componentAiGuidance[path];
         if (!guidance) return "";
         const rules = guidance.rules.map(rule => `- ${rule}`).join("\n");
+        const implementation = guidance.implementation?.length
+          ? `\n\nImplementation and handoff:\n${guidance.implementation.map(item => `- ${item}`).join("\n")}`
+          : "";
         return `Use the Current ${guidance.name} component from the AISEE Design System in the requested product context.
 
 Canonical reference:
@@ -1516,7 +1538,7 @@ Canonical reference:
 - Open the reference before implementation and reuse the exported Current component when its source is available. Do not approximate it from memory or replace it with visually unstyled browser UI.
 
 Component intent:
-${guidance.intent}
+${guidance.intent}${implementation}
 
 Component rules:
 ${rules}
@@ -1565,6 +1587,7 @@ Shared implementation rules:
         { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
         { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Checkbox", path: "components/Checkbox/Checkbox.html", subtitle: "Current independent selection control with a short bubble confirmation when selected.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Quantity Stepper", path: "components/QuantityStepper/QuantityStepper.html", subtitle: "Bounded quantity input with editable or buttons-only modes, three sizes and boundary feedback.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter, input-assisted and rich composition dropdown patterns.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with fluid hover, press and spring-like state transitions.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Tag Input", path: "components/TagInput/TagInput.html", subtitle: "Current token input that previews, commits and removes inline tags.", status: "Current", updated: true },

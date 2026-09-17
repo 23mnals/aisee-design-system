@@ -136,7 +136,7 @@ test('every Current component detail page offers a scoped Copy for AI prompt', (
     .filter(entry => entry.path && entry.path !== 'preview/dapp-v6-components.html');
   const guidancePaths = new Set([...portal.matchAll(/^\s+"((?:components\/[^"]+|preview\/avatar)\.html)": \{/gm)].map(match => match[1]));
 
-  assert.equal(currentComponentEntries.length, 24);
+  assert.equal(currentComponentEntries.length, 25);
   for (const entry of currentComponentEntries) {
     assert.ok(guidancePaths.has(entry.path), `${entry.name} should have AI guidance`);
   }
@@ -709,8 +709,8 @@ test('Tabs exposes underline, three segmented compositions and the platform comp
   assert.match(detail, /scaleX\(1\.055\) scaleY\(\.95\)/);
   assert.match(detail, /scaleX\(\.975\) scaleY\(1\.025\)/);
   assert.match(detail, /duration:520,easing:'cubic-bezier\(\.22,\.72,\.18,1\)'/);
-  assert.match(detail, /id="showIcons" type="checkbox" checked/);
-  assert.match(detail, /id="showCounts" type="checkbox" checked/);
+  assert.match(detail, /id="showIcons" type="checkbox" role="switch" checked/);
+  assert.match(detail, /id="showCounts" type="checkbox" role="switch" checked/);
   assert.match(detail, /id="platformModeStatus" aria-live="polite"/);
   assert.match(detail, /hide-demo-icons/);
   assert.match(detail, /hide-demo-counts/);
@@ -1169,4 +1169,37 @@ test('brand and Score Gauge use shared self-hosted Karla', async () => {
   assert.doesNotMatch(foundations, /DigitalNumbers-Regular|font-family:\s*(?:'|")?Digital Numbers/i);
   assert.doesNotMatch(components, /DigitalNumbers-Regular 2\.ttf/);
   assert.match(components, /font:400 20px\/26px Karla,Arial,sans-serif/);
+});
+
+test('Quantity Stepper matches the Figma shell and shared motion contract', async () => {
+  const demo = await readFile(new URL('../components/QuantityStepper/QuantityStepper.html', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../src/components/QuantityStepper.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+
+  assert.match(demo, /--stepper-width:388px/);
+  assert.match(demo, /gap:3px;padding:0;border:1px solid rgba\(17,17,17,\.06\)/);
+  assert.match(demo, /\.quantity-output\[hidden\]\{display:none\}/);
+  assert.match(demo, /\.quantity-value\[data-editable=true\]\{cursor:text\}/);
+  assert.match(demo, /valueWrap\.addEventListener\('click'/);
+  assert.match(demo, /@container\(max-width:260px\)\{\.quantity-unit\{display:none\}\}/);
+  assert.match(demo, /\.quantity-input::selection\{background:var\(--aisee-color-semantic-brand-primary,#FFE253\);color:#111\}/);
+  assert.match(demo, /Inside the AISEE repository \/ package/);
+  assert.match(demo, /Without the AISEE Design System/);
+  assert.match(demo, /assets\/stemui\/action-minus\.svg/);
+  assert.match(demo, /assets\/stemui\/action-plus\.svg/);
+
+  assert.match(source, /const HOLD_DELAY = 400/);
+  assert.match(source, /const HOLD_INTERVAL = 80/);
+  assert.match(source, /const HOLD_FAST_INTERVAL = 40/);
+  assert.match(source, /import minusIcon from '\.\.\/\.\.\/assets\/stemui\/action-minus\.svg'/);
+  assert.match(source, /data-editable=\{editable \|\| undefined\}/);
+  assert.match(source, /event\.target instanceof HTMLInputElement/);
+  assert.match(styles, /container-type: inline-size/);
+  assert.match(styles, /\.aisee-quantity-stepper__value-wrap\[data-editable="true"\] \{ cursor: text; \}/);
+  assert.match(styles, /translateY\(12px\)/);
+  assert.match(styles, /translateX\(-4px\)[\s\S]*translateX\(4px\)/);
+  assert.match(styles, /@container \(max-width: 260px\) \{ \.aisee-quantity-stepper__unit \{ display: none; \} \}/);
+  assert.match(styles, /\.aisee-quantity-stepper__input::selection \{ color: #111; background: var\(--aisee-color-semantic-brand-primary, #FFE253\); \}/);
+  assert.match(portal, /The package is currently a private workspace package/);
+  assert.match(portal, /Implementation and handoff/);
 });

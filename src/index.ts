@@ -5,6 +5,7 @@ import './styles/components.css';
 export { tokens, type AiseeTokens } from './tokens/tokens';
 export * from './components/Button';
 export * from './components/Input';
+export * from './components/QuantityStepper';
 export * from './components/TagInput';
 export * from './components/Checkbox';
 export * from './components/Toggle';
