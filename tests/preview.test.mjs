@@ -651,8 +651,8 @@ test('current component detail pages stay aligned with the published control spe
   assert.match(styles, /\.aisee-dialog \{[^}]*width: min\(480px, calc\(100vw - 32px\)\)/);
   assert.match(styles, /\.aisee-dialog \.aisee-input \{ min-height: 40px; \}/);
   assert.doesNotMatch(dialog, /<p class="result"/);
-  assert.match(toggle, /width:24px;height:16px/);
-  assert.match(toggle, /width:10px;height:10px/);
+  assert.match(toggle, /track 24×16px/);
+  assert.match(toggle, /thumb 10×10px/);
   assert.doesNotMatch(toggle, /Track 36×20px/);
   assert.match(tabs, /gap:24px/);
   assert.match(tabs, /padding:8px 0/);
