@@ -961,6 +961,89 @@
 @keyframes aisee-toast-in { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes aisee-toast-progress { from { transform: scaleX(1); } to { transform: scaleX(0); } }
 
+.aisee-notification-bell {
+  position: relative;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--aisee-color-semantic-text-primary);
+  background: var(--aisee-color-semantic-bg-hover);
+  cursor: pointer;
+  place-items: center;
+  transition: background var(--aisee-motion-micro) var(--aisee-motion-ease-out);
+}
+.aisee-notification-bell:hover { background: var(--aisee-color-semantic-bg-yellow-mid); }
+.aisee-notification-bell:focus-visible { outline: 2px solid var(--aisee-color-semantic-button-usual); outline-offset: 2px; background: var(--aisee-color-semantic-bg-yellow-mid); }
+.aisee-notification-bell__icon { display: block; width: 16px; height: 16px; }
+.aisee-notification-bell__glyph { transform-box: fill-box; transform-origin: 50% 12%; }
+.aisee-notification-bell.is-ringing .aisee-notification-bell__glyph { animation: aisee-notification-bell-ring 540ms cubic-bezier(.2,.8,.2,1); }
+.aisee-notification-bell__badge {
+  position: absolute;
+  top: -7px;
+  right: -8px;
+  display: grid;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border: 2px solid var(--aisee-color-semantic-bg-base);
+  border-radius: 999px;
+  color: var(--aisee-color-semantic-bg-base);
+  background: var(--aisee-color-semantic-feedback-wrong);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  place-items: center;
+  transform-origin: 50% 65%;
+}
+.aisee-notification-bell.is-badge-rolling .aisee-notification-bell__badge,.aisee-notification-bell.is-badge-rolling .aisee-notification-bell__dot { animation: aisee-notification-bell-badge-in 360ms cubic-bezier(.2,1.55,.35,1); }
+.aisee-notification-bell__dot { position: absolute; top: -3px; right: -3px; width: 9px; height: 9px; border: 2px solid var(--aisee-color-semantic-bg-base); border-radius: 50%; background: var(--aisee-color-semantic-feedback-wrong); }
+@keyframes aisee-notification-bell-ring { 0%,100% { transform: rotate(0); } 16% { transform: rotate(10deg); } 34% { transform: rotate(-9deg); } 52% { transform: rotate(6deg); } 70% { transform: rotate(-4deg); } 86% { transform: rotate(2deg); } }
+@keyframes aisee-notification-bell-badge-in { 0% { opacity: 0; transform: scale(.35) translateY(5px); } 65% { opacity: 1; transform: scale(1.14) translateY(-1px); } 100% { transform: scale(1) translateY(0); } }
+
+.aisee-notification-panel { display: flex; width: 362px; height: 415px; max-width: calc(100vw - 32px); overflow: hidden; flex-direction: column; border: 1px solid var(--aisee-color-semantic-button-usual); border-radius: 8px; color: var(--aisee-color-semantic-text-primary); background: var(--aisee-color-semantic-bg-base); box-shadow: var(--aisee-shadow-dropdown); }
+.aisee-notification-panel__header { display: flex; min-height: 56px; align-items: center; padding: 8px 12px; }
+.aisee-notification-panel__header h2 { margin: 0; padding: 10px 4px; font-size: 16px; font-weight: 500; line-height: 24px; }
+.aisee-notification-panel__tabs { display: flex; min-height: 40px; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 12px 1px; border-top: 1px solid var(--aisee-color-border); border-bottom: 1px solid var(--aisee-color-border); }
+.aisee-notification-panel__tabs [role='tablist'] { display: flex; align-self: stretch; gap: 8px; }
+.aisee-notification-panel__tabs [role='tab'] { position: relative; display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border: 0; background: transparent; color: var(--aisee-color-semantic-text-primary); font-size: 12px; line-height: 18px; cursor: pointer; }
+.aisee-notification-panel__tabs [role='tab'][aria-selected='true']::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 3px; background: var(--aisee-color-semantic-button-usual); content: ''; }
+.aisee-notification-panel__tabs [role='tab'] span { display: grid; min-width: 18px; height: 18px; padding: 0 6px; border-radius: 12px; background: var(--aisee-color-semantic-bg-hover); font-weight: 500; line-height: 18px; place-items: center; }
+.aisee-notification-panel__mark-all { padding: 4px 0; border: 0; background: transparent; color: var(--aisee-color-semantic-text-amber); font-size: 12px; font-weight: 600; line-height: 22px; cursor: pointer; }
+.aisee-notification-panel__mark-all:disabled { opacity: .4; cursor: default; }
+.aisee-notification-panel__content { display: grid; min-height: 0; flex: 1 1 auto; gap: 8px; overflow-y: auto; padding: 8px 12px 12px; }
+.aisee-notification-item { display: grid; padding: 12px; border: 1px solid rgba(17,17,17,.04); border-radius: 12px; background: var(--aisee-color-semantic-bg-agent02); transition: background var(--aisee-motion-micro) var(--aisee-motion-ease-out),border-color var(--aisee-motion-micro) var(--aisee-motion-ease-out); }
+.aisee-notification-item:hover,.aisee-notification-item:focus-within { border-color: var(--aisee-color-border); background: var(--aisee-color-semantic-bg-hover); }
+.aisee-notification-item__body { display: flex; align-items: flex-start; gap: 8px; padding: 0; border: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
+.aisee-notification-item__body:focus-visible,.aisee-notification-item__action:focus-visible,.aisee-notification-panel__tabs button:focus-visible { outline: 2px solid var(--aisee-color-semantic-button-usual); outline-offset: 2px; border-radius: 4px; }
+.aisee-notification-item__icon { display: grid; width: 24px; height: 24px; flex: 0 0 auto; border-radius: 8px; background: var(--aisee-color-semantic-bg-hover); place-items: center; }
+.aisee-notification-item[data-tone='analysis'] .aisee-notification-item__icon { background: #e9fca5; }
+.aisee-notification-item[data-tone='growth'] .aisee-notification-item__icon { background: #e3f0af; }
+.aisee-notification-item[data-tone='engage'] .aisee-notification-item__icon { background: #f3e7f4; }
+.aisee-notification-item[data-tone='post'] .aisee-notification-item__icon { background: #fbe994; }
+.aisee-notification-item[data-tone='billing'] .aisee-notification-item__icon { background: #b8e6f2; }
+.aisee-notification-item__icon img { width: 14px; height: 14px; }
+.aisee-notification-item__content { display: grid; min-width: 0; flex: 1 1 auto; gap: 2px; }
+.aisee-notification-item__topline { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 10px; }
+.aisee-notification-item__title { display: flex; min-width: 0; align-items: center; gap: 6px; overflow: hidden; font-size: 14px; font-weight: 500; line-height: 22px; white-space: nowrap; text-overflow: ellipsis; }
+.aisee-notification-item__title img { width: 14px; height: 14px; }
+.aisee-notification-item__time { display: flex; flex: 0 0 auto; align-items: center; gap: 6px; color: rgba(17,17,17,.42); font-size: 11px; line-height: 18px; }
+.aisee-notification-item__unread { width: 6px; height: 6px; border-radius: 50%; background: var(--aisee-color-semantic-feedback-wrong); }
+.aisee-notification-item__description { overflow: hidden; color: var(--aisee-color-semantic-text-blue-gray); font-size: 11px; line-height: 16px; text-overflow: ellipsis; }
+.aisee-notification-item__error { margin-top: 4px; padding: 5px 8px; border-radius: 6px; color: var(--aisee-color-semantic-feedback-wrong); background: var(--aisee-color-semantic-tag-02); font-size: 10px; font-weight: 500; line-height: 14px; }
+.aisee-notification-item__action { display: inline-flex; align-items: center; justify-self: end; gap: 4px; padding: 3px 0; border: 0; background: transparent; color: var(--aisee-color-semantic-text-primary); font-size: 12px; font-weight: 500; line-height: 18px; cursor: pointer; opacity: .7; }
+.aisee-notification-item__action:hover { opacity: 1; }
+.aisee-notification-item__action img { width: 12px; height: 12px; }
+.aisee-notification-panel__state { display: grid; min-height: 156px; place-items: center; color: var(--aisee-color-semantic-text-secondary); font-size: 13px; text-align: center; }
+.aisee-notification-panel__state[data-tone='error'] { color: var(--aisee-color-semantic-feedback-wrong); }
+.aisee-notification-panel__empty { display: flex; min-height: 0; flex: 1 1 auto; flex-direction: column; align-items: center; gap: 16px; padding: 40px 0 0; text-align: center; }
+.aisee-notification-panel__empty > img { width: 40px; height: 40px; object-fit: contain; }
+.aisee-notification-panel__empty > div { display: flex; flex-direction: column; align-items: center; }
+.aisee-notification-panel__empty strong { font-size: 16px; font-weight: 600; line-height: 22px; }
+.aisee-notification-panel__empty span { color: #3d3d3a; font-size: 14px; font-weight: 400; line-height: 22px; }
+
 .aisee-table-wrap { width: 100%; overflow-x: auto; border: 1px solid var(--aisee-color-border); border-radius: var(--aisee-radius-card); background: var(--aisee-color-white); }
 .aisee-table { width: 100%; border-collapse: collapse; color: var(--aisee-color-black); font-size: 14px; }
 .aisee-table caption { padding: 16px; font-size: 16px; font-weight: 600; text-align: left; }
@@ -1011,6 +1094,7 @@
   .aisee-dropdown__menu,.aisee-toast { animation: none; }
   .aisee-dropdown__fluid-highlight { transition: none; }
   .aisee-tooltip { transition: none; }
+  .aisee-notification-bell,.aisee-notification-bell.is-ringing .aisee-notification-bell__glyph,.aisee-notification-bell.is-badge-rolling .aisee-notification-bell__badge,.aisee-notification-bell.is-badge-rolling .aisee-notification-bell__dot,.aisee-notification-item { transition: none; animation: none; }
 }
 
 /* Current PlanCard — Figma v5.4 Upgrade Plan */

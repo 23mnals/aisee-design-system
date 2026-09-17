@@ -28,6 +28,8 @@ export * from './components/ConfirmationDialog';
 export * from './components/Dropdown';
 export * from './components/Tooltip';
 export * from './components/Toast';
+export * from './components/NotificationBell';
+export * from './components/Notification';
 export * from './components/StatCard';
 export * from './components/CreditBar';
 export * from './components/Table';

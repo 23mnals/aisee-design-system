@@ -71,8 +71,9 @@ npm run site
 
 ## 最近更新
 
-### 2026-09-17 · Toggle 样式与 Sidebar 图标
+### 2026-09-17 · Notification、Toggle 与 Sidebar 图标
 
+- **Notification**：新增铃铛、未读徽章、通知面板和消息条目，支持已读操作、空状态及通知状态切换；新通知与重置演示播放铃铛和徽章动画，hover / focus 只摆动铃铛
 - **Sidebar Navigation**：适度放大 Engage 气泡图标，与相邻导航图标的视觉大小更一致，文字位置保持不变
 - **颜色**：Toggle 支持柠檬绿、黄色填充，统一保留深色描边与圆钮
 - **背景与尺寸**：增加浅色 / 深色背景及 16px / 24px 高度组合，24px 黄色版本对齐 Automation 的 Figma 参考
@@ -110,7 +111,7 @@ npm run site
 - PlanCard 新增 v5.4 Upgrade Plan 当前版本，旧套餐卡继续作为 Legacy 保留
 - Figma 对齐 Toggle、Modal footer 和 Engage v5 页面规则
 - 44 个元数据颜色与 46 个语义颜色由 JSON 自动生成 CSS；旧变量通过兼容 alias 保留
-- Current 组件补齐 Avatar、Badge、Checkbox、Empty State、Steps、Tooltip / Toast、Table、Stat Card、Chart、Score Gauge、Credit Bar、Dropdown、Tag Input、Toggle Selection Group 与 Tree Nav；组件目录按分类内 A–Z 排列
+- Current 组件补齐 Avatar、Badge、Checkbox、Empty State、Steps、Tooltip / Toast、Notification、Table、Stat Card、Chart、Score Gauge、Credit Bar、Dropdown、Tag Input、Toggle Selection Group 与 Tree Nav；组件目录按分类内 A–Z 排列
 - Avatar 统一进入 Components：网站注册账号使用方形头像库，社媒头像缺失时使用圆形灰描边兜底库；Sidebar 等账号入口从组件库随机取值并保持稳定；Plan-generated Post 的平台 logo 只用虚线描边，Manual-create Post 只用实线描边
 - Credit Bar 覆盖 Subscription、Top-up、任一来源为 0 及两者都为 0；Empty State 的 `No report data` 表示暂无报告记录，主操作为添加产品 URL 并开始分析
 - Dropdown 覆盖单选、多选、过滤、输入建议与分组账号等组合形态；Fluid Hover 使用缓存几何信息平滑跟随，行操作默认隐藏、在 hover / focus 时按需出现；Grouped account 提供 `Show icons` 开关；所有菜单作为浮层打开，不改变外围内容高度

@@ -161,3 +161,5 @@
 - Split Dialog 只用于同一项短任务内的局部多区段；需要持续导航或长时间编辑时使用页面或 Drawer。破坏性的二选一操作继续使用 Confirmation Dialog。
 - 平台 Tabs 提供 `platformLabelDisplay="auto" | "active" | "all"`，默认 `auto`：全部 Logo + name 的真实宽度能放下时全部显示，空间不足时只展开当前项名称，不能把名称压缩或切断。`active` 与 `all` 只用于需要固定策略的特殊页面，显式 `all` 在不足时横向滚动。
 - Components Overview 的 Current 标签是完整组件页的快捷入口。嵌入门户时在当前 Design System 内打开目标页并同步侧边栏；通过侧边栏 Overview 或浏览器返回键回到总览。
+
+- Notification 使用 Figma `77:17878` 的 32px 实心铃铛、362px 面板与消息条目：默认按钮为 `colour/bg/hover`，hover / focus 切换 `colour/bg/yellow-mid`，未读标记使用 `colour/feedback/wrong`。新通知到达时白色铃铛摆动且徽章数字滚动；正式组件由外部传入的未读数量增加自动触发，推送 / 轮询由产品接入；Reset demo 恢复通知时显式重播两种动画，包括数量相同的情况；hover / focus 只摆动白色铃铛，外层按钮与黑色圆底始终不动。面板统一支持 All / Unread、全部已读、条目已读、操作、错误详情与 ready / loading / empty / error 状态，并遵循 `prefers-reduced-motion`。

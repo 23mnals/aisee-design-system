@@ -136,7 +136,7 @@ test('every Current component detail page offers a scoped Copy for AI prompt', (
     .filter(entry => entry.path && entry.path !== 'preview/dapp-v6-components.html');
   const guidancePaths = new Set([...portal.matchAll(/^\s+"((?:components\/[^"]+|preview\/avatar)\.html)": \{/gm)].map(match => match[1]));
 
-  assert.equal(currentComponentEntries.length, 25);
+  assert.equal(currentComponentEntries.length, 26);
   for (const entry of currentComponentEntries) {
     assert.ok(guidancePaths.has(entry.path), `${entry.name} should have AI guidance`);
   }
@@ -462,6 +462,7 @@ test('high-priority feedback and data components are publishable Current entries
   const componentFiles = [
     ['Tooltip', '../src/components/Tooltip.tsx', '../components/TooltipToast/TooltipToast.html'],
     ['Toast', '../src/components/Toast.tsx', '../components/TooltipToast/TooltipToast.html'],
+    ['NotificationBell', '../src/components/NotificationBell.tsx', '../components/NotificationBell/NotificationBell.html'],
     ['StatCard', '../src/components/StatCard.tsx', '../components/StatCardCurrent/StatCardCurrent.html'],
     ['Table', '../src/components/Table.tsx', '../components/Table/Table.html'],
     ['ScoreGauge', '../src/components/ScoreGauge.tsx', '../components/ScoreGauge/ScoreGauge.html'],
@@ -486,9 +487,49 @@ test('high-priority feedback and data components are publishable Current entries
   assert.match(styles, /\.aisee-table/);
   assert.match(styles, /\.aisee-score-gauge/);
   assert.match(styles, /\.aisee-chart/);
-  for (const path of ['TooltipToast/TooltipToast.html', 'StatCardCurrent/StatCardCurrent.html', 'Table/Table.html', 'ScoreGauge/ScoreGauge.html', 'Chart/Chart.html', 'CreditBar/CreditBar.html']) {
+  for (const path of ['TooltipToast/TooltipToast.html', 'NotificationBell/NotificationBell.html', 'StatCardCurrent/StatCardCurrent.html', 'Table/Table.html', 'ScoreGauge/ScoreGauge.html', 'Chart/Chart.html', 'CreditBar/CreditBar.html']) {
     assert.match(portal, new RegExp(`components/${path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`));
   }
+});
+
+test('notification bell preserves the Figma icon anatomy and semantic states', async () => {
+  const source = await readFile(new URL('../src/components/NotificationBell.tsx', import.meta.url), 'utf8');
+  const panelSource = await readFile(new URL('../src/components/Notification.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/NotificationBell/NotificationBell.html', import.meta.url), 'utf8');
+  assert.match(source, /previousCount\.current/);
+  assert.match(source, /normalizedCount <= previousCount\.current/);
+  assert.match(source, /aisee-notification-bell__glyph/);
+  assert.match(source, /onPointerEnter/);
+  assert.match(source, /playRing\(false\)/);
+  assert.match(source, /is-badge-rolling/);
+  assert.match(styles, /\.aisee-notification-bell \{[\s\S]*?background: var\(--aisee-color-semantic-bg-hover\)/);
+  assert.match(styles, /\.aisee-notification-bell:hover \{ background: var\(--aisee-color-semantic-bg-yellow-mid\)/);
+  assert.match(styles, /\.aisee-notification-bell\.is-ringing \.aisee-notification-bell__glyph/);
+  assert.match(styles, /\.aisee-notification-bell\.is-badge-rolling \.aisee-notification-bell__dot/);
+  assert.doesNotMatch(styles, /aisee-notification-bell-dot-ping/);
+  assert.match(styles, /background: var\(--aisee-color-semantic-feedback-wrong\)/);
+  assert.match(styles, /\.aisee-notification-panel \{[\s\S]*?width: 362px/);
+  assert.match(panelSource, /export function NotificationItem/);
+  assert.match(panelSource, /export function NotificationPanel/);
+  assert.match(panelSource, /displayedTab === 'unread'/);
+  assert.match(panelSource, /NotificationPanelState = 'ready' \| 'empty' \| 'loading' \| 'error'/);
+  assert.match(panelSource, /empty-state\/library\/no-event\.svg/);
+  assert.match(panelSource, /All caught up/);
+  assert.match(panelSource, /You don't have any unread notifications/);
+  assert.match(detail, /Figma node 77:17878|Figma bell/);
+  assert.match(detail, /<small>Default<\/small>/);
+  assert.match(detail, /Use dot instead of count/);
+  assert.match(detail, /Notification dropdown/);
+  assert.match(detail, /id="panelStateTrigger"/);
+  assert.doesNotMatch(detail, /<select id="panelState"/);
+  assert.match(detail, /id="resetPanelDemo"/);
+  assert.match(detail, /class="aisee-toggle"/);
+  assert.match(detail, /class="aisee-toggle__thumb"/);
+  assert.match(detail, /empty-state\/library\/no-event\.svg/);
+  assert.match(detail, /item\.unread=false/);
+  assert.match(detail, /New notifications ring the inner white bell and roll the unread badge/);
+  assert.match(detail, /Panel state/);
 });
 
 test('empty report artwork uses the product URL analysis scenario instead of success copy', async () => {

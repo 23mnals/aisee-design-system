@@ -984,7 +984,7 @@
               <article><h3>Navigation</h3><p>Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.</p></article>
               <article><h3>Content &amp; Status</h3><p>Current PlanCard, Badge, Steps and Empty State.</p></article>
               <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.</p></article>
-              <article><h3>Feedback &amp; Overlays</h3><p>Dialog, Confirmation Dialog, Tooltip and Toast.</p></article>
+              <article><h3>Feedback &amp; Overlays</h3><p>Dialog, Confirmation Dialog, Notification, Tooltip and Toast.</p></article>
             </div>
           </section>
 
@@ -1217,7 +1217,7 @@
         ["AISEE dApp design archive.fig", "备份-官网+dapp主功能.fig"],
         ["Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.", "Current Tabs、可复用 Tree Nav 与产品 Sidebar Navigation 模式。Sidebar Navigation 展开态直接组合 Tree Nav。平台 Tabs 在所有名称都能容纳时自动完整显示；空间不足时只显示当前项名称。"],
         ["Current PlanCard, Badge, Steps and Empty State.", "Current PlanCard、Badge、Steps 与 Empty State。"], ["Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.", "Current Card、Stat Card、Table、Chart、仅限 Analysis 的 Score Gauge 与 Credit Bar；Legacy Post Card 继续保留参考。"],
-        ["Dialog, Confirmation Dialog, Tooltip and Toast.", "Dialog、Confirmation Dialog、Tooltip 与 Toast。"],
+        ["Dialog, Confirmation Dialog, Notification, Tooltip and Toast.", "Dialog、Confirmation Dialog、Notification、Tooltip 与 Toast。"],
         ["Use components without writing code", "无需写代码也能使用组件"], ["Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.", "设计师、产品经理和其他非开发人员无需上传整套 Design System Demo，也能把单个组件准确交给 AI。"],
         ["1. Choose a Current component", "1. 选择 Current 组件"], ["Open the component under Components and review its live states, motion and usage notes. Legacy pages are historical references.", "在 Components 中打开组件，查看实时状态、动效和使用说明。Legacy 页面仅作历史参考。"],
         ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. It copies a self-contained implementation brief, including component intent, integration path, public API, interaction rules and visual boundaries. It is a prompt, not an installable component bundle.", "点击 Open HTML 旁的双星按钮，复制一份可独立阅读的实施提示词，包括组件用途、接入方式、公开 API、交互规则和视觉边界。它是提示词，不是可安装的组件包。"],
@@ -1521,6 +1521,18 @@
             "For auto-dismiss Toasts, animate the bottom countdown for five seconds, then remove the line and close the Toast. Manual close cancels the timer; restarting a Toast restarts it cleanly.",
             "Announce feedback with the appropriate live-region semantics without repeatedly interrupting the user."
           ]
+        },
+        "components/NotificationBell/NotificationBell.html": {
+          name: "Notification",
+          intent: "Open, filter and act on notifications while communicating unread status without moving the surrounding header layout.",
+          rules: [
+            "Reuse the exact solid Figma bell from node 77:17878. Keep the 32px button and black circular icon base fixed. A new notification rings the inner white bell and rolls the unread badge; hover or keyboard focus rings only the white bell. Drive NotificationBell count from application unread data: count increases automatically trigger incoming motion, while decreases and unchanged counts do not. Push subscriptions or polling belong to the application. Reset demo explicitly replays both animations even when restoring the same count.",
+            "Use colour/bg/hover for the default button surface and colour/bg/yellow-mid only on hover or keyboard focus. Use colour/feedback/wrong for unread count and dot indicators.",
+            "Use a numeric badge when the count matters and dot mode when presence alone is enough. Cap the visible label at 99+ while preserving the full accessible count.",
+            "Build the 362px notification panel from NotificationItem rows. Support All and Unread tabs, mark-all-read, item read state, optional action and error detail, and ready/loading/empty/error panel states.",
+            "Reuse the shared Empty State SVG illustration asset for an empty notification panel; do not rasterize it or replace it with a low-resolution copy.",
+            "Use the item tone, status, icon and action variables shown in the component page. Clicking an item marks it read; opening or clearing the panel does not imitate a new-notification badge animation. Respect reduced motion."
+          ]
         }
       };
 
@@ -1609,6 +1621,7 @@ Shared implementation rules:
         { group: "Components", category: "Data Display", name: "Credit Bar", path: "components/CreditBar/CreditBar.html", subtitle: "Current remaining-credit balance with Subscription and Top-up breakdown.", status: "Current", updated: true },
         { group: "Components", category: "Feedback & Overlays", name: "Dialog", path: "components/Dialog/Dialog.html", subtitle: "Composable standard, centered and split dialog structures for forms, choices, details and decisions.", status: "Current", updated: true },
         { group: "Components", category: "Feedback & Overlays", name: "Confirmation Dialog", path: "components/ConfirmationDialog/ConfirmationDialog.html", subtitle: "Current destructive confirmation pattern for unsaved changes.", status: "Current" },
+        { group: "Components", category: "Feedback & Overlays", name: "Notification", path: "components/NotificationBell/NotificationBell.html", subtitle: "Figma-aligned bell, interactive panel and notification item states with exact unread behavior.", status: "Current", updated: true },
         { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "Figma-aligned white Toast notifications with one-line, two-line and functional-color variants; black Tooltip remains separate.", status: "Current" },
 
         { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Interactive 15-page Growth Loop preview covering Analysis, Growth, Engage, Post, Verify and Connection.", status: "Current" }
