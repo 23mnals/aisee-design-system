@@ -7,3 +7,4 @@ site/
 !.env.example
 design-sources/figma/*.fig
 design-sources/figma/*.figma
+artifacts/copy-ai-audit/

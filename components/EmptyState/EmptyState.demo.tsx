@@ -32,7 +32,11 @@ function App() {
   const [notice, setNotice] = useState('');
   const [query, setQuery] = useState('unmatched-keyword');
 
-  return <main>
+  return <main data-aisee-config={JSON.stringify([
+      {scope:'Full composition',component:'EmptyState',props:{illustrationName:fullIllustration},slots:{title:true,description:true,action:true}},
+      {scope:'No action',component:'EmptyState',props:{size:'compact',illustrationName:compactIllustration},slots:{title:true,description:true,action:false}},
+      {scope:'Compose your state',component:'EmptyState',props:{size,variant,...(slots.illustration?{illustrationName}:{})},slots}
+    ])}>
     <h1>Empty State</h1>
     <p className="intro">Compose illustration, title, description and actions to fit the space and the next useful step.</p>
     <div className="empty-example-heading"><h2 className="aisee-content-heading">Full composition <span className="aisee-content-new">NEW</span></h2><Dropdown ariaLabel="Full composition illustration" items={illustrationChoices} value={fullIllustration} onValueChange={value => { setFullIllustration(value as EmptyStateIllustrationName); setNotice(''); }} /></div>

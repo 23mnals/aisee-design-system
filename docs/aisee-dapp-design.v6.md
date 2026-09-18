@@ -354,9 +354,9 @@ Logo mark:                      320px 320px 0 0
 - **GROWTH LOOP** 分组：按功能纵向显示 `Analysis`、`Growth`、`Engage`、`Post`、`Verify`。
   - `Analysis` 选中或展开时，子项纵向显示 `Summary`、`Full Report`，子项左侧使用 2px 分割线形成层级；不使用横向 tab 代替。
   - `Engage` 是 Growth Loop 中的一级功能项，与 Analysis / Growth / Post / Verify 同级；进入 Engage 后，其 Signal Feed、Keywords & Accounts、Replies 作为纵向子项或对应路由显示，详见 §13。
+  - `Verify` 是一级功能分组；子项依次为 `Compare`、`Google Search Data`、`Bing Webmaster Data`。原 Verify 页面入口更名为 Compare，两项搜索数据入口不再单列为 Integrations。
 - **CONNECT CHANNELS** 分组：`Connections`。
-- **INTEGRATIONS** 分组：`Search Console`。
-- **WORKFLOWS** 分组：`Automation`（新功能，独立于 INTEGRATIONS）。
+- **WORKFLOWS** 分组：`Automation`。
 - 导航行统一约 **30px 高**（`padding: 4px 8px`，圆角 8px，icon 容器 18×18，文字 Karla 14px / 400，行内 gap 4px）；同一分组内项目间距约 4px。侧边栏导航图标默认使用 `line_*`，子项增加左侧缩进和分隔线。
 - Hover 底色 `rgba(17,17,17,0.05)`；active 使用当前功能的语义主色（Analysis `#CFFF29`，Engage / Post `#FFE253`），不再使用 Tab Toggle 的双层描边规则。
 - 底部 Profile Card：圆角 8，底 `#FAFAFA`，1px 极淡描边；头像 + 邮箱 + 计划名（Karla 11–12px），内部分隔线，Credits 行 + 6px progress bar。Profile 区固定在底部，不随功能项切换结构。
@@ -827,7 +827,7 @@ Engage **是 Sidebar 的 GROWTH LOOP 纵向功能列表中与 Analysis / Growth 
 
 > **设计系统预览页应用规则（2026-08-13）**：组件与规范预览页的顶部说明区也使用 AISEE Banner 语言，不使用通用后台模板式的大标题栏。标题为 Karla 20 / 500，副标题 12 / 400，左侧使用 44–48px 白色 `draw-*` icon 容器，外层圆角 16px，并保留白色 4–5px 呼吸环。Analysis 使用 `#F5FFD4`，Post Agent 使用 `#FFFADD`，Engage 使用其身份色 `#F3E7F4`；组件卡标题统一 Karla 14 / 600，避免 Ant Design 式偏大、偏粗的展示层级。
 
-> **UI Kit 功能预览覆盖规则（2026-08-18）**：Web App UI Kit 不能只展示 Overview。当前侧边栏中的每个可到达功能都必须有可识别的近似页面预览，至少覆盖 Overview、Analysis、Growth、Improve Score、Build Brand Influence、Engage、Signal Feed、Keywords & Accounts、Replies、Post、Calendar、Channels、Media、Verify、Connection 与 Automation。Automation 是 5.7 新增的 WORKFLOWS 托管自动发布功能，不属于 INTEGRATIONS。预览无需逐像素复刻，但必须同步对应 Figma 设计区块的页面目的、主要信息结构、模块身份色和关键组件状态；不得使用空白页或通用占位卡代替。新增 Figma 功能时同步更新导航、页面注册表与自动覆盖测试。
+> **UI Kit 功能预览覆盖规则（2026-09-15）**：Web App UI Kit 不能只展示 Overview。当前侧边栏中的每个可到达功能都必须有可识别的近似页面预览，至少覆盖 Overview、Analysis、Growth、Improve Score、Build Brand Influence、Engage、Signal Feed、Keywords & Accounts、Replies、Post、Calendar、Channels、Media、Compare、Google Search Data、Bing Webmaster Data、Connection 与 Automation。Verify 是一级分组，依次包含 Compare、Google Search Data 与 Bing Webmaster Data；Automation 位于 WORKFLOWS。预览无需逐像素复刻，但必须同步对应 Figma 设计区块的页面目的、主要信息结构、模块身份色和关键组件状态；不得使用空白页或通用占位卡代替。新增 Figma 功能时同步更新导航、页面注册表与自动覆盖测试。
 
 > **PlanCard 当前版本规则（2026-08-13）**：现行套餐卡以 Figma `v5.4-upgrade plan-页面优化 / upgrade`（node `8253:116053`）为准。页面包含 Plans / Credits 标签、Monthly / Yearly（15% off）计费切换，以及 Starter、Developer、Pro 三张 24px 圆角白色卡片。权益必须按 Analysis、Engage、Post Agent、Support 分组，并保留 Current Plan、Upgrade Plan、黑色 Primary CTA 与 Full Engage 徽章等状态。当前实现位于 `src/components/PlanCard.tsx` 与 `components/PlanCardCurrent/`；旧 `components/PlanCard/` 继续作为 Legacy 保留，不覆盖、不删除。
 

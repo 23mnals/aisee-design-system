@@ -54,14 +54,36 @@ export const Dialog = forwardRef<HTMLDialogElement, DialogProps>(function Dialog
   ...props
 }, forwardedRef) {
   const innerRef = useRef<HTMLDialogElement>(null);
+  const closeTimerRef = useRef<number | null>(null);
   const titleId = useId();
   const descriptionId = useId();
   useImperativeHandle(forwardedRef, () => innerRef.current as HTMLDialogElement);
   useEffect(() => {
     const dialog = innerRef.current;
     if (!dialog) return;
-    if (open && !dialog.open) dialog.showModal();
-    if (!open && dialog.open) dialog.close();
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    if (open) {
+      dialog.removeAttribute('data-closing');
+      if (!dialog.open) dialog.showModal();
+      return;
+    }
+    if (!dialog.open) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      dialog.close();
+      return;
+    }
+    dialog.setAttribute('data-closing', 'true');
+    closeTimerRef.current = window.setTimeout(() => {
+      dialog.close();
+      dialog.removeAttribute('data-closing');
+      closeTimerRef.current = null;
+    }, 180);
+    return () => {
+      if (closeTimerRef.current !== null) window.clearTimeout(closeTimerRef.current);
+    };
   }, [open]);
 
   const body = <div className="aisee-dialog__main">

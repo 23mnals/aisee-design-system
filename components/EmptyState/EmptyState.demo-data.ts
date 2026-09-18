@@ -69,10 +69,10 @@ export const emptyStateExampleCopy: Record<EmptyStateIllustrationName, EmptyStat
     description: 'Install and connect the browser plugin to use AISEE in your workflow.',
     primaryAction: 'Set up plugin',
   },
-  successful: {
-    title: 'All set',
-    description: 'Your setup is complete. You can continue to your workspace.',
-    primaryAction: 'Continue',
+  'no-report-data': {
+    title: 'No report data yet',
+    description: 'Add a product URL to start an analysis and generate your first report.',
+    primaryAction: 'Add product URL',
   },
   unlock: {
     title: 'Feature unlocked',

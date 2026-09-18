@@ -16,6 +16,12 @@ function App() {
       <StatCard value="1 / 32" label="Brand influence tasks completed" />
       <StatCard value="1600" label="Available credits" />
     </StatCardGroup>
+    <h2>Compact information strip <span className="aisee-content-new">NEW</span></h2>
+    <StatCardGroup variant="compact" aria-label="Workspace limits">
+      <StatCard value="30" label="Tracked keywords" />
+      <StatCard value="20" label="Accounts per platform" />
+      <StatCard value="24h" label="Scan frequency" />
+    </StatCardGroup>
     <h2>Optional metadata</h2>
     <section className="stat-demo-grid">
       <StatCard value="74.5" label="7-day goal" delta="+8.3" deltaTone="positive" helper="from current score" />

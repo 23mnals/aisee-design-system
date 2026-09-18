@@ -1,0 +1,42 @@
+.aisee-subscription-plan { width:512px; max-width:100%; box-sizing:border-box; overflow:hidden; border:1px solid var(--aisee-color-border-strong,rgba(17,17,17,.15)); border-radius:var(--aisee-radius-modal); background:var(--aisee-color-white); color:var(--aisee-color-black); box-shadow:var(--aisee-shadow-modal); font-family:Karla,sans-serif; }
+.aisee-subscription-plan__body { display:flex; flex-direction:column; align-items:center; gap:16px; padding:48px 24px 24px; }
+.aisee-subscription-plan__illustration { display:grid; place-items:center; width:64px; height:64px; flex:none; box-sizing:border-box; margin-bottom:8px;  }
+.aisee-subscription-plan__illustration > img { display:block; width:64px; height:64px; object-fit:contain; }
+.aisee-subscription-plan__header { display:flex; flex-direction:column; gap:12px; align-items:center; width:100%; padding:2px 0; text-align:center; }
+.aisee-subscription-plan .aisee-subscription-plan__badge { padding:3px 12px; min-height:24px; border-radius:9999px; background:var(--aisee-color-analysis-soft); color:var(--aisee-color-semantic-text-mini-tiny); font-size:12px; font-weight:500; line-height:18px; }
+.aisee-subscription-plan__price { display:flex; align-items:baseline; justify-content:center; flex-wrap:wrap; }
+.aisee-subscription-plan__price strong { font-size:36px; font-weight:700; line-height:36px; }
+.aisee-subscription-plan__price span { font-size:14px; font-weight:600; line-height:20px; }
+.aisee-subscription-plan__intro { max-width:366px; }
+.aisee-subscription-plan__intro h3 { margin:0; font-size:22px; font-weight:700; line-height:28px; }
+.aisee-subscription-plan__intro p { margin:0; font-size:14px; font-weight:400; line-height:20px; }
+.aisee-subscription-plan__benefits { display:grid; gap:8px; width:100%; }
+.aisee-subscription-plan__benefit { display:flex; align-items:center; gap:8px; min-width:0; min-height:72px; padding:14px 12px; box-sizing:border-box; border:1px solid var(--aisee-color-border); border-radius:14px; background:var(--aisee-color-page); }
+.aisee-subscription-plan__benefit > div { min-width:0; }
+.aisee-subscription-plan__benefit-icon { display:grid; place-items:center; flex:0 0 32px; width:32px; height:32px; border:1px solid var(--aisee-color-border); border-radius:10px; background:var(--aisee-color-white); }
+.aisee-subscription-plan__benefit-icon img { display:block; width:18px; height:18px; object-fit:contain; }
+.aisee-subscription-plan__benefit strong { font-size:16px; line-height:20px; font-weight:600; }
+.aisee-subscription-plan__benefit p { margin:2px 0 0; font-size:12px; line-height:18px; color:var(--aisee-color-semantic-text-description); }
+.aisee-subscription-plan__credit-value { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.aisee-subscription-plan__credit-value strong { font-weight:700; }
+.aisee-subscription-plan__credit-value > span { font-size:12px; line-height:18px; color:var(--aisee-color-semantic-text-description); }
+.aisee-subscription-plan .aisee-subscription-plan__details { width:100%; box-sizing:border-box; margin:0; padding:12px; border:1px solid var(--aisee-color-border); border-radius:14px; background:color-mix(in srgb,var(--aisee-color-black) 2%,var(--aisee-color-white)); gap:8px; }
+.aisee-subscription-plan__details .aisee-dialog-details__row { min-height:22px; border:0; grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); align-items:center; gap:12px; font-size:14px; line-height:22px; }
+.aisee-subscription-plan .aisee-subscription-plan__details dt { color:var(--aisee-color-black); }
+.aisee-subscription-plan .aisee-subscription-plan__details dd { overflow-wrap:anywhere; font-weight:500; }
+.aisee-subscription-plan__company { display:flex; align-items:center; justify-content:flex-end; gap:8px; }
+.aisee-subscription-plan__company > span { display:flex; width:20px; height:20px; flex:none; }
+.aisee-subscription-plan__company img { display:block; width:20px; height:20px; object-fit:contain; }
+.aisee-subscription-plan__footer { display:flex; gap:12px; padding:24px 24px 32px; border-top:1px solid var(--aisee-color-border); }
+.aisee-subscription-plan__footer .aisee-button { padding:8px 16px; min-height:40px; font-size:16px; line-height:24px; }
+.aisee-subscription-plan__footer .aisee-button--secondary { padding-inline:32px; flex:0 0 auto; background:var(--aisee-color-semantic-bg-hover); }
+.aisee-subscription-plan__footer .aisee-button--dark { flex:1; min-width:0; }
+/* Existing Dialog supplies top-layer, focus containment, Escape and motion. */
+.aisee-dialog.aisee-plan-subscription-dialog { width:min(512px,calc(100vw - 32px)); }
+.aisee-plan-subscription-dialog > .aisee-dialog__main { padding:0; }
+.aisee-plan-subscription-dialog .aisee-dialog__header { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); }
+.aisee-plan-subscription-dialog .aisee-dialog__content { margin:0; }
+.aisee-plan-subscription-dialog .aisee-subscription-plan { width:100%; border:0; border-radius:0; box-shadow:none; }
+@media(max-width:440px) { .aisee-subscription-plan__body { padding:32px 16px 20px; } .aisee-subscription-plan__footer { flex-direction:column-reverse; padding:20px 16px 24px; gap:8px; } .aisee-subscription-plan__footer .aisee-button { width:100%; } }
+
+.aisee-subscription-plan .aisee-subscription-plan__details :is(dt,dd) { font-size:14px; line-height:22px; }

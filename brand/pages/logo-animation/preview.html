@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html data-aisee-common-page="logo-animation" lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,6 +36,7 @@
       .download-action { display: flex; align-items: center; justify-content: center; gap: 10px; min-width: 0; padding: 11px 12px; text-align: center; text-decoration: none; }
       .download-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .copy-status { min-height: 20px; margin-top: 10px; color: #444; font-size: 13px; line-height: 20px; text-align: left; }
+      .copy-status:empty { display: none; }
       @media (max-width: 640px) {
         main { padding: 24px 16px 40px; }
         .stage { width: min(84vw, 400px); }
@@ -48,6 +49,7 @@
       }
     </style>
   <link rel="stylesheet" href="../../../fonts/karla.css" data-aisee-typography="karla">
+<link rel="stylesheet" href="../../common-doc-layout.css" data-aisee-common-layout>
 </head>
   <body>
     <main>
@@ -236,5 +238,6 @@
         requestAnimationFrame(frame);
       }
     </script>
-  </body>
+  <script src="../../common-doc-layout.js" data-aisee-common-script></script>
+</body>
 </html>

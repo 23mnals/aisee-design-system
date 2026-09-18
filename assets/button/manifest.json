@@ -1,0 +1,27 @@
+{
+  "source": "Figma",
+  "fileKey": "LLvI9vd66VLNuAltAWJFJw",
+  "retrievedAt": "2026-09-17",
+  "assets": [
+    {
+      "file": "generate.svg",
+      "nodeId": "77:17110",
+      "usage": "Generate Post trailing sparkle; preserve exported paths, display within 16px slot"
+    },
+    {
+      "file": "go-execute.svg",
+      "nodeId": "38:69409",
+      "usage": "Go execute / View replies; mirrored horizontally to match Figma transform"
+    },
+    {
+      "file": "view-post.svg",
+      "nodeId": "I78:121895;8782:260943",
+      "usage": "View Post leading external-link icon"
+    },
+    {
+      "file": "bulk-schedule.svg",
+      "nodeId": "38:69105",
+      "usage": "Bulk schedule leading multicolor check; preserve colors"
+    }
+  ]
+}

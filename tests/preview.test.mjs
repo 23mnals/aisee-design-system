@@ -14,7 +14,7 @@ test('system portal preserves the four required sections', () => {
 });
 
 test('Brand catalog is grouped by AIsee functional modules', () => {
-  const expectedOrder = ['Homepage', 'Common', 'Overview', 'Analyze', 'Growth', 'Post', 'Engage', 'Verify', 'Automation'];
+  const expectedOrder = ['Analyze', 'Automation', 'Common', 'Engage', 'Growth', 'Homepage', 'Overview', 'Post', 'Verify'];
   assert.match(portal, new RegExp(`const brandCategoryOrder = \\[${expectedOrder.map(category => `"${category}"`).join(', ')}\\];`));
 
   const brandEntries = [...portal.matchAll(/\{ group: "Brand",([^}]+)\}/g)].map(match => match[1]);
@@ -28,10 +28,20 @@ test('Brand catalog is grouped by AIsee functional modules', () => {
   assert.match(portal, /category: "Homepage", name: "About Us — Design Faithful"/);
   assert.match(portal, /category: "Common", name: "Update Tutorial Preview"/);
   assert.match(portal, /category: "Common", name: "Install Tutorial Preview"/);
+  assert.match(portal, /group: "Components", category: "Content & Status", name: "Avatar"/);
+  assert.doesNotMatch(portal, /group: "Brand", category: "Common", name: "Avatar"/);
+  assert.doesNotMatch(portal, /preview\/brand-visual-style\.html/);
   assert.doesNotMatch(portal, /category: "Automation", name: "(?:Update|Install) Tutorial Preview"/);
   assert.doesNotMatch(portal, /category: "Overview", name: "About Us/);
   assert.match(portal, /group === "Brand"[\s\S]*?brandCategoryOrder\.map/);
   assert.match(portal, /item\.category \|\| ""/);
+});
+
+test('sidebar keeps Overview first and sorts categories and sibling pages A to Z', () => {
+  assert.match(portal, /const componentCategoryOrder = \["Overview", "Content & Status", "Data Display", "Feedback & Overlays", "Inputs & Controls", "Navigation"\]/);
+  assert.match(portal, /const compareNavItems = \(left, right\) => left\.name\.localeCompare\(right\.name, "en", \{ sensitivity: "base" \}\)/);
+  assert.match(portal, /filter\(item => item\.category === category\)\.sort\(compareNavItems\)/);
+  assert.match(portal, /filter\(item => !item\.category\)\.sort\(compareNavItems\)/);
 });
 
 test('legacy labels stay out of the sidebar and use a lightweight inline title status', () => {
@@ -116,6 +126,66 @@ test('standalone portal script is syntactically valid', () => {
   assert.doesNotThrow(() => new Function(script));
 });
 
+test('every Current component detail page offers a scoped Copy for AI prompt', () => {
+  const currentComponentEntries = [...portal.matchAll(/\{ group: "Components",([^}]+)status: "Current"([^}]*)\}/g)]
+    .map(match => `${match[1]}${match[2]}`)
+    .map(entry => ({
+      name: entry.match(/name: "([^"]+)"/)?.[1],
+      path: entry.match(/path: "([^"]+)"/)?.[1]
+    }))
+    .filter(entry => entry.path && entry.path !== 'preview/dapp-v6-components.html');
+  const guidancePaths = new Set([...portal.matchAll(/^\s+"((?:components\/[^"]+|preview\/avatar)\.html)": \{/gm)].map(match => match[1]));
+
+  assert.equal(currentComponentEntries.length, 28);
+  for (const entry of currentComponentEntries) {
+    assert.ok(guidancePaths.has(entry.path), `${entry.name} should have AI guidance`);
+  }
+  const guidanceLiteral = portal.match(/const componentAiGuidance = (\{[\s\S]*?\n      \});\n\n      function buildComponentAiPrompt/)?.[1];
+  assert.ok(guidanceLiteral, 'component guidance object should be readable');
+  const guidance = new Function(`return (${guidanceLiteral})`)();
+  for (const entry of currentComponentEntries) {
+    const prompt = guidance[entry.path];
+    assert.equal(prompt?.name, entry.name, `${entry.name} guidance should use the registry name`);
+    assert.ok(prompt?.intent?.length >= 40, `${entry.name} should have a concrete intent`);
+    assert.ok(Array.isArray(prompt?.rules) && prompt.rules.length >= 3, `${entry.name} should have at least three scoped rules`);
+    assert.ok(prompt.rules.every(rule => rule.length >= 30), `${entry.name} rules should be concrete`);
+  }
+  assert.ok(!guidancePaths.has('preview/dapp-v6-components.html'));
+  assert.ok(!guidancePaths.has('components/PostCard/PostCard.html'));
+  assert.match(portal, /id="copyAiHeader"[^>]*hidden[^>]*aria-label="Copy component guidance for AI"/);
+  assert.match(portal, /const aiPrompt = buildComponentAiPrompt\(item\.path\)/);
+  assert.match(portal, /copyAiHeader\.hidden = !aiPrompt/);
+  assert.match(portal, /#openStandalone,\s*#copyAiHeader\s*\{\s*min-height: 40px;\s*height: 40px;/);
+  assert.match(portal, /Treat the Design System Demo as a structural and interaction reference/);
+  assert.match(portal, /Detail and rendered Demo: \$\{path\}/);
+  assert.match(portal, /Do not approximate it from memory or replace it with visually unstyled browser UI/);
+  assert.match(portal, /Match the Demo's geometry, spacing, radii, typography, icon weight, colours, states and motion/);
+  assert.match(portal, /compare the rendered result against the reference/);
+  assert.match(portal, /Demo icon is a placeholder|Demo icons are placeholders/);
+  assert.match(portal, /Associate the label with the field/);
+  assert.match(portal, /copyAiHeader\.addEventListener\("click", copyAiPrompt\)/);
+});
+
+test('README portal supports a persistent full-page English and Chinese switch', async () => {
+  const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8');
+  const overview = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
+
+  assert.match(portal, /data-readme-language="en"[^>]*aria-pressed="true"/);
+  assert.match(portal, /data-readme-language="zh"[^>]*aria-pressed="false"/);
+  assert.match(portal, /const readmeLanguageStorageKey = "aisee\.design-system\.readmeLanguage"/);
+  assert.match(portal, /function setReadmeLanguage\(language, persist = true\)/);
+  assert.match(portal, /Use components without writing code/);
+  assert.match(portal, /无需写代码也能使用组件/);
+  assert.match(portal, /setReadmeLanguage\(readmeLanguage, false\)/);
+  assert.match(portal, /AISEE dApp design archive\.fig/);
+  assert.match(portal, /colorEnglishLabels = new Map/);
+  assert.match(portal, /readmeLanguage === "zh" \? "全部类别" : "All categories"/);
+  assert.match(portal, /colorDisplayText\(token\.name\)/);
+  assert.match(readme, /## 非开发人员如何使用组件/);
+  assert.match(readme, /双星图标的 \*\*Copy for AI\*\*/);
+  assert.match(overview, /Every Current detail page includes Copy for AI/);
+});
+
 test('portal and v6 previews self-host Karla', async () => {
   const foundations = await readFile(new URL('../preview/dapp-v6-foundations.html', import.meta.url), 'utf8');
   const components = await readFile(new URL('../preview/dapp-v6-components.html', import.meta.url), 'utf8');
@@ -185,6 +255,12 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(source, /selectionMode\?: 'single' \| 'multiple'/);
   assert.match(source, /filterable\?: boolean/);
   assert.match(source, /editable\?: boolean/);
+  assert.match(source, /leading\?: ReactNode/);
+  assert.match(source, /supportingText\?: string/);
+  assert.match(source, /trailing\?: ReactNode/);
+  assert.match(source, /group\?: string/);
+  assert.match(source, /menuHeader\?: ReactNode/);
+  assert.match(source, /footer\?: ReactNode/);
   assert.match(source, /aria-multiselectable/);
   assert.match(source, /line_chevron-up\.svg/);
   assert.match(source, /aisee-dropdown__option-leading/);
@@ -200,9 +276,213 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(detail, /\.suggestion\{[^}]*font-size:14px;line-height:20px/);
   assert.match(detail, /\.clear\{[^}]*font-size:14px;line-height:20px/);
   assert.match(detail, /\.menu-search:hover,.menu-search:focus\{border-color:var\(--black\);outline:0;box-shadow:0 0 0 2px var\(--lime\)\}/);
+  assert.match(detail, /Interactive core patterns/);
+  assert.match(detail, /Variant playground/);
+  assert.match(detail, /\.variant-playground\{[^}]*min-height:0;padding:20px\}/);
+  assert.match(detail, /\.composition-grid\{display:block;margin-top:16px\}/);
+  assert.match(detail, /id="compositionVariantControl"/);
+  assert.match(detail, /id="compositionVariantMenu" role="listbox"/);
+  assert.match(detail, /data-composition-option="compact"/);
+  assert.match(detail, /variant-select__trigger[\s\S]*?line_chevron-up\.svg/);
+  assert.doesNotMatch(detail, /<select/);
+  assert.match(detail, /data-composition="compact"/);
+  assert.match(detail, /data-composition="search"/);
+  assert.match(detail, /data-composition="filter"/);
+  assert.match(detail, /data-composition="account"/);
+  assert.match(detail, /data-composition="action"/);
+  assert.match(detail, /function renderCompositionVariant\(\)/);
+  assert.match(detail, /\.composition-stage>.menu\.static\.account-menu\{width:min\(100%,420px\)\}/);
+  assert.match(detail, /\.menu\.open\{display:grid;gap:4px/);
+  assert.match(detail, /#compactMenu\.open\{display:grid;gap:4px\}/);
+  assert.match(detail, /\.composition-stage>.filter-panel\{width:min\(100%,360px\)\}/);
+  assert.match(detail, /\.filter-panel\{[^}]*padding:17px[^}]*border-radius:16px[^}]*background:#fff\}/);
+  assert.match(detail, /\.filter-chip\{[^}]*height:24px[^}]*border:1px solid rgba\(17,17,17,\.06\)[^}]*border-radius:8px[^}]*background:#fafafa[^}]*font:500 12px/);
+  assert.match(detail, /\.project-copy\{font-weight:500\}/);
+  assert.match(styles, /\.aisee-dropdown__menu \{[\s\S]*?gap: 4px;/);
+  assert.match(detail, /Compact status menu/);
+  assert.match(detail, /Search list \+ action/);
+  assert.match(detail, /Filter panel/);
+  assert.match(detail, /Grouped account menu/);
+  assert.match(detail, /Icon action menu/);
+  assert.match(detail, /Copy Channel ID/);
+  assert.match(detail, /Move \/ add to customer/);
+  assert.match(detail, /Edit Time Slots/);
+  assert.match(detail, /Disable Channel/);
+  assert.match(detail, /data-action-item="Delete"/);
+  assert.match(detail, /\.action-option\.is-danger\{color:#ec5212\}/);
+  assert.match(detail, /\.composition-stage\{[^}]*height:var\(--composition-stage-height,260px\)[^}]*margin-top:14px[^}]*padding:24px[^}]*overflow:auto/);
+  assert.match(detail, /\.menu\.static\.fluid-hover-surface\{position:relative;top:auto\}/);
+  assert.match(detail, /function syncCompositionStageHeight\(card\)/);
+  assert.match(detail, /requestAnimationFrame\(\(\)=>syncCompositionStageHeight\(activeCard\)\)/);
+  assert.doesNotMatch(detail, /\.composition-stage\{[^}]*height:580px/);
+  assert.match(detail, /<\/section>\s*<div class="variant-summary" aria-live="polite"><h3 id="variantSummaryTitle">/);
+  assert.doesNotMatch(detail, /Current preview · Read only/);
+  for (const [file, component] of [
+    ['action-copy.svg', 'LineFileCopyIcon'],
+    ['action-add-customer.svg', 'LinePeopleAddContactIcon'],
+    ['action-time-slots.svg', 'LineClockTimeIcon'],
+    ['action-disable.svg', 'LineProhibitedNotClickableIcon'],
+    ['action-delete.svg', 'LineTrashDeleteIcon'],
+  ]) {
+    assert.match(detail, new RegExp(file.replace('.', '\\.')));
+    assert.match(detail, new RegExp(`data-stemui-export="${component}"`));
+    await access(new URL(`../assets/stemui/${file}`, import.meta.url));
+  }
+  assert.match(detail, /compositionProjectSearch/);
+  assert.match(detail, /data-filter-select="keyword"/);
+  assert.match(detail, /data-filter-select="accounts"/);
+  assert.match(detail, /data-filter-select="subreddits"/);
+  assert.match(detail, /data-filter-group="score"/);
+  assert.match(detail, /data-filter-group="time"/);
+  assert.match(detail, /data-filter-group="intents"/);
+  assert.match(components, /trigger-to-menu 8px · option gap 4px · open the component page to switch live compositions/);
+  await access(new URL('../assets/dropdown/search.svg', import.meta.url));
   assert.doesNotMatch(detail, /class="check"/);
   assert.match(portal, /dropdown menus keep an 8px gap below the trigger/);
-  assert.match(portal, /5% black fill for hover, focus and selected items/);
+  assert.match(portal, /One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking/);
+});
+
+test('Brand Common documents share the Current component content frame', async () => {
+  const shared = await readFile(new URL('../brand/common-doc-layout.css', import.meta.url), 'utf8');
+  const layout = await readFile(new URL('../brand/common-doc-layout.js', import.meta.url), 'utf8');
+  assert.match(shared, /width: 640px !important/);
+  assert.match(shared, /padding: 24px !important/);
+  assert.match(layout, /aisee-common-document/);
+  assert.match(layout, /Overview \/ Examples/);
+  assert.match(layout, /existingTitle\.remove\(\)/);
+  assert.match(portal, /querySelector\("\.aisee-common-document, main, \.page, #root"\)/);
+  const foundations = await readFile(new URL('../preview/dapp-v6-foundations.html', import.meta.url), 'utf8');
+  assert.match(foundations, /\.note\{[^}]*border:1px solid var\(--line\);border-left:3px solid var\(--lime\)/);
+  const documents = [
+    '../preview/dapp-v6-foundations.html',
+    '../brand/pages/logo-animation/preview.html',
+    '../preview/brand-logo.html',
+    '../preview/avatar.html',
+    '../preview/colors-brand.html',
+    '../preview/spacing-radii-shadows.html',
+    '../preview/type-display.html',
+    '../preview/type-ui.html',
+    '../legacy/pages/插件更新教程Preview.html',
+    '../legacy/pages/Install Tutorial Preview.html',
+  ];
+  for (const path of documents) {
+    const source = await readFile(new URL(path, import.meta.url), 'utf8');
+    assert.match(source, /data-aisee-common-layout/);
+    assert.match(source, /data-aisee-common-page=/);
+    assert.match(source, /data-aisee-common-script/);
+  }
+});
+
+test('Avatar documents the two Figma-backed random assignment libraries', async () => {
+  const avatar = await readFile(new URL('../preview/avatar.html', import.meta.url), 'utf8');
+  const commonLayout = await readFile(new URL('../brand/common-doc-layout.js', import.meta.url), 'utf8');
+  const portal = await readFile(new URL('../aisee-design-system-preview.html', import.meta.url), 'utf8');
+  assert.match(avatar, /Website account avatars · Square/);
+  assert.match(avatar, /Social fallback avatars · Circular/);
+  assert.match(avatar, /SOURCE_COUNTS=\{account:22,social:24\}/);
+  assert.match(avatar, /TOTAL_COUNTS=\{account:34,social:36\}/);
+  assert.match(avatar, /dapp-avatar-set\.svg/);
+  assert.match(avatar, /social-avatar-set\.svg/);
+  assert.match(avatar, /cannot be fetched/);
+  assert.match(avatar, /data-aisee-common-showcase/);
+  assert.match(avatar, /Figma 98:181874/);
+  assert.match(avatar, /Figma 77:16893/);
+  assert.match(avatar, /aria-label="Choose account avatar"/);
+  assert.match(avatar, /avatar-picker__thumb/);
+  assert.doesNotMatch(avatar, /<select/);
+  assert.match(avatar, /role="switch"/);
+  assert.match(avatar, /width:24px;height:16px/);
+  assert.match(avatar, /width:10px;height:10px/);
+  assert.match(avatar, /renderOriginalAnimated/);
+  assert.doesNotMatch(avatar, /motion-eye/);
+  assert.match(avatar, /function followPointer\(surface,event\)/);
+  assert.match(avatar, /is-pointer-following/);
+  assert.match(avatar, /<g clip-path="url\(#\$\{clipId\}\)"><circle class="avatar-source-pupil"/);
+  assert.match(avatar, /Growth Loop Plan/);
+  assert.match(avatar, /assets\/avatar\/credit-information\.svg/);
+  assert.match(avatar, /platform-badge\{[^}]*border:1px solid #111/);
+  assert.match(avatar, /platform-badge--plan\{border-style:dashed\}/);
+  assert.match(avatar, /platform-badge--manual\{border-style:solid\}/);
+  assert.match(avatar, /assets\/avatar\/platform-x-mark\.svg/);
+  assert.match(avatar, /data-post-origin="plan"/);
+  assert.match(avatar, /data-post-origin="manual"/);
+  assert.match(avatar, /Generated extensions · 12 <span class="new-badge aisee-content-new">NEW/);
+  assert.match(commonLayout, /data-aisee-common-showcase/);
+  assert.match(portal, /name: "Avatar"[^\n]*updated: true/);
+  assert.match(portal, /"preview\/avatar\.html": \{/);
+  assert.match(portal, /Generated preview extensions are excluded until explicitly approved/);
+  const avatarComponent = await readFile(new URL('../src/components/Avatar.tsx', import.meta.url), 'utf8');
+  const publicApi = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
+  assert.match(avatarComponent, /export function Avatar/);
+  assert.match(avatarComponent, /export function SocialAccountAvatar/);
+  assert.match(avatarComponent, /AISEE_AVATAR_COUNTS = \{ account: 22, social: 24 \}/);
+  assert.match(publicApi, /components\/Avatar/);
+  assert.match(portal, /<span class="nav-label-text">README<\/span><span class="nav-new-label"/);
+  assert.match(portal, /readme-updated-title[^>]*>Sources and authority <span class="nav-new-label"/);
+  assert.match(portal, /readme-updated-title[^>]*>Visual foundations <span class="nav-new-label"/);
+  assert.match(portal, /readme-updated-title[^>]*>Component library <span class="nav-new-label"/);
+  const avatarScript = avatar.match(/<script>([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(avatarScript);
+  assert.doesNotThrow(() => new Function(avatarScript));
+  await access(new URL('../assets/avatar/dapp-avatar-set.svg', import.meta.url));
+  await access(new URL('../assets/avatar/social-avatar-set.svg', import.meta.url));
+  const creditInformationIcon = await readFile(new URL('../assets/avatar/credit-information.svg', import.meta.url), 'utf8');
+  assert.match(creditInformationIcon, /stroke-width="1\.1"/);
+  assert.doesNotMatch(creditInformationIcon, /stroke-width="1\.5"/);
+});
+
+test('Fluid Hover is synchronized to the Current Dropdown implementation and demo', async () => {
+  const preview = await readFile(new URL('../prototypes/dropdown-fluid-hover-preview.html', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/Select/Select.html', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../src/components/Dropdown.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const portal = await readFile(new URL('../aisee-design-system-preview.html', import.meta.url), 'utf8');
+  assert.match(preview, /Synced to Current Demo/);
+  for (const setting of ['icons', 'groups', 'disabled', 'rowAction', 'footerAction']) {
+    assert.match(preview, new RegExp(`data-setting="${setting}"`));
+  }
+  assert.match(preview, /fluid-highlight/);
+  assert.match(preview, /pointermove/);
+  assert.match(preview, /transition:transform 110ms/);
+  assert.match(preview, /cachedGeometry/);
+  assert.match(preview, /\.row-shell:hover \.row-action/);
+  assert.match(preview, /background:rgba\(17,17,17,\.04\)/);
+  assert.match(preview, /width:24px;height:16px/);
+  assert.match(preview, /width:10px;height:10px/);
+  assert.match(detail, /installFluidHover/);
+  assert.match(detail, /fluid-hover-highlight/);
+  assert.match(detail, /pointermove/);
+  assert.match(detail, /id="variantSummaryTitle"/);
+  assert.match(detail, /id="variantSummaryDescription"/);
+  assert.doesNotMatch(detail, /data-composition="[^"]+"[^>]*><h3>/);
+  assert.match(detail, /id="variantIcons"/);
+  assert.match(detail, /data-show-icons/);
+  assert.match(detail, /geometry=new Map/);
+  assert.match(detail, /availableSet/);
+  assert.match(detail, /transition:transform 110ms/);
+  assert.match(detail, /\.variant-select__menu\{position:absolute/);
+  assert.match(detail, /\.fluid-hover-surface\{isolation:isolate\}/);
+  assert.match(detail, /\.menu\.static\.fluid-hover-surface\{position:relative;top:auto\}/);
+  assert.match(detail, /surface\.clientLeft/);
+  assert.match(detail, /account-row-action/);
+  assert.match(detail, /data-account-action/);
+  assert.match(source, /fluidHover\?: boolean/);
+  assert.match(source, /gapClick\?: boolean \| \{ maxDistance\?: number \}/);
+  assert.match(source, /action\?: \{/);
+  assert.match(source, /pointerFrameRef/);
+  assert.match(source, /itemGeometryRef/);
+  assert.match(source, /measureItems/);
+  assert.match(source, /activateIndex\(directIndex, false\)/);
+  assert.match(source, /activateIndex\(nearest\.index, false\)/);
+  assert.match(source, /if \(syncReactState\) setActiveIndex\(nextIndex\)/);
+  assert.match(source, /aisee-dropdown__fluid-highlight/);
+  assert.match(source, /menu\.clientLeft/);
+  assert.match(styles, /\.aisee-dropdown__fluid-highlight/);
+  assert.match(styles, /transform 72ms cubic-bezier\(\.2,\.8,\.2,1\)/);
+  assert.match(styles, /\.aisee-dropdown__option-action/);
+  assert.match(styles, /\.aisee-dropdown__option-shell:hover \.aisee-dropdown__option-action/);
+  assert.match(styles, /prefers-reduced-motion: reduce[\s\S]*?\.aisee-dropdown__fluid-highlight/);
+  assert.doesNotMatch(portal, /prototypes\/dropdown-fluid-hover-preview\.html/);
 });
 
 test('high-priority feedback and data components are publishable Current entries', async () => {
@@ -210,9 +490,12 @@ test('high-priority feedback and data components are publishable Current entries
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   const statStyles = await readFile(new URL('../src/styles/stat-card.css', import.meta.url), 'utf8');
   const creditStyles = await readFile(new URL('../src/styles/credit-bar.css', import.meta.url), 'utf8');
+  const creditSource = await readFile(new URL('../src/components/CreditBar.tsx', import.meta.url), 'utf8');
+  const creditDemo = await readFile(new URL('../components/CreditBar/CreditBar.demo.tsx', import.meta.url), 'utf8');
   const componentFiles = [
     ['Tooltip', '../src/components/Tooltip.tsx', '../components/TooltipToast/TooltipToast.html'],
     ['Toast', '../src/components/Toast.tsx', '../components/TooltipToast/TooltipToast.html'],
+    ['NotificationBell', '../src/components/NotificationBell.tsx', '../components/NotificationBell/NotificationBell.html'],
     ['StatCard', '../src/components/StatCard.tsx', '../components/StatCardCurrent/StatCardCurrent.html'],
     ['Table', '../src/components/Table.tsx', '../components/Table/Table.html'],
     ['ScoreGauge', '../src/components/ScoreGauge.tsx', '../components/ScoreGauge/ScoreGauge.html'],
@@ -227,12 +510,73 @@ test('high-priority feedback and data components are publishable Current entries
   assert.match(styles, /\.aisee-toast-viewport/);
   assert.match(statStyles, /\.aisee-stat-card/);
   assert.match(creditStyles, /\.aisee-credit-bar/);
+  assert.match(creditStyles, /\.aisee-credit-bar__legend-item\[data-zero="true"\]/);
+  assert.match(creditSource, /data-zero=\{subscription === 0 \? 'true' : undefined\}/);
+  assert.match(creditSource, /data-zero=\{topUp === 0 \? 'true' : undefined\}/);
+  assert.match(creditSource, /data-empty=\{total === 0 \? 'true' : undefined\}/);
+  assert.match(creditDemo, /Top-up is zero · Subscription only/);
+  assert.match(creditDemo, /Subscription is zero · Top-up only/);
+  assert.match(creditDemo, /No remaining credits · Both sources zero/);
   assert.match(styles, /\.aisee-table/);
   assert.match(styles, /\.aisee-score-gauge/);
   assert.match(styles, /\.aisee-chart/);
-  for (const path of ['TooltipToast/TooltipToast.html', 'StatCardCurrent/StatCardCurrent.html', 'Table/Table.html', 'ScoreGauge/ScoreGauge.html', 'Chart/Chart.html', 'CreditBar/CreditBar.html']) {
+  for (const path of ['TooltipToast/TooltipToast.html', 'NotificationBell/NotificationBell.html', 'StatCardCurrent/StatCardCurrent.html', 'Table/Table.html', 'ScoreGauge/ScoreGauge.html', 'Chart/Chart.html', 'CreditBar/CreditBar.html']) {
     assert.match(portal, new RegExp(`components/${path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`));
   }
+});
+
+test('notification bell preserves the Figma icon anatomy and semantic states', async () => {
+  const source = await readFile(new URL('../src/components/NotificationBell.tsx', import.meta.url), 'utf8');
+  const panelSource = await readFile(new URL('../src/components/Notification.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/NotificationBell/NotificationBell.html', import.meta.url), 'utf8');
+  assert.match(source, /previousCount\.current/);
+  assert.match(source, /normalizedCount <= previousCount\.current/);
+  assert.match(source, /aisee-notification-bell__glyph/);
+  assert.match(source, /onPointerEnter/);
+  assert.match(source, /playRing\(false\)/);
+  assert.match(source, /is-badge-rolling/);
+  assert.match(styles, /\.aisee-notification-bell \{[\s\S]*?background: var\(--aisee-color-semantic-bg-hover\)/);
+  assert.match(styles, /\.aisee-notification-bell:hover \{ background: var\(--aisee-color-semantic-bg-yellow-mid\)/);
+  assert.match(styles, /\.aisee-notification-bell\.is-ringing \.aisee-notification-bell__glyph/);
+  assert.match(styles, /\.aisee-notification-bell\.is-badge-rolling \.aisee-notification-bell__dot/);
+  assert.doesNotMatch(styles, /aisee-notification-bell-dot-ping/);
+  assert.match(styles, /background: var\(--aisee-color-semantic-feedback-wrong\)/);
+  assert.match(styles, /\.aisee-notification-panel \{[\s\S]*?width: 362px/);
+  assert.match(panelSource, /export function NotificationItem/);
+  assert.match(panelSource, /export function NotificationPanel/);
+  assert.match(panelSource, /displayedTab === 'unread'/);
+  assert.match(panelSource, /NotificationPanelState = 'ready' \| 'empty' \| 'loading' \| 'error'/);
+  assert.match(panelSource, /empty-state\/library\/no-event\.svg/);
+  assert.match(panelSource, /All caught up/);
+  assert.match(panelSource, /You don't have any unread notifications/);
+  assert.match(detail, /Figma node 77:17878|Figma bell/);
+  assert.match(detail, /<small>Default<\/small>/);
+  assert.match(detail, /Use dot instead of count/);
+  assert.match(detail, /Notification dropdown/);
+  assert.match(detail, /id="panelStateTrigger"/);
+  assert.doesNotMatch(detail, /<select id="panelState"/);
+  assert.match(detail, /id="resetPanelDemo"/);
+  assert.match(detail, /class="aisee-toggle"/);
+  assert.match(detail, /class="aisee-toggle__thumb"/);
+  assert.match(detail, /empty-state\/library\/no-event\.svg/);
+  assert.match(detail, /item\.unread=false/);
+  assert.match(detail, /New notifications ring the inner white bell and roll the unread badge/);
+  assert.match(detail, /Panel state/);
+});
+
+test('empty report artwork uses the product URL analysis scenario instead of success copy', async () => {
+  const illustrations = await readFile(new URL('../src/components/EmptyStateIllustration.tsx', import.meta.url), 'utf8');
+  const copy = await readFile(new URL('../components/EmptyState/EmptyState.demo-data.ts', import.meta.url), 'utf8');
+  const manifest = await readFile(new URL('../assets/empty-state/library/manifest.json', import.meta.url), 'utf8');
+  await access(new URL('../assets/empty-state/library/no-report-data.svg', import.meta.url));
+  assert.match(illustrations, /'no-report-data': \{[^}]*label: "No report data"/);
+  assert.doesNotMatch(illustrations, /label: "Successful"/);
+  assert.match(copy, /title: 'No report data yet'/);
+  assert.match(copy, /Add a product URL to start an analysis/);
+  assert.match(copy, /primaryAction: 'Add product URL'/);
+  assert.match(manifest, /"name": "no-report-data"/);
+  assert.doesNotMatch(manifest, /"name": "successful"/);
 });
 
 test('score gauge follows Figma node 58:32548 instead of the legacy donut', async () => {
@@ -327,7 +671,7 @@ test('portal exposes the published Figma color architecture as a searchable tabl
   assert.match(hoverBackground?.usage || '', /Hover 状态背景叠色/);
   assert.equal(hoverBackground?.reviewMode, 'Dark');
   assert.match(portal, /用途已验证/);
-  assert.ok(portal.includes('token.reviewMode ? `${token.reviewMode} 待校对`'));
+  assert.ok(portal.includes('token.reviewMode ? `${token.reviewMode} ${readmeLanguage === "zh" ? "待校对" : "review pending"}`'));
   assert.match(portal, /页面和组件只能使用语义化变量/);
   assert.match(portal, /id="colorTokenRows"/);
   assert.match(portal, /data-color-layer="primitive"/);
@@ -343,9 +687,16 @@ test('checkbox is published, documented and follows the v6 selection states', as
   const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
   assert.match(source, /export const Checkbox/);
   assert.match(source, /type="checkbox"/);
+  assert.match(source, /data-celebrating=\{celebrating \|\| undefined\}/);
+  assert.match(source, /event\.currentTarget\.checked && !event\.currentTarget\.disabled/);
+  assert.match(source, /Array\.from\(\{ length: 8 \}/);
   assert.match(exports, /components\/Checkbox/);
   assert.match(styles, /\.aisee-checkbox__control \{[\s\S]*?width: 18px;[\s\S]*?height: 18px;[\s\S]*?border: 1\.5px solid/);
   assert.match(styles, /\.aisee-checkbox-row:hover \.aisee-checkbox__control \{ background: var\(--aisee-module-primary\); \}/);
+  assert.match(styles, /@keyframes aisee-checkbox-burst/);
+  assert.match(styles, /prefers-reduced-motion: reduce[^}]+\.aisee-checkbox__control\[data-celebrating="true"\]/);
+  assert.match(detail, /class="burst"/);
+  assert.match(detail, /classList\.add\('is-celebrating'\)/);
   for (const state of ['Default', 'Row hover', 'Selected', 'Disabled']) assert.match(detail, new RegExp(state));
   assert.match(overview, /<h2>Checkbox<\/h2>/);
   assert.match(portal, /components\/Checkbox\/Checkbox\.html/);
@@ -374,8 +725,8 @@ test('current component detail pages stay aligned with the published control spe
   assert.match(styles, /\.aisee-dialog \{[^}]*width: min\(480px, calc\(100vw - 32px\)\)/);
   assert.match(styles, /\.aisee-dialog \.aisee-input \{ min-height: 40px; \}/);
   assert.doesNotMatch(dialog, /<p class="result"/);
-  assert.match(toggle, /width:24px;height:16px/);
-  assert.match(toggle, /width:10px;height:10px/);
+  assert.match(toggle, /track 24×16px/);
+  assert.match(toggle, /thumb 10×10px/);
   assert.doesNotMatch(toggle, /Track 36×20px/);
   assert.match(tabs, /gap:24px/);
   assert.match(tabs, /padding:8px 0/);
@@ -432,8 +783,8 @@ test('Tabs exposes underline, three segmented compositions and the platform comp
   assert.match(detail, /scaleX\(1\.055\) scaleY\(\.95\)/);
   assert.match(detail, /scaleX\(\.975\) scaleY\(1\.025\)/);
   assert.match(detail, /duration:520,easing:'cubic-bezier\(\.22,\.72,\.18,1\)'/);
-  assert.match(detail, /id="showIcons" type="checkbox" checked/);
-  assert.match(detail, /id="showCounts" type="checkbox" checked/);
+  assert.match(detail, /id="showIcons" type="checkbox" role="switch" checked/);
+  assert.match(detail, /id="showCounts" type="checkbox" role="switch" checked/);
   assert.match(detail, /id="platformModeStatus" aria-live="polite"/);
   assert.match(detail, /hide-demo-icons/);
   assert.match(detail, /hide-demo-counts/);
@@ -540,6 +891,7 @@ test('component title area navigates to adjacent sidebar entries and names each 
 
 test('Sidebar Navigation is a reusable interactive current component', async () => {
   const source = await readFile(new URL('../src/components/SidebarNavigation.tsx', import.meta.url), 'utf8');
+  const treeSource = await readFile(new URL('../src/components/TreeNav.tsx', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
   const detail = await readFile(new URL('../components/SidebarNavigation/SidebarNavigation.html', import.meta.url), 'utf8');
   const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
@@ -550,10 +902,13 @@ test('Sidebar Navigation is a reusable interactive current component', async () 
   assert.match(source, /aria-haspopup=\{isCollapsed && hasChildren \? 'menu' : undefined\}/);
   assert.match(source, /role="menuitem"/);
   assert.match(source, /onValueChange\?: \(value: string\) => void/);
-  assert.match(source, /iconSrc\?: string/);
-  assert.match(source, /iconTone\?: 'monochrome' \| 'brand'/);
+  assert.match(source, /SidebarNavigationItem extends TreeNavItem/);
+  assert.match(treeSource, /iconSrc\?: string/);
+  assert.match(treeSource, /iconTone\?: 'monochrome' \| 'brand'/);
   assert.match(source, /className="aisee-sidebar__icon-mask"/);
-  assert.match(source, /aria-expanded=\{hasChildren \? \(isCollapsed \? isFlyoutOpen : isOpen\) : undefined\}/);
+  assert.match(source, /aria-expanded=\{hasChildren \? isFlyoutOpen : undefined\}/);
+  assert.match(source, /<TreeNav/);
+  assert.match(source, /className="aisee-sidebar__tree"/);
   assert.match(source, /const toggleLabel = isCollapsed \? 'Open sidebar' : 'Close sidebar'/);
   assert.match(source, /function SidebarToggleIcon\(\)/);
   assert.match(source, /expandIcon \?\? <SidebarToggleIcon \/>/);
@@ -572,24 +927,46 @@ test('Sidebar Navigation is a reusable interactive current component', async () 
   assert.match(styles, /\.aisee-sidebar__item:hover:not\(:disabled\)/);
   assert.match(styles, /\.aisee-sidebar__icon-mask \{[^}]*background: currentColor;[^}]*mask: var\(--aisee-sidebar-icon\)/);
   assert.doesNotMatch(styles, /aisee-sidebar__chevron/);
-  assert.match(detail, /const openIds=new Set\(\['engage'\]\)/);
-  assert.match(detail, /every other primary item can expand independently/);
-  assert.match(detail, /class="workspace" aria-label="Example content area"/);
-  assert.match(detail, /sidebar\.classList\.toggle\('is-collapsed',collapsed\)/);
-  assert.match(detail, /\.collapse:hover\{[^}]*cursor:w-resize\}/);
-  assert.match(detail, /\.sidebar\.is-collapsed,\.sidebar\.is-collapsed \*\{cursor:e-resize\}/);
-  assert.doesNotMatch(detail, /sidebar-cursor-(?:collapse|expand)\.svg/);
-  assert.match(detail, /class="collapse-icon" src="\.\.\/\.\.\/assets\/sidebar-v6\/sidebar-close\.svg"/);
-  assert.match(detail, /role="tooltip">Close sidebar/);
-  assert.match(detail, /const label=collapsed\?'Open sidebar':'Close sidebar'/);
-  assert.doesNotMatch(detail, /cursor:col-resize/);
-  assert.match(detail, /function showFlyout\(item,wrap\)/);
-  assert.match(detail, /const iconMarkup=item=>item\.brand/);
-  assert.match(detail, /\.nav-icon-mask\{background:currentColor;mask:var\(--nav-icon\)/);
-  assert.doesNotMatch(detail, /toggle-marker/);
+  const demo = await readFile(new URL('../components/SidebarNavigation/SidebarNavigation.demo.tsx', import.meta.url), 'utf8');
+  assert.match(detail, /sidebar-navigation-demo\.js/);
+  assert.match(demo, /<SidebarLayout/);
+  assert.match(demo, /<SidebarNavigation/);
+  assert.match(demo, /defaultOpenItemIds=\{\['analysis', 'post', 'verify'\]\}/);
+  for (const label of ['Summary', 'Full Report', 'Opportunities', 'Recommendations', 'Tasks', 'Signal Feed', 'Keywords & Accounts', 'Replies', 'Calendar', 'Table', 'Media', 'Compare', 'Google Search Data', 'Bing Webmaster Data']) assert.ok(demo.includes(label));
+  assert.doesNotMatch(demo, /label: 'Integrations'/);
+  assert.match(demo, /Analysis, Growth, Engage, Post and Verify each preserve their nested destinations/);
+  assert.match(demo, /composes the standalone Tree Nav component/);
+  assert.match(demo, /aria-label="Example content area"/);
+  assert.match(demo, /<Avatar kind="account" seed="name@example\.com"/);
+  assert.match(demo, /Growth Loop Plan/);
   assert.match(exports, /components\/SidebarNavigation/);
   assert.match(portal, /name: "Sidebar Navigation"[^\n]+status: "Current", updated: true/);
-  await Promise.all(['sidebar-close.svg', 'dashboard.svg', 'analysis.svg', 'growth.svg', 'engage.svg', 'keywords.svg', 'replies.svg', 'post.svg', 'campaign.svg', 'google.svg', 'bing.svg'].map(file => access(new URL(`../assets/sidebar-v6/${file}`, import.meta.url))));
+  await Promise.all(['sidebar-close.svg', 'dashboard.svg', 'analysis.svg', 'growth.svg', 'engage.svg', 'keywords.svg', 'replies.svg', 'post.svg', 'campaign.svg', 'compare.svg', 'google.svg', 'bing.svg'].map(file => access(new URL(`../assets/sidebar-v6/${file}`, import.meta.url))));
+});
+
+test('Tree Nav is a standalone reusable hierarchy and the expanded Sidebar composes it', async () => {
+  const source = await readFile(new URL('../src/components/TreeNav.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../components/TreeNav/TreeNav.html', import.meta.url), 'utf8');
+  const exports = await readFile(new URL('../src/index.ts', import.meta.url), 'utf8');
+  assert.match(source, /export interface TreeNavItem/);
+  assert.match(source, /items: TreeNavItem\[\]/);
+  assert.match(source, /openItemIds\?: string\[\]/);
+  assert.match(source, /defaultOpenItemIds\?: string\[\]/);
+  assert.match(source, /showDisclosure\?: boolean/);
+  assert.match(source, /showRootRail\?: boolean/);
+  assert.match(source, /aria-expanded=\{hasChildren \? isOpen : undefined\}/);
+  assert.match(source, /aria-current=\{!hasChildren && activeValue === item\.id \? 'page' : undefined\}/);
+  assert.match(source, /item\.children\?\.map\(\(child\) => renderItem\(child, depth \+ 1\)\)/);
+  assert.match(styles, /\.aisee-tree-nav__children\[data-open="true"\]/);
+  assert.match(styles, /\.aisee-tree-nav__rail/);
+  assert.match(detail, /The standalone preview starts directly with leaf options/);
+  assert.match(detail, /Saved views/);
+  assert.doesNotMatch(detail, /label:'Engage'/);
+  assert.match(detail, /Sidebar Navigation uses this component in its expanded state/);
+  assert.match(exports, /components\/TreeNav/);
+  assert.match(portal, /name: "Tree Nav"[^\n]+status: "Current", updated: true/);
+  assert.match(portal, /"components\/TreeNav\/TreeNav\.html": \{/);
 });
 
 test('component preview uses the AISEE banner shell and compact type hierarchy', async () => {
@@ -679,10 +1056,14 @@ test('StemUI preview snapshot is read-only, versioned and complete', async () =>
   const manifest = JSON.parse(await readFile(new URL('../assets/stemui/manifest.json', import.meta.url), 'utf8'));
   const syncScript = await readFile(new URL('../scripts/sync-stemui-assets.mjs', import.meta.url), 'utf8');
   assert.equal(manifest.package, '@stemui/icons');
+  assert.equal(manifest.version, '0.1.40');
   assert.equal(manifest.mode, 'read-only source snapshot');
   assert.ok(manifest.assets.length >= 32, `expected at least 32 StemUI preview assets, found ${manifest.assets.length}`);
   for (const file of ['nav-calendar.svg', 'nav-growth.svg', 'avatar-user.svg', 'avatar-social-1.svg', 'platform-x.svg', 'platform-linkedin.svg', 'platform-reddit.svg']) {
     await access(new URL(`../assets/stemui/${file}`, import.meta.url));
+  }
+  for (const file of ['action-copy.svg', 'action-add-customer.svg', 'action-time-slots.svg', 'action-disable.svg', 'action-delete.svg']) {
+    assert.ok(manifest.assets.some(asset => asset.file === file), `${file} must be registered in the StemUI snapshot manifest`);
   }
   assert.doesNotMatch(syncScript, /writeFile\([^)]*sourceRoot|copyFile\([^,]+,\s*source/);
 });
@@ -695,7 +1076,7 @@ test('webapp UI kit follows the current Growth Loop shell and previews every fun
   assert.match(kit, /src="\.\.\/\.\.\/assets\/aisee-logo-wordmark\.svg"/);
   assert.match(sidebar, /src="\.\.\/\.\.\/assets\/aisee-logo-mark\.png"/);
   assert.match(kit, /Growth Loop/);
-  const destinations = ['Overview', 'Analysis', 'Growth', 'Improve Score', 'Build Brand Influence', 'Engage', 'Signal Feed', 'Keywords & Accounts', 'Replies', 'Post', 'Calendar', 'Channels', 'Media', 'Verify', 'Connection', 'Automation'];
+  const destinations = ['Overview', 'Analysis', 'Growth', 'Improve Score', 'Build Brand Influence', 'Engage', 'Signal Feed', 'Keywords & Accounts', 'Replies', 'Post', 'Calendar', 'Channels', 'Media', 'Compare', 'Google Search Data', 'Bing Webmaster Data', 'Connection', 'Automation'];
   for (const destination of destinations) {
     assert.match(kit, new RegExp(`['\"]${destination.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')}['\"]`));
   }
@@ -706,13 +1087,15 @@ test('webapp UI kit follows the current Growth Loop shell and previews every fun
   assert.match(kit, /Score Improvement Plan/);
   assert.match(kit, /Content Calendar/);
   assert.match(sidebar, /id: 'workflows', label: 'Workflows'/);
-  assert.match(kit, /Automation runs in WORKFLOWS and stays separate from INTEGRATIONS/);
+  assert.match(kit, /Automation runs in WORKFLOWS as its own destination/);
   assert.match(kit, /id="webapp-sidebar"/);
   assert.match(sidebar, /import \{ SidebarNavigation/);
   assert.match(sidebar, /<SidebarNavigation/);
   assert.match(kit, /sidebar-collapsed/);
   assert.match(kit, /--sidebar-collapsed:58px/);
-  assert.match(sidebar, /avatar-user/);
+  assert.match(sidebar, /import \{ Avatar \} from '\.\.\/\.\.\/src\/components\/Avatar'/);
+  assert.match(sidebar, /<Avatar kind="account" seed="projects5@gmail\.com"/);
+  assert.match(sidebar, /Growth Loop Plan/);
   assert.match(sidebar, /nav-overview/);
   assert.doesNotMatch(kit, /banner-overview\.png/);
   assert.doesNotMatch(kit, /const navSvg=/);
@@ -725,6 +1108,13 @@ test('webapp UI kit follows the current Growth Loop shell and previews every fun
   assert.match(shared, /aisee-logo-wordmark\.svg/);
   assert.match(shared, /aisee-logo-mark\.png/);
   assert.match(shared, /label: 'Verify'/);
+  assert.match(shared, /label: 'Compare', child: true/);
+  assert.match(shared, /label: 'Google Search Data', child: true/);
+  assert.match(shared, /label: 'Bing Webmaster Data', child: true/);
+  assert.match(sidebar, /children: \[/);
+  assert.match(sidebar, /sidebarItem\('Compare', 'Compare', 'compare'\)/);
+  assert.match(sidebar, /sidebarItem\('Google Search Data', 'Google Search Data', 'google', 'brand'\)/);
+  assert.match(sidebar, /sidebarItem\('Bing Webmaster Data', 'Bing Webmaster Data', 'bing', 'brand'\)/);
   assert.match(shared, /label: 'Connection'/);
   assert.match(shared, /function StemUIAsset/);
   assert.match(shared, /name="avatar-user"/);
@@ -742,8 +1132,8 @@ test('webapp UI kit inline controller is syntactically valid', async () => {
   assert.doesNotThrow(() => new Function(scripts[0][1]));
 });
 
-test('current PlanCard follows the latest Figma upgrade-plan pattern while legacy remains available', async () => {
-  const current = await readFile(new URL('../components/PlanCardCurrent/PlanCardCurrent.html', import.meta.url), 'utf8');
+test('previous PlanCard comparison and legacy remain available after the subscription update', async () => {
+  const current = await readFile(new URL('../components/PlanCardCurrent/PlanCardPrevious.html', import.meta.url), 'utf8');
   const legacy = await readFile(new URL('../components/PlanCard/PlanCard.html', import.meta.url), 'utf8');
   const source = await readFile(new URL('../src/components/PlanCard.tsx', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
@@ -776,6 +1166,9 @@ test('brand logo preview uses official assets instead of a CSS redraw', async ()
   const logo = await readFile(new URL('../preview/brand-logo.html', import.meta.url), 'utf8');
   assert.match(logo, /src="\.\.\/assets\/aisee-logo-mark\.png"/);
   assert.match(logo, /src="\.\.\/assets\/logo-wordmark\.png"/);
+  assert.match(logo, /\.logo-grid--sizes \{ grid-template-columns: repeat\(3, minmax\(0, 1fr\)\); \}/);
+  assert.match(logo, /\.logo-sample \{[^}]*border: 1px solid rgba\(17,17,17,\.08\)/);
+  assert.match(logo, /\.logo-sample--lime \{ background: #CFFF29; \}/);
   assert.doesNotMatch(logo, /lm-bg|lm-face|lm-eye/);
 });
 
@@ -841,4 +1234,37 @@ test('brand and Score Gauge use shared self-hosted Karla', async () => {
   assert.doesNotMatch(foundations, /DigitalNumbers-Regular|font-family:\s*(?:'|")?Digital Numbers/i);
   assert.doesNotMatch(components, /DigitalNumbers-Regular 2\.ttf/);
   assert.match(components, /font:400 20px\/26px Karla,Arial,sans-serif/);
+});
+
+test('Quantity Stepper matches the Figma shell and shared motion contract', async () => {
+  const demo = await readFile(new URL('../components/QuantityStepper/QuantityStepper.html', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../src/components/QuantityStepper.tsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+
+  assert.match(demo, /--stepper-width:388px/);
+  assert.match(demo, /gap:3px;padding:0;border:1px solid rgba\(17,17,17,\.06\)/);
+  assert.match(demo, /\.quantity-output\[hidden\]\{display:none\}/);
+  assert.match(demo, /\.quantity-value\[data-editable=true\]\{cursor:text\}/);
+  assert.match(demo, /valueWrap\.addEventListener\('click'/);
+  assert.match(demo, /@container\(max-width:260px\)\{\.quantity-unit\{display:none\}\}/);
+  assert.match(demo, /\.quantity-input::selection\{background:var\(--aisee-color-semantic-brand-primary,#FFE253\);color:#111\}/);
+  assert.match(demo, /Inside the AISEE repository \/ package/);
+  assert.match(demo, /Without the AISEE Design System/);
+  assert.match(demo, /assets\/stemui\/action-minus\.svg/);
+  assert.match(demo, /assets\/stemui\/action-plus\.svg/);
+
+  assert.match(source, /const HOLD_DELAY = 400/);
+  assert.match(source, /const HOLD_INTERVAL = 80/);
+  assert.match(source, /const HOLD_FAST_INTERVAL = 40/);
+  assert.match(source, /import minusIcon from '\.\.\/\.\.\/assets\/stemui\/action-minus\.svg'/);
+  assert.match(source, /data-editable=\{editable \|\| undefined\}/);
+  assert.match(source, /event\.target instanceof HTMLInputElement/);
+  assert.match(styles, /container-type: inline-size/);
+  assert.match(styles, /\.aisee-quantity-stepper__value-wrap\[data-editable="true"\] \{ cursor: text; \}/);
+  assert.match(styles, /translateY\(12px\)/);
+  assert.match(styles, /translateX\(-4px\)[\s\S]*translateX\(4px\)/);
+  assert.match(styles, /@container \(max-width: 260px\) \{ \.aisee-quantity-stepper__unit \{ display: none; \} \}/);
+  assert.match(styles, /\.aisee-quantity-stepper__input::selection \{ color: #111; background: var\(--aisee-color-semantic-brand-primary, #FFE253\); \}/);
+  assert.match(portal, /The package is currently a private workspace package/);
+  assert.match(portal, /Implementation and handoff/);
 });
