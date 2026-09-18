@@ -1107,7 +1107,7 @@
         "system": "AISEE dApp Design System",
         "status": "Current",
         "authorityOrder": ["docs/TEAM_DECISIONS.md", "docs/aisee-dapp-design.v6.md", "src/components and Current component pages", "relevant dated Figma feature block", "Legacy references"],
-        "requiredSources": ["aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
+        "requiredSources": ["aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "docs/COMPONENT_CONFIGURATION.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
         "rules": {
           "appTypography": "Karla only",
           "pageBackground": "#FAFAFA",
@@ -1121,6 +1121,7 @@
           "staticBorder": "rgba(17,17,17,0.05)",
           "colorArchitecture": "Pages and components must consume semantic color variables only; primitive colors are raw token-layer values.",
           "implementation": "Reuse Current exported components and tokens; do not copy Legacy styling when a Current equivalent exists.",
+          "componentConfiguration": "All variable controls are captured at copy time; see docs/COMPONENT_CONFIGURATION.md. This rule also applies when consuming the full system without Copy for AI. Match target designs to Current components; retain established product configuration or documented defaults when unspecified.",
           "componentPrompt": "Every Current component detail page exposes a scoped Copy for AI prompt. Overview, Legacy, Brand and UI Kit pages do not expose it.",
           "avatarAssignment": "Use the exported Avatar component. Registered website users use the 22 approved square account avatars with a stable user seed. Missing social-media profile images use the 24 approved circular gray-outline social avatars with a stable social-account seed. Generated preview extensions are excluded until explicitly approved."
         },
@@ -1128,6 +1129,8 @@
       }
     </script>
 
+    <script src="assets/update-badges.js"></script>
+    <script src="assets/component-config.js"></script>
     <script>
       const colorArchitecture = JSON.parse(document.getElementById("aisee-color-architecture").textContent);
       let activeColorLayer = "semantic";
@@ -1213,7 +1216,7 @@
         ["No icon fonts and no emoji UI icons; use SVG or typed React icon components.", "不使用图标字体或 emoji 界面图标；使用 SVG 或带类型的 React 图标组件。"], ["Social platform marks keep their official form and brand color at small badge sizes.", "社交平台标志在小尺寸 Badge 中保留官方形态和品牌色。"],
         ["Component library", "组件库"], ["Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.", "组件按“类别 → 组件”组织。Current 条目是实施事实来源；Legacy 条目仅作历史参考并有清晰标识。"],
         ["Actions", "操作"], ["Inputs & Controls", "输入与控件"], ["Navigation", "导航"], ["Content & Status", "内容与状态"], ["Data Display", "数据展示"], ["Feedback & Overlays", "反馈与浮层"],
-        ["Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.", "Input、Checkbox、Select / Dropdown、Toggle、Tag Input 与 Toggle Selection Group。Checkbox 在新选中时播放一次简短的 bubble 扩散动画，并兼容 reduced motion。Input 和下拉触发器使用 1px 黑色内描边加 2px 模块色环；下拉菜单与触发器保持 8px 间距，选项间距为 4px。单一共享的 5% 黑色 Fluid Hover 高亮会连续跟随最近的可用选项，已选项仍保持可见。Dropdown 的复合变体可在 Variant Playground 中切换并直接测试。"],
+        ["Checkbox, Input, Quantity Stepper, Select / Dropdown, Tag Input, Toggle and Toggle Selection Group. Quantity Stepper supports direct entry or buttons-only control, three sizes, bounded values and boundary feedback. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.", "Checkbox、Input、Quantity Stepper、Select / Dropdown、Tag Input、Toggle 与 Toggle Selection Group。Quantity Stepper 支持直接输入或仅加减按钮控制，并提供三种尺寸、最大最小值和边界反馈。Checkbox 在新选中时播放一次简短的 bubble 扩散动画，并兼容 reduced motion。Input 和下拉触发器使用 1px 黑色内描边加 2px 模块色环；下拉菜单与触发器保持 8px 间距，选项间距为 4px。单一共享的 5% 黑色 Fluid Hover 高亮会连续跟随最近的可用选项，已选项仍保持可见。Dropdown 的复合变体可在 Variant Playground 中切换并直接测试。"],
         ["AISEE dApp design archive.fig", "备份-官网+dapp主功能.fig"],
         ["Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.", "Current Tabs、可复用 Tree Nav 与产品 Sidebar Navigation 模式。Sidebar Navigation 展开态直接组合 Tree Nav。平台 Tabs 在所有名称都能容纳时自动完整显示；空间不足时只显示当前项名称。"],
         ["Current PlanCard, Badge, Steps and Empty State.", "Current PlanCard、Badge、Steps 与 Empty State。"], ["Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.", "Current Card、Stat Card、Table、Chart、仅限 Analysis 的 Score Gauge 与 Credit Bar；Legacy Post Card 继续保留参考。"],
@@ -1273,7 +1276,9 @@
             "Choose primary, secondary, ghost, dark or danger from the action hierarchy; do not choose a variant only because it looks prominent.",
             "Resolve functional colour from context: pale yellow surfaces use Post yellow, lime surfaces use Analysis lime, and other surfaces use #111111 unless a semantic token supersedes it.",
             "Preserve the approved fill sweep motion, hover colours, focus visibility, disabled state and loading behavior. A fill-only button must not reveal a border during the sweep; a bordered button may retain its border.",
-            "Keep the button label short and action-led. Use a real semantic icon only when it improves recognition."
+            "Keep the button label short and action-led. Use a real semantic icon only when it improves recognition.",
+            "Button accepts icon, showIcon (default true), and iconPosition (left by default). Actions such as View Post and Bulk schedule use a leading icon; forward navigation (Go execute / View replies) and AI generation (Generate Post) use a trailing icon. Use 16px decorative icon slots with a 6px gap; showIcon=false removes all slots and gaps. leadingIcon and trailingIcon can be paired for two-sided actions such as Search; the single icon prop takes precedence. The Icon variants header includes Show icon and mutually exclusive Left / Right controls; States lists Small / Default / Large directly, followed by With icon and separate disabled variants.",
+            "Use currentColor SVGs or CSS masks for monochrome icons so hover and focus follow the button foreground. Preserve multi-color source assets. Icon position is explicit and must not be inferred from translated label text."
           ]
         },
         "components/Input/Input.html": {
@@ -1283,7 +1288,7 @@
             "Compose a sentence-case label, the field, and optional helper or error text. Replace Demo labels, values and helper text with copy for the real task.",
             "Choose the native type that matches the data, such as text, url, email, search or password.",
             "Support Default, Hover, Focus, Disabled and Error states. Keep the 36px height, 8px radius, subtle default border and the 1px dark border plus 2px module-colour ring on hover and focus. Error uses the semantic danger colour without the module ring.",
-            "Associate the label with the field, connect helper or error text with aria-describedby and set aria-invalid for errors."
+            "Associate the label with the field, connect helper or error text with aria-describedby and set aria-invalid for errors. Use the exported Textarea for long-form content; it shares Input focus, disabled and error treatment and is demonstrated in Card compositions."
           ]
         },
         "components/QuantityStepper/QuantityStepper.html": {
@@ -1321,12 +1326,14 @@
           rules: [
             "Choose the documented variant from the data and task; do not combine filtering, free input and multi-select unless the workflow requires them.",
             "Keep the trigger, menu, 8px trigger-to-menu gap, 4px option gap, equal padding, chevron state and 5% black hover/focus/selected surface from the Current component.",
-            "Use the Variant playground to choose and test Compact menu, Search + action, Filter panel or Grouped account before implementation.",
+            "Use the Variant playground to choose and test Compact menu, Search + action, Engage filter panel, Grouped account or Icon action menu before implementation. Playground headings use weight 500. Filter chips use a 5% black surface and black border on hover; selected chips retain white text with a #333 hover surface and keyboard focus uses a 2px black outline.",
             "Use leading media, supporting text, trailing status, groups, headers or footer actions only when the option content requires them; keep the simple menu compact.",
             "Keep Fluid Hover enabled by default: one shared 5% black highlight follows the nearest enabled row across 4px gaps, follows keyboard focus, skips disabled rows, supports gap clicks and honors prefers-reduced-motion.",
             "Render the menu as an overlay outside normal document flow so opening or closing it never changes the surrounding content height or position.",
+            "In the Variant playground, size the preview stage to the selected composition's expanded content. Keep every composition on the same 14px stage gap and 24px top padding, then reserve that calculated height while the same menu opens or closes.",
             "For an independent row action, use item.action. Keep its 24px control hidden until the row is hovered or keyboard-focused; reveal a gray fill with a gray border, and use Post yellow only while the action itself is hovered.",
-            "For grouped account menus, expose a Show icons toggle when users need to compare density. When off, omit each item's leading avatar or platform icon while preserving labels, supporting text, trailing status and row actions.",
+            "For grouped account menus, expose a Show icons toggle when users need to compare density. When off, omit each item's leading avatar or platform icon while preserving labels, supporting text, trailing status and row actions. In the grouped account composition, Test must expand and collapse its children with aria-expanded and aria-controls. Keep trailing counts 12px from the row edge at rest; on hover or focus, shift them left by 30px over 160ms as the action appears, honoring reduced motion. Connect X, LinkedIn and TikTok are full-row action buttons, not selectable accounts and not rows with an extra plus button. Connection dialogs are outside this demo.",
+            "For channel or item actions, use Icon action menu: keep one 16px leading icon per row, retain the compact rectangular menu geometry and use the semantic danger colour only for the destructive Delete action. Its hover and keyboard highlight use the pale red semantic tag-02 token.",
             "For multi-select, use the leading Checkbox state and preserve selection while filtering. Support keyboard navigation, Escape and the correct aria-expanded/selected semantics."
           ]
         },
@@ -1346,6 +1353,18 @@
             "Keep committed tags and the text cursor in one horizontal flow; never stack the tag above the input inside the field.",
             "Support typing preview, Enter or Add to commit, remove controls, duplicate prevention and Backspace removal when the input is empty.",
             "Use real task values and define overflow behavior for narrow containers without clipping a focused tag."
+          ]
+        },
+        "components/SegmentedChoice/SegmentedChoice.html": {
+          name: "Segmented Choice",
+          intent: "Choose one of 2–4 options with short requirements and an explanation that follows the selected option.",
+          rules: [
+            "Hover uses the shared bg-hover colour token; never add a grey border to unselected choices. Selected choices retain their semantic fill and dark border with the same hover overlay.",
+            "Import SegmentedChoice from @aisee/design-system with the package stylesheet. Use options with id, label, requirement, description and optional disabled.",
+            "Use value / onValueChange or defaultValue; provide label and optionally name, required, disabled, tone lime or yellow. Post format uses yellow.",
+            "Keep the pale shared track, equal-width 8px rounded options, dark selected border, 12px labels and 10px requirements. Preserve native radio keyboard navigation, hover and focus states.",
+            "The selected explanation appears below the group; the information icon reveals the same explanation on hover or keyboard focus. Do not put interactive controls inside radio labels.",
+            "Use Dropdown for many choices, Tabs for switching views, and Toggle Selection Group for independently enabled multi-selection."
           ]
         },
         "components/ToggleSelectionGroup/ToggleSelectionGroup.html": {
@@ -1373,6 +1392,7 @@
           rules: [
             "Reuse the Current vertical product grouping and information architecture. Choose real destination icons from StemUI; Demo icons are structural examples.",
             "Keep Verify as the Growth Loop parent. Its current child order is Compare, Google Search Data, then Bing Webmaster Data; do not recreate a separate Integrations group for those sources.",
+            "Compose SidebarLayout with variant sidebar (default white rail), muted (gray rail with white content), floating, inset or topbar. Topbar spans the full shell width and fixes the toggle at the top left. Collapse hides the entire sidebar (no icon rail) and makes hidden navigation inert. reveal hover shows a temporary full sidebar overlay without moving content; leaving, outside click, selection or Escape closes it. Clicking restores the docked sidebar; reveal click disables hover preview. togglePosition inside (default) or outside is independent; preserve selection, open groups and collapsed state across layout changes. Floating uses 16px outer spacing, white fill and a subtle border; its content header stays transparent, and content must not add horizontal padding on top of the 16px shell gutters; inset makes the content region the card. The inset content header has square corners and only a bottom separator; the outer content card keeps its radius. Place the outside toggle at the top left of the content header, before the title, using SidebarLayout header. Use a transparent borderless icon button without a separate gutter or floating frame. Collapse/expand icons use the button/usual token at full opacity on hover or keyboard focus.",
             "Support 224px expanded and 58px collapsed states. Collapsed state shows icons only; labels remain available to assistive technology and tooltips.",
             "Render the footer account identity with the Avatar component. Use kind account and a stable account seed so the same account resolves to one of the 22 approved square avatars across pages and sessions.",
             "Compose the standalone Tree Nav component for expanded nested destinations instead of recreating its hierarchy, rail, selected state or disclosure behavior.",
@@ -1389,13 +1409,30 @@
             "Support controlled or uncontrolled selected and open states, visible keyboard focus, disabled items and reduced motion."
           ]
         },
+        "components/FeatureOverview/FeatureOverview.html": {
+          name: "Feature Overview",
+          intent: "Present grouped capabilities and benefits inside one continuous divided card.",
+          implementation: [
+            "Import FeatureOverview, FeatureList, Card, CardGrid, StatCard and StatCardGroup from @aisee/design-system with its stylesheet.",
+            "Use Card variant=divided with CardGrid divided columns={1|2|3|4} for arbitrary content; FeatureOverview composes sections with id, title, icon, badges, description, summary, items, tone and footer.",
+            "FeatureList items have id, content, optional supporting, trailing and icon; tone is analysis, growth, engage, publish or neutral. StatCardGroup variant=compact accepts the existing StatCard children with text-only or icon-only values. Compact metric icons are 16px; inline help aligns vertically with its label."
+          ],
+          rules: [
+            "Keep one white 24px-radius outer shell with subtle single internal separators, never four separate framed cards. Nested content stays simple.",
+            "Feature lists and capability strips are read-only. Use real task content and do not add selection, hover actions or billing logic to informational rows.",
+            "Reuse Badge and Tooltip for header metadata and explanations. Preserve semantic headings, list structure and accessible platform labels.",
+            "Allow content-driven row heights and wrap text. Three and four columns reduce to two below 900px container width; divided layouts become one column below 600px, with separators recalculated.",
+            "This capability composition does not replace the existing PlanCard pricing API. Platform icon groups in this demo remain local content, not a new shared component."
+          ]
+        },
         "components/PlanCardCurrent/PlanCardCurrent.html": {
           name: "PlanCard — Current",
-          intent: "Compare plans, billing cycles, benefits and the current or recommended purchase action.",
+          intent: "Confirm a single subscription before starting full analysis, with price, entitlements, credits and brand context.",
           rules: [
-            "Keep plan name, price, billing cadence, grouped benefits and action hierarchy scannable. Use real entitlement and price data.",
-            "Represent current, recommended, available and disabled states explicitly; never present the current plan as a primary purchase action.",
-            "Use Post yellow for purchase/publishing actions and semantic status tokens for supporting labels."
+            "Use PlanCard variant=subscription with real name, title, description, price, credits, companyName and website. Supply onAction for checkout and onDismiss for Maybe later.",
+            "Figma 51:329855: 512px white surface, 16px radius, centered illustration and price, simple benefit rows and brand details. Reuse Button, Badge and DialogDetails; do not nest framed Card surfaces.",
+            "Use a dark primary subscription button and a subtle secondary dismissal button. Demo callbacks do not purchase or start analysis; the product owns those flows.",
+            "For modal usage wrap in Dialog with class aisee-plan-subscription-dialog, accessible title and closeable=false. Keep Escape, focus containment and content scrolling. Preserve previous comparison API and archived demo."
           ]
         },
         "preview/avatar.html": {
@@ -1441,9 +1478,15 @@
         },
         "components/Card/Card.html": {
           name: "Card",
-          intent: "Group related content and actions on a neutral reusable surface.",
+          intent: "Compose related form fields, choices, metrics and previews inside one reusable Card surface.",
           rules: [
-            "Use the Current card radius, padding, border and optional minimal elevation from semantic tokens.",
+            "Use Card variant=divided and CardGrid divided for continuous sections sharing one outer frame and single internal separators. FeatureOverview demonstrates content-driven sections and mobile stacking.",
+            "Collapsed cards remove the content gap below the header and center the title, actions and chevron. Brand Mention uses the shared TagInput for multiple removable values; preserve them when collapsed.",
+            "Use the complex white inset frame only at the outermost Card level, in every context. Nested cards must use a simple pale fill or white fill with a light border; no repeated inset frames or shadows. Nested section Cards automatically simplify to 8px radius and 12px padding.",
+            "Card keeps the existing default white 12px surface; variant=section uses the Figma 16px radius, 16px padding, 5px white inset frame and neutral light body. Section headings use Karla 16px / 500. Do not apply hover feedback to the entire static card.",
+            "Compose title + single Input, Input groups, Dropdown / Checkbox options, Textarea or textarea groups, mixed forms, StatCard overview sets, account lists, optional settings and content previews. Reuse the existing controls instead of rebuilding them inside Card.",
+            "Card accepts title, description, headerAction and footer. CardGrid columns=1..4 handles responsive groups. Card supports collapsible, defaultExpanded, expanded and onExpandedChange; use collapseLabel for non-text headings. Collapse keeps children mounted and preserves field values; it does not disable or clear form fields.",
+            "Textarea is the multiline Input counterpart: label, hint, error, disabled, readOnly, required and native value / onChange remain available. Associate each field label and error; Card must not become a form engine.",
             "Build hierarchy from the card's real content instead of copying Demo headings or metrics. Avoid nesting cards without a clear information boundary.",
             "If the whole card is interactive, provide one semantic target, a visible focus state and no competing nested click targets."
           ]
@@ -1452,6 +1495,7 @@
           name: "Stat Card — Current",
           intent: "Show a compact overview metric with its label and optional unit, baseline or trend context.",
           rules: [
+            "Use StatCardGroup variant=compact for read-only number or icon information strips. Cells share subtle separators and small labels; no repeated card frames. Use optional Tooltip for explanations. Existing default metric cards remain unchanged.",
             "Use real metric names, values and comparison periods; keep the metric value visually dominant.",
             "Use optional units, baseline badges and trends only when they change interpretation. Never imply improvement from colour alone.",
             "Keep responsive groups aligned and apply the Current grey card border so every boundary remains visible."
@@ -1497,6 +1541,7 @@
           name: "Dialog",
           intent: "Run a focused form, choice, detail, summary or bounded multi-section task above the current page.",
           rules: [
+            "Constrain dialogs to the viewport, allow the content region to shrink and scroll, and keep the header and footer visible. Long content must remain reachable on desktop and narrow screens.",
             "Choose structure first: Standard for forms/choices/details, Centered for decisions/summaries, and Split only for a bounded multi-section task that truly needs a sidebar.",
             "Compose icon, fields and actions from the actual workflow. Do not classify or clone dialogs only by feature name.",
             "Implement a real trigger, overlay, close behavior, initial focus, focus trap, Escape handling and focus return. Preserve balanced footer spacing.",
@@ -1556,6 +1601,9 @@ Component rules:
 ${rules}
 
 Shared implementation rules:
+- Read docs/COMPONENT_CONFIGURATION.md. The configuration appended below is captured at copy time and applies to its named example scopes.
+- First match any supplied target screenshot or accessible design link to existing Current components by purpose, structure and interaction; reuse a suitable component and its variants instead of rebuilding it. Screenshots do not prove hidden interactions.
+- Honor explicit user choices (including the copied configuration); otherwise follow the target design, retain established product configuration, then use documented defaults. Do not choose variants randomly or treat this selection as a global product default.
 - Reuse the exported Current component, its existing motion and current AISEE semantic tokens when they are available in the project.
 - Treat the Design System Demo as a structural and interaction reference. Replace all sample copy, data, icons and illustrations with content that matches the real task.
 - Preserve the target page's information architecture and surrounding product behavior. Do not rebuild unrelated areas or import Legacy styling over Current components.
@@ -1596,23 +1644,25 @@ Shared implementation rules:
         { group: "Brand", category: "Common", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
 
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
-        { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
+        { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Action buttons with optional leading or trailing icons, shared hover motion and accessible states.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Checkbox", path: "components/Checkbox/Checkbox.html", subtitle: "Current independent selection control with a short bubble confirmation when selected.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Quantity Stepper", path: "components/QuantityStepper/QuantityStepper.html", subtitle: "Bounded quantity input with editable or buttons-only modes, three sizes and boundary feedback.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter, input-assisted and rich composition dropdown patterns.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Lime / yellow toggle, light / dark surfaces and 16 / 24px sizes with fluid state transitions.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Tag Input", path: "components/TagInput/TagInput.html", subtitle: "Current token input that previews, commits and removes inline tags.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Segmented Choice", path: "components/SegmentedChoice/SegmentedChoice.html", subtitle: "Single-choice options with short requirements, contextual explanations and accessible keyboard selection.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Toggle Selection Group", path: "components/ToggleSelectionGroup/ToggleSelectionGroup.html", subtitle: "Enable option groups while preserving selection across off and on states.", status: "Current", updated: true },
         { group: "Components", category: "Navigation", name: "Tabs", path: "components/Tabs/Tabs.html", subtitle: "Current underline and segmented tabs with text, icon and count compositions.", status: "Current", updated: true },
-        { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "Current grouped product navigation with Verify-owned Compare and search-data destinations.", status: "Current", updated: true },
+        { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "AISEE grouped navigation with white or gray full-height rails, floating-card and inset layouts, plus inside, content-header and top-navigation toggles.", status: "Current", updated: true },
         { group: "Components", category: "Navigation", name: "Tree Nav", path: "components/TreeNav/TreeNav.html", subtitle: "Focused local navigation with a hierarchy rail, leaf selection and optional parent disclosure.", status: "Current", updated: true },
-        { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
+        { group: "Components", category: "Content & Status", name: "Feature Overview", path: "components/FeatureOverview/FeatureOverview.html", subtitle: "Continuous divided cards with reusable feature lists and compact information strips.", status: "Current", updated: true },
+        { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Subscription confirmation with plan benefits, credits and brand context.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Avatar", path: "preview/avatar.html", subtitle: "Approved account and missing-social-profile avatar libraries with stable assignment, motion and post-origin variants.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Solid, dot, colour, source and semantic status badges with icon and label.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Steps", path: "components/Steps/Steps.html", subtitle: "Static workflows, animated progress, thinking activity and feature tutorials.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Empty State", path: "components/EmptyState/EmptyState.html", subtitle: "Composable empty states with optional illustration, title, description and actions.", status: "Current", updated: true },
-        { group: "Components", category: "Data Display", name: "Card", path: "components/Card/Card.html", subtitle: "Current neutral content surface with optional minimal elevation.", status: "Current" },
+        { group: "Components", category: "Data Display", name: "Card", path: "components/Card/Card.html", subtitle: "Reusable neutral and section cards for forms, selections, overview metrics and content previews.", status: "Current", updated: true },
         { group: "Components", category: "Data Display", name: "Stat Card — Current", path: "components/StatCardCurrent/StatCardCurrent.html", subtitle: "Compact overview metrics with optional units, baseline badges and responsive grouping.", status: "Current", updated: true },
         { group: "Components", category: "Data Display", name: "Table", path: "components/Table/Table.html", subtitle: "Current semantic data table with compact rows and numeric alignment.", status: "Current" },
         { group: "Components", category: "Data Display", name: "Chart", path: "components/Chart/Chart.html", subtitle: "Current module-aware line chart with accessible point values.", status: "Current" },
@@ -1798,7 +1848,7 @@ Shared implementation rules:
             const groupItems = visible.filter(item => item.group === group);
             if (!groupItems.length) return "";
             const renderItem = item => {
-              const hasUpdate = item.updated === true;
+              const hasUpdate = item.updated === true && AiseeUpdates.isRecent(AiseeUpdates.dateFor(item.path, item.updatedAt));
               return `
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}" aria-label="${escapeHtml(`${item.name}${hasUpdate ? ", new" : ""}`)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
@@ -1971,6 +2021,15 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       }
 
       previewFrame.addEventListener("load", mountFrameStepper);
+      function refreshUpdateBadges() {
+        renderNav(searchInput.value);
+        const item = items.find(entry => entry.path === activePath);
+        try {
+          if (item && previewFrame.contentDocument) AiseeUpdates.apply(previewFrame.contentDocument, AiseeUpdates.dateFor(item.path, item.updatedAt));
+        } catch { /* Cross-origin previews own their metadata. */ }
+      }
+      previewFrame.addEventListener("load", refreshUpdateBadges);
+      window.addEventListener("aisee:updates-refresh", refreshUpdateBadges);
 
       function readHash() {
         const match = location.hash.match(/^#page=(.+)$/);
@@ -2021,6 +2080,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
               subtitle: page.subtitle || "Web-generated design output.",
               status: "Brand",
               updated: page.updated === true,
+              updatedAt: page.updatedAt,
               updateId: page.updateId || page.updatedAt || "updated"
             }))
             .filter(item => !registered.has(item.path));
@@ -2073,12 +2133,13 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         copyAiHeader.disabled = true;
         copyAiHeaderLabel.textContent = "Copying…";
         try {
-          await writeClipboard(aiPrompt);
+          const configuration = AiseeComponentConfig.readFrame(previewFrame, item.path, document.baseURI);
+          await writeClipboard(aiPrompt + AiseeComponentConfig.format(configuration));
           copyAiHeaderLabel.textContent = "Copied";
           showToast(`${item.name} prompt copied`);
         } catch (error) {
           copyAiHeaderLabel.textContent = "Copy failed";
-          showToast("Prompt copy failed");
+          showToast(error.message || "Prompt copy failed");
         } finally {
           window.setTimeout(() => {
             copyAiHeader.disabled = false;

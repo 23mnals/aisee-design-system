@@ -1,0 +1,53 @@
+body{margin:0;background:var(--aisee-color-page);color:var(--aisee-color-black);font:400 14px/20px Karla,Arial,sans-serif}
+.card-demo h1{margin:0;font-size:16px;font-weight:500;line-height:24px}
+.card-demo>h2,.card-demo-heading h2{margin:32px 0 8px;font-size:16px;font-weight:500;line-height:24px}
+.card-demo .intro{margin:8px 0 0;color:var(--aisee-color-text-muted)}
+.card-demo-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:32px 0 8px}
+.card-demo-heading h2{margin:0}
+.card-demo-heading>.aisee-dropdown{width:250px;max-width:100%}
+.card-demo-stage{position:relative}
+.card-demo .aisee-card__body>p{margin:0}
+.card-demo .aisee-dropdown{min-width:0}
+.card-demo .aisee-dropdown__trigger{width:100%}
+.card-demo-note{margin:8px 0 12px;color:var(--aisee-color-text-muted);font-size:12px;line-height:18px}
+.card-demo-choices{border:0;margin:16px 0 0;padding:0;min-width:0}
+.card-demo-choices legend{padding:0;margin-bottom:8px;font-size:12px;font-weight:500;line-height:18px}
+.card-demo-choices>div{display:flex;flex-wrap:wrap;gap:8px}
+.card-demo-choice{position:relative;cursor:pointer}
+.card-demo-choice>span{display:block;padding:6px 12px;border:1px solid transparent;border-radius:8px;background:var(--aisee-color-semantic-bg-hover);font-size:14px;line-height:20px;transition:background 140ms,border-color 140ms}
+.card-demo-choice input:checked+span{background:var(--aisee-module-primary)}
+.card-demo-choice:hover>span{border-color:var(--aisee-color-black)}
+.card-demo-choice input:focus-visible+span{outline:2px solid var(--aisee-color-black);outline-offset:2px}
+.card-demo .aisee-card__body>.card-demo-choices:first-child{margin-top:0}
+.card-demo-checks{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px}
+.card-demo-account-list{display:grid;gap:6px}
+.card-demo-account{padding:8px;border:1px solid var(--aisee-color-border);border-radius:12px;background:var(--aisee-color-white);min-width:0}
+.card-demo-account>.aisee-checkbox{display:flex;flex-direction:row-reverse;width:100%;justify-content:space-between;gap:12px}
+.card-demo-account .aisee-checkbox__label{min-width:0;flex:1}
+.card-demo-account-info{display:flex;align-items:center;gap:10px;min-width:0}
+.card-demo-account-info>span:last-child{min-width:0}
+.card-demo-account-info strong{display:block;font-size:14px;font-weight:500;line-height:18px;overflow-wrap:anywhere}
+.card-demo-account-info small{display:block;font-size:12px;font-weight:400;line-height:18px;color:var(--aisee-color-text-muted);overflow-wrap:anywhere}
+.card-demo-account[data-disabled]{opacity:.5}
+.card-demo-notice{width:100%;margin:4px 0 0;padding:8px;border-radius:8px;background:var(--aisee-color-semantic-brand-primary-tint);color:var(--aisee-color-semantic-text-amber);font-size:12px;line-height:18px}
+.card-demo-nested{margin-top:16px;padding:12px;border-radius:8px;container:aisee-card / inline-size}
+.card-demo-nested>.aisee-card__header .aisee-card__title{font-size:14px;font-weight:500;line-height:22px}
+.card-demo-nested .aisee-toggle__label{font-size:12px;color:var(--aisee-color-text-muted)}
+.card-demo .aisee-card__footer .card-demo-note{margin:0;width:100%}
+.card-demo-preview{padding:16px;border-radius:16px;background:var(--aisee-color-semantic-bg-hover)}
+.card-demo-post-content{margin:16px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:22px}
+.card-demo-neutral{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card-demo-usage{padding:20px;border:1px solid var(--aisee-color-border);border-radius:12px;background:var(--aisee-color-white);color:var(--aisee-color-text-muted)}
+.card-demo-usage p{margin:0 0 12px}.card-demo-usage p:last-child{margin-bottom:0}
+.card-demo-usage pre{overflow:auto;padding:12px;background:var(--aisee-color-page);border-radius:8px;font:400 12px/20px Karla,Arial,sans-serif}
+.card-demo-dialog{width:min(1280px,calc(100vw - 32px));max-width:none}
+.card-demo-create-post{display:grid;grid-template-columns:minmax(220px,1fr) minmax(330px,2fr) minmax(220px,1fr);gap:8px;align-items:stretch}
+.card-demo-write-settings{margin-top:16px}
+@media(max-width:1000px){.card-demo-create-post{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:440px){.card-demo-neutral{grid-template-columns:1fr}.card-demo-heading>.aisee-dropdown{width:100%}.card-demo .aisee-card__header{flex-wrap:wrap}.card-demo .aisee-card__heading{min-width:120px}}
+/* The documentation frame must not override the component specimen. */
+main.card-demo>.aisee-card--section{padding:16px!important;border-radius:16px!important;background:var(--aisee-color-semantic-bg-agent02)!important}
+
+.card-demo .aisee-segmented-choice{margin-bottom:16px}
+
+main.card-demo>.aisee-card--divided{padding:0!important;border-radius:24px!important}

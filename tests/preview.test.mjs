@@ -136,7 +136,7 @@ test('every Current component detail page offers a scoped Copy for AI prompt', (
     .filter(entry => entry.path && entry.path !== 'preview/dapp-v6-components.html');
   const guidancePaths = new Set([...portal.matchAll(/^\s+"((?:components\/[^"]+|preview\/avatar)\.html)": \{/gm)].map(match => match[1]));
 
-  assert.equal(currentComponentEntries.length, 26);
+  assert.equal(currentComponentEntries.length, 28);
   for (const entry of currentComponentEntries) {
     assert.ok(guidancePaths.has(entry.path), `${entry.name} should have AI guidance`);
   }
@@ -278,7 +278,7 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(detail, /\.menu-search:hover,.menu-search:focus\{border-color:var\(--black\);outline:0;box-shadow:0 0 0 2px var\(--lime\)\}/);
   assert.match(detail, /Interactive core patterns/);
   assert.match(detail, /Variant playground/);
-  assert.match(detail, /\.variant-playground\{min-height:0;padding:20px\}/);
+  assert.match(detail, /\.variant-playground\{[^}]*min-height:0;padding:20px\}/);
   assert.match(detail, /\.composition-grid\{display:block;margin-top:16px\}/);
   assert.match(detail, /id="compositionVariantControl"/);
   assert.match(detail, /id="compositionVariantMenu" role="listbox"/);
@@ -289,12 +289,13 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(detail, /data-composition="search"/);
   assert.match(detail, /data-composition="filter"/);
   assert.match(detail, /data-composition="account"/);
+  assert.match(detail, /data-composition="action"/);
   assert.match(detail, /function renderCompositionVariant\(\)/);
   assert.match(detail, /\.composition-stage>.menu\.static\.account-menu\{width:min\(100%,420px\)\}/);
   assert.match(detail, /\.menu\.open\{display:grid;gap:4px/);
   assert.match(detail, /#compactMenu\.open\{display:grid;gap:4px\}/);
-  assert.match(detail, /\.composition-stage>.filter-panel\{width:min\(100%,320px\)\}/);
-  assert.match(detail, /\.filter-panel\{[^}]*padding:17px 17px 25px[^}]*border-radius:16px[^}]*background:#fff\}/);
+  assert.match(detail, /\.composition-stage>.filter-panel\{width:min\(100%,360px\)\}/);
+  assert.match(detail, /\.filter-panel\{[^}]*padding:17px[^}]*border-radius:16px[^}]*background:#fff\}/);
   assert.match(detail, /\.filter-chip\{[^}]*height:24px[^}]*border:1px solid rgba\(17,17,17,\.06\)[^}]*border-radius:8px[^}]*background:#fafafa[^}]*font:500 12px/);
   assert.match(detail, /\.project-copy\{font-weight:500\}/);
   assert.match(styles, /\.aisee-dropdown__menu \{[\s\S]*?gap: 4px;/);
@@ -302,8 +303,38 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(detail, /Search list \+ action/);
   assert.match(detail, /Filter panel/);
   assert.match(detail, /Grouped account menu/);
+  assert.match(detail, /Icon action menu/);
+  assert.match(detail, /Copy Channel ID/);
+  assert.match(detail, /Move \/ add to customer/);
+  assert.match(detail, /Edit Time Slots/);
+  assert.match(detail, /Disable Channel/);
+  assert.match(detail, /data-action-item="Delete"/);
+  assert.match(detail, /\.action-option\.is-danger\{color:#ec5212\}/);
+  assert.match(detail, /\.composition-stage\{[^}]*height:var\(--composition-stage-height,260px\)[^}]*margin-top:14px[^}]*padding:24px[^}]*overflow:auto/);
+  assert.match(detail, /\.menu\.static\.fluid-hover-surface\{position:relative;top:auto\}/);
+  assert.match(detail, /function syncCompositionStageHeight\(card\)/);
+  assert.match(detail, /requestAnimationFrame\(\(\)=>syncCompositionStageHeight\(activeCard\)\)/);
+  assert.doesNotMatch(detail, /\.composition-stage\{[^}]*height:580px/);
+  assert.match(detail, /<\/section>\s*<div class="variant-summary" aria-live="polite"><h3 id="variantSummaryTitle">/);
+  assert.doesNotMatch(detail, /Current preview · Read only/);
+  for (const [file, component] of [
+    ['action-copy.svg', 'LineFileCopyIcon'],
+    ['action-add-customer.svg', 'LinePeopleAddContactIcon'],
+    ['action-time-slots.svg', 'LineClockTimeIcon'],
+    ['action-disable.svg', 'LineProhibitedNotClickableIcon'],
+    ['action-delete.svg', 'LineTrashDeleteIcon'],
+  ]) {
+    assert.match(detail, new RegExp(file.replace('.', '\\.')));
+    assert.match(detail, new RegExp(`data-stemui-export="${component}"`));
+    await access(new URL(`../assets/stemui/${file}`, import.meta.url));
+  }
   assert.match(detail, /compositionProjectSearch/);
-  assert.match(detail, /data-filter-group="difficulty"/);
+  assert.match(detail, /data-filter-select="keyword"/);
+  assert.match(detail, /data-filter-select="accounts"/);
+  assert.match(detail, /data-filter-select="subreddits"/);
+  assert.match(detail, /data-filter-group="score"/);
+  assert.match(detail, /data-filter-group="time"/);
+  assert.match(detail, /data-filter-group="intents"/);
   assert.match(components, /trigger-to-menu 8px · option gap 4px · open the component page to switch live compositions/);
   await access(new URL('../assets/dropdown/search.svg', import.meta.url));
   assert.doesNotMatch(detail, /class="check"/);
@@ -421,7 +452,9 @@ test('Fluid Hover is synchronized to the Current Dropdown implementation and dem
   assert.match(detail, /installFluidHover/);
   assert.match(detail, /fluid-hover-highlight/);
   assert.match(detail, /pointermove/);
-  assert.match(detail, /Current preview · Read only/);
+  assert.match(detail, /id="variantSummaryTitle"/);
+  assert.match(detail, /id="variantSummaryDescription"/);
+  assert.doesNotMatch(detail, /data-composition="[^"]+"[^>]*><h3>/);
   assert.match(detail, /id="variantIcons"/);
   assert.match(detail, /data-show-icons/);
   assert.match(detail, /geometry=new Map/);
@@ -429,7 +462,7 @@ test('Fluid Hover is synchronized to the Current Dropdown implementation and dem
   assert.match(detail, /transition:transform 110ms/);
   assert.match(detail, /\.variant-select__menu\{position:absolute/);
   assert.match(detail, /\.fluid-hover-surface\{isolation:isolate\}/);
-  assert.match(detail, /\.menu\.static\.fluid-hover-surface\{position:relative\}/);
+  assert.match(detail, /\.menu\.static\.fluid-hover-surface\{position:relative;top:auto\}/);
   assert.match(detail, /surface\.clientLeft/);
   assert.match(detail, /account-row-action/);
   assert.match(detail, /data-account-action/);
@@ -894,31 +927,18 @@ test('Sidebar Navigation is a reusable interactive current component', async () 
   assert.match(styles, /\.aisee-sidebar__item:hover:not\(:disabled\)/);
   assert.match(styles, /\.aisee-sidebar__icon-mask \{[^}]*background: currentColor;[^}]*mask: var\(--aisee-sidebar-icon\)/);
   assert.doesNotMatch(styles, /aisee-sidebar__chevron/);
-  assert.match(detail, /const openIds=new Set\(\['verify'\]\)/);
-  assert.match(detail, /label:'Verify'[^\n]+children:\[/);
-  assert.match(detail, /label:'Compare',icon:'compare\.svg'/);
-  assert.match(detail, /label:'Google Search Data',icon:'google\.svg',brand:true/);
-  assert.match(detail, /label:'Bing Webmaster Data',icon:'bing\.svg',brand:true/);
-  assert.doesNotMatch(detail, /label:'Integrations'/);
-  assert.match(detail, /every other primary item can expand independently/);
-  assert.match(detail, /composes the standalone Tree Nav component/);
-  assert.match(detail, /class="workspace" aria-label="Example content area"/);
-  assert.match(detail, /sidebar\.classList\.toggle\('is-collapsed',collapsed\)/);
-  assert.match(detail, /\.collapse:hover\{[^}]*cursor:w-resize\}/);
-  assert.match(detail, /\.sidebar\.is-collapsed,\.sidebar\.is-collapsed \*\{cursor:e-resize\}/);
-  assert.doesNotMatch(detail, /sidebar-cursor-(?:collapse|expand)\.svg/);
-  assert.match(detail, /class="collapse-icon" src="\.\.\/\.\.\/assets\/sidebar-v6\/sidebar-close\.svg"/);
-  assert.match(detail, /role="tooltip">Close sidebar/);
-  assert.match(detail, /const label=collapsed\?'Open sidebar':'Close sidebar'/);
-  assert.doesNotMatch(detail, /cursor:col-resize/);
-  assert.match(detail, /function showFlyout\(item,wrap\)/);
-  assert.match(detail, /const iconMarkup=item=>item\.brand/);
-  assert.match(detail, /data-avatar-kind="account" data-avatar-seed="name@example\.com"/);
-  assert.match(detail, /assets\/avatar\/dapp-avatar-set\.svg/);
-  assert.match(detail, /hashSeed\(avatar\.dataset\.avatarSeed\)%22\+1/);
-  assert.match(detail, /Growth Loop Plan/);
-  assert.match(detail, /\.nav-icon-mask\{background:currentColor;mask:var\(--nav-icon\)/);
-  assert.doesNotMatch(detail, /toggle-marker/);
+  const demo = await readFile(new URL('../components/SidebarNavigation/SidebarNavigation.demo.tsx', import.meta.url), 'utf8');
+  assert.match(detail, /sidebar-navigation-demo\.js/);
+  assert.match(demo, /<SidebarLayout/);
+  assert.match(demo, /<SidebarNavigation/);
+  assert.match(demo, /defaultOpenItemIds=\{\['analysis', 'post', 'verify'\]\}/);
+  for (const label of ['Summary', 'Full Report', 'Opportunities', 'Recommendations', 'Tasks', 'Signal Feed', 'Keywords & Accounts', 'Replies', 'Calendar', 'Table', 'Media', 'Compare', 'Google Search Data', 'Bing Webmaster Data']) assert.ok(demo.includes(label));
+  assert.doesNotMatch(demo, /label: 'Integrations'/);
+  assert.match(demo, /Analysis, Growth, Engage, Post and Verify each preserve their nested destinations/);
+  assert.match(demo, /composes the standalone Tree Nav component/);
+  assert.match(demo, /aria-label="Example content area"/);
+  assert.match(demo, /<Avatar kind="account" seed="name@example\.com"/);
+  assert.match(demo, /Growth Loop Plan/);
   assert.match(exports, /components\/SidebarNavigation/);
   assert.match(portal, /name: "Sidebar Navigation"[^\n]+status: "Current", updated: true/);
   await Promise.all(['sidebar-close.svg', 'dashboard.svg', 'analysis.svg', 'growth.svg', 'engage.svg', 'keywords.svg', 'replies.svg', 'post.svg', 'campaign.svg', 'compare.svg', 'google.svg', 'bing.svg'].map(file => access(new URL(`../assets/sidebar-v6/${file}`, import.meta.url))));
@@ -1036,10 +1056,14 @@ test('StemUI preview snapshot is read-only, versioned and complete', async () =>
   const manifest = JSON.parse(await readFile(new URL('../assets/stemui/manifest.json', import.meta.url), 'utf8'));
   const syncScript = await readFile(new URL('../scripts/sync-stemui-assets.mjs', import.meta.url), 'utf8');
   assert.equal(manifest.package, '@stemui/icons');
+  assert.equal(manifest.version, '0.1.40');
   assert.equal(manifest.mode, 'read-only source snapshot');
   assert.ok(manifest.assets.length >= 32, `expected at least 32 StemUI preview assets, found ${manifest.assets.length}`);
   for (const file of ['nav-calendar.svg', 'nav-growth.svg', 'avatar-user.svg', 'avatar-social-1.svg', 'platform-x.svg', 'platform-linkedin.svg', 'platform-reddit.svg']) {
     await access(new URL(`../assets/stemui/${file}`, import.meta.url));
+  }
+  for (const file of ['action-copy.svg', 'action-add-customer.svg', 'action-time-slots.svg', 'action-disable.svg', 'action-delete.svg']) {
+    assert.ok(manifest.assets.some(asset => asset.file === file), `${file} must be registered in the StemUI snapshot manifest`);
   }
   assert.doesNotMatch(syncScript, /writeFile\([^)]*sourceRoot|copyFile\([^,]+,\s*source/);
 });
@@ -1108,8 +1132,8 @@ test('webapp UI kit inline controller is syntactically valid', async () => {
   assert.doesNotThrow(() => new Function(scripts[0][1]));
 });
 
-test('current PlanCard follows the latest Figma upgrade-plan pattern while legacy remains available', async () => {
-  const current = await readFile(new URL('../components/PlanCardCurrent/PlanCardCurrent.html', import.meta.url), 'utf8');
+test('previous PlanCard comparison and legacy remain available after the subscription update', async () => {
+  const current = await readFile(new URL('../components/PlanCardCurrent/PlanCardPrevious.html', import.meta.url), 'utf8');
   const legacy = await readFile(new URL('../components/PlanCard/PlanCard.html', import.meta.url), 'utf8');
   const source = await readFile(new URL('../src/components/PlanCard.tsx', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8');

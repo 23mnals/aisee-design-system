@@ -21,6 +21,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: npm run audit:copy-ai
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: copy-ai-audit
+          path: artifacts/copy-ai-audit/
+          if-no-files-found: ignore
 
   pages:
     if: github.ref == 'refs/heads/ai/desktop/design-system-current' && github.event_name == 'push'

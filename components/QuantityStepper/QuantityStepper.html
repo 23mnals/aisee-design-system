@@ -74,5 +74,6 @@ line_plus_add.svg</code></pre></article>
   document.querySelectorAll('[data-stepper]').forEach(mount);
   document.querySelectorAll('[data-mode-control]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-mode-control]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));document.querySelector('.preview-stage [data-stepper]')?.quantityStepper?.setMode(button.dataset.modeControl)}));
 </script>
+<script src="../../assets/update-badges.js"></script>
 </body>
 </html>

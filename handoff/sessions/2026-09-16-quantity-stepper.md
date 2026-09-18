@@ -16,11 +16,12 @@
 - 输入数字的浏览器原生蓝色选区改为 AISEE 语义黄色，数字保持黑色。
 - Copy for AI 补齐有 Design System 与无 Design System 两种接入路径、公开 props、依赖、完整静态与动效参数；Usage 增加 React 示例和独立使用说明。
 - README 最近更新、Overview、Copy for AI、NEW 标识和回归测试同步更新。
+- 同轮追加修正 Select / Dropdown Variant Playground：舞台高度按当前组合的实际菜单高度计算，各组合内容保持相同顶部起点；浏览器实测内容顶部偏移统一为 24px，Compact 展开和收起均保留 220px 高度，不让外围页面跳动。
 
 ## Git / 工作区
 
 - 分支：`ai/desktop/design-system-current`。
-- 本轮修改尚未 commit / push；本轮 Quantity Stepper 与已确认的 Dialog、Tabs 同批提交；Select / Dropdown、Notification 和 Sidebar 的待验收修改继续留在本地。
+- 本轮修改尚未 commit / push；工作区还有 Notification、Dialog、Tabs、Select 等同批未提交内容，后续提交前需按确认范围复查。
 
 ## 验收
 
@@ -34,4 +35,4 @@
 ## 下一步
 
 - 等待用户在本地 Demo 验收 Quantity Stepper 的贴边、窄容器和动效。
-- 已按用户授权整理完成内容并推送开发分支；Select / Dropdown、Notification 与 Sidebar 待验收后再单独提交。
+- 用户明确要求同步远端后，再整理本批提交并推送开发分支。

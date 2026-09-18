@@ -7,6 +7,7 @@
 - 分支：`ai/desktop/design-system-current`。
 - 功能提交：`549782a feat: add toggle variants and refine engage icon`。
 - 此文档提交记录发布边界，推送结果以远端分支记录为准。
+- 文档提交为 `ae7b45e`。首次推送返回 Empty reply from server；HTTP/1.1 重试返回 github.com:443 连接失败。未确认推送成功，两个提交保留本地待推送。本段故障记录与 handoff-context 状态属于失败后补充的本地文档修改。
 - 没有修改 main、创建 PR、合并或强制推送。
 
 ## 纳入与排除

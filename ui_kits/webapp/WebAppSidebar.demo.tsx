@@ -14,18 +14,19 @@ const sidebarItem = (id: string, label: string, icon: string, iconTone?: 'monoch
 const groups: SidebarNavigationGroup[] = [
   { id: 'project', label: 'Project', items: [item('Overview', 'Overview', 'nav-overview')] },
   { id: 'growth-loop', label: 'Growth Loop', items: [
-    item('Analysis', 'Analysis', 'nav-analysis'),
-    { ...item('Growth', 'Growth', 'nav-growth'), children: [item('Improve Score', 'Improve Score', 'nav-improve-score'), item('Build Brand Influence', 'Build Brand Influence', 'nav-brand-influence')] },
-    { ...item('Engage', 'Engage', 'nav-engage'), children: [item('Signal Feed', 'Signal Feed', 'nav-signal-feed'), item('Keywords & Accounts', 'Keywords & Accounts', 'nav-keywords'), item('Replies', 'Replies', 'nav-replies')] },
-    { ...item('Post', 'Post', 'nav-post'), children: [item('Calendar', 'Calendar', 'nav-calendar'), item('Channels', 'Channels', 'nav-channels'), item('Media', 'Media', 'nav-media')] },
+    { ...item('Analysis', 'Analysis', 'nav-analysis'), children: [item('Summary', 'Summary', 'nav-overview'), item('Full Report', 'Full Report', 'nav-post')] },
+    item('Growth', 'Growth', 'nav-growth'),
+    item('Engage', 'Engage', 'nav-engage'),
+    { ...item('Post', 'Post', 'nav-post'), children: [item('Calendar', 'Calendar', 'nav-calendar'), item('Table', 'Table', 'nav-overview'), item('Media', 'Media', 'nav-media')], actionLabel: 'Create post', actionIcon: <img src={asset('action-plus')} alt="" /> },
+    { ...sidebarItem('Campaigns', 'Campaigns', 'campaign'), badge: 'NEW' },
     { ...item('Verify', 'Verify', 'nav-verify'), children: [
       sidebarItem('Compare', 'Compare', 'compare'),
       sidebarItem('Google Search Data', 'Google Search Data', 'google', 'brand'),
       sidebarItem('Bing Webmaster Data', 'Bing Webmaster Data', 'bing', 'brand'),
     ] },
-    item('Connection', 'Connection', 'nav-connection'),
   ] },
-  { id: 'workflows', label: 'Workflows', items: [item('Automation', 'Automation', 'nav-automation')] },
+  { id: 'workflows', label: 'Workflows', items: [sidebarItem('Automation', 'Automation', 'dashboard')] },
+  { id: 'connect-channels', label: 'Connect Channels', items: [item('Connections', 'Connections', 'nav-connection')] },
 ];
 
 function Sidebar() {
@@ -48,7 +49,7 @@ function Sidebar() {
     groups={groups}
     value={value}
     collapsed={collapsed}
-    defaultOpenItemIds={['Growth', 'Engage', 'Post', 'Verify']}
+    defaultOpenItemIds={['Analysis', 'Post', 'Verify']}
     ariaLabel="AISEE product navigation"
     onValueChange={next => { setValue(next); window.dispatchEvent(new CustomEvent('aisee:navigate', { detail: next })); }}
     onCollapsedChange={next => {

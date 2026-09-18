@@ -44,7 +44,7 @@ npm run preview:local
 不需要把整套 Design System Demo 交给 AI，也不需要自己从 HTML 中寻找 CSS。单组件任务按以下方式使用：
 
 1. 在门户的 **Components** 中打开需要的 `Current` 组件，先查看页面里的状态、动画和使用说明。
-2. 点击页面右上角双星图标的 **Copy for AI**。复制内容已经包含组件用途、关键交互、视觉边界、无障碍与 AISEE 通用规则。
+2. 先选好组件变量，再点击页面右上角双星图标的 **Copy for AI**。所有带变量的组件均在点击时复制最新配置，并附上组件用途、关键交互、视觉边界、无障碍与 AISEE 通用规则；同页多个示例分别标明配置归属。
 3. 把复制的 Prompt 连同目标页面、真实文案、真实数据和预期行为一起发给 AI。Demo 中的图标、插图、文案和数据都只是参考，AI 应根据实际功能替换。
 4. 生成后对照 Current Demo 验收适用的 default、hover、focus、disabled、loading、empty、响应式与无障碍状态。
 
@@ -62,6 +62,30 @@ GitHub Pages 由共享开发分支 `ai/desktop/design-system-current` 自动发�
 npm run site
 ```
 
+## 批量验证 Copy for AI
+
+运行 `npm run audit:copy-ai`，打开 [批量检查报告](artifacts/copy-ai-audit/report.html)。报告覆盖全部 28 个复制入口和 190 个受控配置案例，检查配置导出、真实组件参数类型、复制处理与切页保护；附各案例提示词和待验收清单。新增组件 / 变量时同步扩展案例。每次推送的 CI 也会运行并保存 `copy-ai-audit` 报告。
+
+**自动检查通过不代表 AI 生成页面已经通过验收。** 浏览器交互、截图对照及实际生成结果另行验证；报告明确标为未执行。批量验收方法和可直接交给 AI 的验收指令见 [Copy for AI 验收指南](docs/COPY_AI_VALIDATION.md)。
+
+## AI 选择变量与复用组件
+
+- **先选变量，再复制**适用于所有带变量的 Current 组件，不限于 Sidebar。切换后再次复制会读取新配置；普通搜索词、表单内容和演示数据不属于设计配置。纯展示页不声称选择了某个示例。
+- 给 AI 目标截图或可访问的页面 / Figma 链接后，先按用途、结构和交互匹配 Current 组件；有合适组件就直接复用，再选择对应变量。截图可判断可见布局，不能确定 hover、收起方式、加载状态等隐藏行为；链接不可访问时说明缺失，不自行猜测。
+- 选择顺序：用户明确指定（包括复制的配置）→ 目标设计 → 产品已确定的统一配置 → 组件文档默认值。存在冲突时指出差异，不能随机挑选。
+- **这也是直接把整个设计系统交给 AI 时的规则**，不依赖 Copy for AI 入口。同一产品沿用已有配置；单次预览选择不会自动成为全产品默认值。生成时记录所用组件和变量供后续页面沿用。
+- 规则与代码默认值可以减少结果差异，但无法保证未读取规范的外部 AI 自动遵守；交付时应包含 README 和 AI_HANDOFF。详细范围与接入方式见 [组件配置契约](docs/COMPONENT_CONFIGURATION.md)。
+
+## 分区卡片规则
+
+复杂描边卡片只用于外层，任何场景下的内层卡片均简化为浅灰填充或白底浅描边，不重复白色内框和阴影。已有白色 Card 保留；表单、总览和创建流程使用 section 变体：16px 圆角 / 内距、5px 白色内边框、浅色内容底，标题 Karla 16px / 500。内部复用 Input、Textarea、Dropdown、Checkbox、Toggle 和 StatCard，支持 1–4 列自适应布局；卡片不接管业务表单或发布逻辑。详见 [分区卡片交付说明](docs/SECTION_CARDS.md)。
+
+功能权益展示可使用 FeatureOverview，底层复用 Card divided、FeatureList 与 StatCardGroup compact。外框统一为 24px 白色卡片，内部共享分隔线；平台图标条暂为组合示例，不独立导出。详见 [功能总览交付说明](docs/FEATURE_OVERVIEW.md)。
+
+## Button 图标规则
+
+Button 支持显示 / 隐藏图标。一般操作图标在左，前进箭头与 AI 生成标识在右；统一使用 16px 图标容器、6px 文字间距，关闭后不占位。单色图标随按钮 hover / focus 变色，多色原图保留颜色。
+
 ## 字体边界
 
 - **Homepage / Brand：Karla + Gotu**
@@ -71,34 +95,30 @@ npm run site
 
 ## 最近更新
 
-### 2026-09-17 · Notification、Toggle 与 Sidebar 图标
+### 2026-09-18 · Copy for AI 当前配置与批量检查
 
-- **Notification**：新增铃铛、未读徽章、通知面板和消息条目，支持已读操作、空状态及通知状态切换；新通知与重置演示播放铃铛和徽章动画，hover / focus 只摆动铃铛
-- **Sidebar Navigation**：适度放大 Engage 气泡图标，与相邻导航图标的视觉大小更一致，文字位置保持不变
-- **颜色**：Toggle 支持柠檬绿、黄色填充，统一保留深色描边与圆钮
-- **背景与尺寸**：增加浅色 / 深色背景及 16px / 24px 高度组合，24px 黄色版本对齐 Automation 的 Figma 参考
-- **交互与交付**：保留 hover、按压、弹性切换及减弱动效支持；组件页可切换颜色、背景、尺寸和状态，下拉框使用侧边栏同款箭头并增加右侧留白，Overview 与 Copy for AI 同步说明
+- 所有带变量的 Current 组件在复制时带上最新选择，不再只复制静态规范。
+- 新增批量配置检查报告，集中查看各组件提示词，并区分配置检查、浏览器验证和 AI 产出验收。
+- 同页多个示例分别记录配置，隐藏的无关选项不混入当前组合。
+- 复制前检查预览是否加载完成，避免切页时复制上一页配置。
+- 明确截图 / 链接优先匹配已有组件、同产品沿用配置以及未指定时使用默认值的规则。
 
-### 2026-09-16 · Current 组件与交互更新
+### 2026-09-18 · Sidebar 布局变量
 
-- **Tree Nav**：新增独立 Current 组件页，默认直接展示约 6 个相关选项，不重复外围标题，并支持层级引导线、叶子选中与禁用状态
-- **Sidebar Navigation**：展开态直接组合 Tree Nav，侧栏自身继续负责功能分组、收起态、账号入口与收起后的子级浮层
-- **Checkbox**：从未选中切换到选中时播放一次短促的 bubble 扩散与回弹反馈；取消选中、初始选中和禁用态不触发，并兼容 reduced motion
-- **Dialog**：打开使用轻微上移与缩放建立层级，内容短暂延后进入；关闭使用更短的退场时间，并兼容 reduced motion
-- **Tabs**：`Show icons` 与 `Show counts` 使用正式 Toggle 组件的轨道、滑块和动效参数
-- **Quantity Stepper**：按 Figma 结构更新数量组件，左右按钮贴合外框并使用 StemUI 图标；中间整块数值区均可点击并在原位输入，同时支持 AISEE 黄色文本选区、长按加速、数字滚动、边界抖动和窄容器自动隐藏单位字段
-- **发现与交付**：Components Overview、A–Z 导航、`NEW` 标识和 Tree Nav / Checkbox 的 `Copy for AI` 已同步更新
+- 侧栏新增通栏白底、通栏灰底、独立卡片、内容内嵌与顶部导航五种排版，保留 AISEE 字体、图标与配色。
+- 收起按钮可独立选择内部或外部位置，原四种侧栏支持八种组合；外部按钮位于内容标题栏左侧，无额外悬浮框和占位列。
+- 组件页用两个下拉框实时切换，保留当前选中、分组展开和收起状态。
+- 原有嵌套导航、账号区域及收起后的子菜单浮层继续可用。
+- 顶部导航模式收起后完全隐藏侧栏，可切换悬停临时预览或点击展开；临时预览不挤动正文，并使用轻量阴影。
+- 收起 / 展开图标悬停时加深为 button/usual 色值，内部与外部按钮保持一致。
+- 布局控制下拉框靠右对齐。悬浮卡片模式的内容标题栏透明，侧栏与内容及内容右侧间距统一为 16px；内嵌模式标题栏为直角，只保留底部分隔线。
 
-### 2026-09-15 ～ 2026-09-16
+### 2026-09-18 · PlanCard 订阅确认
 
-- **Avatar**：22 个网站注册方形头像与 24 个社媒缺失圆形兜底头像进入 Components；头像随机取值后保持稳定；眼睛动画直接作用于原头像并限制瞳孔范围；颜色、眼睛尺寸和位置增加差异
-- **账号与平台标识**：Sidebar 账号入口同步组件头像库，套餐名更新为 `Growth Loop Plan`，额度说明 icon 改为细描边；Plan-generated Post 的平台 logo 使用单层虚线描边，Manual-create Post 使用单层实线描边，并缩小 logo 与外圈间距
-- **Sidebar Navigation**：原 Verify 页面更名为 Compare；Google Search Data 与 Bing Webmaster Data 移入 Verify 子级；账号入口随机展示组件库头像
-- **组件发现与 AI 交付**：Avatar 移入 Components；分类内按 A–Z 排序；README、页面更新位置与新增组件显示 `NEW`；22 个 Current 组件详情页提供经过同一规则约束的 `Copy for AI`
-- **Credit Bar 与 Empty State**：补齐 Subscription 为 0、Top-up 为 0、两者同时为 0 的额度状态；原 Successful 插图语义修正为 `No report data`，表示暂无报告记录，并引导用户添加产品 URL 发起分析
-- **Dropdown**：同步单选、多选、过滤、输入建议、Compact、Search + action、Filter panel 与 Grouped account；Fluid Hover 使用缓存几何信息，长列表移动时不再反复刷新全部选项，并缩短跟随时间；行操作加号为 24px、默认隐藏、行 hover / focus 后显示灰底灰边、按钮自身 hover 才变黄
-- **Dropdown 参数与布局**：Grouped account 增加真实 `Show icons` 开关；关闭后只显示文字；所有下拉菜单以浮层展开，不改变 Playground、后续内容或文档高度
-- **在线 Demo**：GitHub About 保留固定 Pages 地址，Pages 改由 `ai/desktop/design-system-current` 在完整检查通过后自动发布；`main` 继续作为 PR 确认后的稳定代码
+- PlanCard 更新为单套餐订阅确认卡，集中展示价格、完整功能权限、credits 与品牌信息
+- 提供静态卡片及真实弹窗预览，支持稍后关闭、Escape 与内部滚动
+- 订阅操作提供购买流程回调，示例只展示反馈，不执行支付
+- 内部使用简单浅底信息行，旧三档套餐示例保留在历史入口
 
 ## v6 主要更新
 
@@ -108,16 +128,16 @@ npm run site
 - 页面背景 `#FAFAFA`，卡片 `#FFFFFF`，静态描边统一 5% 黑
 - 所有弹窗标题统一 Karla 20px / 500（包括二次确认）
 - Automation 属于 WORKFLOWS 分组；Google Search Data 与 Bing Webmaster Data 归入 Verify，不再单列 INTEGRATIONS
-- PlanCard 新增 v5.4 Upgrade Plan 当前版本，旧套餐卡继续作为 Legacy 保留
+- PlanCard 当前展示单套餐订阅确认；此前 v5.4 三档比较与 Legacy 套餐卡保留供追溯
 - Figma 对齐 Toggle、Modal footer 和 Engage v5 页面规则
 - 44 个元数据颜色与 46 个语义颜色由 JSON 自动生成 CSS；旧变量通过兼容 alias 保留
 - Current 组件补齐 Avatar、Badge、Checkbox、Empty State、Steps、Tooltip / Toast、Notification、Table、Stat Card、Chart、Score Gauge、Credit Bar、Dropdown、Tag Input、Toggle Selection Group 与 Tree Nav；组件目录按分类内 A–Z 排列
 - Avatar 统一进入 Components：网站注册账号使用方形头像库，社媒头像缺失时使用圆形灰描边兜底库；Sidebar 等账号入口从组件库随机取值并保持稳定；Plan-generated Post 的平台 logo 只用虚线描边，Manual-create Post 只用实线描边
 - Credit Bar 覆盖 Subscription、Top-up、任一来源为 0 及两者都为 0；Empty State 的 `No report data` 表示暂无报告记录，主操作为添加产品 URL 并开始分析
-- Dropdown 覆盖单选、多选、过滤、输入建议与分组账号等组合形态；Fluid Hover 使用缓存几何信息平滑跟随，行操作默认隐藏、在 hover / focus 时按需出现；Grouped account 提供 `Show icons` 开关；所有菜单作为浮层打开，不改变外围内容高度
-- Tree Nav 作为独立层级导航组件默认直接展示本地相关选项、子级引导线与叶子选中；只有需要自行命名分组时才使用父级展开。Sidebar Navigation 展开态组合 Tree Nav，并单独维护多分组、侧栏收起与浮层职责
+- Dropdown 覆盖单选、多选、过滤、输入建议、分组账号与带图标操作菜单等组合形态；Fluid Hover 使用缓存几何信息平滑跟随，行操作默认隐藏、在 hover / focus 时按需出现；Grouped account 提供 `Show icons` 开关；所有菜单作为浮层打开，不改变外围内容高度
+- Tree Nav 作为独立层级导航组件默认直接展示本地相关选项、子级引导线与叶子选中；只有需要自行命名分组时才使用父级展开。Sidebar Navigation 展开态组合 Tree Nav，并单独维护多分组、侧栏收起与浮层职责；SidebarLayout 支持 sidebar / muted / floating / inset / topbar，收起按钮 inside / outside 可独立组合
 - Checkbox 新选中时使用短促 bubble 扩散反馈，保留原有选中语义、键盘路径并遵循 reduced motion
-- README、组件页面、Overview、`Copy for AI` 与 `NEW` 标识随 Current 组件更新同步维护，方便用户识别新增内容并把同一套规则交给 AI
+- README、组件页面、Overview、`Copy for AI` 与 `NEW` 标识随 Current 组件更新同步维护，方便用户识别新增内容并把同一套规则交给 AI；`NEW` 按台北时区计算，更新当天为第 1 天，第 8 天零点隐藏
 
 完整迁移表见 [`docs/MIGRATION.md`](docs/MIGRATION.md)，资源状态见 [`docs/RESOURCE_INVENTORY.md`](docs/RESOURCE_INVENTORY.md)。
 

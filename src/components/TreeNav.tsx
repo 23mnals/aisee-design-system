@@ -10,6 +10,9 @@ export interface TreeNavItem {
   status?: ReactNode;
   disabled?: boolean;
   children?: TreeNavItem[];
+  actionLabel?: string;
+  actionIcon?: ReactNode;
+  onAction?: (item: TreeNavItem) => void;
 }
 
 export interface TreeNavProps {
@@ -94,6 +97,12 @@ export function TreeNav({
         {item.status && <span className="aisee-tree-nav__status">{item.status}</span>}
         {hasChildren && showDisclosure && <span className="aisee-tree-nav__disclosure" aria-hidden="true" />}
       </button>
+      {item.actionLabel && <button
+        className="aisee-tree-nav__action"
+        type="button"
+        aria-label={item.actionLabel}
+        onClick={() => item.onAction?.(item)}
+      >{item.actionIcon ?? <span aria-hidden="true">+</span>}</button>}
       {hasChildren && <div
         className="aisee-tree-nav__children"
         id={childrenId}

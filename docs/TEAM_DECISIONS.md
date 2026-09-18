@@ -2,6 +2,27 @@
 
 此文件记录团队对基础规范的后续澄清。发生冲突时，顺序为：本文件最新决策 → 当前 dApp spec → 历史文件。
 
+## 2026-09-18 — 所有组件的变量复制与 AI 复用
+
+- 所有带变量的 Current 组件统一遵循“先选变量，再点 Copy for AI，复制点击时的最新配置”；不能只对 Sidebar 实现，也不能把所有可选值清单冒充当前选择。
+- 同页独立示例按 scope 分开，组件 props 与组合 / 插槽 / 主题 / 动效要求分开；预览状态不等同于生产环境固定状态，不导出业务输入、搜索词或账号数据。
+- AI 收到截图或可访问链接时，先核对现有 Current 组件的用途、结构、交互；可满足时直接复用并映射变量。截图只说明可见状态，隐藏交互与不可访问设计不得臆测。
+- 明确用户选择优先；否则依次参考目标设计、产品已确定配置、组件文档默认值。该规则同样适用于整套系统交付，不依赖复制入口。同一产品沿用已确定配置，不随机选择；单次 Demo 选择不自动改全产品默认值。
+- 接入契约与当前覆盖见 [COMPONENT_CONFIGURATION.md](COMPONENT_CONFIGURATION.md)。
+
+## 2026-09-18 — 分段选项与 Brand Mention
+
+- Segmented Choice hover 统一使用颜色变量 bg-hover（--aisee-color-semantic-bg-hover），未选项不额外增加灰色描边；选中项保留语义填充和深色描边，hover 叠加同一变量。
+- Brand Mention 使用已有 TagInput 接受多个品牌 / 话题，收起不丢标签。
+- 可折叠 Card 收起时移除 header 底部内容间距，标题、右侧标签和箭头垂直居中。
+
+## 2026-09-18 — 通用卡片嵌套层级
+
+- 复杂描边（含白色内框、多层边缘或强调阴影）的卡片只用于外层；任何场景下内部都不再重复复杂描边，不限于 Create Post 或弹窗。
+- 内层优先浅灰纯色填充，或白色填充 + 浅色单描边，减少重复边框造成的臃肿感。
+- section Card 嵌套时自动简化为白底浅描边、8px 圆角、12px 内距、无白色内框和阴影。独立外层 section 保留原有外观，功能与状态不变。
+- 用户参考：Figma 77:16889；内部 Post setup 见 77:16984。
+
 ## 2026-09-15 — Common 文档与 Dropdown 精确样式
 
 - Brand / Common 的现行文档内容使用与 Current 组件页一致的 640px 居中结构：标题和描述在白色详情卡上方，详情卡内展示 Overview / Examples 等具体内容；上一项 / 下一项箭头位于标题区右上角，不能压在卡片内容或元信息上。
@@ -14,6 +35,7 @@
 - Dropdown Variant Playground 顶部的参数为“当前预览说明”，不得伪装成可点击按钮；Grouped account 中 `Show icons` 是真实 Toggle，打开显示头像和平台图标，关闭后只保留文字、状态和行操作。
 - Dropdown 菜单必须作为浮层脱离文档流；展开和收起不得改变 Variant Playground、组件卡片或后续内容的高度与位置。Fluid Hover 容器不得覆盖菜单自身的绝对定位。
 - Dropdown 富选项的独立行操作使用 `item.action`。24px 操作按钮不常驻：默认隐藏，行 hover 或 `focus-within` 时以灰底灰描边出现，按钮自身 hover 后才使用 Post 黄色；不得把黄色 hover 状态当默认样式。
+- Dropdown 的 Icon action menu 用于频道或条目操作：保留 Figma 的紧凑矩形菜单、16px 左侧线性图标与单行标签；普通操作使用正文色，只有 Delete 使用语义危险色；操作图标必须来自 `@stemui/icons` 的明确导出，HTML Demo 使用 `assets/stemui/` 只读快照，不得手绘或用通用占位图标替代。
 - Common 页面中的说明卡使用完整灰色描边和左侧品牌强调线；Logo 示例按用途拆成独立有描边的样本卡，避免无分组的松散排版。
 - Components / Content & Status / Avatar 分为两套不可混用的头像库：22 个方形头像用于网站用户注册时按稳定用户 seed 分配；24 个带灰色描边的圆形头像仅在发布 Post 且无法抓取用户社交媒体头像时按稳定社交账号 seed 兜底。资产以 Figma `98:180630` 为权威；Generated extensions 未确认前不进入自动分配资源池。
 - Empty State 插图节点 `42:11910` 表示“暂无报告记录”，名称统一为 `No report data`，不能作为成功状态使用；对应示例说明当前没有报告数据，并以 `Add product URL` 引导用户发起分析。
@@ -149,6 +171,7 @@
 - Sidebar Navigation 的单色功能 icon 与文字共用 `currentColor`：默认均为 `#3D3D3A`，hover / selected 均为 `#111111`；Google、Bing 等多色品牌 Logo 保持官方颜色，不参与统一染色。
 - Tree Nav 是独立 Current 组件，默认直接展示一组相关叶子选项与层级引导线，不在列表内部重复页面已经提供的分组标题；仅在 Tree Nav 必须自行承担分组命名时才使用父级展开。Sidebar Navigation 展开态必须组合 Tree Nav，并额外负责多个产品分组、宽度收起、账号 Footer 和收起态 flyout。
 - Checkbox 只在状态由未选中切换为选中时播放一次短促 bubble 扩散反馈；初始选中、取消选中、禁用态不播放，且必须遵循 `prefers-reduced-motion`。
+- Notification 使用 Figma `77:17878` 的 32px 实心铃铛、362px 面板与消息条目：默认按钮为 `colour/bg/hover`，hover / focus 切换 `colour/bg/yellow-mid`，未读标记使用 `colour/feedback/wrong`。新通知到达时白色铃铛摆动且徽章数字滚动；正式组件由外部传入的未读数量增加自动触发，推送 / 轮询由产品接入；Reset demo 恢复通知时显式重播两种动画，包括数量相同的情况；hover / focus 只摆动白色铃铛，外层按钮与黑色圆底始终不动。面板统一支持 All / Unread、全部已读、条目已读、操作、错误详情与 ready / loading / empty / error 状态，并遵循 `prefers-reduced-motion`。
 - Current 页面中新增或更新的内容区块标题紧邻显示 Campaigns 同款 `NEW` 胶囊；内容级标记必须显式添加，不能把所有标题按时间自动标记。
 - 每次完成一批用户可见更新，必须在根 README 的“最近更新”中按日期使用 3–8 条简洁内容说明更新内容与用户可见结果；README 只保留最近 3 批，更早记录归档到 `CHANGELOG.md`。“v6 主要更新”只保存长期有效的版本级变化，不能替代批次更新清单。影响当前规范时，同步维护组件页、Overview、`Copy for AI`、`NEW` 标识、相关设计资源和交付文档；纯重构、格式化、内部测试等不可见调整不进入 README。
 - Dropdown trigger 与所有菜单选项统一使用 Karla 14px / 20px；选项字号不依赖外围页面继承。
@@ -162,4 +185,10 @@
 - 平台 Tabs 提供 `platformLabelDisplay="auto" | "active" | "all"`，默认 `auto`：全部 Logo + name 的真实宽度能放下时全部显示，空间不足时只展开当前项名称，不能把名称压缩或切断。`active` 与 `all` 只用于需要固定策略的特殊页面，显式 `all` 在不足时横向滚动。
 - Components Overview 的 Current 标签是完整组件页的快捷入口。嵌入门户时在当前 Design System 内打开目标页并同步侧边栏；通过侧边栏 Overview 或浏览器返回键回到总览。
 
-- Notification 使用 Figma `77:17878` 的 32px 实心铃铛、362px 面板与消息条目：默认按钮为 `colour/bg/hover`，hover / focus 切换 `colour/bg/yellow-mid`，未读标记使用 `colour/feedback/wrong`。新通知到达时白色铃铛摆动且徽章数字滚动；正式组件由外部传入的未读数量增加自动触发，推送 / 轮询由产品接入；Reset demo 恢复通知时显式重播两种动画，包括数量相同的情况；hover / focus 只摆动白色铃铛，外层按钮与黑色圆底始终不动。面板统一支持 All / Unread、全部已读、条目已读、操作、错误详情与 ready / loading / empty / error 状态，并遵循 `prefers-reduced-motion`。
+
+## 2026-09-17 · NEW 日期规则
+
+- 文档更新标记统一以 Asia/Taipei 日历日期计算：更新当天算第 1 天，第 1–7 天保留，第 8 天零点隐藏。
+- 侧栏、README、组件详情与 Open HTML 独立页共用 `assets/update-badges.js`。页面跨午夜、后台恢复、动态组件渲染时同步更新；不依赖访问次数或 localStorage，不因重新构建重置日期。
+- 内容更新时维护该文件的日期表；Brand metadata 使用 `updatedAt`（YYYY-MM-DD）。缺失、非法及未来日期不显示 NEW。业务示例自身的 NEW 徽章不属于文档更新标记，不参与过期。
+- Toggle Playground 的变量选择直接使用正式 Dropdown 组件，触发框、弹出菜单、键盘操作与动效保持同源，不使用原生 select 菜单。

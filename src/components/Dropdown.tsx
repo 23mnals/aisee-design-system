@@ -71,7 +71,6 @@ export function Dropdown({
   const highlightRef = useRef<HTMLSpanElement>(null);
   const itemRefs = useRef(new Map<string, HTMLButtonElement>());
   const itemGeometryRef = useRef(new Map<string, { x: number; y: number; width: number; height: number; centerY: number }>());
-  const highlightSizeRef = useRef({ width: 0, height: 0 });
   const activeIndexRef = useRef(0);
   const pointerFrameRef = useRef<number | null>(null);
   const [open, setOpen] = useState(false);
@@ -123,13 +122,13 @@ export function Dropdown({
       return;
     }
     if (instant) highlight.setAttribute('data-instant', 'true');
-    if (highlightSizeRef.current.width !== geometry.width) {
+    // The menu unmounts when closed; compare against this highlight node so a
+    // newly opened menu always receives its dimensions, even when unchanged.
+    if (highlight.style.width !== `${geometry.width}px`) {
       highlight.style.width = `${geometry.width}px`;
-      highlightSizeRef.current.width = geometry.width;
     }
-    if (highlightSizeRef.current.height !== geometry.height) {
+    if (highlight.style.height !== `${geometry.height}px`) {
       highlight.style.height = `${geometry.height}px`;
-      highlightSizeRef.current.height = geometry.height;
     }
     highlight.style.transform = `translate3d(${geometry.x}px, ${geometry.y}px, 0)`;
     highlight.setAttribute('data-visible', 'true');

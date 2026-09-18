@@ -49,5 +49,6 @@
     function render(){tree.innerHTML=items.map(item=>`<div class="node"><button class="item" type="button" data-id="${item.id}" ${item.disabled?'disabled':''} ${selected===item.id?'aria-current="page"':''}><span class="label">${item.label}</span></button></div>`).join('');tree.querySelectorAll('.item').forEach(button=>button.addEventListener('click',()=>{selected=button.dataset.id;render()}))}
     render();
   </script>
+<script src="../../assets/update-badges.js"></script>
 </body>
 </html>

@@ -13,6 +13,8 @@ export * from './components/Tabs';
 export * from './components/SidebarNavigation';
 export * from './components/TreeNav';
 export * from './components/Card';
+export * from './components/FeatureList';
+export * from './components/FeatureOverview';
 export * from './components/Badge';
 export * from './components/Steps';
 export * from './components/AiseeLoadingAnimation';
@@ -38,3 +40,5 @@ export * from './components/AiseeLogoAnimation';
 export * from './components/Chart';
 export * from './components/PlanCard';
 export * from './components/Avatar';
+
+export * from './components/SegmentedChoice';
