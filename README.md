@@ -99,7 +99,8 @@ Button 支持显示 / 隐藏图标。一般操作图标在左，前进箭头与 
 
 ### 2026-09-20 · Notification 短版 Copy for AI
 
-- Notification 复制约 1,550 字符短提示词，保留当前选定的铃铛与面板配置。
+- Notification 页面区分 Installation、Usage 与 Behavior，提供本地 import、最小调用和完整交互示例。
+- Notification 复制一句话接入指令，保留当前选定的铃铛与面板配置。
 - 编码 AI 自动获取完整组件、样式、字体与图标，无需安装整套 AISEE 库或另传附件。
 - 复制前检查公开源码是否可用与版本是否一致，避免交付失效地址。
 - 新增单组件接入说明与独立 React 项目验证；其他组件的复制方式保持原样。

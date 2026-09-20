@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import { readFile, mkdir, writeFile, access } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -31,7 +32,7 @@ const add = (name, label, selectors, verify = () => {}) => {
     const snapshot = api.read(doc, path);
     verify(snapshot.sections);
     const prompt = deliveries[path] ? context.AiseeAiDelivery.format(deliveries[path], snapshot) : context.buildComponentAiPrompt(path) + api.format(snapshot);
-    if (deliveries[path]) { assert.ok(prompt.length < 4000); assert.ok(prompt.includes(JSON.stringify(snapshot))); }
+    if (deliveries[path]) { assert.ok(prompt.length < 200); const selected = context.AiseeAiDelivery.preset(snapshot); const guide = readFileSync(resolve(root,'assets/ai-deliveries/notification', deliveries[path].installerSha256.slice(0,12), `${selected.state}-${selected.mask}.md`),'utf8'); const exported = JSON.parse(guide.match(/```json\n([\s\S]*?)\n```/)[1]); assert.deepEqual(exported.NotificationBell, JSON.parse(JSON.stringify(snapshot.sections[0].props))); assert.deepEqual(exported.NotificationPanel, JSON.parse(JSON.stringify(snapshot.sections[1].props))); assert.equal(exported.slots.errorDetail,snapshot.sections[1].slots.errorDetail); }
     else { assert.ok(prompt.includes('Shared implementation rules:')); assert.ok(prompt.includes(JSON.stringify(snapshot, null, 2))); }
     cases.push({name, label, path, status:'pass', snapshot, prompt});
   } catch (error) { cases.push({name, label, path, status:'fail', error:error.message}); }

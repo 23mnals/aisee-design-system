@@ -19,12 +19,14 @@ try {
     const bundle=JSON.parse(await readFile(join(root,entry.url),'utf8'));
     const name=bundle.name.toLowerCase();
     const prompt=ctx.AiseeAiDelivery.format(bundle,{sections:[{component:'NotificationBell',props:{dot:true}}]});
-    assert.ok(prompt.length < 4000, 'Short prompt must fit chat messages');
+    assert.ok(prompt.length < 200, 'Short prompt must fit chat messages');
     assert.ok(!prompt.includes(bundle.payload), 'Never put the archive in clipboard');
-    assert.ok(prompt.includes('"dot":true'));
+    assert.ok(!prompt.includes('\n'));
+    const guide = await readFile(join(root,new URL(prompt.split('：')[1]).pathname.replace('/aisee-design-system/','')),'utf8');
+    assert.ok(guide.includes('"dot": true'));
     const installer=await readFile(join(root,'assets/ai-deliveries',new URL(bundle.installerUrl).pathname.split('/').pop()),'utf8');
     assert.equal(createHash('sha256').update(installer).digest('hex'),bundle.installerSha256);
-    assert.ok(prompt.includes(bundle.installerUrl));
+    assert.ok(guide.includes(bundle.installerUrl));
     await writeFile(join(temp,'install.cjs'),installer);
     const install=()=>spawnSync(process.execPath,['install.cjs',`src/components/aisee/${name}`],{cwd:temp,encoding:'utf8'});
     const result=install(); assert.equal(result.status,0,result.stderr);
@@ -54,5 +56,5 @@ try {
   const types=spawnSync(process.execPath,[join(root,'node_modules/typescript/bin/tsc'),'-p','tsconfig.json'],{cwd:temp,encoding:'utf8'});
   assert.equal(types.status,0,types.stdout+types.stderr);
   await build({root:temp,configFile:false,plugins:[react()],logLevel:'warn',build:{lib:{entry:join(temp,'src/index.ts'),formats:['es']},rollupOptions:{external:['react','react-dom','react/jsx-runtime']}}});
-  console.log('PASS: Notification short prompt stays under 4,000 characters; its versioned installer extracts offline, reinstall safely, reject overwrites, typecheck and build with its real usage example.');
+  console.log('PASS: Notification short prompt stays under 200 characters; its versioned installer extracts offline, reinstall safely, reject overwrites, typecheck and build with its real usage example.');
 } finally {await rm(temp,{recursive:true,force:true});}

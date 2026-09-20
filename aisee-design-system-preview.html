@@ -2142,7 +2142,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
             if (!response.ok) throw new Error('Notification source delivery is unavailable. Please refresh after rebuilding.');
             const delivery = await response.json();
             if (delivery.page !== item.path) throw new Error('Source delivery does not match this component.');
-            await AiseeAiDelivery.checkPublished(delivery);
+            await AiseeAiDelivery.checkPublished(delivery, configuration);
             prompt = AiseeAiDelivery.format(delivery, configuration);
           }
           await writeClipboard(prompt);

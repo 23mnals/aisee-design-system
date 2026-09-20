@@ -114,15 +114,20 @@ test('the actual copy handler writes current configuration and never writes on a
   assert.equal(writes.length,3,'Unpublished source must not produce a broken copied link');
 });
 
-test('Notification publication gate rejects missing or mismatched source and accepts exact installer bytes', async () => {
+test('Notification publication gate verifies selected guide and installer', async () => {
   const {webcrypto,createHash}=await import('node:crypto');
   const delivery=vm.createContext({URL,crypto:webcrypto,Uint8Array});
   vm.runInContext(await readFile(new URL('assets/ai-delivery.js',root),'utf8'),delivery);
   const bytes=new TextEncoder().encode('verified installer fixture');
-  const metadata={installerUrl:'https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/test.cjs',installerSha256:createHash('sha256').update(bytes).digest('hex')};
+  const metadata={guideBaseUrl:'https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/notification/test/',installerUrl:'https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/test.cjs',installerSha256:createHash('sha256').update(bytes).digest('hex')};
+  const configuration={sections:[]};
   delivery.fetch=async()=>({ok:false});
-  await assert.rejects(()=>delivery.AiseeAiDelivery.checkPublished(metadata),/尚未发布/);
-  delivery.fetch=async()=>({ok:true,arrayBuffer:async()=>bytes.buffer});
-  await delivery.AiseeAiDelivery.checkPublished(metadata);
-  await assert.rejects(()=>delivery.AiseeAiDelivery.checkPublished({...metadata,installerSha256:'invalid'}),/不匹配/);
+  await assert.rejects(()=>delivery.AiseeAiDelivery.checkPublished(metadata,configuration),/尚未发布/);
+  delivery.fetch=async url=>url.endsWith('.md')?{ok:true,text:async()=>metadata.installerSha256}:{ok:true,arrayBuffer:async()=>bytes.buffer};
+  await delivery.AiseeAiDelivery.checkPublished(metadata,configuration);
+  await assert.rejects(()=>delivery.AiseeAiDelivery.checkPublished({...metadata,installerSha256:'invalid'},configuration),/不匹配/);
+  for(const state of ['ready','empty','loading','error']) for(let mask=0;mask<32;mask++) {
+    const config={sections:[{component:'NotificationBell',props:{dot:Boolean(mask&1)}},{component:'NotificationPanel',props:{state,showIcons:Boolean(mask&2),showStatus:Boolean(mask&4),showActions:Boolean(mask&8)},slots:{errorDetail:Boolean(mask&16)}}]};
+    assert.equal(delivery.AiseeAiDelivery.guideUrl(metadata,config),metadata.guideBaseUrl+state+'-'+mask+'.md');
+  }
 });

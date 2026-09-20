@@ -2,6 +2,13 @@
 
 工作纪律见 AGENTS.md，长期决策见 docs/TEAM_DECISIONS.md。
 
+## 当前增量：一句话复制
+
+- 用户要求复制只有一句话。本轮 Notification 改为约 145 字符指令 + 所选配置文档链接，安装步骤和 JSON 由 AI 打开链接后读取；128 种组合均有静态文档。
+- Installation / Usage / Behavior 已分开，提供环境说明、源码安装说明链接、本地 import、最小调用和完整交互示例。
+- 在 /tmp/aisee-notification-release 基于 aa6fa25 独立发布修正；原本地分支及其他未提交内容保持不动，最终 SHA / CI 以 git 和发布验收记录为准。
+- 最近 session：[一句话复制与安装说明](handoff/sessions/2026-09-20-notification-one-line.md)。
+
 ## 当前版本
 
 - 发布分支 ai/desktop/design-system-current；本批从远端 2a9d63a 独立整理 Notification 短版 Copy for AI，最新 SHA 以 git log 为准。
@@ -12,7 +19,7 @@
 ## 最近完成
 
 - 既有组件变量及 Copy for AI 批量检查已在 2a9d63a 发布。
-- Notification 改为约 1,550 字符短提示词，编码 AI 自动获取完整源码、样式、字体和图标，无需安装整库或用户另传附件。
+- Notification 改为约 145 字符短提示词，编码 AI 自动获取完整源码、样式、字体和图标，无需安装整库或用户另传附件。
 - 目标项目需 React 18+、TSX / CSS / SVG 支持，以及可联网运行 Node 的编码 AI。真实业务回调由产品接入。
 - 自动验证包含独立 React 项目、真实源码比对、哈希、重复执行与冲突保护、类型检查和构建。完整说明见 docs/NOTIFICATION_COPY_AI.md。
 
