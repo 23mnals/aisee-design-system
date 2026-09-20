@@ -27,7 +27,7 @@
     'components/StatCardCurrent/StatCardCurrent.html': '2026-09-18',
     'components/CreditBar/CreditBar.html': '2026-09-15',
     'components/Dialog/Dialog.html': '2026-09-17',
-    'components/NotificationBell/NotificationBell.html': '2026-09-18'
+    'components/NotificationBell/NotificationBell.html': '2026-09-20'
   });
   function dateOrdinal(value) {
     if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return NaN;

@@ -1131,6 +1131,7 @@
 
     <script src="assets/update-badges.js"></script>
     <script src="assets/component-config.js"></script>
+    <script src="assets/ai-delivery.js"></script>
     <script>
       const colorArchitecture = JSON.parse(document.getElementById("aisee-color-architecture").textContent);
       let activeColorLayer = "semantic";
@@ -2134,9 +2135,19 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         copyAiHeaderLabel.textContent = "Copying…";
         try {
           const configuration = AiseeComponentConfig.readFrame(previewFrame, item.path, document.baseURI);
-          await writeClipboard(aiPrompt + AiseeComponentConfig.format(configuration));
+          let prompt = aiPrompt + AiseeComponentConfig.format(configuration);
+          const isSourcePilot = item.path === 'components/NotificationBell/NotificationBell.html';
+          if (isSourcePilot) {
+            const response = await fetch(new URL('assets/ai-deliveries/NotificationBell.json', document.baseURI).href, {cache:'no-store'});
+            if (!response.ok) throw new Error('Notification source delivery is unavailable. Please refresh after rebuilding.');
+            const delivery = await response.json();
+            if (delivery.page !== item.path) throw new Error('Source delivery does not match this component.');
+            await AiseeAiDelivery.checkPublished(delivery);
+            prompt = AiseeAiDelivery.format(delivery, configuration);
+          }
+          await writeClipboard(prompt);
           copyAiHeaderLabel.textContent = "Copied";
-          showToast(`${item.name} prompt copied`);
+          showToast(isSourcePilot ? 'Notification: short integration prompt and selected configuration copied. Paste directly into your coding AI.' : `${item.name} prompt copied`);
         } catch (error) {
           copyAiHeaderLabel.textContent = "Copy failed";
           showToast(error.message || "Prompt copy failed");

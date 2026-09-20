@@ -1,5 +1,7 @@
 # 把 AISEE HTML 交给其他 AI 的使用说明
 
+> Notification 单组件短版源码交付已作为独立试点接入 Copy for AI，保留当前配置。接入前提、公开下载和验证边界见 [说明](NOTIFICATION_COPY_AI.md)；其他组件沿用本文原规则。
+
 ## 结论
 
 其他 AI **通常能读取上传 HTML 中直接存在的文字、CSS、HTML 结构和内联 JavaScript**，但这不等于它一定能读取整个设计系统，也不等于它会自动按照 demo 精确实现。

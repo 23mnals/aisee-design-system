@@ -12,6 +12,12 @@ const context = vm.createContext({URL});
 vm.runInContext(await readFile(resolve(root, 'assets/component-config.js'), 'utf8'), context);
 // Execute the same prompt builder used by the portal, not a second prompt template.
 vm.runInContext(portal.slice(portal.indexOf('const componentAiGuidance ='), portal.indexOf('const baseItems =')) + '\nglobalThis.guidance = componentAiGuidance;', context);
+vm.runInContext(await readFile(resolve(root, 'assets/ai-delivery.js'), 'utf8'), context);
+const deliveries = {};
+for (const path of ['components/NotificationBell/NotificationBell.html']) {
+  const name = path === 'preview/avatar.html' ? 'Avatar' : path.split('/')[1];
+  deliveries[path] = JSON.parse(await readFile(resolve(root, `assets/ai-deliveries/${name}.json`), 'utf8'));
+}
 const api = context.AiseeComponentConfig;
 const pathFor = name => `components/${name}/${name}.html`;
 const cases = [];
@@ -24,9 +30,9 @@ const add = (name, label, selectors, verify = () => {}) => {
   try {
     const snapshot = api.read(doc, path);
     verify(snapshot.sections);
-    const prompt = context.buildComponentAiPrompt(path) + api.format(snapshot);
-    assert.ok(prompt.includes('Shared implementation rules:'));
-    assert.ok(prompt.includes(JSON.stringify(snapshot, null, 2)));
+    const prompt = deliveries[path] ? context.AiseeAiDelivery.format(deliveries[path], snapshot) : context.buildComponentAiPrompt(path) + api.format(snapshot);
+    if (deliveries[path]) { assert.ok(prompt.length < 4000); assert.ok(prompt.includes(JSON.stringify(snapshot))); }
+    else { assert.ok(prompt.includes('Shared implementation rules:')); assert.ok(prompt.includes(JSON.stringify(snapshot, null, 2))); }
     cases.push({name, label, path, status:'pass', snapshot, prompt});
   } catch (error) { cases.push({name, label, path, status:'fail', error:error.message}); }
 };

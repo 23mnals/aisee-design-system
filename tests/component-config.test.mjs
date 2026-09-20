@@ -14,6 +14,15 @@ const element = attributes => ({checked:attributes.checked, getAttribute:name =>
 const doc = selectors => ({querySelector:selector => selectors[selector] || null});
 const plain = value => JSON.parse(JSON.stringify(value));
 
+test('only Notification includes self-contained source in the pilot', async () => {
+  const prompts = vm.createContext({});
+  vm.runInContext(portal.slice(portal.indexOf('const componentAiGuidance ='), portal.indexOf('const baseItems =')), prompts);
+  const manifest = JSON.parse(await readFile(new URL('assets/ai-deliveries/manifest.json', root), 'utf8'));
+  assert.deepEqual(Object.keys(manifest), [path('NotificationBell')]);
+  assert.match(portal, /const isSourcePilot = item.path === 'components\/NotificationBell\/NotificationBell.html'/);
+  assert.match(prompts.buildComponentAiPrompt(path('Button')), /Shared implementation rules:/);
+});
+
 test('every Copy for AI entry registers either a live reader or an explicit gallery fallback', () => {
   const guidance = portal.slice(portal.indexOf('const componentAiGuidance'), portal.indexOf('function buildComponentAiPrompt'));
   const entries = [...guidance.matchAll(/"((?:components|preview)\/[^"\n]+\.html)":\s*\{/g)].map(m=>m[1]);
@@ -76,7 +85,9 @@ test('the actual copy handler writes current configuration and never writes on a
   const page=doc({'[data-aisee-config]':element(state)});
   Object.assign(page,{URL:'http://localhost/'+path('Button'),readyState:'complete'});
   const writes=[];
-  const sandbox=vm.createContext({items:[{path:path('Button'),name:'Button'}],activePath:path('Button'),buildComponentAiPrompt:()=> 'Current Button rules',AiseeComponentConfig:api,previewFrame:{contentDocument:page},document:{baseURI:'http://localhost/'},copyAiHeader:{},copyAiHeaderLabel:{},writeClipboard:async text=>writes.push(text),showToast:()=>{},window:{setTimeout:fn=>fn()}});
+  const downloads=[];
+  class DeliveryURL extends URL { static createObjectURL(){return 'blob:delivery';} static revokeObjectURL(){} }
+  const sandbox=vm.createContext({URL:DeliveryURL,Blob,fetch:async()=>({ok:true,json:async()=>({page:path('Button')})}),AiseeAiDelivery:{format:()=> '\nReal source installation',checkPublished:async()=>{}},items:[{path:path('Button'),name:'Button'}],activePath:path('Button'),buildComponentAiPrompt:()=> 'Current Button rules',AiseeComponentConfig:api,previewFrame:{contentDocument:page},document:{baseURI:'http://localhost/',createElement:()=>({click(){downloads.push(this.download);}})},copyAiHeader:{},copyAiHeaderLabel:{},writeClipboard:async text=>writes.push(text),showToast:()=>{},window:{setTimeout:fn=>fn()}});
   vm.runInContext(handler,sandbox);
   await sandbox.copyAiPrompt();
   assert.match(writes[0],/"showIcon": false/);
@@ -86,4 +97,32 @@ test('the actual copy handler writes current configuration and never writes on a
   page.URL='http://localhost/'+path('Badge');
   await sandbox.copyAiPrompt();
   assert.equal(writes.length,2);
+  assert.deepEqual(downloads,[]);
+  page.URL='http://localhost/'+path('NotificationBell');
+  page.querySelector=selector => selector.includes('panelStateMenu') ? element({'data-value':'ready'}) : element({checked:true});
+  sandbox.activePath=path('NotificationBell');
+  sandbox.items=[{path:path('NotificationBell'),name:'Notification'}];
+  sandbox.fetch=async()=>({ok:false});
+  await sandbox.copyAiPrompt();
+  assert.equal(writes.length,2,'Missing delivery must not silently copy an incomplete prompt');
+  sandbox.fetch=async()=>({ok:true,json:async()=>({page:path('NotificationBell')})});
+  await sandbox.copyAiPrompt();
+  assert.match(writes[2],/Real source installation/);
+  assert.deepEqual(downloads,[],'Pilot must not require an attachment download');
+  sandbox.AiseeAiDelivery.checkPublished=async()=>{throw Error('not published');};
+  await sandbox.copyAiPrompt();
+  assert.equal(writes.length,3,'Unpublished source must not produce a broken copied link');
+});
+
+test('Notification publication gate rejects missing or mismatched source and accepts exact installer bytes', async () => {
+  const {webcrypto,createHash}=await import('node:crypto');
+  const delivery=vm.createContext({URL,crypto:webcrypto,Uint8Array});
+  vm.runInContext(await readFile(new URL('assets/ai-delivery.js',root),'utf8'),delivery);
+  const bytes=new TextEncoder().encode('verified installer fixture');
+  const metadata={installerUrl:'https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/test.cjs',installerSha256:createHash('sha256').update(bytes).digest('hex')};
+  delivery.fetch=async()=>({ok:false});
+  await assert.rejects(()=>delivery.AiseeAiDelivery.checkPublished(metadata),/尚未发布/);
+  delivery.fetch=async()=>({ok:true,arrayBuffer:async()=>bytes.buffer});
+  await delivery.AiseeAiDelivery.checkPublished(metadata);
+  await assert.rejects(()=>delivery.AiseeAiDelivery.checkPublished({...metadata,installerSha256:'invalid'}),/不匹配/);
 });
