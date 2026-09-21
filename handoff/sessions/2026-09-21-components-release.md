@@ -19,4 +19,11 @@
 
 ## 验收与发布跟踪
 
-本地 npm run check、独立生产交付验证、Copy for AI 配置审计与站点构建均在发布前重跑；CI/Pages 及公网验收结果在当前交接记录。最终发布结果以远端提交和工作流状态为准。
+- npm run check：130 项测试、类型检查与库构建通过。
+- verify:ai-deliveries：29 份生产交付独立类型检查/构建、精确文件范围、哈希、重装及冲突检查通过。
+- audit:copy-ai：196 个配置案例，0 失败；npm run site 通过。
+- 功能提交 665757c；合并提交 120e8e80a794725428467eb9d558ad5f59f7bf12 保留双方历史。解决重叠文件冲突后，合并树与已验收功能快照完全一致。
+- 正常 push 到开发分支成功；CI / Pages run https://github.com/23mnals/aisee-design-system/actions/runs/35575034360 成功。
+- 公网 Confirmation Dialog f0524f6175a927ef、Thinking Indicator 99ee5a4fe9847cba 的 latest、接入说明与安装器 SHA-256 验证通过；线上导航及 NEW 三天规则通过。
+- 发布后浏览器 Copy 点击复测因工具超时未完成，没有将此项记为通过。组件本地交互验证见对应 session；跨 AI 平台业务接入待外部开发验收。
+- 最终保留 10 个无关未跟踪文件；后续普通开发不自动发布。

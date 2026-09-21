@@ -9,7 +9,7 @@
 - Thinking Indicator 保留圆形/无限符号变形、文字扫光轮换，支持图标、尺寸和本地化；4 个必要生产文件，无额外字体或动效库。
 - NEW 更新当天算第 1 天，第 4 天台北零点隐藏；新内容按自身日期重新显示，刷新和构建不延长。
 - 416 个未发布的中间交付文件已保留在本地 artifacts/unpublished-deliveries，不提交；旧公开版本全部保留。无关原型和备用资源保持原位。
-- 正在整合本地与远端提交记录并执行发布验收；最终提交和部署结果待本轮结束写入。
+- 已提交 665757c，并安全合并远端历史为 120e8e8；正常 push 成功。CI / Pages [35575034360](https://github.com/23mnals/aisee-design-system/actions/runs/35575034360) 成功，公网导航、三天 NEW 和两组件生产交付已核验。
 
 ## 最近完成 · 2026-09-21 统一生产交付已发布
 
@@ -24,17 +24,16 @@
 
 ## 当前 Git 与工作区
 
-- 原工作区 ai/desktop/design-system-current，HEAD d6d166b，origin 跟踪 c34e5fc，ahead 1 / behind 4；仍有大量本地修改与未跟踪产物，staged 为空。不能直接 pull/push/reset/restore/clean；先比较并保护现有工作。
-- 已发布代码从 /tmp/aisee-notification-release 独立工作区提交（detached HEAD c34e5fc）。该目录只有未跟踪 node_modules 符号链接，未发布该链接或 prototypes/验收产物/无关图片。
-- HTTPS Git 传输超时，使用 GitHub Git Data API 验证 tree/commit 完全一致后 force=false 快进发布。原本地分支和文件保留，仅同步远端跟踪记录。
+- 开发分支 ai/desktop/design-system-current；功能发布提交 120e8e80a794725428467eb9d558ad5f59f7bf12。本地和远端分叉已安全整合，工作区文件与验收快照一致；最后交接文档提交见 git log。
+- 未提交文件从 845 个降至 10 个，均为未确认的 prototypes 与通知备用资源，保留原位，不自动提交或删除。416 个未发布的中间构建文件保留于 artifacts/unpublished-deliveries（忽略）。
+- 本轮正常 HTTPS push 成功，无需旧发布工作区或 Git Data API 绕行。main 未操作，没有创建或合并 PR。
 - 本轮发布授权已执行；后续普通开发不自动 commit/push，正式 main 同步仍须用户授权 PR，合并另需授权。
 
 ## 验收结果与边界
 
-- 本次快照：125 项测试、192 个配置案例、28 份独立 React 交付类型检查与构建通过；静态站点构建通过。
-- 匿名验证全部 28 个公开 latest、接入说明、安装器哈希通过；公开 NotificationBell 安装仅 4 必需文件。
-- 真实 Copy 解析器使用公网入口成功，生产配置过滤通过，Notification 输出一句话且不带 Demo 状态。
-- 本轮浏览器工具两次超时，未完成发布后的按钮点击复测。上一轮已在本地验证 Bell 11 项行为及 Button/Tabs/Dialog 交互；不宣称全部组件全部视觉状态已验收。
+- 本次发布：130 项测试、196 个配置案例（0 失败）、29 份独立 React 生产交付类型检查与构建通过；静态站点构建通过。数量为本次构建结果，不是规范限制。
+- CI 与 Pages 部署成功。公网 Confirmation Dialog f0524f6175a927ef（7 文件）、Thinking Indicator 99ee5a4fe9847cba（4 文件）的 latest、说明、安装器 SHA-256 均与本地一致；线上 Thinking 导航及 NEW age < 3 已核验。
+- 两个组件本地交互、响应式、键盘及 reduced-motion 等验证见对应组件 session。发布后的浏览器 Copy 按钮点击复测因工具超时未完成；不宣称该项或全部组件全部视觉状态已验收。
 - 跨 AI 平台真实项目最终产出仍待外部开发复测。详细报告生成于 artifacts/production-delivery-audit、artifacts/copy-ai-audit（不发布到仓库）。
 
 ## 其他当前状态
@@ -47,11 +46,11 @@
 
 ## 下一步
 
-0. 用户先在本地验收 Thinking Indicator 和 Confirmation Dialog；明确要求发布后再安全整合并发布两轮更新。不要直接推送当前分叉且有未提交文件的原工作区。
+0. 本轮组件更新已上线，可刷新公开网站查看 Thinking Indicator、Confirmation Dialog 和 NEW 三天规则。
 1. 请外部开发从新版页面重新 Copy for AI，在业务项目验收；不要再转发旧 ready-30.md。
 2. 若反馈下载失败，先检查公开 latest/网络/编码 AI 访问能力；若效果问题，按固定任务及视口核对真实交付源码、配置、交互与视觉。
 3. 新增组件/变量时维护生产清单及批量案例；发布后再次核对跨平台版本和公网可达性。
-4. 后续开发前先处理原工作区分叉的安全整合，不覆盖现有未提交文件。
+4. 后续开发前检查 git status；保留剩余 10 个无关原型/备用资源，按明确需求单独处理。
 
 ## 最近 session
 
