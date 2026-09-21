@@ -17,7 +17,10 @@ const built=[];
 for(const manifest of registry.components) {
   const buffers=await productionFiles(manifest,root);
   const files=Object.fromEntries(Object.entries(buffers).map(([p,b])=>[p,b.toString('base64')]));
-  const payload=gzipSync(JSON.stringify(files),{level:9}).toString('base64');
+  const compressed=gzipSync(JSON.stringify(files),{level:9});
+  // RFC 1952 OS=255: identical source must not change version between macOS and Linux.
+  compressed[9]=255;
+  const payload=compressed.toString('base64');
   const sha256=hash(Buffer.from(payload,'base64'));
   const version=hash(JSON.stringify({manifest,sha256,generatorVersion})).slice(0,16);
   const base=new URL(manifest.slug+'/',registry.publicBaseUrl).href;

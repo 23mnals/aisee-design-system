@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Toggle",
   "page": "components/Toggle/Toggle.html",
-  "version": "1e585550e29c335f",
-  "delivery": "./releases/1e585550e29c335f/ready.md",
-  "installer": "./releases/1e585550e29c335f/install.cjs",
-  "installerSha256": "0af280961a7d27a041275eea81ca39325f6feeec0ca0b83807482dea601024f2",
+  "version": "3b3454fb15aa4934",
+  "delivery": "./releases/3b3454fb15aa4934/ready.md",
+  "installer": "./releases/3b3454fb15aa4934/install.cjs",
+  "installerSha256": "20cbd2dbcd16a0cb54af8e726d69d68986b4eb0e27c1a4abaac54e83ac95e7a0",
   "configuration": {
     "props": {
       "Toggle": [

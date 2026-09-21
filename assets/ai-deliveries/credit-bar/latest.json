@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "CreditBar",
   "page": "components/CreditBar/CreditBar.html",
-  "version": "c326db0f9c2c724e",
-  "delivery": "./releases/c326db0f9c2c724e/ready.md",
-  "installer": "./releases/c326db0f9c2c724e/install.cjs",
-  "installerSha256": "636afddea82caf0661835d368a0618dcf48023d0a3e8a7c3bbf8187613b41e4a",
+  "version": "2c05ff4a18c420ba",
+  "delivery": "./releases/2c05ff4a18c420ba/ready.md",
+  "installer": "./releases/2c05ff4a18c420ba/install.cjs",
+  "installerSha256": "88bbe714edada53232388f981ab5d73674488f7f9b502eee9038db793389079c",
   "configuration": {
     "props": {}
   },

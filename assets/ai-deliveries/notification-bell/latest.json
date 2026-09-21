@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "NotificationBell",
   "page": "components/NotificationBell/NotificationBell.html",
-  "version": "71160f3c26397730",
-  "delivery": "./releases/71160f3c26397730/ready.md",
-  "installer": "./releases/71160f3c26397730/install.cjs",
-  "installerSha256": "0dd22fbad2ad3ea58584e2f09b036b5b3a89b208872331abb75deb9ebe9a8121",
+  "version": "3d239fcdf6bb64c2",
+  "delivery": "./releases/3d239fcdf6bb64c2/ready.md",
+  "installer": "./releases/3d239fcdf6bb64c2/install.cjs",
+  "installerSha256": "06f048932240442be782fab5f12f4cbac3b35a9ae30294da89131137a3d4ff93",
   "configuration": {
     "props": {}
   },

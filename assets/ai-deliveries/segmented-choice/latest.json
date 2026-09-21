@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "SegmentedChoice",
   "page": "components/SegmentedChoice/SegmentedChoice.html",
-  "version": "6869ceb5d059512e",
-  "delivery": "./releases/6869ceb5d059512e/ready.md",
-  "installer": "./releases/6869ceb5d059512e/install.cjs",
-  "installerSha256": "bf9fdf056af33d67506dcf0fdc36d2d64874e9fe0fb64a6d0a194b2d9756874b",
+  "version": "36a81329344f1704",
+  "delivery": "./releases/36a81329344f1704/ready.md",
+  "installer": "./releases/36a81329344f1704/install.cjs",
+  "installerSha256": "d0ed29fdd05475be04ea5011f1e03bc0e74c4fb707be0b6b9a45602fd0f11816",
   "configuration": {
     "props": {}
   },

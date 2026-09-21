@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Button",
   "page": "components/Button/Button.html",
-  "version": "e5fd995ff82d3b95",
-  "delivery": "./releases/e5fd995ff82d3b95/ready.md",
-  "installer": "./releases/e5fd995ff82d3b95/install.cjs",
-  "installerSha256": "e01fc36fc14274c81ca8be06700981c3464292e9a20f5904f7fdf4faaf5c48d6",
+  "version": "b7bac4f3de97ea0f",
+  "delivery": "./releases/b7bac4f3de97ea0f/ready.md",
+  "installer": "./releases/b7bac4f3de97ea0f/install.cjs",
+  "installerSha256": "9a0770f14f4fb82fccbbc01f86710085b9cb4f8ce401a47aea622eea5aa14856",
   "configuration": {
     "props": {
       "Button": [

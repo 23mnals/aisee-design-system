@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "SidebarNavigation",
   "page": "components/SidebarNavigation/SidebarNavigation.html",
-  "version": "86f5ef6ab2b1eb17",
-  "delivery": "./releases/86f5ef6ab2b1eb17/ready.md",
-  "installer": "./releases/86f5ef6ab2b1eb17/install.cjs",
-  "installerSha256": "6d9204e3fa5b6177fd6b3c75ea4271e54123fdd6ef2c4075e6168b7172d3f5f9",
+  "version": "3c500a252f26cc20",
+  "delivery": "./releases/3c500a252f26cc20/ready.md",
+  "installer": "./releases/3c500a252f26cc20/install.cjs",
+  "installerSha256": "8d302f2bee70397e8fdd1e666d338218a245b3a444f2c0bff6068c37d5dcc5e6",
   "configuration": {
     "props": {
       "SidebarLayout": [

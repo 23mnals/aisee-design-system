@@ -19,3 +19,7 @@
 ## Git 与部署
 
 原工作区保留，独立目录创建发布提交后非强制快进到 ai/desktop/design-system-current。Git HTTPS 低速超时，必要时使用 GitHub Git Data API 并校验 tree/commit；发布前重新核对远端父提交。推送触发 CI 与 Pages，最终结果记录于原工作区当前交接；main 不变，不创建 PR。
+
+## 公网验收发现并修复跨平台版本差异
+
+首轮发布 a9045c0 的 CI/Pages 成功，但公网清单与 Mac 本地版本不同。解压后源码完全一致，差异仅为 gzip OS header：Linux=3、macOS=19。构建器现在统一为 RFC 1952 的 OS=255，并加入逐组件归档重建一致性回归检查；125 项测试、28 份独立交付验证通过。修复后再次发布并核对公网版本、说明和安装器 SHA-256，避免本地复制因平台差异被误拦截。

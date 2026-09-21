@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Dropdown",
   "page": "components/Select/Select.html",
-  "version": "796a77cb8b7447c7",
-  "delivery": "./releases/796a77cb8b7447c7/ready.md",
-  "installer": "./releases/796a77cb8b7447c7/install.cjs",
-  "installerSha256": "47133bac67edb233156337befd7823f9ff519db620eb616773ec1c8b30d43256",
+  "version": "e20e5839973b3f7a",
+  "delivery": "./releases/e20e5839973b3f7a/ready.md",
+  "installer": "./releases/e20e5839973b3f7a/install.cjs",
+  "installerSha256": "9167abf98a5627ecb022d7a19160b76b40354c52bb3d594b65b43531cf2abb0d",
   "configuration": {
     "props": {
       "Dropdown": []

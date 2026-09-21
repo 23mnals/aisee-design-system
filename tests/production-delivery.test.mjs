@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {gunzipSync} from 'node:zlib';
+import {gunzipSync,gzipSync} from 'node:zlib';
 import {validateManifest,productionFiles,imports} from '../scripts/production-delivery.mjs';
 import {cssDependencyClosure} from '../scripts/css-delivery.mjs';
 const root=new URL('../',import.meta.url).pathname;
@@ -105,4 +105,16 @@ test('all generated latest pointers work through the real browser resolver witho
   }});
   vm.runInContext(await readFile(new URL('../assets/ai-delivery.js',import.meta.url),'utf8'),ctx);
   for(const m of registry.components){const d=await ctx.AiseeAiDelivery.resolveDelivery(m.page,'https://23mnals.github.io/aisee-design-system/');assert.equal(d.name,m.name);assert.ok(ctx.AiseeAiDelivery.format(d).includes('/latest.json'));}
+});
+
+
+test('production archives are reproducible across platform gzip headers',async()=>{
+  for(const manifest of registry.components){
+    const delivery=JSON.parse(await readFile(new URL(`../assets/ai-deliveries/${manifest.name}.json`,import.meta.url)));
+    const published=Buffer.from(delivery.payload,'base64');
+    const regenerated=gzipSync(gunzipSync(published),{level:9});
+    regenerated[9]=255;
+    assert.equal(published[9],255,manifest.name+' uses a platform-neutral gzip header');
+    assert.deepEqual(regenerated,published,manifest.name+' reproduces the exact version payload');
+  }
 });

@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "FeatureOverview",
   "page": "components/FeatureOverview/FeatureOverview.html",
-  "version": "b18ecc209412a6c6",
-  "delivery": "./releases/b18ecc209412a6c6/ready.md",
-  "installer": "./releases/b18ecc209412a6c6/install.cjs",
-  "installerSha256": "0595ba88597341f23df7ce13019f6900d949ade4d434a71f7fb82b35e4e99cbd",
+  "version": "08f60f7e261152fe",
+  "delivery": "./releases/08f60f7e261152fe/ready.md",
+  "installer": "./releases/08f60f7e261152fe/install.cjs",
+  "installerSha256": "d1ccf6c6d2c8dd5b64d9339e75c25624499833ce3ca43f0344e67a70349b9f3f",
   "configuration": {
     "props": {
       "CardGrid": [

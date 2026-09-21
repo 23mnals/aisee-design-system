@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "QuantityStepper",
   "page": "components/QuantityStepper/QuantityStepper.html",
-  "version": "c66b153c187d5939",
-  "delivery": "./releases/c66b153c187d5939/ready.md",
-  "installer": "./releases/c66b153c187d5939/install.cjs",
-  "installerSha256": "e750894a6073fc8fc27dd4414deaae140598585e6103851e9db1ef6deeec2815",
+  "version": "85361ff51383093e",
+  "delivery": "./releases/85361ff51383093e/ready.md",
+  "installer": "./releases/85361ff51383093e/install.cjs",
+  "installerSha256": "041d6c48d98229e7cb920f95acc323e29bef082d88edb54a70df2882a886e5b2",
   "configuration": {
     "props": {
       "QuantityStepper": [

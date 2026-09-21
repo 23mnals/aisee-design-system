@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "EmptyState",
   "page": "components/EmptyState/EmptyState.html",
-  "version": "92557cef6d1c0db4",
-  "delivery": "./releases/92557cef6d1c0db4/ready.md",
-  "installer": "./releases/92557cef6d1c0db4/install.cjs",
-  "installerSha256": "59d92afc763017e5c5a0c0aef5c6c5429106209c7148ca5d7e42a646ead95432",
+  "version": "8d9387f6edc8991e",
+  "delivery": "./releases/8d9387f6edc8991e/ready.md",
+  "installer": "./releases/8d9387f6edc8991e/install.cjs",
+  "installerSha256": "38d6996a095c59033d0ad07adf41c1fc54dfe910a3d913030553ef1996cdddd1",
   "configuration": {
     "props": {
       "EmptyState": [

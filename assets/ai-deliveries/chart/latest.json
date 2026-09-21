@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Chart",
   "page": "components/Chart/Chart.html",
-  "version": "5b5e276ed2420728",
-  "delivery": "./releases/5b5e276ed2420728/ready.md",
-  "installer": "./releases/5b5e276ed2420728/install.cjs",
-  "installerSha256": "9c5b76cf11228348e87cd8a772bc180aa2ce2676664bb46b6a272d4eda8e1030",
+  "version": "bf915f92b820fab8",
+  "delivery": "./releases/bf915f92b820fab8/ready.md",
+  "installer": "./releases/bf915f92b820fab8/install.cjs",
+  "installerSha256": "bbfc680254f0053e898a848e98ec82b9d1d2d80de06db706cce5ad4d590b25a0",
   "configuration": {
     "props": {}
   },

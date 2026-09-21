@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "TooltipToast",
   "page": "components/TooltipToast/TooltipToast.html",
-  "version": "e44c316605a41127",
-  "delivery": "./releases/e44c316605a41127/ready.md",
-  "installer": "./releases/e44c316605a41127/install.cjs",
-  "installerSha256": "300714c544ac45b4aedffe17fa5438dba6e272560ae8d4f8e9e8bef2b68240ad",
+  "version": "052378da0ea2a5f6",
+  "delivery": "./releases/052378da0ea2a5f6/ready.md",
+  "installer": "./releases/052378da0ea2a5f6/install.cjs",
+  "installerSha256": "e625b15ba75c8824d7fab94f039f1f69c31f21c2eae2a04a19dee02669c1eba8",
   "configuration": {
     "props": {
       "Tooltip": [

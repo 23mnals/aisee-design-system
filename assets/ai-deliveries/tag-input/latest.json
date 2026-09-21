@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "TagInput",
   "page": "components/TagInput/TagInput.html",
-  "version": "6a1bdb04022d6fd5",
-  "delivery": "./releases/6a1bdb04022d6fd5/ready.md",
-  "installer": "./releases/6a1bdb04022d6fd5/install.cjs",
-  "installerSha256": "39ca7892f57abb791ea6d5665e365ef26ae8512dad84d7c5614763acd274fbc0",
+  "version": "c25a0013cccba403",
+  "delivery": "./releases/c25a0013cccba403/ready.md",
+  "installer": "./releases/c25a0013cccba403/install.cjs",
+  "installerSha256": "4084e87ae8a2664aa225c5caf0a200e087c8f6cc7a504d8064fdf0c8e2c09a08",
   "configuration": {
     "props": {}
   },

@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Dialog",
   "page": "components/Dialog/Dialog.html",
-  "version": "726a72c3e89153cf",
-  "delivery": "./releases/726a72c3e89153cf/ready.md",
-  "installer": "./releases/726a72c3e89153cf/install.cjs",
-  "installerSha256": "d12bcd96170108d637b450d806fc266c4622deb17f483e16122849e4ea3974a3",
+  "version": "65459cfe5be095b8",
+  "delivery": "./releases/65459cfe5be095b8/ready.md",
+  "installer": "./releases/65459cfe5be095b8/install.cjs",
+  "installerSha256": "ac14e7b39c7c5ffb66cd279dfd39bfdf29d8ac64472974c0fe206691e34d91a0",
   "configuration": {
     "props": {}
   },

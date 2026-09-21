@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "ToggleSelectionGroup",
   "page": "components/ToggleSelectionGroup/ToggleSelectionGroup.html",
-  "version": "04e77ad924520841",
-  "delivery": "./releases/04e77ad924520841/ready.md",
-  "installer": "./releases/04e77ad924520841/install.cjs",
-  "installerSha256": "73831822c835c05be1bc18be0a384d3b6767e49f180a4df1abcd362ab8f553d8",
+  "version": "7741e7162bb040a7",
+  "delivery": "./releases/7741e7162bb040a7/ready.md",
+  "installer": "./releases/7741e7162bb040a7/install.cjs",
+  "installerSha256": "5aeb4ce8e4da9ba70b1211b3d1c28de924c030333c137c137a5c570ec4c16f22",
   "configuration": {
     "props": {}
   },

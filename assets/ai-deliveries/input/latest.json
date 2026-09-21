@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Input",
   "page": "components/Input/Input.html",
-  "version": "cbc528f9e7cfdda6",
-  "delivery": "./releases/cbc528f9e7cfdda6/ready.md",
-  "installer": "./releases/cbc528f9e7cfdda6/install.cjs",
-  "installerSha256": "012eea1e9255089849b52cfe672699e7c42b59fa4f03715ce4c949d24597b86d",
+  "version": "7b2310e3c2913ab2",
+  "delivery": "./releases/7b2310e3c2913ab2/ready.md",
+  "installer": "./releases/7b2310e3c2913ab2/install.cjs",
+  "installerSha256": "8cc072c2139d35310d6c996a953376d1be49c843eb8859214711f08b37f8a0ac",
   "configuration": {
     "props": {
       "Input": [

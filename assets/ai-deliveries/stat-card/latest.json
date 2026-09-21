@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "StatCard",
   "page": "components/StatCardCurrent/StatCardCurrent.html",
-  "version": "ed96b1a55d9a198a",
-  "delivery": "./releases/ed96b1a55d9a198a/ready.md",
-  "installer": "./releases/ed96b1a55d9a198a/install.cjs",
-  "installerSha256": "cae9f9c65c8b33d55bba8fdf70f2868fd4282ebf9e7bc5bb7b61d2f18da11aab",
+  "version": "c3adf1d6310b3e6f",
+  "delivery": "./releases/c3adf1d6310b3e6f/ready.md",
+  "installer": "./releases/c3adf1d6310b3e6f/install.cjs",
+  "installerSha256": "cf31523f0422637740a663eb174d692899486feb6153738d2baa9307a2a5de5e",
   "configuration": {
     "props": {}
   },

@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Steps",
   "page": "components/Steps/Steps.html",
-  "version": "5a95f762348c633d",
-  "delivery": "./releases/5a95f762348c633d/ready.md",
-  "installer": "./releases/5a95f762348c633d/install.cjs",
-  "installerSha256": "4fc1be9459282c23894c76211f76bc157b6f9987398917b41e9bbaec8f83329e",
+  "version": "a998243903082f7c",
+  "delivery": "./releases/a998243903082f7c/ready.md",
+  "installer": "./releases/a998243903082f7c/install.cjs",
+  "installerSha256": "d31b22006cd8820f3603d91645fb64c15b97b183f9b8b163a451ee79f7a30447",
   "configuration": {
     "props": {
       "Steps": [

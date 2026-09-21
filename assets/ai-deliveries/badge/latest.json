@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Badge",
   "page": "components/Badge/Badge.html",
-  "version": "3e52cc783c265201",
-  "delivery": "./releases/3e52cc783c265201/ready.md",
-  "installer": "./releases/3e52cc783c265201/install.cjs",
-  "installerSha256": "2e55cad820c1a0d4d31807fcd857211a6f50af730f36a6f2e8b19011c2a86539",
+  "version": "43a382b68e55b019",
+  "delivery": "./releases/43a382b68e55b019/ready.md",
+  "installer": "./releases/43a382b68e55b019/install.cjs",
+  "installerSha256": "b516a61d828ee5c6e3c213bbc6ceb769dc4d3e60f2c97126c3863ae56020c53c",
   "configuration": {
     "props": {}
   },

@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Tabs",
   "page": "components/Tabs/Tabs.html",
-  "version": "1ad6c2f467943fe3",
-  "delivery": "./releases/1ad6c2f467943fe3/ready.md",
-  "installer": "./releases/1ad6c2f467943fe3/install.cjs",
-  "installerSha256": "f2e33677f4f1553ec4de034a76474bbecc17c44506e6557257195c7f653b9d9b",
+  "version": "8342adf99b662a70",
+  "delivery": "./releases/8342adf99b662a70/ready.md",
+  "installer": "./releases/8342adf99b662a70/install.cjs",
+  "installerSha256": "670032f51e6943d9d83fc0b92221ef601879d85ce5c9bd4ecceee3ad10ea95cb",
   "configuration": {
     "props": {
       "Tabs": [

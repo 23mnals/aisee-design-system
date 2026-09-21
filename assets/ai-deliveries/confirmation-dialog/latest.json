@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "ConfirmationDialog",
   "page": "components/ConfirmationDialog/ConfirmationDialog.html",
-  "version": "3832be337ff87928",
-  "delivery": "./releases/3832be337ff87928/ready.md",
-  "installer": "./releases/3832be337ff87928/install.cjs",
-  "installerSha256": "a09262a918a9fb4247ee569f30ff65891020926dbdf5fae56a073b1749944c9a",
+  "version": "9f2d7765651ed785",
+  "delivery": "./releases/9f2d7765651ed785/ready.md",
+  "installer": "./releases/9f2d7765651ed785/install.cjs",
+  "installerSha256": "dad164d23701ce6350f7c940b769252dcd3409ed1caaa19cd94fdb83330dcc88",
   "configuration": {
     "props": {}
   },

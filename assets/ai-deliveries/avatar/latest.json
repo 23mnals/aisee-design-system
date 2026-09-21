@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "Avatar",
   "page": "preview/avatar.html",
-  "version": "1bd931494688a94f",
-  "delivery": "./releases/1bd931494688a94f/ready.md",
-  "installer": "./releases/1bd931494688a94f/install.cjs",
-  "installerSha256": "b7f4a6b259a4c1c743c96ed51ea0c8ad993c51507d0bb5c555b57e9a8de4424a",
+  "version": "b96866c8600ac513",
+  "delivery": "./releases/b96866c8600ac513/ready.md",
+  "installer": "./releases/b96866c8600ac513/install.cjs",
+  "installerSha256": "ea600a112807edc4fcea5869a553d45e018c62e462a940ec19b8c92371bbb749",
   "configuration": {
     "props": {
       "Avatar": [

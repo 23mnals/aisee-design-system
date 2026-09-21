@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "ScoreGauge",
   "page": "components/ScoreGauge/ScoreGauge.html",
-  "version": "cf1c942fb0d23e35",
-  "delivery": "./releases/cf1c942fb0d23e35/ready.md",
-  "installer": "./releases/cf1c942fb0d23e35/install.cjs",
-  "installerSha256": "9066d9ffbd5378f243c684cda927fce1318ddec9f536711b507faf2cd795817f",
+  "version": "b45f2fb25cfa3894",
+  "delivery": "./releases/b45f2fb25cfa3894/ready.md",
+  "installer": "./releases/b45f2fb25cfa3894/install.cjs",
+  "installerSha256": "25c5e9bcf53714c73945631756602db31ea67faa9e765b88725c8610f3450228",
   "configuration": {
     "props": {}
   },

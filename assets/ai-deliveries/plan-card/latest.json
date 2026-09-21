@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "PlanCard",
   "page": "components/PlanCardCurrent/PlanCardCurrent.html",
-  "version": "4053b4b3ab7d999e",
-  "delivery": "./releases/4053b4b3ab7d999e/ready.md",
-  "installer": "./releases/4053b4b3ab7d999e/install.cjs",
-  "installerSha256": "818727c9b981249f5478ee22f0409843bd83c3aec92d1ec850b39a3ab8d33885",
+  "version": "f4e0e26189383ee8",
+  "delivery": "./releases/f4e0e26189383ee8/ready.md",
+  "installer": "./releases/f4e0e26189383ee8/install.cjs",
+  "installerSha256": "f14994d7f2d9f3feac62ceed24b8b415537c052cc46e61495ac5b3fad8d20e1a",
   "configuration": {
     "props": {}
   },
