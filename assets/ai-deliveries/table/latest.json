@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 3,
+  "name": "Table",
+  "page": "components/Table/Table.html",
+  "version": "c18f09880efac99d",
+  "delivery": "./releases/c18f09880efac99d/ready.md",
+  "installer": "./releases/c18f09880efac99d/install.cjs",
+  "installerSha256": "d37a3550e890d8bd9f955c8cd6295064a937e1ce51f318e87187b64bd1288165",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Table.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 3,
+  "name": "ConfirmationDialog",
+  "page": "components/ConfirmationDialog/ConfirmationDialog.html",
+  "version": "f0524f6175a927ef",
+  "delivery": "./releases/f0524f6175a927ef/ready.md",
+  "installer": "./releases/f0524f6175a927ef/install.cjs",
+  "installerSha256": "d84206e6ddd07e2fa6b55025ea85dfe04c46c92b7ff112030b1c4623eb2ab69e",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "ConfirmationDialog.tsx",
+    "Button.tsx",
+    "styles.css",
+    "assets/dialog-close.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/dialog-close.svg.d.ts"
+  ]
+}

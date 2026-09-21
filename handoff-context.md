@@ -2,50 +2,63 @@
 
 > 工作纪律见 [AGENTS.md](AGENTS.md)，长期决策见 [docs/TEAM_DECISIONS.md](docs/TEAM_DECISIONS.md)，历史见 [handoff/sessions/](handoff/sessions/)。
 
-## 当前 Git
+## 本轮发布 · 2026-09-21 组件更新
 
-- 分支：`ai/desktop/design-system-current`。
-- 最新功能提交：`2a9d63a feat: publish component variants and Copy for AI configuration audit`，已按用户本轮授权推送到同名远端开发分支；`main` 未修改。
-- 本次交接记录随独立文档提交保存在本地；功能提交后的文档 push 连续因 GitHub 443 连接超时失败，尚有 1 个文档提交未推送。网络恢复后重试普通 push；最终 HEAD 请读取 `git log`。
-- 当前组件、演示、资源、配置复制规则及批量检查已纳入版本。未引用的 Notification 备用素材、`prototypes/assets/` 和两个 dialog / notification 动效实验页面保留本地，未加入提交；不要删除或误判为发布遗漏。
-- 本轮本地检查全部通过；功能提交的远端 CI verify 与 Pages 部署均已成功（run `35333320666`），批量报告 artifact 已上传。
+- 用户已授权发布到开发分支。本轮包含通用 Confirmation Dialog、Thinking Indicator、NEW 三天规则及文档/交付，main 不操作。
+- Confirmation Dialog 支持普通确认和可选影响卡片；文案、图标、按钮与回调由宿主提供，7 个必要生产文件。
+- Thinking Indicator 保留圆形/无限符号变形、文字扫光轮换，支持图标、尺寸和本地化；4 个必要生产文件，无额外字体或动效库。
+- NEW 更新当天算第 1 天，第 4 天台北零点隐藏；新内容按自身日期重新显示，刷新和构建不延长。
+- 416 个未发布的中间交付文件已保留在本地 artifacts/unpublished-deliveries，不提交；旧公开版本全部保留。无关原型和备用资源保持原位。
+- 正在整合本地与远端提交记录并执行发布验收；最终提交和部署结果待本轮结束写入。
 
-## 已完成 / 最近更新
+## 最近完成 · 2026-09-21 统一生产交付已发布
 
-- **Copy for AI 全组件当前配置**：15 个变量页面在点击时读取当前 iframe 的选择，13 个固定展示页明确没有选定示例。独立示例、真实 props、组合 / 插槽分开记录；隐藏无关参数与业务输入不进入配置。覆盖 28 个复制入口。
-- **批量检查**：运行 `npm run audit:copy-ai`，输出 `artifacts/copy-ai-audit/report.html`、JSON 和 `review.csv`。当前 190 个受控配置案例通过，检查实际提示词模板、配置读取、公开 TypeScript props 和复制处理函数；CI 自动执行并上传 `copy-ai-audit` artifact。README 与 [验收说明](docs/COPY_AI_VALIDATION.md) 已同步。
-- **验证边界**：190 个案例是配置契约检查，不是自动点击所有浏览器变量或实际调用其他 AI 生成页面。CSV 的 browser / AI_output 默认 NOT RUN；每次重跑会覆盖报告，已填写的验收表应另存。此前 28 个入口浏览器复制反馈成功、侧栏和按钮变量切换已验证；工具虚拟剪贴板不能可靠读回内容，处理函数由集成测试验证。
-- 本轮 `npm run check` 通过：类型检查、104 项测试、组件 / 包构建；`npm run site` 静态站点构建通过。报告页面在浏览器可打开。
-- **Sidebar**：白底 / 灰底通栏、floating、inset × inside / outside，以及 topbar + hover / click；外置按钮位于内容标题栏，16px 间距、透明 floating 标题、inset 底分隔线、button/usual hover 和轻阴影已实现。
-- **PlanCard / FeatureOverview**：新版单套餐订阅确认、旧三档比较保留；连体分区 Card、FeatureList、紧凑 StatCard、四区组合及文字 / 图标模式已实现。
-- **其他本批版本内容**：Card 九类组合、Textarea 与 Create Post；Segmented Choice；Brand Mention TagInput；嵌套简化、弹窗滚动；Select hover / 浮层 / 摘要与危险行颜色；Button 图标变量；Toggle 正式 Dropdown；NEW 七天规则；TreeNav 行操作与 Webapp 关联导航更新。
+- 用户明确要求发布新版供外部开发复制。已发布到 ai/desktop/design-system-current：机制提交 a9045c0，跨平台归档修复 c34e5fcb618c728b9f7885d7b5febb7926f0789a。main 未操作；没有创建或合并 PR。
+- CI / Pages run [35568475082](https://github.com/23mnals/aisee-design-system/actions/runs/35568475082) 成功。公开入口：https://23mnals.github.io/aisee-design-system/
+- 所有已登记 Current 组件依据 delivery/components.json 显式声明生产源码、局部样式、runtime dependencies、必要资产、Demo 排除项、可复制配置和 compatibility。核心无 Notification 特判，不限制文件数。
+- CSS selector/value AST 依赖闭包保留状态、嵌套、变量默认值及条件覆盖、@property、keyframes、media/supports/reduced-motion；缺失依赖阻止构建。生产代码不依赖 Demo，不包含字体/全局 reset/整库 token 环境。
+- Copy 文本为具体组件名称 + 稳定 latest.json + 白名单真实配置。稳定地址解析执行时最新已发布生产版本；已安装源码不自动更新。公开版本、说明、安装器校验通过后才复制，旧历史链接保留。
+- NotificationBell 仅交付 NotificationBell.tsx、styles.css、index.ts、styles.css.d.ts；真实 count/dot/onClick、铃铛及数字动画保留，通知面板、演示控制、模拟数据均不交付。
+- 首轮发现 gzip OS 标识在 Mac/Linux 不同，导致源码一致而版本不同；已统一 OS=255 并加入全部归档重建一致性测试。最终公网、本地和独立发布目录版本完全一致。
+- 各组件自行声明 compatibility / dependencies，不统一要求 React 18 或 Node 20；Node 要求针对源码安装器。规范不写死组件总数，报告动态输出。
 
-## 仍待确认 / 未完成
+## 当前 Git 与工作区
 
-- **实际 AI 产出验收**：尚未运行跨 AI 平台生成对比。固定模型 / 版本 / 任务 / 视口，按验收表比较布局、变量、交互和响应式；关键案例至少独立复测两次。合同检查通过不等于视觉还原通过。
-- **视觉 / 产品验收**：用户本轮授权保存远端开发版本，不等同于每个组件所有场景已验收，也不等同于正式同步 main。
-- PlanCard 订阅确认、FeatureOverview 第一批、Segmented Choice / Card、Button 图标变量、Select / Sidebar、Toggle 正式菜单、NEW 七天规则继续按实际预览验收。
-- FeatureOverview 第二批平台图标条组件化尚未实施；购买 / 支付及分析启动由产品接口负责。
-- Webapp 的 Growth / Engage 为单级入口，组件页有子菜单，产品层级方向仍待确认，未擅自统一。
-- Button 参考稿中的完整任务列表 / 回复卡片是否扩展为复合组件尚未确认。
-- 用户尚未指定全产品统一布局配置；单次 Demo 选择不自动成为全产品默认值。
-- Connect X / LinkedIn / TikTok 连接账号弹窗暂缓。
+- 原工作区 ai/desktop/design-system-current，HEAD d6d166b，origin 跟踪 c34e5fc，ahead 1 / behind 4；仍有大量本地修改与未跟踪产物，staged 为空。不能直接 pull/push/reset/restore/clean；先比较并保护现有工作。
+- 已发布代码从 /tmp/aisee-notification-release 独立工作区提交（detached HEAD c34e5fc）。该目录只有未跟踪 node_modules 符号链接，未发布该链接或 prototypes/验收产物/无关图片。
+- HTTPS Git 传输超时，使用 GitHub Git Data API 验证 tree/commit 完全一致后 force=false 快进发布。原本地分支和文件保留，仅同步远端跟踪记录。
+- 本轮发布授权已执行；后续普通开发不自动 commit/push，正式 main 同步仍须用户授权 PR，合并另需授权。
 
-## 当前规则
+## 验收结果与边界
 
-- 全组件遵循“先选变量、再复制”；新增变量同步配置快照与批量案例，契约见 [COMPONENT_CONFIGURATION.md](docs/COMPONENT_CONFIGURATION.md)。
-- 截图 / 可访问链接先匹配并复用 Current 组件。选择优先级：明确用户选择 → 目标设计 → 产品既有配置 → 文档默认值。同产品保留统一配置；截图不能证明隐藏交互。
-- NEW 日期由 `assets/update-badges.js` 显式维护，按 Asia/Taipei 日历日计算七天，不因构建自动刷新；业务示例自己的 NEW 不参与。
-- Dropdown 是浮层；复杂描边仅用于外层 Card，内层保持简单表面。
-- 后续普通修改不自动提交 / 推送；本轮远端保存授权已执行，正式进入 main 仍走授权 PR。
+- 本次快照：125 项测试、192 个配置案例、28 份独立 React 交付类型检查与构建通过；静态站点构建通过。
+- 匿名验证全部 28 个公开 latest、接入说明、安装器哈希通过；公开 NotificationBell 安装仅 4 必需文件。
+- 真实 Copy 解析器使用公网入口成功，生产配置过滤通过，Notification 输出一句话且不带 Demo 状态。
+- 本轮浏览器工具两次超时，未完成发布后的按钮点击复测。上一轮已在本地验证 Bell 11 项行为及 Button/Tabs/Dialog 交互；不宣称全部组件全部视觉状态已验收。
+- 跨 AI 平台真实项目最终产出仍待外部开发复测。详细报告生成于 artifacts/production-delivery-audit、artifacts/copy-ai-audit（不发布到仓库）。
+
+## 其他当前状态
+
+- Tooltip 当前智能定位、四方向 hover/focus 示例与默认 Playful 头像弹簧预览随本批依赖同步发布；通用 Tooltip API 默认 subtle，支持 none、键盘、Escape 与 reduced motion。
+- 第三方接入指南及 pack:local / verify:package 整库备选路径已同步；没有发布公共 npm 包，没有修改 private / UNLICENSED。
+- Sidebar、Card、PlanCard、FeatureOverview、Button、Select、Toggle、TreeNav 等当前实现保留。产品布局/层级或新复合模块仍按用户实际预览验收，不另建平行系统。
+- FeatureOverview 第二批平台图标条组件化尚未实施；购买/支付及分析启动由业务接口负责。Connect X/LinkedIn/TikTok 连接弹窗暂缓。
+- 用户尚未指定全产品统一布局配置；Demo 单次选择不自动成为产品默认。截图/可访问链接先匹配并复用 Current 组件。
 
 ## 下一步
 
-1. 按批量报告选择代表案例，实际生成并填写视觉 / 交互验收结果；新增变量同时维护检查案例。
-2. 按用户反馈继续组件验收，确认 Sidebar 产品层级及 FeatureOverview 第二批范围。
-3. 用户明确授权正式同步时，再创建开发分支到 main 的 PR。
+0. 用户先在本地验收 Thinking Indicator 和 Confirmation Dialog；明确要求发布后再安全整合并发布两轮更新。不要直接推送当前分叉且有未提交文件的原工作区。
+1. 请外部开发从新版页面重新 Copy for AI，在业务项目验收；不要再转发旧 ready-30.md。
+2. 若反馈下载失败，先检查公开 latest/网络/编码 AI 访问能力；若效果问题，按固定任务及视口核对真实交付源码、配置、交互与视觉。
+3. 新增组件/变量时维护生产清单及批量案例；发布后再次核对跨平台版本和公网可达性。
+4. 后续开发前先处理原工作区分叉的安全整合，不覆盖现有未提交文件。
 
 ## 最近 session
 
-- [2026-09-18-copy-ai-audit-release.md](handoff/sessions/2026-09-18-copy-ai-audit-release.md)
-- [2026-09-18-copy-ai-selected-config.md](handoff/sessions/2026-09-18-copy-ai-selected-config.md)
+- [组件更新发布](handoff/sessions/2026-09-21-components-release.md)
+- [NEW 三天期限](handoff/sessions/2026-09-21-new-badge-three-days.md)
+- [Thinking Indicator](handoff/sessions/2026-09-21-thinking-indicator.md)
+- [通用 Confirmation Dialog](handoff/sessions/2026-09-21-confirmation-dialog-reusable.md)
+- [统一生产交付发布](handoff/sessions/2026-09-21-production-delivery-publish.md)
+- [版本、兼容与 CSS 闭包](handoff/sessions/2026-09-21-delivery-contract-css-closure.md)
+- [全组件生产交付](handoff/sessions/2026-09-20-production-delivery.md)

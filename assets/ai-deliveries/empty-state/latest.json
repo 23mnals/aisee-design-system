@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 3,
+  "name": "EmptyState",
+  "page": "components/EmptyState/EmptyState.html",
+  "version": "8d9387f6edc8991e",
+  "delivery": "./releases/8d9387f6edc8991e/ready.md",
+  "installer": "./releases/8d9387f6edc8991e/install.cjs",
+  "installerSha256": "38d6996a095c59033d0ad07adf41c1fc54dfe910a3d913030553ef1996cdddd1",
+  "configuration": {
+    "props": {
+      "EmptyState": [
+        "size",
+        "variant",
+        "illustrationName"
+      ]
+    },
+    "slots": {
+      "EmptyState": [
+        "illustration",
+        "title",
+        "description",
+        "action"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "EmptyState.tsx",
+    "EmptyStateIllustration.tsx",
+    "styles.css",
+    "assets/empty-state/library/bound.svg",
+    "assets/empty-state/library/free-use.svg",
+    "assets/empty-state/library/link.svg",
+    "assets/empty-state/library/no-account.svg",
+    "assets/empty-state/library/no-credit.svg",
+    "assets/empty-state/library/no-event.svg",
+    "assets/empty-state/library/no-media.svg",
+    "assets/empty-state/library/no-report-data.svg",
+    "assets/empty-state/library/no-report.svg",
+    "assets/empty-state/library/no-time-slot.svg",
+    "assets/empty-state/library/nobody.svg",
+    "assets/empty-state/library/nothing.svg",
+    "assets/empty-state/library/plugin.svg",
+    "assets/empty-state/library/unlock.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/empty-state/library/bound.svg.d.ts",
+    "assets/empty-state/library/free-use.svg.d.ts",
+    "assets/empty-state/library/link.svg.d.ts",
+    "assets/empty-state/library/no-account.svg.d.ts",
+    "assets/empty-state/library/no-credit.svg.d.ts",
+    "assets/empty-state/library/no-event.svg.d.ts",
+    "assets/empty-state/library/no-media.svg.d.ts",
+    "assets/empty-state/library/no-report-data.svg.d.ts",
+    "assets/empty-state/library/no-report.svg.d.ts",
+    "assets/empty-state/library/no-time-slot.svg.d.ts",
+    "assets/empty-state/library/nobody.svg.d.ts",
+    "assets/empty-state/library/nothing.svg.d.ts",
+    "assets/empty-state/library/plugin.svg.d.ts",
+    "assets/empty-state/library/unlock.svg.d.ts"
+  ]
+}

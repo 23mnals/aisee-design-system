@@ -136,7 +136,8 @@ test('every Current component detail page offers a scoped Copy for AI prompt', (
     .filter(entry => entry.path && entry.path !== 'preview/dapp-v6-components.html');
   const guidancePaths = new Set([...portal.matchAll(/^\s+"((?:components\/[^"]+|preview\/avatar)\.html)": \{/gm)].map(match => match[1]));
 
-  assert.equal(currentComponentEntries.length, 28);
+  assert.ok(currentComponentEntries.length > 0);
+  assert.equal(currentComponentEntries.length, guidancePaths.size);
   for (const entry of currentComponentEntries) {
     assert.ok(guidancePaths.has(entry.path), `${entry.name} should have AI guidance`);
   }
@@ -157,7 +158,7 @@ test('every Current component detail page offers a scoped Copy for AI prompt', (
   assert.match(portal, /copyAiHeader\.hidden = !aiPrompt/);
   assert.match(portal, /#openStandalone,\s*#copyAiHeader\s*\{\s*min-height: 40px;\s*height: 40px;/);
   assert.match(portal, /Treat the Design System Demo as a structural and interaction reference/);
-  assert.match(portal, /Detail and rendered Demo: \$\{path\}/);
+  assert.match(portal, /Original Demo path .*\$\{path\}/);
   assert.match(portal, /Do not approximate it from memory or replace it with visually unstyled browser UI/);
   assert.match(portal, /Match the Demo's geometry, spacing, radii, typography, icon weight, colours, states and motion/);
   assert.match(portal, /compare the rendered result against the reference/);
@@ -830,7 +831,7 @@ test('Tag Input previews a draft and commits or removes tags with the expected k
   assert.match(styles, /border: 1px dashed rgba\(17,17,17,\.06\)/);
   assert.match(styles, /box-shadow: 0 0 0 3px var\(--aisee-color-post-agent-primary\)/);
   assert.match(styles, /\.aisee-tag-input:hover:not\(\[aria-disabled="true"\]\)/);
-  assert.match(styles, /\.aisee-tag-input__add:hover:not\(:disabled\) \{ background: var\(--aisee-color-post-agent-primary-hover\); \}/);
+  assert.match(styles, /\.aisee-tag-input__add:hover:not\(:disabled\) \{ background: var\(--aisee-color-post-agent-hover\); \}/);
   assert.match(styles, /\.aisee-tag-input__add-icon \{[^}]*color: currentColor;/);
   assert.match(styles, /\.aisee-tag-input__add-icon::before \{ content: '\+'; \}/);
   assert.match(detail, /\.control:hover:not\(:has\(input:disabled\)\),\.control:focus-within/);
@@ -1023,13 +1024,15 @@ test('confirmation dialog follows the Figma unsaved changes pattern', async () =
   assert.match(styles, /\.aisee-confirmation-dialog__description \{[^}]*color: var\(--aisee-color-black\);/);
   assert.match(styles, /\.aisee-confirmation-dialog__actions \.aisee-button--secondary:hover:not\(:disabled\) \{[^}]*background: rgba\(17,17,17,\.06\);/);
   assert.match(styles, /\.aisee-confirmation-dialog__actions \.aisee-button \{ width: 100%; height: 44px;/);
-  assert.match(detail, /@font-face\{font-family:Karla/);
-  assert.match(detail, /class="toast-viewport"/);
-  assert.match(detail, /showToast\('Changes discarded','success'\)/);
+  const demo = await readFile(new URL('../components/ConfirmationDialog/ConfirmationDialog.demo.tsx', import.meta.url), 'utf8');
+  assert.match(detail, /confirmation-dialog-demo\.js/);
+  assert.match(demo, /<ConfirmationDialog/);
+  assert.match(demo, /<ToastViewport><Toast/);
+  assert.match(demo, /Changes discarded/);
   assert.doesNotMatch(detail, /class="result"/);
   assert.match(design, /ToastViewport[\s\S]*?不得挂载在 dialog DOM 内/);
   assert.match(source, /aria-labelledby=\{titleId\}/);
-  assert.match(source, /aria-describedby=\{descriptionId\}/);
+  assert.match(source, /aria-describedby=\{description \? descriptionId : undefined\}/);
   assert.match(source, /dialog-close\.svg/);
   await access(new URL('../assets/dialog-close.svg', import.meta.url));
 });
@@ -1265,6 +1268,7 @@ test('Quantity Stepper matches the Figma shell and shared motion contract', asyn
   assert.match(styles, /translateX\(-4px\)[\s\S]*translateX\(4px\)/);
   assert.match(styles, /@container \(max-width: 260px\) \{ \.aisee-quantity-stepper__unit \{ display: none; \} \}/);
   assert.match(styles, /\.aisee-quantity-stepper__input::selection \{ color: #111; background: var\(--aisee-color-semantic-brand-primary, #FFE253\); \}/);
-  assert.match(portal, /The package is currently a private workspace package/);
+  assert.match(portal, /Do not assume @aisee\/design-system is publicly installable/);
+  assert.match(portal, /AiseeAiDelivery.format/);
   assert.match(portal, /Implementation and handoff/);
 });

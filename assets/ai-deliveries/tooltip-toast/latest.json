@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 3,
+  "name": "TooltipToast",
+  "page": "components/TooltipToast/TooltipToast.html",
+  "version": "052378da0ea2a5f6",
+  "delivery": "./releases/052378da0ea2a5f6/ready.md",
+  "installer": "./releases/052378da0ea2a5f6/install.cjs",
+  "installerSha256": "e625b15ba75c8824d7fab94f039f1f69c31f21c2eae2a04a19dee02669c1eba8",
+  "configuration": {
+    "props": {
+      "Tooltip": [
+        "placement",
+        "animation"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    },
+    {
+      "name": "react-dom",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Tooltip.tsx",
+    "useTooltipSpring.ts",
+    "spring.ts",
+    "tooltip-position.ts",
+    "Toast.tsx",
+    "styles.css",
+    "assets/stemui/action-check.svg",
+    "assets/stemui/action-close.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/stemui/action-check.svg.d.ts",
+    "assets/stemui/action-close.svg.d.ts"
+  ]
+}

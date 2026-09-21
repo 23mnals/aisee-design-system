@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 3,
+  "name": "ThinkingIndicator",
+  "page": "components/ThinkingIndicator/ThinkingIndicator.html",
+  "version": "99ee5a4fe9847cba",
+  "delivery": "./releases/99ee5a4fe9847cba/ready.md",
+  "installer": "./releases/99ee5a4fe9847cba/install.cjs",
+  "installerSha256": "8405cf7b4f3bbe160864d6098dc9113671c36808fdbd5a7e87cb47decdb232f5",
+  "configuration": {
+    "props": {
+      "ThinkingIndicator": [
+        "showIcon",
+        "size"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "ThinkingIndicator.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

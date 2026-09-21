@@ -1,3 +1,5 @@
+@import './thinking-indicator.css';
+@import './tooltip.css';
 @import './subscription-plan.css';
 @import './tutorial-steps.css';
 @import './loading-animation.css';
@@ -216,7 +218,7 @@
 .aisee-tag-input__remove:hover { background: rgba(17,17,17,.06); }
 .aisee-tag-input__remove span { display: block; width: 10px; height: 10px; background: url('../../assets/tag-input/close.svg') center/10px 10px no-repeat; }
 .aisee-tag-input__add { display: inline-flex; min-width: 54px; height: 30px; flex: 0 0 auto; align-items: center; justify-content: center; gap: 4px; padding: 0 9px; border: 0; border-radius: 6px; background: var(--aisee-color-post-agent-primary); color: var(--aisee-color-black); font: 500 12px/18px Karla, sans-serif; cursor: pointer; transition: background var(--aisee-motion-micro); }
-.aisee-tag-input__add:hover:not(:disabled) { background: var(--aisee-color-post-agent-primary-hover); }
+.aisee-tag-input__add:hover:not(:disabled) { background: var(--aisee-color-post-agent-hover); }
 .aisee-tag-input__add:disabled { background: transparent; color: var(--aisee-color-text-muted); cursor: default; }
 .aisee-tag-input__add-icon { display: grid; width: 14px; height: 14px; color: currentColor; font: 500 14px/14px Karla, sans-serif; place-items: center; }
 .aisee-tag-input__add-icon::before { content: '+'; }
@@ -931,6 +933,10 @@ textarea.aisee-input.aisee-textarea { min-height: 120px; resize: vertical; font:
 .aisee-event-dialog__check { display: flex; align-items: flex-start; gap: 8px; color: rgba(17,17,17,.6); font-size: 14px; line-height: 22px; }
 
 .aisee-confirmation-dialog {
+  box-sizing: border-box;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  font: inherit;
   width: min(512px, calc(100vw - 32px));
   padding: 24px;
   border: 1px solid rgba(17,17,17,.15);
@@ -965,31 +971,27 @@ textarea.aisee-input.aisee-textarea { min-height: 120px; resize: vertical; font:
 .aisee-confirmation-dialog__actions .aisee-button--secondary { border: 0; background: rgba(17,17,17,.02); }
 .aisee-confirmation-dialog__actions .aisee-button--secondary:hover:not(:disabled) { border: 0; background: rgba(17,17,17,.06); }
 
-.aisee-tooltip-trigger { position: relative; display: inline-flex; }
-.aisee-tooltip-trigger:focus-visible { outline: 2px solid var(--aisee-color-black); outline-offset: 3px; border-radius: 4px; }
-.aisee-tooltip {
-  position: absolute;
-  z-index: 30;
-  left: 50%;
-  width: max-content;
-  max-width: 320px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: var(--aisee-color-white);
-  background: var(--aisee-color-black);
-  box-shadow: 0 10px 12px rgba(0,0,0,.12);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, 4px);
-  transition: opacity var(--aisee-motion-micro) var(--aisee-motion-ease-out), transform var(--aisee-motion-micro) var(--aisee-motion-ease-out);
+
+.aisee-confirmation-dialog__body { min-width: 0; }
+.aisee-confirmation-dialog__notices { display: grid; gap: 12px; margin: 12px 0 0; padding: 0; list-style: none; }
+.aisee-confirmation-dialog__notice { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 12px; }
+.aisee-confirmation-dialog__notice--positive { background: var(--aisee-color-semantic-tag-09); }
+.aisee-confirmation-dialog__notice--warning { background: var(--aisee-color-semantic-bg-warning); }
+.aisee-confirmation-dialog__notice-icon { display: grid; flex: 0 0 32px; width: 32px; height: 32px; place-items: center; border-radius: 6px; background: var(--aisee-color-white); }
+.aisee-confirmation-dialog__notice-icon > img, .aisee-confirmation-dialog__notice-icon > svg { display: block; width: 18px; height: 18px; object-fit: contain; }
+.aisee-confirmation-dialog__notice-copy { display: grid; min-width: 0; gap: 2px; overflow-wrap: anywhere; }
+.aisee-confirmation-dialog__notice-title { color: var(--aisee-color-black); font-size: 14px; font-weight: 500; line-height: 18px; }
+.aisee-confirmation-dialog__notice-description { color: var(--aisee-color-semantic-text-secondary); font-size: 12px; font-weight: 400; line-height: 16px; }
+.aisee-confirmation-dialog__content { margin-top: 12px; }
+.aisee-confirmation-dialog--with-notices { padding-bottom: 32px; }
+.aisee-confirmation-dialog--with-notices .aisee-confirmation-dialog__actions { margin-top: 44px; }
+.aisee-confirmation-dialog__actions .aisee-button { min-width: 0; padding-inline: 6px; }
+@media (max-width: 480px) {
+  .aisee-confirmation-dialog__actions { flex-direction: column; }
+  .aisee-confirmation-dialog__actions .aisee-button { flex: none; }
+  .aisee-confirmation-dialog--with-notices .aisee-confirmation-dialog__actions { margin-top: 24px; }
 }
-.aisee-tooltip--top { bottom: calc(100% + 8px); }
-.aisee-tooltip--bottom { top: calc(100% + 8px); transform: translate(-50%, -4px); }
-.aisee-tooltip-trigger:hover .aisee-tooltip,
-.aisee-tooltip-trigger:focus-within .aisee-tooltip { opacity: 1; transform: translate(-50%, 0); }
+
 
 .aisee-toast-viewport { position: fixed; z-index: 50; top: 24px; right: 24px; display: grid; width: min(400px, calc(100vw - 32px)); justify-items: end; gap: 12px; }
 .aisee-toast {

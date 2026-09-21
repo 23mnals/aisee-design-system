@@ -4,7 +4,10 @@
   const DAY = 86400000;
   const TIME_ZONE = 'Asia/Taipei';
   const dates = Object.freeze({
-    'README': '2026-09-18',
+    'README': '2026-09-21',
+    'components/ThinkingIndicator/ThinkingIndicator.html': '2026-09-21',
+    'components/ConfirmationDialog/ConfirmationDialog.html': '2026-09-21',
+    'components/TooltipToast/TooltipToast.html': '2026-09-20',
     'components/Button/Button.html': '2026-09-18',
     'components/Input/Input.html': '2026-09-18',
     'components/SegmentedChoice/SegmentedChoice.html': '2026-09-18',
@@ -27,7 +30,7 @@
     'components/StatCardCurrent/StatCardCurrent.html': '2026-09-18',
     'components/CreditBar/CreditBar.html': '2026-09-15',
     'components/Dialog/Dialog.html': '2026-09-17',
-    'components/NotificationBell/NotificationBell.html': '2026-09-18'
+    'components/NotificationBell/NotificationBell.html': '2026-09-20'
   });
   function dateOrdinal(value) {
     if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return NaN;
@@ -42,7 +45,7 @@
   }
   function isRecent(updatedAt, now = new Date()) {
     const age = dateOrdinal(calendarDate(now)) - dateOrdinal(updatedAt);
-    return Number.isFinite(age) && age >= 0 && age < 7;
+    return Number.isFinite(age) && age >= 0 && age < 3;
   }
   function dateFor(path, explicitDate) { return explicitDate || dates[path]; }
   function apply(doc, fallbackDate, now = new Date()) {
@@ -81,7 +84,7 @@
     global.dispatchEvent(new Event('aisee:updates-refresh'));
   }
   function scheduleMidnight() {
-    // Taipei has a fixed UTC+8 offset; calendar-day arithmetic never uses a 168h window.
+    // Taipei has a fixed UTC+8 offset; expiry follows calendar dates rather than a rolling-hour window.
     const delay = DAY - ((Date.now() + 8 * 3600000) % DAY);
     global.setTimeout(() => { refreshAll(); scheduleMidnight(); }, delay);
   }

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 3,
+  "name": "Toggle",
+  "page": "components/Toggle/Toggle.html",
+  "version": "3b3454fb15aa4934",
+  "delivery": "./releases/3b3454fb15aa4934/ready.md",
+  "installer": "./releases/3b3454fb15aa4934/install.cjs",
+  "installerSha256": "20cbd2dbcd16a0cb54af8e726d69d68986b4eb0e27c1a4abaac54e83ac95e7a0",
+  "configuration": {
+    "props": {
+      "Toggle": [
+        "color",
+        "surface",
+        "size"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Toggle.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

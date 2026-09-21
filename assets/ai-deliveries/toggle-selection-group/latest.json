@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 3,
+  "name": "ToggleSelectionGroup",
+  "page": "components/ToggleSelectionGroup/ToggleSelectionGroup.html",
+  "version": "7741e7162bb040a7",
+  "delivery": "./releases/7741e7162bb040a7/ready.md",
+  "installer": "./releases/7741e7162bb040a7/install.cjs",
+  "installerSha256": "5aeb4ce8e4da9ba70b1211b3d1c28de924c030333c137c137a5c570ec4c16f22",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "ToggleSelectionGroup.tsx",
+    "Checkbox.tsx",
+    "Toggle.tsx",
+    "styles.css",
+    "assets/toggle-selection-group/check.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/toggle-selection-group/check.svg.d.ts"
+  ]
+}

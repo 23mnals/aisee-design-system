@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 3,
+  "name": "ScoreGauge",
+  "page": "components/ScoreGauge/ScoreGauge.html",
+  "version": "b45f2fb25cfa3894",
+  "delivery": "./releases/b45f2fb25cfa3894/ready.md",
+  "installer": "./releases/b45f2fb25cfa3894/install.cjs",
+  "installerSha256": "25c5e9bcf53714c73945631756602db31ea67faa9e765b88725c8610f3450228",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "ScoreGauge.tsx",
+    "styles.css",
+    "assets/score-gauge/score-gauge-texture.png",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/score-gauge/score-gauge-texture.png.d.ts"
+  ]
+}

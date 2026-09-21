@@ -7,17 +7,17 @@ const context = vm.createContext({ Date, Intl });
 vm.runInContext(source, context);
 const { isRecent, apply, dateFor } = context.AiseeUpdates;
 
-test('NEW includes update day through day seven and expires at Taipei midnight on day eight', () => {
+test('NEW includes update day through day three and expires at Taipei midnight on day four', () => {
   assert.equal(isRecent('2026-09-17', new Date('2026-09-16T16:00:00Z')), true);
-  assert.equal(isRecent('2026-09-17', new Date('2026-09-23T15:59:59.999Z')), true);
-  assert.equal(isRecent('2026-09-17', new Date('2026-09-23T16:00:00Z')), false);
-  assert.equal(isRecent('2026-09-17', new Date('2026-09-24T12:00:00Z')), false);
+  assert.equal(isRecent('2026-09-17', new Date('2026-09-19T15:59:59.999Z')), true);
+  assert.equal(isRecent('2026-09-17', new Date('2026-09-19T16:00:00Z')), false);
+  assert.equal(isRecent('2026-09-17', new Date('2026-09-20T12:00:00Z')), false);
 });
 test('NEW crosses month, year and leap-day boundaries without a rolling-hour offset', () => {
-  assert.equal(isRecent('2026-12-28', new Date('2027-01-02T16:00:00Z')), true);
-  assert.equal(isRecent('2026-12-28', new Date('2027-01-03T16:00:00Z')), false);
-  assert.equal(isRecent('2028-02-29', new Date('2028-03-05T16:00:00Z')), true);
-  assert.equal(isRecent('2028-02-29', new Date('2028-03-06T16:00:00Z')), false);
+  assert.equal(isRecent('2026-12-30', new Date('2026-12-31T16:00:00Z')), true);
+  assert.equal(isRecent('2026-12-30', new Date('2027-01-01T16:00:00Z')), false);
+  assert.equal(isRecent('2028-02-29', new Date('2028-03-01T16:00:00Z')), true);
+  assert.equal(isRecent('2028-02-29', new Date('2028-03-02T16:00:00Z')), false);
 });
 test('missing, invalid and future update dates never generate a permanent NEW label', () => {
   for (const value of [undefined, '', 'updated', '2026-02-30', '2026-9-17', '2026-09-18']) {
@@ -36,11 +36,11 @@ test('content badges can expire and refresh without touching product badges', ()
     assert.equal(selector, '.aisee-content-new, .nav-new-label');
     return [badge];
   } };
-  apply(doc, '2026-09-17', new Date('2026-09-23T16:00:00Z'));
+  apply(doc, '2026-09-17', new Date('2026-09-19T16:00:00Z'));
   assert.equal(badge.hidden, true);
   assert.deepEqual(styles.get('display'), ['none', 'important']);
-  badge.dataset.updatedAt = '2026-09-24';
-  apply(doc, '2026-09-17', new Date('2026-09-23T16:00:00Z'));
+  badge.dataset.updatedAt = '2026-09-20';
+  apply(doc, '2026-09-17', new Date('2026-09-19T16:00:00Z'));
   assert.equal(badge.hidden, false);
   assert.equal(styles.has('display'), false);
 });

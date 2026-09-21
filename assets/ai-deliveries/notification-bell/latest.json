@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 3,
+  "name": "NotificationBell",
+  "page": "components/NotificationBell/NotificationBell.html",
+  "version": "3d239fcdf6bb64c2",
+  "delivery": "./releases/3d239fcdf6bb64c2/ready.md",
+  "installer": "./releases/3d239fcdf6bb64c2/install.cjs",
+  "installerSha256": "06f048932240442be782fab5f12f4cbac3b35a9ae30294da89131137a3d4ff93",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "NotificationBell.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

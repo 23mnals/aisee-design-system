@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 3,
+  "name": "Dropdown",
+  "page": "components/Select/Select.html",
+  "version": "e20e5839973b3f7a",
+  "delivery": "./releases/e20e5839973b3f7a/ready.md",
+  "installer": "./releases/e20e5839973b3f7a/install.cjs",
+  "installerSha256": "9167abf98a5627ecb022d7a19160b76b40354c52bb3d594b65b43531cf2abb0d",
+  "configuration": {
+    "props": {
+      "Dropdown": []
+    },
+    "slots": {
+      "Dropdown": [
+        "leadingIcon"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Dropdown.tsx",
+    "styles.css",
+    "assets/dropdown/search.svg",
+    "assets/stemui/action-check.svg",
+    "assets/stemui/line_chevron-up.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/dropdown/search.svg.d.ts",
+    "assets/stemui/action-check.svg.d.ts",
+    "assets/stemui/line_chevron-up.svg.d.ts"
+  ]
+}

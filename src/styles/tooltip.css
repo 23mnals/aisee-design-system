@@ -1,0 +1,75 @@
+.aisee-tooltip-trigger { position: relative; display: inline-flex; }
+.aisee-tooltip-trigger:focus-visible { outline: 2px solid var(--aisee-color-black); outline-offset: 3px; border-radius: 4px; }
+.aisee-tooltip {
+  position: absolute;
+  z-index: 30;
+  left: 50%;
+  width: max-content;
+  max-width: 320px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--aisee-color-white);
+  background: var(--aisee-color-black);
+  box-shadow: 0 10px 12px rgba(0,0,0,.12);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition: opacity var(--aisee-motion-micro) var(--aisee-motion-ease-out), transform var(--aisee-motion-micro) var(--aisee-motion-ease-out);
+}
+.aisee-tooltip--top { bottom: calc(100% + 8px); }
+.aisee-tooltip--bottom { top: calc(100% + 8px); transform: translate(-50%, -4px); }
+.aisee-tooltip-trigger:hover .aisee-tooltip,
+.aisee-tooltip-trigger:focus-within .aisee-tooltip { opacity: 1; transform: translate(-50%, 0); }
+
+.aisee-tooltip--right { top: 50%; left: calc(100% + 8px); transform: translate(-4px, -50%); }
+.aisee-tooltip--left { top: 50%; left: auto; right: calc(100% + 8px); transform: translate(4px, -50%); }
+.aisee-tooltip-trigger:hover .aisee-tooltip--right,
+.aisee-tooltip-trigger:focus-within .aisee-tooltip--right,
+.aisee-tooltip-trigger:hover .aisee-tooltip--left,
+.aisee-tooltip-trigger:focus-within .aisee-tooltip--left { transform: translate(0, -50%); }
+@media (prefers-reduced-motion: reduce) { .aisee-tooltip { transition: none; } }
+/* Viewport coordinates are measured by Tooltip; popover avoids ancestor clipping. */
+.aisee-tooltip.aisee-tooltip--floating {
+  position: fixed; inset: auto; margin: 0; border: 0; box-sizing: border-box;
+  max-width: min(320px, calc(100vw - 16px)); max-height: calc(100vh - 16px);
+  overflow-wrap: anywhere; white-space: normal; overflow: hidden;
+  opacity: 1; transform: none; z-index: 1000;
+  font-family: Karla, Arial, sans-serif;
+}
+
+/* Placement and motion use separate layers, so spring / tilt never change measurements. */
+.aisee-tooltip.aisee-tooltip--floating {
+  padding: 0; background: transparent; box-shadow: none; overflow: visible; transition: none;
+  --tooltip-enter-x: 0px; --tooltip-enter-y: 4px;
+}
+.aisee-tooltip--floating[data-placement="bottom"] { --tooltip-enter-y: -4px; }
+.aisee-tooltip--floating[data-placement="right"] { --tooltip-enter-x: -4px; --tooltip-enter-y: 0px; }
+.aisee-tooltip--floating[data-placement="left"] { --tooltip-enter-x: 4px; --tooltip-enter-y: 0px; }
+.aisee-tooltip-motion, .aisee-tooltip-surface { display: block; }
+.aisee-tooltip-surface {
+  padding: 8px 12px; border-radius: 8px;
+  background: var(--aisee-color-black); color: var(--aisee-color-white);
+  box-shadow: 0 4px 10px rgba(0,0,0,.1);
+  max-height: calc(100vh - 16px); overflow: hidden;
+}
+.aisee-tooltip--floating[data-ready="true"][data-state="open"] .aisee-tooltip-motion { animation: tooltip-enter 160ms ease-out both; }
+.aisee-tooltip--floating[data-ready="true"][data-state="open"][data-animation="playful"] .aisee-tooltip-motion { animation: tooltip-fade 160ms ease-out both; }
+.aisee-tooltip--floating[data-state="closed"] .aisee-tooltip-motion { animation: tooltip-exit 120ms ease-in both; }
+.aisee-tooltip--floating[data-animation="playful"][data-input="pointer"] .aisee-tooltip-surface { transform: var(--tooltip-spring-transform, none); will-change: transform; }
+.aisee-tooltip--floating[data-input="keyboard"] { --tooltip-enter-x: 0px; --tooltip-enter-y: 0px; }
+.aisee-tooltip--floating[data-input="keyboard"][data-state="open"] .aisee-tooltip-motion { animation-name: tooltip-enter; }
+.aisee-tooltip--floating[data-animation="none"] .aisee-tooltip-motion { animation: none; }
+.aisee-tooltip--floating[data-animation="none"][data-state="closed"] { opacity: 0; }
+@keyframes tooltip-enter {
+  from { opacity: 0; transform: translate(var(--tooltip-enter-x), var(--tooltip-enter-y)); }
+  to { opacity: 1; transform: translate(0, 0); }
+}
+@keyframes tooltip-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tooltip-exit { from { opacity: 1; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .aisee-tooltip--floating .aisee-tooltip-motion, .aisee-tooltip--floating .aisee-tooltip-surface { animation: none!important; transform: none!important; transition: none!important; }
+  .aisee-tooltip--floating[data-state="closed"] { opacity: 0; }
+}

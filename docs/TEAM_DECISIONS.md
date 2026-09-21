@@ -188,7 +188,37 @@
 
 ## 2026-09-17 · NEW 日期规则
 
-- 文档更新标记统一以 Asia/Taipei 日历日期计算：更新当天算第 1 天，第 1–7 天保留，第 8 天零点隐藏。
+- 文档更新标记统一以 Asia/Taipei 日历日期计算：更新当天算第 1 天，第 1–3 天保留，第 4 天零点隐藏（2026-09-21 按用户要求暂改为 3 天）；有新内容更新时按该内容最新日期重新计时。
 - 侧栏、README、组件详情与 Open HTML 独立页共用 `assets/update-badges.js`。页面跨午夜、后台恢复、动态组件渲染时同步更新；不依赖访问次数或 localStorage，不因重新构建重置日期。
 - 内容更新时维护该文件的日期表；Brand metadata 使用 `updatedAt`（YYYY-MM-DD）。缺失、非法及未来日期不显示 NEW。业务示例自身的 NEW 徽章不属于文档更新标记，不参与过期。
 - Toggle Playground 的变量选择直接使用正式 Dropdown 组件，触发框、弹出菜单、键盘操作与动效保持同源，不使用原生 select 菜单。
+
+## 2026-09-20 · Notification 单组件交付边界
+
+- 用户已确认旧公开交付能够接入，但其内容过多。Copy for AI 只交付铃铛和未读数字动画，不复制状态展台、演示操作、模拟数据、通知面板或面板配置。
+- 动画沿用 Current NotificationBell；产品传入真实 count / onClick，默认数字徽章。dot 仍是可选产品 API，但演示开关不作为复制配置。
+- 交付仅限生产需要的源码、局部样式、入口和类型声明，文件数不设上限；Bell SVG 内联，沿用 token 默认值，继承产品字体。不打包全局 reset、整套 token、Karla 或面板插图。
+- 后续已推广为所有组件统一的显式生产清单、白名单配置和 latest 指针。保留设计系统完整 Demo；Production 不可依赖 Demo。依据见 [生产交付契约](PRODUCTION_DELIVERY.md)。
+
+## 2026-09-21 · Production delivery 契约补充
+
+- 已复制的稳定 latest.json 地址在执行时解析最新已发布生产版本；已安装源码不会自动更新。复制时的公开版本检查只是可用性校验，不将短指令固定为版本快照。
+- 每个组件显式声明 dependencies / compatibility，安装说明读取这些值，不额外统一强制 React/Node 版本。Node 安装器环境与组件浏览器运行环境区分。
+- 文档规范使用“所有已登记组件”，实际组件数与验收数由报告动态输出。
+- CSS 按 selector/value AST 和依赖图计算闭包，包括伪类/伪元素、变量默认值及条件覆盖、keyframes、media/supports/reduced-motion，不能只按 class 字符串切片；可达但未登记或未解析的依赖阻止构建。
+
+## 2026-09-21 · 通用 Confirmation Dialog
+
+- 在现有 ConfirmationDialog 上扩展可选 notices 和 children，不创建平行弹窗。无 notices 时保留原简洁确认。
+- Notice 只声明 positive / warning 语义、标题、说明和可选宿主图标；自动化、队列数量与回复等业务内容仅为 Demo 示例。
+- 业务项目控制 open、onClose 和 onConfirm；组件不自行执行业务操作、关闭确认成功状态或插入 Toast。
+- 生产交付遵循统一 manifest：必要源码、Button、局部样式闭包和关闭图标；不含场景数据、业务插图、Toast、字体或展示页。
+- 标题沿用系统已确认的 20px / 500；Figma 72:56945 用于影响卡片结构、配色与间距。
+
+## 2026-09-21 · Thinking Indicator
+
+- 参考 Fluid Functionalism ThinkingIndicator 的圆形/无限符号变形、文字扫光和轮换，使用原生 SVG + 局部 CSS 适配 AISEE。无需引入整套 shadcn、Inter 字体、SizeProvider 或动画库。
+- AISEE 预览字体为 Karla，默认 14/22、紧凑 12/18，字重 500、语义次级文字色；生产继承宿主字体。
+- labels 是可本地化的装饰性等待文案，不是实际进度或模型推理记录；真实任务进度使用 Steps。业务项目决定显示与卸载时机。
+- 系统 reduced motion 停止 SVG、扫光和文字轮换，读屏保持单一稳定状态；文字轮换不触发反复播报。
+- Copy for AI 交付组件与局部样式完整闭包，选项只包含 showIcon / size，不包含 Demo 控件、字体和展示布局。

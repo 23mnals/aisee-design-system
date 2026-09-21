@@ -42,3 +42,5 @@ export * from './components/PlanCard';
 export * from './components/Avatar';
 
 export * from './components/SegmentedChoice';
+
+export * from './components/ThinkingIndicator';

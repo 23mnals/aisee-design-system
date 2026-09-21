@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 3,
+  "name": "Steps",
+  "page": "components/Steps/Steps.html",
+  "version": "a998243903082f7c",
+  "delivery": "./releases/a998243903082f7c/ready.md",
+  "installer": "./releases/a998243903082f7c/install.cjs",
+  "installerSha256": "d31b22006cd8820f3603d91645fb64c15b97b183f9b8b163a451ee79f7a30447",
+  "configuration": {
+    "props": {
+      "Steps": [
+        "animated"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Steps.tsx",
+    "styles.css",
+    "assets/steps/check.svg",
+    "assets/steps/connector.svg",
+    "assets/steps/error.svg",
+    "assets/steps/loading.svg",
+    "assets/steps/success.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/steps/check.svg.d.ts",
+    "assets/steps/connector.svg.d.ts",
+    "assets/steps/error.svg.d.ts",
+    "assets/steps/loading.svg.d.ts",
+    "assets/steps/success.svg.d.ts"
+  ]
+}

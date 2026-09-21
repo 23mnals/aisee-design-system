@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 3,
+  "name": "PlanCard",
+  "page": "components/PlanCardCurrent/PlanCardCurrent.html",
+  "version": "f4e0e26189383ee8",
+  "delivery": "./releases/f4e0e26189383ee8/ready.md",
+  "installer": "./releases/f4e0e26189383ee8/install.cjs",
+  "installerSha256": "f14994d7f2d9f3feac62ceed24b8b415537c052cc46e61495ac5b3fad8d20e1a",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "PlanCard.tsx",
+    "SubscriptionPlanCard.tsx",
+    "Badge.tsx",
+    "Button.tsx",
+    "Dialog.tsx",
+    "styles.css",
+    "assets/badge/draft.svg",
+    "assets/badge/failed.svg",
+    "assets/badge/from-plan.svg",
+    "assets/badge/manual.svg",
+    "assets/badge/published.svg",
+    "assets/badge/rewritten.svg",
+    "assets/badge/scheduled.svg",
+    "assets/dialog-close.svg",
+    "assets/empty-state/library/unlock.svg",
+    "assets/plan-card/subscription/access.svg",
+    "assets/plan-card/subscription/credits.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/badge/draft.svg.d.ts",
+    "assets/badge/failed.svg.d.ts",
+    "assets/badge/from-plan.svg.d.ts",
+    "assets/badge/manual.svg.d.ts",
+    "assets/badge/published.svg.d.ts",
+    "assets/badge/rewritten.svg.d.ts",
+    "assets/badge/scheduled.svg.d.ts",
+    "assets/dialog-close.svg.d.ts",
+    "assets/empty-state/library/unlock.svg.d.ts",
+    "assets/plan-card/subscription/access.svg.d.ts",
+    "assets/plan-card/subscription/credits.svg.d.ts"
+  ]
+}

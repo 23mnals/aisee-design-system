@@ -982,7 +982,7 @@
               <article><h3>Actions</h3><p>Button.</p></article>
               <article><h3>Inputs &amp; Controls</h3><p>Checkbox, Input, Quantity Stepper, Select / Dropdown, Tag Input, Toggle and Toggle Selection Group. Quantity Stepper supports direct entry or buttons-only control, three sizes, bounded values and boundary feedback. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.</p></article>
               <article><h3>Navigation</h3><p>Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.</p></article>
-              <article><h3>Content &amp; Status</h3><p>Current PlanCard, Badge, Steps and Empty State.</p></article>
+              <article><h3>Content &amp; Status</h3><p>Current PlanCard, Badge, Steps, Thinking Indicator and Empty State.</p></article>
               <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.</p></article>
               <article><h3>Feedback &amp; Overlays</h3><p>Dialog, Confirmation Dialog, Notification, Tooltip and Toast.</p></article>
             </div>
@@ -993,18 +993,19 @@
             <p>Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.</p>
             <div class="principles-grid">
               <article class="principle"><strong>1. Choose a Current component</strong><p>Open the component under Components and review its live states, motion and usage notes. Legacy pages are historical references.</p></article>
-              <article class="principle"><strong>2. Copy for AI</strong><p>Use the two-star button beside Open HTML. It copies a self-contained implementation brief, including component intent, integration path, public API, interaction rules and visual boundaries. It is a prompt, not an installable component bundle.</p></article>
-              <article class="principle"><strong>3. Add the real task</strong><p>Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI should replace Demo copy, data, icons and illustrations.</p></article>
+              <article class="principle"><strong>2. Copy for AI</strong><p>Use the two-star button beside Open HTML. All registered Current components copy a named production integration instruction, a stable latest-delivery URL and allowed real options. Your coding AI retrieves the required implementation, styles and assets; demo controls and fonts stay here.</p></article>
+              <article class="principle"><strong>3. Add the real task</strong><p>Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.</p></article>
               <article class="principle"><strong>4. Compare the result</strong><p>Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.</p></article>
             </div>
-            <div class="priority-note"><strong>Which handoff to use:</strong> give Copy for AI to an AI coding tool. Give a human developer the package or source files; when they do not have the Design System, also use Open HTML as the runnable implementation reference. Overview and Legacy pages do not expose this button.</div>
+            <div class="priority-note"><strong>Which handoff to use:</strong> Copy for AI uses each component manifest to deliver production files. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.</div>
+            <p><a href="docs/GETTING_STARTED.md" target="_blank" rel="noreferrer">第三方接入指南 · Installation, prerequisites and troubleshooting</a></p>
           </section>
 
           <section class="overview-section" id="ai-handoff" aria-labelledby="ai-handoff-title">
             <h2 id="ai-handoff-title">AI implementation handoff</h2>
             <p>This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.</p>
             <div class="principles-grid">
-              <article class="principle"><strong>Minimum input</strong><p>Share this HTML, <code>docs/aisee-dapp-design.v6.md</code>, <code>docs/TEAM_DECISIONS.md</code> and the target-page requirements.</p></article>
+              <article class="principle"><strong>Minimum input</strong><p>Share this HTML, <code>docs/aisee-dapp-design.v6.md</code>, <code>docs/TEAM_DECISIONS.md</code> and the target-page requirements. Include a compatible installed package, authorized tgz or complete source, plus docs/GETTING_STARTED.md.</p></article>
               <article class="principle"><strong>Reliable assets</strong><p>Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.</p></article>
               <article class="principle"><strong>Implementation order</strong><p>Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.</p></article>
               <article class="principle"><strong>Verification</strong><p>Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.</p></article>
@@ -1107,7 +1108,7 @@
         "system": "AISEE dApp Design System",
         "status": "Current",
         "authorityOrder": ["docs/TEAM_DECISIONS.md", "docs/aisee-dapp-design.v6.md", "src/components and Current component pages", "relevant dated Figma feature block", "Legacy references"],
-        "requiredSources": ["aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "docs/COMPONENT_CONFIGURATION.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
+        "requiredSources": ["docs/GETTING_STARTED.md", "aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "docs/COMPONENT_CONFIGURATION.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
         "rules": {
           "appTypography": "Karla only",
           "pageBackground": "#FAFAFA",
@@ -1120,7 +1121,7 @@
           "dialogRadius": "16px",
           "staticBorder": "rgba(17,17,17,0.05)",
           "colorArchitecture": "Pages and components must consume semantic color variables only; primitive colors are raw token-layer values.",
-          "implementation": "Reuse Current exported components and tokens; do not copy Legacy styling when a Current equivalent exists.",
+          "implementation": "Verify dependency availability first. Follow docs/GETTING_STARTED.md for local package installation or complete source integration; prompts and previews do not install the private package. Reuse Current exported components and tokens; do not copy Legacy styling.",
           "componentConfiguration": "All variable controls are captured at copy time; see docs/COMPONENT_CONFIGURATION.md. This rule also applies when consuming the full system without Copy for AI. Match target designs to Current components; retain established product configuration or documented defaults when unspecified.",
           "componentPrompt": "Every Current component detail page exposes a scoped Copy for AI prompt. Overview, Legacy, Brand and UI Kit pages do not expose it.",
           "avatarAssignment": "Use the exported Avatar component. Registered website users use the 22 approved square account avatars with a stable user seed. Missing social-media profile images use the 24 approved circular gray-outline social avatars with a stable social-account seed. Generated preview extensions are excluded until explicitly approved."
@@ -1131,6 +1132,7 @@
 
     <script src="assets/update-badges.js"></script>
     <script src="assets/component-config.js"></script>
+    <script src="assets/ai-delivery.js"></script>
     <script>
       const colorArchitecture = JSON.parse(document.getElementById("aisee-color-architecture").textContent);
       let activeColorLayer = "semantic";
@@ -1219,16 +1221,16 @@
         ["Checkbox, Input, Quantity Stepper, Select / Dropdown, Tag Input, Toggle and Toggle Selection Group. Quantity Stepper supports direct entry or buttons-only control, three sizes, bounded values and boundary feedback. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.", "Checkbox、Input、Quantity Stepper、Select / Dropdown、Tag Input、Toggle 与 Toggle Selection Group。Quantity Stepper 支持直接输入或仅加减按钮控制，并提供三种尺寸、最大最小值和边界反馈。Checkbox 在新选中时播放一次简短的 bubble 扩散动画，并兼容 reduced motion。Input 和下拉触发器使用 1px 黑色内描边加 2px 模块色环；下拉菜单与触发器保持 8px 间距，选项间距为 4px。单一共享的 5% 黑色 Fluid Hover 高亮会连续跟随最近的可用选项，已选项仍保持可见。Dropdown 的复合变体可在 Variant Playground 中切换并直接测试。"],
         ["AISEE dApp design archive.fig", "备份-官网+dapp主功能.fig"],
         ["Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.", "Current Tabs、可复用 Tree Nav 与产品 Sidebar Navigation 模式。Sidebar Navigation 展开态直接组合 Tree Nav。平台 Tabs 在所有名称都能容纳时自动完整显示；空间不足时只显示当前项名称。"],
-        ["Current PlanCard, Badge, Steps and Empty State.", "Current PlanCard、Badge、Steps 与 Empty State。"], ["Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.", "Current Card、Stat Card、Table、Chart、仅限 Analysis 的 Score Gauge 与 Credit Bar；Legacy Post Card 继续保留参考。"],
+        ["Current PlanCard, Badge, Steps, Thinking Indicator and Empty State.", "Current PlanCard、Badge、Steps、Thinking Indicator 与 Empty State。"], ["Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.", "Current Card、Stat Card、Table、Chart、仅限 Analysis 的 Score Gauge 与 Credit Bar；Legacy Post Card 继续保留参考。"],
         ["Dialog, Confirmation Dialog, Notification, Tooltip and Toast.", "Dialog、Confirmation Dialog、Notification、Tooltip 与 Toast。"],
         ["Use components without writing code", "无需写代码也能使用组件"], ["Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.", "设计师、产品经理和其他非开发人员无需上传整套 Design System Demo，也能把单个组件准确交给 AI。"],
         ["1. Choose a Current component", "1. 选择 Current 组件"], ["Open the component under Components and review its live states, motion and usage notes. Legacy pages are historical references.", "在 Components 中打开组件，查看实时状态、动效和使用说明。Legacy 页面仅作历史参考。"],
-        ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. It copies a self-contained implementation brief, including component intent, integration path, public API, interaction rules and visual boundaries. It is a prompt, not an installable component bundle.", "点击 Open HTML 旁的双星按钮，复制一份可独立阅读的实施提示词，包括组件用途、接入方式、公开 API、交互规则和视觉边界。它是提示词，不是可安装的组件包。"],
-        ["3. Add the real task", "3. 补充真实任务"], ["Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI should replace Demo copy, data, icons and illustrations.", "把 Prompt 连同目标页面、真实内容和预期行为交给 AI。AI 应替换 Demo 文案、数据、图标和插图。"],
+        ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. All registered Current components copy a named production integration instruction, a stable latest-delivery URL and allowed real options. Your coding AI retrieves the required implementation, styles and assets; demo controls and fonts stay here.", "点击 Open HTML 旁的双星按钮。所有已登记的 Current 组件统一复制具体名称、稳定最新交付入口和允许的真实配置；编码 AI 取得必要生产源码、样式与资源，演示控件和字体保留在本站。"],
+        ["3. Add the real task", "3. 补充真实任务"], ["Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.", "把 Prompt 连同目标页面、真实内容和预期行为交给 AI。AI 使用真实业务内容，并保留必要的生产组件资源。"],
         ["4. Compare the result", "4. 对照验收"], ["Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.", "对照 Current Demo 检查生成页面，包括适用的 Hover、Focus、Disabled、Loading、Empty、响应式和无障碍状态。"],
-        ["Which handoff to use:", "如何选择交付方式："], ["give Copy for AI to an AI coding tool. Give a human developer the package or source files; when they do not have the Design System, also use Open HTML as the runnable implementation reference. Overview and Legacy pages do not expose this button.", "Copy for AI 适合交给 AI 编码工具。人类开发者需要组件包或源码；没有 Design System 时，同时使用 Open HTML 作为可运行的实现参考。Overview 与 Legacy 页面不显示该按钮。"],
+        ["Which handoff to use:", "如何选择交付方式："], ["Copy for AI uses each component manifest to deliver production files. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.", "Copy for AI 按各组件显式生产清单交付，排除演示页面、mock 数据、字体和全局环境。无需额外附件或安装整个 AISEE 库；需要兼容 React 项目及可联网、执行 Node 的编码 AI。"],
         ["AI implementation handoff", "AI 实施交付"], ["This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.", "本门户是可读参考资料，但不能保证其他 AI 会执行链接页面或推断出全部实施规则。应把已部署门户或仓库、权威规范文件，以及“复用 Current 组件”的明确要求一起交给 AI。"],
-        ["Minimum input", "最少输入"], ["Share this HTML,", "提供本 HTML、"], ["and the target-page requirements.", "以及目标页面需求。"], ["Reliable assets", "可靠资源"], ["Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.", "优先提供公开 HTTPS 预览或仓库/ZIP。单个本地 HTML 无法携带不可访问的相对字体、图片、源文件或链接子页。"],
+        ["Minimum input", "最少输入"], ["Share this HTML,", "提供本 HTML、"], ["and the target-page requirements. Include a compatible installed package, authorized tgz or complete source, plus docs/GETTING_STARTED.md.", "以及目标页面需求；同时提供兼容的已安装包、获准使用的 tgz 或完整源码，以及 docs/GETTING_STARTED.md。"], ["Reliable assets", "可靠资源"], ["Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.", "优先提供公开 HTTPS 预览或仓库/ZIP。单个本地 HTML 无法携带不可访问的相对字体、图片、源文件或链接子页。"],
         ["Implementation order", "实施顺序"], ["Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.", "Team Decisions → Design Spec v6 → Current 组件实现 → 带日期的 Figma 功能区块 → Legacy 参考。"], ["Verification", "验收"], ["Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.", "要求接收方 AI 列出复用组件、说明偏差，并把最终页面与 Current Demo 对照。"],
         ["Machine-readable contract:", "机器可读契约："], ["this HTML embeds", "本 HTML 内嵌"], ["as JSON. Full instructions and a copyable prompt are in", "JSON。完整说明与可复制 Prompt 位于"],
         ["Versions and maintenance", "版本与维护"], ["Figma versions belong to feature pages. Open a new page for a new feature or independent new requirement; when an existing function gains a requirement, add its newest design above the earlier content on that function's original page. Every design block's black title frame records its update subject and date, and is authoritative even when the page or file name stays unchanged.", "Figma 版本归属于功能页。新功能或独立新需求新开页面；已有功能增加需求时，在原功能页旧内容上方加入最新设计。每个设计区块的黑色标题框记录更新主题和日期，即使页面名或文件名未变也以它为准。"],
@@ -1295,9 +1297,9 @@
           name: "Quantity Stepper",
           intent: "Adjust a bounded numeric value through direct entry, minus and plus buttons, or a buttons-only compact control.",
           implementation: [
-            "Preferred repository or workspace usage: import { QuantityStepper } from '@aisee/design-system' and import '@aisee/design-system/styles.css'. Example: <QuantityStepper defaultValue={4} min={1} max={10} unit=\"replies/day\" onValueChange={setQuantity} />.",
-            "The package is currently a private workspace package. If it is not available, use Open HTML for a runnable reference or vendor src/components/QuantityStepper.tsx, the Quantity Stepper block from src/styles/components.css, and the approved StemUI icon assets.",
-            "Standalone icon dependency: @stemui/icons@0.1.40. Use the official sources line_line_nochange.svg and line_plus_add.svg; do not substitute text minus/plus glyphs or hand-drawn SVGs.",
+            "Only when the package is already installed, repository or workspace usage: import { QuantityStepper } from '@aisee/design-system' and import '@aisee/design-system/styles.css'. Example: <QuantityStepper defaultValue={4} min={1} max={10} unit=\"replies/day\" onValueChange={setQuantity} />.",
+            "Use the supplied local source when the package is absent. For a source copy, include QuantityStepper.tsx and its recursive style, token and approved icon dependencies; Open HTML alone does not install them.",
+            "Internal icons are bundled in the built AISEE package. A source copy must retain assets/stemui/action-minus.svg and action-plus.svg. Only install @stemui/icons separately if the product itself imports it; verify its exports instead of inventing icon names.",
             "Public props: value/defaultValue, min, max, step, size (sm/md/lg), inputMode (editable/buttons-only), unit, disabled, onValueChange, ariaLabel and className."
           ],
           rules: [
@@ -1455,6 +1457,15 @@
             "Keep badges compact and non-interactive unless the surrounding product explicitly defines them as a filter. Do not copy Demo labels as product data."
           ]
         },
+        "components/ThinkingIndicator/ThinkingIndicator.html": {
+          name: "Thinking Indicator",
+          intent: "Show a lightweight waiting state before an AI reply arrives.",
+          rules: [
+            "Preserve the circle-to-infinity morph, shimmer and cycling text; keep all motion static under reduced motion.",
+            "Support default/compact sizes and optional icon. Inherit host typography and supply localized labels when needed.",
+            "Mount only while the host is waiting. Decorative phrases are not task progress or reasoning logs; do not copy the playground or simulate business activity."
+          ]
+        },
         "components/Steps/Steps.html": {
           name: "Steps",
           intent: "Explain a sequence, report live progress, show longer thinking activity or teach a new feature.",
@@ -1550,9 +1561,9 @@
         },
         "components/ConfirmationDialog/ConfirmationDialog.html": {
           name: "Confirmation Dialog",
-          intent: "Confirm a destructive action or protect unsaved changes before data is lost.",
+          intent: "Confirm consequential actions with a short description or configurable impact notices.",
           rules: [
-            "State the exact consequence in the title and description. Keep the safe action available and label the danger action with the real operation.",
+            "Supply the title, description, labels and callbacks from the real product. Optional positive/warning notices explain different consequences; their icons and content are host slots, not built-in automation data. Keep the safe action available.",
             "Use the semantic danger button and preserve close, Escape, focus trap and focus-return behavior.",
             "Show completion feedback with the page-level Toast component rather than an inline success message inside the dialog."
           ]
@@ -1561,7 +1572,7 @@
           name: "Tooltip / Toast",
           intent: "Use Tooltip for brief contextual labels and Toast for temporary page-level feedback.",
           rules: [
-            "Tooltip remains a compact black hover/focus label and must not contain required instructions or interactive controls.",
+            "Tooltip remains a compact black hover/focus label and must not contain required instructions or interactive controls. Tooltip defaults to placement auto: prefer top when there is room, otherwise flip to a fitting side and shift inside the viewport on scroll or resize. Explicit top/right/bottom/left values are preferred sides, not locked positions. The four direction buttons are shown together; bubbles only appear on hover or keyboard focus, not permanently. Direction examples are not a selected fixed placement. Tooltip animation defaults to subtle (160ms fade and 4px directional entry, 120ms fade out); playful uses a damped spring for avatar/member details: directional entry based on pointer entry position, scale .6 and 20px offset, pointer-following horizontal sway and rotation with inertia (target +/-18deg and +/-22px; overshoot allowed). Keep the transformed bubble inside the viewport. Do not add a second border around an already framed avatar, and none disables motion. Keyboard focus uses fade only, and reduced-motion disables animation and tilt. Copy the selected animation prop; preserve automatic placement. Keep Toast positioning independent.",
             "Toast uses the Current white bordered one-line or two-line structure, the matching semantic SVG icon and success, error or Agent progress colour.",
             "For auto-dismiss Toasts, animate the bottom countdown for five seconds, then remove the line and close the Toast. Manual close cancels the timer; restarting a Toast restarts it cleanly.",
             "Announce feedback with the appropriate live-region semantics without repeatedly interrupting the user."
@@ -1569,14 +1580,11 @@
         },
         "components/NotificationBell/NotificationBell.html": {
           name: "Notification",
-          intent: "Open, filter and act on notifications while communicating unread status without moving the surrounding header layout.",
+          intent: "Integrate the notification bell and unread badge animation into the existing product header.",
           rules: [
-            "Reuse the exact solid Figma bell from node 77:17878. Keep the 32px button and black circular icon base fixed. A new notification rings the inner white bell and rolls the unread badge; hover or keyboard focus rings only the white bell. Drive NotificationBell count from application unread data: count increases automatically trigger incoming motion, while decreases and unchanged counts do not. Push subscriptions or polling belong to the application. Reset demo explicitly replays both animations even when restoring the same count.",
-            "Use colour/bg/hover for the default button surface and colour/bg/yellow-mid only on hover or keyboard focus. Use colour/feedback/wrong for unread count and dot indicators.",
-            "Use a numeric badge when the count matters and dot mode when presence alone is enough. Cap the visible label at 99+ while preserving the full accessible count.",
-            "Build the 362px notification panel from NotificationItem rows. Support All and Unread tabs, mark-all-read, item read state, optional action and error detail, and ready/loading/empty/error panel states.",
-            "Reuse the shared Empty State SVG illustration asset for an empty notification panel; do not rasterize it or replace it with a low-resolution copy.",
-            "Use the item tone, status, icon and action variables shown in the component page. Clicking an item marks it read; opening or clearing the panel does not imitate a new-notification badge animation. Respect reduced motion."
+            "Install only NotificationBell.tsx and its scoped CSS. Preserve the inline Figma SVG, bell ring and numeric badge animation; respect reduced motion.",
+            "Pass the real unread count and existing product click handler. Count increases animate both bell and badge; hover/focus animates only the bell. Keep the button and black circle stationary.",
+            "Preview controls, simulated messages, state galleries and notification panel are demonstrations, not installation options. Do not create them in the recipient project. Inherit the host font; do not import global styles, assets or a whole token sheet."
           ]
         }
       };
@@ -1584,6 +1592,7 @@
       function buildComponentAiPrompt(path) {
         const guidance = componentAiGuidance[path];
         if (!guidance) return "";
+        const integration = "Use the production implementation declared by this component's delivery manifest. Preserve its interactions and animations; never install Demo controls, mock data, showcase pages or a global design-system environment. Reuse the host React, typography and token overrides. Do not assume @aisee/design-system is publicly installable.";
         const rules = guidance.rules.map(rule => `- ${rule}`).join("\n");
         const implementation = guidance.implementation?.length
           ? `\n\nImplementation and handoff:\n${guidance.implementation.map(item => `- ${item}`).join("\n")}`
@@ -1591,8 +1600,10 @@
         return `Use the Current ${guidance.name} component from the AISEE Design System in the requested product context.
 
 Canonical reference:
-- Detail and rendered Demo: ${path}
-- Open the reference before implementation and reuse the exported Current component when its source is available. Do not approximate it from memory or replace it with visually unstyled browser UI.
+- Original Demo path (optional visual reference, not a file expected in the target project): ${path}
+
+${integration}
+- Use the delivered implementation and styling. Consult the visual reference when accessible; it is not required to extract and integrate the supplied code. Do not approximate it from memory or replace it with visually unstyled browser UI.
 
 Component intent:
 ${guidance.intent}${implementation}
@@ -1601,15 +1612,15 @@ Component rules:
 ${rules}
 
 Shared implementation rules:
-- Read docs/COMPONENT_CONFIGURATION.md. The configuration appended below is captured at copy time and applies to its named example scopes.
+- The configuration appended below is captured at copy time and applies to its named example scopes; its interpretation rules are included in this prompt.
 - First match any supplied target screenshot or accessible design link to existing Current components by purpose, structure and interaction; reuse a suitable component and its variants instead of rebuilding it. Screenshots do not prove hidden interactions.
 - Honor explicit user choices (including the copied configuration); otherwise follow the target design, retain established product configuration, then use documented defaults. Do not choose variants randomly or treat this selection as a global product default.
 - Reuse the exported Current component, its existing motion and current AISEE semantic tokens when they are available in the project.
 - Treat the Design System Demo as a structural and interaction reference. Replace all sample copy, data, icons and illustrations with content that matches the real task.
 - Preserve the target page's information architecture and surrounding product behavior. Do not rebuild unrelated areas or import Legacy styling over Current components.
-- dApp interfaces use Karla. Product colours consume semantic tokens; do not hardcode primitive colour values in the page.
+- Inherit the host typography; do not bundle fonts. Retain scoped token fallbacks and prefer host token overrides.
 - Implement applicable default, hover, focus, active, disabled, loading, error, empty and responsive states, plus keyboard and screen-reader behavior.
-- Match the Demo's geometry, spacing, radii, typography, icon weight, colours, states and motion at the same viewport. If the reference or exported source is unavailable, ask for access instead of inventing a replacement.
+- Match the Demo's geometry, spacing, radii, typography, icon weight, colours, states and motion at the same viewport. An unavailable reference page is not a blocker when the supplied source delivery is present.
 - After implementation, compare the rendered result against the reference, then list the reused component, tokens and every intentional deviation.`;
       }
 
@@ -1660,6 +1671,7 @@ Shared implementation rules:
         { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Subscription confirmation with plan benefits, credits and brand context.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Avatar", path: "preview/avatar.html", subtitle: "Approved account and missing-social-profile avatar libraries with stable assignment, motion and post-origin variants.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Solid, dot, colour, source and semantic status badges with icon and label.", status: "Current", updated: true },
+        { group: "Components", category: "Content & Status", name: "Thinking Indicator", path: "components/ThinkingIndicator/ThinkingIndicator.html", subtitle: "AISEE thinking status with circle-to-infinity motion, cycling shimmer text, compact and text-only variants.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Steps", path: "components/Steps/Steps.html", subtitle: "Static workflows, animated progress, thinking activity and feature tutorials.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Empty State", path: "components/EmptyState/EmptyState.html", subtitle: "Composable empty states with optional illustration, title, description and actions.", status: "Current", updated: true },
         { group: "Components", category: "Data Display", name: "Card", path: "components/Card/Card.html", subtitle: "Reusable neutral and section cards for forms, selections, overview metrics and content previews.", status: "Current", updated: true },
@@ -1670,9 +1682,9 @@ Shared implementation rules:
         { group: "Components", category: "Data Display", name: "Post Card", path: "components/PostCard/PostCard.html", subtitle: "Legacy social post card specimen retained from Cards & Data.", status: "Legacy" },
         { group: "Components", category: "Data Display", name: "Credit Bar", path: "components/CreditBar/CreditBar.html", subtitle: "Current remaining-credit balance with Subscription and Top-up breakdown.", status: "Current", updated: true },
         { group: "Components", category: "Feedback & Overlays", name: "Dialog", path: "components/Dialog/Dialog.html", subtitle: "Composable standard, centered and split dialog structures for forms, choices, details and decisions.", status: "Current", updated: true },
-        { group: "Components", category: "Feedback & Overlays", name: "Confirmation Dialog", path: "components/ConfirmationDialog/ConfirmationDialog.html", subtitle: "Current destructive confirmation pattern for unsaved changes.", status: "Current" },
+        { group: "Components", category: "Feedback & Overlays", name: "Confirmation Dialog", path: "components/ConfirmationDialog/ConfirmationDialog.html", subtitle: "Reusable confirmation with optional impact notices, configurable labels and host callbacks.", status: "Current" },
         { group: "Components", category: "Feedback & Overlays", name: "Notification", path: "components/NotificationBell/NotificationBell.html", subtitle: "Figma-aligned bell, interactive panel and notification item states with exact unread behavior.", status: "Current", updated: true },
-        { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "Figma-aligned white Toast notifications with one-line, two-line and functional-color variants; black Tooltip remains separate.", status: "Current" },
+        { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "Figma-aligned white Toast notifications with one-line, two-line and functional-color variants; black Tooltip supports automatic placement, hover direction examples and optional motion.", status: "Current" },
 
         { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Interactive 15-page Growth Loop preview covering Analysis, Growth, Engage, Post, Verify and Connection.", status: "Current" }
       ];
@@ -2134,9 +2146,12 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         copyAiHeaderLabel.textContent = "Copying…";
         try {
           const configuration = AiseeComponentConfig.readFrame(previewFrame, item.path, document.baseURI);
-          await writeClipboard(aiPrompt + AiseeComponentConfig.format(configuration));
+          const delivery = await AiseeAiDelivery.resolveDelivery(item.path, document.baseURI);
+          if (activePath !== item.path) throw new Error('页面已切换，请在当前组件页面重新复制。');
+          const prompt = AiseeAiDelivery.format(delivery, configuration);
+          await writeClipboard(prompt);
           copyAiHeaderLabel.textContent = "Copied";
-          showToast(`${item.name} prompt copied`);
+          showToast(`${delivery.name}: production integration prompt copied.`);
         } catch (error) {
           copyAiHeaderLabel.textContent = "Copy failed";
           showToast(error.message || "Prompt copy failed");
