@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["components/SidebarNavigation/SidebarNavigation.demo.tsx", "components/PlanCardCurrent/PlanCardCurrent.demo.tsx", "components/FeatureOverview/FeatureOverview.demo.tsx", "components/SegmentedChoice/SegmentedChoice.demo.tsx", "components/Card/Card.demo.tsx", "components/Button/Button.demo.tsx", "components/Toggle/Toggle.demo.tsx", "src", "docs", "components/Steps/Steps.demo.tsx", "components/Badge/Badge.demo.tsx", "components/EmptyState/EmptyState.demo.tsx", "components/ToggleSelectionGroup/ToggleSelectionGroup.demo.tsx"]
+  "include": ["components/TooltipToast/TooltipToast.demo.tsx", "components/SidebarNavigation/SidebarNavigation.demo.tsx", "components/PlanCardCurrent/PlanCardCurrent.demo.tsx", "components/FeatureOverview/FeatureOverview.demo.tsx", "components/SegmentedChoice/SegmentedChoice.demo.tsx", "components/Card/Card.demo.tsx", "components/Button/Button.demo.tsx", "components/Toggle/Toggle.demo.tsx", "src", "docs", "components/Steps/Steps.demo.tsx", "components/Badge/Badge.demo.tsx", "components/EmptyState/EmptyState.demo.tsx", "components/ToggleSelectionGroup/ToggleSelectionGroup.demo.tsx"]
 }

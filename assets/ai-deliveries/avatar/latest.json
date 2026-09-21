@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 3,
+  "name": "Avatar",
+  "page": "preview/avatar.html",
+  "version": "1bd931494688a94f",
+  "delivery": "./releases/1bd931494688a94f/ready.md",
+  "installer": "./releases/1bd931494688a94f/install.cjs",
+  "installerSha256": "b7f4a6b259a4c1c743c96ed51ea0c8ad993c51507d0bb5c555b57e9a8de4424a",
+  "configuration": {
+    "props": {
+      "Avatar": [
+        "kind",
+        "index",
+        "animated"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Avatar.tsx",
+    "styles.css",
+    "assets/avatar/dapp-avatar-set.svg",
+    "assets/avatar/platform-x-mark.svg",
+    "assets/avatar/social-avatar-set.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/avatar/dapp-avatar-set.svg.d.ts",
+    "assets/avatar/platform-x-mark.svg.d.ts",
+    "assets/avatar/social-avatar-set.svg.d.ts"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 3,
+  "name": "Card",
+  "page": "components/Card/Card.html",
+  "version": "0077fb4f913cec54",
+  "delivery": "./releases/0077fb4f913cec54/ready.md",
+  "installer": "./releases/0077fb4f913cec54/install.cjs",
+  "installerSha256": "37e05ebb7fd4ff56a3070654d9abc8a7e549ad25bf9fb3759c0e03b19c95f2bb",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Card.tsx",
+    "styles.css",
+    "assets/stemui/line_chevron-up.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/stemui/line_chevron-up.svg.d.ts"
+  ]
+}

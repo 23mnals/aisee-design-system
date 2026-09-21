@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 3,
+  "name": "Input",
+  "page": "components/Input/Input.html",
+  "version": "cbc528f9e7cfdda6",
+  "delivery": "./releases/cbc528f9e7cfdda6/ready.md",
+  "installer": "./releases/cbc528f9e7cfdda6/install.cjs",
+  "installerSha256": "012eea1e9255089849b52cfe672699e7c42b59fa4f03715ce4c949d24597b86d",
+  "configuration": {
+    "props": {
+      "Input": [
+        "type"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Input.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

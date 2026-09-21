@@ -1,7 +1,5 @@
 # Copy for AI 批量验收
 
-> Notification 单组件短版源码交付已作为独立试点接入 Copy for AI，保留当前配置。接入前提、公开下载和验证边界见 [说明](NOTIFICATION_COPY_AI.md)；其他组件沿用本文原规则。
-
 复制准确、浏览器交互正确、AI 最终产出符合预期是三项不同的检查。任何一项未执行都记录为“未验证”，不能由另外一项通过推断它也通过。
 
 ## 1. 一次检查全部复制入口
@@ -14,9 +12,9 @@ npm run audit:copy-ai
 
 生成 `artifacts/copy-ai-audit/report.html`、`report.json`、`review.csv`。HTML 是可展开阅读的报告，JSON 包含所有案例与完整提示词，CSV 用于逐项记录后续验收。报告每次重跑会更新，已填写的 CSV 请另存。无需调用 AI 服务或额外 API key。
 
-当前覆盖 28 个复制入口、190 个受控配置案例：Sidebar 10 种、Button 4 种、Toggle 32 种、Empty State 64 种插槽 / 表面 / 尺寸组合、Feature Overview 8 种、Card 9 种、Toggle Selection Group 8 种、Steps 2 种、Input 5 种、Checkbox 3 种、Quantity Stepper 2 种、Tabs 4 种、Select 10 种、Notification 8 种、Avatar 8 种，以及 13 个固定展示页。
+覆盖所有已登记复制入口及其受控配置矩阵，包括布局、真实样式/交互选项、插槽与演示状态隔离。组件及案例数量由每次运行的报告动态统计；新增登记项必须同步验收矩阵，不能依赖固定总数判断覆盖。
 
-这些案例是明确列出的覆盖矩阵，不代表所有业务数据、插图资源、视口与变量笛卡尔积都已穷举。Notification 的四个插槽目前测试全开 / 全关；Empty State 的插图使用代表性资源；业务数据不属于此检查范围。
+这些案例是明确列出的覆盖矩阵，不代表所有业务数据、插图资源、视口与变量笛卡尔积都已穷举。Notification 的页面案例检查全开 / 全关，额外边界测试检查 128 种演示组合输出相同；Empty State 的插图使用代表性资源；业务数据不属于此检查范围。
 
 检查包括：
 
@@ -28,13 +26,23 @@ npm run audit:copy-ai
 
 失败返回非零退出码；每次推送 / PR 的 CI 会执行，并保存 `copy-ai-audit` artifact。报告文件只在本地或 CI 产物中生成，不作为固定“全通过”结果提交进 Git。
 
-## 2. 浏览器验收
+## 2. 源码交付与独立项目验收
+
+`npm run verify:ai-deliveries` 覆盖所有已登记入口：将每个清单的文件独立解包，检查无 Demo/字体/全局样式、校验指纹、幂等安装/冲突保护，并在没有 AISEE 包的 React 宿主一起通过类型检查与生产构建。浏览器行为页生成在 `artifacts/production-delivery-runtime/index.html`；运行时交互需要实际点击测试，不能把生成文件等同于已验证。复制机制还测试 latest 版本切换与页面导航竞态。详见 [生产交付契约](PRODUCTION_DELIVERY.md)。
+
+### 整库 tgz
+
+先 `npm run pack:local`，再 `npm run verify:package`。后者把实际 tgz 安装到独立临时目录，检查公开 TypeScript API、样式导入、React/Vite 生产构建以及内嵌字体 / CSS 资源，结束后删除临时目录。它离线复用仓库已有 React 及工具链，模拟“已有 React 项目收到包”，不验证公共 npm 下载或所有框架。
+
+`npm test` 另检查所有已登记组件的真实 latest 指针经过统一解析器可取得校验一致的生产交付。新手 / 第三方的完整流程见 [接入指南](GETTING_STARTED.md)。当前验证并不覆盖 SSR、水合或外部 AI 实际生成。
+
+## 3. 浏览器验收
 
 至少对每个带变量的组件执行：默认配置复制 → 改一个变量 → 再复制 → 关闭相关开关 / 换组合 → 再复制。把实际复制文本与可见控件状态逐项对照。检查同页独立示例、隐藏控制器、切页加载时复制，以及刷新后的默认值。
 
 可让具备浏览器能力的 AI 逐页批量执行，但仍须保存实际文本和断言证据；仅显示“Copied”不能证明文本内容正确。工具无法读取系统剪贴板时，明确标记未直接回读，并用复制函数集成测试作为有限的补充证据。
 
-## 3. AI 生成结果验收
+## 4. AI 生成结果验收
 
 固定模型 / 版本、目标任务、源代码或可访问预览、视口和案例提示词；每个案例用独立上下文生成。优先覆盖所有组件的一种代表性组合，再补容易混淆的变体（例如 Sidebar 的 inside / outside / topbar hover / click）。关键案例重复生成至少两次，检查是否随意换配置。
 

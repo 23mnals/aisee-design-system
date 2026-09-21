@@ -1,8 +1,8 @@
 # Current 组件配置契约
 
-> Notification 单组件短版源码交付已作为独立试点接入 Copy for AI，保留当前配置。接入前提、公开下载和验证边界见 [说明](NOTIFICATION_COPY_AI.md)；其他组件沿用本文原规则。
-
 所有带变量的组件：先选择，再点门户的 **Copy for AI**，复制点击时的最新配置。此规则不只适用于 Sidebar。更改选择后需要重新复制；复制结果不会自动同步到其他 AI，也不会自动改变产品默认布局。
+
+所有入口使用 [生产交付契约](PRODUCTION_DELIVERY.md)。页面配置快照仅是读取层；复制前必须经过各组件 manifest 的真实 props / slots / theme 白名单。布局、方向、动效可保留，previewState、mock 内容、演示计数和 showcase composition 不进入指令，更不能改变生产文件范围。NotificationBell 的所有演示控件均忽略；真实 count / onClick 来自业务项目。
 
 ## 当前覆盖
 
@@ -10,28 +10,29 @@
 | --- | --- |
 | Sidebar Navigation | 当前布局；对应的内部 / 外部按钮或 hover / click 展开方式 |
 | Button | 显示图标、显示时的左右位置 |
-| Toggle | 颜色、表面、尺寸、演示开关 / 禁用状态 |
-| Input | 演示状态，禁用和错误参数 |
+| Toggle | 颜色、表面、尺寸；排除演示开关 / 禁用状态 |
+| Input | 输入类型；排除演示禁用、错误与 hover/focus 状态 |
 | Checkbox | 模块主题 |
 | Quantity Stepper | 可输入或仅按钮模式 |
 | Tabs | 两个独立示例的图标与计数插槽 |
-| Select / Dropdown | 当前组合；仅对应组合的图标开关或演示展开状态 |
-| Toggle Selection Group | 当前使用场景组合 |
+| Select / Dropdown | 仅当前适用的图标插槽；排除示例组合与演示展开状态 |
+| Toggle Selection Group | 交付生产组件；场景选择仅用于演示，不复制 |
 | Empty State | 三个独立示例的插图、尺寸、表面与内容插槽 |
 | Steps | 思考步骤的动画开关 |
-| Card | 当前内容组合 |
-| Feature Overview | 连体容器列数、紧凑信息条文字 / 图标模式 |
+| Tooltip / Toast | Tooltip 动画：subtle / playful / none；定位保持 auto |
+| Card | 交付生产 Card；内容组合选择是演示，不复制 |
+| Feature Overview | 连体容器列数与 divided；另一独立 StatCard 展示不进入 FeatureOverview 交付 |
 | Avatar | 两个头像示例的资源选择、网站头像眼睛动画 |
-| Notification | 铃铛圆点模式、面板状态、图标 / 状态 / 操作 / 错误详情 |
+| Notification | 仅交付铃铛与未读数字动画；页面演示开关不复制，真实 count / onClick 由产品接入 |
 
-其余 13 个已提供 Copy for AI 的 Current 页面为固定展示：Segmented Choice、PlanCard Current、TagInput、TreeNav、Badge、StatCard Current、Table、Chart、ScoreGauge、CreditBar、Dialog、ConfirmationDialog、TooltipToast。它们复制组件规范，并明确没有通过变量控制器选定某个展示例。业务单选、多选、标签输入和打开弹窗不等于设计变量选择。
+其余 12 个已提供 Copy for AI 的 Current 页面为固定展示：Segmented Choice、PlanCard Current、TagInput、TreeNav、Badge、StatCard Current、Table、Chart、ScoreGauge、CreditBar、Dialog、ConfirmationDialog。它们复制具名生产交付入口，不声称选定了某个展示例。业务单选、多选、标签输入和打开弹窗不等于设计变量选择。
 
 ## 格式与边界
 
-复制结果包含规范和 `schemaVersion: 1` 的 JSON 快照：`reference` 定位组件页，`status` 为 `selected` 或 `no-variable-controls`，`sections` 按 `scope` 指明各个独立示例。
+读取层生成 `schemaVersion: 1` 的页面快照；这是内部接口，不会整份复制。最终剪贴板是具名接入指令、稳定 latest URL 以及经过清单筛选的可选 JSON。
 
-- `props` 使用实际组件参数；`slots`、`composition`、`theme`、`motion` 描述组合要求，不能作为不存在的属性直接展开传入组件。
-- `previewState` 为演示状态；生产环境由实际业务驱动。演示用错误文字须替换为真实校验提示。
+- 只保留白名单内真实 `props`、`slots`、`theme`；`composition`、`motion` 和 `previewState` 原始字段不输出。真实动画参数必须映射到组件实际 props，例如 Tooltip.animation、Avatar.animated。
+- 演示错误、通知数量和 loading/empty 场景均由真实产品数据驱动，不固定写入接入代码。
 - 关闭图标后不携带无效的位置选择；切换组合后不携带隐藏控制器的旧值。
 - 不读取业务搜索词、表单值、账号身份、通知内容或进度等数据。未批准的头像扩展仍不能进入自动分配池。
 - 同页多个示例是独立配置，不能合并成单个组件。需要选用其中哪一个时依照目标任务。
@@ -47,4 +48,6 @@
 
 React 示例从实际状态生成 `data-aisee-config` JSON；静态示例在 `assets/component-config.js` 注册显式读取函数。门户只在复制按钮被点击时读取当前 iframe。不得用通用遍历所有 input 的方式代替配置声明。
 
-新增 Current 复制入口时必须注册读取器或明确为无变量展示页；新增变量时同步快照、本文覆盖表和验证。检查切换后再次复制、独立示例归属、失效控制器排除、真实 props 映射与不泄漏业务输入。
+新增 Current 复制入口时必须注册读取器或明确为无变量展示页；新增变量时同步快照、production manifest 的配置白名单、本文覆盖表和验证。检查切换后再次复制、独立示例归属、失效控制器排除、真实 props 映射与不泄漏业务输入。
+
+Tooltip / Toast 的四个方向按钮同时展示，气泡在 hover / focus 后出现；方向不是选择器。动画选择器导出实际 `animation` 参数（subtle / playful / none），预览页初始选择 playful，组件未传 animation 时默认为 subtle。Tooltip 默认 `placement="auto"`；指定方向也是优先方向，空间不足仍会翻转。Copy for AI 保留该规则，不假设用户选中了某个固定方向。

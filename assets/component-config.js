@@ -2,8 +2,8 @@
 (function (global) {
   'use strict';
   const pathFor = name => `components/${name}/${name}.html`;
-  const reactPages = ['SidebarNavigation', 'Button', 'Toggle', 'EmptyState', 'FeatureOverview', 'Card', 'ToggleSelectionGroup', 'Steps'].map(pathFor);
-  const galleryPages = ['SegmentedChoice', 'PlanCardCurrent', 'TagInput', 'TreeNav', 'Badge', 'StatCardCurrent', 'Table', 'Chart', 'ScoreGauge', 'CreditBar', 'Dialog', 'ConfirmationDialog', 'TooltipToast'].map(pathFor);
+  const reactPages = ['SidebarNavigation', 'Button', 'Toggle', 'EmptyState', 'FeatureOverview', 'Card', 'ToggleSelectionGroup', 'Steps', 'TooltipToast'].map(pathFor);
+  const galleryPages = ['SegmentedChoice', 'PlanCardCurrent', 'TagInput', 'TreeNav', 'Badge', 'StatCardCurrent', 'Table', 'Chart', 'ScoreGauge', 'CreditBar', 'Dialog', 'ConfirmationDialog'].map(pathFor);
   function required(doc, selector) {
     const element = doc.querySelector(selector);
     if (!element) throw new Error('Configuration is not ready: ' + selector);
@@ -27,21 +27,26 @@
       section('Segmented · Icon + text', 'Tabs', {}, {slots:{icon:checked(doc, '#showIcons')}}),
       section('Segmented · Text only', 'Tabs', {}, {slots:{count:checked(doc, '#showCounts')}})
     ],
-    [pathFor('NotificationBell')]: doc => [
-      section('Notification bell', 'NotificationBell', {dot:checked(doc, '#dotModeDemo')}),
-      section('Notification dropdown', 'NotificationPanel', {state:attr(doc, '#panelStateMenu [aria-selected="true"]', 'data-value'),showIcons:checked(doc, '#showIcons'),showStatus:checked(doc, '#showStatus'),showActions:checked(doc, '#showActions')}, {slots:{errorDetail:checked(doc, '#showErrors')},previewState:'Panel state is for demonstration; real loading and errors come from the data source.'})
-    ],
+    // Notification's playground controls do not configure the bell source delivery.
+    [pathFor('NotificationBell')]: () => [section('Notification bell', 'NotificationBell', {})],
     [pathFor('Select')]: doc => {
       const composition = attr(doc, '#compositionVariantControl', 'data-value');
       const extra = composition === 'action' ? {slots:{leadingIcon:checked(doc, '#variantIcons')}} : {};
       if (composition === 'compact') extra.previewState = {open:checked(doc, '#variantOpen')};
       return [section('Variant playground', 'Dropdown', {}, {composition, ...extra, rules:['Composition is a demo recipe, not a Dropdown prop. Reuse the matching Current composition; use real task content.']})];
     },
-    'preview/avatar.html': doc => ['account','social'].map(kind => section(kind === 'account' ? 'Sidebar account profile' : 'Social account list', 'Avatar', {kind}, {
-      composition:{assetIndex:Number(attr(doc, `[data-picker="${kind}"] [aria-selected="true"]`, 'data-index'))},
-      ...(kind === 'account' ? {motion:{animateEyes:checked(doc, '#avatarMotion')}} : {}),
-      rules:['Asset index refers to this page’s avatar library; use the matching approved asset. Do not treat it as a seed or assume a nonexistent component prop. Generated extensions remain unapproved and must not enter automatic assignment pools.']
-    }))
+    'preview/avatar.html': doc => ['account','social'].map(kind => {
+      const index = Number(attr(doc, `[data-picker="${kind}"] [aria-selected="true"]`, 'data-index'));
+      const approved = Number.isInteger(index) && index >= 1 && index <= (kind === 'account' ? 22 : 24);
+      const animated = kind === 'account' ? checked(doc, '#avatarMotion') : false;
+      return section(kind === 'account' ? 'Sidebar account profile' : 'Social account list', 'Avatar', {
+        kind, ...(approved ? {index} : {}), ...(kind === 'account' ? {animated} : {})
+      }, {
+        composition:{assetIndex:index},
+        ...(kind === 'account' ? {motion:{animateEyes:animated}} : {}),
+        rules:['Use approved production avatar IDs only. Generated preview extensions remain unapproved and are not delivered.']
+      });
+    })
   };
   const supportedPaths = Object.freeze([...reactPages, ...Object.keys(staticReaders), ...galleryPages]);
   function read(doc, path) {

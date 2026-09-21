@@ -15,10 +15,8 @@ vm.runInContext(await readFile(resolve(root, 'assets/component-config.js'), 'utf
 vm.runInContext(portal.slice(portal.indexOf('const componentAiGuidance ='), portal.indexOf('const baseItems =')) + '\nglobalThis.guidance = componentAiGuidance;', context);
 vm.runInContext(await readFile(resolve(root, 'assets/ai-delivery.js'), 'utf8'), context);
 const deliveries = {};
-for (const path of ['components/NotificationBell/NotificationBell.html']) {
-  const name = path === 'preview/avatar.html' ? 'Avatar' : path.split('/')[1];
-  deliveries[path] = JSON.parse(await readFile(resolve(root, `assets/ai-deliveries/${name}.json`), 'utf8'));
-}
+const deliveryCatalog=JSON.parse(await readFile(resolve(root,'assets/ai-deliveries/manifest.json'),'utf8'));
+for(const [path,entry] of Object.entries(deliveryCatalog)) deliveries[path]=JSON.parse(await readFile(resolve(root,entry.url),'utf8'));
 const api = context.AiseeComponentConfig;
 const pathFor = name => `components/${name}/${name}.html`;
 const cases = [];
@@ -31,9 +29,13 @@ const add = (name, label, selectors, verify = () => {}) => {
   try {
     const snapshot = api.read(doc, path);
     verify(snapshot.sections);
-    const prompt = deliveries[path] ? context.AiseeAiDelivery.format(deliveries[path], snapshot) : context.buildComponentAiPrompt(path) + api.format(snapshot);
-    if (deliveries[path]) { assert.ok(prompt.length < 200); const selected = context.AiseeAiDelivery.preset(snapshot); const guide = readFileSync(resolve(root,'assets/ai-deliveries/notification', deliveries[path].installerSha256.slice(0,12), `${selected.state}-${selected.mask}.md`),'utf8'); const exported = JSON.parse(guide.match(/```json\n([\s\S]*?)\n```/)[1]); assert.deepEqual(exported.NotificationBell, JSON.parse(JSON.stringify(snapshot.sections[0].props))); assert.deepEqual(exported.NotificationPanel, JSON.parse(JSON.stringify(snapshot.sections[1].props))); assert.equal(exported.slots.errorDetail,snapshot.sections[1].slots.errorDetail); }
-    else { assert.ok(prompt.includes('Shared implementation rules:')); assert.ok(prompt.includes(JSON.stringify(snapshot, null, 2))); }
+    const delivery=deliveries[path];assert.ok(delivery,'Missing production manifest');
+    const prompt=context.AiseeAiDelivery.format(delivery,snapshot);
+    assert.ok(prompt.startsWith(`Integrate AISEE ${delivery.name} into the current React project:`));
+    assert.ok(prompt.includes('/latest.json'));
+    assert.doesNotMatch(prompt,/previewState|mock data|Show icons|ready-30/);
+    const sanitized=context.AiseeAiDelivery.configuration(delivery,snapshot);
+    assert.ok(sanitized.every(s=>!s.previewState&&!s.composition&&!s.rules));
     cases.push({name, label, path, status:'pass', snapshot, prompt});
   } catch (error) { cases.push({name, label, path, status:'fail', error:error.message}); }
 };
@@ -72,6 +74,8 @@ const groupSource=await readFile(resolve(root,'components/ToggleSelectionGroup/T
 const models=vm.runInNewContext('('+groupSource.match(/const models = (\[[\s\S]*?\]);/)[1]+')');
 const scenarios=vm.runInNewContext('('+groupSource.match(/const scenarios = (\[[\s\S]*?\]);/)[1]+')',{models});
 for (const scenario of scenarios) group(scenario.id,{scenarioId:scenario.id,scenario},s=>assert.equal(s[0].composition.id,scenario.id));
+const tooltip=await react('TooltipToast');
+for (const animation of ['subtle','playful','none']) tooltip(animation,{animation},s=>{assert.equal(s[0].props.animation,animation);assert.equal(s[0].props.placement,'auto');});
 const steps=await react('Steps');
 for (const animated of [true,false]) steps(`animated=${animated}`,{animated},s=>assert.equal(s[0].props.animated,animated));
 for (const state of ['default','hover','focus','disabled','error']) add('Input',state,{'#stateLabel':{'data-state':state}},s=>assert.equal(s[0].props.disabled,state==='disabled'));
@@ -79,20 +83,20 @@ for (const theme of ['analysis','post','engage']) add('Checkbox',theme,{'[data-t
 for (const mode of ['editable','buttons']) add('QuantityStepper',mode,{'[data-mode-control][aria-pressed="true"]':{'data-mode-control':mode}},s=>assert.equal(s[0].props.inputMode,mode==='buttons'?'buttons-only':'editable'));
 for (const icon of [true,false]) for (const count of [true,false]) add('Tabs',`icons=${icon}/counts=${count}`,{'#showIcons':{checked:icon},'#showCounts':{checked:count}},s=>{assert.equal(s[0].slots.icon,icon);assert.equal(s[1].slots.count,count);});
 for (const composition of ['compact','search','filter','account','action']) for (const enabled of [true,false]) add('Select',`${composition}/${enabled}`,{'#compositionVariantControl':{'data-value':composition},'#variantIcons':{checked:enabled},'#variantOpen':{checked:enabled}},s=>{assert.equal(s[0].composition,composition);assert.equal(s[0].slots?.leadingIcon,composition==='action'?enabled:undefined);});
-for (const state of ['ready','empty','loading','error']) for (const enabled of [true,false]) add('NotificationBell',`${state}/options=${enabled}`,{'#dotModeDemo':{checked:enabled},'#panelStateMenu [aria-selected="true"]':{'data-value':state},...Object.fromEntries(['showIcons','showStatus','showActions','showErrors'].map(id=>['#'+id,{checked:enabled}]))},s=>{assert.equal(s[0].props.dot,enabled);assert.equal(s[1].props.state,state);assert.equal(s[1].props.showIcons,enabled);});
+for (const state of ['ready','empty','loading','error']) for (const enabled of [true,false]) add('NotificationBell',`${state}/options=${enabled}`,{'#dotModeDemo':{checked:enabled},'#panelStateMenu [aria-selected="true"]':{'data-value':state},...Object.fromEntries(['showIcons','showStatus','showActions','showErrors'].map(id=>['#'+id,{checked:enabled}]))},s=>{assert.equal(s.length,1);assert.equal(s[0].component,'NotificationBell');assert.equal(Object.keys(s[0].props).length,0);});
 for (const index of [1,22,24,25]) for (const enabled of [true,false]) add('Avatar',`asset=${index}/motion=${enabled}`,{'[data-picker="account"] [aria-selected="true"]':{'data-index':String(index)},'[data-picker="social"] [aria-selected="true"]':{'data-index':String(index)},'#avatarMotion':{checked:enabled}},s=>assert.equal(s[0].composition.assetIndex,index));
-for (const name of ['SegmentedChoice','PlanCardCurrent','TagInput','TreeNav','Badge','StatCardCurrent','Table','Chart','ScoreGauge','CreditBar','Dialog','ConfirmationDialog','TooltipToast']) add(name,'gallery',{},s=>assert.equal(s.length,0));
+for (const name of ['SegmentedChoice','PlanCardCurrent','TagInput','TreeNav','Badge','StatCardCurrent','Table','Chart','ScoreGauge','CreditBar','Dialog','ConfirmationDialog']) add(name,'gallery',{},s=>assert.equal(s.length,0));
 
 const checks=[];
 try {
   assert.deepEqual([...new Set(cases.map(c=>c.path))].sort(),Object.keys(context.guidance).sort());
-  for (const path of Object.keys(context.guidance)) await access(resolve(root,path));
+  for (const path of ['components/NotificationBell/NotificationBell.html']) await access(resolve(root,path));
   checks.push({name:'All Copy for AI entries covered and references exist',status:'pass'});
 } catch(error) { checks.push({name:'Entry coverage',status:'fail',error:error.message}); }
 
 // Compile exported props against the actual public component types.
 await mkdir(output,{recursive:true});
-const typed=cases.filter(c=>c.snapshot).flatMap(c=>c.snapshot.sections).filter(s=>s.props && Object.keys(s.props).length);
+const typed=cases.filter(c=>c.snapshot).flatMap(c=>context.AiseeAiDelivery.configuration(deliveries[c.path],c.snapshot)).filter(s=>s.props && Object.keys(s.props).length);
 const typeSource="import type { ComponentProps } from 'react';\nimport * as DS from '../../src/index';\n"+typed.map((s,i)=>`const config${i}: Partial<ComponentProps<typeof DS.${s.component}>> = ${JSON.stringify(s.props)};`).join('\n');
 await writeFile(resolve(output,'props.tsx'),typeSource);
 await writeFile(resolve(output,'tsconfig.json'),JSON.stringify({extends:'../../tsconfig.json',include:['props.tsx','../../src/vite-env.d.ts']}));

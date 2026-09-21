@@ -1,0 +1,1648 @@
+{
+  "schemaVersion": 1,
+  "publicBaseUrl": "https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/",
+  "components": [
+    {
+      "name": "Button",
+      "slug": "button",
+      "page": "components/Button/Button.html",
+      "entries": [
+        "src/components/Button.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Button.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-button"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Button/Button.html",
+        "components/Button/Button.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve two-sided hover/focus fill motion, icon slots and disabled behavior."
+      ],
+      "configuration": {
+        "props": {
+          "Button": [
+            "variant",
+            "size",
+            "showIcon",
+            "iconPosition"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Input",
+      "slug": "input",
+      "page": "components/Input/Input.html",
+      "entries": [
+        "src/components/Input.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Input.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-field",
+            "aisee-input",
+            "aisee-textarea"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Input/Input.html"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "Input": [
+            "type"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "QuantityStepper",
+      "slug": "quantity-stepper",
+      "page": "components/QuantityStepper/QuantityStepper.html",
+      "entries": [
+        "src/components/QuantityStepper.tsx"
+      ],
+      "productionFiles": [
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-visually-hidden"
+          ]
+        },
+        "src/components/QuantityStepper.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-quantity-stepper"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/stemui/action-minus.svg",
+        "assets/stemui/action-plus.svg"
+      ],
+      "demoFiles": [
+        "components/QuantityStepper/QuantityStepper.html"
+      ],
+      "preserve": [
+        "Preserve keyboard editing, hold acceleration, min/max boundaries and numeric roll motion."
+      ],
+      "configuration": {
+        "props": {
+          "QuantityStepper": [
+            "inputMode"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Checkbox",
+      "slug": "checkbox",
+      "page": "components/Checkbox/Checkbox.html",
+      "entries": [
+        "src/components/Checkbox.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Checkbox.tsx",
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-sr-only"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-checkbox",
+            "aisee-checkbox-row"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Checkbox/Checkbox.html"
+      ],
+      "preserve": [
+        "Preserve checked/indeterminate states, focus behavior and check celebration animation."
+      ],
+      "configuration": {
+        "props": {
+          "Checkbox": []
+        },
+        "themes": [
+          "analysis",
+          "post",
+          "engage"
+        ]
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Dropdown",
+      "slug": "dropdown",
+      "page": "components/Select/Select.html",
+      "entries": [
+        "src/components/Dropdown.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Dropdown.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-dropdown",
+            "aisee-field__label"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/dropdown/search.svg",
+        "assets/stemui/action-check.svg",
+        "assets/stemui/line_chevron-up.svg"
+      ],
+      "demoFiles": [
+        "components/Select/Select.html"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "Dropdown": []
+        },
+        "slots": {
+          "Dropdown": [
+            "leadingIcon"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Toggle",
+      "slug": "toggle",
+      "page": "components/Toggle/Toggle.html",
+      "entries": [
+        "src/components/Toggle.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Toggle.tsx",
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-sr-only"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-toggle"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Toggle/Toggle.html",
+        "components/Toggle/Toggle.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "Toggle": [
+            "color",
+            "surface",
+            "size"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "TagInput",
+      "slug": "tag-input",
+      "page": "components/TagInput/TagInput.html",
+      "entries": [
+        "src/components/TagInput.tsx"
+      ],
+      "productionFiles": [
+        "src/components/TagInput.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-tag-input-field",
+            "aisee-tag-input"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/tag-input/close.svg"
+      ],
+      "demoFiles": [
+        "components/TagInput/TagInput.html"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "SegmentedChoice",
+      "slug": "segmented-choice",
+      "page": "components/SegmentedChoice/SegmentedChoice.html",
+      "entries": [
+        "src/components/SegmentedChoice.tsx"
+      ],
+      "productionFiles": [
+        "src/components/SegmentedChoice.tsx",
+        "src/components/Tooltip.tsx",
+        "src/hooks/useTooltipSpring.ts",
+        "src/utils/spring.ts",
+        "src/utils/tooltip-position.ts",
+        {
+          "path": "src/styles/tooltip.css",
+          "classes": [
+            "aisee-segmented-choice",
+            "aisee-tooltip",
+            "aisee-tooltip-trigger",
+            "aisee-tooltip-motion",
+            "aisee-tooltip-surface"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-segmented-choice",
+            "aisee-tooltip",
+            "aisee-tooltip-trigger",
+            "aisee-tooltip-motion",
+            "aisee-tooltip-surface"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        },
+        {
+          "name": "react-dom",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/segmented-choice/info.svg"
+      ],
+      "demoFiles": [
+        "components/SegmentedChoice/SegmentedChoice.html",
+        "components/SegmentedChoice/SegmentedChoice.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "ToggleSelectionGroup",
+      "slug": "toggle-selection-group",
+      "page": "components/ToggleSelectionGroup/ToggleSelectionGroup.html",
+      "entries": [
+        "src/components/ToggleSelectionGroup.tsx"
+      ],
+      "productionFiles": [
+        "src/components/ToggleSelectionGroup.tsx",
+        "src/components/Checkbox.tsx",
+        "src/components/Toggle.tsx",
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-sr-only"
+          ]
+        },
+        {
+          "path": "src/styles/toggle-selection-group.css",
+          "classes": [
+            "aisee-selection-group",
+            "aisee-checkbox",
+            "aisee-checkbox-row",
+            "aisee-toggle"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-selection-group",
+            "aisee-checkbox",
+            "aisee-checkbox-row",
+            "aisee-toggle"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/toggle-selection-group/check.svg"
+      ],
+      "demoFiles": [
+        "components/ToggleSelectionGroup/ToggleSelectionGroup.html",
+        "components/ToggleSelectionGroup/ToggleSelectionGroup.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Tabs",
+      "slug": "tabs",
+      "page": "components/Tabs/Tabs.html",
+      "entries": [
+        "src/components/Tabs.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Tabs.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-tabs",
+            "aisee-tab"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Tabs/Tabs.html"
+      ],
+      "preserve": [
+        "Preserve controlled selection, keyboard navigation, icon/text variants and responsive platform labels."
+      ],
+      "configuration": {
+        "props": {
+          "Tabs": [
+            "variant",
+            "layout",
+            "platformLabelDisplay"
+          ]
+        },
+        "slots": {
+          "Tabs": [
+            "icon",
+            "count"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "SidebarNavigation",
+      "slug": "sidebar-navigation",
+      "page": "components/SidebarNavigation/SidebarNavigation.html",
+      "entries": [
+        "src/components/SidebarNavigation.tsx"
+      ],
+      "productionFiles": [
+        "src/components/SidebarNavigation.tsx",
+        "src/components/TreeNav.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-sidebar",
+            "aisee-sidebar-layout",
+            "aisee-tree-nav"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        },
+        {
+          "name": "react-dom",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/SidebarNavigation/SidebarNavigation.html",
+        "components/SidebarNavigation/SidebarNavigation.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve collapse/reveal, nested navigation, layout variants and keyboard behavior."
+      ],
+      "configuration": {
+        "props": {
+          "SidebarLayout": [
+            "variant",
+            "togglePosition",
+            "reveal"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "TreeNav",
+      "slug": "tree-nav",
+      "page": "components/TreeNav/TreeNav.html",
+      "entries": [
+        "src/components/TreeNav.tsx"
+      ],
+      "productionFiles": [
+        "src/components/TreeNav.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-tree-nav"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/TreeNav/TreeNav.html"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "FeatureOverview",
+      "slug": "feature-overview",
+      "page": "components/FeatureOverview/FeatureOverview.html",
+      "entries": [
+        "src/components/FeatureOverview.tsx",
+        "src/components/Card.tsx",
+        "src/components/FeatureList.tsx"
+      ],
+      "productionFiles": [
+        "src/components/FeatureOverview.tsx",
+        "src/components/Card.tsx",
+        "src/components/FeatureList.tsx",
+        {
+          "path": "src/styles/feature-overview.css",
+          "classes": [
+            "aisee-feature-overview",
+            "aisee-card",
+            "aisee-card-grid",
+            "aisee-feature-list"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-feature-overview",
+            "aisee-card",
+            "aisee-card-grid",
+            "aisee-feature-list"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/feature-overview/check-analysis.svg",
+        "assets/feature-overview/check-engage.svg",
+        "assets/feature-overview/check-growth.svg",
+        "assets/feature-overview/check-publish.svg",
+        "assets/stemui/line_chevron-up.svg"
+      ],
+      "demoFiles": [
+        "components/FeatureOverview/FeatureOverview.html",
+        "components/FeatureOverview/FeatureOverview.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "CardGrid": [
+            "columns",
+            "divided"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "PlanCard",
+      "slug": "plan-card",
+      "page": "components/PlanCardCurrent/PlanCardCurrent.html",
+      "entries": [
+        "src/components/PlanCard.tsx"
+      ],
+      "productionFiles": [
+        "src/components/PlanCard.tsx",
+        "src/components/SubscriptionPlanCard.tsx",
+        "src/components/Badge.tsx",
+        "src/components/Button.tsx",
+        "src/components/Dialog.tsx",
+        {
+          "path": "src/styles/subscription-plan.css",
+          "classes": [
+            "aisee-plan-card",
+            "aisee-subscription-plan",
+            "aisee-plan-subscription-dialog",
+            "aisee-badge",
+            "aisee-button",
+            "aisee-dialog",
+            "aisee-dialog-notice",
+            "aisee-dialog-details",
+            "aisee-dialog-summary"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-plan-card",
+            "aisee-subscription-plan",
+            "aisee-plan-subscription-dialog",
+            "aisee-badge",
+            "aisee-button",
+            "aisee-dialog",
+            "aisee-dialog-notice",
+            "aisee-dialog-details",
+            "aisee-dialog-summary"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/badge/draft.svg",
+        "assets/badge/failed.svg",
+        "assets/badge/from-plan.svg",
+        "assets/badge/manual.svg",
+        "assets/badge/published.svg",
+        "assets/badge/rewritten.svg",
+        "assets/badge/scheduled.svg",
+        "assets/dialog-close.svg",
+        "assets/empty-state/library/unlock.svg",
+        "assets/plan-card/subscription/access.svg",
+        "assets/plan-card/subscription/credits.svg"
+      ],
+      "demoFiles": [
+        "components/PlanCardCurrent/PlanCardCurrent.html",
+        "components/PlanCardCurrent/PlanCardCurrent.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Avatar",
+      "slug": "avatar",
+      "page": "preview/avatar.html",
+      "entries": [
+        "src/components/Avatar.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Avatar.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-avatar",
+            "aisee-social-account-avatar"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/avatar/dapp-avatar-set.svg",
+        "assets/avatar/platform-x-mark.svg",
+        "assets/avatar/social-avatar-set.svg"
+      ],
+      "demoFiles": [
+        "preview/avatar.html"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "Avatar": [
+            "kind",
+            "index",
+            "animated"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Badge",
+      "slug": "badge",
+      "page": "components/Badge/Badge.html",
+      "entries": [
+        "src/components/Badge.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Badge.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-badge"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/badge/draft.svg",
+        "assets/badge/failed.svg",
+        "assets/badge/from-plan.svg",
+        "assets/badge/manual.svg",
+        "assets/badge/published.svg",
+        "assets/badge/rewritten.svg",
+        "assets/badge/scheduled.svg"
+      ],
+      "demoFiles": [
+        "components/Badge/Badge.html",
+        "components/Badge/Badge.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Steps",
+      "slug": "steps",
+      "page": "components/Steps/Steps.html",
+      "entries": [
+        "src/components/Steps.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Steps.tsx",
+        {
+          "path": "src/styles/steps.css",
+          "classes": [
+            "aisee-steps"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-steps"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/steps/check.svg",
+        "assets/steps/connector.svg",
+        "assets/steps/error.svg",
+        "assets/steps/loading.svg",
+        "assets/steps/success.svg"
+      ],
+      "demoFiles": [
+        "components/Steps/Steps.html",
+        "components/Steps/Steps.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve production step progress and loading animations; workflow state comes from the host."
+      ],
+      "configuration": {
+        "props": {
+          "Steps": [
+            "animated"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "EmptyState",
+      "slug": "empty-state",
+      "page": "components/EmptyState/EmptyState.html",
+      "entries": [
+        "src/components/EmptyState.tsx"
+      ],
+      "productionFiles": [
+        "src/components/EmptyState.tsx",
+        "src/components/EmptyStateIllustration.tsx",
+        {
+          "path": "src/styles/empty-state.css",
+          "classes": [
+            "aisee-empty-state",
+            "aisee-empty-state-illustration"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-empty-state",
+            "aisee-empty-state-illustration"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/empty-state/library/bound.svg",
+        "assets/empty-state/library/free-use.svg",
+        "assets/empty-state/library/link.svg",
+        "assets/empty-state/library/no-account.svg",
+        "assets/empty-state/library/no-credit.svg",
+        "assets/empty-state/library/no-event.svg",
+        "assets/empty-state/library/no-media.svg",
+        "assets/empty-state/library/no-report-data.svg",
+        "assets/empty-state/library/no-report.svg",
+        "assets/empty-state/library/no-time-slot.svg",
+        "assets/empty-state/library/nobody.svg",
+        "assets/empty-state/library/nothing.svg",
+        "assets/empty-state/library/plugin.svg",
+        "assets/empty-state/library/unlock.svg"
+      ],
+      "demoFiles": [
+        "components/EmptyState/EmptyState.html",
+        "components/EmptyState/EmptyState.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "EmptyState": [
+            "size",
+            "variant",
+            "illustrationName"
+          ]
+        },
+        "slots": {
+          "EmptyState": [
+            "illustration",
+            "title",
+            "description",
+            "action"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Card",
+      "slug": "card",
+      "page": "components/Card/Card.html",
+      "entries": [
+        "src/components/Card.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Card.tsx",
+        {
+          "path": "src/styles/feature-overview.css",
+          "classes": [
+            "aisee-card",
+            "aisee-card-grid"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-card",
+            "aisee-card-grid"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/stemui/line_chevron-up.svg"
+      ],
+      "demoFiles": [
+        "components/Card/Card.html",
+        "components/Card/Card.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "StatCard",
+      "slug": "stat-card",
+      "page": "components/StatCardCurrent/StatCardCurrent.html",
+      "entries": [
+        "src/components/StatCard.tsx"
+      ],
+      "productionFiles": [
+        "src/components/StatCard.tsx",
+        {
+          "path": "src/styles/stat-card.css",
+          "classes": [
+            "aisee-stat-card",
+            "aisee-stat-card-group"
+          ]
+        },
+        {
+          "path": "src/styles/feature-overview.css",
+          "classes": [
+            "aisee-stat-card",
+            "aisee-stat-card-group"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-stat-card",
+            "aisee-stat-card-group"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/StatCardCurrent/StatCardCurrent.html",
+        "components/StatCardCurrent/StatCardCurrent.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Table",
+      "slug": "table",
+      "page": "components/Table/Table.html",
+      "entries": [
+        "src/components/Table.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Table.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-table-wrap",
+            "aisee-table"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Table/Table.html"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Chart",
+      "slug": "chart",
+      "page": "components/Chart/Chart.html",
+      "entries": [
+        "src/components/Chart.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Chart.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-chart"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Chart/Chart.html"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "ScoreGauge",
+      "slug": "score-gauge",
+      "page": "components/ScoreGauge/ScoreGauge.html",
+      "entries": [
+        "src/components/ScoreGauge.tsx"
+      ],
+      "productionFiles": [
+        "src/components/ScoreGauge.tsx",
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-sr-only"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-score-gauge"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "src/assets/score-gauge/score-gauge-texture.png"
+      ],
+      "demoFiles": [
+        "components/ScoreGauge/ScoreGauge.html"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "CreditBar",
+      "slug": "credit-bar",
+      "page": "components/CreditBar/CreditBar.html",
+      "entries": [
+        "src/components/CreditBar.tsx"
+      ],
+      "productionFiles": [
+        "src/components/CreditBar.tsx",
+        {
+          "path": "src/styles/credit-bar.css",
+          "classes": [
+            "aisee-credit-bar"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-credit-bar"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/credit-bar/sparkles.svg"
+      ],
+      "demoFiles": [
+        "components/CreditBar/CreditBar.html",
+        "components/CreditBar/CreditBar.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "Dialog",
+      "slug": "dialog",
+      "page": "components/Dialog/Dialog.html",
+      "entries": [
+        "src/components/Dialog.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Dialog.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-dialog",
+            "aisee-dialog-notice",
+            "aisee-dialog-details",
+            "aisee-dialog-summary"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/dialog-close.svg"
+      ],
+      "demoFiles": [
+        "components/Dialog/Dialog.html",
+        "components/Dialog/Dialog.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "ConfirmationDialog",
+      "slug": "confirmation-dialog",
+      "page": "components/ConfirmationDialog/ConfirmationDialog.html",
+      "entries": [
+        "src/components/ConfirmationDialog.tsx"
+      ],
+      "productionFiles": [
+        "src/components/ConfirmationDialog.tsx",
+        "src/components/Button.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-confirmation-dialog",
+            "aisee-button"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/dialog-close.svg"
+      ],
+      "demoFiles": [
+        "components/ConfirmationDialog/ConfirmationDialog.html"
+      ],
+      "preserve": [
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "TooltipToast",
+      "slug": "tooltip-toast",
+      "page": "components/TooltipToast/TooltipToast.html",
+      "entries": [
+        "src/components/Tooltip.tsx",
+        "src/components/Toast.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Tooltip.tsx",
+        "src/hooks/useTooltipSpring.ts",
+        "src/utils/spring.ts",
+        "src/utils/tooltip-position.ts",
+        "src/components/Toast.tsx",
+        {
+          "path": "src/styles/tooltip.css",
+          "classes": [
+            "aisee-tooltip",
+            "aisee-tooltip-trigger",
+            "aisee-tooltip-motion",
+            "aisee-tooltip-surface",
+            "aisee-toast",
+            "aisee-toast-viewport"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-tooltip",
+            "aisee-tooltip-trigger",
+            "aisee-tooltip-motion",
+            "aisee-tooltip-surface",
+            "aisee-toast",
+            "aisee-toast-viewport"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        },
+        {
+          "name": "react-dom",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/stemui/action-check.svg",
+        "assets/stemui/action-close.svg"
+      ],
+      "demoFiles": [
+        "components/TooltipToast/TooltipToast.html",
+        "components/TooltipToast/TooltipToast.demo.tsx"
+      ],
+      "preserve": [
+        "Preserve Tooltip auto placement, viewport collision handling, hover/focus/Escape, subtle/playful spring motion and reduced motion.",
+        "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page."
+      ],
+      "configuration": {
+        "props": {
+          "Tooltip": [
+            "placement",
+            "animation"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    },
+    {
+      "name": "NotificationBell",
+      "slug": "notification-bell",
+      "page": "components/NotificationBell/NotificationBell.html",
+      "entries": [
+        "src/components/NotificationBell.tsx"
+      ],
+      "productionFiles": [
+        "src/components/NotificationBell.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-notification-bell"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/NotificationBell/NotificationBell.html"
+      ],
+      "preserve": [
+        "Keep the inline bell icon, hover/focus, numeric badge and optional unread dot.",
+        "Real count increases ring the white bell and animate the badge number. Rerenders, unchanged/decreased/cleared counts must not replay incoming animation.",
+        "The outer button and black icon circle remain fixed; respect prefers-reduced-motion. Connect count and onClick to existing product data and navigation."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": "<NotificationBell count={unreadCount} onClick={openNotifications} />",
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ]
+    }
+  ]
+}

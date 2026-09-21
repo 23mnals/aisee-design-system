@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 3,
+  "name": "StatCard",
+  "page": "components/StatCardCurrent/StatCardCurrent.html",
+  "version": "ed96b1a55d9a198a",
+  "delivery": "./releases/ed96b1a55d9a198a/ready.md",
+  "installer": "./releases/ed96b1a55d9a198a/install.cjs",
+  "installerSha256": "cae9f9c65c8b33d55bba8fdf70f2868fd4282ebf9e7bc5bb7b61d2f18da11aab",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "StatCard.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

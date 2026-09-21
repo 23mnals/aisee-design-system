@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 3,
+  "name": "TreeNav",
+  "page": "components/TreeNav/TreeNav.html",
+  "version": "c1ace6f1c3d768b4",
+  "delivery": "./releases/c1ace6f1c3d768b4/ready.md",
+  "installer": "./releases/c1ace6f1c3d768b4/install.cjs",
+  "installerSha256": "34c591de3a9eaea170cbe69578fb9e85f301a09ae7bc07a7ff3eee776ed463d6",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "TreeNav.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

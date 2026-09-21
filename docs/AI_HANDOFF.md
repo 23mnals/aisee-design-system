@@ -1,7 +1,5 @@
 # 把 AISEE HTML 交给其他 AI 的使用说明
 
-> Notification 单组件短版源码交付已作为独立试点接入 Copy for AI，保留当前配置。接入前提、公开下载和验证边界见 [说明](NOTIFICATION_COPY_AI.md)；其他组件沿用本文原规则。
-
 ## 结论
 
 其他 AI **通常能读取上传 HTML 中直接存在的文字、CSS、HTML 结构和内联 JavaScript**，但这不等于它一定能读取整个设计系统，也不等于它会自动按照 demo 精确实现。
@@ -13,7 +11,7 @@
 - 本地 `file://`、`localhost`、私有仓库链接和登录后的 Figma 页面，对另一平台通常不可访问。
 - 只给截图或单个 demo，会让模型把示例内容误当组件规则，或漏掉 hover、focus、disabled、响应式与无障碍状态。
 
-因此，“给一个 HTML”只能作为视觉和源码参考，**不能保证实现一致**。最可靠的交付是公开 HTTPS 预览或完整仓库/ZIP，加上权威规范和明确提示词。
+因此，“给一个 HTML”只能作为视觉和源码参考，**不能保证实现一致**。可执行的交付需要实际组件包或完整源码，再附同版本可访问预览、权威规范和明确提示词。
 
 ## 变量配置与目标设计匹配
 
@@ -30,16 +28,20 @@
 - 单色 SVG 使用 `currentColor` 或 mask 跟随 hover / focus 文字颜色，多色图标保留原始色。继续复用 Button 原有双向填充动画、禁用态与焦点规则。
 - 本轮参考节点：`77:17106`、`38:69084`、`78:121895`（文件 `LLvI9vd66VLNuAltAWJFJw`）。本轮只提取其中按钮，完整任务列表与回复卡片尚待明确范围。
 
+## 接入前检查
+
+先读 [第三方接入指南](GETTING_STARTED.md) 和 [生产交付契约](PRODUCTION_DELIVERY.md)。当前所有已登记的 Current 组件通过公开 latest 指针提供必要生产源码，无需整库或私有仓库权限；真实配置白名单与 Demo 状态分开。
+
 ## 单组件任务（推荐）
 
 如果只需要 Button、Input、Tabs、Dialog 等一个 Current 组件，不必上传整套 Demo：
 
 1. 在主门户打开对应的 Current 组件页。
 2. 点击右上角双星图标的 `Copy for AI`。
-3. 把复制的组件 Prompt、目标页面和真实业务内容一起交给 AI。
+3. 将短指令、目标页面和真实业务需求交给编码 AI，由它下载生产组件接入。
 4. 要求 AI 对照 Current Demo 检查适用状态与动画。
 
-每个组件 Prompt 都包含该组件的用途、接入方式、公开 API、交互、视觉边界、无障碍和 AISEE 通用规则。它适合交给 AI 编码工具，但不是可安装的组件包。人类开发者仍需要 `@aisee/design-system` 工作区包或对应源码；没有 Design System 时，应同时打开组件页的 Open HTML 作为可运行参考。Demo 中的示例文案、数据、图标和插图不是规定资产，接收方应按真实功能替换。Overview 和 Legacy 页面不提供该按钮，避免把汇总或历史内容误当成 Current 实现。
+每个组件的复制指令明确组件名、latest 地址及允许的真实配置；用途、文件清单、必须保留的交互与动画、前置环境、安装和验收放在公开版本说明中。禁止创建演示页、带入 mock 数据或全局 Design System 环境。Overview 和 Legacy 页面不提供 Copy for AI。
 
 ## Card 分区组合
 
@@ -52,7 +54,7 @@ Card 新增 `variant="section"`，将标题、输入 / 输入组、选项、长�
 1. `aisee-design-system-preview.html`，最好是可访问的部署 URL。
 2. `docs/TEAM_DECISIONS.md`。
 3. `docs/aisee-dapp-design.v6.md`。
-4. `src/tokens/color-architecture.json`、`src/tokens/tokens.json`、`src/styles/components.css` 与 `src/components/`。
+4. 对应版本的可安装 tgz 与来源 JSON，或保留 `src/`、`assets/`、`fonts/` 完整依赖的源码；同时提供 `docs/GETTING_STARTED.md`。不能仅给 components 目录。
 5. 目标页面的内容、信息架构、状态和响应式要求。
 
 主 HTML 内已嵌入 `<script type="application/json" id="aisee-ai-contract">`，让支持源码解析的平台快速找到来源优先级、基础令牌和实现边界。但 JSON 只是索引，不能替代完整文件。
@@ -70,6 +72,7 @@ Card 新增 `variant="section"`，将标题、输入 / 输入组、选项、长�
 5. Legacy 页面仅用于没有 Current 对应项时参考
 
 必须：
+- 先读取 docs/GETTING_STARTED.md，确认目标项目已安装兼容包；否则取得并安装实际 tgz 或迁入完整源码 / 样式 / 资源，不引用不存在的包；
 - 保留目标页面的内容和信息架构；
 - 复用现有 Current 组件与 tokens，不重新猜测颜色、字号、圆角和间距；
 - 颜色只使用 `--aisee-color-semantic-*`；不得在页面写 HEX，也不得直接使用 `--aisee-color-primitive-*`；
@@ -120,3 +123,9 @@ Figma 51:213896 的四区功能总览使用导出的 FeatureOverview；底层为
 ## Sidebar 布局变量（2026-09-18，待验收）
 
 SidebarLayout + SidebarNavigation 提供 sidebar / muted / floating / inset / topbar 五种布局与 inside / outside 按钮位置，默认仍为通栏白底 + 内部按钮。topbar 固定全宽顶栏按钮，收起完全隐藏侧栏；hover 临时浮出不挤正文，click 恢复固定展开，Escape / 离开 / 外部点击 / 选择关闭临时预览。布局变化保留导航选中、分组与收起状态。独立卡片使用 16px 外距 / 圆角、AISEE 浅描边；外部按钮在内容区标题栏左侧，无悬浮框与独立占位列。图标 hover / focus 使用 button/usual 全不透明；floating 内容标题栏透明，内容左右间距均为 16px，不叠加正文横向内距。Inset 标题栏直角且仅底部 1px 分隔线；预览变量下拉框靠右。现有 Webapp 默认调用保持兼容，产品层级未改。详见 [SIDEBAR_LAYOUTS.md](SIDEBAR_LAYOUTS.md)。
+
+## Tooltip 智能定位
+
+Tooltip 默认 `placement="auto"`，空间充足优先上方，否则选择可容纳的一侧，横向或纵向偏移以避开视口边缘。显式 `top` / `right` / `bottom` / `left` 只是优先方向；仍会翻转。滚动、窗口和内容尺寸变化重新测量，触发目标滚出裁切区域后隐藏。提示通过顶层浮层显示，保留键盘 focus 和 Escape 关闭；不改变 Toast 定位。组件页同时展示四个方向按钮，气泡只在 hover / focus 后显示；Copy for AI 不导出人为选定的固定方向。
+
+`animation="subtle"` 为默认：160ms 淡入与沿实际方向 4px 位移，120ms 淡出；`playful` 用于头像 / 成员介绍，真实低阻尼弹簧（入场 stiffness 260 / damping 10，跟随 stiffness 100 / damping 5）。记录进入点，沿对应方向摇摆；跟随目标角度 ±18°、水平位移 ±22px，允许惯性过冲；入场从 0.6 倍和 20px 开始；`none` 无动画。键盘聚焦仅淡入、不弹跳和倾斜，prefers-reduced-motion 关闭所有动效。动效与测量层分离，保留智能翻转和滚动定位。Demo 初始选择 playful，组件 API 默认仍为 subtle。Demo 动画控制同步应用到主示例、四方向和头像示例，Copy for AI 导出当前动画与 auto 定位。

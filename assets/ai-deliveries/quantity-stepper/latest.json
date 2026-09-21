@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 3,
+  "name": "QuantityStepper",
+  "page": "components/QuantityStepper/QuantityStepper.html",
+  "version": "c66b153c187d5939",
+  "delivery": "./releases/c66b153c187d5939/ready.md",
+  "installer": "./releases/c66b153c187d5939/install.cjs",
+  "installerSha256": "e750894a6073fc8fc27dd4414deaae140598585e6103851e9db1ef6deeec2815",
+  "configuration": {
+    "props": {
+      "QuantityStepper": [
+        "inputMode"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "QuantityStepper.tsx",
+    "styles.css",
+    "assets/stemui/action-minus.svg",
+    "assets/stemui/action-plus.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/stemui/action-minus.svg.d.ts",
+    "assets/stemui/action-plus.svg.d.ts"
+  ]
+}

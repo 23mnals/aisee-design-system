@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 3,
+  "name": "CreditBar",
+  "page": "components/CreditBar/CreditBar.html",
+  "version": "c326db0f9c2c724e",
+  "delivery": "./releases/c326db0f9c2c724e/ready.md",
+  "installer": "./releases/c326db0f9c2c724e/install.cjs",
+  "installerSha256": "636afddea82caf0661835d368a0618dcf48023d0a3e8a7c3bbf8187613b41e4a",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "CreditBar.tsx",
+    "styles.css",
+    "assets/credit-bar/sparkles.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/credit-bar/sparkles.svg.d.ts"
+  ]
+}

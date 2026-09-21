@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 3,
+  "name": "SegmentedChoice",
+  "page": "components/SegmentedChoice/SegmentedChoice.html",
+  "version": "6869ceb5d059512e",
+  "delivery": "./releases/6869ceb5d059512e/ready.md",
+  "installer": "./releases/6869ceb5d059512e/install.cjs",
+  "installerSha256": "bf9fdf056af33d67506dcf0fdc36d2d64874e9fe0fb64a6d0a194b2d9756874b",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    },
+    {
+      "name": "react-dom",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "SegmentedChoice.tsx",
+    "Tooltip.tsx",
+    "useTooltipSpring.ts",
+    "spring.ts",
+    "tooltip-position.ts",
+    "styles.css",
+    "assets/segmented-choice/info.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/segmented-choice/info.svg.d.ts"
+  ]
+}

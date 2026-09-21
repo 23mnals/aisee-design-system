@@ -1,3 +1,4 @@
+@import './tooltip.css';
 @import './subscription-plan.css';
 @import './tutorial-steps.css';
 @import './loading-animation.css';
@@ -216,7 +217,7 @@
 .aisee-tag-input__remove:hover { background: rgba(17,17,17,.06); }
 .aisee-tag-input__remove span { display: block; width: 10px; height: 10px; background: url('../../assets/tag-input/close.svg') center/10px 10px no-repeat; }
 .aisee-tag-input__add { display: inline-flex; min-width: 54px; height: 30px; flex: 0 0 auto; align-items: center; justify-content: center; gap: 4px; padding: 0 9px; border: 0; border-radius: 6px; background: var(--aisee-color-post-agent-primary); color: var(--aisee-color-black); font: 500 12px/18px Karla, sans-serif; cursor: pointer; transition: background var(--aisee-motion-micro); }
-.aisee-tag-input__add:hover:not(:disabled) { background: var(--aisee-color-post-agent-primary-hover); }
+.aisee-tag-input__add:hover:not(:disabled) { background: var(--aisee-color-post-agent-hover); }
 .aisee-tag-input__add:disabled { background: transparent; color: var(--aisee-color-text-muted); cursor: default; }
 .aisee-tag-input__add-icon { display: grid; width: 14px; height: 14px; color: currentColor; font: 500 14px/14px Karla, sans-serif; place-items: center; }
 .aisee-tag-input__add-icon::before { content: '+'; }
@@ -965,31 +966,6 @@ textarea.aisee-input.aisee-textarea { min-height: 120px; resize: vertical; font:
 .aisee-confirmation-dialog__actions .aisee-button--secondary { border: 0; background: rgba(17,17,17,.02); }
 .aisee-confirmation-dialog__actions .aisee-button--secondary:hover:not(:disabled) { border: 0; background: rgba(17,17,17,.06); }
 
-.aisee-tooltip-trigger { position: relative; display: inline-flex; }
-.aisee-tooltip-trigger:focus-visible { outline: 2px solid var(--aisee-color-black); outline-offset: 3px; border-radius: 4px; }
-.aisee-tooltip {
-  position: absolute;
-  z-index: 30;
-  left: 50%;
-  width: max-content;
-  max-width: 320px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: var(--aisee-color-white);
-  background: var(--aisee-color-black);
-  box-shadow: 0 10px 12px rgba(0,0,0,.12);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, 4px);
-  transition: opacity var(--aisee-motion-micro) var(--aisee-motion-ease-out), transform var(--aisee-motion-micro) var(--aisee-motion-ease-out);
-}
-.aisee-tooltip--top { bottom: calc(100% + 8px); }
-.aisee-tooltip--bottom { top: calc(100% + 8px); transform: translate(-50%, -4px); }
-.aisee-tooltip-trigger:hover .aisee-tooltip,
-.aisee-tooltip-trigger:focus-within .aisee-tooltip { opacity: 1; transform: translate(-50%, 0); }
 
 .aisee-toast-viewport { position: fixed; z-index: 50; top: 24px; right: 24px; display: grid; width: min(400px, calc(100vw - 32px)); justify-items: end; gap: 12px; }
 .aisee-toast {

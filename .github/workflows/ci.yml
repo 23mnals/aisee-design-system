@@ -27,7 +27,9 @@ jobs:
         if: always()
         with:
           name: copy-ai-audit
-          path: artifacts/copy-ai-audit/
+          path: |
+            artifacts/copy-ai-audit/
+            artifacts/production-delivery-audit/
           if-no-files-found: ignore
 
   pages:

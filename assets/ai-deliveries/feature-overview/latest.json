@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 3,
+  "name": "FeatureOverview",
+  "page": "components/FeatureOverview/FeatureOverview.html",
+  "version": "b18ecc209412a6c6",
+  "delivery": "./releases/b18ecc209412a6c6/ready.md",
+  "installer": "./releases/b18ecc209412a6c6/install.cjs",
+  "installerSha256": "0595ba88597341f23df7ce13019f6900d949ade4d434a71f7fb82b35e4e99cbd",
+  "configuration": {
+    "props": {
+      "CardGrid": [
+        "columns",
+        "divided"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "FeatureOverview.tsx",
+    "Card.tsx",
+    "FeatureList.tsx",
+    "styles.css",
+    "assets/feature-overview/check-analysis.svg",
+    "assets/feature-overview/check-engage.svg",
+    "assets/feature-overview/check-growth.svg",
+    "assets/feature-overview/check-publish.svg",
+    "assets/stemui/line_chevron-up.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/feature-overview/check-analysis.svg.d.ts",
+    "assets/feature-overview/check-engage.svg.d.ts",
+    "assets/feature-overview/check-growth.svg.d.ts",
+    "assets/feature-overview/check-publish.svg.d.ts",
+    "assets/stemui/line_chevron-up.svg.d.ts"
+  ]
+}

@@ -1,32 +1,29 @@
 # AISEE Design System 当前交接
 
-工作纪律见 AGENTS.md，长期决策见 docs/TEAM_DECISIONS.md。
+> 工作纪律见 AGENTS.md；长期决策见 docs/TEAM_DECISIONS.md；历史见 handoff/sessions/。
 
-## 当前增量：一句话复制
+## 当前发布批次 · 2026-09-21
 
-- 用户要求复制只有一句话。本轮 Notification 改为约 145 字符指令 + 所选配置文档链接，安装步骤和 JSON 由 AI 打开链接后读取；128 种组合均有静态文档。
-- Installation / Usage / Behavior 已分开，提供环境说明、源码安装说明链接、本地 import、最小调用和完整交互示例。
-- 在 /tmp/aisee-notification-release 基于 aa6fa25 独立发布修正；原本地分支及其他未提交内容保持不动，最终 SHA / CI 以 git 和发布验收记录为准。
-- 最近 session：[一句话复制与安装说明](handoff/sessions/2026-09-20-notification-one-line.md)。
+- 用户明确授权发布新版 Copy for AI 给外部开发使用；目标为 ai/desktop/design-system-current，不操作 main。
+- 基于远端 dbaabd12c883ca21c930d51000db95d4b1089bf5，在独立发布工作区整理全组件生产交付机制、必要 Current 源码依赖与文档。原本地工作区的其他未提交文件保留。
+- 每个已登记组件使用显式 production manifest，排除 Demo、mock、字体与全局 Design System 环境；必要文件数量不设上限。
+- CSS 使用 selector/value AST 依赖闭包，保留状态、变量默认值与条件覆盖、keyframes、media/supports/reduced-motion；缺失依赖阻止构建。
+- 复制短指令指定组件名及真实选项，稳定 latest.json 在执行时解析最新已发布生产版本；已安装源码不自动更新。兼容要求由各组件清单声明。
+- NotificationBell 仅交付铃铛源码、局部样式、入口与 CSS 类型声明；业务 count/dot/onClick、铃铛和数字动画保留，面板与演示控制不交付。
+- Tooltip 已确认的智能定位与 Playful 预览作为当前清单依赖同步发布；原 Demo 仍可切换所有状态。
 
-## 当前版本
+## 验收与发布状态
 
-- 发布分支 ai/desktop/design-system-current；本批从远端 2a9d63a 独立整理 Notification 短版 Copy for AI，最新 SHA 以 git log 为准。
-- 仅发布 Notification 所需短提示词、固定哈希公开源码脚本、复制前可用性检查、选定配置、验证与接入文档。其他组件仍用原 Copy for AI。
-- 原本地工作区有 Tooltip、第三方整库接入等未提交工作以及未推送的 d6d166b 交接提交，均未混入本批。独立提交后原本地分支可能与远端分叉，后续先检查 git status 和历史，不直接 push 或覆盖本地工作。
-- main 未修改。推送将触发 CI / Pages；是否上线以对应 Actions 和匿名下载验证为准。
-
-## 最近完成
-
-- 既有组件变量及 Copy for AI 批量检查已在 2a9d63a 发布。
-- Notification 改为约 145 字符短提示词，编码 AI 自动获取完整源码、样式、字体和图标，无需安装整库或用户另传附件。
-- 目标项目需 React 18+、TSX / CSS / SVG 支持，以及可联网运行 Node 的编码 AI。真实业务回调由产品接入。
-- 自动验证包含独立 React 项目、真实源码比对、哈希、重复执行与冲突保护、类型检查和构建。完整说明见 docs/NOTIFICATION_COPY_AI.md。
+- 独立发布目录完成类型检查、124 项测试、组件/包/静态站点构建。
+- Registered components: 28；Verified deliveries: 28；全部独立安装、类型检查、构建通过。配置审计 192 个案例、0 失败。
+- 发布目录与原工作区生成的生产版本清单完全一致。旧已发布的不可变交付链接保留。
+- 本提交推送后由 CI 验证并部署 Pages；最终状态以 GitHub Actions 和公开地址验证结果为准，不把本地检查等同于线上部署成功。
+- 公开入口：https://23mnals.github.io/aisee-design-system/
 
 ## 未完成与下一步
 
-- 确认本次 CI / Pages 部署和公开脚本哈希，通过后用户在真实目标项目测试复制结果；未完成第三方 AI 最终视觉与交互验收。
-- 试点确认后再决定是否推广其他组件，不自动扩大范围。
-- 原本地未提交组件继续按用户反馈处理，正式同步 main 仍需授权 PR。
-
-最近 session：[Notification 短版独立发布](handoff/sessions/2026-09-20-notification-short-publish.md)。
+- 外部开发需要从新版页面重新 Copy for AI，在真实业务项目复测；不要继续转发旧 ready-30.md。
+- 尚未运行所有组件全部视觉状态或跨 AI 平台产出对比；类型/构建通过不等同于全部视觉验收。
+- 原本地工作区 HEAD d6d166b 与远端存在分叉及未提交修改，禁止直接 pull/reset/覆盖；下次修改先核对 git status 与远端差异。
+- 后续普通开发不自动发布；正式同步 main 仍需用户授权 PR，合并另需明确授权。
+- 最近 session：[统一生产交付发布](handoff/sessions/2026-09-21-production-delivery-publish.md)。

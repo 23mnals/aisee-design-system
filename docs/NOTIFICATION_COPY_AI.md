@@ -1,28 +1,11 @@
-# Notification 单组件接入
+# NotificationBell Copy for AI
 
-## 使用方式
+NotificationBell 使用全组件统一的 [生产交付机制](PRODUCTION_DELIVERY.md)，没有专属打包或复制特判。清单只把 NotificationBell 作为入口；输出铃铛实现、局部样式、入口及必要 CSS 类型声明。无 NotificationPanel、mock 消息、演示页面、字体、面板资产或全局样式。
 
-1. 打开 Notification Current 页面，选择铃铛 dot/count、面板状态和内容开关。
-2. 点击 Copy for AI，直接粘贴到目标项目的编码 AI。无需手动安装 AISEE 库、下载归档或上传附件。
-3. 编码 AI 按配置链接中的说明下载版本固定的公开脚本，核对 SHA-256，用 Node 解包到项目目录；读取随包的 INTEGRATION.md 并接入本地导出和样式。
-4. 对照选定配置检查未读数量、已读回调、面板开关、字体图标与铃铛动画。真实通知数据、路由和业务回调由目标产品提供。
+复制内容明确写 `Integrate AISEE NotificationBell into the current React project`，链接稳定的 `notification-bell/latest.json`。公开指针随组件构建/发布自动更新。旧 ready-30.md 仍为旧版历史交付，当前复制入口不再使用它。
 
-## 前提与边界
+生产 API 保留 `count`、`dot` 与原生 button props。业务项目使用 `count={unreadCount}` 和 `onClick={openNotifications}`；数字来自真实数据，默认 count 为零。演示页圆点、Populated/Empty、Show icons/status/actions/error detail、Reset/Simulate/Mark all read 不改变复制内容或文件范围。
 
-- 接收方必须能联网下载源码、编辑项目并运行 Node；仅能文字聊天或出图的 AI 无法执行安装。
-- 目标为 React 18+ / ReactDOM 项目，支持 TSX、CSS、SVG 和字体资源。SSR 使用客户端边界。无需 Tailwind、shadcn 或额外动效依赖。
-- styles.css 只加载一次；沿用目标项目结构并检查全局 token / base 样式与现有样式的关系。不要把多个独立 Demo 的预览状态当成真实业务状态。
-- 安装脚本包含 Current NotificationBell / NotificationPanel 源码和必要资源，不会安装 npm 依赖；遇到已有不同文件会停止，避免覆盖改动。
-- 源码由公开 Pages 提供，不要求私有仓库权限。复制前检查公开文件及哈希；缺失或版本不一致会提示原因。更新本地组件后需发布对应交付文件才能复制新版本。
-- 本轮仅 Notification 试点；没有将所有组件改为源码交付，也没有发布 npm 包。提示词中的链接不是可直接粘贴到 JSX 的代码，实际接入由编码 AI 完成。
+必须保留：内联铃铛、hover/focus、计数/圆点、99+、增加时铃铛摆动与徽章数字动画。普通 rerender、相同数量、减少、清零不重新播放 incoming 动画。hover/focus 只摆动铃铛；外层按钮和黑色圆底不动。保留 `prefers-reduced-motion`，字体继承宿主。
 
-## 验证与发布
-
-- npm run verify:ai-deliveries：校验短提示词、固定版本文件、独立 React 项目解包、重复执行与冲突保护、真实源码一致性、类型检查和构建。
-- npm run audit:copy-ai：Notification 各配置使用实际短提示词；其他入口继续使用原模板。
-- 开发分支推送通过 CI 后自动更新 Pages。发布后需匿名下载文件、核对哈希并测试实际复制。
-- 自动检查不等于第三方 AI 最终生成效果验收，仍需在真实目标项目测试。
-
-## 一句话链接
-
-Notification 的 Copy for AI 仅复制一句接入指令和配置链接，约 145 字符。链接文档记录当时选择的铃铛、面板与内容开关，并提供完整安装步骤、校验和环境要求；不再把 JSON 或长说明放入剪贴板。组件页面提供 Installation、Usage（可复制 import、最小调用及完整交互示例）和 Behavior。
+验收命令见通用文档。自动测试覆盖 128 种演示组合的同一输出、原始组件逻辑保留和动画样式；独立 React 浏览器验收覆盖增加/减少/清零/重新渲染、hover/focus、计数与圆点。多个生产组件共用一个独立宿主进行类型检查与构建，不假定接收项目安装了 AISEE。

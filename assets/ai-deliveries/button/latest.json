@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 3,
+  "name": "Button",
+  "page": "components/Button/Button.html",
+  "version": "e5fd995ff82d3b95",
+  "delivery": "./releases/e5fd995ff82d3b95/ready.md",
+  "installer": "./releases/e5fd995ff82d3b95/install.cjs",
+  "installerSha256": "e01fc36fc14274c81ca8be06700981c3464292e9a20f5904f7fdf4faaf5c48d6",
+  "configuration": {
+    "props": {
+      "Button": [
+        "variant",
+        "size",
+        "showIcon",
+        "iconPosition"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Button.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

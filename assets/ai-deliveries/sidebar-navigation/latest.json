@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 3,
+  "name": "SidebarNavigation",
+  "page": "components/SidebarNavigation/SidebarNavigation.html",
+  "version": "86f5ef6ab2b1eb17",
+  "delivery": "./releases/86f5ef6ab2b1eb17/ready.md",
+  "installer": "./releases/86f5ef6ab2b1eb17/install.cjs",
+  "installerSha256": "6d9204e3fa5b6177fd6b3c75ea4271e54123fdd6ef2c4075e6168b7172d3f5f9",
+  "configuration": {
+    "props": {
+      "SidebarLayout": [
+        "variant",
+        "togglePosition",
+        "reveal"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    },
+    {
+      "name": "react-dom",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "SidebarNavigation.tsx",
+    "TreeNav.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

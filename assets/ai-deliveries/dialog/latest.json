@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 3,
+  "name": "Dialog",
+  "page": "components/Dialog/Dialog.html",
+  "version": "726a72c3e89153cf",
+  "delivery": "./releases/726a72c3e89153cf/ready.md",
+  "installer": "./releases/726a72c3e89153cf/install.cjs",
+  "installerSha256": "d12bcd96170108d637b450d806fc266c4622deb17f483e16122849e4ea3974a3",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Dialog.tsx",
+    "styles.css",
+    "assets/dialog-close.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/dialog-close.svg.d.ts"
+  ]
+}

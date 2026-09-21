@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 3,
+  "name": "Chart",
+  "page": "components/Chart/Chart.html",
+  "version": "5b5e276ed2420728",
+  "delivery": "./releases/5b5e276ed2420728/ready.md",
+  "installer": "./releases/5b5e276ed2420728/install.cjs",
+  "installerSha256": "9c5b76cf11228348e87cd8a772bc180aa2ce2676664bb46b6a272d4eda8e1030",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Chart.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

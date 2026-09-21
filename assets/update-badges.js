@@ -4,7 +4,8 @@
   const DAY = 86400000;
   const TIME_ZONE = 'Asia/Taipei';
   const dates = Object.freeze({
-    'README': '2026-09-18',
+    'README': '2026-09-20',
+    'components/TooltipToast/TooltipToast.html': '2026-09-20',
     'components/Button/Button.html': '2026-09-18',
     'components/Input/Input.html': '2026-09-18',
     'components/SegmentedChoice/SegmentedChoice.html': '2026-09-18',

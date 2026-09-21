@@ -8,3 +8,8 @@ site/
 design-sources/figma/*.fig
 design-sources/figma/*.figma
 artifacts/copy-ai-audit/
+
+artifacts/packages/
+
+artifacts/production-delivery-audit/
+artifacts/production-delivery-runtime/

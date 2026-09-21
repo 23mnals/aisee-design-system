@@ -33,7 +33,7 @@
   line-height: 1.4;
 }
 
-.aisee-sr-only {
+.aisee-sr-only, .aisee-visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;

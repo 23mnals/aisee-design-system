@@ -8,3 +8,9 @@
 - 无新增产品运行依赖，不改变原组件视觉与交互；其余组件不推广。
 - 独立 React 解包 / 类型检查 / 构建、106 项测试、190 配置审计与 site 构建通过。真实外部 AI 最终产出仍待用户测试。
 - 基于 aa6fa25 在独立 /tmp/aisee-notification-release 发布；原工作区其他修改保持本地。发布后的 commit / Actions / 地址实测结果见当前交接。
+
+## 发布验收
+
+- 提交 dbaabd12c883ca21c930d51000db95d4b1089bf5 已通过 GitHub API force=false 快进发布；远端 tree / commit 与本地一致。CI / Pages run 35494800362 成功。
+- 匿名读取 ready-30.md 成功，配置和安装脚本 SHA 与当前选择一致；正文可直接被外部 AI 读取，不依赖网页 JavaScript。
+- 页面 Installation、Usage、Behavior 以及展开完整示例已在浏览器确认。第三方 AI 最终产出仍需实际目标项目验收。

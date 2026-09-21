@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 3,
+  "name": "Badge",
+  "page": "components/Badge/Badge.html",
+  "version": "3e52cc783c265201",
+  "delivery": "./releases/3e52cc783c265201/ready.md",
+  "installer": "./releases/3e52cc783c265201/install.cjs",
+  "installerSha256": "2e55cad820c1a0d4d31807fcd857211a6f50af730f36a6f2e8b19011c2a86539",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Badge.tsx",
+    "styles.css",
+    "assets/badge/draft.svg",
+    "assets/badge/failed.svg",
+    "assets/badge/from-plan.svg",
+    "assets/badge/manual.svg",
+    "assets/badge/published.svg",
+    "assets/badge/rewritten.svg",
+    "assets/badge/scheduled.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/badge/draft.svg.d.ts",
+    "assets/badge/failed.svg.d.ts",
+    "assets/badge/from-plan.svg.d.ts",
+    "assets/badge/manual.svg.d.ts",
+    "assets/badge/published.svg.d.ts",
+    "assets/badge/rewritten.svg.d.ts",
+    "assets/badge/scheduled.svg.d.ts"
+  ]
+}

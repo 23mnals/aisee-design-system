@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 3,
+  "name": "Checkbox",
+  "page": "components/Checkbox/Checkbox.html",
+  "version": "b0484acf9a6d757f",
+  "delivery": "./releases/b0484acf9a6d757f/ready.md",
+  "installer": "./releases/b0484acf9a6d757f/install.cjs",
+  "installerSha256": "19c56c1cc1ee455982cf8476ccbd9d85269d72925d03985ba34ea6c6b560ad4d",
+  "configuration": {
+    "props": {
+      "Checkbox": []
+    },
+    "themes": [
+      "analysis",
+      "post",
+      "engage"
+    ]
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "files": [
+    "Checkbox.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

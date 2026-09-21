@@ -157,7 +157,7 @@ test('every Current component detail page offers a scoped Copy for AI prompt', (
   assert.match(portal, /copyAiHeader\.hidden = !aiPrompt/);
   assert.match(portal, /#openStandalone,\s*#copyAiHeader\s*\{\s*min-height: 40px;\s*height: 40px;/);
   assert.match(portal, /Treat the Design System Demo as a structural and interaction reference/);
-  assert.match(portal, /Detail and rendered Demo: \$\{path\}/);
+  assert.match(portal, /Original Demo path .*\$\{path\}/);
   assert.match(portal, /Do not approximate it from memory or replace it with visually unstyled browser UI/);
   assert.match(portal, /Match the Demo's geometry, spacing, radii, typography, icon weight, colours, states and motion/);
   assert.match(portal, /compare the rendered result against the reference/);
@@ -830,7 +830,7 @@ test('Tag Input previews a draft and commits or removes tags with the expected k
   assert.match(styles, /border: 1px dashed rgba\(17,17,17,\.06\)/);
   assert.match(styles, /box-shadow: 0 0 0 3px var\(--aisee-color-post-agent-primary\)/);
   assert.match(styles, /\.aisee-tag-input:hover:not\(\[aria-disabled="true"\]\)/);
-  assert.match(styles, /\.aisee-tag-input__add:hover:not\(:disabled\) \{ background: var\(--aisee-color-post-agent-primary-hover\); \}/);
+  assert.match(styles, /\.aisee-tag-input__add:hover:not\(:disabled\) \{ background: var\(--aisee-color-post-agent-hover\); \}/);
   assert.match(styles, /\.aisee-tag-input__add-icon \{[^}]*color: currentColor;/);
   assert.match(styles, /\.aisee-tag-input__add-icon::before \{ content: '\+'; \}/);
   assert.match(detail, /\.control:hover:not\(:has\(input:disabled\)\),\.control:focus-within/);
@@ -1265,6 +1265,7 @@ test('Quantity Stepper matches the Figma shell and shared motion contract', asyn
   assert.match(styles, /translateX\(-4px\)[\s\S]*translateX\(4px\)/);
   assert.match(styles, /@container \(max-width: 260px\) \{ \.aisee-quantity-stepper__unit \{ display: none; \} \}/);
   assert.match(styles, /\.aisee-quantity-stepper__input::selection \{ color: #111; background: var\(--aisee-color-semantic-brand-primary, #FFE253\); \}/);
-  assert.match(portal, /The package is currently a private workspace package/);
+  assert.match(portal, /Do not assume @aisee\/design-system is publicly installable/);
+  assert.match(portal, /AiseeAiDelivery.format/);
   assert.match(portal, /Implementation and handoff/);
 });
