@@ -27,7 +27,7 @@ function App() {
     <div className="runner-demo__heading"><h2>Interactive preview <span className="aisee-content-new">NEW</span></h2><div className="runner-demo__controls">
       <Toggle label="Show runner" checked={open} onChange={event => setOpen(event.target.checked)} />
       <Dropdown ariaLabel="Runner view" items={[{id:'default',label:'Default'},{id:'expanded',label:'Expanded'},{id:'minimized',label:'Minimized'}]} value={view} onValueChange={value => setView(value as AutomationRunnerView)} />
-      <Dropdown ariaLabel="Runner placement" items={[{id:'bottom-right',label:'Bottom right'},{id:'bottom-center',label:'Bottom center'},{id:'bottom-left',label:'Bottom left'}]} value={placement} onValueChange={value => setPlacement(value as AutomationRunnerPlacement)} />
+      <Dropdown ariaLabel="Runner placement" items={[{id:'bottom-right',label:'Right'},{id:'bottom-center',label:'Center'},{id:'bottom-left',label:'Left'}]} value={placement} onValueChange={value => setPlacement(value as AutomationRunnerPlacement)} />
     </div></div>
     <section className="runner-demo__app" aria-label="App shell persistence preview">
       <nav aria-label="Demo pages">{pages.map(item => <button key={item} className={page === item ? 'is-active' : ''} type="button" onClick={() => setPage(item)}>{item}</button>)}</nav>

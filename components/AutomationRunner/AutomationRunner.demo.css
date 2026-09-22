@@ -4,9 +4,10 @@ h1 { margin: 0; font-size: 16px; font-weight: 500; line-height: 24px; }
 h2 { margin: 32px 0 12px; font-size: 16px; font-weight: 500; line-height: 24px; }
 .intro,.note { color: rgba(17,17,17,.6); font-size: 14px; line-height: 22px; }
 .runner-demo__heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; margin: 32px 0 12px; }
-.runner-demo__heading h2 { margin: 0; }
+.runner-demo__heading h2 { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 8px; margin: 0; white-space: nowrap; }
+.runner-demo__heading h2 .aisee-content-new { flex: 0 0 auto; }
 .runner-demo__controls { display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; white-space: nowrap; }
-.runner-demo__controls .aisee-dropdown { width: 154px; }
+.runner-demo__controls .aisee-dropdown { width: 132px; }
 .runner-demo__app { min-height: 360px; overflow: hidden; border: 1px solid rgba(17,17,17,.05); border-radius: 16px; background: #fff; }
 .runner-demo__app nav { display: flex; gap: 4px; padding: 12px; border-bottom: 1px solid rgba(17,17,17,.05); }
 .runner-demo__app nav button { padding: 7px 12px; border: 0; border-radius: 8px; background: transparent; font: inherit; cursor: pointer; }

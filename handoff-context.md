@@ -4,21 +4,20 @@
 
 ## 当前 Git 与发布
 
-- 开发分支 `ai/desktop/design-system-current`；功能提交 `cd502b5` 与交接提交 `553daf8` 已推送到远端开发分支，main 未操作。
-- `553daf8` 的提交信息带 `[skip ci]`，导致包含功能提交的同一次 push 未触发 CI / Pages；本文件所在后续提交不带跳过标记，用于重新触发公开站点部署。
-- 上次 CI / Pages [35575034360](https://github.com/23mnals/aisee-design-system/actions/runs/35575034360) 成功；公开入口 https://23mnals.github.io/aisee-design-system/ 尚不包含本轮本地版本。
+- 开发分支 `ai/desktop/design-system-current`；Automation Runner 功能提交 `cd502b5`、交接提交 `553daf8` 与部署触发提交 `7cd6dc0` 已推送，main 未操作。
+- `7cd6dc0` 已完成 CI 与 Pages 部署，公开站点已恢复为 63 pages 并包含 Automation Runner。
 - 既存 10 个无关通知备用资源/原型继续保留，不重置、不删除；旧公开 release 全部保留。
 
 ## 正在做
 
-- Automation Runner 已完成本地实现、验收、提交并推送到 `https://github.com/23mnals/aisee-design-system.git` 的 `ai/desktop/design-system-current`；正在补触发 CI / Pages。
+- 正在发布 Automation Runner Demo 控制区与门户 Share 图标的小幅优化。
 - 用户已确认 A+D 分区动效并授权同步：悬停卡片按指针方向轻探，只有进入绿色小怪兽时播放一次软胶回弹；已同步 Demo、生产组件和 Copy for AI，取消循环抖动。
-- Automation Runner Demo 的标题与控制区已修复为桌面单行布局；Show runner 开关状态不会再触发换行，窄屏时才整组换行。
+- Automation Runner Demo 的标题与 `NEW` 固定单行；位置选择显示精简为 Left、Center、Right，真实 bottom placement 值不变。
 - Automation Runner Copy for AI 已明确增量合并：宿主已有的兼容眨眼/眼珠跟随可保留，其余出退场、状态、A+D、拖拽和 reduced-motion 以当前交付为准，不创建第二个 Runner 或重复监听。
 - Automation Runner 的卡片交互已补齐：标题/箭头展开、横线最小化，点击最小化卡片任意位置恢复 default；Demo view 下拉框仅用于直接预览状态。
-- 同一未发布批次还包含 Host Project Compatibility、门户滚动条/描述/按钮布局、Sidebar 收起间距、Tooltip NEW 标签等已确认修改。
+- 门户 Share 已换为连接节点图标，复制当前页链接的行为不变。
 
-## 最近完成 · Automation Runner（本地未发布）
+## 最近完成 · Automation Runner
 
 - 新增根布局常驻浮层，支持 default、expanded、minimized、关闭/重新唤起、底部三种位置、整卡任意位置拖拽及键盘方向键移动；拖动不会误触内部按钮。
 - 采用 Figma `72:55666`、`72:56017`、`72:55315` 的尺寸和 5 个原始 SVG；默认 332×64、展开约 332×252、最小 74×64。
@@ -52,7 +51,7 @@
 
 ## 未完成与下一步
 
-1. 等待本次无 `[skip ci]` 的提交完成 CI / Pages，并核对 Automation Runner 公开组件页、63 pages、latest 与 Copy for AI。
+1. 发布并核对本轮 Automation Runner 控制区与门户 Share 图标优化。
 2. 在外部 React 项目验证 Automation Runner 接入。
 3. 实际业务项目验证宿主 primitive 复用和全局 app-shell 挂载；本仓库尚未验证真实 MUI/Ant/Chakra 等项目。
 4. FeatureOverview 第二批平台图标条组件化尚未实施；连接弹窗暂缓，支付和自动化任务执行始终由业务接口负责。
@@ -61,6 +60,7 @@
 
 - [Automation Runner 通用常驻浮层](handoff/sessions/2026-09-21-automation-runner.md)
 - [Automation Runner 发布准备](handoff/sessions/2026-09-22-automation-runner-release.md)
+- [Automation Runner 控制区与分享入口](handoff/sessions/2026-09-22-automation-runner-demo-polish.md)
 - [Host Project Compatibility](handoff/sessions/2026-09-21-host-project-compatibility.md)
 - [预览间距与按钮布局](handoff/sessions/2026-09-21-preview-layout.md)
 - [精简页面描述](handoff/sessions/2026-09-21-page-descriptions.md)

@@ -13,6 +13,11 @@ test('system portal preserves the four required sections', () => {
   assert.match(portal, />UI Kits — Webapp</);
 });
 
+test('top bar uses the compact connected-node share icon', () => {
+  assert.match(portal, /id="shareButton"[\s\S]*?<circle cx="18" cy="5" r="2\.5"\/>[\s\S]*?<path d="m8\.2 10\.8 7\.6-4\.5M8\.2 13\.2l7\.6 4\.5"\/>/);
+  assert.doesNotMatch(portal, /M8 12v7a1 1 0 0 0 1 1h10/);
+});
+
 test('Brand catalog is grouped by AIsee functional modules', () => {
   const expectedOrder = ['Analyze', 'Automation', 'Common', 'Engage', 'Growth', 'Homepage', 'Overview', 'Post', 'Verify'];
   assert.match(portal, new RegExp(`const brandCategoryOrder = \\[${expectedOrder.map(category => `"${category}"`).join(', ')}\\];`));

@@ -81,3 +81,14 @@ test('automation runner delivery is production-only and includes exact required 
   assert.match(guide, /do not duplicate their DOM, state, keyframes or window pointermove listener/);
   assert.match(guide, /bottom entrance and exit bounce, default\/expanded\/minimized views, pointer-directed card lean/);
 });
+
+test('automation runner demo keeps compact placement controls and an unbroken heading', async () => {
+  const demo = await readFile(new URL('../components/AutomationRunner/AutomationRunner.demo.tsx', import.meta.url), 'utf8');
+  const css = await readFile(new URL('../components/AutomationRunner/AutomationRunner.demo.css', import.meta.url), 'utf8');
+  assert.match(demo, /id:'bottom-right',label:'Right'/);
+  assert.match(demo, /id:'bottom-center',label:'Center'/);
+  assert.match(demo, /id:'bottom-left',label:'Left'/);
+  assert.doesNotMatch(demo, /label:'Bottom (?:right|center|left)'/);
+  assert.match(css, /\.runner-demo__heading h2 \{[^}]*flex-wrap: nowrap;[^}]*white-space: nowrap;/);
+  assert.match(css, /\.runner-demo__heading h2 \.aisee-content-new \{ flex: 0 0 auto; \}/);
+});
