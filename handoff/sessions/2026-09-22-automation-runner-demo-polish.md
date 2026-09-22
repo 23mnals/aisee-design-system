@@ -23,4 +23,5 @@
 ## Git / 发布
 
 - 当前分支：`ai/desktop/design-system-current`。
-- 本批提交与远端发布信息以本轮结束时的 `handoff-context.md` 为准。
+- 功能提交：`c6ed991 fix: compact automation runner preview controls`。
+- 两次 Git push 与一次 GitHub HTTPS 连通性检查均在 443 端口超时；本地提交完整保留，远端仍为 `7cd6dc0`，待网络恢复后继续推送。

@@ -4,13 +4,13 @@
 
 ## 当前 Git 与发布
 
-- 开发分支 `ai/desktop/design-system-current`；Automation Runner 功能提交 `cd502b5`、交接提交 `553daf8` 与部署触发提交 `7cd6dc0` 已推送，main 未操作。
+- 开发分支 `ai/desktop/design-system-current`；Automation Runner 控制区与 Share 图标优化已提交为 `c6ed991`，当前因 GitHub 443 连接超时尚未推送；远端仍为 `7cd6dc0`，main 未操作。
 - `7cd6dc0` 已完成 CI 与 Pages 部署，公开站点已恢复为 63 pages 并包含 Automation Runner。
 - 既存 10 个无关通知备用资源/原型继续保留，不重置、不删除；旧公开 release 全部保留。
 
 ## 正在做
 
-- 正在发布 Automation Runner Demo 控制区与门户 Share 图标的小幅优化。
+- Automation Runner Demo 控制区与门户 Share 图标优化已完成本地验收和提交；两次 push 与一次 GitHub 连通性检查均超时，待网络恢复后推送。
 - 用户已确认 A+D 分区动效并授权同步：悬停卡片按指针方向轻探，只有进入绿色小怪兽时播放一次软胶回弹；已同步 Demo、生产组件和 Copy for AI，取消循环抖动。
 - Automation Runner Demo 的标题与 `NEW` 固定单行；位置选择显示精简为 Left、Center、Right，真实 bottom placement 值不变。
 - Automation Runner Copy for AI 已明确增量合并：宿主已有的兼容眨眼/眼珠跟随可保留，其余出退场、状态、A+D、拖拽和 reduced-motion 以当前交付为准，不创建第二个 Runner 或重复监听。
@@ -51,7 +51,7 @@
 
 ## 未完成与下一步
 
-1. 发布并核对本轮 Automation Runner 控制区与门户 Share 图标优化。
+1. 网络恢复后推送 `c6ed991` 及本次交接提交，并核对 Pages 上的 Automation Runner 控制区与 Share 图标。
 2. 在外部 React 项目验证 Automation Runner 接入。
 3. 实际业务项目验证宿主 primitive 复用和全局 app-shell 挂载；本仓库尚未验证真实 MUI/Ant/Chakra 等项目。
 4. FeatureOverview 第二批平台图标条组件化尚未实施；连接弹窗暂缓，支付和自动化任务执行始终由业务接口负责。
