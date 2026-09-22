@@ -17,10 +17,10 @@
 - 本地功能提交：`cd502b5`。
 - 远端：`https://github.com/23mnals/aisee-design-system.git`。
 - 第一次 push 因沙箱 DNS 失败；申请外部网络执行时被自动审批拒绝，要求用户明确确认具体 GitHub 目的地和分支。
-- 尚未 push，不能声称远端或 Pages 已更新。
+- 用户明确授权后，`cd502b5` 与 `553daf8` 已推送到远端开发分支。
+- 因最后一个提交 `553daf8` 带 `[skip ci]`，GitHub 跳过了整次 push，未创建新 CI / Pages 任务；公开站点仍停留在 `120e8e8`。追加一个不带跳过标记的记录提交以触发部署。
 
 ## 下一步
 
-1. 用户明确确认推送到上述 GitHub 远端的 `ai/desktop/design-system-current`。
-2. 推送本地提交，等待 CI / Pages。
-3. 核对公开组件页、Automation Runner `latest.json` 与 Copy for AI。
+1. 等待重新触发的 CI / Pages 完成。
+2. 核对公开组件页显示 63 pages、Automation Runner 入口、`latest.json` 与 Copy for AI。

@@ -4,14 +4,14 @@
 
 ## 当前 Git 与发布
 
-- 开发分支 `ai/desktop/design-system-current`；本地 HEAD `cd502b5`，比远端开发分支领先 1 个提交。
-- Automation Runner、Host Project Compatibility 和同批界面修复已提交为 `cd502b5 feat: publish automation runner and host-compatible deliveries`；因当前会话的外发审批要求明确 GitHub 目的地，尚未 push，main 未操作。
+- 开发分支 `ai/desktop/design-system-current`；功能提交 `cd502b5` 与交接提交 `553daf8` 已推送到远端开发分支，main 未操作。
+- `553daf8` 的提交信息带 `[skip ci]`，导致包含功能提交的同一次 push 未触发 CI / Pages；本文件所在后续提交不带跳过标记，用于重新触发公开站点部署。
 - 上次 CI / Pages [35575034360](https://github.com/23mnals/aisee-design-system/actions/runs/35575034360) 成功；公开入口 https://23mnals.github.io/aisee-design-system/ 尚不包含本轮本地版本。
 - 既存 10 个无关通知备用资源/原型继续保留，不重置、不删除；旧公开 release 全部保留。
 
 ## 正在做
 
-- Automation Runner 已完成本地实现、验收和提交；等待用户明确确认推送到 `https://github.com/23mnals/aisee-design-system.git` 的 `ai/desktop/design-system-current`。
+- Automation Runner 已完成本地实现、验收、提交并推送到 `https://github.com/23mnals/aisee-design-system.git` 的 `ai/desktop/design-system-current`；正在补触发 CI / Pages。
 - 用户已确认 A+D 分区动效并授权同步：悬停卡片按指针方向轻探，只有进入绿色小怪兽时播放一次软胶回弹；已同步 Demo、生产组件和 Copy for AI，取消循环抖动。
 - Automation Runner Demo 的标题与控制区已修复为桌面单行布局；Show runner 开关状态不会再触发换行，窄屏时才整组换行。
 - Automation Runner Copy for AI 已明确增量合并：宿主已有的兼容眨眼/眼珠跟随可保留，其余出退场、状态、A+D、拖拽和 reduced-motion 以当前交付为准，不创建第二个 Runner 或重复监听。
@@ -32,7 +32,7 @@
 - 所有已登记生产清单声明 `integrationMode / primitives / preserve`，接收方优先复用宿主兼容 primitive；不为单组件引入整套 UI framework，不覆盖宿主 theme/provider/global styles，不兼容时 standalone。
 - CSS 交付继续使用 AST 完整依赖闭包，保留 selector、伪状态、变量默认值、keyframes、media/supports/reduced-motion，缺失依赖阻止构建。
 - 门户目录隐藏滚动条；页面顶部描述去冗余来源字段；操作按钮保持单行；Sidebar 收起按钮与分隔线留白修正；Tooltip/Avatar NEW 标签按原日期显示。
-- 新 latest 和版本已进入本地提交 `cd502b5`，尚未推送；公开 Copy 仍使用上一发布版，不能宣称外部已获取本轮规则。
+- 新 latest 和版本已进入远端提交 `cd502b5`；在本次 Pages 重新部署完成前，公开 Copy 仍使用上一发布版。
 
 ## 本轮验收
 
@@ -52,8 +52,8 @@
 
 ## 未完成与下一步
 
-1. 用户明确确认 GitHub 远端和分支后，推送本地提交 `cd502b5` 与本次交接提交到 `origin/ai/desktop/design-system-current`，并等待 CI / Pages。
-2. 推送后核对 Automation Runner 公开组件页、latest、Copy for AI，以及外部 React 项目接入。
+1. 等待本次无 `[skip ci]` 的提交完成 CI / Pages，并核对 Automation Runner 公开组件页、63 pages、latest 与 Copy for AI。
+2. 在外部 React 项目验证 Automation Runner 接入。
 3. 实际业务项目验证宿主 primitive 复用和全局 app-shell 挂载；本仓库尚未验证真实 MUI/Ant/Chakra 等项目。
 4. FeatureOverview 第二批平台图标条组件化尚未实施；连接弹窗暂缓，支付和自动化任务执行始终由业务接口负责。
 
