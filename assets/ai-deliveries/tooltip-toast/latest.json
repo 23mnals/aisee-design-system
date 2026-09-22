@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "TooltipToast",
   "page": "components/TooltipToast/TooltipToast.html",
-  "version": "052378da0ea2a5f6",
-  "delivery": "./releases/052378da0ea2a5f6/ready.md",
-  "installer": "./releases/052378da0ea2a5f6/install.cjs",
+  "version": "b9401259d027a6cd",
+  "delivery": "./releases/b9401259d027a6cd/ready.md",
+  "installer": "./releases/b9401259d027a6cd/install.cjs",
   "installerSha256": "e625b15ba75c8824d7fab94f039f1f69c31f21c2eae2a04a19dee02669c1eba8",
   "configuration": {
     "props": {
@@ -30,6 +30,37 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "tooltip",
+      "sourceFiles": [
+        "src/components/Tooltip.tsx"
+      ],
+      "requiredCapabilities": [
+        "hover/focus open, Escape dismiss and trigger ref",
+        "portal and collision-aware automatic placement with scroll/resize tracking",
+        "AISEE spring pointer tracking, directional entrance and separate positioning/motion transforms"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "live-region",
+      "sourceFiles": [
+        "src/components/Toast.tsx"
+      ],
+      "requiredCapabilities": [
+        "status/alert semantics, accessible dismissal and lifecycle cleanup",
+        "AISEE timer/progress and entry/exit motion hooks"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve Tooltip auto placement, viewport collision handling, hover/focus/Escape, subtle/playful spring motion and reduced motion.",
+    "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Tooltip.tsx",
     "useTooltipSpring.ts",

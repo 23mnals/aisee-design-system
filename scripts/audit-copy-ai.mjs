@@ -78,6 +78,8 @@ const tooltip=await react('TooltipToast');
 for (const animation of ['subtle','playful','none']) tooltip(animation,{animation},s=>{assert.equal(s[0].props.animation,animation);assert.equal(s[0].props.placement,'auto');});
 const thinking=await react('ThinkingIndicator');
 for (const showIcon of [true,false]) for (const size of ['default','compact']) thinking(`${size}/icon=${showIcon}`,{showIcon,size},s=>{assert.equal(s[0].props.showIcon,showIcon);assert.equal(s[0].props.size,size);});
+const runner=await react('AutomationRunner');
+for (const view of ['default','expanded','minimized']) for (const placement of ['bottom-left','bottom-center','bottom-right']) runner(`${view}/${placement}`,{open:true,view,placement,page:'Overview'},s=>{assert.equal(s[0].props.defaultView,view);assert.equal(s[0].props.placement,placement);});
 const steps=await react('Steps');
 for (const animated of [true,false]) steps(`animated=${animated}`,{animated},s=>assert.equal(s[0].props.animated,animated));
 for (const state of ['default','hover','focus','disabled','error']) add('Input',state,{'#stateLabel':{'data-state':state}},s=>assert.equal(s[0].props.disabled,state==='disabled'));

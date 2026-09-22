@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Chart",
   "page": "components/Chart/Chart.html",
-  "version": "bf915f92b820fab8",
-  "delivery": "./releases/bf915f92b820fab8/ready.md",
-  "installer": "./releases/bf915f92b820fab8/install.cjs",
+  "version": "c1d125636a6f3840",
+  "delivery": "./releases/c1d125636a6f3840/ready.md",
+  "installer": "./releases/c1d125636a6f3840/install.cjs",
   "installerSha256": "bbfc680254f0053e898a848e98ec82b9d1d2d80de06db706cce5ad4d590b25a0",
   "configuration": {
     "props": {}
@@ -20,6 +20,12 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Chart.tsx",
     "styles.css",

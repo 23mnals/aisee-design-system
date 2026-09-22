@@ -2,62 +2,66 @@
 
 > 工作纪律见 [AGENTS.md](AGENTS.md)，长期决策见 [docs/TEAM_DECISIONS.md](docs/TEAM_DECISIONS.md)，历史见 [handoff/sessions/](handoff/sessions/)。
 
-## 本轮发布 · 2026-09-21 组件更新
+## 当前 Git 与发布
 
-- 用户已授权发布到开发分支。本轮包含通用 Confirmation Dialog、Thinking Indicator、NEW 三天规则及文档/交付，main 不操作。
-- Confirmation Dialog 支持普通确认和可选影响卡片；文案、图标、按钮与回调由宿主提供，7 个必要生产文件。
-- Thinking Indicator 保留圆形/无限符号变形、文字扫光轮换，支持图标、尺寸和本地化；4 个必要生产文件，无额外字体或动效库。
-- NEW 更新当天算第 1 天，第 4 天台北零点隐藏；新内容按自身日期重新显示，刷新和构建不延长。
-- 416 个未发布的中间交付文件已保留在本地 artifacts/unpublished-deliveries，不提交；旧公开版本全部保留。无关原型和备用资源保持原位。
-- 已提交 665757c，并安全合并远端历史为 120e8e8；正常 push 成功。CI / Pages [35575034360](https://github.com/23mnals/aisee-design-system/actions/runs/35575034360) 成功，公网导航、三天 NEW 和两组件生产交付已核验。
+- 开发分支 `ai/desktop/design-system-current`；HEAD `674efe6103ce4281406da16f834ca4e95c509e10`，与远端开发分支一致。
+- 最近功能发布为 `120e8e80a794725428467eb9d558ad5f59f7bf12`；本轮 Automation Runner、Host Project Compatibility 和其他本地修复均未 commit/push，main 未操作。
+- 上次 CI / Pages [35575034360](https://github.com/23mnals/aisee-design-system/actions/runs/35575034360) 成功；公开入口 https://23mnals.github.io/aisee-design-system/ 尚不包含本轮本地版本。
+- 既存 10 个无关通知备用资源/原型继续保留，不重置、不删除；旧公开 release 全部保留。
 
-## 最近完成 · 2026-09-21 统一生产交付已发布
+## 正在做
 
-- 用户明确要求发布新版供外部开发复制。已发布到 ai/desktop/design-system-current：机制提交 a9045c0，跨平台归档修复 c34e5fcb618c728b9f7885d7b5febb7926f0789a。main 未操作；没有创建或合并 PR。
-- CI / Pages run [35568475082](https://github.com/23mnals/aisee-design-system/actions/runs/35568475082) 成功。公开入口：https://23mnals.github.io/aisee-design-system/
-- 所有已登记 Current 组件依据 delivery/components.json 显式声明生产源码、局部样式、runtime dependencies、必要资产、Demo 排除项、可复制配置和 compatibility。核心无 Notification 特判，不限制文件数。
-- CSS selector/value AST 依赖闭包保留状态、嵌套、变量默认值及条件覆盖、@property、keyframes、media/supports/reduced-motion；缺失依赖阻止构建。生产代码不依赖 Demo，不包含字体/全局 reset/整库 token 环境。
-- Copy 文本为具体组件名称 + 稳定 latest.json + 白名单真实配置。稳定地址解析执行时最新已发布生产版本；已安装源码不自动更新。公开版本、说明、安装器校验通过后才复制，旧历史链接保留。
-- NotificationBell 仅交付 NotificationBell.tsx、styles.css、index.ts、styles.css.d.ts；真实 count/dot/onClick、铃铛及数字动画保留，通知面板、演示控制、模拟数据均不交付。
-- 首轮发现 gzip OS 标识在 Mac/Linux 不同，导致源码一致而版本不同；已统一 OS=255 并加入全部归档重建一致性测试。最终公网、本地和独立发布目录版本完全一致。
-- 各组件自行声明 compatibility / dependencies，不统一要求 React 18 或 Node 20；Node 要求针对源码安装器。规范不写死组件总数，报告动态输出。
+- Automation Runner 已完成本地实现和验收，等待用户查看并决定是否发布开发分支。
+- 用户已确认 A+D 分区动效并授权同步：悬停卡片按指针方向轻探，只有进入绿色小怪兽时播放一次软胶回弹；已同步 Demo、生产组件和 Copy for AI，取消循环抖动。
+- Automation Runner Demo 的标题与控制区已修复为桌面单行布局；Show runner 开关状态不会再触发换行，窄屏时才整组换行。
+- Automation Runner Copy for AI 已明确增量合并：宿主已有的兼容眨眼/眼珠跟随可保留，其余出退场、状态、A+D、拖拽和 reduced-motion 以当前交付为准，不创建第二个 Runner 或重复监听。
+- Automation Runner 的卡片交互已补齐：标题/箭头展开、横线最小化，点击最小化卡片任意位置恢复 default；Demo view 下拉框仅用于直接预览状态。
+- 同一未发布批次还包含 Host Project Compatibility、门户滚动条/描述/按钮布局、Sidebar 收起间距、Tooltip NEW 标签等已确认修改。
 
-## 当前 Git 与工作区
+## 最近完成 · Automation Runner（本地未发布）
 
-- 开发分支 ai/desktop/design-system-current；功能发布提交 120e8e80a794725428467eb9d558ad5f59f7bf12。本地和远端分叉已安全整合，工作区文件与验收快照一致；最后交接文档提交见 git log。
-- 未提交文件从 845 个降至 10 个，均为未确认的 prototypes 与通知备用资源，保留原位，不自动提交或删除。416 个未发布的中间构建文件保留于 artifacts/unpublished-deliveries（忽略）。
-- 本轮正常 HTTPS push 成功，无需旧发布工作区或 Git Data API 绕行。main 未操作，没有创建或合并 PR。
-- 本轮发布授权已执行；后续普通开发不自动 commit/push，正式 main 同步仍须用户授权 PR，合并另需授权。
+- 新增根布局常驻浮层，支持 default、expanded、minimized、关闭/重新唤起、底部三种位置、整卡任意位置拖拽及键盘方向键移动；拖动不会误触内部按钮。
+- 采用 Figma `72:55666`、`72:56017`、`72:55315` 的尺寸和 5 个原始 SVG；默认 332×64、展开约 332×252、最小 74×64。
+- 底部弹性出入场、绿色眼睛眨眼和跟随鼠标、卡片方向探头及小怪兽单次软胶回弹均完成；reduced motion 保留状态与操作并停止装饰动画。
+- Demo 的 Show runner、视图和位置控制在桌面宽度下保持同一行，720px 以下才切换为窄屏纵向布局。
+- 标题、说明、详情和返回操作由宿主传入；关闭只隐藏窗口，组件不启动、轮询、停止或取消自动化任务。
+- 门户、Overview、NEW、公共导出、生产 manifest 与 Copy for AI 已登记。生产交付仅含组件、局部样式、入口/类型和 5 个必要 SVG，不含 Demo、mock、字体或全局样式。
 
-## 验收结果与边界
+## 同批本地完成 · Host Project Compatibility 与界面修复
 
-- 本次发布：130 项测试、196 个配置案例（0 失败）、29 份独立 React 生产交付类型检查与构建通过；静态站点构建通过。数量为本次构建结果，不是规范限制。
-- CI 与 Pages 部署成功。公网 Confirmation Dialog f0524f6175a927ef（7 文件）、Thinking Indicator 99ee5a4fe9847cba（4 文件）的 latest、说明、安装器 SHA-256 均与本地一致；线上 Thinking 导航及 NEW age < 3 已核验。
-- 两个组件本地交互、响应式、键盘及 reduced-motion 等验证见对应组件 session。发布后的浏览器 Copy 按钮点击复测因工具超时未完成；不宣称该项或全部组件全部视觉状态已验收。
-- 跨 AI 平台真实项目最终产出仍待外部开发复测。详细报告生成于 artifacts/production-delivery-audit、artifacts/copy-ai-audit（不发布到仓库）。
+- 所有已登记生产清单声明 `integrationMode / primitives / preserve`，接收方优先复用宿主兼容 primitive；不为单组件引入整套 UI framework，不覆盖宿主 theme/provider/global styles，不兼容时 standalone。
+- CSS 交付继续使用 AST 完整依赖闭包，保留 selector、伪状态、变量默认值、keyframes、media/supports/reduced-motion，缺失依赖阻止构建。
+- 门户目录隐藏滚动条；页面顶部描述去冗余来源字段；操作按钮保持单行；Sidebar 收起按钮与分隔线留白修正；Tooltip/Avatar NEW 标签按原日期显示。
+- 新 latest 和版本仅在本地，公开 Copy 仍使用上一发布版；发布前不能宣称外部已获取本轮规则。
 
-## 其他当前状态
+## 本轮验收
 
-- Tooltip 当前智能定位、四方向 hover/focus 示例与默认 Playful 头像弹簧预览随本批依赖同步发布；通用 Tooltip API 默认 subtle，支持 none、键盘、Escape 与 reduced motion。
-- 第三方接入指南及 pack:local / verify:package 整库备选路径已同步；没有发布公共 npm 包，没有修改 private / UNLICENSED。
-- Sidebar、Card、PlanCard、FeatureOverview、Button、Select、Toggle、TreeNav 等当前实现保留。产品布局/层级或新复合模块仍按用户实际预览验收，不另建平行系统。
-- FeatureOverview 第二批平台图标条组件化尚未实施；购买/支付及分析启动由业务接口负责。Connect X/LinkedIn/TikTok 连接弹窗暂缓。
-- 用户尚未指定全产品统一布局配置；Demo 单次选择不自动成为产品默认。截图/可访问链接先匹配并复用 Current 组件。
+- 浏览器实测 Automation Runner：标题展开、箭头收起、横线最小化、点击最小卡片空白区域恢复及整卡拖拽均通过；拖动最小卡片不会误触恢复。Show runner 开关关闭再开启后标题与三项控制保持同一行；展开 332×257、最小 74×64、底部间距 24。
+- `npm run typecheck` 通过；`npm test` 137 项通过。
+- `npm run verify:ai-deliveries`：Registered components 30 / Verified deliveries 30。
+- `npm run audit:copy-ai`：30 组件、205 个受控配置案例、0 失败；不等同于外部 AI 产出验收。
+- `npm run site`、`git diff --check` 通过。
 
-## 下一步
+## 持续有效的交付约定
 
-0. 本轮组件更新已上线，可刷新公开网站查看 Thinking Indicator、Confirmation Dialog 和 NEW 三天规则。
-1. 请外部开发从新版页面重新 Copy for AI，在业务项目验收；不要再转发旧 ready-30.md。
-2. 若反馈下载失败，先检查公开 latest/网络/编码 AI 访问能力；若效果问题，按固定任务及视口核对真实交付源码、配置、交互与视觉。
-3. 新增组件/变量时维护生产清单及批量案例；发布后再次核对跨平台版本和公网可达性。
-4. 后续开发前检查 git status；保留剩余 10 个无关原型/备用资源，按明确需求单独处理。
+- Production 不依赖 Demo；生产清单不限制文件数，只包含真实运行需要的源码、局部样式、资产、依赖和类型。
+- Copy 使用具体组件名 + 稳定 `latest.json` + 真实选项；稳定地址在执行时解析最新已发布版，已安装源码不会自动更新。
+- 兼容性按组件声明，不统一强制 React/Node 版本；安装前识别宿主 UI 库并保留 AISEE 外观、状态、动效、行为和无障碍。
+- NEW 更新当天算第 1 天，第 4 天台北零点消失；构建和刷新不延长日期。
+- Automation Runner 应挂载在 app shell、位于路由内容外；重新唤起入口和真实任务状态归宿主业务所有。
+
+## 未完成与下一步
+
+1. 用户查看 Automation Runner 的视觉与动效；如要求发布，先复查 diff，整理已确认本地批次后 commit/push 开发分支，并等待 CI / Pages。
+2. 发布后核对 Automation Runner 公开组件页、latest、Copy for AI，以及外部 React 项目接入。
+3. 实际业务项目验证宿主 primitive 复用和全局 app-shell 挂载；本仓库尚未验证真实 MUI/Ant/Chakra 等项目。
+4. FeatureOverview 第二批平台图标条组件化尚未实施；连接弹窗暂缓，支付和自动化任务执行始终由业务接口负责。
 
 ## 最近 session
 
-- [组件更新发布](handoff/sessions/2026-09-21-components-release.md)
-- [NEW 三天期限](handoff/sessions/2026-09-21-new-badge-three-days.md)
-- [Thinking Indicator](handoff/sessions/2026-09-21-thinking-indicator.md)
-- [通用 Confirmation Dialog](handoff/sessions/2026-09-21-confirmation-dialog-reusable.md)
-- [统一生产交付发布](handoff/sessions/2026-09-21-production-delivery-publish.md)
-- [版本、兼容与 CSS 闭包](handoff/sessions/2026-09-21-delivery-contract-css-closure.md)
-- [全组件生产交付](handoff/sessions/2026-09-20-production-delivery.md)
+- [Automation Runner 通用常驻浮层](handoff/sessions/2026-09-21-automation-runner.md)
+- [Host Project Compatibility](handoff/sessions/2026-09-21-host-project-compatibility.md)
+- [预览间距与按钮布局](handoff/sessions/2026-09-21-preview-layout.md)
+- [精简页面描述](handoff/sessions/2026-09-21-page-descriptions.md)
+- [Tooltip NEW 标签修复](handoff/sessions/2026-09-21-tooltip-new-labels.md)
+- [隐藏导航滚动条](handoff/sessions/2026-09-21-sidebar-scrollbar.md)

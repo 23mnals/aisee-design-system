@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "EmptyState",
   "page": "components/EmptyState/EmptyState.html",
-  "version": "8d9387f6edc8991e",
-  "delivery": "./releases/8d9387f6edc8991e/ready.md",
-  "installer": "./releases/8d9387f6edc8991e/install.cjs",
+  "version": "bab735017a50bfa4",
+  "delivery": "./releases/bab735017a50bfa4/ready.md",
+  "installer": "./releases/bab735017a50bfa4/install.cjs",
   "installerSha256": "38d6996a095c59033d0ad07adf41c1fc54dfe910a3d913030553ef1996cdddd1",
   "configuration": {
     "props": {
@@ -34,6 +34,12 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "EmptyState.tsx",
     "EmptyStateIllustration.tsx",

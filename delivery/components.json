@@ -31,7 +31,8 @@
         "components/Button/Button.demo.tsx"
       ],
       "preserve": [
-        "Preserve two-sided hover/focus fill motion, icon slots and disabled behavior."
+        "Preserve two-sided hover/focus fill motion, icon slots and disabled behavior.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -52,6 +53,20 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/Button.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button semantics, disabled/type and keyboard activation",
+            "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -85,7 +100,8 @@
         "components/Input/Input.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -103,6 +119,20 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "input",
+          "sourceFiles": [
+            "src/components/Input.tsx"
+          ],
+          "requiredCapabilities": [
+            "native input ref, value/defaultValue/onChange and form semantics",
+            "disabled, invalid, focus and accessible labeling"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -143,7 +173,8 @@
         "components/QuantityStepper/QuantityStepper.html"
       ],
       "preserve": [
-        "Preserve keyboard editing, hold acceleration, min/max boundaries and numeric roll motion."
+        "Preserve keyboard editing, hold acceleration, min/max boundaries and numeric roll motion.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -161,6 +192,20 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "number-input",
+          "sourceFiles": [
+            "src/components/QuantityStepper.tsx"
+          ],
+          "requiredCapabilities": [
+            "editable and buttons-only modes, bounds and step",
+            "press-and-hold repeat and keyboard input without duplicate handlers"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -199,7 +244,8 @@
         "components/Checkbox/Checkbox.html"
       ],
       "preserve": [
-        "Preserve checked/indeterminate states, focus behavior and check celebration animation."
+        "Preserve checked/indeterminate states, focus behavior and check celebration animation.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -220,6 +266,20 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "checkbox",
+          "sourceFiles": [
+            "src/components/Checkbox.tsx"
+          ],
+          "requiredCapabilities": [
+            "checked, indeterminate and disabled state, form semantics",
+            "keyboard activation, focus and AISEE celebration state hooks"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -256,7 +316,8 @@
         "components/Select/Select.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -277,6 +338,31 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "popover",
+          "sourceFiles": [
+            "src/components/Dropdown.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled visibility, outside dismissal and focus return",
+            "anchored collision-aware positioning, scroll/resize handling and portal className"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "selection",
+          "sourceFiles": [
+            "src/components/Dropdown.tsx"
+          ],
+          "requiredCapabilities": [
+            "single/multiple selection, editable/filterable input and keyboard navigation",
+            "disabled/grouped items and nested row actions without selection conflicts"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -315,7 +401,8 @@
         "components/Toggle/Toggle.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -335,6 +422,20 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "switch",
+          "sourceFiles": [
+            "src/components/Toggle.tsx"
+          ],
+          "requiredCapabilities": [
+            "checked/defaultChecked, disabled and change callback",
+            "keyboard activation and state hooks for AISEE motion"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -369,7 +470,8 @@
         "components/TagInput/TagInput.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -383,6 +485,20 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "input",
+          "sourceFiles": [
+            "src/components/TagInput.tsx"
+          ],
+          "requiredCapabilities": [
+            "keyboard token entry/removal and composition input",
+            "controlled text, focus and labeling"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -440,7 +556,8 @@
         "components/SegmentedChoice/SegmentedChoice.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -454,6 +571,32 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "single-choice",
+          "sourceFiles": [
+            "src/components/SegmentedChoice.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled selection, disabled choices and keyboard activation",
+            "AISEE option layout and selected/focus hooks"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "tooltip",
+          "sourceFiles": [
+            "src/components/Tooltip.tsx"
+          ],
+          "requiredCapabilities": [
+            "hover/focus open, Escape dismiss and trigger ref",
+            "portal and collision-aware automatic placement with scroll/resize tracking",
+            "AISEE spring pointer tracking, directional entrance and separate positioning/motion transforms"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -508,7 +651,8 @@
         "components/ToggleSelectionGroup/ToggleSelectionGroup.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -522,6 +666,42 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "selection-group",
+          "sourceFiles": [
+            "src/components/ToggleSelectionGroup.tsx"
+          ],
+          "requiredCapabilities": [
+            "independent group enablement and preserved item selections",
+            "accessible labels, disabled handling and keyboard activation"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "checkbox",
+          "sourceFiles": [
+            "src/components/Checkbox.tsx"
+          ],
+          "requiredCapabilities": [
+            "checked, indeterminate and disabled state, form semantics",
+            "keyboard activation, focus and AISEE celebration state hooks"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "switch",
+          "sourceFiles": [
+            "src/components/Toggle.tsx"
+          ],
+          "requiredCapabilities": [
+            "checked/defaultChecked, disabled and change callback",
+            "keyboard activation and state hooks for AISEE motion"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -554,7 +734,8 @@
         "components/Tabs/Tabs.html"
       ],
       "preserve": [
-        "Preserve controlled selection, keyboard navigation, icon/text variants and responsive platform labels."
+        "Preserve controlled selection, keyboard navigation, icon/text variants and responsive platform labels.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -580,6 +761,20 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "tabs",
+          "sourceFiles": [
+            "src/components/Tabs.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled value and change callback, disabled tabs and keyboard navigation",
+            "AISEE state classes, measurement refs and label visibility"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -620,7 +815,8 @@
         "components/SidebarNavigation/SidebarNavigation.demo.tsx"
       ],
       "preserve": [
-        "Preserve collapse/reveal, nested navigation, layout variants and keyboard behavior."
+        "Preserve collapse/reveal, nested navigation, layout variants and keyboard behavior.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -640,6 +836,31 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "portal",
+          "sourceFiles": [
+            "src/components/SidebarNavigation.tsx"
+          ],
+          "requiredCapabilities": [
+            "explicit portal target and host stacking context",
+            "toggle ownership, focus, Escape and hover reveal coordination"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "tree-navigation",
+          "sourceFiles": [
+            "src/components/TreeNav.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled selection and expansion, disabled nodes",
+            "nested keyboard behavior and AISEE hierarchy/state hooks"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -671,7 +892,8 @@
         "components/TreeNav/TreeNav.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -685,6 +907,20 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "tree-navigation",
+          "sourceFiles": [
+            "src/components/TreeNav.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled selection and expansion, disabled nodes",
+            "nested keyboard behavior and AISEE hierarchy/state hooks"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -739,7 +975,8 @@
         "components/FeatureOverview/FeatureOverview.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -759,7 +996,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "PlanCard",
@@ -828,7 +1067,8 @@
         "components/PlanCardCurrent/PlanCardCurrent.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -842,6 +1082,32 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/Button.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button semantics, disabled/type and keyboard activation",
+            "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "dialog",
+          "sourceFiles": [
+            "src/components/Dialog.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled open/onClose, modal isolation, focus management and focus return",
+            "Escape/backdrop dismissal, accessible title/description and native dialog ref API",
+            "AISEE backdrop, entry/exit timing, layout variants and reduced-motion behavior"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -878,7 +1144,8 @@
         "preview/avatar.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -899,7 +1166,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "Badge",
@@ -938,7 +1207,8 @@
         "components/Badge/Badge.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -953,7 +1223,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "Steps",
@@ -996,7 +1268,8 @@
         "components/Steps/Steps.demo.tsx"
       ],
       "preserve": [
-        "Preserve production step progress and loading animations; workflow state comes from the host."
+        "Preserve production step progress and loading animations; workflow state comes from the host.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -1015,7 +1288,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "EmptyState",
@@ -1070,7 +1345,8 @@
         "components/EmptyState/EmptyState.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -1099,7 +1375,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "Card",
@@ -1140,7 +1418,8 @@
         "components/Card/Card.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -1155,7 +1434,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "StatCard",
@@ -1201,7 +1482,8 @@
         "components/StatCardCurrent/StatCardCurrent.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -1216,7 +1498,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "Table",
@@ -1247,7 +1531,8 @@
         "components/Table/Table.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -1262,7 +1547,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "Chart",
@@ -1292,7 +1579,8 @@
         "components/Chart/Chart.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -1307,7 +1595,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "ScoreGauge",
@@ -1345,7 +1635,8 @@
         "components/ScoreGauge/ScoreGauge.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -1360,7 +1651,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "CreditBar",
@@ -1399,7 +1692,8 @@
         "components/CreditBar/CreditBar.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -1414,7 +1708,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     },
     {
       "name": "Dialog",
@@ -1450,7 +1746,8 @@
         "components/Dialog/Dialog.demo.tsx"
       ],
       "preserve": [
-        "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion."
+        "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -1464,6 +1761,21 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "dialog",
+          "sourceFiles": [
+            "src/components/Dialog.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled open/onClose, modal isolation, focus management and focus return",
+            "Escape/backdrop dismissal, accessible title/description and native dialog ref API",
+            "AISEE backdrop, entry/exit timing, layout variants and reduced-motion behavior"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -1505,7 +1817,8 @@
       "preserve": [
         "Preserve the controlled native modal, safe-action initial focus, focus containment and return, Escape/close/cancel callbacks, responsive actions and scrollable long content.",
         "Preserve optional positive/warning impact notices and host icon/content slots. Labels, notices, counts and confirm callbacks come from the host; never install the automation/discard examples or their illustration assets.",
-        "The host decides when confirmation succeeds and closes the dialog; do not automatically run a business operation or add demo Toast behavior."
+        "The host decides when confirmation succeeds and closes the dialog; do not automatically run a business operation or add demo Toast behavior.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -1519,6 +1832,32 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "dialog",
+          "sourceFiles": [
+            "src/components/ConfirmationDialog.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled open, cancel-first focus, focus return and modal isolation",
+            "Escape/cancel handling, accessible title/description and native dialog ref API",
+            "AISEE impact notices, confirm-disabled behavior and host-owned callbacks"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/Button.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button semantics, disabled/type and keyboard activation",
+            "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -1581,7 +1920,8 @@
       ],
       "preserve": [
         "Preserve Tooltip auto placement, viewport collision handling, hover/focus/Escape, subtle/playful spring motion and reduced motion.",
-        "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page."
+        "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -1600,6 +1940,32 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "tooltip",
+          "sourceFiles": [
+            "src/components/Tooltip.tsx"
+          ],
+          "requiredCapabilities": [
+            "hover/focus open, Escape dismiss and trigger ref",
+            "portal and collision-aware automatic placement with scroll/resize tracking",
+            "AISEE spring pointer tracking, directional entrance and separate positioning/motion transforms"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "live-region",
+          "sourceFiles": [
+            "src/components/Toast.tsx"
+          ],
+          "requiredCapabilities": [
+            "status/alert semantics, accessible dismissal and lifecycle cleanup",
+            "AISEE timer/progress and entry/exit motion hooks"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -1633,7 +1999,8 @@
       "preserve": [
         "Keep the inline bell icon, hover/focus, numeric badge and optional unread dot.",
         "Real count increases ring the white bell and animate the badge number. Rerenders, unchanged/decreased/cleared counts must not replay incoming animation.",
-        "The outer button and black icon circle remain fixed; respect prefers-reduced-motion. Connect count and onClick to existing product data and navigation."
+        "The outer button and black icon circle remain fixed; respect prefers-reduced-motion. Connect count and onClick to existing product data and navigation.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {}
@@ -1647,6 +2014,97 @@
         {
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/NotificationBell.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button props, accessible label, pointer/focus and click callbacks",
+            "AISEE inner glyph motion and badge state driven by real count; outer button stays fixed"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "AutomationRunner",
+      "slug": "automation-runner",
+      "page": "components/AutomationRunner/AutomationRunner.html",
+      "entries": [
+        "src/components/AutomationRunner.tsx"
+      ],
+      "productionFiles": [
+        "src/components/AutomationRunner.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-automation-runner"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/automation-runner/drag-handle.svg",
+        "assets/automation-runner/eye-mask.svg",
+        "assets/automation-runner/chevron-down.svg",
+        "assets/automation-runner/minimize.svg",
+        "assets/automation-runner/close.svg"
+      ],
+      "demoFiles": [
+        "components/AutomationRunner/AutomationRunner.html",
+        "components/AutomationRunner/AutomationRunner.demo.tsx",
+        "components/AutomationRunner/AutomationRunner.demo.css"
+      ],
+      "preserve": [
+        "Mount the runner once in the host app shell outside route content so it persists across navigation. Closing hides only the window and must never stop, cancel or mutate the automation task.",
+        "Preserve default, expanded and minimized views, controlled open/view callbacks, real detail rows and the Back to Automation host callback. The card title and arrow toggle details, the line control minimizes it, and clicking anywhere on the minimized card restores the default view; the visible green eye remains the keyboard-accessible restore control.",
+        "Before integration, inspect the host for an existing Automation Runner or equivalent persistent status card. Update a compatible existing implementation in place instead of mounting a second runner. Retain an existing blink and pointer-following eye only when they already behave correctly; do not duplicate their DOM, state, keyframes or window pointermove listener.",
+        "Except for a compatible existing blink and pointer-following eye, this delivery is authoritative for all component behavior: bottom entrance and exit bounce, default/expanded/minimized views, pointer-directed card lean, one jelly rebound only when entering the green mascot, whole-card pointer dragging, keyboard drag-handle movement, viewport clamping and complete prefers-reduced-motion fallback. A drag must not activate expand, minimize, close or action controls.",
+        "Use the exact exported Figma icons and eye mask. Detail values and automation state come from the host; do not ship Demo routes, controls or mock task management.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+      ],
+      "configuration": {
+        "props": {
+          "AutomationRunner": [
+            "defaultView",
+            "placement"
+          ]
+        }
+      },
+      "usage": "// Mount once in the root app shell, outside route content.\n<AutomationRunner open={runnerVisible} view={runnerView} details={automationStatusRows} onOpenChange={setRunnerVisible} onViewChange={setRunnerView} onAction={() => navigate('/automation')} />",
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/AutomationRunner.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button semantics, refs, accessible labels and keyboard activation without host default visuals",
+            "AISEE controlled visibility/view state, drag handle pointer capture, focus rings and playful motion"
+          ],
+          "fallback": "standalone"
         }
       ]
     },
@@ -1682,7 +2140,8 @@
       "preserve": [
         "Preserve the native six-second circle/infinity SVG morph, four-second decorative text cycle and shimmer. Do not restart the cycle on ordinary rerenders.",
         "Respect live prefers-reduced-motion changes: static infinity and first phrase, no shimmer or cycling. Keep one stable accessible status; decorative phrases must remain aria-hidden.",
-        "Support showIcon and default/compact size. Host controls when to mount/unmount during real work. Labels are neutral decorative phrases, never actual progress or reasoning logs."
+        "Support showIcon and default/compact size. Host controls when to mount/unmount during real work. Labels are neutral decorative phrases, never actual progress or reasoning logs.",
+        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
       ],
       "configuration": {
         "props": {
@@ -1702,7 +2161,9 @@
           "path": "src/tokens/tokens.css",
           "mode": "custom-properties"
         }
-      ]
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
     }
   ]
 }

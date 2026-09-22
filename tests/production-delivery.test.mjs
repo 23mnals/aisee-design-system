@@ -11,7 +11,7 @@ const bell=registry.components.find(c=>c.name==='NotificationBell');
 test('manifest boundary rejects demos/fonts/global sheets and missing transitive dependencies',async()=>{
   for(const path of ['src/Playground.tsx','src/mock-data.ts','fonts/Karla.ttf','src/index.ts','src/tokens/tokens.css'])assert.throws(()=>validateManifest({...bell,productionFiles:[...bell.productionFiles,path]}));
   const confirmation=registry.components.find(c=>c.name==='ConfirmationDialog');
-  await assert.rejects(()=>productionFiles({...confirmation,productionFiles:confirmation.productionFiles.filter(f=>f!=='src/components/Button.tsx')},decodeURIComponent(root)),/undeclared production dependency/);
+  await assert.rejects(()=>productionFiles({...confirmation,productionFiles:confirmation.productionFiles.filter(f=>f!=='src/components/Button.tsx'),primitives:confirmation.primitives.filter(p=>!p.sourceFiles.includes('src/components/Button.tsx'))},decodeURIComponent(root)),/undeclared production dependency/);
   await assert.rejects(()=>productionFiles({...bell,productionFiles:[...bell.productionFiles,'src/components/Tabs.tsx']},decodeURIComponent(root)),/unused production source/);
 });
 

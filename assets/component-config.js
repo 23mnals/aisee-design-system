@@ -2,7 +2,7 @@
 (function (global) {
   'use strict';
   const pathFor = name => `components/${name}/${name}.html`;
-  const reactPages = ['ThinkingIndicator', 'SidebarNavigation', 'Button', 'Toggle', 'EmptyState', 'FeatureOverview', 'Card', 'ToggleSelectionGroup', 'Steps', 'TooltipToast'].map(pathFor);
+  const reactPages = ['AutomationRunner', 'ThinkingIndicator', 'SidebarNavigation', 'Button', 'Toggle', 'EmptyState', 'FeatureOverview', 'Card', 'ToggleSelectionGroup', 'Steps', 'TooltipToast'].map(pathFor);
   const galleryPages = ['SegmentedChoice', 'PlanCardCurrent', 'TagInput', 'TreeNav', 'Badge', 'StatCardCurrent', 'Table', 'Chart', 'ScoreGauge', 'CreditBar', 'Dialog', 'ConfirmationDialog'].map(pathFor);
   function required(doc, selector) {
     const element = doc.querySelector(selector);

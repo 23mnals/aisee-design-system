@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "SegmentedChoice",
   "page": "components/SegmentedChoice/SegmentedChoice.html",
-  "version": "36a81329344f1704",
-  "delivery": "./releases/36a81329344f1704/ready.md",
-  "installer": "./releases/36a81329344f1704/install.cjs",
+  "version": "afadd8247927950c",
+  "delivery": "./releases/afadd8247927950c/ready.md",
+  "installer": "./releases/afadd8247927950c/install.cjs",
   "installerSha256": "d0ed29fdd05475be04ea5011f1e03bc0e74c4fb707be0b6b9a45602fd0f11816",
   "configuration": {
     "props": {}
@@ -25,6 +25,36 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "single-choice",
+      "sourceFiles": [
+        "src/components/SegmentedChoice.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled selection, disabled choices and keyboard activation",
+        "AISEE option layout and selected/focus hooks"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "tooltip",
+      "sourceFiles": [
+        "src/components/Tooltip.tsx"
+      ],
+      "requiredCapabilities": [
+        "hover/focus open, Escape dismiss and trigger ref",
+        "portal and collision-aware automatic placement with scroll/resize tracking",
+        "AISEE spring pointer tracking, directional entrance and separate positioning/motion transforms"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "SegmentedChoice.tsx",
     "Tooltip.tsx",

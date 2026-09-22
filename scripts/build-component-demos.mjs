@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 
 // Bundle the actual React component for the existing static preview server and Pages.
 // Keep generated files beside the HTML so a checkout opens without a separate dev server.
-for (const [component, bundle] of [['ThinkingIndicator', 'thinking-indicator-demo'], ['ConfirmationDialog', 'confirmation-dialog-demo'], ['TooltipToast', 'tooltip-toast-demo'], ['SidebarNavigation', 'sidebar-navigation-demo'], ['PlanCardCurrent', 'plan-card-demo'], ['FeatureOverview', 'feature-overview-demo'], ['SegmentedChoice', 'segmented-choice-demo'], ['Card', 'card-demo'], ['Toggle', 'toggle-demo'], ['Button', 'button-demo'], ['Badge', 'badge-demo'], ['Steps', 'steps-demo'], ['EmptyState', 'empty-state-demo'], ['ToggleSelectionGroup', 'toggle-selection-demo'], ['StatCardCurrent', 'stat-card-demo'], ['CreditBar', 'credit-bar-demo'], ['Dialog', 'dialog-demo']]) {
+for (const [component, bundle] of [['AutomationRunner', 'automation-runner-demo'], ['ThinkingIndicator', 'thinking-indicator-demo'], ['ConfirmationDialog', 'confirmation-dialog-demo'], ['TooltipToast', 'tooltip-toast-demo'], ['SidebarNavigation', 'sidebar-navigation-demo'], ['PlanCardCurrent', 'plan-card-demo'], ['FeatureOverview', 'feature-overview-demo'], ['SegmentedChoice', 'segmented-choice-demo'], ['Card', 'card-demo'], ['Toggle', 'toggle-demo'], ['Button', 'button-demo'], ['Badge', 'badge-demo'], ['Steps', 'steps-demo'], ['EmptyState', 'empty-state-demo'], ['ToggleSelectionGroup', 'toggle-selection-demo'], ['StatCardCurrent', 'stat-card-demo'], ['CreditBar', 'credit-bar-demo'], ['Dialog', 'dialog-demo']]) {
 await build({
   configFile: false,
   publicDir: false,

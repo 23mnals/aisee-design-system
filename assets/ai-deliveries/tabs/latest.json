@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Tabs",
   "page": "components/Tabs/Tabs.html",
-  "version": "8342adf99b662a70",
-  "delivery": "./releases/8342adf99b662a70/ready.md",
-  "installer": "./releases/8342adf99b662a70/install.cjs",
+  "version": "766c15c235135c0e",
+  "delivery": "./releases/766c15c235135c0e/ready.md",
+  "installer": "./releases/766c15c235135c0e/install.cjs",
   "installerSha256": "670032f51e6943d9d83fc0b92221ef601879d85ce5c9bd4ecceee3ad10ea95cb",
   "configuration": {
     "props": {
@@ -32,6 +32,24 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "tabs",
+      "sourceFiles": [
+        "src/components/Tabs.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled value and change callback, disabled tabs and keyboard navigation",
+        "AISEE state classes, measurement refs and label visibility"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve controlled selection, keyboard navigation, icon/text variants and responsive platform labels.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Tabs.tsx",
     "styles.css",

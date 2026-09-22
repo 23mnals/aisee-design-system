@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "ToggleSelectionGroup",
   "page": "components/ToggleSelectionGroup/ToggleSelectionGroup.html",
-  "version": "7741e7162bb040a7",
-  "delivery": "./releases/7741e7162bb040a7/ready.md",
-  "installer": "./releases/7741e7162bb040a7/install.cjs",
+  "version": "0a45a3d79a8a62ad",
+  "delivery": "./releases/0a45a3d79a8a62ad/ready.md",
+  "installer": "./releases/0a45a3d79a8a62ad/install.cjs",
   "installerSha256": "5aeb4ce8e4da9ba70b1211b3d1c28de924c030333c137c137a5c570ec4c16f22",
   "configuration": {
     "props": {}
@@ -20,6 +20,46 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "selection-group",
+      "sourceFiles": [
+        "src/components/ToggleSelectionGroup.tsx"
+      ],
+      "requiredCapabilities": [
+        "independent group enablement and preserved item selections",
+        "accessible labels, disabled handling and keyboard activation"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "checkbox",
+      "sourceFiles": [
+        "src/components/Checkbox.tsx"
+      ],
+      "requiredCapabilities": [
+        "checked, indeterminate and disabled state, form semantics",
+        "keyboard activation, focus and AISEE celebration state hooks"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "switch",
+      "sourceFiles": [
+        "src/components/Toggle.tsx"
+      ],
+      "requiredCapabilities": [
+        "checked/defaultChecked, disabled and change callback",
+        "keyboard activation and state hooks for AISEE motion"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "ToggleSelectionGroup.tsx",
     "Checkbox.tsx",

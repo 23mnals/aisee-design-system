@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Card",
   "page": "components/Card/Card.html",
-  "version": "4c033de8b0f7d22e",
-  "delivery": "./releases/4c033de8b0f7d22e/ready.md",
-  "installer": "./releases/4c033de8b0f7d22e/install.cjs",
+  "version": "bada5896786dfd50",
+  "delivery": "./releases/bada5896786dfd50/ready.md",
+  "installer": "./releases/bada5896786dfd50/install.cjs",
   "installerSha256": "7aa6135293d4589e411c7031f58c7e0b590e7f18ebfe7ad1e7b76b0d9b5d9ea2",
   "configuration": {
     "props": {}
@@ -20,6 +20,12 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Card.tsx",
     "styles.css",

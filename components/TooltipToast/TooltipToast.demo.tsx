@@ -14,7 +14,7 @@ function TooltipPlayground() {
     <div className="placement-gallery" aria-label="Tooltip placement examples">
       {(['top','right','bottom','left'] as const).map(side => <div className="placement-example" key={side}><Tooltip placement={side} animation={animation} content="Tooltip"><button className="trigger" type="button">{side[0].toUpperCase() + side.slice(1)}</button></Tooltip></div>)}
     </div>
-    <h2>Avatar hover</h2>
+    <h2 className="aisee-content-heading">Avatar hover <span className="aisee-content-new" aria-label="New or updated content">NEW</span></h2>
     <section className="demo tooltip-demo avatar-tooltip-demo" aria-label="Avatar tooltip examples">
       {['Alex','Sam','Taylor'].map((name,index) => <Tooltip key={name} animation={animation} content={<><strong>{name}</strong><span className="member-role">Team member</span></>}><button className="avatar-trigger" type="button" aria-label={name}><img draggable={false} src={`../../assets/stemui/avatar-social-${index + 1}.svg`} alt="" /></button></Tooltip>)}
     </section>

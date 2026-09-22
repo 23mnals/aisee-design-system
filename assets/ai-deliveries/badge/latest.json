@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Badge",
   "page": "components/Badge/Badge.html",
-  "version": "43a382b68e55b019",
-  "delivery": "./releases/43a382b68e55b019/ready.md",
-  "installer": "./releases/43a382b68e55b019/install.cjs",
+  "version": "c2d66e516a39deda",
+  "delivery": "./releases/c2d66e516a39deda/ready.md",
+  "installer": "./releases/c2d66e516a39deda/install.cjs",
   "installerSha256": "b516a61d828ee5c6e3c213bbc6ceb769dc4d3e60f2c97126c3863ae56020c53c",
   "configuration": {
     "props": {}
@@ -20,6 +20,12 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Badge.tsx",
     "styles.css",

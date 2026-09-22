@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Notification Bell · Motion preview</title>
+  <link rel="stylesheet" href="../fonts/karla.css">
+  <style>
+    :root{--ink:#111;--muted:rgba(17,17,17,.6);--line:rgba(17,17,17,.06);--lime:#cfff29;--feedback-wrong:#ec5212;--bg-hover:#1111110a;--bell-hover:#fff2b3;--ease:cubic-bezier(.2,.8,.2,1)}*{box-sizing:border-box}body{min-height:100vh;margin:0;background:#fafafa;color:var(--ink);font:14px/20px Karla,Arial,sans-serif}button{font:inherit}.page{width:min(760px,calc(100% - 48px));margin:0 auto;padding:56px 0}.eyebrow{margin:0 0 8px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.title{margin:0;font-size:28px;font-weight:600;line-height:36px}.intro{max-width:620px;margin:10px 0 0;color:var(--muted);font-size:16px;line-height:24px}.stage{display:grid;min-height:360px;margin-top:32px;border:1px solid var(--line);border-radius:18px;background:#fff;place-items:center}.preview{display:grid;justify-items:center;gap:24px}.bell{position:relative;display:grid;width:32px;height:32px;padding:8px;border:0;border-radius:8px;background:var(--bg-hover);cursor:pointer;place-items:center;transition:background .15s ease-out}.bell:hover,.bell:focus-visible{background:var(--bell-hover)}.bell:focus-visible,.action:focus-visible{outline:2px solid var(--ink);outline-offset:2px}.bell-icon{display:block;width:16px;height:16px}.bell-glyph{transform-box:fill-box;transform-origin:50% 12%}.bell.is-ringing .bell-glyph{animation:ring 540ms var(--ease)}.badge{position:absolute;top:-7px;right:-8px;display:grid;min-width:18px;height:18px;padding:0 5px;overflow:hidden;border:2px solid #fff;border-radius:999px;background:var(--feedback-wrong);color:#fff;font-size:10px;font-weight:700;line-height:14px;place-items:center;transform-origin:50% 65%}.badge[hidden]{display:none}.badge.is-new{animation:badge-pop 360ms cubic-bezier(.2,1.55,.35,1)}.badge-number{display:block}.badge-number.roll{animation:number-roll 260ms var(--ease)}.dot{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border:2px solid #fff;border-radius:50%;background:var(--feedback-wrong)}.dot:after{position:absolute;inset:-3px;border:1px solid var(--feedback-wrong);border-radius:50%;content:"";animation:dot-ping 1.2s ease-out infinite}.actions{display:flex;gap:8px}.action{min-height:36px;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);cursor:pointer}.action.primary{border-color:transparent;background:var(--lime)}.action:hover{border-color:rgba(17,17,17,.15)}.options{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px}.options label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}.note{margin:16px 0 0;color:var(--muted);font-size:12px}@keyframes ring{0%,100%{transform:rotate(0)}16%{transform:rotate(10deg)}34%{transform:rotate(-9deg)}52%{transform:rotate(6deg)}70%{transform:rotate(-4deg)}86%{transform:rotate(2deg)}}@keyframes badge-pop{0%{opacity:0;transform:scale(.35) translateY(5px)}65%{opacity:1;transform:scale(1.14) translateY(-1px)}100%{transform:scale(1) translateY(0)}}@keyframes number-roll{0%{opacity:0;transform:translateY(85%)}100%{opacity:1;transform:translateY(0)}}@keyframes dot-ping{0%{opacity:.8;transform:scale(.5)}75%,100%{opacity:0;transform:scale(1.8)}}@media(prefers-reduced-motion:reduce){.bell,.bell.is-ringing .bell-glyph,.badge.is-new,.badge-number.roll,.dot:after{transition:none;animation:none}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <p class="eyebrow">Motion study · synchronized to Current component</p>
+    <h1 class="title">Notification Bell</h1>
+    <p class="intro">严格沿用 Figma 节点 77:17878 的 32×32 按钮与 16px 实心铃铛。新通知会摆动白色铃铛并滚动未读徽章；hover / focus 只重播铃铛摆动，不改变徽章。</p>
+    <section class="stage">
+      <div class="preview">
+        <button class="bell" id="bell" type="button" aria-label="No unread notifications">
+          <svg class="bell-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="8" fill="#111111"/>
+            <g class="bell-glyph" fill="#fff">
+              <path d="M8.0001 12.8246C7.2123 12.8246 6.58586 12.4906 6.50183 11.785C6.49956 11.764 6.50183 11.7426 6.5084 11.7225C6.51496 11.7023 6.52573 11.6837 6.53993 11.668C6.5542 11.6523 6.57156 11.6398 6.591 11.6312C6.61036 11.6226 6.63136 11.6183 6.65253 11.6184H9.34566C9.36706 11.6182 9.3883 11.6227 9.40786 11.6314C9.42746 11.64 9.44493 11.6528 9.45926 11.6688C9.4735 11.6847 9.4842 11.7036 9.49063 11.724C9.497 11.7445 9.49903 11.766 9.49646 11.7873C9.40033 12.4797 8.77956 12.8246 8.0001 12.8246Z"/>
+              <path d="M11.6937 11.0153H4.30608C3.85978 11.0153 3.62761 10.4499 3.88428 10.1484C4.49985 9.41939 4.93478 9.11296 4.93478 7.10283C4.93478 5.26083 5.90498 4.60723 6.70631 4.28836C6.76148 4.26536 6.81118 4.23109 6.85225 4.18773C6.89338 4.14439 6.92495 4.09289 6.94488 4.03659C7.08401 3.57483 7.47751 3.17529 7.99995 3.17529C8.52231 3.17529 8.91508 3.57483 9.05528 4.03696C9.07538 4.09323 9.10705 4.14469 9.14821 4.18806C9.18935 4.23143 9.23908 4.26573 9.29428 4.28873C10.0937 4.60686 11.0658 5.26159 11.0658 7.10323C11.0658 9.11336 11.5004 9.41979 12.1159 10.1488C12.3699 10.4499 12.1374 11.0153 11.6937 11.0153Z"/>
+            </g>
+          </svg>
+          <span class="badge" id="badge" hidden><span class="badge-number" id="count">0</span></span>
+          <span class="dot" id="dot" hidden></span>
+        </button>
+        <div class="actions"><button class="action primary" id="notify" type="button">Send notification</button><button class="action" id="clear" type="button">Mark all read</button></div>
+        <div class="options"><label><input id="dotMode" type="checkbox"> Dot mode</label><span>点击铃铛也可清空</span></div>
+        <span class="sr" id="announcement" aria-live="polite"></span>
+      </div>
+    </section>
+    <p class="note">动效时长约 540ms；只在未读数增加时触发，按钮底与黑色圆形底不动，清空不摆动，并遵循 reduced motion。</p>
+  </main>
+  <script>
+    const bell=document.querySelector('#bell'),badge=document.querySelector('#badge'),countNode=document.querySelector('#count'),dot=document.querySelector('#dot'),dotMode=document.querySelector('#dotMode'),announcement=document.querySelector('#announcement');let count=0,timer;
+    function render(animate=false){const isDot=dotMode.checked,hasUnread=count>0;badge.hidden=!hasUnread||isDot;dot.hidden=!hasUnread||!isDot;countNode.textContent=count>99?'99+':String(count);bell.setAttribute('aria-label',hasUnread?`${count} unread notification${count===1?'':'s'}`:'No unread notifications');if(animate){clearTimeout(timer);bell.classList.remove('is-ringing');badge.classList.remove('is-new');countNode.classList.remove('roll');void bell.offsetWidth;bell.classList.add('is-ringing');if(!isDot){badge.classList.add('is-new');countNode.classList.add('roll')}timer=setTimeout(()=>{bell.classList.remove('is-ringing');badge.classList.remove('is-new');countNode.classList.remove('roll')},650)}announcement.textContent=hasUnread?`${count} unread notifications`:'All notifications read'}
+    function hoverRing(){clearTimeout(timer);bell.classList.remove('is-ringing');void bell.offsetWidth;bell.classList.add('is-ringing');timer=setTimeout(()=>bell.classList.remove('is-ringing'),650)}
+    document.querySelector('#notify').addEventListener('click',()=>{count+=1;render(true)});document.querySelector('#clear').addEventListener('click',()=>{count=0;render()});bell.addEventListener('pointerenter',hoverRing);bell.addEventListener('focus',hoverRing);dotMode.addEventListener('change',()=>render());render();
+  </script>
+</body>
+</html>

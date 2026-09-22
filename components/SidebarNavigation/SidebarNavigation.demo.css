@@ -10,6 +10,7 @@ body{margin:0;background:var(--aisee-color-page);color:var(--aisee-color-black);
 .sidebar-demo .aisee-sidebar-layout{min-width:560px;min-height:920px}
 .sidebar-demo .aisee-sidebar-layout__content{display:flex;flex-direction:column}
 .sidebar-demo .aisee-sidebar__header{padding-bottom:8px;border-bottom:1px solid var(--aisee-color-border)}
+.sidebar-demo .aisee-sidebar--collapsed.aisee-sidebar--toggle-inside .aisee-sidebar__header{min-height:41px}
 .sidebar-demo .aisee-sidebar__nav{padding-top:0}
 .sidebar-demo-header{display:grid;gap:8px}
 .sidebar-demo-project{display:flex;min-width:0;height:32px;align-items:center;gap:8px;border:1px solid var(--aisee-color-border);border-radius:8px;padding:4px 8px;background:var(--aisee-color-white)}

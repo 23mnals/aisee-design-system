@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "QuantityStepper",
   "page": "components/QuantityStepper/QuantityStepper.html",
-  "version": "85361ff51383093e",
-  "delivery": "./releases/85361ff51383093e/ready.md",
-  "installer": "./releases/85361ff51383093e/install.cjs",
+  "version": "88c73c09d4242b09",
+  "delivery": "./releases/88c73c09d4242b09/ready.md",
+  "installer": "./releases/88c73c09d4242b09/install.cjs",
   "installerSha256": "041d6c48d98229e7cb920f95acc323e29bef082d88edb54a70df2882a886e5b2",
   "configuration": {
     "props": {
@@ -24,6 +24,24 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "number-input",
+      "sourceFiles": [
+        "src/components/QuantityStepper.tsx"
+      ],
+      "requiredCapabilities": [
+        "editable and buttons-only modes, bounds and step",
+        "press-and-hold repeat and keyboard input without duplicate handlers"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve keyboard editing, hold acceleration, min/max boundaries and numeric roll motion.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "QuantityStepper.tsx",
     "styles.css",

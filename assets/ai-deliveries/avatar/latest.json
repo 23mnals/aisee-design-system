@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Avatar",
   "page": "preview/avatar.html",
-  "version": "b96866c8600ac513",
-  "delivery": "./releases/b96866c8600ac513/ready.md",
-  "installer": "./releases/b96866c8600ac513/install.cjs",
+  "version": "8572ca8da74aa002",
+  "delivery": "./releases/8572ca8da74aa002/ready.md",
+  "installer": "./releases/8572ca8da74aa002/install.cjs",
   "installerSha256": "ea600a112807edc4fcea5869a553d45e018c62e462a940ec19b8c92371bbb749",
   "configuration": {
     "props": {
@@ -26,6 +26,12 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Avatar.tsx",
     "styles.css",

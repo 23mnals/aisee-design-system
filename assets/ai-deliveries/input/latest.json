@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Input",
   "page": "components/Input/Input.html",
-  "version": "7b2310e3c2913ab2",
-  "delivery": "./releases/7b2310e3c2913ab2/ready.md",
-  "installer": "./releases/7b2310e3c2913ab2/install.cjs",
+  "version": "b647726d0df49f07",
+  "delivery": "./releases/b647726d0df49f07/ready.md",
+  "installer": "./releases/b647726d0df49f07/install.cjs",
   "installerSha256": "8cc072c2139d35310d6c996a953376d1be49c843eb8859214711f08b37f8a0ac",
   "configuration": {
     "props": {
@@ -24,6 +24,24 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "input",
+      "sourceFiles": [
+        "src/components/Input.tsx"
+      ],
+      "requiredCapabilities": [
+        "native input ref, value/defaultValue/onChange and form semantics",
+        "disabled, invalid, focus and accessible labeling"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Input.tsx",
     "styles.css",

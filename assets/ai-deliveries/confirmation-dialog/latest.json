@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "ConfirmationDialog",
   "page": "components/ConfirmationDialog/ConfirmationDialog.html",
-  "version": "f0524f6175a927ef",
-  "delivery": "./releases/f0524f6175a927ef/ready.md",
-  "installer": "./releases/f0524f6175a927ef/install.cjs",
+  "version": "c857f30885f3dcfc",
+  "delivery": "./releases/c857f30885f3dcfc/ready.md",
+  "installer": "./releases/c857f30885f3dcfc/install.cjs",
   "installerSha256": "d84206e6ddd07e2fa6b55025ea85dfe04c46c92b7ff112030b1c4623eb2ab69e",
   "configuration": {
     "props": {}
@@ -20,6 +20,38 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "dialog",
+      "sourceFiles": [
+        "src/components/ConfirmationDialog.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled open, cancel-first focus, focus return and modal isolation",
+        "Escape/cancel handling, accessible title/description and native dialog ref API",
+        "AISEE impact notices, confirm-disabled behavior and host-owned callbacks"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "button",
+      "sourceFiles": [
+        "src/components/Button.tsx"
+      ],
+      "requiredCapabilities": [
+        "native button semantics, disabled/type and keyboard activation",
+        "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve the controlled native modal, safe-action initial focus, focus containment and return, Escape/close/cancel callbacks, responsive actions and scrollable long content.",
+    "Preserve optional positive/warning impact notices and host icon/content slots. Labels, notices, counts and confirm callbacks come from the host; never install the automation/discard examples or their illustration assets.",
+    "The host decides when confirmation succeeds and closes the dialog; do not automatically run a business operation or add demo Toast behavior.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "ConfirmationDialog.tsx",
     "Button.tsx",

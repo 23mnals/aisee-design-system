@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Button",
   "page": "components/Button/Button.html",
-  "version": "b7bac4f3de97ea0f",
-  "delivery": "./releases/b7bac4f3de97ea0f/ready.md",
-  "installer": "./releases/b7bac4f3de97ea0f/install.cjs",
+  "version": "6583b71bdf6f1708",
+  "delivery": "./releases/6583b71bdf6f1708/ready.md",
+  "installer": "./releases/6583b71bdf6f1708/install.cjs",
   "installerSha256": "9a0770f14f4fb82fccbbc01f86710085b9cb4f8ce401a47aea622eea5aa14856",
   "configuration": {
     "props": {
@@ -27,6 +27,24 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "button",
+      "sourceFiles": [
+        "src/components/Button.tsx"
+      ],
+      "requiredCapabilities": [
+        "native button semantics, disabled/type and keyboard activation",
+        "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve two-sided hover/focus fill motion, icon slots and disabled behavior.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Button.tsx",
     "styles.css",

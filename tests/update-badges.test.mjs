@@ -51,7 +51,19 @@ test('every Current standalone component loads the same expiry script', async ()
     const html = await readFile(new URL('../' + path, import.meta.url), 'utf8');
     assert.match(html, /<script src="[^"\n]*assets\/update-badges\.js"><\/script>/, path);
   }
-  assert.match(portal, /item\.updated === true && AiseeUpdates\.isRecent/);
+  assert.match(portal, /const hasUpdate = AiseeUpdates\.isRecent\(AiseeUpdates\.dateFor\(item\.path, item\.updatedAt\)\)/);
+  assert.doesNotMatch(portal, /item\.updated === true && AiseeUpdates\.isRecent/);
   assert.match(source, /scheduleMidnight/);
   assert.match(source, /visibilitychange/);
+});
+
+test('Tooltip additions remain NEW for their actual update date and then expire', async () => {
+  const path = 'components/TooltipToast/TooltipToast.html';
+  assert.equal(dateFor(path), '2026-09-20');
+  assert.equal(isRecent(dateFor(path), new Date('2026-09-21T04:00:00Z')), true);
+  assert.equal(isRecent(dateFor(path), new Date('2026-09-22T16:00:00Z')), false);
+  const html = await readFile(new URL('../' + path, import.meta.url), 'utf8');
+  const demo = await readFile(new URL('../components/TooltipToast/TooltipToast.demo.tsx', import.meta.url), 'utf8');
+  assert.match(html, /Tooltip <span class="aisee-content-new"/);
+  assert.match(demo, /Avatar hover <span className="aisee-content-new"/);
 });

@@ -10,6 +10,21 @@
 
 接收方需要兼容的 React 项目及组件清单声明的运行环境。具体 React、Node 和第三方依赖要求由每个组件的 `dependencies / compatibility` 配置声明，Copy for AI 不额外强制统一技术栈版本。Node 声明用于执行源码安装器，不是浏览器组件的运行依赖；宿主构建工具自身的版本要求由宿主负责。还需 TSX/CSS 及该组件必要资源的导入支持，以及可联网读取交付、执行项目命令的编码 AI。无需手动下载附件或安装整个 AISEE 库；缺少基础依赖时按清单和宿主包管理方式补充。
 
+## Host Project Compatibility
+
+Copy for AI 不假设目标项目使用 AISEE 基础组件。安装前，编码 AI 必须检查目标项目的 package.json、lockfile、现有组件导入、自定义 primitives、theme/provider 和全局样式，识别 shadcn/ui、Radix、MUI、Ant Design、Chakra、Headless UI 或宿主自定义实现。网站无法在复制时读取外部项目；识别与适配由接收方编码 AI 在执行接入时完成，源码安装器只负责校验并解包。
+
+1. 已有兼容 primitive 优先复用，按清单 requiredCapabilities 核实当前版本 API、refs、DOM/状态钩子、受控状态和无障碍能力，不能只凭库名判断兼容。
+2. 不为一个 AISEE 组件安装另一套完整 UI framework。第三方 primitive 只负责 focus、portal、定位、dialog 无障碍、button/input 等底层能力。
+3. AISEE 的视觉、尺寸、图标、状态、动画、交互及 reduced-motion 必须保留。若宿主带默认外观，须能局部中和；不得直接换成 MUI/Ant 等默认样式。组件公共 props 和 ref 行为也必须保持，尤其 native dialog API 不能静默换成不兼容 ref。
+4. 仅在清单声明的边界建立本地 adapter；不得覆盖宿主原组件、theme、provider 或 global styles。AISEE CSS 及 portal 内容均须局部作用域，禁止全局 button/input/svg/body/reset。兼容字体/token 可复用，差异用组件局部默认值补足，不以换肤破坏 AISEE 规范。
+5. 宿主 primitive 无法满足必要行为时，该边界退回已交付的 standalone implementation，并说明具体缺失能力。primitives 为空表示无需替换库级基础能力，不制造 adapter。完整生产交付始终保留可运行的 standalone 基线，文件数量不随宿主库自动猜测。
+6. 适配后检查视觉/状态/动画一致性、键盘与焦点返回、浮层位置/层级及宿主类型检查/构建；避免重复 focus trap、Escape/外部点击监听或定位与动效争用 transform。简短记录实际识别的宿主栈、复用点与回退理由。
+
+每个组件声明 `integrationMode: "host-first"`、`primitives` 与 `preserve`；primitive 使用 `role / sourceFiles / requiredCapabilities / fallback: "standalone"`。sourceFiles 必须属于自身 productionFiles，不能指向 Demo 或外部假想文件。preserve 对宿主适配与 standalone 同样有效。这些字段同步到 latest、交付元数据和版本接入说明；短复制指令无需展开规则。
+
+这是一套明确的接入契约，不是已完成所有第三方库的适配器。具体宿主兼容性由实际项目验证；本仓库验证清单、规则传递、CSS 边界及 standalone 交付，不把这些检查冒充 MUI/Ant/Chakra 等真实宿主的全面验收。
+
 ## 显式清单
 
 `delivery/components.json` 是文件范围的唯一来源，每条包含：
@@ -22,14 +37,15 @@
 - `styleDependencies`：逐项声明仅用于解析必要 CSS custom properties 的来源，不把整套 token 文件交付出去。
 - `assets`：代码或选定 CSS 实际引用的生产资产，逐项列出。未使用或未声明引用都会使构建失败。
 - `demoFiles`：明确不参与交付的预览/演示文件；另外拒绝 demo/mock/playground/showcase/story/examples/fonts 路径和字体扩展名。
-- `preserve`：必须保留的组件行为。
+- `integrationMode / primitives`：宿主优先策略与逐项可适配底层边界，含生产来源、必需能力和独立回退。
+- `preserve`：必须保留的视觉、状态、动画、行为与无障碍规范。
 - `configuration`：可复制的真实 props / slots / theme 白名单，纯演示状态不在其中。
 
 不限制文件数量。必要的类型声明、入口和局部样式属于生产文件；Dialog、Tooltip 等可带多个实现或动效文件。构建验证所有生产源码引用都在清单内，所有源码都由入口可达。Production 不能依赖 Demo；Demo 继续使用生产组件或既有展示实现，不随交付清单改变。
 
 CSS 闭包从生产选择器进入，保留复合/嵌套 selector、pseudo state 与 pseudo element，递归追踪 `var()` 默认值和别名、条件覆盖、`@property` 以及变量间接引用的 keyframes；动画内的新变量继续参与闭包。按原来源顺序保留 media、supports、layer、container 与 reduced-motion 包装。根默认值作为宿主可覆盖的 fallback 注入，仅将用到的条件变量限定在组件作用域；生产 JS 明确写入的动态 CSS 属性属于运行时依赖。缺失变量、循环默认值或未声明的可达 CSS import 依赖使构建失败，不能静默遗漏。组合中另一组件的专属覆盖由组合清单负责，不外溢到单组件。
 
-构建保留现有源代码逻辑，仅处理相对导入、客户端边界、局部样式导入和 token 默认值。所有样式有组件作用域，不输出全局 reset、整套 token 或字体目录；优先继承宿主字体并保留 token 覆盖入口。必要 SVG/image 仍交付，否则组件真实功能会缺失。资源类型声明逐文件作用域，多个交付并用不会互相冲突。
+构建交付保留 standalone 源代码逻辑；接收方可按清单适配宿主 primitives。构建仅处理相对导入、客户端边界、局部样式导入和 token 默认值。所有样式有组件作用域，不输出全局 reset、整套 token 或字体目录；优先继承宿主字体并保留 token 覆盖入口。必要 SVG/image 仍交付，否则组件真实功能会缺失。资源类型声明逐文件作用域，多个交付并用不会互相冲突。
 
 ## 配置与 Demo 边界
 
@@ -50,7 +66,7 @@ NotificationBell 默认交付动画铃铛本身，数值/圆点是生产 API；�
 1. 新组件登记完整生产清单与配置白名单，Demo 继续独立维护。禁止通过扫描整个目录来自动扩大交付。
 2. `npm run build:ai-deliveries`：生成所有交付，检查缺失/越界/未使用依赖。
 3. `npm run verify:ai-deliveries`：将所有已登记交付安装到与本仓库隔离的 React 目录，检查准确文件范围、校验、重复安装/冲突保护、跨组件类型检查与构建；生成独立浏览器验收页。
-4. `npm run audit:copy-ai`：检查全部入口、真实配置白名单与实际提示词；192 个受控案例不是全部业务组合，也不等同于 AI 视觉结果。
+4. `npm run audit:copy-ai`：检查全部入口、真实配置白名单与实际提示词；报告中的受控案例不是全部业务组合，也不等同于 AI 视觉结果。
 5. `npm test`、`npm run typecheck`、`npm run site`：回归边界、latest 切换、Demo 和站点。
 6. 打开 `artifacts/production-delivery-runtime/index.html` 检查真实 bell/count 动画与 Button/Tabs/Dialog。发布后再检验公开地址和浏览器 Copy for AI。
 

@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Dropdown",
   "page": "components/Select/Select.html",
-  "version": "e20e5839973b3f7a",
-  "delivery": "./releases/e20e5839973b3f7a/ready.md",
-  "installer": "./releases/e20e5839973b3f7a/install.cjs",
+  "version": "1540c33f6b92f350",
+  "delivery": "./releases/1540c33f6b92f350/ready.md",
+  "installer": "./releases/1540c33f6b92f350/install.cjs",
   "installerSha256": "9167abf98a5627ecb022d7a19160b76b40354c52bb3d594b65b43531cf2abb0d",
   "configuration": {
     "props": {
@@ -27,6 +27,35 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "popover",
+      "sourceFiles": [
+        "src/components/Dropdown.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled visibility, outside dismissal and focus return",
+        "anchored collision-aware positioning, scroll/resize handling and portal className"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "selection",
+      "sourceFiles": [
+        "src/components/Dropdown.tsx"
+      ],
+      "requiredCapabilities": [
+        "single/multiple selection, editable/filterable input and keyboard navigation",
+        "disabled/grouped items and nested row actions without selection conflicts"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Dropdown.tsx",
     "styles.css",

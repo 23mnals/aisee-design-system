@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "PlanCard",
   "page": "components/PlanCardCurrent/PlanCardCurrent.html",
-  "version": "f4e0e26189383ee8",
-  "delivery": "./releases/f4e0e26189383ee8/ready.md",
-  "installer": "./releases/f4e0e26189383ee8/install.cjs",
+  "version": "06a95bf93fc90548",
+  "delivery": "./releases/06a95bf93fc90548/ready.md",
+  "installer": "./releases/06a95bf93fc90548/install.cjs",
   "installerSha256": "f14994d7f2d9f3feac62ceed24b8b415537c052cc46e61495ac5b3fad8d20e1a",
   "configuration": {
     "props": {}
@@ -20,6 +20,36 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "button",
+      "sourceFiles": [
+        "src/components/Button.tsx"
+      ],
+      "requiredCapabilities": [
+        "native button semantics, disabled/type and keyboard activation",
+        "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "dialog",
+      "sourceFiles": [
+        "src/components/Dialog.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled open/onClose, modal isolation, focus management and focus return",
+        "Escape/backdrop dismissal, accessible title/description and native dialog ref API",
+        "AISEE backdrop, entry/exit timing, layout variants and reduced-motion behavior"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "PlanCard.tsx",
     "SubscriptionPlanCard.tsx",

@@ -645,7 +645,9 @@ test('portal contains an explicit machine-readable AI implementation contract', 
   const contractSource = portal.match(/<script type="application\/json" id="aisee-ai-contract">([\s\S]*?)<\/script>/)?.[1];
   assert.ok(contractSource, 'AI contract should be embedded in the standalone portal');
   const contract = JSON.parse(contractSource);
-  assert.equal(contract.rules.appTypography, 'Karla only');
+  assert.match(contract.rules.appTypography, /previews use Karla/);
+  assert.match(contract.rules.appTypography, /inherit compatible host typography/);
+  assert.match(contract.rules.hostProjectCompatibility, /host/);
   assert.equal(contract.rules.analysisPrimary, '#CFFF29');
   assert.match(contract.rules.implementation, /Current exported components/);
   const handoff = await readFile(new URL('../docs/AI_HANDOFF.md', import.meta.url), 'utf8');
@@ -751,7 +753,7 @@ test('updated components use a static Figma-aligned NEW label', async () => {
   assert.match(portal, /\.nav-new-label \{[\s\S]*min-width: 33px;[\s\S]*height: 16px;/);
   assert.match(portal, /color: #82006c;[\s\S]*background: #fbd1ef;/);
   assert.match(portal, /hasUpdate \? '<span class="nav-new-label" aria-hidden="true">NEW<\/span>'/);
-  assert.match(portal, /const hasUpdate = item\.updated === true/);
+  assert.match(portal, /const hasUpdate = AiseeUpdates\.isRecent\(AiseeUpdates\.dateFor/);
   assert.match(portal, /updated: page\.updated === true/);
   assert.doesNotMatch(portal, /readUpdatesStorageKey|hasUnreadUpdate|markUpdateRead/);
 });

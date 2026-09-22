@@ -2,6 +2,9 @@
 
 适用于团队开发、第三方和编码 AI。所有已登记的 Current 组件统一使用 [生产交付契约](PRODUCTION_DELIVERY.md)。Copy for AI 只取得目标组件必要的源码、样式、运行依赖与生产资产，继承宿主字体；不复制 Demo、模拟数据、展示布局或整个 Design System 环境。
 
+
+安装前先识别宿主已有 UI 库与自定义 primitives，按组件清单的 `integrationMode / primitives / preserve` 优先复用兼容底层能力；不为单个组件安装整套 UI framework。保留 AISEE 视觉、状态、动画与行为；样式局部作用域，不覆盖宿主 theme/provider/global styles。不兼容时退回交付的 standalone 实现。识别和适配由编码 AI 在目标项目执行，解包安装器不会自动改造框架。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
+
 ## 0. 单组件最短路径
 
 1. 提供方构建并发布组件交付；本地预览不能代替公开地址。

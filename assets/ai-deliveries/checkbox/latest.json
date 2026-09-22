@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Checkbox",
   "page": "components/Checkbox/Checkbox.html",
-  "version": "b0b4ac29d1920eaa",
-  "delivery": "./releases/b0b4ac29d1920eaa/ready.md",
-  "installer": "./releases/b0b4ac29d1920eaa/install.cjs",
+  "version": "cae6a2ff786c553c",
+  "delivery": "./releases/cae6a2ff786c553c/ready.md",
+  "installer": "./releases/cae6a2ff786c553c/install.cjs",
   "installerSha256": "24eda9e6f382b4e4f93c9aec38edbe5a7433050ea19f202ae56bcd96e0479790",
   "configuration": {
     "props": {
@@ -27,6 +27,24 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "checkbox",
+      "sourceFiles": [
+        "src/components/Checkbox.tsx"
+      ],
+      "requiredCapabilities": [
+        "checked, indeterminate and disabled state, form semantics",
+        "keyboard activation, focus and AISEE celebration state hooks"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve checked/indeterminate states, focus behavior and check celebration animation.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Checkbox.tsx",
     "styles.css",

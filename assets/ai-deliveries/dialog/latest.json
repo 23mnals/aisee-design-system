@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Dialog",
   "page": "components/Dialog/Dialog.html",
-  "version": "65459cfe5be095b8",
-  "delivery": "./releases/65459cfe5be095b8/ready.md",
-  "installer": "./releases/65459cfe5be095b8/install.cjs",
+  "version": "6f5336ec46608c5d",
+  "delivery": "./releases/6f5336ec46608c5d/ready.md",
+  "installer": "./releases/6f5336ec46608c5d/install.cjs",
   "installerSha256": "ac14e7b39c7c5ffb66cd279dfd39bfdf29d8ac64472974c0fe206691e34d91a0",
   "configuration": {
     "props": {}
@@ -20,6 +20,25 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "dialog",
+      "sourceFiles": [
+        "src/components/Dialog.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled open/onClose, modal isolation, focus management and focus return",
+        "Escape/backdrop dismissal, accessible title/description and native dialog ref API",
+        "AISEE backdrop, entry/exit timing, layout variants and reduced-motion behavior"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Dialog.tsx",
     "styles.css",

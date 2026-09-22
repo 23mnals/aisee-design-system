@@ -1,3 +1,4 @@
+import {validateHostIntegration} from './host-project-compatibility.mjs';
 import {readFile} from 'node:fs/promises';
 import {resolve,dirname,basename,posix} from 'node:path';
 import postcss from 'postcss';
@@ -8,6 +9,7 @@ import {cssDependencyClosure,withVariableFallbacks} from './css-delivery.mjs';
 const forbidden = /(?:^|[/_.-])(?:demo|playground|showcase|mock|mocks|stories|story|examples|fonts)(?:[/_.-]|$)|\.(?:woff2?|ttf|otf)$/i;
 export const sourcePath = file => typeof file === 'string' ? file : file.path;
 export function validateManifest(manifest) {
+  validateHostIntegration(manifest);
   if (!/^[A-Za-z][A-Za-z0-9]*$/.test(manifest.name) || !/^[a-z0-9-]+$/.test(manifest.slug)) throw Error('Invalid component identity');
   if(!manifest.compatibility || Array.isArray(manifest.compatibility) || typeof manifest.compatibility!=='object' || !Object.entries(manifest.compatibility).every(([key,value])=>key && typeof value==='string' && value.trim())) throw Error(`${manifest.name}: declare compatibility explicitly`);
   for(const d of manifest.dependencies) if(manifest.compatibility[d.name] && manifest.compatibility[d.name]!==d.range) throw Error(`${manifest.name}: compatibility and dependency disagree for ${d.name}`);

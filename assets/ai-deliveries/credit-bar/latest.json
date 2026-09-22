@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "CreditBar",
   "page": "components/CreditBar/CreditBar.html",
-  "version": "2c05ff4a18c420ba",
-  "delivery": "./releases/2c05ff4a18c420ba/ready.md",
-  "installer": "./releases/2c05ff4a18c420ba/install.cjs",
+  "version": "c52b8cfa8d47e1ea",
+  "delivery": "./releases/c52b8cfa8d47e1ea/ready.md",
+  "installer": "./releases/c52b8cfa8d47e1ea/install.cjs",
   "installerSha256": "88bbe714edada53232388f981ab5d73674488f7f9b502eee9038db793389079c",
   "configuration": {
     "props": {}
@@ -20,6 +20,12 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "CreditBar.tsx",
     "styles.css",

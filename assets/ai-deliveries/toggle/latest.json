@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Toggle",
   "page": "components/Toggle/Toggle.html",
-  "version": "3b3454fb15aa4934",
-  "delivery": "./releases/3b3454fb15aa4934/ready.md",
-  "installer": "./releases/3b3454fb15aa4934/install.cjs",
+  "version": "80b588a756cbf568",
+  "delivery": "./releases/80b588a756cbf568/ready.md",
+  "installer": "./releases/80b588a756cbf568/install.cjs",
   "installerSha256": "20cbd2dbcd16a0cb54af8e726d69d68986b4eb0e27c1a4abaac54e83ac95e7a0",
   "configuration": {
     "props": {
@@ -26,6 +26,24 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "switch",
+      "sourceFiles": [
+        "src/components/Toggle.tsx"
+      ],
+      "requiredCapabilities": [
+        "checked/defaultChecked, disabled and change callback",
+        "keyboard activation and state hooks for AISEE motion"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Toggle.tsx",
     "styles.css",

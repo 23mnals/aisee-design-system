@@ -5,6 +5,7 @@
   const TIME_ZONE = 'Asia/Taipei';
   const dates = Object.freeze({
     'README': '2026-09-21',
+    'components/AutomationRunner/AutomationRunner.html': '2026-09-21',
     'components/ThinkingIndicator/ThinkingIndicator.html': '2026-09-21',
     'components/ConfirmationDialog/ConfirmationDialog.html': '2026-09-21',
     'components/TooltipToast/TooltipToast.html': '2026-09-20',

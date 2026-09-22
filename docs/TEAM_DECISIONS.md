@@ -222,3 +222,16 @@
 - labels 是可本地化的装饰性等待文案，不是实际进度或模型推理记录；真实任务进度使用 Steps。业务项目决定显示与卸载时机。
 - 系统 reduced motion 停止 SVG、扫光和文字轮换，读屏保持单一稳定状态；文字轮换不触发反复播报。
 - Copy for AI 交付组件与局部样式完整闭包，选项只包含 showIcon / size，不包含 Demo 控件、字体和展示布局。
+
+## Host Project Compatibility · 2026-09-21
+
+安装前先识别宿主已有 UI 库与自定义 primitives，按组件清单的 `integrationMode / primitives / preserve` 优先复用兼容底层能力；不为单个组件安装整套 UI framework。保留 AISEE 视觉、状态、动画与行为；样式局部作用域，不覆盖宿主 theme/provider/global styles。不兼容时退回交付的 standalone 实现。识别和适配由编码 AI 在目标项目执行，解包安装器不会自动改造框架。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
+
+## 2026-09-21 · Automation Runner
+
+- Automation Runner 是挂载在应用根布局、独立于路由内容的常驻浮层；页面切换不卸载。关闭只隐藏窗口，不能停止或修改真实自动化任务。
+- 组件支持 default、expanded、minimized 三种受控或非受控状态；标题或箭头展开、横线最小化，点击最小化卡片任意位置恢复 default，绿色眼睛作为键盘可访问的恢复控件。标题、说明、详情行和返回操作由宿主业务传入，Demo 路由和模拟状态不进入生产交付。
+- 使用 Figma 72:55666、72:56017、72:55315 的几何与原始图标；默认 332×64、展开约 332×252、最小 74×64。
+- 底部弹性出退场、眨眼和眼珠跟随鼠标是该浮层的确认交互。悬停卡片时按指针方向轻探；只有进入绿色小怪兽时播放一次软胶回弹，不循环抖动。减少动态效果时全部停用，但状态和控制保持可用。
+- 整张卡片任意位置均可拖拽并限制在视口内；超过移动阈值后不触发展开、最小化、关闭或操作按钮。拖拽手柄另支持键盘方向键；关闭后的重新唤起入口由宿主应用提供。
+- Copy for AI 接入已有同类浮层时必须原位增量合并，不能创建第二个 Runner。只有现有眨眼和眼珠跟随行为已正确兼容时才保留；除此之外，卡片出退场、三种视图、A+D、拖拽、视口限制和 reduced-motion 均以当前交付为准，同时禁止重复 DOM、keyframes、状态和全局 pointermove 监听。

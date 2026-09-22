@@ -30,6 +30,8 @@
 
 ## 接入前检查
 
+安装前先识别宿主已有 UI 库与自定义 primitives，按组件清单的 `integrationMode / primitives / preserve` 优先复用兼容底层能力；不为单个组件安装整套 UI framework。保留 AISEE 视觉、状态、动画与行为；样式局部作用域，不覆盖宿主 theme/provider/global styles。不兼容时退回交付的 standalone 实现。识别和适配由编码 AI 在目标项目执行，解包安装器不会自动改造框架。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
+
 先读 [第三方接入指南](GETTING_STARTED.md) 和 [生产交付契约](PRODUCTION_DELIVERY.md)。当前所有已登记的 Current 组件通过公开 latest 指针提供必要生产源码，无需整库或私有仓库权限；真实配置白名单与 Demo 状态分开。
 
 ## 单组件任务（推荐）

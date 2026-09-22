@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Table",
   "page": "components/Table/Table.html",
-  "version": "c18f09880efac99d",
-  "delivery": "./releases/c18f09880efac99d/ready.md",
-  "installer": "./releases/c18f09880efac99d/install.cjs",
+  "version": "c12076491f99f200",
+  "delivery": "./releases/c12076491f99f200/ready.md",
+  "installer": "./releases/c12076491f99f200/install.cjs",
   "installerSha256": "d37a3550e890d8bd9f955c8cd6295064a937e1ce51f318e87187b64bd1288165",
   "configuration": {
     "props": {}
@@ -20,6 +20,12 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Table.tsx",
     "styles.css",

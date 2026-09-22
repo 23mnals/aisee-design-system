@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "StatCard",
   "page": "components/StatCardCurrent/StatCardCurrent.html",
-  "version": "c3adf1d6310b3e6f",
-  "delivery": "./releases/c3adf1d6310b3e6f/ready.md",
-  "installer": "./releases/c3adf1d6310b3e6f/install.cjs",
+  "version": "e1ff66a9f8e093db",
+  "delivery": "./releases/e1ff66a9f8e093db/ready.md",
+  "installer": "./releases/e1ff66a9f8e093db/install.cjs",
   "installerSha256": "cf31523f0422637740a663eb174d692899486feb6153738d2baa9307a2a5de5e",
   "configuration": {
     "props": {}
@@ -20,6 +20,12 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "StatCard.tsx",
     "styles.css",

@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "TagInput",
   "page": "components/TagInput/TagInput.html",
-  "version": "c25a0013cccba403",
-  "delivery": "./releases/c25a0013cccba403/ready.md",
-  "installer": "./releases/c25a0013cccba403/install.cjs",
+  "version": "dded073b547d0198",
+  "delivery": "./releases/dded073b547d0198/ready.md",
+  "installer": "./releases/dded073b547d0198/install.cjs",
   "installerSha256": "4084e87ae8a2664aa225c5caf0a200e087c8f6cc7a504d8064fdf0c8e2c09a08",
   "configuration": {
     "props": {}
@@ -20,6 +20,24 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "input",
+      "sourceFiles": [
+        "src/components/TagInput.tsx"
+      ],
+      "requiredCapabilities": [
+        "keyboard token entry/removal and composition input",
+        "controlled text, focus and labeling"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "TagInput.tsx",
     "styles.css",

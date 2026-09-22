@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "SidebarNavigation",
   "page": "components/SidebarNavigation/SidebarNavigation.html",
-  "version": "3c500a252f26cc20",
-  "delivery": "./releases/3c500a252f26cc20/ready.md",
-  "installer": "./releases/3c500a252f26cc20/install.cjs",
+  "version": "0b91c38f8fbe3c28",
+  "delivery": "./releases/0b91c38f8fbe3c28/ready.md",
+  "installer": "./releases/0b91c38f8fbe3c28/install.cjs",
   "installerSha256": "8d302f2bee70397e8fdd1e666d338218a245b3a444f2c0bff6068c37d5dcc5e6",
   "configuration": {
     "props": {
@@ -31,6 +31,35 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [
+    {
+      "role": "portal",
+      "sourceFiles": [
+        "src/components/SidebarNavigation.tsx"
+      ],
+      "requiredCapabilities": [
+        "explicit portal target and host stacking context",
+        "toggle ownership, focus, Escape and hover reveal coordination"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "tree-navigation",
+      "sourceFiles": [
+        "src/components/TreeNav.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled selection and expansion, disabled nodes",
+        "nested keyboard behavior and AISEE hierarchy/state hooks"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Preserve collapse/reveal, nested navigation, layout variants and keyboard behavior.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "SidebarNavigation.tsx",
     "TreeNav.tsx",

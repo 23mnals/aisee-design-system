@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Steps",
   "page": "components/Steps/Steps.html",
-  "version": "a998243903082f7c",
-  "delivery": "./releases/a998243903082f7c/ready.md",
-  "installer": "./releases/a998243903082f7c/install.cjs",
+  "version": "88137e062fc03867",
+  "delivery": "./releases/88137e062fc03867/ready.md",
+  "installer": "./releases/88137e062fc03867/install.cjs",
   "installerSha256": "d31b22006cd8820f3603d91645fb64c15b97b183f9b8b163a451ee79f7a30447",
   "configuration": {
     "props": {
@@ -24,6 +24,12 @@
     "react": ">=18",
     "node": ">=18"
   },
+  "integrationMode": "host-first",
+  "primitives": [],
+  "preserve": [
+    "Preserve production step progress and loading animations; workflow state comes from the host.",
+    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+  ],
   "files": [
     "Steps.tsx",
     "styles.css",

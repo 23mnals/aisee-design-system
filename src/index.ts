@@ -44,3 +44,4 @@ export * from './components/Avatar';
 export * from './components/SegmentedChoice';
 
 export * from './components/ThinkingIndicator';
+export * from './components/AutomationRunner';

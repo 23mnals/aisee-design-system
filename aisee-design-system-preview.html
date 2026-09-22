@@ -150,10 +150,12 @@
         z-index: 20;
         width: var(--sidebar);
         overflow-y: auto;
+        scrollbar-width: none;
         border-right: 1px solid var(--line);
         background: var(--surface);
         padding: 18px 12px 32px;
       }
+      .sidebar::-webkit-scrollbar { display: none; }
       .nav-home, .nav-item {
         width: 100%;
         min-height: 32px;
@@ -445,7 +447,7 @@
       .component-map p { margin: 0; color: var(--muted); font-size: 14px; }
       .version-badge { display: inline-flex; align-items: center; min-height: 26px; margin-left: 8px; border-radius: 999px; background: var(--accent); color: #222900; padding: 2px 9px; font-size: 11px; font-weight: 750; vertical-align: middle; }
 
-      .preview { min-height: calc(100vh - var(--topbar)); display: grid; grid-template-rows: auto 1fr; }
+      .preview { min-width: 0; min-height: calc(100vh - var(--topbar)); display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
       .preview[hidden], .home[hidden] { display: none; }
       .preview-toolbar {
         min-height: 72px;
@@ -457,11 +459,13 @@
         padding: 12px 18px;
       }
       .back-button { flex: 0 0 auto; }
-      .preview-meta { min-width: 0; }
+      .preview-meta { min-width: 0; flex: 1; }
       .preview-title-row { min-width: 0; }
       .preview-meta h1 { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; letter-spacing: -.015em; }
       .preview-meta p { margin: 2px 0 0; overflow: hidden; color: var(--muted); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
-      .preview-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+      .preview-actions { margin-left: auto; display: flex; flex: 0 0 auto; align-items: center; gap: 8px; }
+      .preview-actions .action-button { flex: 0 0 auto; white-space: nowrap; }
+      .preview-actions .action-button svg { flex-shrink: 0; }
       .preview-frame-wrap { position: relative; isolation: isolate; min-height: 0; background: #e9eaec; padding: 12px; }
       .preview-frame {
         position: relative;
@@ -997,7 +1001,7 @@
               <article class="principle"><strong>3. Add the real task</strong><p>Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.</p></article>
               <article class="principle"><strong>4. Compare the result</strong><p>Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.</p></article>
             </div>
-            <div class="priority-note"><strong>Which handoff to use:</strong> Copy for AI uses each component manifest to deliver production files. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.</div>
+            <div class="priority-note"><strong>Which handoff to use:</strong> Copy for AI uses each component manifest to deliver production files. Inspect host UI primitives before installation; reuse compatible capabilities while preserving AISEE visuals and behavior. No extra UI framework or global theme/provider replacement. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.</div>
             <p><a href="docs/GETTING_STARTED.md" target="_blank" rel="noreferrer">第三方接入指南 · Installation, prerequisites and troubleshooting</a></p>
           </section>
 
@@ -1110,7 +1114,8 @@
         "authorityOrder": ["docs/TEAM_DECISIONS.md", "docs/aisee-dapp-design.v6.md", "src/components and Current component pages", "relevant dated Figma feature block", "Legacy references"],
         "requiredSources": ["docs/GETTING_STARTED.md", "aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "docs/COMPONENT_CONFIGURATION.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
         "rules": {
-          "appTypography": "Karla only",
+          "appTypography": "AISEE previews use Karla; standalone deliveries inherit compatible host typography.",
+          "hostProjectCompatibility": "Before installation inspect host UI libraries and custom primitives. Follow integrationMode/primitives/preserve in the component manifest: reuse compatible host primitives, preserve AISEE visuals/states/motion/behavior, scope CSS including portals, never overwrite host theme/provider/global styles or add a whole UI framework. Fall back to standalone at incompatible boundaries. See docs/PRODUCTION_DELIVERY.md.",
           "pageBackground": "#FAFAFA",
           "cardBackground": "#FFFFFF",
           "analysisPrimary": "#CFFF29",
@@ -1228,7 +1233,7 @@
         ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. All registered Current components copy a named production integration instruction, a stable latest-delivery URL and allowed real options. Your coding AI retrieves the required implementation, styles and assets; demo controls and fonts stay here.", "点击 Open HTML 旁的双星按钮。所有已登记的 Current 组件统一复制具体名称、稳定最新交付入口和允许的真实配置；编码 AI 取得必要生产源码、样式与资源，演示控件和字体保留在本站。"],
         ["3. Add the real task", "3. 补充真实任务"], ["Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.", "把 Prompt 连同目标页面、真实内容和预期行为交给 AI。AI 使用真实业务内容，并保留必要的生产组件资源。"],
         ["4. Compare the result", "4. 对照验收"], ["Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.", "对照 Current Demo 检查生成页面，包括适用的 Hover、Focus、Disabled、Loading、Empty、响应式和无障碍状态。"],
-        ["Which handoff to use:", "如何选择交付方式："], ["Copy for AI uses each component manifest to deliver production files. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.", "Copy for AI 按各组件显式生产清单交付，排除演示页面、mock 数据、字体和全局环境。无需额外附件或安装整个 AISEE 库；需要兼容 React 项目及可联网、执行 Node 的编码 AI。"],
+        ["Which handoff to use:", "如何选择交付方式："], ["Copy for AI uses each component manifest to deliver production files. Inspect host UI primitives before installation; reuse compatible capabilities while preserving AISEE visuals and behavior. No extra UI framework or global theme/provider replacement. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.", "Copy for AI 安装前先识别宿主基础组件，复用兼容能力并保留 AISEE 视觉与行为；不引入整套 UI 框架或覆盖全局主题/Provider。按各组件显式生产清单交付，排除演示页面、mock 数据、字体和全局环境。无需额外附件或安装整个 AISEE 库；需要兼容 React 项目及可联网、执行 Node 的编码 AI。"],
         ["AI implementation handoff", "AI 实施交付"], ["This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.", "本门户是可读参考资料，但不能保证其他 AI 会执行链接页面或推断出全部实施规则。应把已部署门户或仓库、权威规范文件，以及“复用 Current 组件”的明确要求一起交给 AI。"],
         ["Minimum input", "最少输入"], ["Share this HTML,", "提供本 HTML、"], ["and the target-page requirements. Include a compatible installed package, authorized tgz or complete source, plus docs/GETTING_STARTED.md.", "以及目标页面需求；同时提供兼容的已安装包、获准使用的 tgz 或完整源码，以及 docs/GETTING_STARTED.md。"], ["Reliable assets", "可靠资源"], ["Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.", "优先提供公开 HTTPS 预览或仓库/ZIP。单个本地 HTML 无法携带不可访问的相对字体、图片、源文件或链接子页。"],
         ["Implementation order", "实施顺序"], ["Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.", "Team Decisions → Design Spec v6 → Current 组件实现 → 带日期的 Figma 功能区块 → Legacy 参考。"], ["Verification", "验收"], ["Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.", "要求接收方 AI 列出复用组件、说明偏差，并把最终页面与 Current Demo 对照。"],
@@ -1466,6 +1471,16 @@
             "Mount only while the host is waiting. Decorative phrases are not task progress or reasoning logs; do not copy the playground or simulate business activity."
           ]
         },
+        "components/AutomationRunner/AutomationRunner.html": {
+          name: "Automation Runner",
+          intent: "Keep the status and controls for a running automation available across product routes.",
+          rules: [
+            "Mount one runner in the root app shell outside route content. Closing hides the window only; the host data layer owns and continues the automation.",
+            "Preserve default, expanded and minimized views. The header expands details, the line minimizes, and the animated green eye restores the normal view. Supply real status rows and route the action back to Automation.",
+            "Preserve the bottom bounce entrance/exit, blinking pointer-following eye, hover wobble, optional dragging and viewport clamping. Disable decorative motion under prefers-reduced-motion.",
+            "Do not copy Demo routes, configuration controls or mock automation state. Use the selected default view and placement only as initial component configuration."
+          ]
+        },
         "components/Steps/Steps.html": {
           name: "Steps",
           intent: "Explain a sequence, report live progress, show longer thinking activity or teach a new feature.",
@@ -1592,7 +1607,7 @@
       function buildComponentAiPrompt(path) {
         const guidance = componentAiGuidance[path];
         if (!guidance) return "";
-        const integration = "Use the production implementation declared by this component's delivery manifest. Preserve its interactions and animations; never install Demo controls, mock data, showcase pages or a global design-system environment. Reuse the host React, typography and token overrides. Do not assume @aisee/design-system is publicly installable.";
+        const integration = "Use the production implementation declared by this component's delivery manifest. Preserve its interactions and animations; never install Demo controls, mock data, showcase pages or a global design-system environment. Before installation identify the host UI library and custom primitives; follow integrationMode/primitives/preserve to reuse compatible capabilities, otherwise use standalone. Keep AISEE visuals/states/motion; never add a full UI framework or overwrite host theme/provider/global styles. Reuse the host React, typography and local token overrides. Do not assume @aisee/design-system is publicly installable.";
         const rules = guidance.rules.map(rule => `- ${rule}`).join("\n");
         const implementation = guidance.implementation?.length
           ? `\n\nImplementation and handoff:\n${guidance.implementation.map(item => `- ${item}`).join("\n")}`
@@ -1683,8 +1698,9 @@ Shared implementation rules:
         { group: "Components", category: "Data Display", name: "Credit Bar", path: "components/CreditBar/CreditBar.html", subtitle: "Current remaining-credit balance with Subscription and Top-up breakdown.", status: "Current", updated: true },
         { group: "Components", category: "Feedback & Overlays", name: "Dialog", path: "components/Dialog/Dialog.html", subtitle: "Composable standard, centered and split dialog structures for forms, choices, details and decisions.", status: "Current", updated: true },
         { group: "Components", category: "Feedback & Overlays", name: "Confirmation Dialog", path: "components/ConfirmationDialog/ConfirmationDialog.html", subtitle: "Reusable confirmation with optional impact notices, configurable labels and host callbacks.", status: "Current" },
-        { group: "Components", category: "Feedback & Overlays", name: "Notification", path: "components/NotificationBell/NotificationBell.html", subtitle: "Figma-aligned bell, interactive panel and notification item states with exact unread behavior.", status: "Current", updated: true },
-        { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "Figma-aligned white Toast notifications with one-line, two-line and functional-color variants; black Tooltip supports automatic placement, hover direction examples and optional motion.", status: "Current" },
+        { group: "Components", category: "Feedback & Overlays", name: "Automation Runner", path: "components/AutomationRunner/AutomationRunner.html", subtitle: "Persistent automation status with expandable details, draggable placement, minimized eye and playful motion.", status: "Current", updated: true },
+        { group: "Components", category: "Feedback & Overlays", name: "Notification", path: "components/NotificationBell/NotificationBell.html", subtitle: "Bell, interactive panel and notification item states with exact unread behavior.", status: "Current", updated: true },
+        { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "White Toast notifications with one-line, two-line and functional-color variants; black Tooltip supports automatic placement, hover direction examples and optional motion.", status: "Current" },
 
         { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Interactive 15-page Growth Loop preview covering Analysis, Growth, Engage, Post, Verify and Connection.", status: "Current" }
       ];
@@ -1860,7 +1876,7 @@ Shared implementation rules:
             const groupItems = visible.filter(item => item.group === group);
             if (!groupItems.length) return "";
             const renderItem = item => {
-              const hasUpdate = item.updated === true && AiseeUpdates.isRecent(AiseeUpdates.dateFor(item.path, item.updatedAt));
+              const hasUpdate = AiseeUpdates.isRecent(AiseeUpdates.dateFor(item.path, item.updatedAt));
               return `
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}" aria-label="${escapeHtml(`${item.name}${hasUpdate ? ", new" : ""}`)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
@@ -2002,7 +2018,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         homeView.hidden = true;
         previewView.hidden = false;
         previewTitleLabel.textContent = item.name;
-        previewDescription.textContent = `${item.group} · ${item.subtitle}`;
+        previewDescription.textContent = item.subtitle;
         const isBrandOutput = item.kind === "brand-output";
         const isLegacy = item.status === "Legacy";
         previewMeta.classList.toggle("has-inline-tag", isLegacy);
