@@ -13,8 +13,9 @@ test('system portal preserves the four required sections', () => {
   assert.match(portal, />UI Kits — Webapp</);
 });
 
-test('top bar uses the compact connected-node share icon', () => {
-  assert.match(portal, /id="shareButton"[\s\S]*?<circle cx="18" cy="5" r="2\.5"\/>[\s\S]*?<path d="m8\.2 10\.8 7\.6-4\.5M8\.2 13\.2l7\.6 4\.5"\/>/);
+test('top bar uses the compact copy-link icon', () => {
+  assert.match(portal, /id="shareButton"[\s\S]*?<path d="M10 13a5 5 0 0 0 7\.54\.54l3-3a5 5 0 0 0-7\.07-7\.07l-1\.72 1\.71"\/>/);
+  assert.doesNotMatch(portal, /<circle cx="18" cy="5" r="2\.5"\/>/);
   assert.doesNotMatch(portal, /M8 12v7a1 1 0 0 0 1 1h10/);
 });
 
@@ -282,7 +283,21 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(detail, /\.suggestion\{[^}]*font-size:14px;line-height:20px/);
   assert.match(detail, /\.clear\{[^}]*font-size:14px;line-height:20px/);
   assert.match(detail, /\.menu-search:hover,.menu-search:focus\{border-color:var\(--black\);outline:0;box-shadow:0 0 0 2px var\(--lime\)\}/);
-  assert.match(detail, /Interactive core patterns/);
+  assert.match(detail, /Core types/);
+  for (const type of ['Single-select', 'Multi-select', 'Searchable multi-select', 'Combobox', 'Action menu', 'Grouped select']) {
+    assert.match(detail, new RegExp(`>${type}<`));
+  }
+  for (const businessLabel of ['Reporting period', 'Publish channels', 'Platform filter', 'Website URL']) {
+    assert.doesNotMatch(detail, new RegExp(businessLabel));
+  }
+  assert.match(detail, /Search · multiple selection · clear action/);
+  assert.match(detail, /role="combobox"/);
+  assert.match(detail, /data-core-action=/);
+  assert.match(detail, /data-grouped-value=/);
+  assert.doesNotMatch(detail, /<label class="label" for="(?:singleTrigger|multiTrigger|filterTrigger|inputDemo|coreActionTrigger|coreGroupedTrigger)"/);
+  for (const accessibleName of ['Single-select', 'Multi-select', 'Searchable multi-select', 'Combobox', 'Action menu', 'Grouped select']) {
+    assert.match(detail, new RegExp(`aria-label="${accessibleName}"`));
+  }
   assert.match(detail, /Variant playground/);
   assert.match(detail, /\.variant-playground\{[^}]*min-height:0;padding:20px\}/);
   assert.match(detail, /\.composition-grid\{display:block;margin-top:16px\}/);

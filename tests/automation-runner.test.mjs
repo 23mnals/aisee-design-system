@@ -53,7 +53,14 @@ test('automation runner source keeps host-owned state, drag, unique ids and moti
   assert.match(source, /if \(!session\.moved\) \{[\s\S]*session\.moved = true;[\s\S]*setPointerCapture/);
   assert.match(source, /if \(minimized\) updateView\('default'\)/);
   assert.match(source, /Math\.hypot\(deltaX, deltaY\) < 4/);
-  for (const animation of ['aisee-runner-enter', 'aisee-runner-exit', 'aisee-runner-mascot-jelly', 'aisee-runner-blink']) assert.match(css, new RegExp('@keyframes ' + animation));
+  for (const animation of ['aisee-runner-enter', 'aisee-runner-exit', 'aisee-runner-mascot-jelly', 'aisee-runner-blink', 'aisee-runner-eye-panic-open', 'aisee-runner-iris-panic-search']) assert.match(css, new RegExp('@keyframes ' + animation));
+  assert.match(css, /__panel:hover \.aisee-automation-runner__eye-window \{ animation: aisee-runner-eye-panic-open/);
+  assert.match(css, /__panel:hover \.aisee-automation-runner__iris \{ animation: aisee-runner-iris-panic-search/);
+  assert.match(css, /@keyframes aisee-runner-eye-panic-open \{ 0% \{ top: 5\.6px; left: 6px; width: 15\.323px; height: 6\.805px; \}/);
+  assert.doesNotMatch(css, /@keyframes aisee-runner-eye-panic-open[^}]*transform: scale/);
+  assert.match(css, /@keyframes aisee-runner-iris-panic-search \{ 0% \{ top: 1px; left: 2\.5px; width: 6\.9px; height: 6\.9px;/);
+  assert.match(css, /14% \{ top: 2\.821px; left: 4\.182px; width: 7\.582px; height: 9\.845px;/);
+  assert.match(source, /--aisee-runner-eye-x-wide/);
   assert.match(source, /onPointerEnter=\{event =>/);
   assert.match(source, /aisee-runner-mascot-jelly/);
   assert.match(css, /prefers-reduced-motion/);
@@ -69,17 +76,19 @@ test('automation runner delivery is production-only and includes exact required 
   const css = Buffer.from(files['styles.css'], 'base64').toString();
   assert.match(css, /aisee-runner-blink/);
   assert.match(css, /aisee-runner-mascot-jelly/);
+  assert.match(css, /aisee-runner-eye-panic-open/);
+  assert.match(css, /aisee-runner-iris-panic-search/);
   assert.match(css, /data-view='minimized'\] \.aisee-automation-runner__panel \{ cursor: pointer; \}/);
   assert.match(css, /prefers-reduced-motion/);
   assert.doesNotMatch(css, /@font-face|:root|Karla/);
   assert.deepEqual(bundle.dependencies.map(dependency => dependency.name), ['react']);
   assert.match(bundle.preserve.join('\n'), /Update a compatible existing implementation in place/);
-  assert.match(bundle.preserve.join('\n'), /Except for a compatible existing blink and pointer-following eye, this delivery is authoritative/);
+  assert.match(bundle.preserve.join('\n'), /wide-eyed two-pass panic scan when entering the whole card/);
   assert.match(bundle.preserve.join('\n'), /clicking anywhere on the minimized card restores the default view/);
   const latest = JSON.parse(await readFile(new URL('../assets/ai-deliveries/automation-runner/latest.json', import.meta.url)));
   const guide = await readFile(new URL(`../assets/ai-deliveries/automation-runner/${latest.delivery}`, import.meta.url), 'utf8');
   assert.match(guide, /do not duplicate their DOM, state, keyframes or window pointermove listener/);
-  assert.match(guide, /bottom entrance and exit bounce, default\/expanded\/minimized views, pointer-directed card lean/);
+  assert.match(guide, /pointer-directed card lean, a wide-eyed two-pass panic scan when entering the whole card/);
 });
 
 test('automation runner demo keeps compact placement controls and an unbroken heading', async () => {
@@ -89,6 +98,9 @@ test('automation runner demo keeps compact placement controls and an unbroken he
   assert.match(demo, /id:'bottom-center',label:'Center'/);
   assert.match(demo, /id:'bottom-left',label:'Left'/);
   assert.doesNotMatch(demo, /label:'Bottom (?:right|center|left)'/);
+  assert.match(demo, /Demo pages · runner stays visible/);
+  assert.match(demo, /runner-demo__route-tabs/);
   assert.match(css, /\.runner-demo__heading h2 \{[^}]*flex-wrap: nowrap;[^}]*white-space: nowrap;/);
   assert.match(css, /\.runner-demo__heading h2 \.aisee-content-new \{ flex: 0 0 auto; \}/);
+  assert.match(css, /\.runner-demo__route-label \{[^}]*white-space: nowrap;/);
 });

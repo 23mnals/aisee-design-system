@@ -29,7 +29,7 @@
 - Dropdown 菜单中相邻选项的垂直间距统一为 4px；组件源码与详情页全部示例必须同步，不能只修其中一处。
 - Filter 组合以 Figma `38:82016` 为权威：面板约 320px 宽、1px `#111` 描边、16px 圆角、白底；面板内垂直间距 12px，上 17px、左右 17px、下 25px；分隔线为 8% 黑。
 - Filter 未选项高 24px、圆角 8px、背景 `#FAFAFA`、1px `rgba(17,17,17,.06)` 描边、Karla 12px / 500、文字 `#3D3D3A`；选中项为 `#111` 背景和白字。不得改成胶囊形或自行替换颜色。
-- Dropdown 详情页上半区用于展示 Single、Multi、Filter、Input 四种基础交互模式；下半区用单一 Variant Playground 切换 Compact menu、Search + action、Filter panel 与 Grouped account 等 Figma 组合，并保留当前变体的真实交互和参数说明，避免平铺成两套重复示例。
+- Dropdown 详情页按可复用能力展示 Single-select、Multi-select、Searchable multi-select、Combobox、Action menu、Grouped select 六类核心类型，不使用 Reporting period、Publish channels 等业务功能命名。Filter panel、Search + action、Grouped account 等归入下半区组合示例，并保留当前组合的真实交互和参数说明。
 - Dropdown Demo 的 Composition 选择器使用项目自定义触发器与菜单，不使用浏览器原生 `select`；箭头复用 Sidebar 的 `line_chevron-up.svg` 线性图标并随展开状态旋转。
 - Dropdown 的 Fluid Hover 已从预览同步为 Current 默认行为：菜单内只使用一个共享的 5% 黑色高亮层，跨 4px 间隙连续跟随最近可用选项；打开或尺寸变化时一次缓存选项位置，指针移动期间不再反复查询 DOM 或读取布局，空隙命中按动画帧合并；禁用项不参与，键盘焦点同步，点击间隙选择当前高亮项，并遵循 reduced-motion。React API 可用 `fluidHover={false}` 关闭，用 `gapClick` 控制间隙点击。
 - Dropdown Variant Playground 顶部的参数为“当前预览说明”，不得伪装成可点击按钮；Grouped account 中 `Show icons` 是真实 Toggle，打开显示头像和平台图标，关闭后只保留文字、状态和行操作。
@@ -120,7 +120,7 @@
 - 每个功能页面主内容区第一块固定为 Page Banner，以 Figma `66:122927` 为基准：高 76px、圆角 16px、白色 4px 描边环、44×44px 白色 icon 容器、24×24px leaf icon、Karla 20/500 标题与 14/400 描述；右侧按功能放按钮、Toggle、统计或留空。
 - Page Banner 和功能页面必须与 Analysis、Growth、Engage、Post、Verify、Connection 等实际功能对应，不把 Overview 结构复制成所有页面。
 - 搜索框、Input 与 Dropdown 的 hover/focus 沿用 Aisee lime `#CFFF29`；深色 Button hover 转为当前模块品牌色，带品牌色的 Button hover 转为深色。
-- Input 提供真实的 Default、Hover、Focus、Disabled、Error；Select / Dropdown 至少覆盖单选，并按设计稿提供多选、Filter、Input 型下拉。菜单与触发器保持设计稿间距，选中项和 hover 使用浅黑透明填充。
+- Input 提供真实的 Default、Hover、Focus、Disabled、Error；Select / Dropdown 覆盖单选、多选、可搜索多选、Combobox、操作菜单和分组选择。Filter panel 等设计稿实例属于组合示例，不作为基础类型命名。菜单与触发器保持设计稿间距，选中项和 hover 使用浅黑透明填充。
 - 页面灰色背景保持偏浅；卡片和灰色展示框四周必须留出间距，组件不能贴边。
 
 ## 2026-08-21 — Dialog 与事件反馈
@@ -188,7 +188,7 @@
 
 ## 2026-09-17 · NEW 日期规则
 
-- 文档更新标记统一以 Asia/Taipei 日历日期计算：更新当天算第 1 天，第 1–3 天保留，第 4 天零点隐藏（2026-09-21 按用户要求暂改为 3 天）；有新内容更新时按该内容最新日期重新计时。
+- 文档更新标记统一以 Asia/Taipei 日历日期计算：更新当天算第 1 天，第 1–7 天保留，第 8 天零点隐藏（2026-09-23 恢复为 7 天）；已有内容沿用最初添加 NEW 或最近一次真实内容更新的登记日期，修改期限、刷新或重新构建不续期，只有真实内容更新才重新计时。
 - 侧栏、README、组件详情与 Open HTML 独立页共用 `assets/update-badges.js`。页面跨午夜、后台恢复、动态组件渲染时同步更新；不依赖访问次数或 localStorage，不因重新构建重置日期。
 - 内容更新时维护该文件的日期表；Brand metadata 使用 `updatedAt`（YYYY-MM-DD）。缺失、非法及未来日期不显示 NEW。业务示例自身的 NEW 徽章不属于文档更新标记，不参与过期。
 - Toggle Playground 的变量选择直接使用正式 Dropdown 组件，触发框、弹出菜单、键盘操作与动效保持同源，不使用原生 select 菜单。
@@ -232,6 +232,6 @@
 - Automation Runner 是挂载在应用根布局、独立于路由内容的常驻浮层；页面切换不卸载。关闭只隐藏窗口，不能停止或修改真实自动化任务。
 - 组件支持 default、expanded、minimized 三种受控或非受控状态；标题或箭头展开、横线最小化，点击最小化卡片任意位置恢复 default，绿色眼睛作为键盘可访问的恢复控件。标题、说明、详情行和返回操作由宿主业务传入，Demo 路由和模拟状态不进入生产交付。
 - 使用 Figma 72:55666、72:56017、72:55315 的几何与原始图标；默认 332×64、展开约 332×252、最小 74×64。
-- 底部弹性出退场、眨眼和眼珠跟随鼠标是该浮层的确认交互。悬停卡片时按指针方向轻探；只有进入绿色小怪兽时播放一次软胶回弹，不循环抖动。减少动态效果时全部停用，但状态和控制保持可用。
+- 底部弹性出退场、眨眼和眼珠跟随鼠标是该浮层的确认交互。悬停卡片时眼睛瞪大并左右慌张扫视两次，同时按指针方向轻探；只有进入绿色小怪兽时播放一次软胶回弹，不循环抖动。减少动态效果时停止扫视和位移，只保留静态放大的眼神反馈，状态和控制保持可用。
 - 整张卡片任意位置均可拖拽并限制在视口内；超过移动阈值后不触发展开、最小化、关闭或操作按钮。拖拽手柄另支持键盘方向键；关闭后的重新唤起入口由宿主应用提供。
 - Copy for AI 接入已有同类浮层时必须原位增量合并，不能创建第二个 Runner。只有现有眨眼和眼珠跟随行为已正确兼容时才保留；除此之外，卡片出退场、三种视图、A+D、拖拽、视口限制和 reduced-motion 均以当前交付为准，同时禁止重复 DOM、keyframes、状态和全局 pointermove 监听。

@@ -133,6 +133,8 @@ export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps
       const dy = clamp((event.clientY - (box.top + box.height / 2)) / 80, -1, 1);
       rootRef.current?.style.setProperty('--aisee-runner-eye-x', `${dx * 2.3}px`);
       rootRef.current?.style.setProperty('--aisee-runner-eye-y', `${dy * 1.15}px`);
+      rootRef.current?.style.setProperty('--aisee-runner-eye-x-wide', `${dx * 2.99}px`);
+      rootRef.current?.style.setProperty('--aisee-runner-eye-y-wide', `${dy * 1.932}px`);
       rootRef.current?.style.setProperty('--aisee-runner-eye-number', dx.toFixed(3));
       rootRef.current?.style.setProperty('--aisee-runner-lean', `${dx * 6}deg`);
       rootRef.current?.style.setProperty('--aisee-runner-lean-card', `${dx * 1.32}deg`);

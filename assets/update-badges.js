@@ -46,7 +46,7 @@
   }
   function isRecent(updatedAt, now = new Date()) {
     const age = dateOrdinal(calendarDate(now)) - dateOrdinal(updatedAt);
-    return Number.isFinite(age) && age >= 0 && age < 3;
+    return Number.isFinite(age) && age >= 0 && age < 7;
   }
   function dateFor(path, explicitDate) { return explicitDate || dates[path]; }
   function apply(doc, fallbackDate, now = new Date()) {

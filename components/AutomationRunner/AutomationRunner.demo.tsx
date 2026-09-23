@@ -30,10 +30,13 @@ function App() {
       <Dropdown ariaLabel="Runner placement" items={[{id:'bottom-right',label:'Right'},{id:'bottom-center',label:'Center'},{id:'bottom-left',label:'Left'}]} value={placement} onValueChange={value => setPlacement(value as AutomationRunnerPlacement)} />
     </div></div>
     <section className="runner-demo__app" aria-label="App shell persistence preview">
-      <nav aria-label="Demo pages">{pages.map(item => <button key={item} className={page === item ? 'is-active' : ''} type="button" onClick={() => setPage(item)}>{item}</button>)}</nav>
+      <nav aria-label="Demo page switching">
+        <span className="runner-demo__route-label">Demo pages · runner stays visible</span>
+        <div className="runner-demo__route-tabs">{pages.map(item => <button key={item} className={page === item ? 'is-active' : ''} type="button" onClick={() => setPage(item)}>{item}</button>)}</div>
+      </nav>
       <div className="runner-demo__page"><span>Current route</span><strong>{page}</strong><p>Switch routes above. The runner stays mounted because it belongs to the app shell, outside route content.</p></div>
     </section>
-    <p className="note">Turn on Show runner to launch it from the bottom. Use the card title or arrow to expand, the line to minimize and click anywhere on the minimized card to restore. Hover the card for a pointer-following curious lean; enter the green mascot to play one jelly rebound. The eye blinks and follows the pointer. Closing hides only this window; turn Show runner on again to restore it.</p>
+    <p className="note">Turn on Show runner to launch it from the bottom. Use the card title or arrow to expand, the line to minimize and click anywhere on the minimized card to restore. Hover the card for a pointer-following curious lean and a wide-eyed two-pass panic scan; enter the green mascot to play one jelly rebound. The eye blinks and follows the pointer. Closing hides only this window; turn Show runner on again to restore it.</p>
     <h2>Integration</h2>
     <section className="runner-demo__usage"><pre><code>{`// Mount once in your root layout, outside route content.
 <AutomationRunner
@@ -48,7 +51,7 @@ function App() {
 // The automation task remains owned by your data layer.
 // Closing this window must not stop the running task.`}</code></pre>
       <p>Feed title, description and detail rows from real automation state. Store visibility and view state in the app shell if they should survive navigation or reloads. The component does not start, stop or poll an automation.</p>
-      <p>Pointer dragging is optional and the drag handle also supports arrow keys. Reduced motion removes the entrance, exit, blink, directional lean and jelly rebound while preserving every state and control.</p>
+      <p>Pointer dragging is optional and the drag handle also supports arrow keys. Reduced motion removes the entrance, exit, blink, panic scan, directional lean and jelly rebound while preserving the wide-eye hover feedback, every state and every control.</p>
     </section>
     <AutomationRunner open={open} view={view} placement={placement} details={details} onOpenChange={setOpen} onViewChange={setView} onAction={() => setPage('Schedule')} />
   </main>;

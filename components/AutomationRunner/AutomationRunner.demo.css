@@ -9,9 +9,11 @@ h2 { margin: 32px 0 12px; font-size: 16px; font-weight: 500; line-height: 24px; 
 .runner-demo__controls { display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; white-space: nowrap; }
 .runner-demo__controls .aisee-dropdown { width: 132px; }
 .runner-demo__app { min-height: 360px; overflow: hidden; border: 1px solid rgba(17,17,17,.05); border-radius: 16px; background: #fff; }
-.runner-demo__app nav { display: flex; gap: 4px; padding: 12px; border-bottom: 1px solid rgba(17,17,17,.05); }
-.runner-demo__app nav button { padding: 7px 12px; border: 0; border-radius: 8px; background: transparent; font: inherit; cursor: pointer; }
-.runner-demo__app nav button.is-active { background: rgba(17,17,17,.05); font-weight: 500; }
+.runner-demo__app nav { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px; border-bottom: 1px solid rgba(17,17,17,.05); }
+.runner-demo__route-label { color: rgba(17,17,17,.45); font-size: 12px; line-height: 18px; white-space: nowrap; }
+.runner-demo__route-tabs { display: flex; gap: 4px; }
+.runner-demo__route-tabs button { padding: 7px 12px; border: 0; border-radius: 8px; background: transparent; font: inherit; cursor: pointer; }
+.runner-demo__route-tabs button.is-active { background: rgba(17,17,17,.05); font-weight: 500; }
 .runner-demo__page { display: grid; min-height: 280px; place-content: center; justify-items: center; padding: 24px; text-align: center; }
 .runner-demo__page span { color: rgba(17,17,17,.45); font-size: 12px; }
 .runner-demo__page strong { margin-top: 4px; font-size: 24px; font-weight: 500; }
@@ -19,4 +21,4 @@ h2 { margin: 32px 0 12px; font-size: 16px; font-weight: 500; line-height: 24px; 
 .runner-demo__usage { padding: 24px; border-radius: 16px; background: #fff; font-size: 14px; line-height: 22px; }
 .runner-demo__usage pre { margin: 0; overflow-x: auto; padding: 16px; border-radius: 8px; background: #fafafa; }
 .runner-demo__usage p { color: rgba(17,17,17,.6); }
-@media (max-width: 720px) { body { padding: 16px 16px 140px; } .runner-demo__heading { grid-template-columns: 1fr; } .runner-demo__controls { justify-content: flex-start; overflow-x: auto; } }
+@media (max-width: 720px) { body { padding: 16px 16px 140px; } .runner-demo__heading { grid-template-columns: 1fr; } .runner-demo__controls { justify-content: flex-start; overflow-x: auto; } .runner-demo__app nav { align-items: flex-start; flex-direction: column; } }

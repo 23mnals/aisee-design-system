@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "name": "AutomationRunner",
   "page": "components/AutomationRunner/AutomationRunner.html",
-  "version": "b2ef940b46efe883",
-  "delivery": "./releases/b2ef940b46efe883/ready.md",
-  "installer": "./releases/b2ef940b46efe883/install.cjs",
-  "installerSha256": "27da9e500a795d1314d52715024baa60229056b605e5e4fc5ba6bc84142e4d9e",
+  "version": "3c0e5249c21a92d4",
+  "delivery": "./releases/3c0e5249c21a92d4/ready.md",
+  "installer": "./releases/3c0e5249c21a92d4/install.cjs",
+  "installerSha256": "8ce0a8cc1a8275a6fb3510d66deeca476fbcbd429481b5257d2d7bb66e1028b5",
   "configuration": {
     "props": {
       "AutomationRunner": [
@@ -43,7 +43,7 @@
     "Mount the runner once in the host app shell outside route content so it persists across navigation. Closing hides only the window and must never stop, cancel or mutate the automation task.",
     "Preserve default, expanded and minimized views, controlled open/view callbacks, real detail rows and the Back to Automation host callback. The card title and arrow toggle details, the line control minimizes it, and clicking anywhere on the minimized card restores the default view; the visible green eye remains the keyboard-accessible restore control.",
     "Before integration, inspect the host for an existing Automation Runner or equivalent persistent status card. Update a compatible existing implementation in place instead of mounting a second runner. Retain an existing blink and pointer-following eye only when they already behave correctly; do not duplicate their DOM, state, keyframes or window pointermove listener.",
-    "Except for a compatible existing blink and pointer-following eye, this delivery is authoritative for all component behavior: bottom entrance and exit bounce, default/expanded/minimized views, pointer-directed card lean, one jelly rebound only when entering the green mascot, whole-card pointer dragging, keyboard drag-handle movement, viewport clamping and complete prefers-reduced-motion fallback. A drag must not activate expand, minimize, close or action controls.",
+    "Except for a compatible existing blink and pointer-following eye, this delivery is authoritative for all component behavior: bottom entrance and exit bounce, default/expanded/minimized views, pointer-directed card lean, a wide-eyed two-pass panic scan when entering the whole card, one jelly rebound only when entering the green mascot, whole-card pointer dragging, keyboard drag-handle movement, viewport clamping and complete prefers-reduced-motion fallback. A drag must not activate expand, minimize, close or action controls.",
     "Use the exact exported Figma icons and eye mask. Detail values and automation state come from the host; do not ship Demo routes, controls or mock task management.",
     "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
   ],

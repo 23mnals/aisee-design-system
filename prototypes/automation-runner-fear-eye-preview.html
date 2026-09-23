@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Automation Runner · Fear eye previews</title>
+  <style>
+    @font-face{font-family:Karla;src:url('../assets/fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
+    *{box-sizing:border-box}
+    body{margin:0;background:#fafafa;color:#111;font-family:Karla,Arial,sans-serif}
+    main{width:min(1120px,calc(100% - 32px));margin:0 auto;padding:48px 0 80px}
+    h1{margin:0;font-size:24px;font-weight:600;line-height:32px}
+    .intro{max-width:720px;margin:10px 0 32px;color:rgba(17,17,17,.58);font-size:14px;line-height:22px}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .option{min-width:0;padding:20px;border:1px solid rgba(17,17,17,.06);border-radius:20px;background:#fff}
+    .option__head{min-height:90px;margin-bottom:18px}
+    .option__title{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .option h2{margin:0;font-size:16px;font-weight:600;line-height:22px}
+    .option p{margin:6px 0 0;color:rgba(17,17,17,.52);font-size:13px;line-height:19px}
+    .tag{flex:0 0 auto;padding:4px 8px;border-radius:999px;background:#efffc0;font-size:11px;font-weight:600;line-height:16px}
+    .stage{display:grid;min-height:220px;place-items:center;border-radius:16px;background:#fafafa;overflow:hidden}
+    .runner{--eye-x:0px;--eye-y:0px;--eye-number:0;--lean:0deg;display:flex;width:min(332px,calc(100% - 20px));height:64px;align-items:center;gap:11px;padding:16px 12px;border-radius:16px;background:#111;color:#fff;box-shadow:0 10px 24px rgba(17,17,17,.14);transform-origin:78% 100%;transition:transform 260ms cubic-bezier(.2,.8,.2,1),box-shadow 260ms ease;will-change:transform}
+    .stage.is-active .runner{transform:translateY(-3px) rotate(calc(var(--lean) * .22));box-shadow:0 15px 30px rgba(17,17,17,.17)}
+    .drag{display:grid;width:12px;height:32px;flex:0 0 12px;place-items:center;opacity:.45;font-size:13px}
+    .mascot{position:relative;width:27px;height:28px;flex:0 0 27px;overflow:hidden;border-radius:14px 14px 0 0;background:#c9fe12;transform-origin:50% 100%;transition:transform 180ms cubic-bezier(.2,.9,.3,1.25)}
+    .stage.is-active .mascot{transform:translateX(calc(var(--eye-number) * 2px)) rotate(var(--lean))}
+    .eye{position:absolute;top:5.6px;left:6px;width:15.323px;height:6.805px;overflow:hidden;background:#fff;-webkit-mask:url('../assets/automation-runner/eye-mask.svg') center/100% 100% no-repeat;mask:url('../assets/automation-runner/eye-mask.svg') center/100% 100% no-repeat;animation:blink 5.2s ease-in-out infinite;transform-origin:center;transition:transform 180ms cubic-bezier(.2,1.5,.3,1)}
+    .iris{position:absolute;top:1px;left:2.5px;width:6.9px;height:6.9px;border-radius:50%;background:#111;transform:translate(var(--eye-x),var(--eye-y));transition:transform 90ms linear}
+    .copy{display:flex;min-width:0;flex:1;flex-direction:column}
+    .copy strong{overflow:hidden;font-size:16px;font-weight:500;line-height:19px;white-space:nowrap;text-overflow:ellipsis}
+    .copy span{overflow:hidden;color:rgba(255,255,255,.75);font-size:12px;line-height:15px;white-space:nowrap;text-overflow:ellipsis}
+    .actions{display:flex;gap:8px;color:rgba(255,255,255,.5);font-size:16px}
+
+    /* A: a clean, single startled reaction. */
+    [data-fear='startled'].is-active .eye{animation:none;transform:scale(1.24,1.58)}
+    [data-fear='startled'].is-active .iris{transform:translate(var(--eye-x),var(--eye-y)) scale(.86)}
+
+    /* B: the eye opens wide, then the pupil searches twice before following the pointer again. */
+    [data-fear='panic'].is-active .eye{animation:none;transform:scale(1.3,1.68)}
+    [data-fear='panic'].is-active .iris{animation:panic-search 620ms cubic-bezier(.2,.8,.2,1) 1 both}
+
+    /* C: a larger frozen stare with a tiny eye-only tremble. */
+    [data-fear='freeze'].is-active .eye{animation:fear-freeze 760ms cubic-bezier(.2,1.2,.3,1) 1 both}
+    [data-fear='freeze'].is-active .iris{transform:translate(var(--eye-x),var(--eye-y)) scale(.68)}
+
+    @keyframes blink{0%,43%,47%,100%{transform:scaleY(1)}45%{transform:scaleY(.06)}}
+    @keyframes panic-search{
+      0%{transform:translate(var(--eye-x),var(--eye-y)) scale(.82)}
+      22%{transform:translate(calc(var(--eye-x) - 2.2px),var(--eye-y)) scale(.82)}
+      46%{transform:translate(calc(var(--eye-x) + 2.2px),var(--eye-y)) scale(.82)}
+      68%{transform:translate(calc(var(--eye-x) - .8px),var(--eye-y)) scale(.82)}
+      100%{transform:translate(var(--eye-x),var(--eye-y)) scale(.82)}
+    }
+    @keyframes fear-freeze{
+      0%{transform:translateX(0) scale(1)}
+      22%{transform:translateX(0) scale(1.38,1.82)}
+      34%{transform:translateX(-.35px) scale(1.38,1.82)}
+      44%{transform:translateX(.35px) scale(1.38,1.82)}
+      54%{transform:translateX(-.25px) scale(1.38,1.82)}
+      66%,100%{transform:translateX(0) scale(1.38,1.82)}
+    }
+    .hint{margin:14px 0 0;color:rgba(17,17,17,.46);font-size:12px;line-height:18px;text-align:center}
+    .note{margin:28px 0 0;padding:16px;border-radius:12px;background:#fff;color:rgba(17,17,17,.62);font-size:13px;line-height:20px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}.option__head{min-height:0}.stage{min-height:180px}}
+    @media(prefers-reduced-motion:reduce){.eye,.iris,.stage.is-active .eye,.stage.is-active .iris{animation:none!important}.runner,.mascot,.eye,.iris{transition:none!important}}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Automation Runner · 惊吓眼神预览</h1>
+    <p class="intro">把鼠标移到整张黑色卡片上体验。三种方案都保留卡片朝指针轻探与眼珠跟随，只改变小怪兽被突然靠近时的眼神。</p>
+    <section class="grid">
+      <article class="option">
+        <div class="option__head"><div class="option__title"><h2>A · 突然受惊</h2><span class="tag">克制</span></div><p>眼睛快速瞪大、瞳孔略缩，然后保持跟随鼠标。清晰但不会抢戏。</p></div>
+        <div class="stage" data-fear="startled"><div class="runner"><span class="drag">⠿</span><span class="mascot"><span class="eye"><span class="iris"></span></span></span><span class="copy"><strong>Automation running</strong><span>Keep one AISEE tab open</span></span><span class="actions">⌄　−　×</span></div></div>
+        <p class="hint">适合长期显示，反应最轻</p>
+      </article>
+      <article class="option">
+        <div class="option__head"><div class="option__title"><h2>B · 慌张扫视</h2><span class="tag">推荐</span></div><p>瞪大后左右寻找两次，像突然不知道该看哪里，随后恢复跟随鼠标。</p></div>
+        <div class="stage" data-fear="panic"><div class="runner"><span class="drag">⠿</span><span class="mascot"><span class="eye"><span class="iris"></span></span></span><span class="copy"><strong>Automation running</strong><span>Keep one AISEE tab open</span></span><span class="actions">⌄　−　×</span></div></div>
+        <p class="hint">“恐惧、不知所措”的表达最明确</p>
+      </article>
+      <article class="option">
+        <div class="option__head"><div class="option__title"><h2>C · 吓到僵住</h2><span class="tag">夸张</span></div><p>眼睛最大幅度撑开，瞳孔明显缩小，并加入一次眼部轻颤。</p></div>
+        <div class="stage" data-fear="freeze"><div class="runner"><span class="drag">⠿</span><span class="mascot"><span class="eye"><span class="iris"></span></span></span><span class="copy"><strong>Automation running</strong><span>Keep one AISEE tab open</span></span><span class="actions">⌄　−　×</span></div></div>
+        <p class="hint">戏剧性最强，适合更活泼的品牌语气</p>
+      </article>
+    </section>
+    <p class="note">当前仅为独立预览，没有修改正式 Automation Runner。选定后会把对应眼神接到卡片 hover，同时保留现有眨眼、眼珠跟随、A+D 分区响应和 reduced-motion 规则。</p>
+  </main>
+  <script>
+    document.querySelectorAll('.stage').forEach(stage => {
+      const runner = stage.querySelector('.runner');
+      const iris = stage.querySelector('.iris');
+      stage.addEventListener('pointerenter', () => {
+        stage.classList.remove('is-active');
+        void stage.offsetWidth;
+        stage.classList.add('is-active');
+      });
+      stage.addEventListener('pointermove', event => {
+        const box = runner.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, (event.clientX - (box.left + box.width / 2)) / (box.width / 2)));
+        const y = Math.max(-1, Math.min(1, (event.clientY - (box.top + box.height / 2)) / 70));
+        runner.style.setProperty('--eye-x', `${x * 2.3}px`);
+        runner.style.setProperty('--eye-y', `${y * 1.15}px`);
+        runner.style.setProperty('--eye-number', x.toFixed(3));
+        runner.style.setProperty('--lean', `${x * 6}deg`);
+      });
+      stage.addEventListener('pointerleave', () => {
+        stage.classList.remove('is-active');
+        iris.getAnimations().forEach(animation => animation.cancel());
+        runner.style.setProperty('--eye-x', '0px');
+        runner.style.setProperty('--eye-y', '0px');
+        runner.style.setProperty('--eye-number', '0');
+        runner.style.setProperty('--lean', '0deg');
+      });
+    });
+  </script>
+</body>
+</html>
