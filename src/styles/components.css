@@ -1294,6 +1294,7 @@ textarea.aisee-input.aisee-textarea { min-height: 120px; resize: vertical; font:
 .aisee-automation-runner__panel:hover .aisee-automation-runner__mascot { transform: translateX(calc(var(--aisee-runner-eye-number) * 2px)) rotate(var(--aisee-runner-lean)); }
 .aisee-automation-runner__mascot.is-jelly { animation: aisee-runner-mascot-jelly 620ms cubic-bezier(.2,1.3,.3,1) both; }
 .aisee-automation-runner__summary { display: flex; min-width: 0; flex: 1 1 auto; flex-direction: column; align-items: flex-start; cursor: grab; text-align: left; }
+.aisee-automation-runner__summary:disabled { color: inherit; cursor: grab; opacity: 1; }
 .aisee-automation-runner__title { max-width: 100%; overflow: hidden; font-size: 16px; font-weight: 500; line-height: 19px; white-space: nowrap; text-overflow: ellipsis; }
 .aisee-automation-runner__description { max-width: 100%; overflow: hidden; color: rgba(255,255,255,.8); font-size: 12px; font-weight: 400; line-height: 15px; white-space: nowrap; text-overflow: ellipsis; }
 .aisee-automation-runner__expand,.aisee-automation-runner__minimize,.aisee-automation-runner__close { display: grid; width: 20px; height: 20px; flex: 0 0 20px; border-radius: 6px !important; cursor: pointer; opacity: .5; place-items: center; transition: opacity 120ms ease,background 120ms ease; }

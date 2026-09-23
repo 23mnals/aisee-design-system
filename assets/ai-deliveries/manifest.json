@@ -226,7 +226,7 @@
   "components/AutomationRunner/AutomationRunner.html": {
     "name": "AutomationRunner",
     "page": "components/AutomationRunner/AutomationRunner.html",
-    "version": "3c0e5249c21a92d4",
+    "version": "200678363f0b540a",
     "latestUrl": "https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/automation-runner/latest.json",
     "url": "assets/ai-deliveries/AutomationRunner.json",
     "fileCount": 14

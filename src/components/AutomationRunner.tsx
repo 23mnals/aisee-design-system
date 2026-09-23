@@ -48,11 +48,37 @@ export interface AutomationRunnerProps extends Omit<HTMLAttributes<HTMLDivElemen
   draggable?: boolean;
 }
 
-type Position = { x: number; y: number };
-type DragSession = { pointerId: number; origin: Position; start: Position; moved: boolean };
+type AxisAnchor = 'start' | 'center' | 'end';
+type Position = { x: number; y: number; anchorX: AxisAnchor; anchorY: AxisAnchor; offsetX: number; offsetY: number };
+type Point = { x: number; y: number };
+type DragSession = { pointerId: number; origin: Point; start: Point; moved: boolean };
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), Math.max(min, max));
+}
+
+function nearestAnchor(start: number, size: number, viewportSize: number): AxisAnchor {
+  const distances: Record<AxisAnchor, number> = {
+    start: Math.abs(start - 8),
+    center: Math.abs(start + size / 2 - viewportSize / 2),
+    end: Math.abs(viewportSize - 8 - (start + size)),
+  };
+  return (Object.keys(distances) as AxisAnchor[]).reduce((best, candidate) => distances[candidate] < distances[best] ? candidate : best, 'start');
+}
+
+function anchoredPosition(x: number, y: number, width: number, height: number, anchorX?: AxisAnchor, anchorY?: AxisAnchor): Position {
+  const nextX = clamp(x, 8, window.innerWidth - width - 8);
+  const nextY = clamp(y, 8, window.innerHeight - height - 8);
+  const horizontal = anchorX ?? nearestAnchor(nextX, width, window.innerWidth);
+  const vertical = anchorY ?? nearestAnchor(nextY, height, window.innerHeight);
+  return {
+    x: nextX,
+    y: nextY,
+    anchorX: horizontal,
+    anchorY: vertical,
+    offsetX: horizontal === 'start' ? nextX : horizontal === 'end' ? window.innerWidth - nextX - width : nextX + width / 2 - window.innerWidth / 2,
+    offsetY: vertical === 'start' ? nextY : vertical === 'end' ? window.innerHeight - nextY - height : nextY + height / 2 - window.innerHeight / 2,
+  };
 }
 
 export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps>(function AutomationRunner(
@@ -94,6 +120,10 @@ export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps
   const detailsId = useId();
   const currentOpen = controlledOpen ? Boolean(open) : localOpen;
   const currentView = controlledView ? view : localView;
+  const hasDetails = details.length > 0 || Boolean(onAction);
+  const effectiveView: AutomationRunnerView = currentView === 'expanded' && !hasDetails ? 'default' : currentView;
+  const expanded = effectiveView === 'expanded';
+  const minimized = effectiveView === 'minimized';
 
   const setRootRef = (node: HTMLDivElement | null) => {
     rootRef.current = node;
@@ -148,13 +178,19 @@ export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps
 
   useEffect(() => {
     if (!position || !rootRef.current) return;
-    const box = rootRef.current.getBoundingClientRect();
-    const next = {
-      x: clamp(position.x, 8, window.innerWidth - box.width - 8),
-      y: clamp(position.y, 8, window.innerHeight - box.height - 8),
+    const constrain = () => {
+      const box = rootRef.current?.getBoundingClientRect();
+      if (!box) return;
+      setPosition(previous => {
+        if (!previous) return previous;
+        const next = anchoredPosition(box.left, box.top, box.width, box.height, previous.anchorX, previous.anchorY);
+        return next.x === previous.x && next.y === previous.y && next.offsetX === previous.offsetX && next.offsetY === previous.offsetY ? previous : next;
+      });
     };
-    if (next.x !== position.x || next.y !== position.y) setPosition(next);
-  }, [currentView, position]);
+    constrain();
+    window.addEventListener('resize', constrain);
+    return () => window.removeEventListener('resize', constrain);
+  }, [effectiveView, Boolean(position)]);
 
   const beginDrag = (event: PointerEvent<HTMLElement>) => {
     if (!draggable || !rootRef.current || event.button !== 0) return;
@@ -174,10 +210,7 @@ export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps
     rootRef.current.dataset.dragging = 'true';
     event.preventDefault();
     const box = rootRef.current.getBoundingClientRect();
-    setPosition({
-      x: clamp(session.origin.x + deltaX, 8, window.innerWidth - box.width - 8),
-      y: clamp(session.origin.y + deltaY, 8, window.innerHeight - box.height - 8),
-    });
+    setPosition(anchoredPosition(session.origin.x + deltaX, session.origin.y + deltaY, box.width, box.height));
   };
   const endDrag = (event: PointerEvent<HTMLElement>) => {
     const session = dragRef.current;
@@ -205,13 +238,17 @@ export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps
     const delta = event.shiftKey ? 24 : 8;
     const x = box.left + (event.key === 'ArrowLeft' ? -delta : event.key === 'ArrowRight' ? delta : 0);
     const y = box.top + (event.key === 'ArrowUp' ? -delta : event.key === 'ArrowDown' ? delta : 0);
-    setPosition({ x: clamp(x, 8, window.innerWidth - box.width - 8), y: clamp(y, 8, window.innerHeight - box.height - 8) });
+    setPosition(anchoredPosition(x, y, box.width, box.height));
   };
 
   if (!rendered) return null;
-  const expanded = currentView === 'expanded';
-  const minimized = currentView === 'minimized';
-  const positionStyle = position ? { left: position.x, top: position.y, right: 'auto', bottom: 'auto' } : undefined;
+  const positionStyle = position ? {
+    left: position.anchorX === 'start' ? position.offsetX : position.anchorX === 'center' ? `calc(50% + ${position.offsetX}px)` : 'auto',
+    right: position.anchorX === 'end' ? position.offsetX : 'auto',
+    top: position.anchorY === 'start' ? position.offsetY : position.anchorY === 'center' ? `calc(50% + ${position.offsetY}px)` : 'auto',
+    bottom: position.anchorY === 'end' ? position.offsetY : 'auto',
+    transform: `translate(${position.anchorX === 'center' ? '-50%' : '0'}, ${position.anchorY === 'center' ? '-50%' : '0'})`,
+  } : undefined;
   const rootStyle = {
     ...style,
     ...positionStyle,
@@ -222,7 +259,7 @@ export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps
     {...props}
     ref={setRootRef}
     className={`aisee-automation-runner${className ? ` ${className}` : ''}`}
-    data-view={currentView}
+    data-view={effectiveView}
     data-placement={placement}
     data-phase={phase}
     data-dragged={position ? true : undefined}
@@ -267,16 +304,17 @@ export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps
         <button
           className="aisee-automation-runner__summary"
           type="button"
-          aria-expanded={expanded}
-          aria-controls={detailsId}
-          onClick={() => updateView(expanded ? 'default' : 'expanded')}
+          aria-expanded={hasDetails ? expanded : undefined}
+          aria-controls={hasDetails ? detailsId : undefined}
+          disabled={!hasDetails}
+          onClick={() => { if (hasDetails) updateView(expanded ? 'default' : 'expanded'); }}
         >
           <span className="aisee-automation-runner__title">{title}</span>
           <span className="aisee-automation-runner__description">{description}</span>
         </button>
-        <button className="aisee-automation-runner__expand" type="button" aria-label={expanded ? collapseLabel : expandLabel} onClick={() => updateView(expanded ? 'default' : 'expanded')}>
+        {hasDetails && <button className="aisee-automation-runner__expand" type="button" aria-label={expanded ? collapseLabel : expandLabel} onClick={() => updateView(expanded ? 'default' : 'expanded')}>
           <img src={chevronIcon} alt="" />
-        </button>
+        </button>}
         <button className="aisee-automation-runner__minimize" type="button" aria-label={minimizeLabel} onClick={() => updateView('minimized')}>
           <img src={minimizeIcon} alt="" />
         </button>
@@ -284,7 +322,7 @@ export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps
           <img src={closeIcon} alt="" />
         </button>
       </header>
-      <div id={detailsId} className="aisee-automation-runner__details" aria-hidden={!expanded}>
+      {hasDetails && <div id={detailsId} className="aisee-automation-runner__details" aria-hidden={!expanded}>
         <div className="aisee-automation-runner__details-inner">
           <dl>
             {details.map(item => <div key={item.id} className="aisee-automation-runner__detail">
@@ -293,7 +331,7 @@ export const AutomationRunner = forwardRef<HTMLDivElement, AutomationRunnerProps
           </dl>
           {onAction && <button className="aisee-automation-runner__action" type="button" onClick={onAction}>{actionLabel}</button>}
         </div>
-      </div>
+      </div>}
     </section>
   </div>;
 });

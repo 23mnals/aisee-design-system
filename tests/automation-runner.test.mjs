@@ -21,11 +21,16 @@ new Function('require', 'module', 'exports', code)(require, module, module.expor
 const render = props => renderToStaticMarkup(createElement(module.exports.AutomationRunner, props));
 
 test('automation runner renders accessible default, expanded and minimized states', () => {
-  const normal = render({ title: 'Running', description: 'Keep open' });
+  const normal = render({ title: 'Running', description: 'Keep open', details: [{ id: 'one', label: 'Scheduled publishing', value: 'On' }] });
   assert.match(normal, /data-view="default"/);
   assert.match(normal, /aria-expanded="false"/);
   assert.match(normal, /Running/);
   assert.match(normal, /Keep open/);
+
+  const empty = render({ defaultView: 'expanded', title: 'Running' });
+  assert.match(empty, /data-view="default"/);
+  assert.doesNotMatch(empty, /aisee-automation-runner__details/);
+  assert.doesNotMatch(empty, /aisee-automation-runner__expand/);
 
   const expanded = render({ defaultView: 'expanded', details: [{ id: 'one', label: 'Scheduled publishing', value: 'On' }], onAction() {} });
   assert.match(expanded, /data-view="expanded"/);
@@ -47,6 +52,11 @@ test('automation runner source keeps host-owned state, drag, unique ids and moti
   assert.match(source, /setPointerCapture/);
   assert.match(source, /window\.addEventListener\('pointermove'/);
   assert.match(source, /data-dragged/);
+  assert.match(source, /function nearestAnchor/);
+  assert.match(source, /anchorX: horizontal/);
+  assert.match(source, /right: position\.anchorX === 'end'/);
+  assert.match(source, /bottom: position\.anchorY === 'end'/);
+  assert.match(source, /currentView === 'expanded' && !hasDetails \? 'default'/);
   assert.match(source, /onPointerDown=\{beginDrag\}/);
   assert.match(source, /onClickCapture=\{preventDragClick\}/);
   assert.match(source, /onClick=\{restoreFromMinimized\}/);
