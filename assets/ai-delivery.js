@@ -55,7 +55,7 @@ console.log('Installed ' + writes.length + ' source/style/asset files into ' + r
   function guideUrl(delivery) {return publicUrl(delivery.latestUrl);}
   function format(delivery, snapshot) {
     const options=configuration(delivery,snapshot);
-    return `Integrate AISEE ${delivery.name} into the current React project: ${guideUrl(delivery)}${options.length ? ` Selected options: ${JSON.stringify(options)}` : ''}`;
+    return `Integrate AISEE ${delivery.name} into this React project. Reuse compatible host/shadcn primitives in place (inspect components.json and components/ui); do not create parallel AISEE primitives. Use standalone only when no compatible primitive exists: ${guideUrl(delivery)}${options.length ? ` Selected options: ${JSON.stringify(options)}` : ''}`;
   }
   async function checkPublished(expected) {
     const latestUrl=guideUrl(expected);

@@ -23,6 +23,9 @@ test('every production manifest declares host-first boundaries without assuming 
   assert.throws(()=>validateManifest({...dialog,primitives:[boundary,boundary]}), /duplicate/);
   assert.throws(()=>validateManifest({...dialog,primitives:[{...boundary,fallback:'install-mui'}]}), /fallback/);
   assert.match(hostIntegrationGuide(dialog), /native dialog ref API/);
+  assert.match(hostIntegrationGuide(dialog), /components\.json/);
+  assert.match(hostIntegrationGuide(dialog), /Do not create a parallel AISEE primitive/);
+  assert.match(hostIntegrationGuide(dialog), /temporary reference directory/);
   assert.deepEqual(registry.components.find(m=>m.name==='ThinkingIndicator').primitives, []);
 });
 

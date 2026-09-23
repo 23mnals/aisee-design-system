@@ -819,7 +819,7 @@
           <div class="hero">
             <p class="eyebrow">Latest feature page 5.7 · Design Spec v6 · Shared source of truth</p>
             <h1>Build every AISEE experience from the same system.</h1>
-            <p class="hero-copy">Foundations, reusable components and preserved product previews—updated from the latest dApp design specification while keeping unmatched legacy work available.</p>
+            <p class="hero-copy">Foundations, reusable components, maintained UI demos and clearly labelled AI explorations. Confirmed product design always follows the relevant latest Figma source.</p>
           </div>
 
           <div class="status-card">
@@ -1001,7 +1001,7 @@
               <article class="principle"><strong>3. Add the real task</strong><p>Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.</p></article>
               <article class="principle"><strong>4. Compare the result</strong><p>Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.</p></article>
             </div>
-            <div class="priority-note"><strong>Which handoff to use:</strong> Copy for AI uses each component manifest to deliver production files. Inspect host UI primitives before installation; reuse compatible capabilities while preserving AISEE visuals and behavior. No extra UI framework or global theme/provider replacement. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.</div>
+            <div class="priority-note"><strong>Which handoff to use:</strong> Copy for AI uses each component manifest to deliver production files. Inspect host UI primitives before installation. In shadcn/ui projects, read components.json and extend the compatible existing components/ui primitive in place; do not create a parallel AISEE primitive or a second components/ui tree. Preserve AISEE visuals and behavior without replacing the host theme or provider. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.</div>
             <p><a href="docs/GETTING_STARTED.md" target="_blank" rel="noreferrer">第三方接入指南 · Installation, prerequisites and troubleshooting</a></p>
           </section>
 
@@ -1047,10 +1047,19 @@
           <section class="home-section" aria-labelledby="architecture-title">
             <div class="section-heading"><h2 id="architecture-title">System architecture</h2><p>Four maintained sections</p></div>
             <div class="architecture">
-              <article><h3>README</h3><p>How the system is structured, maintained and shared.</p></article>
-              <article><h3>Brand</h3><p>Brand language and all preserved visual foundations.</p></article>
-              <article><h3>Components</h3><p>Reusable interface patterns and tested component states.</p></article>
-              <article><h3>UI Kits — Webapp</h3><p>Complete screens for real implementation reference.</p></article>
+              <article><h3>README</h3><p>Entry point for AI-guided visual work, design exploration and developer component integration.</p></article>
+              <article><h3>Brand</h3><p>AISEE foundations live in Common. AI-generated references live under AI Explorations / Inspiration and are not product specifications.</p></article>
+              <article><h3>Components</h3><p>Independently reusable components with states, motion, APIs and Copy for AI production delivery.</p></article>
+              <article><h3>UI Kits — Webapp</h3><p>Multi-component patterns, page examples and interaction demos. They are not confirmed product screens unless verified against the relevant latest Figma.</p></article>
+            </div>
+          </section>
+
+          <section class="home-section" aria-labelledby="routes-title">
+            <div class="section-heading"><h2 id="routes-title">Three ways to use this system</h2><p>Choose the path that matches the task</p></div>
+            <div class="architecture">
+              <article><h3>Ask AI to create a visual</h3><p>Pending a real brief or reference image. Do not start from an empty placeholder; provide the actual goal and source before generating.</p></article>
+              <article><h3>Explore a direction</h3><p>Use Brand / AI Explorations / Inspiration for ideas only. These references are not approved product design or implementation guidance.</p></article>
+              <article><h3>Integrate a component</h3><p>Use a Current entry under Components and Copy for AI to bring its production code, states and motion into an existing project.</p></article>
             </div>
           </section>
 
@@ -1115,7 +1124,7 @@
         "requiredSources": ["docs/GETTING_STARTED.md", "aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "docs/COMPONENT_CONFIGURATION.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
         "rules": {
           "appTypography": "AISEE previews use Karla; standalone deliveries inherit compatible host typography.",
-          "hostProjectCompatibility": "Before installation inspect host UI libraries and custom primitives. Follow integrationMode/primitives/preserve in the component manifest: reuse compatible host primitives, preserve AISEE visuals/states/motion/behavior, scope CSS including portals, never overwrite host theme/provider/global styles or add a whole UI framework. Fall back to standalone at incompatible boundaries. See docs/PRODUCTION_DELIVERY.md.",
+          "hostProjectCompatibility": "Before installation inspect host UI libraries and custom primitives. Follow integrationMode/primitives/preserve in the component manifest: reuse compatible host primitives, preserve AISEE visuals/states/motion/behavior, scope CSS including portals, never overwrite host theme/provider/global styles or add a whole UI framework. In shadcn/ui projects read components.json and existing components/ui files, then extend the compatible primitive in place; do not create a parallel AISEE primitive or second components/ui tree. Use the delivery as temporary reference and remove it after merging. Fall back to standalone only at incompatible boundaries. See docs/PRODUCTION_DELIVERY.md.",
           "pageBackground": "#FAFAFA",
           "cardBackground": "#FFFFFF",
           "analysisPrimary": "#CFFF29",
@@ -1150,7 +1159,7 @@
       const readmeZhTranslations = new Map([
         ["Latest feature page 5.7 · Design Spec v6 · Shared source of truth", "最新功能页 5.7 · Design Spec v6 · 统一事实来源"],
         ["Build every AISEE experience from the same system.", "使用同一套系统构建每一个 AISEE 体验。"],
-        ["Foundations, reusable components and preserved product previews—updated from the latest dApp design specification while keeping unmatched legacy work available.", "这里汇集基础规范、可复用组件和产品预览；内容跟随最新 dApp 设计规范更新，同时保留尚未迁移的历史方案。"],
+        ["Foundations, reusable components, maintained UI demos and clearly labelled AI explorations. Confirmed product design always follows the relevant latest Figma source.", "这里汇集基础规范、可复用组件、持续维护的 UI Demo 与明确标识的 AI 探索稿。已确认的实际产品设计始终以对应的最新 Figma 为准。"],
         ["Latest registered feature page: 5.7", "最新登记功能页：5.7"],
         ["Figma versions belong to feature pages; 5.7 adds hosted automatic publishing (Automation) under WORKFLOWS. Implementation rules follow Design Specification v6 and the latest team decisions.", "Figma 版本归属于具体功能页；5.7 在 WORKFLOWS 下新增托管自动发布（Automation）。实施规则遵循 Design Specification v6 和最新团队决策。"],
         ["Use this system", "开始使用"],
@@ -1233,7 +1242,7 @@
         ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. All registered Current components copy a named production integration instruction, a stable latest-delivery URL and allowed real options. Your coding AI retrieves the required implementation, styles and assets; demo controls and fonts stay here.", "点击 Open HTML 旁的双星按钮。所有已登记的 Current 组件统一复制具体名称、稳定最新交付入口和允许的真实配置；编码 AI 取得必要生产源码、样式与资源，演示控件和字体保留在本站。"],
         ["3. Add the real task", "3. 补充真实任务"], ["Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.", "把 Prompt 连同目标页面、真实内容和预期行为交给 AI。AI 使用真实业务内容，并保留必要的生产组件资源。"],
         ["4. Compare the result", "4. 对照验收"], ["Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.", "对照 Current Demo 检查生成页面，包括适用的 Hover、Focus、Disabled、Loading、Empty、响应式和无障碍状态。"],
-        ["Which handoff to use:", "如何选择交付方式："], ["Copy for AI uses each component manifest to deliver production files. Inspect host UI primitives before installation; reuse compatible capabilities while preserving AISEE visuals and behavior. No extra UI framework or global theme/provider replacement. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.", "Copy for AI 安装前先识别宿主基础组件，复用兼容能力并保留 AISEE 视觉与行为；不引入整套 UI 框架或覆盖全局主题/Provider。按各组件显式生产清单交付，排除演示页面、mock 数据、字体和全局环境。无需额外附件或安装整个 AISEE 库；需要兼容 React 项目及可联网、执行 Node 的编码 AI。"],
+        ["Which handoff to use:", "如何选择交付方式："], ["Copy for AI uses each component manifest to deliver production files. Inspect host UI primitives before installation. In shadcn/ui projects, read components.json and extend the compatible existing components/ui primitive in place; do not create a parallel AISEE primitive or a second components/ui tree. Preserve AISEE visuals and behavior without replacing the host theme or provider. No demo pages, mock data, fonts or global Design System setup; no extra attachment or AISEE package installation. Requires a compatible React project and a coding AI with network and Node access.", "Copy for AI 安装前先识别宿主基础组件。shadcn/ui 项目必须读取 components.json，并在已有 components/ui 兼容 primitive 上原位增加 AISEE 视觉与行为；不得创建平行的 AISEE primitive 或第二套 components/ui。不得引入整套 UI 框架或覆盖宿主主题与 Provider；交付排除演示页面、mock 数据、字体和全局环境。无需额外附件或安装整个 AISEE 库；需要兼容 React 项目及可联网、执行 Node 的编码 AI。"],
         ["AI implementation handoff", "AI 实施交付"], ["This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.", "本门户是可读参考资料，但不能保证其他 AI 会执行链接页面或推断出全部实施规则。应把已部署门户或仓库、权威规范文件，以及“复用 Current 组件”的明确要求一起交给 AI。"],
         ["Minimum input", "最少输入"], ["Share this HTML,", "提供本 HTML、"], ["and the target-page requirements. Include a compatible installed package, authorized tgz or complete source, plus docs/GETTING_STARTED.md.", "以及目标页面需求；同时提供兼容的已安装包、获准使用的 tgz 或完整源码，以及 docs/GETTING_STARTED.md。"], ["Reliable assets", "可靠资源"], ["Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.", "优先提供公开 HTTPS 预览或仓库/ZIP。单个本地 HTML 无法携带不可访问的相对字体、图片、源文件或链接子页。"],
         ["Implementation order", "实施顺序"], ["Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.", "Team Decisions → Design Spec v6 → Current 组件实现 → 带日期的 Figma 功能区块 → Legacy 参考。"], ["Verification", "验收"], ["Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.", "要求接收方 AI 列出复用组件、说明偏差，并把最终页面与 Current Demo 对照。"],
@@ -1246,7 +1255,8 @@
         ["Missing earlier feature pages", "尚未登记的早期功能页"], ["Feature history not yet registered here", "尚未在这里登记的功能历史"], ["Add and retain each page; do not overwrite it with 5.7", "逐页补充并保留；不要用 5.7 覆盖"],
         ["Legacy HTML previews", "历史 HTML 预览"], ["Unmatched components, flows, assets and experiments", "尚未匹配的组件、流程、资源与实验"], ["Retain unless a separate deprecation review approves removal", "保留，除非另行通过废弃评审"],
         ["Start with Design Spec v6", "从 Design Spec v6 开始"], ["Current product rules", "当前产品规则"], ["Color, typography, layout, spacing and module themes.", "颜色、字体、布局、间距与模块主题。"], ["Interactive states and reusable product patterns.", "交互状态与可复用产品模式。"],
-        ["System architecture", "系统架构"], ["Four maintained sections", "四个维护分区"], ["How the system is structured, maintained and shared.", "系统的结构、维护与共享方式。"], ["Brand language and all preserved visual foundations.", "品牌语言与全部保留的视觉基础。"], ["Reusable interface patterns and tested component states.", "可复用界面模式与已验证组件状态。"], ["Complete screens for real implementation reference.", "供真实实施参考的完整页面。"],
+        ["System architecture", "系统架构"], ["Four maintained sections", "四个维护分区"], ["Entry point for AI-guided visual work, design exploration and developer component integration.", "面向 AI 按规则出图、设计方向探索和开发组件接入的统一入口。"], ["AISEE foundations live in Common. AI-generated references live under AI Explorations / Inspiration and are not product specifications.", "AISEE 基础规范位于 Common；AI 生成的参考稿位于 AI Explorations / Inspiration，不属于产品实施规范。"], ["Independently reusable components with states, motion, APIs and Copy for AI production delivery.", "可独立复用的组件，包含状态、动效、API 与 Copy for AI 生产交付。"], ["Multi-component patterns, page examples and interaction demos. They are not confirmed product screens unless verified against the relevant latest Figma.", "由多个组件组成的模式、页面示例与交互 Demo；未与对应最新 Figma 核对前，不代表已确认产品页面。"],
+        ["Three ways to use this system", "三条使用路径"], ["Choose the path that matches the task", "按当前任务选择入口"], ["Ask AI to create a visual", "让 AI 按规则出图"], ["Pending a real brief or reference image. Do not start from an empty placeholder; provide the actual goal and source before generating.", "需要先提供真实 brief 或参考图；当前不设置看似可用的空入口，补齐目标与来源后再生成。"], ["Explore a direction", "让设计师探索方向"], ["Use Brand / AI Explorations / Inspiration for ideas only. These references are not approved product design or implementation guidance.", "Brand / AI Explorations / Inspiration 仅用于灵感探索，不是已确认产品设计或实施规范。"], ["Integrate a component", "让开发人员接入组件"], ["Use a Current entry under Components and Copy for AI to bring its production code, states and motion into an existing project.", "从 Components 选择 Current 组件，通过 Copy for AI 把生产源码、状态与动效接入已有项目。"],
         ["Use these when old and new conflict", "新旧冲突时以这些规则为准"], ["Homepage and Brand use Karla only. dApp, App and Webapp use Karla only.", "Homepage 与 Brand 只使用 Karla；dApp、App 与 Webapp 也只使用 Karla。"], ["Migration", "迁移"], ["Matching legacy rules are replaced by v6. Non-overlapping legacy files remain available and are labeled Legacy.", "与 v6 重合的历史规则由 v6 替代；不重合的历史文件继续保留并标记为 Legacy。"], ["v6 wins on conflict", "冲突时以 v6 为准"]
       ]);
 
@@ -1607,7 +1617,7 @@
       function buildComponentAiPrompt(path) {
         const guidance = componentAiGuidance[path];
         if (!guidance) return "";
-        const integration = "Use the production implementation declared by this component's delivery manifest. Preserve its interactions and animations; never install Demo controls, mock data, showcase pages or a global design-system environment. Before installation identify the host UI library and custom primitives; follow integrationMode/primitives/preserve to reuse compatible capabilities, otherwise use standalone. Keep AISEE visuals/states/motion; never add a full UI framework or overwrite host theme/provider/global styles. Reuse the host React, typography and local token overrides. Do not assume @aisee/design-system is publicly installable.";
+        const integration = "Use the production implementation declared by this component's delivery manifest. Preserve its interactions and animations; never install Demo controls, mock data, showcase pages or a global design-system environment. Before installation identify the host UI library and custom primitives; follow integrationMode/primitives/preserve to reuse compatible capabilities. For shadcn/ui, inspect components.json and existing components/ui files, then extend the compatible primitive at its existing path. Do not create a parallel AISEE primitive, a second components/ui tree, or a new src/components/aisee path when a compatible host primitive exists. Use downloaded standalone source only as temporary reference in that case and remove it after merging. Keep AISEE visuals/states/motion; never add a full UI framework or overwrite host theme/provider/global styles. Fall back to standalone only when the host primitive cannot satisfy a required capability. Reuse the host React, typography and local token overrides. Do not assume @aisee/design-system is publicly installable.";
         const rules = guidance.rules.map(rule => `- ${rule}`).join("\n");
         const implementation = guidance.implementation?.length
           ? `\n\nImplementation and handoff:\n${guidance.implementation.map(item => `- ${item}`).join("\n")}`
@@ -1640,25 +1650,25 @@ Shared implementation rules:
       }
 
       const baseItems = [
-        { group: "Brand", category: "Automation", name: "Plugin Entry Options", path: "legacy/pages/Plugin Entry Options.html", subtitle: "Three browser-extension install entry placements.", status: "Legacy" },
-        { group: "Brand", category: "Analyze", name: "Comparison Modal", path: "legacy/pages/Comparison Modal.html", subtitle: "Analysis comparison with Full Report and By Module views.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Mission option B · all six sections · design-system styling.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Homepage animation language, word reveal, mascot and cursor.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Narrative page with marquee and illustration placeholders.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "About Us — v4", path: "legacy/pages/About Us v4.html", subtitle: "Centered hero, tracking eye, static color cards and image-trail footer.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Animated homepage with ticker and mascot.", status: "Legacy" },
-        { group: "Brand", category: "Growth", name: "Module Comparison v3", path: "legacy/pages/Module Comparison.html", subtitle: "By Module comparison with inline switching and delta cues.", status: "Legacy" },
-        { group: "Brand", category: "Post", name: "Post Reply Tutorial (preview)", path: "legacy/pages/Post Reply Tutorial (preview).html", subtitle: "Looping reply composition and posting tutorial.", status: "Legacy" },
-        { group: "Brand", category: "Post", name: "Post Reply Tutorial Reddit (preview)", path: "legacy/pages/Post Reply Tutorial Reddit (preview).html", subtitle: "Looping Reddit comment composition and posting tutorial.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Dashboard (Redesigned)", path: "legacy/pages/Engage Dashboard (Redesigned).html", subtitle: "Action-first KPIs and a focused review queue.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Dashboard v6 (Donut Impressions)", path: "legacy/pages/Engage Dashboard v6 (Donut Impressions).html", subtitle: "Impressions donut and rebalanced two-row dashboard.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Empty State (optimized)", path: "legacy/pages/Engage Empty State (optimized).html", subtitle: "Suggested chips, action-first titles and mini preview.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Replies (History)", path: "legacy/pages/Engage Replies (History).html", subtitle: "Generated replies with Awaiting, Sent, Dismissed and Failed filters.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Replies (Tracking)", path: "legacy/pages/Engage Replies (Tracking).html", subtitle: "Reply tracking, monitoring choices, status and credit spend.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage v3 (React TSX preview)", path: "legacy/pages/Engage v3 (React TSX preview).html", subtitle: "Preview of the TSX modules in aisee-agent-test.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage", path: "legacy/pages/Engage.html", subtitle: "Initial Setup and Signal Feed with Reply Panel.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Paste Link Tutorial (preview)", path: "legacy/pages/Paste Link Tutorial (preview).html", subtitle: "Looping paste-link, save and tracking-started tutorial.", status: "Legacy" },
-        { group: "Brand", category: "Verify", name: "Tracking Eye", path: "legacy/pages/Tracking Eye.html", subtitle: "AISEE character peeks out of the eye and scans sources.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Plugin Entry Options", path: "legacy/pages/Plugin Entry Options.html", subtitle: "Inspiration only · Automation exploration; not approved product design or implementation guidance. Three browser-extension install entry placements.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Comparison Modal", path: "legacy/pages/Comparison Modal.html", subtitle: "Inspiration only · Analyze exploration; not approved product design or implementation guidance. Analysis comparison with Full Report and By Module views.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Mission option B with all six sections.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Homepage motion, word reveal, mascot and cursor.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Narrative page with marquee and illustration placeholders.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "About Us — v4", path: "legacy/pages/About Us v4.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Centered hero, tracking eye, color cards and image-trail footer.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Animated homepage with ticker and mascot.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Module Comparison v3", path: "legacy/pages/Module Comparison.html", subtitle: "Inspiration only · Growth exploration; not approved product design or implementation guidance. By Module comparison with inline switching and delta cues.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Post Reply Tutorial (preview)", path: "legacy/pages/Post Reply Tutorial (preview).html", subtitle: "Inspiration only · Post exploration; not approved product design or implementation guidance. Looping reply composition and posting tutorial.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Post Reply Tutorial Reddit (preview)", path: "legacy/pages/Post Reply Tutorial Reddit (preview).html", subtitle: "Inspiration only · Post exploration; not approved product design or implementation guidance. Looping Reddit comment composition and posting tutorial.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Engage Dashboard (Redesigned)", path: "legacy/pages/Engage Dashboard (Redesigned).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Action-first KPIs and a focused review queue.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Engage Dashboard v6 (Donut Impressions)", path: "legacy/pages/Engage Dashboard v6 (Donut Impressions).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Impressions donut and rebalanced dashboard.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Engage Empty State (optimized)", path: "legacy/pages/Engage Empty State (optimized).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Suggested chips, action-first titles and mini preview.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Engage Replies (History)", path: "legacy/pages/Engage Replies (History).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Reply history filters and generated replies.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Engage Replies (Tracking)", path: "legacy/pages/Engage Replies (Tracking).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Reply tracking, status and credit-spend reference.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Engage v3 (React TSX preview)", path: "legacy/pages/Engage v3 (React TSX preview).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. TSX module preview from an external experiment.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Engage", path: "legacy/pages/Engage.html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Initial Setup and Signal Feed with Reply Panel.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Paste Link Tutorial (preview)", path: "legacy/pages/Paste Link Tutorial (preview).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Looping paste-link and tracking-started tutorial.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Tracking Eye", path: "legacy/pages/Tracking Eye.html", subtitle: "Inspiration only · Verify exploration; not approved product design or implementation guidance. AISEE character scans reference sources.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "dApp v6 Foundations", path: "preview/dapp-v6-foundations.html", subtitle: "Current color, typography, layout and module-theme rules.", status: "Current" },
         { group: "Brand", category: "Common", name: "AIsee Logo Animation", path: "brand/pages/logo-animation/preview.html", subtitle: "Current cursor-following eye animation with natural blinking and side glances.", status: "Current" },
         { group: "Brand", category: "Common", name: "Logo", path: "preview/brand-logo.html", subtitle: "Real logo image, full wordmark, sizes, backgrounds and mark scale.", status: "Legacy" },
@@ -1666,8 +1676,8 @@ Shared implementation rules:
         { group: "Brand", category: "Common", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "Display Type — Karla", path: "preview/type-display.html", subtitle: "Karla display scale from hero to body.", status: "Legacy" },
         { group: "Brand", category: "Common", name: "UI Type — Karla", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "328×160 looping animation: download new version → remove old → drag new package in.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "Inspiration only · onboarding exploration; not approved product design or implementation guidance. Looping extension-update tutorial.", status: "Legacy" },
+        { group: "Brand", category: "AI Explorations / Inspiration", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "Inspiration only · onboarding exploration; not approved product design or implementation guidance. Looping extension-install tutorial.", status: "Legacy" },
 
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
         { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Action buttons with optional leading or trailing icons, shared hover motion and accessible states.", status: "Current", updated: true },
@@ -1702,7 +1712,7 @@ Shared implementation rules:
         { group: "Components", category: "Feedback & Overlays", name: "Notification", path: "components/NotificationBell/NotificationBell.html", subtitle: "Bell, interactive panel and notification item states with exact unread behavior.", status: "Current", updated: true },
         { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "White Toast notifications with one-line, two-line and functional-color variants; black Tooltip supports automatic placement, hover direction examples and optional motion.", status: "Current" },
 
-        { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Interactive 15-page Growth Loop preview covering Analysis, Growth, Engage, Post, Verify and Connection.", status: "Current" }
+        { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Maintained multi-component page and interaction demo; confirm actual product design against the relevant latest Figma.", status: "Current" }
       ];
       // Keep historical pages available in the portal; only the separate PNG/HTML
       // output comparison cards are omitted from the preview surface.
@@ -1712,7 +1722,7 @@ Shared implementation rules:
       const groupOrder = ["Brand", "Components", "UI Kits — Webapp"];
       const groupLabels = { "Brand": "Brand", "Components": "Components", "UI Kits — Webapp": "UI Kits — Webapp" };
       const groupIcons = { "Brand": "nav-overview", "Components": "nav-analysis", "UI Kits — Webapp": "nav-overview" };
-      const brandCategoryOrder = ["Analyze", "Automation", "Common", "Engage", "Growth", "Homepage", "Overview", "Post", "Verify"];
+      const brandCategoryOrder = ["Common", "AI Explorations / Inspiration"];
       const componentCategoryOrder = ["Overview", "Content & Status", "Data Display", "Feedback & Overlays", "Inputs & Controls", "Navigation"];
       const compareNavItems = (left, right) => left.name.localeCompare(right.name, "en", { sensitivity: "base" });
       const pageIcons = {
@@ -1868,7 +1878,7 @@ Shared implementation rules:
       function renderNav(query = "") {
         const normalized = query.trim().toLowerCase();
         const visible = normalized
-          ? items.filter(item => `${item.name} ${item.subtitle} ${item.group} ${item.category || ""} ${item.status}`.toLowerCase().includes(normalized))
+          ? items.filter(item => `${item.name} ${item.subtitle} ${item.group} ${item.category || ""} ${item.status} ${item.source || ""} ${item.surface || ""}`.toLowerCase().includes(normalized))
           : items;
         const navOpenState = readNavOpenState();
 
@@ -1881,7 +1891,7 @@ Shared implementation rules:
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}" aria-label="${escapeHtml(`${item.name}${hasUpdate ? ", new" : ""}`)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
               <span class="nav-label nav-item-label"><span class="nav-label-text">${escapeHtml(item.name)}</span>${hasUpdate ? '<span class="nav-new-label" aria-hidden="true">NEW</span>' : ""}</span>
-              ${item.kind === "brand-output" ? '<span class="item-tag">Brand</span>' : ""}
+              ${item.kind === "brand-output" ? `<span class="item-tag">${escapeHtml(item.status)}</span>` : ""}
             </button>`;
             };
           const itemMarkup = group === "Brand"
@@ -2020,15 +2030,15 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         previewTitleLabel.textContent = item.name;
         previewDescription.textContent = item.subtitle;
         const isBrandOutput = item.kind === "brand-output";
-        const isLegacy = item.status === "Legacy";
-        previewMeta.classList.toggle("has-inline-tag", isLegacy);
-        previewTitleTag.textContent = isLegacy ? "legacy" : "";
-        previewTitleTag.hidden = !isLegacy;
+        const hasStatusTag = item.status === "Legacy" || item.status === "Draft";
+        previewMeta.classList.toggle("has-inline-tag", hasStatusTag);
+        previewTitleTag.textContent = hasStatusTag ? item.status.toLowerCase() : "";
+        previewTitleTag.hidden = !hasStatusTag;
         framePreviousItem = previousItem;
         frameNextItem = nextItem;
-        previewTag.textContent = isBrandOutput ? "Brand" : "";
+        previewTag.textContent = isBrandOutput ? [item.source, item.surface].filter(Boolean).join(" · ") : "";
         previewTag.className = "item-tag";
-        previewTag.hidden = !isBrandOutput;
+        previewTag.hidden = !isBrandOutput || !previewTag.textContent;
         const aiPrompt = buildComponentAiPrompt(item.path);
         copyAiHeader.hidden = !aiPrompt;
         copyAiHeader.setAttribute("aria-label", aiPrompt ? `Copy ${item.name} guidance for AI` : "Copy component guidance for AI");
@@ -2099,14 +2109,17 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
             .filter(page => page && typeof page.name === "string" && typeof page.html === "string")
             .map(page => ({
               group: "Brand",
-              category: page.category || "Common",
+              category: page.category || "AI Explorations / Inspiration",
               kind: "brand-output",
               name: page.name,
               path: page.html,
               html: page.html,
               image: page.image,
               subtitle: page.subtitle || "Web-generated design output.",
-              status: "Brand",
+              source: page.source,
+              surface: page.surface,
+              designStatus: page.designStatus,
+              status: page.designStatus === "Selected" ? "Current" : page.designStatus || "Draft",
               updated: page.updated === true,
               updatedAt: page.updatedAt,
               updateId: page.updateId || page.updatedAt || "updated"

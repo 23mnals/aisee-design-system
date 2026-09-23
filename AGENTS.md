@@ -115,16 +115,18 @@ PNG 不是同步、注册或 Demo 展示的必要条件。如果没有与当前 
 
 ### Brand 注册规则
 
-- 每个 Web 产物必须注册到 Brand 对应的 AISEE 功能分类。
+- AISEE 基础规范保留在 Brand / Common。
+- Web / AI 生成的参考与探索稿默认注册到 Brand / AI Explorations / Inspiration；功能上下文写入名称、subtitle 或 metadata，不按页面名称自动迁入 UI Kits，也不把探索稿标为已确认产品设计。
 - 例如 `brand/pages/managed-automation/` 在 UI 中显示为：
 
   ```text
   Brand
-  └── Automation
+  └── AI Explorations / Inspiration
       └── Managed Automation
   ```
 
-- 文件来源通过 metadata 区分 Web / ChatGPT，但不得增加 Web 或 ChatGPT 一级或二级导航。
+- 文件来源通过 metadata 区分 Web / ChatGPT，使用状态通过 `designStatus` 区分 Draft / Selected；两者不得混为一个字段，也不得增加 Web 或 ChatGPT 一级或二级导航。
+- 探索稿必须明确标注“仅供灵感参考，非实际产品设计、非实施规范”；实际产品设计以对应功能的最新 Figma 为准。
 
 ### Web 产物 push 提醒
 

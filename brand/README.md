@@ -2,25 +2,20 @@
 
 Brand 是 Design System 的官网与品牌入口，字体允许 **Karla + Gotu**。
 
-## 按 AIsee 功能模块分类
+## 门户分类
 
-团队预览中的 Brand 页面按产品功能查找，固定顺序为：
+Brand 只区分两类内容：
 
-1. **Homepage**：官网、About 与品牌叙事页面
-2. **Common**：跨模块共用的 Logo、颜色、字体、间距和 Foundations
-3. **Overview**：产品总体概览页面（如有）
-4. **Analyze**：分析结果与比较视图
-5. **Growth**：跨模块增长和效果比较
-6. **Post**：发帖与回复发布教程
-7. **Engage**：信号、回复、追踪和 Engage 仪表盘
-8. **Verify**：验证与追踪相关视觉素材
-9. **Automation**：安装、更新和插件入口等自动化工作流素材
+1. **Common**：AISEE 基础规范，包括 Logo 与资产、颜色、字体、间距、圆角、阴影、dApp 基础视觉和跨组件动效原则。
+2. **AI Explorations / Inspiration**：由 ChatGPT、Codex 或其他 AI 平台生成的方向探索与参考稿。它们仅供灵感参考，不是实际产品设计，也不是开发实施规范；真实产品设计以对应功能的最新 Figma 为准。
 
-分类只改变预览导航的信息架构，不移动或删除历史文件；Legacy 状态也保持不变。新增 Brand 页面时必须填写所属功能模块，跨模块基础规范归入 Common。
+来源与使用状态分开记录：`source / surface` 说明内容从哪里产生，`designStatus` 或门户 `status` 说明 Draft、Current、Legacy 等使用状态。来源为 AI 不等于 Draft，Draft 也不会自动升级为 Selected 或 Current。
+
+分类只改变预览导航的信息架构，不移动或删除历史文件；原路径、直达链接和 Legacy/Draft 状态保持不变。新增 AI 参考稿进入 AI Explorations / Inspiration，并在说明中保留原功能语境；跨模块基础规范归入 Common。
 
 ## 页面产出约定
 
-当用户提出新的页面需求，并要求依据设计规范或 Figma 设计稿实现时，页面原型、静态 HTML、页面专用视觉资源和对应说明默认归档到本目录。每个页面应放在独立子目录中，并同时记录：
+当用户提出新的页面需求，并要求依据设计规范或 Figma 设计稿实现时，页面原型、静态 HTML、页面专用视觉资源和对应说明默认归档到本目录的 AI 探索区。每个页面应放在独立子目录中，并同时记录：
 
 - 页面用途、来源的 Markdown / Figma 节点和版本；
 - 使用的字体、颜色、组件和交互状态；

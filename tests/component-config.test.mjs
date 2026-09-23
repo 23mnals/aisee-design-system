@@ -125,8 +125,9 @@ test('latest pointer advances without changing copied URL; validates guides and 
 test('all Notification demo combinations produce exactly the same production prompt', async () => {
   const ctx=vm.createContext({URL});vm.runInContext(await readFile(new URL('assets/ai-delivery.js',root),'utf8'),ctx);
   const bell=JSON.parse(await readFile(new URL('assets/ai-deliveries/NotificationBell.json',root),'utf8'));
-  const prompt=ctx.AiseeAiDelivery.format(bell,{sections:[]});assert.ok(prompt.length<200);
+  const prompt=ctx.AiseeAiDelivery.format(bell,{sections:[]});assert.ok(prompt.length<360);
   assert.match(prompt,/Integrate AISEE NotificationBell/);assert.match(prompt,/latest.json/);
+  assert.match(prompt,/Reuse/);assert.match(prompt,/shadcn/);assert.match(prompt,/components\.json/);assert.match(prompt,/components\/ui/);assert.match(prompt,/do not create parallel AISEE primitives/);assert.match(prompt,/Use standalone only when no compatible primitive exists/);
   for(const state of ['ready','empty','loading','error'])for(let mask=0;mask<32;mask++) {
     const snapshot={sections:[{component:'NotificationBell',props:{dot:!!(mask&1),count:42}},{component:'NotificationPanel',props:{state,showIcons:!!(mask&2),showStatus:!!(mask&4),showActions:!!(mask&8)},slots:{errorDetail:!!(mask&16)}}]};
     assert.equal(ctx.AiseeAiDelivery.format(bell,snapshot),prompt);

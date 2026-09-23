@@ -1,6 +1,6 @@
 # Brand 页面产出
 
-网页端或其他 AI 工具生成的品牌页面，统一按“一个功能一个文件夹”归档：
+网页端或其他 AI 工具生成的参考与探索页面，统一按“一个主题一个文件夹”归档。这些页面默认只用于灵感探索，不代表已确认产品设计或实施规范；实际产品设计以对应功能的最新 Figma 为准。
 
 ```text
 brand/pages/<feature-slug>/
@@ -17,14 +17,18 @@ brand/pages/<feature-slug>/
   "version": 1,
   "pages": [
     {
-      "name": "Automation",
+      "name": "Managed Automation",
       "html": "brand/pages/automation/preview.html",
-      "subtitle": "Hosted automatic publishing workflow preview."
+      "category": "AI Explorations / Inspiration",
+      "subtitle": "Inspiration only · Automation exploration; not approved product design or implementation guidance.",
+      "source": "ChatGPT",
+      "surface": "Web",
+      "designStatus": "Draft"
     }
   ]
 }
 ```
 
-`name` 必须是侧边栏显示的英文功能名，`html` 是必填的仓库相对路径，`subtitle` 用于说明页面用途；`image` 如果存在，仅作为资源登记和后续扩展使用。门户会把这些条目归到 Brand 分组，在详情页使用单个 HTML 预览，并可通过右上角 `Open HTML` 单独打开。
+`name` 必须是侧边栏显示的英文名称，`html` 是必填的仓库相对路径，`category` 默认使用 `AI Explorations / Inspiration`，`subtitle` 必须说明其灵感参考边界；`image` 如果存在，仅作为资源登记和后续扩展使用。`source` / `surface` 记录来源，`designStatus` 记录使用状态，两者不得混为一个字段。新产物默认 `Draft`，不得因同步或展示自动升级为 `Selected` / `Current`。门户会把这些条目归到 Brand 分组，在详情页使用单个 HTML 预览，并可通过右上角 `Open HTML` 单独打开。
 
 文件路径必须使用仓库相对路径，不要引用聊天临时目录、`/var/folders/...` 或本机绝对路径。放入仓库并登记后，下一次打开门户即可读取；GitHub Pages 构建会同时发布这些文件。

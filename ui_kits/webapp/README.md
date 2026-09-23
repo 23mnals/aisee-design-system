@@ -1,6 +1,6 @@
 # aisee Web App UI Kit
 
-An interactive, multi-page recreation of the current aisee web application shell. The layout baseline is the **Figma 5.5 Growth Loop feature page**, with the Figma 5.7 hosted automatic publishing workflow added as a separate WORKFLOWS destination. Each functional destination is synchronized as a recognisable preview from its current Figma feature area. These previews preserve information architecture and visual language; they are not pixel-perfect production screens.
+An interactive, multi-page UI Kit for demonstrating how AISEE components compose into patterns, page examples and flows. The maintained demo uses the **Figma 5.5 Growth Loop feature page** as a historical layout baseline and includes the Figma 5.7 hosted automatic publishing workflow as a separate WORKFLOWS example. A UI Kit entry being Current means the demo is maintained; it does not mean the screen is an approved product design. Actual product implementation must be checked against the relevant latest Figma source.
 
 ## Design Width
 1440px desktop. Sidebar: 224px expanded / 58px collapsed (icon-only). Header: 70px. Main content padding: 16px.

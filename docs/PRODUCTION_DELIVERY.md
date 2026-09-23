@@ -6,7 +6,7 @@
 
 用户点击 Copy for AI，复制一句明确组件名称的指令和稳定 `latest.json` 地址；只有清单允许的真实样式/交互选项会附加到指令。编码 AI 读取 latest，按其中的相对 `delivery` 地址取得版本说明，再下载并校验安装器，将生产源码接入已有 React 项目。
 
-例如：`Integrate AISEE NotificationBell into the current React project: https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/notification-bell/latest.json`
+例如：`Integrate AISEE NotificationBell into this React project. Reuse compatible host/shadcn primitives in place (inspect components.json and components/ui); do not create parallel AISEE primitives. Use standalone only when no compatible primitive exists: https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/notification-bell/latest.json`
 
 接收方需要兼容的 React 项目及组件清单声明的运行环境。具体 React、Node 和第三方依赖要求由每个组件的 `dependencies / compatibility` 配置声明，Copy for AI 不额外强制统一技术栈版本。Node 声明用于执行源码安装器，不是浏览器组件的运行依赖；宿主构建工具自身的版本要求由宿主负责。还需 TSX/CSS 及该组件必要资源的导入支持，以及可联网读取交付、执行项目命令的编码 AI。无需手动下载附件或安装整个 AISEE 库；缺少基础依赖时按清单和宿主包管理方式补充。
 
@@ -14,11 +14,11 @@
 
 Copy for AI 不假设目标项目使用 AISEE 基础组件。安装前，编码 AI 必须检查目标项目的 package.json、lockfile、现有组件导入、自定义 primitives、theme/provider 和全局样式，识别 shadcn/ui、Radix、MUI、Ant Design、Chakra、Headless UI 或宿主自定义实现。网站无法在复制时读取外部项目；识别与适配由接收方编码 AI 在执行接入时完成，源码安装器只负责校验并解包。
 
-1. 已有兼容 primitive 优先复用，按清单 requiredCapabilities 核实当前版本 API、refs、DOM/状态钩子、受控状态和无障碍能力，不能只凭库名判断兼容。
+1. 已有兼容 primitive 优先复用，按清单 requiredCapabilities 核实当前版本 API、refs、DOM/状态钩子、受控状态和无障碍能力，不能只凭库名判断兼容。shadcn/ui 项目必须先读取 `components.json`、alias 配置与现有 `components/ui` 文件。
 2. 不为一个 AISEE 组件安装另一套完整 UI framework。第三方 primitive 只负责 focus、portal、定位、dialog 无障碍、button/input 等底层能力。
 3. AISEE 的视觉、尺寸、图标、状态、动画、交互及 reduced-motion 必须保留。若宿主带默认外观，须能局部中和；不得直接换成 MUI/Ant 等默认样式。组件公共 props 和 ref 行为也必须保持，尤其 native dialog API 不能静默换成不兼容 ref。
 4. 仅在清单声明的边界建立本地 adapter；不得覆盖宿主原组件、theme、provider 或 global styles。AISEE CSS 及 portal 内容均须局部作用域，禁止全局 button/input/svg/body/reset。兼容字体/token 可复用，差异用组件局部默认值补足，不以换肤破坏 AISEE 规范。
-5. 宿主 primitive 无法满足必要行为时，该边界退回已交付的 standalone implementation，并说明具体缺失能力。primitives 为空表示无需替换库级基础能力，不制造 adapter。完整生产交付始终保留可运行的 standalone 基线，文件数量不随宿主库自动猜测。
+5. 宿主已有兼容的 shadcn/ui 或自定义 primitive 时，直接在它的既有路径与公开 API 上合并 AISEE 视觉、状态和动画；不得创建平行的 `src/components/aisee` primitive，也不得复制第二套 `components/ui`。交付源码只解包到临时参考目录，合并完成后删除。只有宿主 primitive 无法满足必要行为时，该边界才退回 standalone implementation，并说明具体缺失能力。primitives 为空表示无需替换库级基础能力，不制造 adapter。
 6. 适配后检查视觉/状态/动画一致性、键盘与焦点返回、浮层位置/层级及宿主类型检查/构建；避免重复 focus trap、Escape/外部点击监听或定位与动效争用 transform。简短记录实际识别的宿主栈、复用点与回退理由。
 
 每个组件声明 `integrationMode: "host-first"`、`primitives` 与 `preserve`；primitive 使用 `role / sourceFiles / requiredCapabilities / fallback: "standalone"`。sourceFiles 必须属于自身 productionFiles，不能指向 Demo 或外部假想文件。preserve 对宿主适配与 standalone 同样有效。这些字段同步到 latest、交付元数据和版本接入说明；短复制指令无需展开规则。

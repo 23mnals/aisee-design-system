@@ -31,7 +31,11 @@ const add = (name, label, selectors, verify = () => {}) => {
     verify(snapshot.sections);
     const delivery=deliveries[path];assert.ok(delivery,'Missing production manifest');
     const prompt=context.AiseeAiDelivery.format(delivery,snapshot);
-    assert.ok(prompt.startsWith(`Integrate AISEE ${delivery.name} into the current React project:`));
+    assert.ok(prompt.startsWith(`Integrate AISEE ${delivery.name} into this React project.`));
+    assert.ok(prompt.includes('components.json'));
+    assert.ok(prompt.includes('components/ui'));
+    assert.ok(prompt.includes('do not create parallel AISEE primitives'));
+    assert.ok(prompt.includes('Use standalone only when no compatible primitive exists'));
     assert.ok(prompt.includes('/latest.json'));
     assert.doesNotMatch(prompt,/previewState|mock data|Show icons|ready-30/);
     const sanitized=context.AiseeAiDelivery.configuration(delivery,snapshot);
