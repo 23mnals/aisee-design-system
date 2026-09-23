@@ -20,7 +20,8 @@
 ## Git
 
 - 当前分支：`ai/desktop/design-system-current`
-- 本轮未提交、未推送。
+- 功能提交：`f6603cc`。
+- 已推送到 `origin/ai/desktop/design-system-current`，main 未操作。
 
 ## 验收
 

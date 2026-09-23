@@ -4,15 +4,16 @@
 
 ## 当前 Git 与发布
 
-- 开发分支 `ai/desktop/design-system-current`；本地最新提交为 `1ab38e8`，Automation Runner 控制区与 Share 图标优化共 2 个提交因 GitHub 443 连接超时尚未推送；远端仍为 `7cd6dc0`，main 未操作。
+- 开发分支 `ai/desktop/design-system-current`；本地与远端最新功能提交均为 `f6603cc`。此前积压的 `c6ed991`、`1ab38e8` 也已一并推送，main 未操作。
+- `f6603cc` 包含 Automation Runner 眼神清晰度与交互交付、Dropdown 类型梳理、NEW 七天规则、生成交付与相关文档；Pages 新一轮部署待 GitHub 完成。
 - `7cd6dc0` 已完成 CI 与 Pages 部署，公开站点已恢复为 63 pages 并包含 Automation Runner。
 - 既存 10 个无关通知备用资源/原型继续保留，不重置、不删除；旧公开 release 全部保留。
 
 ## 正在做
 
-- NEW 显示期限已恢复为 7 天：更新当天算第 1 天，第 8 天台北零点消失。现有显式日期表保持不变，从最初添加 NEW 或最近一次真实内容更新的日期计算；本轮规则调整不批量续期。已完成针对日期边界的测试，尚未提交、尚未推送。
-- Select / Dropdown 核心类型已按能力重新梳理为 Single-select、Multi-select、Searchable multi-select、Combobox、Action menu、Grouped select；每张卡只显示一个类型标题，控件通过该标题获得无障碍名称。本轮修改已完成本地验收，尚未提交、尚未推送。
-- Automation Runner Demo 控制区与门户 Share 图标优化已完成本地验收和提交；两次 push 与一次 GitHub 连通性检查均超时，待网络恢复后推送。
+- NEW 显示期限已恢复为 7 天：更新当天算第 1 天，第 8 天台北零点消失。现有显式日期表保持不变，从最初添加 NEW 或最近一次真实内容更新的日期计算；本轮规则调整不批量续期。日期边界测试通过并已推送。
+- Select / Dropdown 核心类型已按能力重新梳理为 Single-select、Multi-select、Searchable multi-select、Combobox、Action menu、Grouped select；每张卡只显示一个类型标题，控件通过该标题获得无障碍名称。已完成本地验收并随 `f6603cc` 推送。
+- Automation Runner Demo 控制区、门户 Share 图标、眼睛清晰度与生产交付已完成验收并推送。
 - 用户已确认 A+D 分区动效并授权同步：悬停卡片按指针方向轻探，只有进入绿色小怪兽时播放一次软胶回弹；已同步 Demo、生产组件和 Copy for AI，取消循环抖动。
 - 用户从三种眼神预览中选择 B「慌张扫视」，并最终要求恢复最开始确认的眼睛比例：进入整张卡片时眼睛瞪大、黑色眼珠保持原始相对比例，随后左右寻找两次并继续跟随鼠标；实现使用等效真实尺寸重绘，避免持续拉伸 mask 纹理导致模糊。已同步生产样式、Demo 与 Copy for AI。
 - Automation Runner Demo 的标题与 `NEW` 固定单行；位置选择显示精简为 Left、Center、Right，真实 bottom placement 值不变。
@@ -56,7 +57,7 @@
 
 ## 未完成与下一步
 
-1. 用户确认后提交 Select / Dropdown 类型调整；网络恢复后连同此前 2 个提交推送并核对 Pages。
+1. 等待并核对 `f6603cc` 对应的 GitHub Pages 部署结果。
 2. 在外部 React 项目验证 Automation Runner 接入。
 3. 实际业务项目验证宿主 primitive 复用和全局 app-shell 挂载；本仓库尚未验证真实 MUI/Ant/Chakra 等项目。
 4. FeatureOverview 第二批平台图标条组件化尚未实施；连接弹窗暂缓，支付和自动化任务执行始终由业务接口负责。
