@@ -4,12 +4,19 @@
 
 ## 当前 Git 与发布
 
-- 开发分支 `ai/desktop/design-system-current`；本地与远端最新功能提交均为 `f6603cc`。此前积压的 `c6ed991`、`1ab38e8` 也已一并推送，main 未操作。
-- `f6603cc` 包含 Automation Runner 眼神清晰度与交互交付、Dropdown 类型梳理、NEW 七天规则、生成交付与相关文档；Pages 新一轮部署待 GitHub 完成。
+- 开发分支 `ai/desktop/design-system-current`；本轮发布包含 Automation Runner 修复提交 `ee04263` 与门户 / shadcn 接入规则提交 `3c2feeb`，main 未操作。
+- Automation Runner 空详情、边缘锚定、Demo、生产交付和测试已随 `ee04263` 进入本轮发布。
+- 门户信息架构与 shadcn/ui 原位复用规则已随 `3c2feeb` 进入本轮发布；新版 Copy 明确禁止在兼容宿主中创建平行 AISEE primitive。
 - `7cd6dc0` 已完成 CI 与 Pages 部署，公开站点已恢复为 63 pages 并包含 Automation Runner。
 - 既存 10 个无关通知备用资源/原型继续保留，不重置、不删除；旧公开 release 全部保留。
 
 ## 正在做
+
+- 门户 Brand 导航已收敛为 Common 与 AI Explorations / Inspiration；AI 参考稿保留 Legacy / Draft 和原路径，动态来源与状态分开显示。README、UI Kits 边界和 Figma 权威说明已同步。
+- Copy for AI 已明确：shadcn/ui 项目先读 `components.json`、alias 和现有 `components/ui`，在兼容 primitive 的原路径增量合并 AISEE 视觉、状态和动画，不创建平行 `src/components/aisee`、第二套 `components/ui` 或第二个同类组件；standalone 仅作能力不兼容时的回退。
+- Automation Runner 外部接入没有真实详情或操作时，expanded 自动回落为 default，不再出现空白详情区、展开箭头或残留横线。
+- Automation Runner 拖到视口边缘后切换 default、expanded、minimized 会保持最近边缘或中心锚点；右侧向左展开、向右收起，左侧及上下边缘对称处理。
+- Copy for AI 的 preserve 契约已同步上述规则；最新生产交付版本为 `200678363f0b540a`，等待 Pages 完成部署后进入公开站点。
 
 - NEW 显示期限已恢复为 7 天：更新当天算第 1 天，第 8 天台北零点消失。现有显式日期表保持不变，从最初添加 NEW 或最近一次真实内容更新的日期计算；本轮规则调整不批量续期。日期边界测试通过并已推送。
 - Select / Dropdown 核心类型已按能力重新梳理为 Single-select、Multi-select、Searchable multi-select、Combobox、Action menu、Grouped select；每张卡只显示一个类型标题，控件通过该标题获得无障碍名称。已完成本地验收并随 `f6603cc` 推送。
@@ -40,6 +47,9 @@
 
 ## 本轮验收
 
+- 门户浏览器实测四个一级栏目、Brand 两个分类、Managed Automation Draft 与 ChatGPT · Web 来源分离显示、来源搜索及刷新 hash 深链均通过。
+- Copy for AI 新短指令为单句稳定 latest 地址，明确 shadcn 原位复用与 standalone 回退；`npm run audit:copy-ai` 仍为 30 组件、205 个受控配置案例、0 失败。
+- 浏览器实测右侧卡片 332px → 74px → 332px 时右边缘始终为 1264px；左侧同流程左边缘始终为 8px；顶部展开固定 8px 顶边，底部从 257px 收回 64px 时固定 712px 底边。空详情的默认回落和不渲染详情容器已有组件测试覆盖。
 - Select / Dropdown 本地浏览器确认六类核心类型正常显示；业务功能文案已从核心类型示例移除，组合示例保留。
 - 浏览器实测 Automation Runner：标题展开、箭头收起、横线最小化、点击最小卡片空白区域恢复及整卡拖拽均通过；拖动最小卡片不会误触恢复。Show runner 开关关闭再开启后标题与三项控制保持同一行；B「慌张扫视」在整卡 hover 时正常瞪大并完成两次寻找，放大后眼睛与绿色外壳保持清晰；展开 332×257、最小 74×64、底部间距 24。
 - `npm run typecheck` 通过；`npm test` 139 项通过。
@@ -57,13 +67,16 @@
 
 ## 未完成与下一步
 
-1. 等待并核对 `f6603cc` 对应的 GitHub Pages 部署结果。
-2. 在外部 React 项目验证 Automation Runner 接入。
-3. 实际业务项目验证宿主 primitive 复用和全局 app-shell 挂载；本仓库尚未验证真实 MUI/Ant/Chakra 等项目。
-4. FeatureOverview 第二批平台图标条组件化尚未实施；连接弹窗暂缓，支付和自动化任务执行始终由业务接口负责。
+1. 等待并核对本轮 GitHub Pages 部署结果。
+2. 从在线门户复制新版提示到真实 shadcn/ui 项目，确认只修改宿主既有 primitive 路径，不产生平行 AISEE 组件目录。
+3. 在外部 React 项目验证 Automation Runner 最新交付，重点复测空详情和视口四边。
+4. 实际业务项目验证其他宿主 primitive 复用；本仓库尚未验证真实 MUI/Ant/Chakra 等项目。
+5. FeatureOverview 第二批平台图标条组件化尚未实施；连接弹窗暂缓，支付和自动化任务执行始终由业务接口负责。
 
 ## 最近 session
 
+- [门户归属与宿主 primitive 接入修正](handoff/sessions/2026-09-23-portal-ia-host-primitive.md)
+- [Automation Runner 空详情与边缘锚定修复](handoff/sessions/2026-09-23-automation-runner-edge-anchoring.md)
 - [NEW 标签恢复七天](handoff/sessions/2026-09-23-new-label-seven-day.md)
 - [Automation Runner 眼睛放大清晰度](handoff/sessions/2026-09-23-automation-runner-eye-clarity.md)
 - [Select / Dropdown 类型梳理](handoff/sessions/2026-09-22-select-dropdown-type-taxonomy.md)

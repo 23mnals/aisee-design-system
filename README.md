@@ -6,10 +6,18 @@ aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System
 
 | Part | 内容 | 入口 |
 |---|---|---|
-| **README** | 使用方法、版本、协作与资源状态 | 本文件、[`CONTRIBUTING.md`](CONTRIBUTING.md)、[`CHANGELOG.md`](CHANGELOG.md) |
-| **Brand** | 官网设计语言、颜色、Karla + Gotu 字体、Logo、插画与资产 | [`brand/`](brand/) |
-| **Components** | 旧系统组件、动画图标、Engage 业务组件与 v6 React 基础组件 | [`components/`](components/) |
-| **UI Kits — Webapp** | 仅 Karla 的 dApp foundations、layouts、patterns、screens 与交互 UI Kit | [`ui_kits/webapp/`](ui_kits/webapp/) |
+| **README** | 三条使用路径、版本边界、协作规则与资源状态 | 本文件、[`CONTRIBUTING.md`](CONTRIBUTING.md)、[`CHANGELOG.md`](CHANGELOG.md) |
+| **Brand** | Common 保存 AISEE 基础规范；AI Explorations / Inspiration 保存 AI 参考与探索稿 | [`brand/`](brand/) |
+| **Components** | 可独立复用的组件及其状态、动画、API 和 Copy for AI | [`components/`](components/) |
+| **UI Kits — Webapp** | 多个组件组成的模式、页面示例和交互 Demo | [`ui_kits/webapp/`](ui_kits/webapp/) |
+
+### 三条使用路径
+
+1. **让 AI 按规则出图**：必须同时提供真实 brief、目标页面说明或参考图。当前缺少这些输入时标记为待补，不提供一个看似可用的空入口。
+2. **让设计师探索方向**：从 Brand 的 **AI Explorations / Inspiration** 查看 AI 生成的参考稿。这些内容仅供灵感参考，不代表 AISEE 已确认的实际产品页面，也不是实施规范。
+3. **让开发人员接入组件**：从 Components 选择 `Current` 组件，通过 Copy for AI 接入生产源码、必要样式、状态与动画。
+
+UI Kits 中的 `Current` 只表示该组件组合 Demo 正在维护，不表示它已经成为确认的实际产品页面。真实产品设计始终以对应功能的最新 Figma 为准；未核对 Figma 的示例不得作为产品实施依据。
 
 原有历史页面与资源均保留，包括 Brand previews、animated icons、Engage、Analysis、Post Agent、Billing、Pricing、My Account、教程、screenshots 和 uploads。为缩短仓库根目录，旧版 HTML / 文档已集中到 [`legacy/`](legacy/)；没有重复项的旧资源没有删除。
 
@@ -41,7 +49,7 @@ npm run preview:local
 
 ## 首次接入：开发者与第三方必读
 
-**当前所有已登记的 Current 组件统一使用生产源码交付。** Copy for AI 复制明确组件名称、稳定最新版本入口及真实选项；编码 AI 自动取得清单内的必要源码、样式、资产与类型。Demo、mock 数据、演示控制、字体及全局 Design System 环境不进入交付。NotificationBell 保留图标与数字动画，真实数量和点击行为由产品传入。详见 [生产交付契约](docs/PRODUCTION_DELIVERY.md)。安装前由编码 AI 识别宿主 UI 库和自定义 primitives，按 integrationMode / primitives / preserve 复用兼容底层能力，保留 AISEE 外观与行为；不覆盖宿主主题或引入整套框架，不兼容时回退独立实现。
+**当前所有已登记的 Current 组件统一使用生产源码交付。** Copy for AI 复制明确组件名称、稳定最新版本入口及真实选项；编码 AI 自动取得清单内的必要源码、样式、资产与类型。Demo、mock 数据、演示控制、字体及全局 Design System 环境不进入交付。NotificationBell 保留图标与数字动画，真实数量和点击行为由产品传入。详见 [生产交付契约](docs/PRODUCTION_DELIVERY.md)。安装前由编码 AI 识别宿主 UI 库和自定义 primitives，按 integrationMode / primitives / preserve 复用兼容底层能力，保留 AISEE 外观与行为；不覆盖宿主主题或引入整套框架，不兼容时回退独立实现。若宿主已有兼容的 shadcn/ui 或自定义基础组件，应直接在现有路径上合并 AISEE 视觉、状态与动画，不得再创建一套平行的 AISEE primitive。
 
 完整步骤见 [第三方接入指南](docs/GETTING_STARTED.md)：获取与授权、环境准备、已安装 / 未安装 / 源码 / 非 React 四类接入、完整 Tooltip 用例、字体和资源、SSR、常见错误、版本更新及交付验收。当前仓库标记 private / UNLICENSED，不提供已验证的公共 npm 安装入口。
 
@@ -103,11 +111,14 @@ Button 支持显示 / 隐藏图标。一般操作图标在左，前进箭头与 
 
 ## 最近更新
 
-### 2026-09-23 · Automation Runner 与 NEW 规则
+### 2026-09-23 · Automation Runner、NEW 与门户归属
 
+- Brand 将 AISEE 基础规范与 AI 探索稿分开；UI Kits 明确为组件组合 Demo，README 增加三条使用路径和 Figma 权威边界。
 - 卡片悬停时继续保留瞪眼、两次慌张扫视和鼠标跟随效果。
 - 恢复最初确认的眼睛比例与慌张扫视观感；白色眼眶和黑色眼珠改用等效真实尺寸绘制，不再持续拉伸小尺寸纹理。
 - 减少动态模式同步使用清晰的静态瞪眼状态。
+- 未提供详情内容时自动保持默认态，不显示空白详情区、展开箭头或多余分隔线。
+- 拖拽到视口边缘后切换展开、默认和最小化，会固定最近边缘向内展开、向边缘收起，避免卡片被截断。
 - `NEW` 恢复为 7 天：更新当天算第 1 天，第 1–7 天显示，第 8 天台北零点自动消失。
 - 已有内容继续沿用最初登记的更新日期；修改规则、刷新或重新构建不会统一续期，只有真实内容更新才重新计时。
 

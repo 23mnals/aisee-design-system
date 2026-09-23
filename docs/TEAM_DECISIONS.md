@@ -227,11 +227,21 @@
 
 安装前先识别宿主已有 UI 库与自定义 primitives，按组件清单的 `integrationMode / primitives / preserve` 优先复用兼容底层能力；不为单个组件安装整套 UI framework。保留 AISEE 视觉、状态、动画与行为；样式局部作用域，不覆盖宿主 theme/provider/global styles。不兼容时退回交付的 standalone 实现。识别和适配由编码 AI 在目标项目执行，解包安装器不会自动改造框架。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
 
+对于已有 shadcn/ui 的项目，接入 AISEE 组件时先读取 `components.json`、路径 alias 与 `components/ui` 中的现有 primitive；兼容时直接在宿主现有组件路径上增加 AISEE 的视觉、状态、动画和行为，不创建平行的 `src/components/aisee` 或第二套 `components/ui`。交付源码在这种模式下只作为临时参考，合并完成后删除临时目录；只有宿主 primitive 无法满足必要行为时才使用 standalone 实现。
+
+## 2026-09-23 · 门户归属与权威边界
+
+- README 保留为三条使用路径的入口：让 AI 在真实 brief / 参考图基础上按规则出图、让设计师探索方向、让开发接入 Current 组件。缺少实际 brief 或参考图的出图入口标记为待补，不提供看似可用的空入口。
+- Brand / Common 只承载 AISEE Logo、资产、颜色、字体、dApp 基础视觉和跨组件动效等基础规范。AI 生成的 Engage、Growth、Post、Automation 等参考稿归入 Brand / AI Explorations / Inspiration，并明确仅供灵感参考，不是实际产品设计或实施规范。
+- Components 只承载可独立复用的生产组件及其状态、动画、API 和 Copy for AI。UI Kits 承载多个组件组成的模式、页面示例和交互 Demo；Current 只表示该 Demo 正在维护，不自动表示它是已确认产品页面。
+- 实际产品设计以对应功能的最新 Figma 为准。来源 `source / surface` 与使用状态 `designStatus` 分开记录；旧稿保持 Legacy，Draft 不自动升级为 Selected / Current。
+- 本次归属调整只改导航与元数据，不移动或删除物理文件，并保留旧直达路径、搜索、状态标签和现有深链。
+
 ## 2026-09-21 · Automation Runner
 
 - Automation Runner 是挂载在应用根布局、独立于路由内容的常驻浮层；页面切换不卸载。关闭只隐藏窗口，不能停止或修改真实自动化任务。
-- 组件支持 default、expanded、minimized 三种受控或非受控状态；标题或箭头展开、横线最小化，点击最小化卡片任意位置恢复 default，绿色眼睛作为键盘可访问的恢复控件。标题、说明、详情行和返回操作由宿主业务传入，Demo 路由和模拟状态不进入生产交付。
+- 组件支持 default、expanded、minimized 三种受控或非受控状态；标题或箭头仅在有真实详情或操作时展开，外部传入 expanded 但内容为空时自动回落为 default，不显示空白详情区、箭头或分隔线。横线最小化，点击最小化卡片任意位置恢复 default，绿色眼睛作为键盘可访问的恢复控件。标题、说明、详情行和返回操作由宿主业务传入，Demo 路由和模拟状态不进入生产交付。
 - 使用 Figma 72:55666、72:56017、72:55315 的几何与原始图标；默认 332×64、展开约 332×252、最小 74×64。
 - 底部弹性出退场、眨眼和眼珠跟随鼠标是该浮层的确认交互。悬停卡片时眼睛瞪大并左右慌张扫视两次，同时按指针方向轻探；只有进入绿色小怪兽时播放一次软胶回弹，不循环抖动。减少动态效果时停止扫视和位移，只保留静态放大的眼神反馈，状态和控制保持可用。
-- 整张卡片任意位置均可拖拽并限制在视口内；超过移动阈值后不触发展开、最小化、关闭或操作按钮。拖拽手柄另支持键盘方向键；关闭后的重新唤起入口由宿主应用提供。
+- 整张卡片任意位置均可拖拽并限制在视口内；切换 default、expanded、minimized 时保持最近视口边缘或中心锚点，右侧向左展开、向右收起，左侧和上下边缘对称处理，尺寸动画期间也不能越出视口。超过移动阈值后不触发展开、最小化、关闭或操作按钮。拖拽手柄另支持键盘方向键；关闭后的重新唤起入口由宿主应用提供。
 - Copy for AI 接入已有同类浮层时必须原位增量合并，不能创建第二个 Runner。只有现有眨眼和眼珠跟随行为已正确兼容时才保留；除此之外，卡片出退场、三种视图、A+D、拖拽、视口限制和 reduced-motion 均以当前交付为准，同时禁止重复 DOM、keyframes、状态和全局 pointermove 监听。
