@@ -756,6 +756,30 @@
         font-weight: 400;
         line-height: 18px;
       }
+      .ai-copy-controls { position: relative; flex-shrink: 0; }
+      .ai-copy-controls[hidden], .ai-copy-controls [hidden] { display: none !important; }
+      .ai-copy-primary { display: flex; align-items: stretch; border: 1px solid #bedb80; border-radius: 10px; background: #f5ffdb; }
+      .ai-copy-primary #copyAiHeader { gap: 9px; border: 0; border-radius: 9px 0 0 9px; background: transparent; padding: 0 12px; height: 38px; min-height: 38px; }
+      .preview-actions #copyAiModeLabel { display: inline; }
+      .ai-copy-mode-label { padding-left: 10px; border-left: 1px solid #cdddb0; font-size: 12px; font-weight: 400; color: #52613b; white-space: nowrap; }
+      .ai-copy-trigger { display: grid; place-items: center; width: 32px; padding: 0; background: transparent; color: #52613b; border: 0; border-left: 1px solid #dbe8c1; border-radius: 0 9px 9px 0; cursor: pointer; }
+      .ai-copy-primary #copyAiHeader:hover, .ai-copy-trigger:hover, .ai-copy-trigger[aria-expanded="true"] { background: #eaffbe; }
+      .ai-copy-controls button:focus-visible { outline: 2px solid #7fa400; outline-offset: 3px; }
+      .ai-copy-controls button:disabled { opacity: .55; cursor: wait; }
+      .ai-copy-trigger svg { width: 14px; height: 14px; transition: transform 160ms ease; }
+      .ai-copy-trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+      .ai-copy-menu { position: absolute; top: calc(100% + 8px); right: 0; z-index: 80; width: 300px; max-width: calc(100vw - 32px); padding: 6px; background: #fff; border: 1px solid rgba(17,17,17,.08); border-radius: 12px; box-shadow: 0 8px 32px rgba(17,17,17,.12), 0 2px 6px rgba(17,17,17,.04); }
+      .ai-copy-menu-heading { margin: 0; padding: 8px 10px 5px; font: 500 11px/16px Karla, Arial, sans-serif; color: #858585; }
+      .ai-copy-option { display: flex; width: 100%; align-items: center; gap: 10px; padding: 10px; border: 0; border-radius: 7px; background: transparent; color: #111; text-align: left; cursor: pointer; font: 500 14px/18px Karla, Arial, sans-serif; }
+      .ai-copy-option:hover, .ai-copy-option:focus-visible { background: #f5f5f5; }
+      .ai-copy-option[aria-checked="true"] { background: #f7fbeF; }
+      .ai-copy-option::before { content: ''; width: 14px; height: 14px; flex: 0 0 14px; border: 1px solid #dedede; border-radius: 50%; }
+      .ai-copy-option[aria-checked="true"]::before { border-color: #a7c852; background: #bcea67; box-shadow: inset 0 0 0 3px #fff; }
+      .ai-copy-option-copy { display: grid; gap: 3px; min-width: 0; }
+      .ai-copy-option small { display: block; font-size: 12px; line-height: 16px; font-weight: 400; color: #828282; overflow-wrap: anywhere; }
+      .ai-copy-variants { margin-top: 6px; padding-top: 4px; border-top: 1px solid #eee; max-height: 220px; overflow-y: auto; }
+      .ai-copy-status { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+      @media (prefers-reduced-motion: reduce) { .ai-copy-trigger svg { transition: none; } }
       #openStandalone,
       #copyAiHeader {
         min-height: 40px;
@@ -1001,7 +1025,7 @@
               <article class="principle"><strong>3. Add the real task</strong><p>Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.</p></article>
               <article class="principle"><strong>4. Compare the result</strong><p>Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.</p></article>
             </div>
-            <div class="priority-note"><strong>Which handoff to use:</strong> Copy for AI first inspects the target component, styles, UI library and interactions. Preserve what exists and add only requested missing capabilities. For animation requests, add only missing motion without changing existing appearance or interactions. In shadcn/ui projects inspect components.json and components/ui; do not create parallel primitives or import the full delivery stylesheet. Create a component only when the target is absent. Preview options never authorize replacing existing design. Requires a compatible React project and a coding AI with network and Node access.</div>
+            <div class="priority-note"><strong>Which handoff to use:</strong> Copy for AI defaults to Apply AISEE design for component visuals and motion; Add motion only preserves static appearance. Both reuse the host component and UI library and protect business behavior. Only the target component and local styles may change; page, hook, API, request or configuration edits require confirmation of exact files and minimal diffs. No preview variant is included unless explicitly selected. Requires a compatible React project and a coding AI with network and Node access.</div>
             <p><a href="docs/GETTING_STARTED.md" target="_blank" rel="noreferrer">第三方接入指南 · Installation, prerequisites and troubleshooting</a></p>
           </section>
 
@@ -1085,10 +1109,29 @@
             </div>
             <div class="preview-actions">
               <span class="item-tag" id="previewTag"></span>
+              <div class="ai-copy-controls" id="copyAiControls" hidden>
+                <div class="ai-copy-primary">
               <button class="action-button ai-copy" id="copyAiHeader" type="button" hidden aria-label="Copy component guidance for AI" title="Copy for AI">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 4 1.2 3.1L19 8.3l-2.8 1.2L15 13l-1.2-3.5L11 8.3l2.8-1.2L15 4Z"/><path d="m7 12 .8 2.2L10 15l-2.2.8L7 18l-.8-2.2L4 15l2.2-.8L7 12Z"/></svg>
-                <span id="copyAiHeaderLabel">Copy for AI</span>
+                <span id="copyAiHeaderLabel">Copy for AI</span><span class="ai-copy-mode-label" id="copyAiModeLabel">Apply design</span>
               </button>
+                  <button class="ai-copy-trigger" id="copyAiMenuTrigger" type="button" aria-label="Copy for AI options" aria-haspopup="menu" aria-expanded="false" aria-controls="copyAiMenu"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+                <div class="ai-copy-menu" id="copyAiMenu" role="menu" aria-label="Copy for AI options" hidden>
+                  <p class="ai-copy-menu-heading" role="presentation">Copy mode</p>
+                  <div role="group" aria-label="Copy mode">
+                    <button class="ai-copy-option" type="button" role="menuitemradio" aria-checked="true" data-copy-mode="design"><span class="ai-copy-option-copy">Apply AISEE design<small>Update visual style and motion</small></span></button>
+                    <button class="ai-copy-option" type="button" role="menuitemradio" aria-checked="false" data-copy-mode="motion"><span class="ai-copy-option-copy">Add motion only<small>Keep the current appearance</small></span></button>
+                  </div>
+                  <div class="ai-copy-variants" id="copyAiVariantRow" hidden>
+                    <p class="ai-copy-menu-heading" role="presentation">Target variant</p>
+                    <div id="copyAiVariantOptions" role="group" aria-label="Target variant"></div>
+                  </div>
+                </div>
+                <select id="copyAiMode" hidden aria-hidden="true" tabindex="-1"><option value="design">Apply AISEE design</option><option value="motion">Add motion only</option></select>
+                <select id="copyAiVariant" hidden aria-hidden="true" tabindex="-1"><option value="">No specific variant</option></select>
+                <span class="ai-copy-status" id="copyAiStatus" role="status" aria-live="polite">Apply AISEE design · No specific variant</span>
+              </div>
               <button class="action-button" id="copyTsxHeader" type="button" hidden aria-label="Copy AiseeLogoAnimation TSX">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 8.75A2.75 2.75 0 0 1 10.75 6h7.5A2.75 2.75 0 0 1 21 8.75v7.5A2.75 2.75 0 0 1 18.25 19h-7.5A2.75 2.75 0 0 1 8 16.25v-7.5Z"/><path d="M16 6V5.75A2.75 2.75 0 0 0 13.25 3h-7.5A2.75 2.75 0 0 0 3 5.75v7.5A2.75 2.75 0 0 0 5.75 16H8"/></svg>
                 <span id="copyTsxHeaderLabel">复制 TSX</span>
@@ -1124,7 +1167,7 @@
         "requiredSources": ["docs/GETTING_STARTED.md", "aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "docs/COMPONENT_CONFIGURATION.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
         "rules": {
           "appTypography": "AISEE previews use Karla; standalone deliveries inherit compatible host typography.",
-          "hostProjectCompatibility": "Inspect the target component, local styles, UI library and interactions first, including shadcn components.json and components/ui. Existing host styles and interactions take precedence over delivery defaults, preserve and preview options. Add only requested missing capabilities; motion-only requests add only missing animation with cleanup and reduced-motion, preserving appearance and interaction. Never import full delivery CSS, replace UI libraries or create parallel primitives. Incompatibility is not permission to replace an existing target. Only create a component when the target is absent, following host conventions. See docs/PRODUCTION_DELIVERY.md.",
+          "hostProjectCompatibility": "Inspect the host target, styles, UI library and interactions first, including shadcn components.json and components/ui. Apply AISEE design updates component visuals and motion; Add motion only preserves static appearance. Both protect business behavior and restrict writes to the identified component and owned local styles. Page, hook, API, request and configuration edits require exact files, reasons, minimal diffs and explicit confirmation first. No variant is implied by preview defaults. The selected goal and scope override generic reference preservation/installation rules. See docs/PRODUCTION_DELIVERY.md.",
           "pageBackground": "#FAFAFA",
           "cardBackground": "#FFFFFF",
           "analysisPrimary": "#CFFF29",
@@ -1147,6 +1190,7 @@
     <script src="assets/update-badges.js"></script>
     <script src="assets/component-config.js"></script>
     <script src="assets/ai-delivery.js"></script>
+    <script src="assets/copy-ai-controls.js"></script>
     <script>
       const colorArchitecture = JSON.parse(document.getElementById("aisee-color-architecture").textContent);
       let activeColorLayer = "semantic";
@@ -1242,7 +1286,7 @@
         ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. All registered Current components copy a named production integration instruction, a stable latest-delivery URL and allowed real options. Your coding AI retrieves the required implementation, styles and assets; demo controls and fonts stay here.", "点击 Open HTML 旁的双星按钮。所有已登记的 Current 组件统一复制具体名称、稳定最新交付入口和允许的真实配置；编码 AI 取得必要生产源码、样式与资源，演示控件和字体保留在本站。"],
         ["3. Add the real task", "3. 补充真实任务"], ["Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.", "把 Prompt 连同目标页面、真实内容和预期行为交给 AI。AI 使用真实业务内容，并保留必要的生产组件资源。"],
         ["4. Compare the result", "4. 对照验收"], ["Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.", "对照 Current Demo 检查生成页面，包括适用的 Hover、Focus、Disabled、Loading、Empty、响应式和无障碍状态。"],
-        ["Which handoff to use:", "如何选择交付方式："], ["Copy for AI first inspects the target component, styles, UI library and interactions. Preserve what exists and add only requested missing capabilities. For animation requests, add only missing motion without changing existing appearance or interactions. In shadcn/ui projects inspect components.json and components/ui; do not create parallel primitives or import the full delivery stylesheet. Create a component only when the target is absent. Preview options never authorize replacing existing design. Requires a compatible React project and a coding AI with network and Node access.", "Copy for AI 先检查目标组件、样式、UI 库和交互，保留已有实现，只补本次缺失能力。动画需求只加缺失动效，不改外观或交互。shadcn/ui 同时检查 components.json 和 components/ui；不创建平行组件，不导入整份交付样式。只有目标组件不存在时才新增；预览选项不授权替换已有设计。需要兼容 React 项目及可联网、执行 Node 的编码 AI。"],
+        ["Which handoff to use:", "如何选择交付方式："], ["Copy for AI defaults to Apply AISEE design for component visuals and motion; Add motion only preserves static appearance. Both reuse the host component and UI library and protect business behavior. Only the target component and local styles may change; page, hook, API, request or configuration edits require confirmation of exact files and minimal diffs. No preview variant is included unless explicitly selected. Requires a compatible React project and a coding AI with network and Node access.", "Copy for AI 默认 Apply AISEE design，更新组件视觉和动效；Add motion only 保留静态外观。两者复用宿主组件和 UI 库、保护业务行为，只改目标组件和局部样式；页面、hook、API、请求及配置改动先列文件和最小 diff 等待确认。默认不携带预览参数，只有明确选择变体才附加。需要兼容 React 项目及可联网、执行 Node 的编码 AI。"],
         ["AI implementation handoff", "AI 实施交付"], ["This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.", "本门户是可读参考资料，但不能保证其他 AI 会执行链接页面或推断出全部实施规则。应把已部署门户或仓库、权威规范文件，以及“复用 Current 组件”的明确要求一起交给 AI。"],
         ["Minimum input", "最少输入"], ["Share this HTML,", "提供本 HTML、"], ["and the target-page requirements. Include a compatible installed package, authorized tgz or complete source, plus docs/GETTING_STARTED.md.", "以及目标页面需求；同时提供兼容的已安装包、获准使用的 tgz 或完整源码，以及 docs/GETTING_STARTED.md。"], ["Reliable assets", "可靠资源"], ["Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.", "优先提供公开 HTTPS 预览或仓库/ZIP。单个本地 HTML 无法携带不可访问的相对字体、图片、源文件或链接子页。"],
         ["Implementation order", "实施顺序"], ["Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.", "Team Decisions → Design Spec v6 → Current 组件实现 → 带日期的 Figma 功能区块 → Legacy 参考。"], ["Verification", "验收"], ["Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.", "要求接收方 AI 列出复用组件、说明偏差，并把最终页面与 Current Demo 对照。"],
@@ -2006,7 +2050,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         activePath = "";
         saveActivePath("");
         previewFrame.removeAttribute("src");
-        copyAiHeader.hidden = true;
+        copyAiControls.reset(false);
         copyTsxHeader.hidden = true;
         previewView.hidden = true;
         homeView.hidden = false;
@@ -2040,10 +2084,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         previewTag.className = "item-tag";
         previewTag.hidden = !isBrandOutput || !previewTag.textContent;
         const aiPrompt = buildComponentAiPrompt(item.path);
-        copyAiHeader.hidden = !aiPrompt;
-        copyAiHeader.setAttribute("aria-label", aiPrompt ? `Copy ${item.name} guidance for AI` : "Copy component guidance for AI");
-        copyAiHeaderLabel.textContent = "Copy for AI";
-        copyAiHeader.disabled = false;
+        copyAiControls.reset(Boolean(aiPrompt));
         copyTsxHeader.hidden = item.path !== logoAnimationPath;
         copyTsxHeaderLabel.textContent = "复制 TSX";
         copyTsxHeader.disabled = false;
@@ -2167,29 +2208,27 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         if (!copied) throw new Error("copy unavailable");
       }
 
-      async function copyAiPrompt() {
-        const item = items.find(entry => entry.path === activePath);
-        const aiPrompt = item ? buildComponentAiPrompt(item.path) : "";
-        if (!item || !aiPrompt) return;
-        copyAiHeader.disabled = true;
-        copyAiHeaderLabel.textContent = "Copying…";
+      const copyAiControls = AiseeCopyAiControls.create({
+        document, deliveryApi: AiseeAiDelivery,
+        getContext: () => items.find(entry => entry.path === activePath),
+        readSnapshot: path => AiseeComponentConfig.readFrame(previewFrame, path, document.baseURI),
+        resolveDelivery: path => AiseeAiDelivery.resolveDelivery(path, document.baseURI),
+        writeClipboard, showToast
+      });
+      let detachCopyPreview = () => {};
+      previewFrame.addEventListener("load", () => {
+        detachCopyPreview();
+        void copyAiControls.refresh();
         try {
-          const configuration = AiseeComponentConfig.readFrame(previewFrame, item.path, document.baseURI);
-          const delivery = await AiseeAiDelivery.resolveDelivery(item.path, document.baseURI);
-          if (activePath !== item.path) throw new Error('页面已切换，请在当前组件页面重新复制。');
-          const prompt = AiseeAiDelivery.format(delivery, configuration);
-          await writeClipboard(prompt);
-          copyAiHeaderLabel.textContent = "Copied";
-          showToast(`${delivery.name}: production integration prompt copied.`);
-        } catch (error) {
-          copyAiHeaderLabel.textContent = "Copy failed";
-          showToast(error.message || "Prompt copy failed");
-        } finally {
-          window.setTimeout(() => {
-            copyAiHeader.disabled = false;
-            copyAiHeaderLabel.textContent = "Copy for AI";
-          }, 1600);
-        }
+          const doc = previewFrame.contentDocument;
+          const refresh = () => requestAnimationFrame(() => copyAiControls.refresh());
+          doc.addEventListener("click", refresh);
+          doc.addEventListener("change", refresh);
+          detachCopyPreview = () => { doc.removeEventListener("click", refresh); doc.removeEventListener("change", refresh); };
+        } catch { detachCopyPreview = () => {}; }
+      });
+      async function copyAiPrompt() {
+        await copyAiControls.copy();
       }
 
       async function copyLogoTsx() {

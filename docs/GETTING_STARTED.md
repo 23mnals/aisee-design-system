@@ -3,14 +3,14 @@
 适用于团队开发、第三方和编码 AI。所有已登记的 Current 组件统一使用 [生产交付契约](PRODUCTION_DELIVERY.md)。Copy for AI 只取得目标组件必要的源码、样式、运行依赖与生产资产，继承宿主字体；不复制 Demo、模拟数据、展示布局或整个 Design System 环境。
 
 
-安装前检查实际目标组件、样式、UI 库与现有交互；shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`。保留宿主已有样式、布局、图标、API、状态和事件，只添加本次要求且缺失的能力。动画需求只添加缺失动画、必要 hook 与 reduced-motion，不改变静态外观或交互，不导入整份交付 CSS，不创建平行组件。不兼容不能作为重建理由；只有目标组件不存在时才新增，并复用宿主 UI 库和样式约定。交付源码只作为必要的临时参考；安装器仅校验解包，不会自动适配宿主。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
+接入前检查实际目标、样式、UI 库与调用处，shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`，列出精确可写路径。Apply AISEE design 更新目标组件视觉与动效；Add motion only 保留静态外观、仅加缺失动效。两种模式均只允许修改目标组件实现与专属局部样式，保留公开 API、状态所有权、事件与业务流程；页面布局/文案、业务逻辑、hook 文件、API、请求和配置默认不可写。必要的范围外改动先列文件、原因、最小 diff 与影响，等待明确确认后执行。组件内部动画 effects/refs 可用于 cleanup/reduced-motion，但不能改变业务状态。目标不存在或不明确也需先确认路径。不导入整份交付 CSS、不创建平行组件；参考解包到宿主外临时目录，选定 Goal 与范围优先于参考通用安装规则。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
 
 ## 0. 单组件最短路径
 
 1. 提供方构建并发布组件交付；本地预览不能代替公开地址。
-2. 打开目标组件，选择真实布局/样式/交互变量，点击 **Copy for AI**。按钮核对公开版本与文件校验；未发布则显示原因。
-3. 将短指令粘贴给能编辑现有 React 项目、联网并执行 Node 的编码 AI，说明要放在哪里。指令包含具体组件名、稳定 latest 地址及白名单允许的实际选项，不含源码归档或演示状态。
-4. AI 读取 latest 指向的说明，下载并验证安装器，将生产组件连接到真实业务数据和回调；无需用户下载/上传附件或安装整库。
+2. 打开目标组件，在菜单选择 Apply AISEE design（默认）或 Add motion only；默认无预览参数，需要时在 Target variant 明确选择一项，再点击 **Copy for AI**。按钮核对公开版本与文件校验；未发布则显示原因。
+3. 将完整指令粘贴给能编辑现有 React 项目、联网并执行 Node 的编码 AI，说明目标组件的现有路径。指令包含具体组件名、稳定 latest 地址及白名单允许的实际选项，不含源码归档或演示状态。
+4. AI 读取 latest 指向的说明，在宿主外临时目录下载并验证参考源码，只在已列出的组件范围内接入；不调整既有业务数据、回调或调用页面。任何必要的范围外改动必须先展示最小方案并等待确认。
 
 接收环境：兼容的 React 项目及组件清单 `dependencies / compatibility` 声明的 React、Node 和第三方依赖范围；Copy for AI 不额外强制统一版本。Node 用于源码安装步骤。需要 TSX/CSS 处理，带生产资源的组件还需 SVG/image 导入支持。复用现有兼容依赖，不要求 Tailwind/shadcn/额外动画库。非 React 项目不能直接调用 React 组件；无联网/命令执行能力的聊天 AI 不能完成自动安装。
 
@@ -25,7 +25,7 @@ latest 会在发布新版本后更新；旧版本链接保持历史含义。已�
 | React 项目已安装兼容的 AISEE 包 | 检查版本与导出，导入组件及样式 |
 | React 项目未安装，但拿到了团队提供的 `.tgz` | 按下面的本地安装包流程接入（推荐） |
 | 有完整仓库 / ZIP，没有安装包 | 在设计系统仓库构建并打包，或迁入源码及其完整依赖 |
-| 收到任一 Current 组件新版 Copy for AI | AI 按公开地址自动下载组件接入；无需整库、附件或内部仓库 |
+| 收到任一 Current 组件新版 Copy for AI | AI 按公开地址读取参考，只改指定组件；范围外文件先确认 |
 | 只有截图 / 旧版提示词 / 在线预览 | 获取缺失的源码交付文件；不能凭包名写一个不存在的 import |
 | Vue / Svelte / 原生 HTML 等非 React 项目 | 使用 tokens / 字体 / 资源和行为规范，在目标框架实现；现有 React 组件不能直接当作该框架组件调用 |
 
@@ -88,7 +88,7 @@ export function Example() {
 }
 ```
 
-组件的 `content`、`children`、业务值和回调仍须按公开类型填写；Copy for AI 的配置快照只包含设计选择，不是完整可运行页面。未传 `animation` 时 Tooltip 为 subtle，当前 Demo 初始选择为 playful，复制后会显式携带 playful。
+组件的 `content`、`children`、业务值和回调仍须按公开类型填写；Copy for AI 的配置快照只包含设计选择，不是完整可运行页面。未传 `animation` 时 Tooltip 为 subtle，当前 Demo 初始选择为 playful；只有明确选择该目标变体后才携带 playful，默认复制不附加。
 
 此处整库备选构建包包含 CSS、Karla 字体及库内部用到的资源（单组件生产交付不带字体），不需要再从 Demo 地址热链。自定义业务图标 / 头像 / 图片由调用方提供：使用已获准资源，若另行引用 `@stemui/icons` 再按其实际文档安装，不能凭猜测的导出名称使用。不要把 `../../assets/...` 的 Demo 路径原样贴进产品。
 

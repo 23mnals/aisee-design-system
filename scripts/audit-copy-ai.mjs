@@ -32,15 +32,19 @@ const add = (name, label, selectors, verify = () => {}) => {
     const delivery=deliveries[path];assert.ok(delivery,'Missing production manifest');
     const prompt=context.AiseeAiDelivery.format(delivery,snapshot);
     assert.ok(prompt.startsWith(`Integrate AISEE ${delivery.name} into this React project.`));
-    assert.ok(prompt.includes('components.json'));
-    assert.ok(prompt.includes('components/ui'));
-    assert.ok(prompt.includes('do not create parallel AISEE primitives'));
-    assert.ok(prompt.includes('Only create a component when the target is absent'));
-    assert.ok(prompt.includes('do not restyle or change interactions'));
-    assert.ok(prompt.includes('Host preservation overrides'));
-    assert.ok(prompt.includes('do not create parallel AISEE primitives or import full delivery CSS'));
+    const motion=context.AiseeAiDelivery.format(delivery,snapshot,{mode:'motion'});
+    assert.equal(prompt.replace(/^Goal — .*$/m,''),motion.replace(/^Goal — .*$/m,''));
+    assert.ok(prompt.includes('Goal — Apply AISEE design:'));
+    assert.ok(motion.includes('Goal — Add motion only:'));
+    for (const rule of ['components.json','components/ui','exact allowed paths','page layout or copy','hook files','APIs','request layers','project/build/cache configuration','wait for my explicit confirmation']) assert.ok(prompt.includes(rule),rule);
     assert.ok(prompt.includes('/latest.json'));
-    assert.doesNotMatch(prompt,/previewState|mock data|Show icons|ready-30/);
+    assert.doesNotMatch(prompt,/Variant playground|Selected variant target|"props"|previewState|ready-30/);
+    const variants=context.AiseeAiDelivery.variants(delivery,snapshot);
+    for(let variantIndex=0;variantIndex<variants.length;variantIndex++) {
+      const selected=context.AiseeAiDelivery.format(delivery,snapshot,{variantIndex});
+      assert.ok(selected.endsWith(JSON.stringify(variants[variantIndex])));
+      assert.doesNotMatch(selected,/Variant playground/);
+    }
     const sanitized=context.AiseeAiDelivery.configuration(delivery,snapshot);
     assert.ok(sanitized.every(s=>!s.previewState&&!s.composition&&!s.rules));
     cases.push({name, label, path, status:'pass', snapshot, prompt});
@@ -123,7 +127,7 @@ await writeFile(resolve(output,'report.json'),JSON.stringify(report,null,2));
 const csvCell=value=>'\"'+String(value).replaceAll('\"','\"\"')+'\"';
 await writeFile(resolve(output,'review.csv'),'component,case,contract,browser,AI_output,model,viewport,evidence,deviations\n'+cases.map(c=>[c.name,c.label,c.status,'NOT RUN','NOT RUN','','','',''].map(csvCell).join(',')).join('\n'));
 const escape=text=>String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-await writeFile(resolve(output,'report.html'),`<!doctype html><meta charset="utf-8"><title>Copy for AI 批量检查</title><style>body{font:16px/1.6 system-ui;max-width:1080px;margin:40px auto;padding:0 24px;background:#fafafa;color:#111}details{background:white;border:1px solid #ddd;border-radius:8px;margin:8px 0;padding:12px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}summary{cursor:pointer}.warning{background:#fff5d6;padding:16px}</style><h1>Copy for AI 批量检查</h1><p>${report.components} 个组件 · ${cases.length} 个配置案例 · ${failed} 项失败</p><p class="warning">本报告验证复制配置与 API 契约。浏览器点击路径、视觉还原和其他 AI 的实际生成结果仍须单独验收。未测试项不能当作通过。案例使用受控测试值，不代表用户当前浏览器选择或产品默认值。</p><h2>检查结果</h2>${checks.map(c=>`<details open><summary>${escape(c.status+' · '+c.name)}</summary><pre>${escape(c.error||'通过')}</pre></details>`).join('')}<h2>配置与真实提示词模板</h2>${cases.map(c=>`<details><summary>${escape(c.status+' · '+c.name+' · '+c.label)}</summary><p>参考：${escape(c.path)}</p><pre>${escape(c.error||c.prompt)}</pre></details>`).join('')}<h2>生成结果验收（尚未执行）</h2><p>固定模型、版本、目标任务与视口；使用带既有样式和交互的真实宿主，记录接入前后截图与行为。已有布局、字体、颜色、间距、图标、点击、焦点、禁用和状态流转必须保持；动画需求只增加缺失动效并验证 reduced-motion 和监听清理。另测目标不存在时新增，以及不兼容时保留原实现并报告冲突。</p>`);
+await writeFile(resolve(output,'report.html'),`<!doctype html><meta charset="utf-8"><title>Copy for AI 批量检查</title><style>body{font:16px/1.6 system-ui;max-width:1080px;margin:40px auto;padding:0 24px;background:#fafafa;color:#111}details{background:white;border:1px solid #ddd;border-radius:8px;margin:8px 0;padding:12px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}summary{cursor:pointer}.warning{background:#fff5d6;padding:16px}</style><h1>Copy for AI 批量检查</h1><p>${report.components} 个组件 · ${cases.length} 个配置案例 · ${failed} 项失败</p><p class="warning">本报告验证复制配置与 API 契约。浏览器点击路径、视觉还原和其他 AI 的实际生成结果仍须单独验收。未测试项不能当作通过。案例使用受控测试值，不代表用户当前浏览器选择或产品默认值。</p><h2>检查结果</h2>${checks.map(c=>`<details open><summary>${escape(c.status+' · '+c.name)}</summary><pre>${escape(c.error||'通过')}</pre></details>`).join('')}<h2>配置与真实提示词模板</h2>${cases.map(c=>`<details><summary>${escape(c.status+' · '+c.name+' · '+c.label)}</summary><p>参考：${escape(c.path)}</p><pre>${escape(c.error||c.prompt)}</pre></details>`).join('')}<h2>生成结果验收（尚未执行）</h2><p>固定模型、版本、目标任务与视口；使用带既有样式和交互的真实宿主，记录接入前后截图与行为。两种模式都保留页面布局、业务逻辑、点击、焦点、禁用和状态流转；Apply AISEE design 只更新组件视觉与动效，Add motion only 保留静态外观、只增加缺失动效。验证 reduced-motion 和监听清理；范围外改动必须先获明确确认。另测目标不存在时新增，以及不兼容时保留原实现并报告冲突。</p>`);
 console.log(`Copy for AI: ${report.components} components, ${cases.length} controlled cases, ${failed} failures.\nReport: ${resolve(output,'report.html')}\nBrowser / AI output verification: NOT RUN by this command.`);
 for(const check of checks.filter(c=>c.status==='fail')) console.error(check.error);
 for(const entry of cases.filter(c=>c.status==='fail')) console.error(entry.name,entry.label,entry.error);

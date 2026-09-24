@@ -4,24 +4,23 @@
 
 ## 使用路径
 
-用户点击 Copy for AI，复制包含宿主保护约束、明确组件名称的指令和稳定 `latest.json` 地址；只有清单允许的真实样式/交互选项会附加到指令。编码 AI 读取 latest，按其中的相对 `delivery` 地址取得版本说明，再下载并校验安装器，将生产源码接入已有 React 项目。
+组件详情页保留一个 Copy for AI 主按钮及选项菜单：默认 **Apply AISEE design** 更新目标组件视觉与动效；**Add motion only** 保留现有静态外观、只添加缺失动效。两种生成文本只有 Goal 段落不同，共用组件文件范围和业务行为保护规则。
 
-例如：`Integrate AISEE NotificationBell into this React project. Inspect the existing target, styles, UI library and interactions first (shadcn: components.json/components/ui). Preserve them; add only requested missing capabilities. For animation requests, add only missing motion; do not restyle or change interactions. Reuse existing components; do not create parallel AISEE primitives or import full delivery CSS. Only create a component when the target is absent; incompatibility is not permission to replace it. Host preservation overrides delivery defaults/preserve rules and preview options. Reference: https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/notification-bell/latest.json`
+默认 **No specific variant**，不输出预览默认参数。用户在 Target variant 菜单明确选择一项后，才把该项经过白名单筛选的配置作为目标附加；预览名称（例如 Variant playground）不写入。变更预览清除旧选择，复制前后显示当前模式。完整两份实际生成文本见 [Toggle 示例](TOGGLE_COPY_AI.md)。
 
-接收方需要兼容的 React 项目及组件清单声明的运行环境。具体 React、Node 和第三方依赖要求由每个组件的 `dependencies / compatibility` 配置声明，Copy for AI 不额外强制统一技术栈版本。Node 声明用于执行源码安装器，不是浏览器组件的运行依赖；宿主构建工具自身的版本要求由宿主负责。还需 TSX/CSS 及该组件必要资源的导入支持，以及可联网读取交付、执行项目命令的编码 AI。无需手动下载附件或安装整个 AISEE 库；缺少基础依赖时按清单和宿主包管理方式补充。
+接收方需要兼容的 React 项目及组件清单声明的运行环境。具体 React、Node 和第三方依赖要求由每个组件的 `dependencies / compatibility` 配置声明，Copy for AI 不额外强制统一技术栈版本。Node 声明用于执行源码安装器，不是浏览器组件的运行依赖；宿主构建工具自身的版本要求由宿主负责。还需 TSX/CSS 及该组件必要资源的导入支持，以及可联网读取交付、执行项目命令的编码 AI。无需手动下载附件或安装整个 AISEE 库；缺少基础依赖时，先列出拟改文件、原因与最小方案，等待用户确认，不能自动修改依赖或配置。
 
 ## Host Project Compatibility
 
-Copy for AI 默认保留目标项目已有样式、UI 库和交互，只添加本次要求且尚未存在的能力。宿主现状优先于交付稿的外观、默认参数、示例与 `preserve` 列表。复制整组件或预览选项不等于授权换肤、重建组件或更换 UI 库。
+所有已登记的组件共用以下接入边界：
 
-1. **先检查再添加**：读取实际目标组件及调用处、局部 CSS / CSS Modules / Tailwind、图标、token、事件与状态、package.json、lockfile、theme/provider 和全局样式。shadcn/ui 同时读取 `components.json`、alias、现有 `components/ui`；识别 Radix、MUI、Ant、Chakra、Headless UI 或自定义实现，列明已有能力和本次缺口。
-2. **已有实现优先**：沿用既有路径、公开 API、样式、布局、尺寸、颜色、字体、间距、图标、类名、状态、回调、键盘和焦点行为、业务逻辑。只补缺失内容，不重建、不导入整份交付 CSS、不用局部覆盖规则强行换肤，不创建平行 AISEE primitive 或第二套 `components/ui`。
-3. **动画需求只加动画**：已有样式时，只增加缺失的 keyframes、transition 或动效 hook，接入现有状态与事件，包含 cleanup 与 reduced-motion。保留静态外观、点击行为、状态流转、导航和拖拽逻辑；已有动画不重复安装，不覆盖定位或拖拽已有的 transform / transition。不能安全组合时报告具体冲突，保持原实现。
-4. **不兼容不能作为重建理由**：以最小增量补缺失能力；无法安全接入时说明缺口。只有目标组件确实不存在时才新增，并复用宿主 UI 库、样式约定和 token；其中没有可用 primitive 的边界才使用 standalone。`primitives: []` 同样要检查现有组件，不能跳过保护规则。
-5. **源码作为参考**：已有目标只在需要时解包到临时参考目录，提取必要动画或能力及其依赖，不接入完整组件入口或样式文件。添加的样式限定作用域，包含 portal；禁止全局 reset、替换主题/provider/样式或为单组件引入整套框架。安装器仅校验和解包，不会自动判断或适配宿主。
-6. **按宿主前后对比验收**：静态外观、已有交互、API、状态和回调必须保持；新增能力按本次要求验收，检查焦点、键盘、浮层、reduced-motion、清理和项目构建。报告复用位置、新增内容及未解决冲突。用户明确要求修改已有设计或行为时，另按该明确范围执行；交付文档本身不提供此授权。
+1. **先读后列范围**：检查实际目标、UI 库、样式和调用处；修改前列精确文件路径。默认只写目标组件实现及其专属局部样式，components/_components 目录不是整体授权。目标不明确或不存在时先确认目标/新组件路径。
+2. **按选定目标调整视觉**：设计模式允许组件内视觉与动效更新，但不重排页面；动效模式保留全部静态外观。复用既有 primitive 和 UI 库，不创建平行组件，不导入整份交付 CSS。
+3. **两种模式都保留行为**：公开 API、状态所有权、checked/defaultChecked、disabled、回调、焦点/键盘及业务流程不变；不可增加乐观状态、提前切换或绕过确认来制造动画成功。组件内部动画 effects/refs 需要 cleanup/reduced-motion，不构成修改独立 hook 文件的授权。
+4. **范围外先确认**：页面/调用处、文案、业务逻辑、hook 文件、API、请求/超时/异常、路由、全局样式/主题、工程配置和依赖文件默认不可写。确实需要时，先逐文件列原因、最小 diff 和影响，等待用户明确确认后只改获批部分；排障、缓存/网络/测试失败及“继续修好”不扩大范围。
+5. **保护工作与验收**：保留已有 staged/unstaged/untracked 修改，不整文件回滚。参考解包放在宿主项目外临时目录。选定 Goal 与组件范围优先于交付通用安装/默认/保留步骤；最终逐文件核对任务新增 diff 并如实记录限制。
 
-每个组件声明 `integrationMode: "host-first"`、`primitives` 与 `preserve`；生成的 latest、交付元数据和接入说明统一包含 `integrationPolicy`。其中 `preserve` 描述独立参考组件及本次缺失能力，不要求用 AISEE 外观或交互覆盖已有组件；动画需求中非动画的布局、图标、状态与行为不在接入范围。短复制指令直接包含保留宿主和仅加动画的约束，避免只读取短指令时误判。
+每个组件声明 `integrationMode: "host-first"`、`primitives` 与 `preserve`；生成的 latest、交付元数据和接入说明统一包含 `integrationPolicy`。其中 `preserve` 描述独立参考组件及本次缺失能力，是否更新组件外观由所选 Goal 决定，既有业务交互始终保留。当前复制指令显式说明模式与范围，其优先级高于源码参考中的通用宿主保留条款。
 
 这是一套接入契约，不是自动样式合并器。本仓库验证规则传递、交付完整性和覆盖保护；真实外部 AI 是否正确遵循仍需在实际项目验收。
 

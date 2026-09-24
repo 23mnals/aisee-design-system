@@ -159,7 +159,7 @@ test('every Current component detail page offers a scoped Copy for AI prompt', (
   assert.ok(!guidancePaths.has('components/PostCard/PostCard.html'));
   assert.match(portal, /id="copyAiHeader"[^>]*hidden[^>]*aria-label="Copy component guidance for AI"/);
   assert.match(portal, /const aiPrompt = buildComponentAiPrompt\(item\.path\)/);
-  assert.match(portal, /copyAiHeader\.hidden = !aiPrompt/);
+  assert.match(portal, /copyAiControls\.reset\(Boolean\(aiPrompt\)\)/);
   assert.match(portal, /#openStandalone,\s*#copyAiHeader\s*\{\s*min-height: 40px;\s*height: 40px;/);
   assert.match(portal, /Treat the Design System Demo as a structural and interaction reference/);
   assert.match(portal, /Original Demo path .*\$\{path\}/);
@@ -1290,6 +1290,6 @@ test('Quantity Stepper matches the Figma shell and shared motion contract', asyn
   assert.match(styles, /@container \(max-width: 260px\) \{ \.aisee-quantity-stepper__unit \{ display: none; \} \}/);
   assert.match(styles, /\.aisee-quantity-stepper__input::selection \{ color: #111; background: var\(--aisee-color-semantic-brand-primary, #FFE253\); \}/);
   assert.match(portal, /Do not assume @aisee\/design-system is publicly installable/);
-  assert.match(portal, /AiseeAiDelivery.format/);
+  assert.match(portal, /deliveryApi: AiseeAiDelivery/);
   assert.match(portal, /Implementation and handoff/);
 });

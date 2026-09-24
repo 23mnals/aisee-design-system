@@ -78,28 +78,13 @@ test('navigation races, incomplete state and unregistered pages cannot silently 
   assert.equal(gallery.sections.length,0);
 });
 
-test('actual copy handler uses generic production resolver, live choices, and fails closed on navigation/errors', async () => {
-  const handler=portal.match(/async function copyAiPrompt\(\) \{[\s\S]*?(?=\n      async function copyLogoTsx)/)[0];
-  assert.doesNotMatch(handler,/Notification|isSourcePilot/);
-  const state={'data-aisee-config':JSON.stringify([{scope:'Icons',component:'Button',props:{showIcon:false}}])};
-  const page=doc({'[data-aisee-config]':element(state)});
-  Object.assign(page,{URL:'http://localhost/'+path('Button'),readyState:'complete'});
-  const writes=[];
-  const sandbox=vm.createContext({URL,items:[{path:path('Button'),name:'Button'}],activePath:path('Button'),buildComponentAiPrompt:()=> 'registered',AiseeComponentConfig:api,previewFrame:{contentDocument:page},document:{baseURI:'http://localhost/'},copyAiHeader:{},copyAiHeaderLabel:{},writeClipboard:async text=>writes.push(text),showToast:()=>{},window:{setTimeout:fn=>fn()}});
-  vm.runInContext(await readFile(new URL('assets/ai-delivery.js',root),'utf8'),sandbox);
-  const format=sandbox.window.AiseeAiDelivery.format;
-  const delivery={name:'Button',latestUrl:'https://example.com/button/latest.json',configuration:{props:{Button:['showIcon','iconPosition']}}};
-  sandbox.AiseeAiDelivery={format,resolveDelivery:async()=>delivery};
-  vm.runInContext(handler,sandbox);
-  await sandbox.copyAiPrompt();assert.match(writes[0],/"showIcon":false/);
-  state['data-aisee-config']=JSON.stringify([{scope:'Icons',component:'Button',props:{showIcon:true,iconPosition:'right'},previewState:{mock:true}}]);
-  await sandbox.copyAiPrompt();assert.match(writes[1],/"iconPosition":"right"/);assert.doesNotMatch(writes[1],/mock|previewState/);
-  page.URL='http://localhost/'+path('Badge');await sandbox.copyAiPrompt();assert.equal(writes.length,2);
-  page.URL='http://localhost/'+path('Button');
-  sandbox.AiseeAiDelivery.resolveDelivery=async()=>{sandbox.activePath=path('Badge');return delivery;};
-  await sandbox.copyAiPrompt();assert.equal(writes.length,2,'Navigation while fetching must not copy stale component');
-  sandbox.activePath=path('Button');sandbox.AiseeAiDelivery.resolveDelivery=async()=>{throw Error('not published');};
-  await sandbox.copyAiPrompt();assert.equal(writes.length,2,'Never fall back to incomplete repository prompt');
+test('portal delegates copying to the mode and explicit-variant controller', () => {
+  assert.match(portal,/assets\/copy-ai-controls\.js/);
+  assert.match(portal,/copyAiControls\.copy\(\)/);
+  assert.match(portal,/AiseeComponentConfig\.readFrame\(previewFrame, path, document.baseURI\)/);
+  assert.match(portal,/copyAiControls\.reset\(Boolean\(aiPrompt\)\)/);
+  assert.match(portal,/<option value="design">Apply AISEE design<\/option>/);
+  assert.match(portal,/<option value="motion">Add motion only<\/option>/);
 });
 
 test('latest pointer advances without changing copied URL; validates guides and installer bytes', async () => {
@@ -122,14 +107,36 @@ test('latest pointer advances without changing copied URL; validates guides and 
   ctx.fetch=async()=>({ok:false,status:404});await assert.rejects(()=>ctx.AiseeAiDelivery.checkPublished(base),/404/);
 });
 
-test('all Notification demo combinations produce exactly the same production prompt', async () => {
+test('all components share both scope contracts and exclude preview defaults', async () => {
   const ctx=vm.createContext({URL});vm.runInContext(await readFile(new URL('assets/ai-delivery.js',root),'utf8'),ctx);
-  const bell=JSON.parse(await readFile(new URL('assets/ai-deliveries/NotificationBell.json',root),'utf8'));
-  const prompt=ctx.AiseeAiDelivery.format(bell,{sections:[]});assert.ok(prompt.length<1000);
-  assert.match(prompt,/Integrate AISEE NotificationBell/);assert.match(prompt,/latest.json/);
-  assert.match(prompt,/Reuse/);assert.match(prompt,/shadcn/);assert.match(prompt,/components\.json/);assert.match(prompt,/components\/ui/);assert.match(prompt,/do not create parallel AISEE primitives/);assert.match(prompt,/Only create a component when the target is absent/);assert.match(prompt,/do not restyle or change interactions/);assert.match(prompt,/Host preservation overrides/);
-  for(const state of ['ready','empty','loading','error'])for(let mask=0;mask<32;mask++) {
-    const snapshot={sections:[{component:'NotificationBell',props:{dot:!!(mask&1),count:42}},{component:'NotificationPanel',props:{state,showIcons:!!(mask&2),showStatus:!!(mask&4),showActions:!!(mask&8)},slots:{errorDetail:!!(mask&16)}}]};
-    assert.equal(ctx.AiseeAiDelivery.format(bell,snapshot),prompt);
+  const catalog=JSON.parse(await readFile(new URL('assets/ai-deliveries/manifest.json',root),'utf8'));
+  for(const entry of Object.values(catalog)) {
+    const delivery=JSON.parse(await readFile(new URL(entry.url,root),'utf8'));
+    const snapshot={sections:[{component:delivery.name,scope:'Variant playground',props:{color:'lime',surface:'light',size:16}}]};
+    const design=ctx.AiseeAiDelivery.format(delivery,snapshot);
+    const motion=ctx.AiseeAiDelivery.format(delivery,snapshot,{mode:'motion'});
+    assert.match(design,/Goal — Apply AISEE design:/);assert.match(motion,/Goal — Add motion only:/);
+    assert.equal(design.replace(/^Goal — .*$/m,''),motion.replace(/^Goal — .*$/m,''),'Only the goal differs');
+    assert.equal(design,ctx.AiseeAiDelivery.format(delivery),'Default preview is never a target');
+    assert.doesNotMatch(design,/Variant playground|Selected variant target|"props"/);
+    for(const rule of ['exact allowed paths','business pages/callers','page layout or copy','hook files','APIs','request layers','project/build/cache configuration','wait for my explicit confirmation','smallest proposed diff','pending/optimistic state','Never use whole-file rollback'.toLowerCase()]) assert.ok(design.includes(rule),entry.name+': '+rule);
   }
+});
+
+test('Toggle requires explicit variant intent and both full documents match real output', async () => {
+  const ctx=vm.createContext({URL});vm.runInContext(await readFile(new URL('assets/ai-delivery.js',root),'utf8'),ctx);
+  const toggle=JSON.parse(await readFile(new URL('assets/ai-deliveries/Toggle.json',root),'utf8'));
+  const document=await readFile(new URL('docs/TOGGLE_COPY_AI.md',root),'utf8');
+  const blocks=[...document.matchAll(/```text\n([\s\S]*?)\n```/g)].map(m=>m[1]);
+  assert.equal(blocks[0],ctx.AiseeAiDelivery.format(toggle));
+  assert.equal(blocks[1],ctx.AiseeAiDelivery.format(toggle,undefined,{mode:'motion'}));
+  for(const mode of ['design','motion']) for(const color of ['lime','yellow']) for(const surface of ['light','dark']) for(const size of [16,24]) {
+    const snapshot={sections:[{component:'Toggle',scope:'Variant playground',props:{color,surface,size,checked:true,disabled:true},previewState:{open:true}}]};
+    assert.equal(ctx.AiseeAiDelivery.format(toggle,snapshot,{mode}),ctx.AiseeAiDelivery.format(toggle,undefined,{mode}));
+    const selected=ctx.AiseeAiDelivery.format(toggle,snapshot,{mode,variantIndex:0});
+    assert.ok(selected.endsWith(JSON.stringify({component:'Toggle',props:{color,surface,size}})));
+    assert.doesNotMatch(selected,/Variant playground|"checked"|"disabled"|previewState/);
+  }
+  assert.throws(()=>ctx.AiseeAiDelivery.format(toggle,undefined,{mode:'unknown'}),/supported/);
+  assert.throws(()=>ctx.AiseeAiDelivery.format(toggle,undefined,{variantIndex:0}),/Select the current variant/);
 });

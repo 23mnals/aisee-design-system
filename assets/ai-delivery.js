@@ -53,9 +53,38 @@ console.log('Installed ' + writes.length + ' source/style/asset files into ' + r
     return url.href;
   }
   function guideUrl(delivery) {return publicUrl(delivery.latestUrl);}
-  function format(delivery, snapshot) {
-    const options=configuration(delivery,snapshot);
-    return `Integrate AISEE ${delivery.name} into this React project. Inspect the existing target, styles, UI library and interactions first (shadcn: components.json/components/ui). Preserve them; add only requested missing capabilities. For animation requests, add only missing motion; do not restyle or change interactions. Reuse existing components; do not create parallel AISEE primitives or import full delivery CSS. Only create a component when the target is absent; incompatibility is not permission to replace it. Host preservation overrides delivery defaults/preserve rules and preview options. Reference: ${guideUrl(delivery)}${options.length ? ` Reference options (only for requested missing capabilities, never overwrite existing settings): ${JSON.stringify(options)}` : ''}`;
+  const modes = Object.freeze({
+    design: Object.freeze({label:'Apply AISEE design', goal:'Update the existing target component’s visual design and motion to the AISEE reference. Apply changes only inside the component, preserve its placement and surrounding page layout, and keep existing business behavior.'}),
+    motion: Object.freeze({label:'Add motion only', goal:'Add only the target component’s missing AISEE motion. Preserve its existing static appearance, including size, color, typography, spacing, icons and layout, and keep existing business behavior.'})
+  });
+  function modeInfo(mode = 'design') {
+    if (!Object.prototype.hasOwnProperty.call(modes, mode)) throw Error('Choose a supported Copy for AI mode.');
+    return modes[mode];
+  }
+  function variants(delivery, snapshot) {
+    // Preview scope names describe galleries, not a product target.
+    return configuration(delivery, snapshot).map(({scope, ...variant}) => variant);
+  }
+  function format(delivery, snapshot, {mode = 'design', variantIndex = null} = {}) {
+    const selectedMode = modeInfo(mode);
+    let target = '';
+    if (variantIndex !== null) {
+      const choices = variants(delivery, snapshot);
+      if (!Number.isInteger(variantIndex) || variantIndex < 0 || !choices[variantIndex]) throw Error('Select the current variant again before copying.');
+      target = `\nSelected variant target (explicitly chosen by the user; applies only to attributes permitted by the goal): ${JSON.stringify(choices[variantIndex])}`;
+    }
+    return `Integrate AISEE ${delivery.name} into this React project.
+
+Goal — ${selectedMode.label}: ${selectedMode.goal}
+
+Shared component scope and behavior protection:
+1. Inspect the existing target, UI library, styles and callers first (shadcn: components.json, aliases and components/ui). Before editing, list the exact allowed paths: only the requested component implementation and its directly owned local styles. A components/ or _components/ directory is not a blanket allowlist. Reading a file does not authorize editing it. Reuse the existing component and UI library; do not create a parallel primitive or import full delivery CSS. If the target is ambiguous or absent, propose the target/new component paths and wait for my confirmation.
+2. Preserve the component API, state ownership, checked/defaultChecked, disabled, callbacks, keyboard/focus behavior and existing business flow. Use component-internal animation effects/refs with cleanup and reduced-motion support. Do not add pending/optimistic state, change state timing, bypass confirmation or simulate success. Press feedback may animate immediately; the actual state must still follow the original business logic and API results.
+3. Do not modify business pages/callers, page layout or copy, business logic, hook files (shared/custom/business), APIs, data fetching/request layers, timeouts, error handling, routing, global styles/themes/providers, project/build/cache configuration, package manifests or lockfiles. Do not install dependencies. Internal animation effects do not authorize edits to hook files or business state.
+4. If integration or validation requires any file outside this scope, STOP before editing it. List each exact file, why it is needed, the smallest proposed diff and its impact; wait for my explicit confirmation, then change only the approved hunks. This includes caller imports, event wrappers, Tooltip structure and node-remount fixes. Network/cache/test failures and later requests to continue/fix/verify do not expand this scope by themselves.
+5. Preserve existing staged, unstaged and untracked work; never use whole-file rollback over prior changes. Inspect downloaded reference source only in a temporary directory outside the host project. The selected goal and this scope override broader reference installation/default/preservation instructions: visual changes are authorized only by the goal, never by preview defaults. If no variant target is attached, do not infer one from the playground. A selected variant never authorizes business-state or scope changes. Use existing permitted checks, review every changed file against the allowlist, and report unresolved limitations without fixing unrelated code.
+
+Reference: ${guideUrl(delivery)}${target}`;
   }
   async function checkPublished(expected) {
     const latestUrl=guideUrl(expected);
@@ -80,5 +109,5 @@ console.log('Installed ' + writes.length + ' source/style/asset files into ' + r
     if(!entry || entry.page!==page)throw Error('This component has no published production manifest.');
     return checkPublished(entry);
   }
-  global.AiseeAiDelivery = Object.freeze({format, installer, checkPublished, guideUrl, configuration, resolveDelivery});
+  global.AiseeAiDelivery = Object.freeze({format, installer, checkPublished, guideUrl, configuration, variants, modes, modeInfo, resolveDelivery});
 })(typeof window === 'undefined' ? globalThis : window);

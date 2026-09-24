@@ -15,7 +15,7 @@
 
 ## 变量配置与目标设计匹配
 
-所有组件均遵循 README 的 [AI 选择变量与复用组件](../README.md#ai-选择变量与复用组件) 规则。Copy for AI 在点击时附加当前配置；多个示例分别标明 scope，不能合并为一个组件。配置的来源、适用范围、扩展要求见 [COMPONENT_CONFIGURATION.md](COMPONENT_CONFIGURATION.md)。
+所有组件均遵循 README 的 [AI 选择变量与复用组件](../README.md#ai-选择变量与复用组件) 规则。Copy for AI 默认无预览参数；只有在 Target variant 菜单明确选择一个变体后才附加该项，多个示例不能合并为一个组件。配置的来源、适用范围、扩展要求见 [COMPONENT_CONFIGURATION.md](COMPONENT_CONFIGURATION.md)。
 
 直接交付整个设计系统时也须：读取目标截图或可访问链接，优先复用合适的 Current 组件；明确用户选择优先，否则跟随目标设计、产品既有配置、文档默认值。同产品记录并沿用组件配置。静态截图不能证明隐藏交互；链接未读取成功不得声称已经匹配。复制示例不会自动建立产品级默认配置。
 
@@ -30,7 +30,7 @@
 
 ## 接入前检查
 
-安装前检查实际目标组件、样式、UI 库与现有交互；shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`。保留宿主已有样式、布局、图标、API、状态和事件，只添加本次要求且缺失的能力。动画需求只添加缺失动画、必要 hook 与 reduced-motion，不改变静态外观或交互，不导入整份交付 CSS，不创建平行组件。不兼容不能作为重建理由；只有目标组件不存在时才新增，并复用宿主 UI 库和样式约定。交付源码只作为必要的临时参考；安装器仅校验解包，不会自动适配宿主。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
+接入前检查实际目标、样式、UI 库与调用处，shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`，列出精确可写路径。Apply AISEE design 更新目标组件视觉与动效；Add motion only 保留静态外观、仅加缺失动效。两种模式均只允许修改目标组件实现与专属局部样式，保留公开 API、状态所有权、事件与业务流程；页面布局/文案、业务逻辑、hook 文件、API、请求和配置默认不可写。必要的范围外改动先列文件、原因、最小 diff 与影响，等待明确确认后执行。组件内部动画 effects/refs 可用于 cleanup/reduced-motion，但不能改变业务状态。目标不存在或不明确也需先确认路径。不导入整份交付 CSS、不创建平行组件；参考解包到宿主外临时目录，选定 Goal 与范围优先于参考通用安装规则。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
 
 先读 [第三方接入指南](GETTING_STARTED.md) 和 [生产交付契约](PRODUCTION_DELIVERY.md)。当前所有已登记的 Current 组件通过公开 latest 指针提供必要生产源码，无需整库或私有仓库权限；真实配置白名单与 Demo 状态分开。
 
@@ -39,8 +39,8 @@
 如果只需要 Button、Input、Tabs、Dialog 等一个 Current 组件，不必上传整套 Demo：
 
 1. 在主门户打开对应的 Current 组件页。
-2. 点击右上角双星图标的 `Copy for AI`。
-3. 将短指令、目标页面和真实业务需求交给编码 AI，由它下载生产组件接入。
+2. 在 Copy for AI 菜单选择模式；如需指定变体，在 Target variant 中明确选择，再点击主复制按钮。
+3. 将完整指令和明确的目标组件路径交给编码 AI；调用页面仅供只读检查，不能擅自修改。
 4. 要求 AI 对照 Current Demo 检查适用状态与动画。
 
 每个组件的复制指令明确组件名、latest 地址及允许的真实配置；用途、文件清单、必须保留的交互与动画、前置环境、安装和验收放在公开版本说明中。禁止创建演示页、带入 mock 数据或全局 Design System 环境。Overview 和 Legacy 页面不提供 Copy for AI。
@@ -130,4 +130,4 @@ SidebarLayout + SidebarNavigation 提供 sidebar / muted / floating / inset / to
 
 Tooltip 默认 `placement="auto"`，空间充足优先上方，否则选择可容纳的一侧，横向或纵向偏移以避开视口边缘。显式 `top` / `right` / `bottom` / `left` 只是优先方向；仍会翻转。滚动、窗口和内容尺寸变化重新测量，触发目标滚出裁切区域后隐藏。提示通过顶层浮层显示，保留键盘 focus 和 Escape 关闭；不改变 Toast 定位。组件页同时展示四个方向按钮，气泡只在 hover / focus 后显示；Copy for AI 不导出人为选定的固定方向。
 
-`animation="subtle"` 为默认：160ms 淡入与沿实际方向 4px 位移，120ms 淡出；`playful` 用于头像 / 成员介绍，真实低阻尼弹簧（入场 stiffness 260 / damping 10，跟随 stiffness 100 / damping 5）。记录进入点，沿对应方向摇摆；跟随目标角度 ±18°、水平位移 ±22px，允许惯性过冲；入场从 0.6 倍和 20px 开始；`none` 无动画。键盘聚焦仅淡入、不弹跳和倾斜，prefers-reduced-motion 关闭所有动效。动效与测量层分离，保留智能翻转和滚动定位。Demo 初始选择 playful，组件 API 默认仍为 subtle。Demo 动画控制同步应用到主示例、四方向和头像示例，Copy for AI 导出当前动画与 auto 定位。
+`animation="subtle"` 为默认：160ms 淡入与沿实际方向 4px 位移，120ms 淡出；`playful` 用于头像 / 成员介绍，真实低阻尼弹簧（入场 stiffness 260 / damping 10，跟随 stiffness 100 / damping 5）。记录进入点，沿对应方向摇摆；跟随目标角度 ±18°、水平位移 ±22px，允许惯性过冲；入场从 0.6 倍和 20px 开始；`none` 无动画。键盘聚焦仅淡入、不弹跳和倾斜，prefers-reduced-motion 关闭所有动效。动效与测量层分离，保留智能翻转和滚动定位。Demo 初始选择 playful，组件 API 默认仍为 subtle。Demo 动画控制同步应用到主示例、四方向和头像示例，只有明确选择目标变体时，Copy for AI 才附加当前动画与 auto 定位。
