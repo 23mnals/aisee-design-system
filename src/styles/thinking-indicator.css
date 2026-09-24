@@ -1,0 +1,43 @@
+.aisee-thinking-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  color: var(--aisee-color-semantic-text-secondary);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  vertical-align: middle;
+}
+.aisee-thinking-indicator[data-size="compact"] { gap: 6px; font-size: 12px; line-height: 18px; }
+.aisee-thinking-indicator__icon { display: block; flex: none; }
+.aisee-thinking-indicator__words { display: inline-grid; min-width: 0; overflow: hidden; }
+.aisee-thinking-indicator__measure, .aisee-thinking-indicator__word { grid-area: 1 / 1; overflow-wrap: anywhere; }
+.aisee-thinking-indicator__measure { visibility: hidden; }
+.aisee-thinking-indicator__word--in { animation: aisee-thinking-word-in 240ms cubic-bezier(.4,0,.2,1) both; }
+.aisee-thinking-indicator__word--out { animation: aisee-thinking-word-out 160ms cubic-bezier(.4,0,.2,1) both; }
+.aisee-thinking-indicator__shimmer { color: inherit; }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .aisee-thinking-indicator__shimmer {
+    color: transparent;
+    background-image: linear-gradient(90deg, var(--aisee-color-semantic-text-secondary) 0%, var(--aisee-color-semantic-text-secondary) 35%, var(--aisee-color-black) 50%, var(--aisee-color-semantic-text-secondary) 65%, var(--aisee-color-semantic-text-secondary) 100%);
+    background-size: 300% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: aisee-thinking-shimmer 1.5s ease-in-out infinite;
+  }
+}
+.aisee-thinking-indicator__sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@keyframes aisee-thinking-word-in { from { transform: translateY(80%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes aisee-thinking-word-out { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-80%); opacity: 0; } }
+@keyframes aisee-thinking-shimmer { from { background-position: 100% 0; } to { background-position: 0% 0; } }
+.aisee-thinking-indicator[data-reduced-motion="true"] .aisee-thinking-indicator__shimmer { animation: none; color: inherit; background: none; }
+@media (prefers-reduced-motion: reduce) {
+  .aisee-thinking-indicator__word, .aisee-thinking-indicator__shimmer { animation: none; transform: none; color: inherit; background: none; }
+  .aisee-thinking-indicator__word--out { display: none; }
+}
+@media (forced-colors: active) {
+  .aisee-thinking-indicator { color: CanvasText; }
+  .aisee-thinking-indicator__shimmer { color: CanvasText; background: none; animation: none; }
+}

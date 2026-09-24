@@ -33,7 +33,7 @@ function App() {
   const [scenarioId, setScenarioId] = useState('sources');
   const scenario = scenarios.find(item => item.id === scenarioId)!;
   const state = resolveToggleSelection(models, value);
-  return <main>
+  return <main data-aisee-config={JSON.stringify([{scope:'Usage scenarios',component:'ToggleSelectionGroup',composition:{id:scenarioId,label:scenario.label,usage:scenario.usage},rules:['Scenario is a composition recipe, not a component prop; replace sample options with real content.']}])}>
     <h1>Toggle Selection Group</h1>
     <p className="intro">Enable a group, select its options, and pause it without losing your selection.</p>
     <h2 className="aisee-content-heading">Enable &amp; remember <span className="aisee-content-new">NEW</span></h2>

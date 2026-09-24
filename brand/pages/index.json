@@ -10,8 +10,8 @@
     {
       "name": "Managed Automation",
       "html": "brand/pages/managed-automation/preview.html",
-      "subtitle": "Managed publishing and reply automation overview.",
-      "category": "Automation",
+      "subtitle": "Inspiration only · Automation exploration; not approved product design or implementation guidance. Managed publishing and reply automation overview.",
+      "category": "Explorations",
       "source": "ChatGPT",
       "surface": "Web",
       "designStatus": "Draft"

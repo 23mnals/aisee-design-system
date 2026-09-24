@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- @dsCard group="Brand" name="Logo" subtitle="Real logo image — full wordmark, sizes, backgrounds, mark scale" viewport="700x420" -->
-<html lang="en">
+<html data-aisee-common-page="logo" lang="en">
 <head>
 <meta charset="UTF-8">
 <style>
@@ -8,59 +8,65 @@
 @font-face { font-family: 'Gotu'; src: url('../fonts/Gotu-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: #fff; padding: 24px; font-family: 'Karla', sans-serif; }
-.row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
-.label { font-size: 10px; color: #aaa; margin-top: 8px; }
-
+.row { display: grid; gap: 24px; }
+.logo-section { display: grid; gap: 12px; }
+.section-title { color: #111; font-size: 14px; font-weight: 600; line-height: 20px; }
+.logo-grid { display: grid; gap: 12px; }
+.logo-grid--sizes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.logo-grid--backgrounds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.logo-sample { display: grid; min-width: 0; min-height: 138px; align-content: center; justify-items: center; padding: 16px; border: 1px solid rgba(17,17,17,.08); border-radius: 10px; background: #fff; text-align: center; }
+.logo-demo { display: flex; min-height: 64px; align-items: center; justify-content: center; }
+.logo-demo--small { gap: 6px; }
+.logo-demo--lime { gap: 8px; }
+.logo-sample--dark { border-color: #111; background: #111; }
+.logo-sample--lime { background: #CFFF29; }
+.logo-safety-area { display: flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 8px; background: #fff; }
+.logo-name--small { color: #111; font-size: 14px; font-weight: 500; }
+.logo-name--lime { color: #111; font-size: 16px; font-weight: 600; }
+.label { margin-top: 8px; color: rgba(17,17,17,.48); font-size: 11px; line-height: 16px; }
+.logo-sample--dark .label { color: rgba(255,255,255,.58); }
 .logo-mark { display: block; object-fit: contain; flex-shrink: 0; }
 .logo-wordmark { display: block; object-fit: contain; }
+@media (max-width: 560px) {
+  .logo-grid--sizes, .logo-grid--backgrounds { grid-template-columns: 1fr; }
+}
 </style>
 <link rel="stylesheet" href="../fonts/karla.css" data-aisee-typography="karla">
+<link rel="stylesheet" href="../brand/common-doc-layout.css" data-aisee-common-layout>
 </head>
 <body>
 <div class="row">
-
-  <!-- Small -->
-  <div style="text-align:center;">
-    <div style="display:flex;align-items:center;gap:6px;">
-      <img class="logo-mark" src="../assets/aisee-logo-mark.png" alt="AISEE logo mark" style="width:20px;height:20px;">
-      <span style="font-family:'Karla';font-size:14px;font-weight:500;color:#111;">aisee</span>
+  <section class="logo-section" aria-labelledby="logo-size-title">
+    <h2 class="section-title" id="logo-size-title">Size variants</h2>
+    <div class="logo-grid logo-grid--sizes">
+      <article class="logo-sample">
+        <div class="logo-demo logo-demo--small"><img class="logo-mark" src="../assets/aisee-logo-mark.png" alt="AISEE logo mark" style="width:20px;height:20px;"><span class="logo-name--small">aisee</span></div>
+        <p class="label">Small · 20px mark</p>
+      </article>
+      <article class="logo-sample">
+        <div class="logo-demo"><img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark" style="width:88px;height:40px;"></div>
+        <p class="label">Standard · 25px mark</p>
+      </article>
+      <article class="logo-sample">
+        <div class="logo-demo"><img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark large" style="width:142px;height:64px;"></div>
+        <p class="label">Large · 48px mark</p>
+      </article>
     </div>
-    <div class="label">Small (20px)</div>
-  </div>
-
-  <!-- Standard -->
-  <div style="text-align:center;">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark" style="width:88px;height:40px;">
+  </section>
+  <section class="logo-section" aria-labelledby="logo-background-title">
+    <h2 class="section-title" id="logo-background-title">Background variants</h2>
+    <div class="logo-grid logo-grid--backgrounds">
+      <article class="logo-sample logo-sample--dark">
+        <div class="logo-demo"><div class="logo-safety-area"><img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark on a white safety area" style="width:88px;height:40px;"></div></div>
+        <p class="label">On dark · white safety area</p>
+      </article>
+      <article class="logo-sample logo-sample--lime">
+        <div class="logo-demo logo-demo--lime"><img class="logo-mark" src="../assets/aisee-logo-mark.png" alt="AISEE logo mark on lime" style="width:26px;height:26px;"><span class="logo-name--lime">aisee</span></div>
+        <p class="label">On Analysis lime</p>
+      </article>
     </div>
-    <div class="label">Standard (25px)</div>
-  </div>
-
-  <!-- Large -->
-  <div style="text-align:center;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark large" style="width:142px;height:64px;">
-    </div>
-    <div class="label">Large (48px)</div>
-  </div>
-
-  <!-- On dark -->
-  <div style="background:#111;border-radius:12px;padding:16px 20px;text-align:center;">
-    <div style="display:flex;align-items:center;gap:8px;background:#fff;border-radius:8px;padding:3px 10px;">
-      <img class="logo-wordmark" src="../assets/logo-wordmark.png" alt="AISEE wordmark on a white safety area" style="width:88px;height:40px;">
-    </div>
-    <div class="label" style="color:#555;">On dark</div>
-  </div>
-
-  <!-- On lime -->
-  <div style="background:#CFF229;border-radius:12px;padding:16px 20px;text-align:center;">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <img class="logo-mark" src="../assets/aisee-logo-mark.png" alt="AISEE logo mark on lime" style="width:26px;height:26px;">
-      <span style="font-family:'Karla';font-size:16px;font-weight:600;color:#111;">aisee</span>
-    </div>
-    <div class="label" style="color:rgba(17,17,17,0.6);">On lime</div>
-  </div>
-
+  </section>
 </div>
+<script src="../brand/common-doc-layout.js" data-aisee-common-script></script>
 </body>
 </html>

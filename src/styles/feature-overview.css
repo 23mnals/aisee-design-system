@@ -1,0 +1,65 @@
+/* Figma 51:213896: one outer surface, content sections separated by single lines. */
+.aisee-card.aisee-card--divided { container:aisee-divided-card / inline-size; padding:0; border-radius:24px; background:var(--aisee-color-white); }
+.aisee-card--divided > .aisee-card__header { margin:0; padding:24px 16px; border-bottom:1px solid var(--aisee-color-border); }
+.aisee-card--divided > .aisee-card__content > .aisee-card__body { color:var(--aisee-color-black); }
+.aisee-card--divided > .aisee-card__content > .aisee-card__footer { margin:0; padding:16px; }
+.aisee-card-grid.aisee-card-grid--divided { gap:0; align-items:stretch; }
+.aisee-card-grid--divided > .aisee-card-grid__cell { min-width:0; padding:24px 16px; border:0 solid var(--aisee-color-border); border-width:1px 0 0 1px; }
+.aisee-card-grid--divided[data-columns="1"] > :nth-child(-n+1),
+.aisee-card-grid--divided[data-columns="2"] > :nth-child(-n+2),
+.aisee-card-grid--divided[data-columns="3"] > :nth-child(-n+3),
+.aisee-card-grid--divided[data-columns="4"] > :nth-child(-n+4) { border-top-width:0; }
+.aisee-card-grid--divided[data-columns="1"] > *,
+.aisee-card-grid--divided[data-columns="2"] > :nth-child(2n+1),
+.aisee-card-grid--divided[data-columns="3"] > :nth-child(3n+1),
+.aisee-card-grid--divided[data-columns="4"] > :nth-child(4n+1) { border-left-width:0; }
+/* Cards inside a continuous section contribute content, never another outer frame. */
+.aisee-card-grid__cell > .aisee-card { padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; }
+.aisee-card-grid__cell > .aisee-card > .aisee-card__header { margin-bottom:16px; }
+@container aisee-divided-card (max-width:900px) {
+  .aisee-card-grid--divided[data-columns="3"],.aisee-card-grid--divided[data-columns="4"] { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .aisee-card-grid--divided:is([data-columns="3"],[data-columns="4"]) > .aisee-card-grid__cell { border-width:1px 0 0 1px; }
+  .aisee-card-grid--divided:is([data-columns="3"],[data-columns="4"]) > :nth-child(-n+2) { border-top-width:0; }
+  .aisee-card-grid--divided:is([data-columns="3"],[data-columns="4"]) > :nth-child(2n+1) { border-left-width:0; }
+}
+@container aisee-divided-card (max-width:600px) {
+  .aisee-card-grid--divided[data-columns] { grid-template-columns:minmax(0,1fr); }
+  .aisee-card-grid--divided[data-columns] > .aisee-card-grid__cell { border-width:1px 0 0; }
+  .aisee-card-grid--divided[data-columns] > :first-child { border-top-width:0; }
+}
+.aisee-feature-list { display:grid; gap:12px; margin:0; padding:0; list-style:none; color:var(--aisee-color-black); font-size:14px; line-height:22px; }
+.aisee-feature-list__item { display:flex; align-items:flex-start; gap:6px; min-width:0; }
+.aisee-feature-list__icon { display:grid; flex:0 0 18px; width:18px; height:18px; margin-top:2px; place-items:center; }
+.aisee-feature-list__icon img { display:block; width:18px; height:18px; object-fit:contain; }
+.aisee-feature-list__body { flex:1; min-width:0; overflow-wrap:anywhere; }
+.aisee-feature-list__line { display:flex; flex-wrap:wrap; align-items:center; gap:4px 6px; }
+.aisee-feature-list strong { font-weight:600; }
+.aisee-feature-list__trailing { display:inline-flex; align-items:center; min-width:0; }
+.aisee-feature-list__supporting { color:var(--aisee-color-text-muted); font-size:12px; line-height:18px; margin-top:4px; }
+.aisee-feature-overview__section > .aisee-card__header .aisee-card__title { display:flex; flex-wrap:wrap; gap:6px; align-items:center; font-size:18px; line-height:24px; font-weight:600; }
+.aisee-feature-overview__identity { display:inline-flex; align-items:center; gap:6px; }
+.aisee-feature-overview__icon { display:grid; width:32px; height:32px; flex:0 0 32px; place-items:center; }
+.aisee-feature-overview__icon img { display:block; width:28px; height:28px; object-fit:contain; }
+.aisee-feature-overview__badges { display:inline-flex; flex-wrap:wrap; gap:6px; font-weight:500; }
+.aisee-feature-overview__badges .aisee-badge { min-height:24px; padding:3px 8px; border-radius:8px; font-size:12px; line-height:18px; }
+.aisee-feature-overview__section .aisee-card__description { line-height:20px; }
+.aisee-feature-overview__summary { margin-bottom:16px; }
+.aisee-feature-overview__footer { margin-top:16px; }
+/* Optional per-cell compact mode, also inherited from a compact group. */
+.aisee-stat-card-group--compact { container:aisee-summary-strip / inline-size; display:block; padding:4px 0; border:1px solid var(--aisee-color-border); border-radius:12px; background:var(--aisee-color-page); }
+.aisee-stat-card-group--compact > .aisee-stat-card-group__title { margin:0; padding:8px 12px; font-size:14px; line-height:20px; font-weight:500; }
+.aisee-stat-card-group--compact > .aisee-stat-card-group__grid { grid-template-columns:repeat(var(--aisee-stat-columns,3),minmax(0,1fr)); gap:0; }
+.aisee-stat-card--compact,.aisee-stat-card-group--compact > .aisee-stat-card-group__grid > .aisee-stat-card { align-items:center; gap:4px; min-height:56px; padding:5px 12px; border:0; border-radius:0; background:transparent; text-align:center; }
+.aisee-stat-card-group--compact > .aisee-stat-card-group__grid > .aisee-stat-card + .aisee-stat-card { border-left:1px solid var(--aisee-color-border); }
+:is(.aisee-stat-card--compact,.aisee-stat-card-group--compact .aisee-stat-card) .aisee-stat-card__metric { justify-content:center; white-space:normal; }
+:is(.aisee-stat-card--compact,.aisee-stat-card-group--compact .aisee-stat-card) .aisee-stat-card__metric strong { display:flex; align-items:center; justify-content:center; gap:4px; overflow:visible; font-size:16px; line-height:20px; font-weight:600; overflow-wrap:anywhere; }
+:is(.aisee-stat-card--compact,.aisee-stat-card-group--compact .aisee-stat-card) .aisee-stat-card__metric img { display:block; width:16px; height:16px; object-fit:contain; }
+:is(.aisee-stat-card--compact,.aisee-stat-card-group--compact .aisee-stat-card) .aisee-stat-card__label { overflow:visible; color:var(--aisee-color-semantic-text-description); font-size:11px; line-height:16px; font-weight:400; white-space:normal; overflow-wrap:anywhere; }
+:is(.aisee-stat-card--compact,.aisee-stat-card-group--compact .aisee-stat-card) .aisee-stat-card__footer { justify-content:center; flex-wrap:wrap; }
+@container aisee-summary-strip (max-width:340px) {
+ .aisee-stat-card-group--compact > .aisee-stat-card-group__grid { grid-template-columns:1fr; }
+ .aisee-stat-card-group--compact > .aisee-stat-card-group__grid > .aisee-stat-card + .aisee-stat-card { border-left:0; border-top:1px solid var(--aisee-color-border); }
+}
+
+/* Keep inline help aligned with the label text rather than its baseline. */
+:is(.aisee-stat-card--compact,.aisee-stat-card-group--compact .aisee-stat-card) .aisee-stat-card__label .aisee-tooltip-trigger { vertical-align:middle; align-items:center; }

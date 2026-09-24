@@ -1,0 +1,32 @@
+body{margin:0;background:var(--aisee-color-page);font:400 14px/20px Karla,Arial,sans-serif;color:var(--aisee-color-black)}
+/* This comparison needs room for two content-rich sections, and still fits embedded previews. */
+main.feature-demo{width:1100px!important;max-width:100%!important}
+.feature-demo h1{margin:0;font:500 16px/24px Karla,sans-serif}
+.feature-demo>.intro{margin:8px 0 32px;color:var(--aisee-color-text-muted)}
+.feature-demo>h2,.feature-demo-heading h2{font:500 16px/24px Karla,sans-serif;margin:32px 0 8px}
+main.feature-demo>h2+.aisee-card--divided{padding:0!important;border-radius:24px!important}
+.feature-demo-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:32px 0 8px}
+.feature-demo-heading h2{margin:0}
+.feature-demo-heading .aisee-dropdown{width:160px}
+.feature-demo-example,.feature-demo-usage{padding:24px;border:1px solid var(--aisee-color-border);border-radius:12px;background:var(--aisee-color-white)}
+.feature-demo-credit{background:var(--aisee-color-cream)!important;color:var(--aisee-color-semantic-text-amber)!important}
+.feature-demo-credit img{width:14px;height:14px;object-fit:contain}
+.feature-demo-engines{display:inline-flex;align-items:center;padding-right:4px}
+.feature-demo-engine{display:grid;width:20px;height:20px;place-items:center;border:1px solid var(--aisee-color-black);border-radius:50%;background:var(--aisee-color-white);margin-right:-4px}
+.feature-demo-engine img{display:block;width:14px;height:14px;object-fit:contain}
+.feature-demo-gemini{display:block;width:14px;height:14px;mask-size:contain;mask-position:center;mask-repeat:no-repeat;background-size:cover;background-position:center}
+.feature-demo-platforms{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px;border:1px solid var(--aisee-color-border);border-radius:12px;background:color-mix(in srgb,var(--aisee-color-engage-banner) 32%,transparent);font-size:14px;line-height:22px}
+.feature-demo-platforms--publish{background:color-mix(in srgb,var(--aisee-color-cream) 32%,transparent)}
+.feature-demo-platforms strong{font-weight:600}
+.feature-demo-platform-icons{display:inline-flex;flex-wrap:wrap;gap:4px}
+.feature-demo-platform-icons img{display:block;width:20px;height:20px;object-fit:contain}
+.feature-demo-more{color:var(--aisee-color-text-muted)}
+.feature-demo-info{display:inline-block;width:12px;height:12px;vertical-align:middle}
+.feature-demo .aisee-tooltip-trigger:focus-visible{outline:2px solid var(--aisee-color-black);outline-offset:2px;border-radius:4px}
+.feature-demo-sample{margin:0;font-size:14px;line-height:22px}
+.feature-demo-usage p{margin:0 0 12px;color:var(--aisee-color-text-muted)}
+.feature-demo-usage pre{overflow:auto;padding:12px;background:var(--aisee-color-page);border-radius:8px;font:400 12px/20px Karla,sans-serif}
+
+.feature-demo-category{background:var(--aisee-color-semantic-bg-hover)!important;color:var(--aisee-color-black)!important}
+
+.feature-demo .aisee-tooltip{max-width:min(200px,calc(100vw - 64px));white-space:normal}

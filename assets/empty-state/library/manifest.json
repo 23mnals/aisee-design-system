@@ -100,12 +100,12 @@
       "file": "plugin.svg"
     },
     {
-      "name": "successful",
+      "name": "no-report-data",
       "nodeId": "42:11910",
-      "label": "Successful",
-      "feature": "subscription",
+      "label": "No report data",
+      "feature": "analysis",
       "backgroundTone": "lime",
-      "file": "successful.svg"
+      "file": "no-report-data.svg"
     },
     {
       "name": "unlock",

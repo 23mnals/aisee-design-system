@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 3,
+  "name": "TreeNav",
+  "page": "components/TreeNav/TreeNav.html",
+  "version": "0f2dd00dd2541f49",
+  "delivery": "./releases/0f2dd00dd2541f49/ready.md",
+  "installer": "./releases/0f2dd00dd2541f49/install.cjs",
+  "installerSha256": "c1c39f963f1e3c48d257af6322651c8c01f19a235ac6bb12b76abf563b38671e",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "tree-navigation",
+      "sourceFiles": [
+        "src/components/TreeNav.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled selection and expansion, disabled nodes",
+        "nested keyboard behavior and AISEE hierarchy/state hooks"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+  ],
+  "files": [
+    "TreeNav.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

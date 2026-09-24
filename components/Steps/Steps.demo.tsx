@@ -59,7 +59,7 @@ function App() {
     setThinking(items => items.map((item, index) => ({ ...item, status: index === activeIndex ? 'complete' : index === nextIndex ? 'active' : item.status })));
   }
 
-  return <main>
+  return <main data-aisee-config={JSON.stringify([{scope:'Thinking steps',component:'Steps',props:{animated},rules:['Workflow progress is live business state, not a fixed design default.']}])}>
     <h1>Steps</h1>
     <p className="intro">Show progress through a workflow, with optional thinking activity for longer tasks.</p>
 

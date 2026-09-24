@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 3,
+  "name": "QuantityStepper",
+  "page": "components/QuantityStepper/QuantityStepper.html",
+  "version": "9f6a975fc8f97bd9",
+  "delivery": "./releases/9f6a975fc8f97bd9/ready.md",
+  "installer": "./releases/9f6a975fc8f97bd9/install.cjs",
+  "installerSha256": "041d6c48d98229e7cb920f95acc323e29bef082d88edb54a70df2882a886e5b2",
+  "configuration": {
+    "props": {
+      "QuantityStepper": [
+        "inputMode"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "number-input",
+      "sourceFiles": [
+        "src/components/QuantityStepper.tsx"
+      ],
+      "requiredCapabilities": [
+        "editable and buttons-only modes, bounds and step",
+        "press-and-hold repeat and keyboard input without duplicate handlers"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve keyboard editing, hold acceleration, min/max boundaries and numeric roll motion."
+  ],
+  "files": [
+    "QuantityStepper.tsx",
+    "styles.css",
+    "assets/stemui/action-minus.svg",
+    "assets/stemui/action-plus.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/stemui/action-minus.svg.d.ts",
+    "assets/stemui/action-plus.svg.d.ts"
+  ]
+}

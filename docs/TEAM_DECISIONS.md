@@ -2,6 +2,52 @@
 
 此文件记录团队对基础规范的后续澄清。发生冲突时，顺序为：本文件最新决策 → 当前 dApp spec → 历史文件。
 
+## 2026-09-24 — Copy for AI 两种模式与显式变体
+
+- 当前复制入口统一提供 Apply AISEE design（默认，更新组件视觉和动效）与 Add motion only（只加动效、保留静态外观）；两份提示词只有 Goal 段落不同。
+- 两模式只允许目标组件实现及专属局部样式；业务页面、布局/文案、业务逻辑、hook、API、请求和配置默认不可写。必要范围外改动先列文件、原因、最小 diff、影响，等待用户明确确认。
+- 默认不复制预览参数，必须在 Variant 中明确选择一个目标；预览变化清除旧选择。此条覆盖 2026-09-18 的“点击时直接复制预览配置”范围，不改变白名单与业务数据排除原则。
+- 选定设计模式可改变组件视觉，但不授权改业务或页面；动效模式继续保护静态外观。两模式不允许为动画提前切换业务状态。
+
+
+## 2026-09-18 — 所有组件的变量复制与 AI 复用
+
+- 所有带变量的 Current 组件统一遵循“先选变量，再点 Copy for AI，复制点击时的最新配置”；不能只对 Sidebar 实现，也不能把所有可选值清单冒充当前选择。
+- 同页独立示例按 scope 分开，组件 props 与组合 / 插槽 / 主题 / 动效要求分开；预览状态不等同于生产环境固定状态，不导出业务输入、搜索词或账号数据。
+- AI 收到截图或可访问链接时，先核对现有 Current 组件的用途、结构、交互；可满足时直接复用并映射变量。截图只说明可见状态，隐藏交互与不可访问设计不得臆测。
+- 明确用户选择优先；否则依次参考目标设计、产品已确定配置、组件文档默认值。该规则同样适用于整套系统交付，不依赖复制入口。同一产品沿用已确定配置，不随机选择；单次 Demo 选择不自动改全产品默认值。
+- 接入契约与当前覆盖见 [COMPONENT_CONFIGURATION.md](COMPONENT_CONFIGURATION.md)。
+
+## 2026-09-18 — 分段选项与 Brand Mention
+
+- Segmented Choice hover 统一使用颜色变量 bg-hover（--aisee-color-semantic-bg-hover），未选项不额外增加灰色描边；选中项保留语义填充和深色描边，hover 叠加同一变量。
+- Brand Mention 使用已有 TagInput 接受多个品牌 / 话题，收起不丢标签。
+- 可折叠 Card 收起时移除 header 底部内容间距，标题、右侧标签和箭头垂直居中。
+
+## 2026-09-18 — 通用卡片嵌套层级
+
+- 复杂描边（含白色内框、多层边缘或强调阴影）的卡片只用于外层；任何场景下内部都不再重复复杂描边，不限于 Create Post 或弹窗。
+- 内层优先浅灰纯色填充，或白色填充 + 浅色单描边，减少重复边框造成的臃肿感。
+- section Card 嵌套时自动简化为白底浅描边、8px 圆角、12px 内距、无白色内框和阴影。独立外层 section 保留原有外观，功能与状态不变。
+- 用户参考：Figma 77:16889；内部 Post setup 见 77:16984。
+
+## 2026-09-15 — Common 文档与 Dropdown 精确样式
+
+- Brand / Common 的现行文档内容使用与 Current 组件页一致的 640px 居中结构：标题和描述在白色详情卡上方，详情卡内展示 Overview / Examples 等具体内容；上一项 / 下一项箭头位于标题区右上角，不能压在卡片内容或元信息上。
+- Dropdown 菜单中相邻选项的垂直间距统一为 4px；组件源码与详情页全部示例必须同步，不能只修其中一处。
+- Filter 组合以 Figma `38:82016` 为权威：面板约 320px 宽、1px `#111` 描边、16px 圆角、白底；面板内垂直间距 12px，上 17px、左右 17px、下 25px；分隔线为 8% 黑。
+- Filter 未选项高 24px、圆角 8px、背景 `#FAFAFA`、1px `rgba(17,17,17,.06)` 描边、Karla 12px / 500、文字 `#3D3D3A`；选中项为 `#111` 背景和白字。不得改成胶囊形或自行替换颜色。
+- Dropdown 详情页按可复用能力展示 Single-select、Multi-select、Searchable multi-select、Combobox、Action menu、Grouped select 六类核心类型，不使用 Reporting period、Publish channels 等业务功能命名。Filter panel、Search + action、Grouped account 等归入下半区组合示例，并保留当前组合的真实交互和参数说明。
+- Dropdown Demo 的 Composition 选择器使用项目自定义触发器与菜单，不使用浏览器原生 `select`；箭头复用 Sidebar 的 `line_chevron-up.svg` 线性图标并随展开状态旋转。
+- Dropdown 的 Fluid Hover 已从预览同步为 Current 默认行为：菜单内只使用一个共享的 5% 黑色高亮层，跨 4px 间隙连续跟随最近可用选项；打开或尺寸变化时一次缓存选项位置，指针移动期间不再反复查询 DOM 或读取布局，空隙命中按动画帧合并；禁用项不参与，键盘焦点同步，点击间隙选择当前高亮项，并遵循 reduced-motion。React API 可用 `fluidHover={false}` 关闭，用 `gapClick` 控制间隙点击。
+- Dropdown Variant Playground 顶部的参数为“当前预览说明”，不得伪装成可点击按钮；Grouped account 中 `Show icons` 是真实 Toggle，打开显示头像和平台图标，关闭后只保留文字、状态和行操作。
+- Dropdown 菜单必须作为浮层脱离文档流；展开和收起不得改变 Variant Playground、组件卡片或后续内容的高度与位置。Fluid Hover 容器不得覆盖菜单自身的绝对定位。
+- Dropdown 富选项的独立行操作使用 `item.action`。24px 操作按钮不常驻：默认隐藏，行 hover 或 `focus-within` 时以灰底灰描边出现，按钮自身 hover 后才使用 Post 黄色；不得把黄色 hover 状态当默认样式。
+- Dropdown 的 Icon action menu 用于频道或条目操作：保留 Figma 的紧凑矩形菜单、16px 左侧线性图标与单行标签；普通操作使用正文色，只有 Delete 使用语义危险色；操作图标必须来自 `@stemui/icons` 的明确导出，HTML Demo 使用 `assets/stemui/` 只读快照，不得手绘或用通用占位图标替代。
+- Common 页面中的说明卡使用完整灰色描边和左侧品牌强调线；Logo 示例按用途拆成独立有描边的样本卡，避免无分组的松散排版。
+- Components / Content & Status / Avatar 分为两套不可混用的头像库：22 个方形头像用于网站用户注册时按稳定用户 seed 分配；24 个带灰色描边的圆形头像仅在发布 Post 且无法抓取用户社交媒体头像时按稳定社交账号 seed 兜底。资产以 Figma `98:180630` 为权威；Generated extensions 未确认前不进入自动分配资源池。
+- Empty State 插图节点 `42:11910` 表示“暂无报告记录”，名称统一为 `No report data`，不能作为成功状态使用；对应示例说明当前没有报告数据，并以 `Add product URL` 引导用户发起分析。
+
 ## 2026-09-11 — 用户追加的通用组件与字体规则
 
 - 设计系统所有页面统一 Karla，包括 Brand、Legacy 展示、控件、表格、代码提示与 Score Gauge。覆盖下方早期字体分域及 Digital Numbers 例外；保留历史字体资产不代表继续使用。
@@ -82,7 +128,7 @@
 - 每个功能页面主内容区第一块固定为 Page Banner，以 Figma `66:122927` 为基准：高 76px、圆角 16px、白色 4px 描边环、44×44px 白色 icon 容器、24×24px leaf icon、Karla 20/500 标题与 14/400 描述；右侧按功能放按钮、Toggle、统计或留空。
 - Page Banner 和功能页面必须与 Analysis、Growth、Engage、Post、Verify、Connection 等实际功能对应，不把 Overview 结构复制成所有页面。
 - 搜索框、Input 与 Dropdown 的 hover/focus 沿用 Aisee lime `#CFFF29`；深色 Button hover 转为当前模块品牌色，带品牌色的 Button hover 转为深色。
-- Input 提供真实的 Default、Hover、Focus、Disabled、Error；Select / Dropdown 至少覆盖单选，并按设计稿提供多选、Filter、Input 型下拉。菜单与触发器保持设计稿间距，选中项和 hover 使用浅黑透明填充。
+- Input 提供真实的 Default、Hover、Focus、Disabled、Error；Select / Dropdown 覆盖单选、多选、可搜索多选、Combobox、操作菜单和分组选择。Filter panel 等设计稿实例属于组合示例，不作为基础类型命名。菜单与触发器保持设计稿间距，选中项和 hover 使用浅黑透明填充。
 - 页面灰色背景保持偏浅；卡片和灰色展示框四周必须留出间距，组件不能贴边。
 
 ## 2026-08-21 — Dialog 与事件反馈
@@ -117,7 +163,8 @@
 - 本地 HTML 预览通过 HTTP 服务打开，不以 `file://` 双击结果判断内容是否丢失。
 - 发布团队预览时部署完整静态站点，不只发送单个 HTML；AI 交付同时提供 canonical Markdown、明确 token/组件契约、真实本地 SVG 路径和可访问预览。
 - 私有 GitHub 仓库不等于公开在线预览；团队预览站点需可访问，同时仓库仍可保持私有。
-- 每次 `main` 更新后检查 Actions / GitHub Pages，并实际打开线上 Demo 验证域名、HTTPS、相对路径、字体、SVG、视频与交互。
+- GitHub Pages 由共享开发分支 `ai/desktop/design-system-current` 自动部署，作为团队始终可访问的最新 Demo；每次推送必须先通过完整检查，再发布到固定 Pages URL。`main` 继续作为通过 PR 确认的正式稳定代码，不直接承担开发预览更新。
+- 每次开发预览部署后检查 Actions / GitHub Pages，并实际打开线上 Demo 验证域名、HTTPS、相对路径、字体、SVG、视频与交互。
 
 ## 2026-09-10 — 组件更新提示、组件导航与新增控件
 
@@ -130,7 +177,11 @@
 - Sidebar Navigation 的父级功能通过整行点击展开/收起，不显示行尾下拉箭头；收起态点击功能 icon 继续使用 flyout 显示子功能。
 - Sidebar Navigation 不使用自绘 cursor：展开态仅在开合按钮 hover 时使用平台原生 `w-resize`，强调向左收起；收起态整条 rail 使用平台原生 `e-resize`，强调向右展开。按钮视觉继续使用已确认的 Figma icon。
 - Sidebar Navigation 的单色功能 icon 与文字共用 `currentColor`：默认均为 `#3D3D3A`，hover / selected 均为 `#111111`；Google、Bing 等多色品牌 Logo 保持官方颜色，不参与统一染色。
+- Tree Nav 是独立 Current 组件，默认直接展示一组相关叶子选项与层级引导线，不在列表内部重复页面已经提供的分组标题；仅在 Tree Nav 必须自行承担分组命名时才使用父级展开。Sidebar Navigation 展开态必须组合 Tree Nav，并额外负责多个产品分组、宽度收起、账号 Footer 和收起态 flyout。
+- Checkbox 只在状态由未选中切换为选中时播放一次短促 bubble 扩散反馈；初始选中、取消选中、禁用态不播放，且必须遵循 `prefers-reduced-motion`。
+- Notification 使用 Figma `77:17878` 的 32px 实心铃铛、362px 面板与消息条目：默认按钮为 `colour/bg/hover`，hover / focus 切换 `colour/bg/yellow-mid`，未读标记使用 `colour/feedback/wrong`。新通知到达时白色铃铛摆动且徽章数字滚动；正式组件由外部传入的未读数量增加自动触发，推送 / 轮询由产品接入；Reset demo 恢复通知时显式重播两种动画，包括数量相同的情况；hover / focus 只摆动白色铃铛，外层按钮与黑色圆底始终不动。面板统一支持 All / Unread、全部已读、条目已读、操作、错误详情与 ready / loading / empty / error 状态，并遵循 `prefers-reduced-motion`。
 - Current 页面中新增或更新的内容区块标题紧邻显示 Campaigns 同款 `NEW` 胶囊；内容级标记必须显式添加，不能把所有标题按时间自动标记。
+- 每次完成一批用户可见更新，必须在根 README 的“最近更新”中按日期使用 3–8 条简洁内容说明更新内容与用户可见结果；README 只保留最近 3 批，更早记录归档到 `CHANGELOG.md`。“v6 主要更新”只保存长期有效的版本级变化，不能替代批次更新清单。影响当前规范时，同步维护组件页、Overview、`Copy for AI`、`NEW` 标识、相关设计资源和交付文档；纯重构、格式化、内部测试等不可见调整不进入 README。
 - Dropdown trigger 与所有菜单选项统一使用 Karla 14px / 20px；选项字号不依赖外围页面继承。
 - Tag Input 是独立 Inputs & Controls 组件，不扩张基础 Input API；输入时在最前方显示虚线预览，Enter 或 Add 提交为输入框内标签，空输入时 Backspace 删除最后一个标签。
 - Toggle 保持 AISEE 唯一标准 24×16px track、10×10px 黑色 thumb 与模块主色，不替换成外部组件尺寸；交互采用弹性位移、hover 横向伸展、press 压缩和 label 状态过渡，并尊重 reduced motion。
@@ -141,3 +192,75 @@
 - Split Dialog 只用于同一项短任务内的局部多区段；需要持续导航或长时间编辑时使用页面或 Drawer。破坏性的二选一操作继续使用 Confirmation Dialog。
 - 平台 Tabs 提供 `platformLabelDisplay="auto" | "active" | "all"`，默认 `auto`：全部 Logo + name 的真实宽度能放下时全部显示，空间不足时只展开当前项名称，不能把名称压缩或切断。`active` 与 `all` 只用于需要固定策略的特殊页面，显式 `all` 在不足时横向滚动。
 - Components Overview 的 Current 标签是完整组件页的快捷入口。嵌入门户时在当前 Design System 内打开目标页并同步侧边栏；通过侧边栏 Overview 或浏览器返回键回到总览。
+
+
+## 2026-09-17 · NEW 日期规则
+
+- 文档更新标记统一以 Asia/Taipei 日历日期计算：更新当天算第 1 天，第 1–7 天保留，第 8 天零点隐藏（2026-09-23 恢复为 7 天）；已有内容沿用最初添加 NEW 或最近一次真实内容更新的登记日期，修改期限、刷新或重新构建不续期，只有真实内容更新才重新计时。
+- 侧栏、README、组件详情与 Open HTML 独立页共用 `assets/update-badges.js`。页面跨午夜、后台恢复、动态组件渲染时同步更新；不依赖访问次数或 localStorage，不因重新构建重置日期。
+- 内容更新时维护该文件的日期表；Brand metadata 使用 `updatedAt`（YYYY-MM-DD）。缺失、非法及未来日期不显示 NEW。业务示例自身的 NEW 徽章不属于文档更新标记，不参与过期。
+- Toggle Playground 的变量选择直接使用正式 Dropdown 组件，触发框、弹出菜单、键盘操作与动效保持同源，不使用原生 select 菜单。
+
+## 2026-09-20 · Notification 单组件交付边界
+
+- 用户已确认旧公开交付能够接入，但其内容过多。Copy for AI 只交付铃铛和未读数字动画，不复制状态展台、演示操作、模拟数据、通知面板或面板配置。
+- 动画沿用 Current NotificationBell；产品传入真实 count / onClick，默认数字徽章。dot 仍是可选产品 API，但演示开关不作为复制配置。
+- 交付仅限生产需要的源码、局部样式、入口和类型声明，文件数不设上限；Bell SVG 内联，沿用 token 默认值，继承产品字体。不打包全局 reset、整套 token、Karla 或面板插图。
+- 后续已推广为所有组件统一的显式生产清单、白名单配置和 latest 指针。保留设计系统完整 Demo；Production 不可依赖 Demo。依据见 [生产交付契约](PRODUCTION_DELIVERY.md)。
+
+## 2026-09-21 · Production delivery 契约补充
+
+- 已复制的稳定 latest.json 地址在执行时解析最新已发布生产版本；已安装源码不会自动更新。复制时的公开版本检查只是可用性校验，不将短指令固定为版本快照。
+- 每个组件显式声明 dependencies / compatibility，安装说明读取这些值，不额外统一强制 React/Node 版本。Node 安装器环境与组件浏览器运行环境区分。
+- 文档规范使用“所有已登记组件”，实际组件数与验收数由报告动态输出。
+- CSS 按 selector/value AST 和依赖图计算闭包，包括伪类/伪元素、变量默认值及条件覆盖、keyframes、media/supports/reduced-motion，不能只按 class 字符串切片；可达但未登记或未解析的依赖阻止构建。
+
+## 2026-09-21 · 通用 Confirmation Dialog
+
+- 在现有 ConfirmationDialog 上扩展可选 notices 和 children，不创建平行弹窗。无 notices 时保留原简洁确认。
+- Notice 只声明 positive / warning 语义、标题、说明和可选宿主图标；自动化、队列数量与回复等业务内容仅为 Demo 示例。
+- 业务项目控制 open、onClose 和 onConfirm；组件不自行执行业务操作、关闭确认成功状态或插入 Toast。
+- 生产交付遵循统一 manifest：必要源码、Button、局部样式闭包和关闭图标；不含场景数据、业务插图、Toast、字体或展示页。
+- 标题沿用系统已确认的 20px / 500；Figma 72:56945 用于影响卡片结构、配色与间距。
+
+## 2026-09-21 · Thinking Indicator
+
+- 参考 Fluid Functionalism ThinkingIndicator 的圆形/无限符号变形、文字扫光和轮换，使用原生 SVG + 局部 CSS 适配 AISEE。无需引入整套 shadcn、Inter 字体、SizeProvider 或动画库。
+- AISEE 预览字体为 Karla，默认 14/22、紧凑 12/18，字重 500、语义次级文字色；生产继承宿主字体。
+- labels 是可本地化的装饰性等待文案，不是实际进度或模型推理记录；真实任务进度使用 Steps。业务项目决定显示与卸载时机。
+- 系统 reduced motion 停止 SVG、扫光和文字轮换，读屏保持单一稳定状态；文字轮换不触发反复播报。
+- Copy for AI 交付组件与局部样式完整闭包，选项只包含 showIcon / size，不包含 Demo 控件、字体和展示布局。
+
+## Host Project Compatibility · 2026-09-21
+
+安装前检查实际目标组件、样式、UI 库与现有交互；shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`。保留宿主已有样式、布局、图标、API、状态和事件，只添加本次要求且缺失的能力。动画需求只添加缺失动画、必要 hook 与 reduced-motion，不改变静态外观或交互，不导入整份交付 CSS，不创建平行组件。不兼容不能作为重建理由；只有目标组件不存在时才新增，并复用宿主 UI 库和样式约定。交付源码只作为必要的临时参考；安装器仅校验解包，不会自动适配宿主。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
+
+2026-09-24 更正：既有宿主外观与交互优先于交付 `preserve`，原先“合并 AISEE 视觉、状态、动画”的措辞作废。复制动画只授权补缺失动画；不能更换样式或 UI 库，也不能借 standalone 回退重建已有组件。
+
+## 2026-09-23 · 门户归属与权威边界
+
+- README 保留为三条使用路径的入口：让 AI 在真实 brief / 参考图基础上按规则出图、让设计师探索方向、让开发接入 Current 组件。缺少实际 brief 或参考图的出图入口标记为待补，不提供看似可用的空入口。
+- Brand / Foundations 只承载 AISEE Logo、资产、颜色、字体、dApp 基础视觉和跨组件动效等基础规范。AI 生成的 Engage、Growth、Post、Automation 等参考稿归入 Brand / Explorations，并明确仅供灵感参考，不是实际产品设计或实施规范。
+- Components 只承载可独立复用的生产组件及其状态、动画、API 和 Copy for AI。UI Kits 承载多个组件组成的模式、页面示例和交互 Demo；Current 只表示该 Demo 正在维护，不自动表示它是已确认产品页面。
+- 实际产品设计以对应功能的最新 Figma 为准。来源 `source / surface` 与使用状态 `designStatus` 分开记录；旧稿保持 Legacy，Draft 不自动升级为 Selected / Current。
+- 本次归属调整只改导航与元数据，不移动或删除物理文件，并保留旧直达路径、搜索、状态标签和现有深链。
+
+## 2026-09-21 · Automation Runner
+
+- Automation Runner 是挂载在应用根布局、独立于路由内容的常驻浮层；页面切换不卸载。关闭只隐藏窗口，不能停止或修改真实自动化任务。
+- 组件支持 default、expanded、minimized 三种受控或非受控状态；标题或箭头仅在有真实详情或操作时展开，外部传入 expanded 但内容为空时自动回落为 default，不显示空白详情区、箭头或分隔线。横线最小化，点击最小化卡片任意位置恢复 default，绿色眼睛作为键盘可访问的恢复控件。标题、说明、详情行和返回操作由宿主业务传入，Demo 路由和模拟状态不进入生产交付。
+- 使用 Figma 72:55666、72:56017、72:55315 的几何与原始图标；默认 332×64、展开约 332×252、最小 74×64。
+- 底部弹性出退场、眨眼和眼珠跟随鼠标是该浮层的确认交互。悬停卡片时眼睛瞪大并左右慌张扫视两次，同时按指针方向轻探；只有进入绿色小怪兽时播放一次软胶回弹，不循环抖动。减少动态效果时停止扫视和位移，只保留静态放大的眼神反馈，状态和控制保持可用。
+- 整张卡片任意位置均可拖拽并限制在视口内；切换 default、expanded、minimized 时保持最近视口边缘或中心锚点，右侧向左展开、向右收起，左侧和上下边缘对称处理，尺寸动画期间也不能越出视口。超过移动阈值后不触发展开、最小化、关闭或操作按钮。拖拽手柄另支持键盘方向键；关闭后的重新唤起入口由宿主应用提供。
+- Copy for AI 接入已有同类浮层时保留所有既有样式和交互，只补本次要求的缺失能力；动画需求只补缺失动效，不新增或替换拖拽、状态切换、图标、布局或点击行为。禁止重复 DOM、keyframes、状态和全局 pointermove 监听。参考组件的完整行为仅适用于新组件或明确要求的缺口。
+
+## 2026-09-24 · Brand 分类简化命名
+
+- Brand 的两个分类固定为 Foundations 与 Explorations：前者承载基础规范，后者承载 AI 方向探索与灵感参考。
+- 此命名取代 Common 与 AI Explorations / Inspiration；只调整分类名称，页面路径、来源、Draft / Legacy 状态和 Figma 权威边界保持不变。
+
+## 2026-09-24 · Copy for AI 保留宿主并只补缺失能力
+
+安装前检查实际目标组件、样式、UI 库与现有交互；shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`。保留宿主已有样式、布局、图标、API、状态和事件，只添加本次要求且缺失的能力。动画需求只添加缺失动画、必要 hook 与 reduced-motion，不改变静态外观或交互，不导入整份交付 CSS，不创建平行组件。不兼容不能作为重建理由；只有目标组件不存在时才新增，并复用宿主 UI 库和样式约定。交付源码只作为必要的临时参考；安装器仅校验解包，不会自动适配宿主。
+
+- 该规则取代此前优先还原 AISEE 外观或交互的接入要求。预览参数和组件 preserve 不得覆盖宿主；不安全的动效组合须报告冲突并保留原实现。

@@ -134,11 +134,13 @@
       }
       .icon-button { width: 44px; display: grid; place-items: center; }
       .icon-button svg { width: 19px; height: 19px; }
-      .action-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 0 14px; font-weight: 650; text-decoration: none; }
+      .action-button { display: inline-flex; height: 44px; min-height: 44px; align-items: center; justify-content: center; gap: 7px; padding: 0 14px; font-weight: 650; text-decoration: none; }
       .action-button:disabled { cursor: wait; opacity: .65; }
       .action-button.primary { border-color: var(--ink); background: var(--ink); color: white; }
+      .action-button.ai-copy { border-color: rgba(127,164,0,.42); background: rgba(207,255,41,.18); }
       .icon-button:hover, .action-button:hover { border-color: var(--line-strong); background: var(--surface-subtle); }
       .action-button.primary:hover { background: #343538; }
+      .action-button.ai-copy:hover { border-color: rgba(127,164,0,.68); background: rgba(207,255,41,.3); }
       .mobile-menu { display: none; }
 
       .shell { min-height: 100vh; padding-top: var(--topbar); }
@@ -148,10 +150,12 @@
         z-index: 20;
         width: var(--sidebar);
         overflow-y: auto;
+        scrollbar-width: none;
         border-right: 1px solid var(--line);
         background: var(--surface);
         padding: 18px 12px 32px;
       }
+      .sidebar::-webkit-scrollbar { display: none; }
       .nav-home, .nav-item {
         width: 100%;
         min-height: 32px;
@@ -244,6 +248,7 @@
         font-weight: 500;
         line-height: 16px;
       }
+      .readme-updated-title { display: flex; align-items: center; gap: 8px; }
       .nav-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; color: currentColor; }
       .nav-icon img { width: 15px; height: 15px; object-fit: contain; }
       .nav-group-icon { display: inline-grid; width: 16px; height: 16px; flex: 0 0 16px; place-items: center; }
@@ -309,13 +314,14 @@
         overflow: hidden;
       }
       .quick-card:hover { border-color: var(--line-strong); box-shadow: var(--shadow); transform: translateY(-1px); }
-      .quick-card .preview-art { height: 82px; display: flex; gap: 8px; align-items: flex-end; margin: -2px -2px 20px; }
-      .swatch { flex: 1; min-width: 28px; border: 1px solid rgba(0,0,0,.08); border-radius: 8px; }
-      .swatch:nth-child(1) { height: 54px; background: #f1c4b9; }
-      .swatch:nth-child(2) { height: 72px; background: #d8d0ff; }
-      .swatch:nth-child(3) { height: 46px; background: #8edee2; }
-      .swatch:nth-child(4) { height: 64px; background: #d7ff3f; }
-      .component-art { height: 82px; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 20px; }
+      .quick-card > .item-tag { align-self: flex-start; margin-bottom: 12px; }
+      .quick-card .preview-art { width: 100%; height: 72px; flex: 0 0 72px; display: flex; gap: 8px; align-items: stretch; margin: 0 0 20px; }
+      .swatch { height: 100%; flex: 1; min-width: 28px; border: 1px solid rgba(0,0,0,.08); border-radius: 8px; }
+      .swatch:nth-child(1) { background: #f1c4b9; }
+      .swatch:nth-child(2) { background: #d8d0ff; }
+      .swatch:nth-child(3) { background: #8edee2; }
+      .swatch:nth-child(4) { background: #d7ff3f; }
+      .component-art { width: 100%; height: 72px; flex: 0 0 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 0 0 20px; }
       .component-art span { display: grid; place-items: center; border: 1px solid var(--line); border-radius: 9px; background: var(--surface-subtle); font-size: 12px; font-weight: 700; }
       .component-art span:first-child { border-color: #191a1c; background: #191a1c; color: white; }
       .quick-card h3 { margin: auto 0 5px; font-size: 20px; letter-spacing: -.02em; }
@@ -333,6 +339,12 @@
       .overview-nav a { min-height: 36px; flex: 0 0 auto; display: inline-flex; align-items: center; white-space: nowrap; border-radius: 7px; color: var(--muted); padding: 0 11px; font-size: 13px; font-weight: 600; text-decoration: none; }
       .overview-nav a:hover { background: var(--surface-subtle); color: var(--ink); }
       .overview-nav a.active { background: var(--accent-soft); color: #293000; }
+      .readme-tools { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+      .readme-language { display: inline-flex; min-height: 44px; align-items: center; gap: 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 4px; }
+      .readme-language-label { color: var(--muted); padding: 0 8px; font-size: 12px; font-weight: 650; }
+      .readme-language button { min-width: 52px; min-height: 34px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); font: inherit; font-size: 13px; font-weight: 650; cursor: pointer; }
+      .readme-language button:hover { background: var(--surface-subtle); color: var(--ink); }
+      .readme-language button[aria-pressed="true"] { background: var(--accent-soft); color: #293000; box-shadow: inset 0 0 0 1px rgba(127,164,0,.28); }
       .overview-section { scroll-margin-top: calc(var(--topbar) + 74px); margin-top: 60px; border-top: 1px solid var(--line); padding-top: 34px; }
       .overview-section h2 { margin: 0; font-size: 28px; letter-spacing: -.03em; }
       .overview-section > p { max-width: 790px; margin: 10px 0 0; color: var(--muted); font-size: 16px; }
@@ -398,6 +410,9 @@
       .color-control { display: grid; gap: 5px; }
       .color-control span { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
       .color-control input, .color-control select { width: 100%; height: 36px; border: 1px solid var(--line-strong); border-radius: 7px; background: white; color: var(--ink); padding: 0 10px; font: inherit; font-size: 13px; }
+      .color-control--select { position: relative; }
+      .color-control--select::after { position: absolute; right: 12px; bottom: 10px; width: 16px; height: 16px; background: url("assets/stemui/line_chevron-up.svg") center / 16px 16px no-repeat; content: ""; pointer-events: none; transform: rotate(90deg); }
+      .color-control--select select { appearance: none; padding-right: 40px; }
       .color-table-wrap { overflow-x: auto; }
       .color-table { width: 100%; min-width: 840px; border-collapse: collapse; }
       .color-table th, .color-table td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: middle; }
@@ -432,7 +447,7 @@
       .component-map p { margin: 0; color: var(--muted); font-size: 14px; }
       .version-badge { display: inline-flex; align-items: center; min-height: 26px; margin-left: 8px; border-radius: 999px; background: var(--accent); color: #222900; padding: 2px 9px; font-size: 11px; font-weight: 750; vertical-align: middle; }
 
-      .preview { min-height: calc(100vh - var(--topbar)); display: grid; grid-template-rows: auto 1fr; }
+      .preview { min-width: 0; min-height: calc(100vh - var(--topbar)); display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
       .preview[hidden], .home[hidden] { display: none; }
       .preview-toolbar {
         min-height: 72px;
@@ -444,11 +459,13 @@
         padding: 12px 18px;
       }
       .back-button { flex: 0 0 auto; }
-      .preview-meta { min-width: 0; }
+      .preview-meta { min-width: 0; flex: 1; }
       .preview-title-row { min-width: 0; }
       .preview-meta h1 { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; letter-spacing: -.015em; }
       .preview-meta p { margin: 2px 0 0; overflow: hidden; color: var(--muted); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
-      .preview-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+      .preview-actions { margin-left: auto; display: flex; flex: 0 0 auto; align-items: center; gap: 8px; }
+      .preview-actions .action-button { flex: 0 0 auto; white-space: nowrap; }
+      .preview-actions .action-button svg { flex-shrink: 0; }
       .preview-frame-wrap { position: relative; isolation: isolate; min-height: 0; background: #e9eaec; padding: 12px; }
       .preview-frame {
         position: relative;
@@ -739,7 +756,32 @@
         font-weight: 400;
         line-height: 18px;
       }
-      #openStandalone {
+      .ai-copy-controls { position: relative; flex-shrink: 0; }
+      .ai-copy-controls[hidden], .ai-copy-controls [hidden] { display: none !important; }
+      .ai-copy-primary { display: flex; align-items: stretch; border: 1px solid #bedb80; border-radius: 10px; background: #f5ffdb; }
+      .ai-copy-primary #copyAiHeader { gap: 9px; border: 0; border-radius: 9px 0 0 9px; background: transparent; padding: 0 12px; height: 38px; min-height: 38px; }
+      .preview-actions #copyAiModeLabel { display: inline; }
+      .ai-copy-mode-label { padding-left: 10px; border-left: 1px solid #cdddb0; font-size: 12px; font-weight: 400; color: #52613b; white-space: nowrap; }
+      .ai-copy-trigger { display: grid; place-items: center; width: 32px; padding: 0; background: transparent; color: #52613b; border: 0; border-left: 1px solid #dbe8c1; border-radius: 0 9px 9px 0; cursor: pointer; }
+      .ai-copy-primary #copyAiHeader:hover, .ai-copy-trigger:hover, .ai-copy-trigger[aria-expanded="true"] { background: #eaffbe; }
+      .ai-copy-controls button:focus-visible { outline: 2px solid #7fa400; outline-offset: 3px; }
+      .ai-copy-controls button:disabled { opacity: .55; cursor: wait; }
+      .ai-copy-trigger svg { width: 14px; height: 14px; transition: transform 160ms ease; }
+      .ai-copy-trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+      .ai-copy-menu { position: absolute; top: calc(100% + 8px); right: 0; z-index: 80; width: 300px; max-width: calc(100vw - 32px); padding: 6px; background: #fff; border: 1px solid rgba(17,17,17,.08); border-radius: 12px; box-shadow: 0 8px 32px rgba(17,17,17,.12), 0 2px 6px rgba(17,17,17,.04); }
+      .ai-copy-menu-heading { margin: 0; padding: 8px 10px 5px; font: 500 11px/16px Karla, Arial, sans-serif; color: #858585; }
+      .ai-copy-option { display: flex; width: 100%; align-items: center; gap: 10px; padding: 10px; border: 0; border-radius: 7px; background: transparent; color: #111; text-align: left; cursor: pointer; font: 500 14px/18px Karla, Arial, sans-serif; }
+      .ai-copy-option:hover, .ai-copy-option:focus-visible { background: #f5f5f5; }
+      .ai-copy-option[aria-checked="true"] { background: #f7fbeF; }
+      .ai-copy-option::before { content: ''; width: 14px; height: 14px; flex: 0 0 14px; border: 1px solid #dedede; border-radius: 50%; }
+      .ai-copy-option[aria-checked="true"]::before { border-color: #a7c852; background: #bcea67; box-shadow: inset 0 0 0 3px #fff; }
+      .ai-copy-option-copy { display: grid; gap: 3px; min-width: 0; }
+      .ai-copy-option small { display: block; font-size: 12px; line-height: 16px; font-weight: 400; color: #828282; overflow-wrap: anywhere; }
+      .ai-copy-variants { margin-top: 6px; padding-top: 4px; border-top: 1px solid #eee; max-height: 220px; overflow-y: auto; }
+      .ai-copy-status { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+      @media (prefers-reduced-motion: reduce) { .ai-copy-trigger svg { transition: none; } }
+      #openStandalone,
+      #copyAiHeader {
         min-height: 40px;
         height: 40px;
       }
@@ -773,7 +815,7 @@
           <input id="searchInput" type="search" placeholder="Search system…" autocomplete="off" />
         </label>
         <button class="action-button" id="shareButton" type="button" title="Copy this page link">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 12v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-7"/><path d="m15 5-3-3-3 3M12 2v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           <span class="share-text">Share</span>
         </button>
       </div>
@@ -783,7 +825,7 @@
       <aside class="sidebar" id="sidebar" aria-label="Design system navigation">
         <button class="nav-home active" id="homeButton" type="button">
           <span class="nav-icon"><img src="assets/stemui/nav-overview.svg" alt="" aria-hidden="true"></span>
-          <span class="nav-label">README</span>
+          <span class="nav-label nav-item-label"><span class="nav-label-text">README</span><span class="nav-new-label" aria-hidden="true">NEW</span></span>
         </button>
         <nav id="navGroups"></nav>
       </aside>
@@ -791,10 +833,17 @@
 
       <main class="main" id="main-content">
         <section class="home" id="homeView">
+          <div class="readme-tools">
+            <div class="readme-language" role="group" aria-label="README language">
+              <span class="readme-language-label">README</span>
+              <button type="button" data-readme-language="en" aria-pressed="true">EN</button>
+              <button type="button" data-readme-language="zh" aria-pressed="false">中文</button>
+            </div>
+          </div>
           <div class="hero">
             <p class="eyebrow">Latest feature page 5.7 · Design Spec v6 · Shared source of truth</p>
             <h1>Build every AISEE experience from the same system.</h1>
-            <p class="hero-copy">Foundations, reusable components and preserved product previews—updated from the latest dApp design specification while keeping unmatched legacy work available.</p>
+            <p class="hero-copy">Foundations, reusable components, maintained UI demos and clearly labelled AI explorations. Confirmed product design always follows the relevant latest Figma source.</p>
           </div>
 
           <div class="status-card">
@@ -816,6 +865,7 @@
             <a href="#interaction">Interaction</a>
             <a href="#assets">Assets</a>
             <a href="#components-overview">Components</a>
+            <a href="#component-use">Using components</a>
             <a href="#ai-handoff">AI handoff</a>
             <a href="#versions">Versions</a>
           </nav>
@@ -848,13 +898,13 @@
           </section>
 
           <section class="overview-section" id="sources" aria-labelledby="sources-title">
-            <h2 id="sources-title">Sources and authority</h2>
+            <h2 class="readme-updated-title" id="sources-title">Sources and authority <span class="nav-new-label" aria-hidden="true">NEW</span></h2>
             <p>Design files and written specifications serve different roles. The Figma file is the visual product source; the specification and team decisions make implementation rules explicit.</p>
             <div class="source-panel">
               <article class="source-card current">
                 <span class="source-label">Registered Figma archive</span>
                 <h3>Figma feature page 5.7 <span class="version-badge">Latest feature</span></h3>
-                <p><code>备份-官网+dapp主功能.fig</code> contains the homepage and main dApp flows. Page 5.7 adds hosted automatic publishing (Automation) under WORKFLOWS; it is not a global version of the complete file.</p>
+                <p><code>AISEE dApp design archive.fig</code> contains the homepage and main dApp flows. Page 5.7 adds hosted automatic publishing (Automation) under WORKFLOWS; it is not a global version of the complete file.</p>
                 <ul class="source-meta"><li><span>Exported</span><strong>2026-08-18 16:06:53 +08:00</strong></li><li><span>Archive size</span><strong>307 MB</strong></li><li><span>Repository policy</span><strong>Reference only; not copied into Git</strong></li></ul>
               </article>
               <article class="source-card">
@@ -883,30 +933,30 @@
           </section>
 
           <section class="overview-section" id="visual" aria-labelledby="visual-title">
-            <h2 id="visual-title">Visual foundations</h2>
+            <h2 class="readme-updated-title" id="visual-title">Visual foundations <span class="nav-new-label" aria-hidden="true">NEW</span></h2>
             <p>Functional hierarchy comes first. Module color establishes location and action context; neutral surfaces carry the majority of the interface.</p>
             <h3 class="subheading">Color variables</h3>
             <div class="color-rule">
               <span class="color-rule-mark" aria-hidden="true">!</span>
-              <div><strong>页面和组件只能使用语义化变量</strong><p>元数据只保存未经功能修饰的原始颜色；语义化变量根据文字、背景、边框、状态和模块功能引用元数据。禁止在业务页面直接写 HEX 或引用 <code>--aisee-color-primitive-*</code>。</p></div>
+              <div><strong>Pages and components use semantic variables only</strong><p>Primitive variables store raw colours without functional meaning; semantic variables reference them for text, surfaces, borders, states and module context. Do not write HEX or use <code>--aisee-color-primitive-*</code> in product pages.</p></div>
             </div>
             <div class="color-flow" aria-label="Color token dependency flow">
-              <article class="color-flow-step"><span class="color-flow-kicker">Layer 1 · source</span><strong>元数据 / Primitive</strong><p>44 个原始颜色，只有名称、Light / Dark 值，不附加功能含义。</p></article>
+              <article class="color-flow-step"><span class="color-flow-kicker">Layer 1 · source</span><strong>Primitive layer</strong><p>44 raw colours with names and Light / Dark values, without functional meaning.</p></article>
               <span class="color-flow-arrow" aria-hidden="true">→</span>
-              <article class="color-flow-step current"><span class="color-flow-kicker">Layer 2 · contract</span><strong>语义化 / Semantic</strong><p>44 个已应用功能角色，通过 alias 引用元数据；未应用变量暂不公开展示。</p></article>
+              <article class="color-flow-step current"><span class="color-flow-kicker">Layer 2 · contract</span><strong>Semantic layer</strong><p>44 published functional roles reference primitive variables through aliases; unpublished variables stay hidden.</p></article>
               <span class="color-flow-arrow" aria-hidden="true">→</span>
-              <article class="color-flow-step"><span class="color-flow-kicker">Layer 3 · consumer</span><strong>组件与页面</strong><p>只消费 <code>--aisee-color-semantic-*</code>；换主题时无需修改组件内部颜色。</p></article>
+              <article class="color-flow-step"><span class="color-flow-kicker">Layer 3 · consumer</span><strong>Components and pages</strong><p>Consume <code>--aisee-color-semantic-*</code> only, so themes can change without editing component colours.</p></article>
             </div>
             <div class="color-browser" aria-label="Color variable browser">
               <div class="color-browser-head">
                 <div class="color-layer-tabs" role="tablist" aria-label="Color variable layer">
-                  <button class="color-layer-tab" id="primitiveColorTab" type="button" role="tab" aria-selected="false" data-color-layer="primitive">元数据 <span id="primitiveColorCount">44</span></button>
-                  <button class="color-layer-tab" id="semanticColorTab" type="button" role="tab" aria-selected="true" data-color-layer="semantic">语义化 <span id="semanticColorCount">44</span></button>
+                  <button class="color-layer-tab" id="primitiveColorTab" type="button" role="tab" aria-selected="false" data-color-layer="primitive">Primitive <span id="primitiveColorCount">44</span></button>
+                  <button class="color-layer-tab" id="semanticColorTab" type="button" role="tab" aria-selected="true" data-color-layer="semantic">Semantic <span id="semanticColorCount">44</span></button>
                 </div>
                 <div class="color-controls">
-                  <label class="color-control"><span>Search variable</span><input id="colorSearch" type="search" placeholder="搜索变量名、引用或 HEX" autocomplete="off"></label>
-                  <label class="color-control"><span>Mode</span><select id="colorMode"><option value="light">Light</option><option value="dark">Dark</option></select></label>
-                  <label class="color-control"><span>Category</span><select id="colorScope"><option value="all">全部类别</option></select></label>
+                  <label class="color-control"><span>Search variable</span><input id="colorSearch" type="search" placeholder="Search variable name, reference or HEX" autocomplete="off"></label>
+                  <label class="color-control color-control--select"><span>Mode</span><select id="colorMode"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+                  <label class="color-control color-control--select"><span>Category</span><select id="colorScope"><option value="all">All categories</option></select></label>
                 </div>
               </div>
               <div class="color-table-wrap">
@@ -954,23 +1004,36 @@
           </section>
 
           <section class="overview-section" id="components-overview" aria-labelledby="components-title">
-            <h2 id="components-title">Component library</h2>
+            <h2 class="readme-updated-title" id="components-title">Component library <span class="nav-new-label" aria-hidden="true">NEW</span></h2>
             <p>Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.</p>
             <div class="component-map">
               <article><h3>Actions</h3><p>Button.</p></article>
-              <article><h3>Inputs &amp; Controls</h3><p>Input, Checkbox, Select / Dropdown, Toggle, Tag Input and Toggle Selection Group. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger, with a 5% black fill for hover, focus and selected items.</p></article>
-              <article><h3>Navigation</h3><p>Current Tabs and product Sidebar Navigation patterns. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.</p></article>
-              <article><h3>Content &amp; Status</h3><p>Current PlanCard, Badge, Steps and Empty State.</p></article>
+              <article><h3>Inputs &amp; Controls</h3><p>Checkbox, Input, Quantity Stepper, Select / Dropdown, Tag Input, Toggle and Toggle Selection Group. Quantity Stepper supports direct entry or buttons-only control, three sizes, bounded values and boundary feedback. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.</p></article>
+              <article><h3>Navigation</h3><p>Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.</p></article>
+              <article><h3>Content &amp; Status</h3><p>Current PlanCard, Badge, Steps, Thinking Indicator and Empty State.</p></article>
               <article><h3>Data Display</h3><p>Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.</p></article>
-              <article><h3>Feedback &amp; Overlays</h3><p>Dialog, Confirmation Dialog, Tooltip and Toast.</p></article>
+              <article><h3>Feedback &amp; Overlays</h3><p>Dialog, Confirmation Dialog, Notification, Tooltip and Toast.</p></article>
             </div>
+          </section>
+
+          <section class="overview-section" id="component-use" aria-labelledby="component-use-title">
+            <h2 id="component-use-title">Use components without writing code</h2>
+            <p>Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.</p>
+            <div class="principles-grid">
+              <article class="principle"><strong>1. Choose a Current component</strong><p>Open the component under Components and review its live states, motion and usage notes. Legacy pages are historical references.</p></article>
+              <article class="principle"><strong>2. Copy for AI</strong><p>Use the two-star button beside Open HTML. All registered Current components copy a named production integration instruction, a stable latest-delivery URL and allowed real options. Your coding AI retrieves the required implementation, styles and assets; demo controls and fonts stay here.</p></article>
+              <article class="principle"><strong>3. Add the real task</strong><p>Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.</p></article>
+              <article class="principle"><strong>4. Compare the result</strong><p>Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.</p></article>
+            </div>
+            <div class="priority-note"><strong>Which handoff to use:</strong> Copy for AI defaults to Apply AISEE design for component visuals and motion; Add motion only preserves static appearance. Both reuse the host component and UI library and protect business behavior. Only the target component and local styles may change; page, hook, API, request or configuration edits require confirmation of exact files and minimal diffs. No preview variant is included unless explicitly selected. Requires a compatible React project and a coding AI with network and Node access.</div>
+            <p><a href="docs/GETTING_STARTED.md" target="_blank" rel="noreferrer">第三方接入指南 · Installation, prerequisites and troubleshooting</a></p>
           </section>
 
           <section class="overview-section" id="ai-handoff" aria-labelledby="ai-handoff-title">
             <h2 id="ai-handoff-title">AI implementation handoff</h2>
             <p>This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.</p>
             <div class="principles-grid">
-              <article class="principle"><strong>Minimum input</strong><p>Share this HTML, <code>docs/aisee-dapp-design.v6.md</code>, <code>docs/TEAM_DECISIONS.md</code> and the target-page requirements.</p></article>
+              <article class="principle"><strong>Minimum input</strong><p>Share this HTML, <code>docs/aisee-dapp-design.v6.md</code>, <code>docs/TEAM_DECISIONS.md</code> and the target-page requirements. Include a compatible installed package, authorized tgz or complete source, plus docs/GETTING_STARTED.md.</p></article>
               <article class="principle"><strong>Reliable assets</strong><p>Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.</p></article>
               <article class="principle"><strong>Implementation order</strong><p>Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.</p></article>
               <article class="principle"><strong>Verification</strong><p>Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.</p></article>
@@ -1008,10 +1071,19 @@
           <section class="home-section" aria-labelledby="architecture-title">
             <div class="section-heading"><h2 id="architecture-title">System architecture</h2><p>Four maintained sections</p></div>
             <div class="architecture">
-              <article><h3>README</h3><p>How the system is structured, maintained and shared.</p></article>
-              <article><h3>Brand</h3><p>Brand language and all preserved visual foundations.</p></article>
-              <article><h3>Components</h3><p>Reusable interface patterns and tested component states.</p></article>
-              <article><h3>UI Kits — Webapp</h3><p>Complete screens for real implementation reference.</p></article>
+              <article><h3>README</h3><p>Entry point for AI-guided visual work, design exploration and developer component integration.</p></article>
+              <article><h3>Brand</h3><p>AISEE foundations live in Foundations. AI-generated references live under Explorations and are not product specifications.</p></article>
+              <article><h3>Components</h3><p>Independently reusable components with states, motion, APIs and Copy for AI production delivery.</p></article>
+              <article><h3>UI Kits — Webapp</h3><p>Multi-component patterns, page examples and interaction demos. They are not confirmed product screens unless verified against the relevant latest Figma.</p></article>
+            </div>
+          </section>
+
+          <section class="home-section" aria-labelledby="routes-title">
+            <div class="section-heading"><h2 id="routes-title">Three ways to use this system</h2><p>Choose the path that matches the task</p></div>
+            <div class="architecture">
+              <article><h3>Ask AI to create a visual</h3><p>Pending a real brief or reference image. Do not start from an empty placeholder; provide the actual goal and source before generating.</p></article>
+              <article><h3>Explore a direction</h3><p>Use Brand / Explorations for ideas only. These references are not approved product design or implementation guidance.</p></article>
+              <article><h3>Integrate a component</h3><p>Use a Current entry under Components and Copy for AI to bring its production code, states and motion into an existing project.</p></article>
             </div>
           </section>
 
@@ -1037,6 +1109,29 @@
             </div>
             <div class="preview-actions">
               <span class="item-tag" id="previewTag"></span>
+              <div class="ai-copy-controls" id="copyAiControls" hidden>
+                <div class="ai-copy-primary">
+              <button class="action-button ai-copy" id="copyAiHeader" type="button" hidden aria-label="Copy component guidance for AI" title="Copy for AI">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 4 1.2 3.1L19 8.3l-2.8 1.2L15 13l-1.2-3.5L11 8.3l2.8-1.2L15 4Z"/><path d="m7 12 .8 2.2L10 15l-2.2.8L7 18l-.8-2.2L4 15l2.2-.8L7 12Z"/></svg>
+                <span id="copyAiHeaderLabel">Copy for AI</span><span class="ai-copy-mode-label" id="copyAiModeLabel">Apply design</span>
+              </button>
+                  <button class="ai-copy-trigger" id="copyAiMenuTrigger" type="button" aria-label="Copy for AI options" aria-haspopup="menu" aria-expanded="false" aria-controls="copyAiMenu"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+                <div class="ai-copy-menu" id="copyAiMenu" role="menu" aria-label="Copy for AI options" hidden>
+                  <p class="ai-copy-menu-heading" role="presentation">Copy mode</p>
+                  <div role="group" aria-label="Copy mode">
+                    <button class="ai-copy-option" type="button" role="menuitemradio" aria-checked="true" data-copy-mode="design"><span class="ai-copy-option-copy">Apply AISEE design<small>Update visual style and motion</small></span></button>
+                    <button class="ai-copy-option" type="button" role="menuitemradio" aria-checked="false" data-copy-mode="motion"><span class="ai-copy-option-copy">Add motion only<small>Keep the current appearance</small></span></button>
+                  </div>
+                  <div class="ai-copy-variants" id="copyAiVariantRow" hidden>
+                    <p class="ai-copy-menu-heading" role="presentation">Target variant</p>
+                    <div id="copyAiVariantOptions" role="group" aria-label="Target variant"></div>
+                  </div>
+                </div>
+                <select id="copyAiMode" hidden aria-hidden="true" tabindex="-1"><option value="design">Apply AISEE design</option><option value="motion">Add motion only</option></select>
+                <select id="copyAiVariant" hidden aria-hidden="true" tabindex="-1"><option value="">No specific variant</option></select>
+                <span class="ai-copy-status" id="copyAiStatus" role="status" aria-live="polite">Apply AISEE design · No specific variant</span>
+              </div>
               <button class="action-button" id="copyTsxHeader" type="button" hidden aria-label="Copy AiseeLogoAnimation TSX">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 8.75A2.75 2.75 0 0 1 10.75 6h7.5A2.75 2.75 0 0 1 21 8.75v7.5A2.75 2.75 0 0 1 18.25 19h-7.5A2.75 2.75 0 0 1 8 16.25v-7.5Z"/><path d="M16 6V5.75A2.75 2.75 0 0 0 13.25 3h-7.5A2.75 2.75 0 0 0 3 5.75v7.5A2.75 2.75 0 0 0 5.75 16H8"/></svg>
                 <span id="copyTsxHeaderLabel">复制 TSX</span>
@@ -1069,9 +1164,10 @@
         "system": "AISEE dApp Design System",
         "status": "Current",
         "authorityOrder": ["docs/TEAM_DECISIONS.md", "docs/aisee-dapp-design.v6.md", "src/components and Current component pages", "relevant dated Figma feature block", "Legacy references"],
-        "requiredSources": ["aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
+        "requiredSources": ["docs/GETTING_STARTED.md", "aisee-design-system-preview.html", "docs/aisee-dapp-design.v6.md", "docs/TEAM_DECISIONS.md", "docs/COMPONENT_CONFIGURATION.md", "src/tokens/color-architecture.json", "src/tokens/tokens.json", "src/components", "src/styles/components.css"],
         "rules": {
-          "appTypography": "Karla only",
+          "appTypography": "AISEE previews use Karla; standalone deliveries inherit compatible host typography.",
+          "hostProjectCompatibility": "Inspect the host target, styles, UI library and interactions first, including shadcn components.json and components/ui. Apply AISEE design updates component visuals and motion; Add motion only preserves static appearance. Both protect business behavior and restrict writes to the identified component and owned local styles. Page, hook, API, request and configuration edits require exact files, reasons, minimal diffs and explicit confirmation first. No variant is implied by preview defaults. The selected goal and scope override generic reference preservation/installation rules. See docs/PRODUCTION_DELIVERY.md.",
           "pageBackground": "#FAFAFA",
           "cardBackground": "#FFFFFF",
           "analysisPrimary": "#CFFF29",
@@ -1082,62 +1178,572 @@
           "dialogRadius": "16px",
           "staticBorder": "rgba(17,17,17,0.05)",
           "colorArchitecture": "Pages and components must consume semantic color variables only; primitive colors are raw token-layer values.",
-          "implementation": "Reuse Current exported components and tokens; do not copy Legacy styling when a Current equivalent exists."
+          "implementation": "Verify dependency availability first. Follow docs/GETTING_STARTED.md for local package installation or complete source integration; prompts and previews do not install the private package. Reuse Current exported components and tokens; do not copy Legacy styling.",
+          "componentConfiguration": "All variable controls are captured at copy time; see docs/COMPONENT_CONFIGURATION.md. This rule also applies when consuming the full system without Copy for AI. Match target designs to Current components; retain established product configuration or documented defaults when unspecified.",
+          "componentPrompt": "Every Current component detail page exposes a scoped Copy for AI prompt. Overview, Legacy, Brand and UI Kit pages do not expose it.",
+          "avatarAssignment": "Use the exported Avatar component. Registered website users use the 22 approved square account avatars with a stable user seed. Missing social-media profile images use the 24 approved circular gray-outline social avatars with a stable social-account seed. Generated preview extensions are excluded until explicitly approved."
         },
         "handoffGuide": "docs/AI_HANDOFF.md"
       }
     </script>
 
+    <script src="assets/update-badges.js"></script>
+    <script src="assets/component-config.js"></script>
+    <script src="assets/ai-delivery.js"></script>
+    <script src="assets/copy-ai-controls.js"></script>
     <script>
       const colorArchitecture = JSON.parse(document.getElementById("aisee-color-architecture").textContent);
       let activeColorLayer = "semantic";
+      const readmeLanguageStorageKey = "aisee.design-system.readmeLanguage";
+      let readmeLanguage = (() => {
+        try { return localStorage.getItem(readmeLanguageStorageKey) === "zh" ? "zh" : "en"; }
+        catch (error) { return "en"; }
+      })();
+      const readmeTextSources = new WeakMap();
+      const readmeZhTranslations = new Map([
+        ["Latest feature page 5.7 · Design Spec v6 · Shared source of truth", "最新功能页 5.7 · Design Spec v6 · 统一事实来源"],
+        ["Build every AISEE experience from the same system.", "使用同一套系统构建每一个 AISEE 体验。"],
+        ["Foundations, reusable components, maintained UI demos and clearly labelled AI explorations. Confirmed product design always follows the relevant latest Figma source.", "这里汇集基础规范、可复用组件、持续维护的 UI Demo 与明确标识的 AI 探索稿。已确认的实际产品设计始终以对应的最新 Figma 为准。"],
+        ["Latest registered feature page: 5.7", "最新登记功能页：5.7"],
+        ["Figma versions belong to feature pages; 5.7 adds hosted automatic publishing (Automation) under WORKFLOWS. Implementation rules follow Design Specification v6 and the latest team decisions.", "Figma 版本归属于具体功能页；5.7 在 WORKFLOWS 下新增托管自动发布（Automation）。实施规则遵循 Design Specification v6 和最新团队决策。"],
+        ["Use this system", "开始使用"],
+        ["Product", "产品"], ["Sources", "来源"], ["Content", "内容"], ["Visual", "视觉"], ["Interaction", "交互"], ["Assets", "资源"], ["Components", "组件"],
+        ["Using components", "使用组件"], ["AI handoff", "AI 交付"], ["Versions", "版本"],
+        ["Product overview", "产品概览"],
+        ["AISEE is an AI visibility and social engagement platform. Six connected capabilities form a continuous diagnose → grow → execute → verify loop, supported by reusable channel and account connections.", "AISEE 是一个 AI 可见度与社交互动平台。六项相互连接的能力形成“诊断 → 增长 → 执行 → 验证”的持续闭环，并由可复用的渠道与账号连接提供支持。"],
+        ["Measures AI visibility, citation performance, rankings and prompt coverage across generative search platforms.", "衡量各生成式搜索平台中的 AI 可见度、引用表现、排名和提示词覆盖。"],
+        ["Turns diagnostic gaps into prioritized improvement plans, key steps and measurable score-growth tasks.", "把诊断差距转化为有优先级的改进计划、关键步骤和可衡量的分数增长任务。"],
+        ["Finds relevant conversations, manages keywords and accounts, drafts replies and tracks response outcomes.", "发现相关讨论，管理关键词与账号，生成回复草稿并追踪互动结果。"],
+        ["Plans, generates, schedules and publishes social content through connected channels and calendar workflows.", "通过已连接的渠道和日历流程规划、生成、排期并发布社交内容。"],
+        ["Re-scans live visibility after execution, records score changes and verifies whether planned actions created measurable gains.", "执行后重新扫描线上可见度，记录分数变化，并验证计划行动是否带来可衡量的提升。"],
+        ["Manages the channels, social accounts and extension connections required by Growth, Engage and Post workflows.", "管理 Growth、Engage 与 Post 流程所需的渠道、社交账号和扩展连接。"],
+        ["Capability relationship:", "能力关系："],
+        ["Analysis diagnoses → Growth prioritizes → Engage and Post execute → Verify measures the result. Connection supplies the reusable account and channel layer across the loop.", "Analysis 负责诊断 → Growth 排定优先级 → Engage 与 Post 执行 → Verify 衡量结果。Connection 为整个闭环提供可复用的账号与渠道层。"],
+        ["“The future of discoverability.”", "“可发现性的未来。”"],
+        ["Products and surfaces", "产品与界面"], ["Surface", "界面"], ["Purpose", "用途"], ["Design baseline", "设计基准"], ["Typography", "字体"],
+        ["Marketing homepage", "营销官网"], ["Public brand story, product value, FAQ and pricing.", "公开品牌叙事、产品价值、常见问题与价格。"],
+        ["1440px desktop with responsive mobile states", "1440px 桌面端，并包含响应式移动状态"],
+        ["Analysis, Growth, Engage, Post Agent, Verify, Connection and account workflows.", "Analysis、Growth、Engage、Post Agent、Verify、Connection 与账号流程。"],
+        ["1440px application shell; 224px sidebar; 70px header", "1440px 应用框架；224px 侧边栏；70px 顶栏"],
+        ["Mobile references", "移动端参考"], ["Responsive and compact product flows where present in Figma.", "Figma 中已有的响应式与紧凑产品流程。"],
+        ["Frame-specific; document each added version", "按画板确定；每次新增版本都需记录"], ["Karla only", "仅使用 Karla"],
+        ["Sources and authority", "来源与优先级"],
+        ["Design files and written specifications serve different roles. The Figma file is the visual product source; the specification and team decisions make implementation rules explicit.", "设计稿与文字规范承担不同职责。Figma 是产品视觉来源；设计规范与团队决策把实施规则明确下来。"],
+        ["Registered Figma archive", "已登记 Figma 归档"], ["Latest feature", "最新功能"],
+        ["contains the homepage and main dApp flows. Page 5.7 adds hosted automatic publishing (Automation) under WORKFLOWS; it is not a global version of the complete file.", "包含官网与主要 dApp 流程。5.7 在 WORKFLOWS 下新增托管自动发布（Automation）；它不是整个文件的全局版本号。"],
+        ["Exported", "导出时间"], ["Archive size", "归档大小"], ["Repository policy", "仓库规则"], ["Reference only; not copied into Git", "仅作参考；不复制进 Git"],
+        ["Current implementation source", "当前实施来源"],
+        ["Defines tokens, layout, components, motion and content behavior. Team Decisions overrides it when a later clarification exists.", "定义令牌、布局、组件、动效和内容行为；出现更新的澄清时，以 Team Decisions 为准。"],
+        ["Spec", "规范"], ["Color tokens", "颜色令牌"], ["Current package", "当前包"],
+        ["Conflict priority:", "冲突优先级："],
+        ["latest Team Decisions → current Design Spec v6 → the relevant feature page's dated black title frame and its design block → preserved content below. Read update subject and date from the black title frame; page and file names are location aids, not freshness evidence. Page 5.7 must not globally override unrelated feature pages.", "最新 Team Decisions → 当前 Design Spec v6 → 相关功能页中带日期的黑色标题框及其设计区块 → 下方保留内容。更新主题与日期以黑色标题框为准；页面名和文件名只用于定位，不能证明新旧。5.7 不得全局覆盖无关功能页。"],
+        ["Content fundamentals", "内容基础"],
+        ["AISEE copy should feel precise and helpful: technical enough to be trustworthy, but never dense or theatrical.", "AISEE 文案应准确、实用，并具备足够的专业可信度，同时避免密集和夸张。"],
+        ["Minimal and confident", "简洁而明确"], ["Use direct language, clear nouns and active verbs. Remove filler and unsupported claims.", "使用直接表达、明确名词和主动动词，删除空话与无依据的承诺。"],
+        ["Product first, user second", "先说产品，再说用户"], ["Prefer “Create analysis”, “Your report” and “Connect channel” over abstract system language.", "优先使用“Create analysis”“Your report”“Connect channel”等具体表达，避免抽象的系统术语。"],
+        ["Lowercase brand name", "品牌名使用小写"], ["Write “aisee” in product copy. Use “AISEE” only where an all-caps system label is intentionally styled.", "产品文案写作“aisee”；只有刻意使用全大写系统标签时才写“AISEE”。"],
+        ["No emoji in UI", "界面中不使用 emoji"], ["Use text labels and SVG icons. Keep labels short, recognizable and sentence case.", "使用文字标签与 SVG 图标；标签保持简短、易识别，并采用句式大小写。"],
+        ["Numbers stay readable", "数字保持易读"], ["Show data without decorative formatting; pair unfamiliar metrics with labels or tooltips.", "数据不使用装饰性格式；陌生指标应配标签或 Tooltip。"],
+        ["Errors explain the fix", "错误信息说明解决办法"], ["State what happened and the next action. Avoid blame, jokes or generic “Something went wrong”.", "说明发生了什么以及下一步怎么做，避免责备、玩笑或泛泛的“Something went wrong”。"],
+        ["Examples", "示例"],
+        ["Visual foundations", "视觉基础"], ["Functional hierarchy comes first. Module color establishes location and action context; neutral surfaces carry the majority of the interface.", "功能层级优先。模块色用于表达位置与操作语境，大部分界面由中性色承载。"],
+        ["Color variables", "颜色变量"], ["Search variable", "搜索变量"], ["Mode", "模式"], ["Category", "类别"], ["Color", "颜色"], ["Figma variable", "Figma 变量"], ["Alias reference", "别名引用"], ["Resolved value", "解析值"], ["CSS variable", "CSS 变量"], ["Audit", "校验"],
+        ["Pages and components use semantic variables only", "页面和组件只能使用语义化变量"],
+        ["Primitive variables store raw colours without functional meaning; semantic variables reference them for text, surfaces, borders, states and module context. Do not write HEX or use", "元数据只保存未经功能修饰的原始颜色；语义化变量根据文字、背景、边框、状态和模块功能引用元数据。禁止在业务页面直接写 HEX 或引用"],
+        ["Primitive layer", "元数据 / Primitive"], ["Primitive", "元数据"], ["44 raw colours with names and Light / Dark values, without functional meaning.", "44 个原始颜色，只有名称、Light / Dark 值，不附加功能含义。"],
+        ["Semantic layer", "语义化 / Semantic"], ["Semantic", "语义化"], ["44 published functional roles reference primitive variables through aliases; unpublished variables stay hidden.", "44 个已应用功能角色，通过 alias 引用元数据；未应用变量暂不公开展示。"],
+        ["Components and pages", "组件与页面"], ["Consume", "只消费"], ["only, so themes can change without editing component colours.", "；换主题时无需修改组件内部颜色。"], ["in product pages.", "。"],
+        ["Family", "字族"], ["Roles", "用途"], ["Rule", "规则"], ["Karla for display, UI and body", "展示、界面与正文均使用 Karla"], ["Self-host Karla", "自托管 Karla"], ["Karla for all UI, code hints and Score Gauge values", "所有界面、代码提示与 Score Gauge 数值均使用 Karla"], ["Self-host Karla; no secondary UI font", "自托管 Karla；不使用第二套界面字体"],
+        ["Layout, spacing and surfaces", "布局、间距与表面"], ["Application shell", "应用框架"], ["70px fixed header, 224px sidebar and 24–32px main content padding.", "70px 固定顶栏、224px 侧边栏、24–32px 主内容内边距。"],
+        ["Spacing", "间距"], ["4, 8, 12, 16, 24, 32, 48 and 64px scale. Prefer adjacent steps.", "采用 4、8、12、16、24、32、48、64px 间距阶梯，优先使用相邻级别。"],
+        ["Radius", "圆角"], ["8px controls, 12px cards, 16px large surfaces and dialogs, 9999px pills.", "控件 8px、卡片 12px、大型表面与弹窗 16px、胶囊 9999px。"],
+        ["Borders", "描边"], ["Static UI uses 5% black; hover rises to 18%. Modal footer uses the documented 6% exception.", "静态界面使用 5% 黑；Hover 提升到 18%。Modal footer 使用规范中记录的 6% 例外。"],
+        ["Shadows", "阴影"], ["Cards remain subtle. Dropdown and modal layers use defined elevation tokens.", "卡片阴影保持克制；Dropdown 与 Modal 层使用规定的层级令牌。"],
+        ["Backgrounds", "背景"], ["Page #FAFAFA, cards #FFFFFF, warm supporting surfaces only where specified.", "页面为 #FAFAFA，卡片为 #FFFFFF；暖色辅助表面只在明确指定时使用。"],
+        ["Interaction and feedback", "交互与反馈"], ["Motion clarifies hierarchy and state change. It should never distract from data or delay a primary task.", "动效用于说明层级和状态变化，不应干扰数据阅读或延迟主要任务。"],
+        ["Hover and active", "Hover 与 Active"], ["Use subtle fill or border changes. Module navigation uses its theme accent for active context.", "使用轻微填充或描边变化；模块导航用主题强调色表达当前语境。"],
+        ["Focus", "焦点"], ["All keyboard targets require visible focus. Interactive targets remain at least 44×44px.", "所有键盘目标都必须有可见焦点；交互目标至少保持 44×44px。"],
+        ["Motion", "动效"], ["Controls use short shared transitions; active Steps can pulse, thinking titles can wave, and all motion respects reduced-motion preferences.", "控件使用短促统一的过渡；活动 Steps 可脉动，思考标题可做波浪动画；所有动效都遵循减少动态效果偏好。"],
+        ["Loading", "加载"], ["Preserve layout with skeletons or stable placeholders; disable repeated submissions.", "使用骨架或稳定占位保留布局，并阻止重复提交。"],
+        ["Empty states", "空状态"], ["Explain what is missing, why it matters and the single next action.", "说明缺少什么、为什么重要，以及一个明确的下一步操作。"],
+        ["Toast and tooltip", "Toast 与 Tooltip"], ["Toast uses a white bordered surface with a five-second countdown; Tooltip remains a compact black hover or focus label.", "Toast 使用白色描边表面与五秒倒计时；Tooltip 保持为紧凑的黑色 Hover/Focus 标签。"],
+        ["Imagery, logo and iconography", "图片、Logo 与图标"], ["Product UI stays data-led and clean. Brand pages can use geometric shapes, texture and the cyclops mascot, while product interfaces avoid decorative photography.", "产品界面保持数据主导与整洁；品牌页面可使用几何形状、纹理与独眼吉祥物，产品界面避免装饰性摄影。"],
+        ["Use official logo assets", "使用官方 Logo 资源"], ["Never redraw the eye or wordmark with CSS. Preserve proportions and keep a clear safety area. The mark can stand alone; the wordmark should use the supplied artwork.", "不要用 CSS 重画眼睛或字标；保持比例与安全留白。图形标可单独使用，字标必须使用提供的正式资源。"],
+        ["Icon rules", "图标规则"], ["Single source of truth:", "唯一事实来源："], ["the", ""], [". SVG sources and generated React components are maintained there.", "。SVG 源文件与生成的 React 组件都在那里维护。"],
+        ["Product projects install", "产品项目通过 npm 安装"], ["from npm", ""], ["; the npm README is the team entry for installation, exports and published-version guidance. The design-system repository does not duplicate the full SVG library.", "；npm README 是团队查看安装、导出与发布版本说明的入口。设计系统仓库不重复保存整套 SVG。"],
+        ["Use 16×16px in standard controls, 20×20px inside buttons and 24×24px for larger navigation or actions.", "标准控件使用 16×16px，按钮内使用 20×20px，大型导航或操作使用 24×24px。"],
+        ["AISEE icons use the", "AISEE 图标使用"], ["outline family or", "描边系列，或"], ["solid family. Lucide is a fallback only when StemUI has no matching icon.", "实心系列。只有 StemUI 没有匹配图标时才使用 Lucide 兜底。"],
+        ["No icon fonts and no emoji UI icons; use SVG or typed React icon components.", "不使用图标字体或 emoji 界面图标；使用 SVG 或带类型的 React 图标组件。"], ["Social platform marks keep their official form and brand color at small badge sizes.", "社交平台标志在小尺寸 Badge 中保留官方形态和品牌色。"],
+        ["Component library", "组件库"], ["Components are organized as Category → Component. Current entries are the implementation source of truth; Legacy entries remain available as historical references and are clearly labeled.", "组件按“类别 → 组件”组织。Current 条目是实施事实来源；Legacy 条目仅作历史参考并有清晰标识。"],
+        ["Actions", "操作"], ["Inputs & Controls", "输入与控件"], ["Navigation", "导航"], ["Content & Status", "内容与状态"], ["Data Display", "数据展示"], ["Feedback & Overlays", "反馈与浮层"],
+        ["Checkbox, Input, Quantity Stepper, Select / Dropdown, Tag Input, Toggle and Toggle Selection Group. Quantity Stepper supports direct entry or buttons-only control, three sizes, bounded values and boundary feedback. Checkbox confirms a new selection with a short reduced-motion-safe bubble burst. Input and dropdown triggers use a 1px black inner border plus a 2px module-color ring; dropdown menus keep an 8px gap below the trigger and a 4px option gap. One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking, while selected items remain visible. Dropdown compositions can be switched and tested in its Variant playground.", "Checkbox、Input、Quantity Stepper、Select / Dropdown、Tag Input、Toggle 与 Toggle Selection Group。Quantity Stepper 支持直接输入或仅加减按钮控制，并提供三种尺寸、最大最小值和边界反馈。Checkbox 在新选中时播放一次简短的 bubble 扩散动画，并兼容 reduced motion。Input 和下拉触发器使用 1px 黑色内描边加 2px 模块色环；下拉菜单与触发器保持 8px 间距，选项间距为 4px。单一共享的 5% 黑色 Fluid Hover 高亮会连续跟随最近的可用选项，已选项仍保持可见。Dropdown 的复合变体可在 Variant Playground 中切换并直接测试。"],
+        ["AISEE dApp design archive.fig", "备份-官网+dapp主功能.fig"],
+        ["Current Tabs, reusable Tree Nav and product Sidebar Navigation patterns. Sidebar Navigation composes Tree Nav in its expanded state. Platform Tabs automatically show every name when the set fits, then fall back to the current name when space is limited.", "Current Tabs、可复用 Tree Nav 与产品 Sidebar Navigation 模式。Sidebar Navigation 展开态直接组合 Tree Nav。平台 Tabs 在所有名称都能容纳时自动完整显示；空间不足时只显示当前项名称。"],
+        ["Current PlanCard, Badge, Steps, Thinking Indicator and Empty State.", "Current PlanCard、Badge、Steps、Thinking Indicator 与 Empty State。"], ["Current Card, Stat Card, Table, Chart, Analysis-only Score Gauge and Credit Bar; Legacy Post Card remains for reference.", "Current Card、Stat Card、Table、Chart、仅限 Analysis 的 Score Gauge 与 Credit Bar；Legacy Post Card 继续保留参考。"],
+        ["Dialog, Confirmation Dialog, Notification, Tooltip and Toast.", "Dialog、Confirmation Dialog、Notification、Tooltip 与 Toast。"],
+        ["Use components without writing code", "无需写代码也能使用组件"], ["Designers, product managers and other non-developers can hand one component to an AI without uploading the complete Design System demo.", "设计师、产品经理和其他非开发人员无需上传整套 Design System Demo，也能把单个组件准确交给 AI。"],
+        ["1. Choose a Current component", "1. 选择 Current 组件"], ["Open the component under Components and review its live states, motion and usage notes. Legacy pages are historical references.", "在 Components 中打开组件，查看实时状态、动效和使用说明。Legacy 页面仅作历史参考。"],
+        ["2. Copy for AI", "2. 复制给 AI"], ["Use the two-star button beside Open HTML. All registered Current components copy a named production integration instruction, a stable latest-delivery URL and allowed real options. Your coding AI retrieves the required implementation, styles and assets; demo controls and fonts stay here.", "点击 Open HTML 旁的双星按钮。所有已登记的 Current 组件统一复制具体名称、稳定最新交付入口和允许的真实配置；编码 AI 取得必要生产源码、样式与资源，演示控件和字体保留在本站。"],
+        ["3. Add the real task", "3. 补充真实任务"], ["Paste the prompt into your AI tool with the target page, real content and expected behavior. The AI uses real product content and preserves required production assets.", "把 Prompt 连同目标页面、真实内容和预期行为交给 AI。AI 使用真实业务内容，并保留必要的生产组件资源。"],
+        ["4. Compare the result", "4. 对照验收"], ["Check the generated page against the Current demo, including hover, focus, disabled, loading, empty, responsive and accessibility states that apply.", "对照 Current Demo 检查生成页面，包括适用的 Hover、Focus、Disabled、Loading、Empty、响应式和无障碍状态。"],
+        ["Which handoff to use:", "如何选择交付方式："], ["Copy for AI defaults to Apply AISEE design for component visuals and motion; Add motion only preserves static appearance. Both reuse the host component and UI library and protect business behavior. Only the target component and local styles may change; page, hook, API, request or configuration edits require confirmation of exact files and minimal diffs. No preview variant is included unless explicitly selected. Requires a compatible React project and a coding AI with network and Node access.", "Copy for AI 默认 Apply AISEE design，更新组件视觉和动效；Add motion only 保留静态外观。两者复用宿主组件和 UI 库、保护业务行为，只改目标组件和局部样式；页面、hook、API、请求及配置改动先列文件和最小 diff 等待确认。默认不携带预览参数，只有明确选择变体才附加。需要兼容 React 项目及可联网、执行 Node 的编码 AI。"],
+        ["AI implementation handoff", "AI 实施交付"], ["This portal is readable reference material, not a guarantee that another AI will execute linked pages or infer every implementation rule. Give the AI the deployed portal or repository together with the authoritative spec files and an explicit instruction to reuse Current components.", "本门户是可读参考资料，但不能保证其他 AI 会执行链接页面或推断出全部实施规则。应把已部署门户或仓库、权威规范文件，以及“复用 Current 组件”的明确要求一起交给 AI。"],
+        ["Minimum input", "最少输入"], ["Share this HTML,", "提供本 HTML、"], ["and the target-page requirements. Include a compatible installed package, authorized tgz or complete source, plus docs/GETTING_STARTED.md.", "以及目标页面需求；同时提供兼容的已安装包、获准使用的 tgz 或完整源码，以及 docs/GETTING_STARTED.md。"], ["Reliable assets", "可靠资源"], ["Prefer a public HTTPS preview or repository/ZIP. A lone local HTML cannot carry inaccessible relative fonts, images, source files or linked subpages.", "优先提供公开 HTTPS 预览或仓库/ZIP。单个本地 HTML 无法携带不可访问的相对字体、图片、源文件或链接子页。"],
+        ["Implementation order", "实施顺序"], ["Team Decisions → Design Spec v6 → Current component implementation → dated Figma feature block → Legacy reference.", "Team Decisions → Design Spec v6 → Current 组件实现 → 带日期的 Figma 功能区块 → Legacy 参考。"], ["Verification", "验收"], ["Require the receiving AI to list reused components, report deviations and compare the final screen against the Current demos.", "要求接收方 AI 列出复用组件、说明偏差，并把最终页面与 Current Demo 对照。"],
+        ["Machine-readable contract:", "机器可读契约："], ["this HTML embeds", "本 HTML 内嵌"], ["as JSON. Full instructions and a copyable prompt are in", "JSON。完整说明与可复制 Prompt 位于"],
+        ["Versions and maintenance", "版本与维护"], ["Figma versions belong to feature pages. Open a new page for a new feature or independent new requirement; when an existing function gains a requirement, add its newest design above the earlier content on that function's original page. Every design block's black title frame records its update subject and date, and is authoritative even when the page or file name stays unchanged.", "Figma 版本归属于功能页。新功能或独立新需求新开页面；已有功能增加需求时，在原功能页旧内容上方加入最新设计。每个设计区块的黑色标题框记录更新主题和日期，即使页面名或文件名未变也以它为准。"],
+        ["Version / source", "版本 / 来源"], ["Status", "状态"], ["Scope", "范围"], ["Maintenance rule", "维护规则"], ["Living", "持续维护"], ["Planned", "计划中"], ["Legacy", "历史版本"],
+        ["Latest newly opened feature-version page; adds Automation under WORKFLOWS", "最新新开的功能版本页；在 WORKFLOWS 下新增 Automation"], ["Do not treat it as the global version of the complete Figma file", "不要把它当作整个 Figma 文件的全局版本"],
+        ["Existing feature pages", "现有功能页"], ["Original functions and their later requirements", "原有功能及其后续需求"], ["Add the newest requirement above earlier content on the same page", "在同一页面的旧内容上方加入最新需求"],
+        ["Tokens, components, interaction and implementation rules", "令牌、组件、交互与实施规则"], ["Team Decisions overrides conflicts", "发生冲突时以 Team Decisions 为准"],
+        ["Missing earlier feature pages", "尚未登记的早期功能页"], ["Feature history not yet registered here", "尚未在这里登记的功能历史"], ["Add and retain each page; do not overwrite it with 5.7", "逐页补充并保留；不要用 5.7 覆盖"],
+        ["Legacy HTML previews", "历史 HTML 预览"], ["Unmatched components, flows, assets and experiments", "尚未匹配的组件、流程、资源与实验"], ["Retain unless a separate deprecation review approves removal", "保留，除非另行通过废弃评审"],
+        ["Start with Design Spec v6", "从 Design Spec v6 开始"], ["Current product rules", "当前产品规则"], ["Color, typography, layout, spacing and module themes.", "颜色、字体、布局、间距与模块主题。"], ["Interactive states and reusable product patterns.", "交互状态与可复用产品模式。"],
+        ["System architecture", "系统架构"], ["Four maintained sections", "四个维护分区"], ["Entry point for AI-guided visual work, design exploration and developer component integration.", "面向 AI 按规则出图、设计方向探索和开发组件接入的统一入口。"], ["AISEE foundations live in Foundations. AI-generated references live under Explorations and are not product specifications.", "AISEE 基础规范位于 Foundations；AI 生成的参考稿位于 Explorations，不属于产品实施规范。"], ["Independently reusable components with states, motion, APIs and Copy for AI production delivery.", "可独立复用的组件，包含状态、动效、API 与 Copy for AI 生产交付。"], ["Multi-component patterns, page examples and interaction demos. They are not confirmed product screens unless verified against the relevant latest Figma.", "由多个组件组成的模式、页面示例与交互 Demo；未与对应最新 Figma 核对前，不代表已确认产品页面。"],
+        ["Three ways to use this system", "三条使用路径"], ["Choose the path that matches the task", "按当前任务选择入口"], ["Ask AI to create a visual", "让 AI 按规则出图"], ["Pending a real brief or reference image. Do not start from an empty placeholder; provide the actual goal and source before generating.", "需要先提供真实 brief 或参考图；当前不设置看似可用的空入口，补齐目标与来源后再生成。"], ["Explore a direction", "让设计师探索方向"], ["Use Brand / Explorations for ideas only. These references are not approved product design or implementation guidance.", "Brand / Explorations 仅用于灵感探索，不是已确认产品设计或实施规范。"], ["Integrate a component", "让开发人员接入组件"], ["Use a Current entry under Components and Copy for AI to bring its production code, states and motion into an existing project.", "从 Components 选择 Current 组件，通过 Copy for AI 把生产源码、状态与动效接入已有项目。"],
+        ["Use these when old and new conflict", "新旧冲突时以这些规则为准"], ["Homepage and Brand use Karla only. dApp, App and Webapp use Karla only.", "Homepage 与 Brand 只使用 Karla；dApp、App 与 Webapp 也只使用 Karla。"], ["Migration", "迁移"], ["Matching legacy rules are replaced by v6. Non-overlapping legacy files remain available and are labeled Legacy.", "与 v6 重合的历史规则由 v6 替代；不重合的历史文件继续保留并标记为 Legacy。"], ["v6 wins on conflict", "冲突时以 v6 为准"]
+      ]);
+
+      function setReadmeLanguage(language, persist = true) {
+        readmeLanguage = language === "zh" ? "zh" : "en";
+        const walker = document.createTreeWalker(homeView, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) {
+          if (!readmeTextSources.has(node)) readmeTextSources.set(node, node.nodeValue);
+          const source = readmeTextSources.get(node);
+          const core = source.trim();
+          const translated = readmeLanguage === "zh" ? readmeZhTranslations.get(core) : null;
+          node.nodeValue = translated === undefined || translated === null
+            ? source
+            : `${source.match(/^\s*/)[0]}${translated}${source.match(/\s*$/)[0]}`;
+        }
+        homeView.lang = readmeLanguage === "zh" ? "zh-CN" : "en";
+        document.querySelectorAll("[data-readme-language]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.readmeLanguage === readmeLanguage)));
+        const languageGroup = document.querySelector(".readme-language");
+        if (languageGroup) languageGroup.setAttribute("aria-label", readmeLanguage === "zh" ? "README 语言" : "README language");
+        colorSearch.placeholder = readmeLanguage === "zh" ? "搜索变量名、引用或 HEX" : "Search variable name, reference or HEX";
+        if (persist) {
+          try { localStorage.setItem(readmeLanguageStorageKey, readmeLanguage); } catch (error) {}
+        }
+        refreshColorScopeOptions();
+        renderColorTokens();
+      }
+
+      const componentAiGuidance = {
+        "components/Button/Button.html": {
+          name: "Button",
+          intent: "Trigger one clear action with the correct hierarchy, functional colour and feedback state.",
+          rules: [
+            "Choose primary, secondary, ghost, dark or danger from the action hierarchy; do not choose a variant only because it looks prominent.",
+            "Resolve functional colour from context: pale yellow surfaces use Post yellow, lime surfaces use Analysis lime, and other surfaces use #111111 unless a semantic token supersedes it.",
+            "Preserve the approved fill sweep motion, hover colours, focus visibility, disabled state and loading behavior. A fill-only button must not reveal a border during the sweep; a bordered button may retain its border.",
+            "Keep the button label short and action-led. Use a real semantic icon only when it improves recognition.",
+            "Button accepts icon, showIcon (default true), and iconPosition (left by default). Actions such as View Post and Bulk schedule use a leading icon; forward navigation (Go execute / View replies) and AI generation (Generate Post) use a trailing icon. Use 16px decorative icon slots with a 6px gap; showIcon=false removes all slots and gaps. leadingIcon and trailingIcon can be paired for two-sided actions such as Search; the single icon prop takes precedence. The Icon variants header includes Show icon and mutually exclusive Left / Right controls; States lists Small / Default / Large directly, followed by With icon and separate disabled variants.",
+            "Use currentColor SVGs or CSS masks for monochrome icons so hover and focus follow the button foreground. Preserve multi-color source assets. Icon position is explicit and must not be inferred from translated label text."
+          ]
+        },
+        "components/Input/Input.html": {
+          name: "Input",
+          intent: "Collect one typed value with a visible label, appropriate native input semantics and useful feedback.",
+          rules: [
+            "Compose a sentence-case label, the field, and optional helper or error text. Replace Demo labels, values and helper text with copy for the real task.",
+            "Choose the native type that matches the data, such as text, url, email, search or password.",
+            "Support Default, Hover, Focus, Disabled and Error states. Keep the 36px height, 8px radius, subtle default border and the 1px dark border plus 2px module-colour ring on hover and focus. Error uses the semantic danger colour without the module ring.",
+            "Associate the label with the field, connect helper or error text with aria-describedby and set aria-invalid for errors. Use the exported Textarea for long-form content; it shares Input focus, disabled and error treatment and is demonstrated in Card compositions."
+          ]
+        },
+        "components/QuantityStepper/QuantityStepper.html": {
+          name: "Quantity Stepper",
+          intent: "Adjust a bounded numeric value through direct entry, minus and plus buttons, or a buttons-only compact control.",
+          implementation: [
+            "Only when the package is already installed, repository or workspace usage: import { QuantityStepper } from '@aisee/design-system' and import '@aisee/design-system/styles.css'. Example: <QuantityStepper defaultValue={4} min={1} max={10} unit=\"replies/day\" onValueChange={setQuantity} />.",
+            "Use the supplied local source when the package is absent. For a source copy, include QuantityStepper.tsx and its recursive style, token and approved icon dependencies; Open HTML alone does not install them.",
+            "Internal icons are bundled in the built AISEE package. A source copy must retain assets/stemui/action-minus.svg and action-plus.svg. Only install @stemui/icons separately if the product itself imports it; verify its exports instead of inventing icon names.",
+            "Public props: value/defaultValue, min, max, step, size (sm/md/lg), inputMode (editable/buttons-only), unit, disabled, onValueChange, ariaLabel and className."
+          ],
+          rules: [
+            "Use editable mode when users may need an exact value, and buttons-only mode when the range is short and each step is predictable.",
+            "Set an explicit minimum, maximum and step. Clamp typed values to the valid range, disable the unavailable direction and keep the current value visible.",
+            "Choose the documented 32px, 40px or 48px size from the surrounding control density. The 40px default is 388px wide with 40px edge controls, a 3px section gap, 8px radius and controls touching the outer outline.",
+            "Keep the unit outside the editable numeric value and hide it automatically below 260px available width so the number remains readable.",
+            "Treat the complete middle value cell as the editable hit target, including its whitespace and unit label, while keeping the visible number and input in the same position. Never limit activation to the number glyph, and never render an input and a duplicate static number at the same time. Use AISEE semantic yellow for selected input text.",
+            "Animate value changes with a 12px vertical roll. Press scales a control to 0.85. Hold starts after 400ms, repeats every 80ms and accelerates to 40ms after 10 repeats.",
+            "When a user attempts to move past a bound, keep the value unchanged and shake only the value area through 0, -4, 4, -2, 2, 0px over 300ms. Preserve keyboard stepping and reduced-motion behavior."
+          ]
+        },
+        "components/Checkbox/Checkbox.html": {
+          name: "Checkbox",
+          intent: "Let users independently include or exclude one or more options.",
+          rules: [
+            "Use Checkbox for independent multi-selection, not for an immediate on/off setting or a mutually exclusive choice.",
+            "Preserve the Current 18px control, correct check direction, module-colour selected state, row hover and indeterminate state where a parent controls children.",
+            "Make the whole label row clickable, keep keyboard focus visible and expose checked, mixed and disabled states semantically.",
+            "When the value changes from unchecked to checked, play one short bubble burst around the control. Do not replay on initial render or when clearing the value, and disable the celebration for reduced motion."
+          ]
+        },
+        "components/Select/Select.html": {
+          name: "Select / Dropdown",
+          intent: "Choose from a bounded option set using the appropriate simple or composed dropdown pattern.",
+          rules: [
+            "Choose the documented variant from the data and task; do not combine filtering, free input and multi-select unless the workflow requires them.",
+            "Keep the trigger, menu, 8px trigger-to-menu gap, 4px option gap, equal padding, chevron state and 5% black hover/focus/selected surface from the Current component.",
+            "Use the Variant playground to choose and test Compact menu, Search + action, Engage filter panel, Grouped account or Icon action menu before implementation. Playground headings use weight 500. Filter chips use a 5% black surface and black border on hover; selected chips retain white text with a #333 hover surface and keyboard focus uses a 2px black outline.",
+            "Use leading media, supporting text, trailing status, groups, headers or footer actions only when the option content requires them; keep the simple menu compact.",
+            "Keep Fluid Hover enabled by default: one shared 5% black highlight follows the nearest enabled row across 4px gaps, follows keyboard focus, skips disabled rows, supports gap clicks and honors prefers-reduced-motion.",
+            "Render the menu as an overlay outside normal document flow so opening or closing it never changes the surrounding content height or position.",
+            "In the Variant playground, size the preview stage to the selected composition's expanded content. Keep every composition on the same 14px stage gap and 24px top padding, then reserve that calculated height while the same menu opens or closes.",
+            "For an independent row action, use item.action. Keep its 24px control hidden until the row is hovered or keyboard-focused; reveal a gray fill with a gray border, and use Post yellow only while the action itself is hovered.",
+            "For grouped account menus, expose a Show icons toggle when users need to compare density. When off, omit each item's leading avatar or platform icon while preserving labels, supporting text, trailing status and row actions. In the grouped account composition, Test must expand and collapse its children with aria-expanded and aria-controls. Keep trailing counts 12px from the row edge at rest; on hover or focus, shift them left by 30px over 160ms as the action appears, honoring reduced motion. Connect X, LinkedIn and TikTok are full-row action buttons, not selectable accounts and not rows with an extra plus button. Connection dialogs are outside this demo.",
+            "For channel or item actions, use Icon action menu: keep one 16px leading icon per row, retain the compact rectangular menu geometry and use the semantic danger colour only for the destructive Delete action. Its hover and keyboard highlight use the pale red semantic tag-02 token.",
+            "For multi-select, use the leading Checkbox state and preserve selection while filtering. Support keyboard navigation, Escape and the correct aria-expanded/selected semantics."
+          ]
+        },
+        "components/Toggle/Toggle.html": {
+          name: "Toggle",
+          intent: "Change one immediate binary setting while clearly showing on, off and unavailable states.",
+          rules: [
+            "Use Toggle only when the change applies immediately; use Checkbox when the value is submitted with a form.",
+            "Use color=lime|yellow, surface=light|dark and size=16|24 (track height). Omitted color inherits the module; omitted size stays 16. Keep dark #111 outlines and thumbs on both surfaces. Preserve hover/press response, spring-like thumb motion and reduced-motion support.",
+            "Use a persistent label, expose aria-checked and do not rely on colour alone to communicate state."
+          ]
+        },
+        "components/TagInput/TagInput.html": {
+          name: "Tag Input",
+          intent: "Collect repeatable values as removable inline tags without expanding the base Input API.",
+          rules: [
+            "Keep committed tags and the text cursor in one horizontal flow; never stack the tag above the input inside the field.",
+            "Support typing preview, Enter or Add to commit, remove controls, duplicate prevention and Backspace removal when the input is empty.",
+            "Use real task values and define overflow behavior for narrow containers without clipping a focused tag."
+          ]
+        },
+        "components/SegmentedChoice/SegmentedChoice.html": {
+          name: "Segmented Choice",
+          intent: "Choose one of 2–4 options with short requirements and an explanation that follows the selected option.",
+          rules: [
+            "Hover uses the shared bg-hover colour token; never add a grey border to unselected choices. Selected choices retain their semantic fill and dark border with the same hover overlay.",
+            "Import SegmentedChoice from @aisee/design-system with the package stylesheet. Use options with id, label, requirement, description and optional disabled.",
+            "Use value / onValueChange or defaultValue; provide label and optionally name, required, disabled, tone lime or yellow. Post format uses yellow.",
+            "Keep the pale shared track, equal-width 8px rounded options, dark selected border, 12px labels and 10px requirements. Preserve native radio keyboard navigation, hover and focus states.",
+            "The selected explanation appears below the group; the information icon reveals the same explanation on hover or keyboard focus. Do not put interactive controls inside radio labels.",
+            "Use Dropdown for many choices, Tabs for switching views, and Toggle Selection Group for independently enabled multi-selection."
+          ]
+        },
+        "components/ToggleSelectionGroup/ToggleSelectionGroup.html": {
+          name: "Toggle Selection Group",
+          intent: "Enable an option group, edit its active selection and pause the group without losing saved choices.",
+          rules: [
+            "On first activation select every available option. Users may then deselect individual options.",
+            "When switched off, disable every option but preserve the saved selection. Restore that exact selection when switched on again.",
+            "Use the Current selection colours and Checkbox artwork, expose the saved and active counts, and exclude unavailable options from select-all."
+          ]
+        },
+        "components/Tabs/Tabs.html": {
+          name: "Tabs",
+          intent: "Switch between peer views or display modes within the same context.",
+          rules: [
+            "Choose underline, segmented, icon-only, icon-and-text or count composition from the information architecture.",
+            "Use semantic icons that match the real view; Demo icons are placeholders. Counts are optional and must update with their content.",
+            "For platform tabs, show all names only when every item fits. Otherwise show the active name and keep inactive items logo-only. Never clip labels.",
+            "Preserve roving keyboard focus, selected semantics and a stable active indicator."
+          ]
+        },
+        "components/SidebarNavigation/SidebarNavigation.html": {
+          name: "Sidebar Navigation",
+          intent: "Navigate the product's grouped destinations and nested views with a stable expanded or collapsed shell.",
+          rules: [
+            "Reuse the Current vertical product grouping and information architecture. Choose real destination icons from StemUI; Demo icons are structural examples.",
+            "Keep Verify as the Growth Loop parent. Its current child order is Compare, Google Search Data, then Bing Webmaster Data; do not recreate a separate Integrations group for those sources.",
+            "Compose SidebarLayout with variant sidebar (default white rail), muted (gray rail with white content), floating, inset or topbar. Topbar spans the full shell width and fixes the toggle at the top left. Collapse hides the entire sidebar (no icon rail) and makes hidden navigation inert. reveal hover shows a temporary full sidebar overlay without moving content; leaving, outside click, selection or Escape closes it. Clicking restores the docked sidebar; reveal click disables hover preview. togglePosition inside (default) or outside is independent; preserve selection, open groups and collapsed state across layout changes. Floating uses 16px outer spacing, white fill and a subtle border; its content header stays transparent, and content must not add horizontal padding on top of the 16px shell gutters; inset makes the content region the card. The inset content header has square corners and only a bottom separator; the outer content card keeps its radius. Place the outside toggle at the top left of the content header, before the title, using SidebarLayout header. Use a transparent borderless icon button without a separate gutter or floating frame. Collapse/expand icons use the button/usual token at full opacity on hover or keyboard focus.",
+            "Support 224px expanded and 58px collapsed states. Collapsed state shows icons only; labels remain available to assistive technology and tooltips.",
+            "Render the footer account identity with the Avatar component. Use kind account and a stable account seed so the same account resolves to one of the 22 approved square avatars across pages and sessions.",
+            "Compose the standalone Tree Nav component for expanded nested destinations instead of recreating its hierarchy, rail, selected state or disclosure behavior.",
+            "Preserve nested active states, keyboard navigation, aria-current, the native resize cursor and same-browser width/state memory where implemented."
+          ]
+        },
+        "components/TreeNav/TreeNav.html": {
+          name: "Tree Nav",
+          intent: "Navigate one focused local list of related destinations without recreating the full Sidebar shell.",
+          rules: [
+            "Use one Tree Nav instance for one focused local list. The surrounding page supplies the section title; do not repeat it inside the standalone list.",
+            "Show a subtle hierarchy rail and compact leaf rows. A parent disclosure is optional when the Tree Nav must own its group label; Sidebar Navigation may hide the disclosure to preserve its product-shell pattern.",
+            "Selecting a leaf updates aria-current without moving or closing the list.",
+            "Support controlled or uncontrolled selected and open states, visible keyboard focus, disabled items and reduced motion."
+          ]
+        },
+        "components/FeatureOverview/FeatureOverview.html": {
+          name: "Feature Overview",
+          intent: "Present grouped capabilities and benefits inside one continuous divided card.",
+          implementation: [
+            "Import FeatureOverview, FeatureList, Card, CardGrid, StatCard and StatCardGroup from @aisee/design-system with its stylesheet.",
+            "Use Card variant=divided with CardGrid divided columns={1|2|3|4} for arbitrary content; FeatureOverview composes sections with id, title, icon, badges, description, summary, items, tone and footer.",
+            "FeatureList items have id, content, optional supporting, trailing and icon; tone is analysis, growth, engage, publish or neutral. StatCardGroup variant=compact accepts the existing StatCard children with text-only or icon-only values. Compact metric icons are 16px; inline help aligns vertically with its label."
+          ],
+          rules: [
+            "Keep one white 24px-radius outer shell with subtle single internal separators, never four separate framed cards. Nested content stays simple.",
+            "Feature lists and capability strips are read-only. Use real task content and do not add selection, hover actions or billing logic to informational rows.",
+            "Reuse Badge and Tooltip for header metadata and explanations. Preserve semantic headings, list structure and accessible platform labels.",
+            "Allow content-driven row heights and wrap text. Three and four columns reduce to two below 900px container width; divided layouts become one column below 600px, with separators recalculated.",
+            "This capability composition does not replace the existing PlanCard pricing API. Platform icon groups in this demo remain local content, not a new shared component."
+          ]
+        },
+        "components/PlanCardCurrent/PlanCardCurrent.html": {
+          name: "PlanCard — Current",
+          intent: "Confirm a single subscription before starting full analysis, with price, entitlements, credits and brand context.",
+          rules: [
+            "Use PlanCard variant=subscription with real name, title, description, price, credits, companyName and website. Supply onAction for checkout and onDismiss for Maybe later.",
+            "Figma 51:329855: 512px white surface, 16px radius, centered illustration and price, simple benefit rows and brand details. Reuse Button, Badge and DialogDetails; do not nest framed Card surfaces.",
+            "Use a dark primary subscription button and a subtle secondary dismissal button. Demo callbacks do not purchase or start analysis; the product owns those flows.",
+            "For modal usage wrap in Dialog with class aisee-plan-subscription-dialog, accessible title and closeable=false. Keep Escape, focus containment and content scrolling. Preserve previous comparison API and archived demo."
+          ]
+        },
+        "preview/avatar.html": {
+          name: "Avatar",
+          intent: "Render AISEE account identity consistently from the approved website-account and social-fallback avatar libraries.",
+          rules: [
+            "Use kind account for registered website users and assign one of the 22 approved square avatars from a stable user seed. The same user must keep the same avatar across pages and sessions.",
+            "Use kind social only when a social-media profile image cannot be fetched. Assign one of the 24 approved circular avatars with the gray outline from a stable social-account seed.",
+            "Never use the generated extension previews for automatic assignment until product or design explicitly approves them for the source pool.",
+            "Use SocialAccountAvatar with postOrigin plan for a dashed platform-logo outline and manual for a solid outline. Render exactly one outline.",
+            "When animated is enabled, keep the original eye geometry, blink inside the eye mask, follow the pointer within the eye boundary and respect reduced-motion preferences."
+          ]
+        },
+        "components/Badge/Badge.html": {
+          name: "Badge",
+          intent: "Display compact source, status or classification metadata.",
+          rules: [
+            "Use source badges as icon plus label on a solid grey fill with no border.",
+            "Use status badges as icon plus label with a low-saturation semantic fill and grey border. Choose the status icon and colour from the real meaning.",
+            "Keep badges compact and non-interactive unless the surrounding product explicitly defines them as a filter. Do not copy Demo labels as product data."
+          ]
+        },
+        "components/ThinkingIndicator/ThinkingIndicator.html": {
+          name: "Thinking Indicator",
+          intent: "Show a lightweight waiting state before an AI reply arrives.",
+          rules: [
+            "Preserve the circle-to-infinity morph, shimmer and cycling text; keep all motion static under reduced motion.",
+            "Support default/compact sizes and optional icon. Inherit host typography and supply localized labels when needed.",
+            "Mount only while the host is waiting. Decorative phrases are not task progress or reasoning logs; do not copy the playground or simulate business activity."
+          ]
+        },
+        "components/AutomationRunner/AutomationRunner.html": {
+          name: "Automation Runner",
+          intent: "Keep the status and controls for a running automation available across product routes.",
+          rules: [
+            "Mount one runner in the root app shell outside route content. Closing hides the window only; the host data layer owns and continues the automation.",
+            "Preserve default, expanded and minimized views. The header expands details, the line minimizes, and the animated green eye restores the normal view. Supply real status rows and route the action back to Automation.",
+            "Preserve the bottom bounce entrance/exit, blinking pointer-following eye, hover wobble, optional dragging and viewport clamping. Disable decorative motion under prefers-reduced-motion.",
+            "Do not copy Demo routes, configuration controls or mock automation state. Use the selected default view and placement only as initial component configuration."
+          ]
+        },
+        "components/Steps/Steps.html": {
+          name: "Steps",
+          intent: "Explain a sequence, report live progress, show longer thinking activity or teach a new feature.",
+          rules: [
+            "Choose Static workflow for sequence-only content, Animated progress for waiting/in-progress/completed task states, Thinking steps for longer processing, and Feature tutorial for onboarding.",
+            "Select icons from each real step's meaning; every Demo icon is a placeholder and is not prescribed by the component.",
+            "For Thinking steps, use the approved wave animation only on the active loading title and respect reduced motion. Use yellow loading artwork for Post and green for every other module.",
+            "Keep the rail on one line where specified and use horizontal overflow or truncation rather than wrapping labels unexpectedly."
+          ]
+        },
+        "components/EmptyState/EmptyState.html": {
+          name: "Empty State",
+          intent: "Explain missing content and guide the user to the next useful action.",
+          rules: [
+            "Compose illustration, title, description and actions according to need; do not force every slot into every empty state.",
+            "Choose the matching SVG illustration from the supplied library and update title, description and action copy together. Never rasterize or reuse an unrelated illustration.",
+            "Treat the No report data illustration as an empty analysis state, not a success state: explain that no report records exist yet and offer Add product URL to start analysis.",
+            "Resolve primary action colour from the containing surface: pale yellow uses Post yellow, lime uses Analysis lime, and other backgrounds use #111111.",
+            "Use one clear recovery action where possible and distinguish first-use, no-results, permission and error cases."
+          ]
+        },
+        "components/Card/Card.html": {
+          name: "Card",
+          intent: "Compose related form fields, choices, metrics and previews inside one reusable Card surface.",
+          rules: [
+            "Use Card variant=divided and CardGrid divided for continuous sections sharing one outer frame and single internal separators. FeatureOverview demonstrates content-driven sections and mobile stacking.",
+            "Collapsed cards remove the content gap below the header and center the title, actions and chevron. Brand Mention uses the shared TagInput for multiple removable values; preserve them when collapsed.",
+            "Use the complex white inset frame only at the outermost Card level, in every context. Nested cards must use a simple pale fill or white fill with a light border; no repeated inset frames or shadows. Nested section Cards automatically simplify to 8px radius and 12px padding.",
+            "Card keeps the existing default white 12px surface; variant=section uses the Figma 16px radius, 16px padding, 5px white inset frame and neutral light body. Section headings use Karla 16px / 500. Do not apply hover feedback to the entire static card.",
+            "Compose title + single Input, Input groups, Dropdown / Checkbox options, Textarea or textarea groups, mixed forms, StatCard overview sets, account lists, optional settings and content previews. Reuse the existing controls instead of rebuilding them inside Card.",
+            "Card accepts title, description, headerAction and footer. CardGrid columns=1..4 handles responsive groups. Card supports collapsible, defaultExpanded, expanded and onExpandedChange; use collapseLabel for non-text headings. Collapse keeps children mounted and preserves field values; it does not disable or clear form fields.",
+            "Textarea is the multiline Input counterpart: label, hint, error, disabled, readOnly, required and native value / onChange remain available. Associate each field label and error; Card must not become a form engine.",
+            "Build hierarchy from the card's real content instead of copying Demo headings or metrics. Avoid nesting cards without a clear information boundary.",
+            "If the whole card is interactive, provide one semantic target, a visible focus state and no competing nested click targets."
+          ]
+        },
+        "components/StatCardCurrent/StatCardCurrent.html": {
+          name: "Stat Card — Current",
+          intent: "Show a compact overview metric with its label and optional unit, baseline or trend context.",
+          rules: [
+            "Use StatCardGroup variant=compact for read-only number or icon information strips. Cells share subtle separators and small labels; no repeated card frames. Use optional Tooltip for explanations. Existing default metric cards remain unchanged.",
+            "Use real metric names, values and comparison periods; keep the metric value visually dominant.",
+            "Use optional units, baseline badges and trends only when they change interpretation. Never imply improvement from colour alone.",
+            "Keep responsive groups aligned and apply the Current grey card border so every boundary remains visible."
+          ]
+        },
+        "components/Table/Table.html": {
+          name: "Table",
+          intent: "Compare structured records across shared columns.",
+          rules: [
+            "Use semantic table markup with clear headers, row labels where needed and right-aligned comparable numbers.",
+            "Keep the Current compact row rhythm and borders. Use horizontal overflow for essential columns rather than crushing or clipping content.",
+            "Define loading, empty and error treatments outside the body rows, and make sorting/filtering controls keyboard accessible."
+          ]
+        },
+        "components/Chart/Chart.html": {
+          name: "Chart",
+          intent: "Communicate a data trend or comparison with module-aware colour and accessible values.",
+          rules: [
+            "Choose a chart form that fits the data; the Demo line chart is an example, not a mandatory shape.",
+            "Use semantic module colours, readable axes/labels and tooltips for exact values. Do not rely on colour alone for multiple series.",
+            "Provide a text summary or accessible point values and preserve legibility in responsive layouts."
+          ]
+        },
+        "components/ScoreGauge/ScoreGauge.html": {
+          name: "Score Gauge",
+          intent: "Display the compact Analysis score visualization.",
+          rules: [
+            "Use this gauge only in Analysis contexts. Use a Stat Card matrix for other modules or general KPI collections.",
+            "Preserve the Current lime field, texture, tick geometry, needle, title and readable numeric value while mapping the needle to the real scale.",
+            "Expose the value with meter semantics and an accessible label."
+          ]
+        },
+        "components/CreditBar/CreditBar.html": {
+          name: "Credit Bar",
+          intent: "Show remaining credit balance split into Subscription and Top-up categories.",
+          rules: [
+            "Use only the two current categories: Subscription and Top-up. Match the Current typography, progress colours and legend treatment.",
+            "Calculate widths from real totals, display the numeric balance and handle zero, full and overflow values without misleading proportions. When either source is zero, keep its 0 value visible, mute its legend marker and give the full track to the remaining source. When both sources are zero, show 0 Credits, keep both muted zero-value legends, leave the neutral track visible and expose Purchase only when a real purchase flow exists.",
+            "Expose each bar as an accessible progress value with its category and maximum."
+          ]
+        },
+        "components/Dialog/Dialog.html": {
+          name: "Dialog",
+          intent: "Run a focused form, choice, detail, summary or bounded multi-section task above the current page.",
+          rules: [
+            "Constrain dialogs to the viewport, allow the content region to shrink and scroll, and keep the header and footer visible. Long content must remain reachable on desktop and narrow screens.",
+            "Choose structure first: Standard for forms/choices/details, Centered for decisions/summaries, and Split only for a bounded multi-section task that truly needs a sidebar.",
+            "Compose icon, fields and actions from the actual workflow. Do not classify or clone dialogs only by feature name.",
+            "Implement a real trigger, overlay, close behavior, initial focus, focus trap, Escape handling and focus return. Preserve balanced footer spacing.",
+            "Use Confirmation Dialog for destructive or unsaved-change decisions."
+          ]
+        },
+        "components/ConfirmationDialog/ConfirmationDialog.html": {
+          name: "Confirmation Dialog",
+          intent: "Confirm consequential actions with a short description or configurable impact notices.",
+          rules: [
+            "Supply the title, description, labels and callbacks from the real product. Optional positive/warning notices explain different consequences; their icons and content are host slots, not built-in automation data. Keep the safe action available.",
+            "Use the semantic danger button and preserve close, Escape, focus trap and focus-return behavior.",
+            "Show completion feedback with the page-level Toast component rather than an inline success message inside the dialog."
+          ]
+        },
+        "components/TooltipToast/TooltipToast.html": {
+          name: "Tooltip / Toast",
+          intent: "Use Tooltip for brief contextual labels and Toast for temporary page-level feedback.",
+          rules: [
+            "Tooltip remains a compact black hover/focus label and must not contain required instructions or interactive controls. Tooltip defaults to placement auto: prefer top when there is room, otherwise flip to a fitting side and shift inside the viewport on scroll or resize. Explicit top/right/bottom/left values are preferred sides, not locked positions. The four direction buttons are shown together; bubbles only appear on hover or keyboard focus, not permanently. Direction examples are not a selected fixed placement. Tooltip animation defaults to subtle (160ms fade and 4px directional entry, 120ms fade out); playful uses a damped spring for avatar/member details: directional entry based on pointer entry position, scale .6 and 20px offset, pointer-following horizontal sway and rotation with inertia (target +/-18deg and +/-22px; overshoot allowed). Keep the transformed bubble inside the viewport. Do not add a second border around an already framed avatar, and none disables motion. Keyboard focus uses fade only, and reduced-motion disables animation and tilt. Copy the selected animation prop; preserve automatic placement. Keep Toast positioning independent.",
+            "Toast uses the Current white bordered one-line or two-line structure, the matching semantic SVG icon and success, error or Agent progress colour.",
+            "For auto-dismiss Toasts, animate the bottom countdown for five seconds, then remove the line and close the Toast. Manual close cancels the timer; restarting a Toast restarts it cleanly.",
+            "Announce feedback with the appropriate live-region semantics without repeatedly interrupting the user."
+          ]
+        },
+        "components/NotificationBell/NotificationBell.html": {
+          name: "Notification",
+          intent: "Integrate the notification bell and unread badge animation into the existing product header.",
+          rules: [
+            "If a styled bell exists, preserve its icon, appearance and interactions; add only missing bell/count animation with reduced motion. Use NotificationBell.tsx and its scoped CSS only for an absent target.",
+            "Pass the real unread count and existing product click handler. Count increases animate both bell and badge; hover/focus animates only the bell. Keep the button and black circle stationary.",
+            "Preview controls, simulated messages, state galleries and notification panel are demonstrations, not installation options. Do not create them in the recipient project. Inherit the host font; do not import global styles, assets or a whole token sheet."
+          ]
+        }
+      };
+
+      function buildComponentAiPrompt(path) {
+        const guidance = componentAiGuidance[path];
+        if (!guidance) return "";
+        const integration = "First inspect the actual target component, its styles, UI library, state and interactions (shadcn: components.json and components/ui). Existing host appearance and behavior take precedence over all reference rules below. Add only requested missing capabilities at the existing path. For animation requests, add only missing motion with cleanup and reduced-motion; do not change existing styles, icons, layout, events, state or interactions. Do not import full delivery CSS or replace existing transforms. No parallel primitives, second UI tree, global styles or new UI framework. Incompatibility is not permission to replace a target: report conflicts. Only create a component when the target is absent, following host conventions. Use production delivery as temporary reference; never install Demo controls, mock data or showcase pages. Do not assume @aisee/design-system is publicly installable.";
+        const rules = guidance.rules.map(rule => `- ${rule}`).join("\n");
+        const implementation = guidance.implementation?.length
+          ? `\n\nImplementation and handoff:\n${guidance.implementation.map(item => `- ${item}`).join("\n")}`
+          : "";
+        return `Use the Current ${guidance.name} component from the AISEE Design System in the requested product context.
+
+Canonical reference:
+- Original Demo path (optional visual reference, not a file expected in the target project): ${path}
+
+${integration}
+- The following intent, rules and usage describe the standalone reference. Apply only the requested missing subset to an existing target, never replace its styling or interactions; non-motion rules are out of scope for motion-only requests.
+
+Component intent:
+${guidance.intent}${implementation}
+
+Component rules:
+${rules}
+
+Shared implementation rules:
+- The configuration appended below is captured at copy time and applies to its named example scopes; its interpretation rules are included in this prompt.
+- First match any supplied target screenshot or accessible design link to existing Current components by purpose, structure and interaction; reuse a suitable component and its variants instead of rebuilding it. Screenshots do not prove hidden interactions.
+- Honor explicit user choices (including the copied configuration); otherwise follow the target design, retain established product configuration, then use documented defaults. Do not choose variants randomly or treat this selection as a global product default.
+- Reuse the exported Current component, its existing motion and current AISEE semantic tokens when they are available in the project.
+- Treat the Design System Demo as a structural and interaction reference. Replace all sample copy, data, icons and illustrations with content that matches the real task.
+- Preserve the target page's information architecture and surrounding product behavior. Do not rebuild unrelated areas or import Legacy styling over Current components.
+- Inherit the host typography; do not bundle fonts. Retain scoped token fallbacks and prefer host token overrides.
+- Implement applicable default, hover, focus, active, disabled, loading, error, empty and responsive states, plus keyboard and screen-reader behavior.
+- Match the Demo's geometry, spacing, radii, typography, icon weight, colours, states and motion at the same viewport. An unavailable reference page is not a blocker when the supplied source delivery is present.
+- After implementation, compare the rendered result against the reference, then list the reused component, tokens and every intentional deviation.`;
+      }
 
       const baseItems = [
-        { group: "Brand", category: "Automation", name: "Plugin Entry Options", path: "legacy/pages/Plugin Entry Options.html", subtitle: "Three browser-extension install entry placements.", status: "Legacy" },
-        { group: "Brand", category: "Analyze", name: "Comparison Modal", path: "legacy/pages/Comparison Modal.html", subtitle: "Analysis comparison with Full Report and By Module views.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Mission option B · all six sections · design-system styling.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Homepage animation language, word reveal, mascot and cursor.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Narrative page with marquee and illustration placeholders.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "About Us — v4", path: "legacy/pages/About Us v4.html", subtitle: "Centered hero, tracking eye, static color cards and image-trail footer.", status: "Legacy" },
-        { group: "Brand", category: "Homepage", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Animated homepage with ticker and mascot.", status: "Legacy" },
-        { group: "Brand", category: "Growth", name: "Module Comparison v3", path: "legacy/pages/Module Comparison.html", subtitle: "By Module comparison with inline switching and delta cues.", status: "Legacy" },
-        { group: "Brand", category: "Post", name: "Post Reply Tutorial (preview)", path: "legacy/pages/Post Reply Tutorial (preview).html", subtitle: "Looping reply composition and posting tutorial.", status: "Legacy" },
-        { group: "Brand", category: "Post", name: "Post Reply Tutorial Reddit (preview)", path: "legacy/pages/Post Reply Tutorial Reddit (preview).html", subtitle: "Looping Reddit comment composition and posting tutorial.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Dashboard (Redesigned)", path: "legacy/pages/Engage Dashboard (Redesigned).html", subtitle: "Action-first KPIs and a focused review queue.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Dashboard v6 (Donut Impressions)", path: "legacy/pages/Engage Dashboard v6 (Donut Impressions).html", subtitle: "Impressions donut and rebalanced two-row dashboard.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Empty State (optimized)", path: "legacy/pages/Engage Empty State (optimized).html", subtitle: "Suggested chips, action-first titles and mini preview.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Replies (History)", path: "legacy/pages/Engage Replies (History).html", subtitle: "Generated replies with Awaiting, Sent, Dismissed and Failed filters.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage Replies (Tracking)", path: "legacy/pages/Engage Replies (Tracking).html", subtitle: "Reply tracking, monitoring choices, status and credit spend.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage v3 (React TSX preview)", path: "legacy/pages/Engage v3 (React TSX preview).html", subtitle: "Preview of the TSX modules in aisee-agent-test.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Engage", path: "legacy/pages/Engage.html", subtitle: "Initial Setup and Signal Feed with Reply Panel.", status: "Legacy" },
-        { group: "Brand", category: "Engage", name: "Paste Link Tutorial (preview)", path: "legacy/pages/Paste Link Tutorial (preview).html", subtitle: "Looping paste-link, save and tracking-started tutorial.", status: "Legacy" },
-        { group: "Brand", category: "Verify", name: "Tracking Eye", path: "legacy/pages/Tracking Eye.html", subtitle: "AISEE character peeks out of the eye and scans sources.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "dApp v6 Foundations", path: "preview/dapp-v6-foundations.html", subtitle: "Current color, typography, layout and module-theme rules.", status: "Current" },
-        { group: "Brand", category: "Common", name: "AIsee Logo Animation", path: "brand/pages/logo-animation/preview.html", subtitle: "Current cursor-following eye animation with natural blinking and side glances.", status: "Current" },
-        { group: "Brand", category: "Common", name: "Logo", path: "preview/brand-logo.html", subtitle: "Real logo image, full wordmark, sizes, backgrounds and mark scale.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Visual Style", path: "preview/brand-visual-style.html", subtitle: "Homepage hero geometric shapes, mascot and footer band.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Color Palette", path: "preview/colors-brand.html", subtitle: "Brand, neutral and semantic color tokens.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Display Type — Karla", path: "preview/type-display.html", subtitle: "Karla display scale from hero to body.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "UI Type — Karla", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "328×160 looping animation: download new version → remove old → drag new package in.", status: "Legacy" },
-        { group: "Brand", category: "Common", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "328×144 extension-install looping animation.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Plugin Entry Options", path: "legacy/pages/Plugin Entry Options.html", subtitle: "Inspiration only · Automation exploration; not approved product design or implementation guidance. Three browser-extension install entry placements.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Comparison Modal", path: "legacy/pages/Comparison Modal.html", subtitle: "Inspiration only · Analyze exploration; not approved product design or implementation guidance. Analysis comparison with Full Report and By Module views.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "About Us — Design Faithful", path: "legacy/pages/About Us - Design Faithful.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Mission option B with all six sections.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "About Us — Homepage Style", path: "legacy/pages/About Us - Homepage Style.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Homepage motion, word reveal, mascot and cursor.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "About Us — v3", path: "legacy/pages/About Us v3.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Narrative page with marquee and illustration placeholders.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "About Us — v4", path: "legacy/pages/About Us v4.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Centered hero, tracking eye, color cards and image-trail footer.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "aisee Homepage Redesign", path: "legacy/pages/Homepage Redesign.html", subtitle: "Inspiration only · Homepage exploration; not approved product design or implementation guidance. Animated homepage with ticker and mascot.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Module Comparison v3", path: "legacy/pages/Module Comparison.html", subtitle: "Inspiration only · Growth exploration; not approved product design or implementation guidance. By Module comparison with inline switching and delta cues.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Post Reply Tutorial (preview)", path: "legacy/pages/Post Reply Tutorial (preview).html", subtitle: "Inspiration only · Post exploration; not approved product design or implementation guidance. Looping reply composition and posting tutorial.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Post Reply Tutorial Reddit (preview)", path: "legacy/pages/Post Reply Tutorial Reddit (preview).html", subtitle: "Inspiration only · Post exploration; not approved product design or implementation guidance. Looping Reddit comment composition and posting tutorial.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Engage Dashboard (Redesigned)", path: "legacy/pages/Engage Dashboard (Redesigned).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Action-first KPIs and a focused review queue.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Engage Dashboard v6 (Donut Impressions)", path: "legacy/pages/Engage Dashboard v6 (Donut Impressions).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Impressions donut and rebalanced dashboard.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Engage Empty State (optimized)", path: "legacy/pages/Engage Empty State (optimized).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Suggested chips, action-first titles and mini preview.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Engage Replies (History)", path: "legacy/pages/Engage Replies (History).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Reply history filters and generated replies.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Engage Replies (Tracking)", path: "legacy/pages/Engage Replies (Tracking).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Reply tracking, status and credit-spend reference.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Engage v3 (React TSX preview)", path: "legacy/pages/Engage v3 (React TSX preview).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. TSX module preview from an external experiment.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Engage", path: "legacy/pages/Engage.html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Initial Setup and Signal Feed with Reply Panel.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Paste Link Tutorial (preview)", path: "legacy/pages/Paste Link Tutorial (preview).html", subtitle: "Inspiration only · Engage exploration; not approved product design or implementation guidance. Looping paste-link and tracking-started tutorial.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Tracking Eye", path: "legacy/pages/Tracking Eye.html", subtitle: "Inspiration only · Verify exploration; not approved product design or implementation guidance. AISEE character scans reference sources.", status: "Legacy" },
+        { group: "Brand", category: "Foundations", name: "dApp v6 Foundations", path: "preview/dapp-v6-foundations.html", subtitle: "Current color, typography, layout and module-theme rules.", status: "Current" },
+        { group: "Brand", category: "Foundations", name: "AIsee Logo Animation", path: "brand/pages/logo-animation/preview.html", subtitle: "Current cursor-following eye animation with natural blinking and side glances.", status: "Current" },
+        { group: "Brand", category: "Foundations", name: "Logo", path: "preview/brand-logo.html", subtitle: "Real logo image, full wordmark, sizes, backgrounds and mark scale.", status: "Legacy" },
+        { group: "Brand", category: "Foundations", name: "Color Palette", path: "preview/colors-brand.html", subtitle: "Brand, neutral and semantic color tokens.", status: "Legacy" },
+        { group: "Brand", category: "Foundations", name: "Spacing, Radii & Shadows", path: "preview/spacing-radii-shadows.html", subtitle: "8px spacing scale, border radii and shadow levels.", status: "Legacy" },
+        { group: "Brand", category: "Foundations", name: "Display Type — Karla", path: "preview/type-display.html", subtitle: "Karla display scale from hero to body.", status: "Legacy" },
+        { group: "Brand", category: "Foundations", name: "UI Type — Karla", path: "preview/type-ui.html", subtitle: "Legacy specimen retained for reference; v6 app typography is Karla only.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Update Tutorial Preview", path: "legacy/pages/插件更新教程Preview.html", subtitle: "Inspiration only · onboarding exploration; not approved product design or implementation guidance. Looping extension-update tutorial.", status: "Legacy" },
+        { group: "Brand", category: "Explorations", name: "Install Tutorial Preview", path: "legacy/pages/Install Tutorial Preview.html", subtitle: "Inspiration only · onboarding exploration; not approved product design or implementation guidance. Looping extension-install tutorial.", status: "Legacy" },
 
         { group: "Components", category: "Overview", name: "Overview", path: "preview/dapp-v6-components.html", subtitle: "Current component library overview: controls, states, dialogs and quick links.", status: "Current" },
-        { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Current action button with primary, secondary, subtle and danger appearances.", status: "Current" },
+        { group: "Components", name: "Button", path: "components/Button/Button.html", subtitle: "Action buttons with optional leading or trailing icons, shared hover motion and accessible states.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Input", path: "components/Input/Input.html", subtitle: "Current text and URL input with focus ring and helper text.", status: "Current", updated: true },
-        { group: "Components", category: "Inputs & Controls", name: "Checkbox", path: "components/Checkbox/Checkbox.html", subtitle: "Current independent selection control with module-color hover and selected states.", status: "Current" },
-        { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Current single, multiple, filter and input-assisted dropdown with complete states.", status: "Current", updated: true },
-        { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Current binary toggle with fluid hover, press and spring-like state transitions.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Checkbox", path: "components/Checkbox/Checkbox.html", subtitle: "Current independent selection control with a short bubble confirmation when selected.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Quantity Stepper", path: "components/QuantityStepper/QuantityStepper.html", subtitle: "Bounded quantity input with editable or buttons-only modes, three sizes and boundary feedback.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Select / Dropdown", path: "components/Select/Select.html", subtitle: "Single, multi, searchable, combobox, action and grouped dropdown types.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Toggle", path: "components/Toggle/Toggle.html", subtitle: "Lime / yellow toggle, light / dark surfaces and 16 / 24px sizes with fluid state transitions.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Tag Input", path: "components/TagInput/TagInput.html", subtitle: "Current token input that previews, commits and removes inline tags.", status: "Current", updated: true },
+        { group: "Components", category: "Inputs & Controls", name: "Segmented Choice", path: "components/SegmentedChoice/SegmentedChoice.html", subtitle: "Single-choice options with short requirements, contextual explanations and accessible keyboard selection.", status: "Current", updated: true },
         { group: "Components", category: "Inputs & Controls", name: "Toggle Selection Group", path: "components/ToggleSelectionGroup/ToggleSelectionGroup.html", subtitle: "Enable option groups while preserving selection across off and on states.", status: "Current", updated: true },
         { group: "Components", category: "Navigation", name: "Tabs", path: "components/Tabs/Tabs.html", subtitle: "Current underline and segmented tabs with text, icon and count compositions.", status: "Current", updated: true },
-        { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "Current grouped product navigation with nested destinations and account status.", status: "Current", updated: true },
-        { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Current Upgrade Plan cards with billing cycle, grouped benefits and plan states.", status: "Current" },
+        { group: "Components", category: "Navigation", name: "Sidebar Navigation", path: "components/SidebarNavigation/SidebarNavigation.html", subtitle: "AISEE grouped navigation with white or gray full-height rails, floating-card and inset layouts, plus inside, content-header and top-navigation toggles.", status: "Current", updated: true },
+        { group: "Components", category: "Navigation", name: "Tree Nav", path: "components/TreeNav/TreeNav.html", subtitle: "Focused local navigation with a hierarchy rail, leaf selection and optional parent disclosure.", status: "Current", updated: true },
+        { group: "Components", category: "Content & Status", name: "Feature Overview", path: "components/FeatureOverview/FeatureOverview.html", subtitle: "Continuous divided cards with reusable feature lists and compact information strips.", status: "Current", updated: true },
+        { group: "Components", category: "Content & Status", name: "PlanCard — Current", path: "components/PlanCardCurrent/PlanCardCurrent.html", subtitle: "Subscription confirmation with plan benefits, credits and brand context.", status: "Current", updated: true },
+        { group: "Components", category: "Content & Status", name: "Avatar", path: "preview/avatar.html", subtitle: "Approved account and missing-social-profile avatar libraries with stable assignment, motion and post-origin variants.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Badge", path: "components/Badge/Badge.html", subtitle: "Solid, dot, colour, source and semantic status badges with icon and label.", status: "Current", updated: true },
+        { group: "Components", category: "Content & Status", name: "Thinking Indicator", path: "components/ThinkingIndicator/ThinkingIndicator.html", subtitle: "AISEE thinking status with circle-to-infinity motion, cycling shimmer text, compact and text-only variants.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Steps", path: "components/Steps/Steps.html", subtitle: "Static workflows, animated progress, thinking activity and feature tutorials.", status: "Current", updated: true },
         { group: "Components", category: "Content & Status", name: "Empty State", path: "components/EmptyState/EmptyState.html", subtitle: "Composable empty states with optional illustration, title, description and actions.", status: "Current", updated: true },
-        { group: "Components", category: "Data Display", name: "Card", path: "components/Card/Card.html", subtitle: "Current neutral content surface with optional minimal elevation.", status: "Current" },
+        { group: "Components", category: "Data Display", name: "Card", path: "components/Card/Card.html", subtitle: "Reusable neutral and section cards for forms, selections, overview metrics and content previews.", status: "Current", updated: true },
         { group: "Components", category: "Data Display", name: "Stat Card — Current", path: "components/StatCardCurrent/StatCardCurrent.html", subtitle: "Compact overview metrics with optional units, baseline badges and responsive grouping.", status: "Current", updated: true },
         { group: "Components", category: "Data Display", name: "Table", path: "components/Table/Table.html", subtitle: "Current semantic data table with compact rows and numeric alignment.", status: "Current" },
         { group: "Components", category: "Data Display", name: "Chart", path: "components/Chart/Chart.html", subtitle: "Current module-aware line chart with accessible point values.", status: "Current" },
@@ -1145,10 +1751,12 @@
         { group: "Components", category: "Data Display", name: "Post Card", path: "components/PostCard/PostCard.html", subtitle: "Legacy social post card specimen retained from Cards & Data.", status: "Legacy" },
         { group: "Components", category: "Data Display", name: "Credit Bar", path: "components/CreditBar/CreditBar.html", subtitle: "Current remaining-credit balance with Subscription and Top-up breakdown.", status: "Current", updated: true },
         { group: "Components", category: "Feedback & Overlays", name: "Dialog", path: "components/Dialog/Dialog.html", subtitle: "Composable standard, centered and split dialog structures for forms, choices, details and decisions.", status: "Current", updated: true },
-        { group: "Components", category: "Feedback & Overlays", name: "Confirmation Dialog", path: "components/ConfirmationDialog/ConfirmationDialog.html", subtitle: "Current destructive confirmation pattern for unsaved changes.", status: "Current" },
-        { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "Figma-aligned white Toast notifications with one-line, two-line and functional-color variants; black Tooltip remains separate.", status: "Current" },
+        { group: "Components", category: "Feedback & Overlays", name: "Confirmation Dialog", path: "components/ConfirmationDialog/ConfirmationDialog.html", subtitle: "Reusable confirmation with optional impact notices, configurable labels and host callbacks.", status: "Current" },
+        { group: "Components", category: "Feedback & Overlays", name: "Automation Runner", path: "components/AutomationRunner/AutomationRunner.html", subtitle: "Persistent automation status with expandable details, draggable placement, minimized eye and playful motion.", status: "Current", updated: true },
+        { group: "Components", category: "Feedback & Overlays", name: "Notification", path: "components/NotificationBell/NotificationBell.html", subtitle: "Bell, interactive panel and notification item states with exact unread behavior.", status: "Current", updated: true },
+        { group: "Components", category: "Feedback & Overlays", name: "Tooltip / Toast", path: "components/TooltipToast/TooltipToast.html", subtitle: "White Toast notifications with one-line, two-line and functional-color variants; black Tooltip supports automatic placement, hover direction examples and optional motion.", status: "Current" },
 
-        { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Interactive 15-page Growth Loop preview covering Analysis, Growth, Engage, Post, Verify and Connection.", status: "Current" }
+        { group: "UI Kits — Webapp", name: "Web App UI Kit", path: "ui_kits/webapp/index.html", subtitle: "Maintained multi-component page and interaction demo; confirm actual product design against the relevant latest Figma.", status: "Current" }
       ];
       // Keep historical pages available in the portal; only the separate PNG/HTML
       // output comparison cards are omitted from the preview surface.
@@ -1158,11 +1766,12 @@
       const groupOrder = ["Brand", "Components", "UI Kits — Webapp"];
       const groupLabels = { "Brand": "Brand", "Components": "Components", "UI Kits — Webapp": "UI Kits — Webapp" };
       const groupIcons = { "Brand": "nav-overview", "Components": "nav-analysis", "UI Kits — Webapp": "nav-overview" };
-      const brandCategoryOrder = ["Homepage", "Common", "Overview", "Analyze", "Growth", "Post", "Engage", "Verify", "Automation"];
-      const componentCategoryOrder = ["Overview", "Inputs & Controls", "Navigation", "Content & Status", "Data Display", "Feedback & Overlays"];
+      const brandCategoryOrder = ["Foundations", "Explorations"];
+      const componentCategoryOrder = ["Overview", "Content & Status", "Data Display", "Feedback & Overlays", "Inputs & Controls", "Navigation"];
+      const compareNavItems = (left, right) => left.name.localeCompare(right.name, "en", { sensitivity: "base" });
       const pageIcons = {
         "dApp v6 Foundations": "nav-overview", "Overview": "nav-analysis", "dApp v6 Components": "nav-analysis", "PlanCard": "nav-growth", "PlanCard — Current": "nav-growth",
-        "IntentTag": "nav-signal-feed", "StatusBadge": "nav-replies", "Web App UI Kit": "nav-overview", "Logo": "nav-overview", "Visual Style": "nav-overview",
+        "IntentTag": "nav-signal-feed", "StatusBadge": "nav-replies", "Web App UI Kit": "nav-overview", "Logo": "nav-overview",
         "Color Palette": "nav-overview", "Buttons & Badges": "action-check", "Cards & Data": "nav-signal-feed", "Nav, Inputs & Toggles": "nav-overview",
         "Spacing, Radii & Shadows": "nav-overview", "Display Type — Karla": "nav-overview", "UI Type — Karla": "nav-overview", "Tracking Eye": "nav-verify"
       };
@@ -1177,6 +1786,8 @@
       const previewTitleTag = document.getElementById("previewTitleTag");
       const previewDescription = document.getElementById("previewDescription");
       const previewTag = document.getElementById("previewTag");
+      const copyAiHeader = document.getElementById("copyAiHeader");
+      const copyAiHeaderLabel = document.getElementById("copyAiHeaderLabel");
       const copyTsxHeader = document.getElementById("copyTsxHeader");
       const copyTsxHeaderLabel = document.getElementById("copyTsxHeaderLabel");
       const openStandalone = document.getElementById("openStandalone");
@@ -1239,6 +1850,25 @@
         return String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
       }
 
+      const colorEnglishLabels = new Map([
+        ["草绿", "grass-green"],
+        ["lime/line-分数辅助", "lime/line-score-assist"],
+        ["colour/border/描边- hover", "colour/border/stroke-hover"],
+        ["colour/border/描边", "colour/border/stroke"],
+        ["colour/border/分割线- hover", "colour/border/divider-hover"],
+        ["colour/border/分割线", "colour/border/divider"],
+        ["colour/bg/⚠️警告", "colour/bg/warning"],
+        ["深色按钮上的文字与 Icon；也可作为需要纯白承载面的背景颜色。", "Text and icons on dark buttons; also usable as a pure-white supporting surface."],
+        ["组件与可交互表面的 Hover 状态背景叠色。", "Hover overlay for components and interactive surfaces."],
+        ["用途已确认；Dark 模式仍为原始白色，需在 Figma 校对后发布。", "Usage confirmed; the Dark value remains raw white and requires Figma review before publishing."],
+        ["Dark 模式仍为原始白色，建议补充元数据别名。", "The Dark value remains raw white; add a primitive alias after review."]
+      ]);
+
+      function colorDisplayText(value) {
+        if (value === null || value === undefined) return "";
+        return readmeLanguage === "zh" ? String(value) : (colorEnglishLabels.get(String(value)) || String(value));
+      }
+
       function colorCategory(token) {
         if (activeColorLayer === "semantic") return token.scope || "other";
         return token.name.includes("/") ? token.name.split("/")[0] : "base";
@@ -1247,7 +1877,8 @@
       function refreshColorScopeOptions() {
         const current = colorScope.value;
         const categories = [...new Set(colorArchitecture[activeColorLayer].map(colorCategory))].sort();
-        colorScope.innerHTML = `<option value="all">全部类别</option>${categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}`;
+        const allCategoriesLabel = readmeLanguage === "zh" ? "全部类别" : "All categories";
+        colorScope.innerHTML = `<option value="all">${allCategoriesLabel}</option>${categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}`;
         colorScope.value = categories.includes(current) ? current : "all";
       }
 
@@ -1263,29 +1894,35 @@
           return (category === "all" || colorCategory(token) === category) && (!query || haystack.includes(query));
         });
 
-        colorReferenceHeading.textContent = activeColorLayer === "semantic" ? "Alias reference" : "Layer rule";
+        colorReferenceHeading.textContent = readmeLanguage === "zh"
+          ? (activeColorLayer === "semantic" ? "别名引用" : "层级规则")
+          : (activeColorLayer === "semantic" ? "Alias reference" : "Layer rule");
         document.querySelectorAll("[data-color-layer]").forEach(tab => tab.setAttribute("aria-selected", String(tab.dataset.colorLayer === activeColorLayer)));
         colorTokenRows.innerHTML = visible.length ? visible.map(token => {
           const modeData = activeColorLayer === "semantic" ? token[mode] : { value: token[mode], ref: null };
           const cssName = `--aisee-color-${activeColorLayer === "semantic" ? "semantic" : "primitive"}-${token.id}`;
           const reference = activeColorLayer === "semantic"
             ? (modeData.ref
-              ? `<span class="color-reference">→ ${escapeHtml(modeData.ref)}</span>`
-              : (token.verified ? '<span class="color-reference verified">已验证原始值</span>' : '<span class="color-reference raw">原始值 · 待改 alias</span>'))
-            : '<span class="color-reference raw">无功能语义</span>';
+              ? `<span class="color-reference">→ ${escapeHtml(colorDisplayText(modeData.ref))}</span>`
+              : (token.verified
+                ? `<span class="color-reference verified">${readmeLanguage === "zh" ? "已验证原始值" : "Verified raw value"}</span>`
+                : `<span class="color-reference raw">${readmeLanguage === "zh" ? "原始值 · 待改 alias" : "Raw value · alias pending"}</span>`))
+            : `<span class="color-reference raw">${readmeLanguage === "zh" ? "无功能语义" : "No functional meaning"}</span>`;
           const audit = token.review
-            ? `<span class="color-audit">${token.usageVerified ? '<span class="color-ok">用途已验证</span>' : ""}<span class="color-review" title="${escapeHtml(token.review)}">${escapeHtml(token.reviewMode ? `${token.reviewMode} 待校对` : "待校对")}</span></span>`
-            : (token.verified ? '<span class="color-ok">已验证</span>' : (activeColorLayer === "semantic" ? '<span class="color-ok">Alias OK</span>' : '<span class="color-ok">Source</span>'));
-          const usage = token.usage ? `<span class="color-usage">${escapeHtml(token.usage)}</span>` : "";
-          return `<tr><td><span class="color-swatch" style="--swatch:${escapeHtml(modeData.value)}" title="${escapeHtml(modeData.value)}"></span></td><td><span class="color-variable">${escapeHtml(token.name)}</span>${usage}</td><td>${reference}</td><td><code>${escapeHtml(modeData.value)}</code></td><td><code>${escapeHtml(cssName)}</code></td><td>${audit}</td></tr>`;
-        }).join("") : '<tr><td class="color-empty" colspan="6">没有匹配的颜色变量</td></tr>';
-        colorResults.textContent = `显示 ${visible.length} / ${source.length} 个${activeColorLayer === "semantic" ? "语义化" : "元数据"}颜色 · ${mode === "light" ? "Light" : "Dark"} 模式`;
+            ? `<span class="color-audit">${token.usageVerified ? `<span class="color-ok">${readmeLanguage === "zh" ? "用途已验证" : "Usage verified"}</span>` : ""}<span class="color-review" title="${escapeHtml(colorDisplayText(token.review))}">${escapeHtml(token.reviewMode ? `${token.reviewMode} ${readmeLanguage === "zh" ? "待校对" : "review pending"}` : (readmeLanguage === "zh" ? "待校对" : "Review pending"))}</span></span>`
+            : (token.verified ? `<span class="color-ok">${readmeLanguage === "zh" ? "已验证" : "Verified"}</span>` : (activeColorLayer === "semantic" ? '<span class="color-ok">Alias OK</span>' : '<span class="color-ok">Source</span>'));
+          const usage = token.usage ? `<span class="color-usage">${escapeHtml(colorDisplayText(token.usage))}</span>` : "";
+          return `<tr><td><span class="color-swatch" style="--swatch:${escapeHtml(modeData.value)}" title="${escapeHtml(modeData.value)}"></span></td><td><span class="color-variable">${escapeHtml(colorDisplayText(token.name))}</span>${usage}</td><td>${reference}</td><td><code>${escapeHtml(modeData.value)}</code></td><td><code>${escapeHtml(cssName)}</code></td><td>${audit}</td></tr>`;
+        }).join("") : `<tr><td class="color-empty" colspan="6">${readmeLanguage === "zh" ? "没有匹配的颜色变量" : "No matching color variables"}</td></tr>`;
+        colorResults.textContent = readmeLanguage === "zh"
+          ? `显示 ${visible.length} / ${source.length} 个${activeColorLayer === "semantic" ? "语义化" : "元数据"}颜色 · ${mode === "light" ? "Light" : "Dark"} 模式`
+          : `Showing ${visible.length} / ${source.length} ${activeColorLayer === "semantic" ? "semantic" : "primitive"} colours · ${mode === "light" ? "Light" : "Dark"} mode`;
       }
 
       function renderNav(query = "") {
         const normalized = query.trim().toLowerCase();
         const visible = normalized
-          ? items.filter(item => `${item.name} ${item.subtitle} ${item.group} ${item.category || ""} ${item.status}`.toLowerCase().includes(normalized))
+          ? items.filter(item => `${item.name} ${item.subtitle} ${item.group} ${item.category || ""} ${item.status} ${item.source || ""} ${item.surface || ""}`.toLowerCase().includes(normalized))
           : items;
         const navOpenState = readNavOpenState();
 
@@ -1293,30 +1930,30 @@
             const groupItems = visible.filter(item => item.group === group);
             if (!groupItems.length) return "";
             const renderItem = item => {
-              const hasUpdate = item.updated === true;
+              const hasUpdate = AiseeUpdates.isRecent(AiseeUpdates.dateFor(item.path, item.updatedAt));
               return `
             <button class="nav-item${item.path === activePath ? " active" : ""}" type="button" data-path="${escapeHtml(item.path)}" title="${escapeHtml(item.subtitle)}" aria-label="${escapeHtml(`${item.name}${hasUpdate ? ", new" : ""}`)}">
               <span class="nav-icon">${stemuiIcon(pageIcons[item.name] || "nav-overview")}</span>
               <span class="nav-label nav-item-label"><span class="nav-label-text">${escapeHtml(item.name)}</span>${hasUpdate ? '<span class="nav-new-label" aria-hidden="true">NEW</span>' : ""}</span>
-              ${item.kind === "brand-output" ? '<span class="item-tag">Brand</span>' : ""}
+              ${item.kind === "brand-output" ? `<span class="item-tag">${escapeHtml(item.status)}</span>` : ""}
             </button>`;
             };
           const itemMarkup = group === "Brand"
             ? (() => {
                 const categorized = brandCategoryOrder.map(category => {
-                  const categoryItems = groupItems.filter(item => item.category === category);
+                  const categoryItems = groupItems.filter(item => item.category === category).sort(compareNavItems);
                   if (!categoryItems.length) return "";
                   const categoryStateKey = `subgroup:${group}:${category}`;
                   const categoryOpen = navOpenState[categoryStateKey] !== false;
                   return `<details class="nav-subgroup" data-nav-state-key="${escapeHtml(categoryStateKey)}"${categoryOpen ? " open" : ""}><summary class="nav-subgroup-toggle"><span class="nav-subgroup-chevron" aria-hidden="true">${stemuiIcon("line_chevron-up")}</span><span>${escapeHtml(category)}</span></summary><div class="nav-subgroup-items">${categoryItems.map(renderItem).join("")}</div></details>`;
                 }).join("");
-                const uncategorized = groupItems.filter(item => !item.category).map(renderItem).join("");
+                const uncategorized = groupItems.filter(item => !item.category).sort(compareNavItems).map(renderItem).join("");
                 return `${categorized}${uncategorized}`;
               })()
             : group === "Components"
             ? (() => {
                 const renderCategory = category => {
-                const categoryItems = groupItems.filter(item => item.category === category);
+                const categoryItems = groupItems.filter(item => item.category === category).sort(compareNavItems);
                 if (!categoryItems.length) return "";
                 // A category is useful only when it groups multiple real components.
                 // Singletons (for example Overview and Button) stay as direct entries.
@@ -1328,11 +1965,11 @@ return `<details class="nav-subgroup" data-nav-state-key="${escapeHtml(categoryS
                 // Overview remains first; ungrouped real components (for example
                 // Button) follow it as direct entries, without a synthetic category.
                 const overview = renderCategory("Overview");
-                const uncategorized = groupItems.filter(item => !item.category).map(renderItem).join("");
+                const uncategorized = groupItems.filter(item => !item.category).sort(compareNavItems).map(renderItem).join("");
                 const remaining = componentCategoryOrder.filter(category => category !== "Overview").map(renderCategory).join("");
                 return `${overview}${uncategorized}${remaining}`;
               })()
-            : groupItems.map(renderItem).join("");
+            : [...groupItems].sort(compareNavItems).map(renderItem).join("");
           const groupStateKey = `group:${group}`;
           const groupOpen = navOpenState[groupStateKey] !== false;
 return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKey)}"${groupOpen ? " open" : ""}><summary><span class="nav-group-chevron" aria-hidden="true">${stemuiIcon("line_chevron-up")}</span><span class="nav-group-icon">${stemuiIcon(groupIcons[group])}</span><span class="nav-group-label">${escapeHtml(groupLabels[group])}</span><span class="group-count">${groupItems.length}</span></summary><div class="nav-list">${itemMarkup}</div></details>`;
@@ -1365,7 +2002,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       function mountFrameStepper() {
         const frameDocument = previewFrame.contentDocument;
         if (!frameDocument?.body || !contentStepperTemplate) return;
-        const contentRoot = frameDocument.querySelector("main, .page, #root") || frameDocument.body;
+        const contentRoot = frameDocument.querySelector(".aisee-common-document, main, .page, #root") || frameDocument.body;
         frameDocument.querySelector("[data-aisee-doc-stepper]")?.remove();
         frameDocument.getElementById("aisee-doc-stepper-style")?.remove();
 
@@ -1413,6 +2050,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         activePath = "";
         saveActivePath("");
         previewFrame.removeAttribute("src");
+        copyAiControls.reset(false);
         copyTsxHeader.hidden = true;
         previewView.hidden = true;
         homeView.hidden = false;
@@ -1434,17 +2072,19 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
         homeView.hidden = true;
         previewView.hidden = false;
         previewTitleLabel.textContent = item.name;
-        previewDescription.textContent = `${item.group} · ${item.subtitle}`;
+        previewDescription.textContent = item.subtitle;
         const isBrandOutput = item.kind === "brand-output";
-        const isLegacy = item.status === "Legacy";
-        previewMeta.classList.toggle("has-inline-tag", isLegacy);
-        previewTitleTag.textContent = isLegacy ? "legacy" : "";
-        previewTitleTag.hidden = !isLegacy;
+        const hasStatusTag = item.status === "Legacy" || item.status === "Draft";
+        previewMeta.classList.toggle("has-inline-tag", hasStatusTag);
+        previewTitleTag.textContent = hasStatusTag ? item.status.toLowerCase() : "";
+        previewTitleTag.hidden = !hasStatusTag;
         framePreviousItem = previousItem;
         frameNextItem = nextItem;
-        previewTag.textContent = isBrandOutput ? "Brand" : "";
+        previewTag.textContent = isBrandOutput ? [item.source, item.surface].filter(Boolean).join(" · ") : "";
         previewTag.className = "item-tag";
-        previewTag.hidden = !isBrandOutput;
+        previewTag.hidden = !isBrandOutput || !previewTag.textContent;
+        const aiPrompt = buildComponentAiPrompt(item.path);
+        copyAiControls.reset(Boolean(aiPrompt));
         copyTsxHeader.hidden = item.path !== logoAnimationPath;
         copyTsxHeaderLabel.textContent = "复制 TSX";
         copyTsxHeader.disabled = false;
@@ -1460,6 +2100,15 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       }
 
       previewFrame.addEventListener("load", mountFrameStepper);
+      function refreshUpdateBadges() {
+        renderNav(searchInput.value);
+        const item = items.find(entry => entry.path === activePath);
+        try {
+          if (item && previewFrame.contentDocument) AiseeUpdates.apply(previewFrame.contentDocument, AiseeUpdates.dateFor(item.path, item.updatedAt));
+        } catch { /* Cross-origin previews own their metadata. */ }
+      }
+      previewFrame.addEventListener("load", refreshUpdateBadges);
+      window.addEventListener("aisee:updates-refresh", refreshUpdateBadges);
 
       function readHash() {
         const match = location.hash.match(/^#page=(.+)$/);
@@ -1501,15 +2150,19 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
             .filter(page => page && typeof page.name === "string" && typeof page.html === "string")
             .map(page => ({
               group: "Brand",
-              category: page.category || "Common",
+              category: page.category || "Explorations",
               kind: "brand-output",
               name: page.name,
               path: page.html,
               html: page.html,
               image: page.image,
               subtitle: page.subtitle || "Web-generated design output.",
-              status: "Brand",
+              source: page.source,
+              surface: page.surface,
+              designStatus: page.designStatus,
+              status: page.designStatus === "Selected" ? "Current" : page.designStatus || "Draft",
               updated: page.updated === true,
+              updatedAt: page.updatedAt,
               updateId: page.updateId || page.updatedAt || "updated"
             }))
             .filter(item => !registered.has(item.path));
@@ -1537,6 +2190,45 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
           temporary.remove();
           showToast("Page link copied");
         }
+      }
+
+      async function writeClipboard(text) {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+        const temporary = document.createElement("textarea");
+        temporary.value = text;
+        temporary.style.position = "fixed";
+        temporary.style.opacity = "0";
+        document.body.appendChild(temporary);
+        temporary.select();
+        const copied = document.execCommand("copy");
+        temporary.remove();
+        if (!copied) throw new Error("copy unavailable");
+      }
+
+      const copyAiControls = AiseeCopyAiControls.create({
+        document, deliveryApi: AiseeAiDelivery,
+        getContext: () => items.find(entry => entry.path === activePath),
+        readSnapshot: path => AiseeComponentConfig.readFrame(previewFrame, path, document.baseURI),
+        resolveDelivery: path => AiseeAiDelivery.resolveDelivery(path, document.baseURI),
+        writeClipboard, showToast
+      });
+      let detachCopyPreview = () => {};
+      previewFrame.addEventListener("load", () => {
+        detachCopyPreview();
+        void copyAiControls.refresh();
+        try {
+          const doc = previewFrame.contentDocument;
+          const refresh = () => requestAnimationFrame(() => copyAiControls.refresh());
+          doc.addEventListener("click", refresh);
+          doc.addEventListener("change", refresh);
+          detachCopyPreview = () => { doc.removeEventListener("click", refresh); doc.removeEventListener("change", refresh); };
+        } catch { detachCopyPreview = () => {}; }
+      });
+      async function copyAiPrompt() {
+        await copyAiControls.copy();
       }
 
       async function copyLogoTsx() {
@@ -1573,6 +2265,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       renderNav();
       refreshColorScopeOptions();
       renderColorTokens();
+      setReadmeLanguage(readmeLanguage, false);
       readHash();
       const overviewLinks = [...document.querySelectorAll(".overview-nav a")];
       const overviewSections = overviewLinks.map(link => document.getElementById(link.hash.slice(1))).filter(Boolean);
@@ -1585,6 +2278,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       homeButton.addEventListener("click", () => openHome());
       document.getElementById("backButton").addEventListener("click", () => openHome());
       document.getElementById("openFoundations").addEventListener("click", () => openItem("preview/dapp-v6-foundations.html"));
+      document.querySelectorAll("[data-readme-language]").forEach(button => button.addEventListener("click", () => setReadmeLanguage(button.dataset.readmeLanguage)));
       document.querySelectorAll("[data-quick-path]").forEach(button => button.addEventListener("click", () => openItem(button.dataset.quickPath)));
       searchInput.addEventListener("input", event => renderNav(event.target.value));
       document.querySelectorAll("[data-color-layer]").forEach(tab => tab.addEventListener("click", () => {
@@ -1595,6 +2289,7 @@ return `<details class="nav-group" data-nav-state-key="${escapeHtml(groupStateKe
       colorMode.addEventListener("change", () => renderColorTokens());
       colorScope.addEventListener("change", () => renderColorTokens());
       document.getElementById("shareButton").addEventListener("click", sharePage);
+      copyAiHeader.addEventListener("click", copyAiPrompt);
       copyTsxHeader.addEventListener("click", copyLogoTsx);
       menuButton.addEventListener("click", () => {
         const opening = !document.body.classList.contains("nav-open");

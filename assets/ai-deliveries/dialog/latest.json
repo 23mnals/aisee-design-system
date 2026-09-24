@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 3,
+  "name": "Dialog",
+  "page": "components/Dialog/Dialog.html",
+  "version": "34df56fe1933e494",
+  "delivery": "./releases/34df56fe1933e494/ready.md",
+  "installer": "./releases/34df56fe1933e494/install.cjs",
+  "installerSha256": "ac14e7b39c7c5ffb66cd279dfd39bfdf29d8ac64472974c0fe206691e34d91a0",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "dialog",
+      "sourceFiles": [
+        "src/components/Dialog.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled open/onClose, modal isolation, focus management and focus return",
+        "Escape/backdrop dismissal, accessible title/description and native dialog ref API",
+        "AISEE backdrop, entry/exit timing, layout variants and reduced-motion behavior"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion."
+  ],
+  "files": [
+    "Dialog.tsx",
+    "styles.css",
+    "assets/dialog-close.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/dialog-close.svg.d.ts"
+  ]
+}

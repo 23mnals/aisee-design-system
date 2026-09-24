@@ -1,0 +1,8 @@
+body{margin:0;background:var(--aisee-color-page);color:var(--aisee-color-black);font:400 14px/20px Karla,sans-serif}
+.plan-demo h1,.plan-demo-heading h2{margin:0;font:500 16px/24px Karla,sans-serif}
+.plan-demo>.intro{margin:8px 0 32px;color:var(--aisee-color-text-muted)}
+.plan-demo-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.plan-demo-stage{display:flex;justify-content:center;padding:20px 0}
+.plan-demo-feedback{font-size:12px;color:var(--aisee-color-text-muted)}
+.plan-demo-usage p{margin:0 0 12px;color:var(--aisee-color-text-muted)}
+.plan-demo-dialog-feedback{margin:0;padding:0 24px 16px;font-size:12px;color:var(--aisee-color-text-muted)}

@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "name": "Tabs",
+  "page": "components/Tabs/Tabs.html",
+  "version": "977a720318955ae5",
+  "delivery": "./releases/977a720318955ae5/ready.md",
+  "installer": "./releases/977a720318955ae5/install.cjs",
+  "installerSha256": "670032f51e6943d9d83fc0b92221ef601879d85ce5c9bd4ecceee3ad10ea95cb",
+  "configuration": {
+    "props": {
+      "Tabs": [
+        "variant",
+        "layout",
+        "platformLabelDisplay"
+      ]
+    },
+    "slots": {
+      "Tabs": [
+        "icon",
+        "count"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "tabs",
+      "sourceFiles": [
+        "src/components/Tabs.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled value and change callback, disabled tabs and keyboard navigation",
+        "AISEE state classes, measurement refs and label visibility"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve controlled selection, keyboard navigation, icon/text variants and responsive platform labels."
+  ],
+  "files": [
+    "Tabs.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

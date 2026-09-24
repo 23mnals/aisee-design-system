@@ -1,6 +1,6 @@
 {
   "package": "@stemui/icons",
-  "version": "0.1.24",
+  "version": "0.1.40",
   "repository": "https://github.com/qi15582378779/stemui",
   "npm": "https://www.npmjs.com/package/@stemui/icons",
   "mode": "read-only source snapshot",
@@ -78,6 +78,10 @@
       "source": "line_plus_add.svg"
     },
     {
+      "file": "action-minus.svg",
+      "source": "line_line_nochange.svg"
+    },
+    {
       "file": "action-close.svg",
       "source": "line_x_close.svg"
     },
@@ -86,8 +90,28 @@
       "source": "line_correct_done.svg"
     },
     {
-      "file": "line_chevron-up.svg",
-      "source": "line_chevron-up.svg"
+      "file": "action-chevron-down.svg",
+      "source": "line_down_arrow_dropdown.svg"
+    },
+    {
+      "file": "action-copy.svg",
+      "source": "line_file_copy.svg"
+    },
+    {
+      "file": "action-add-customer.svg",
+      "source": "line_people_add_contact.svg"
+    },
+    {
+      "file": "action-time-slots.svg",
+      "source": "line_clock_time.svg"
+    },
+    {
+      "file": "action-disable.svg",
+      "source": "line_prohibited_not_clickable.svg"
+    },
+    {
+      "file": "action-delete.svg",
+      "source": "line_trash_delete.svg"
     },
     {
       "file": "avatar-user.svg",

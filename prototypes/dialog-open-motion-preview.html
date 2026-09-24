@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dialog · Open motion preview</title>
+  <link rel="stylesheet" href="../fonts/karla.css">
+  <style>
+    :root{--ink:#111;--muted:rgba(17,17,17,.6);--line:rgba(17,17,17,.08);--lime:#cfff29;--ease:cubic-bezier(.2,.8,.2,1)}
+    *{box-sizing:border-box}body{min-height:100vh;margin:0;background:#fafafa;color:var(--ink);font:14px/20px Karla,Arial,sans-serif}button,input{font:inherit}
+    .page{width:min(720px,calc(100% - 48px));margin:0 auto;padding:56px 0}.eyebrow{margin:0 0 8px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.title{margin:0;font-size:28px;font-weight:600;line-height:36px}.intro{max-width:580px;margin:10px 0 0;color:var(--muted);font-size:16px;line-height:24px}.stage{display:grid;min-height:360px;margin-top:32px;border:1px solid rgba(17,17,17,.05);border-radius:18px;background:#fff;place-items:center}.open{height:40px;padding:0 18px;border:0;border-radius:8px;background:var(--lime);color:var(--ink);font-weight:500;cursor:pointer}.open:hover{background:#bdf000}.open:focus-visible,.close:focus-visible,.button:focus-visible,.field:focus-visible{outline:2px solid var(--ink);outline-offset:2px}.motion-note{margin:16px 0 0;color:var(--muted);font-size:12px}
+    dialog{width:min(480px,calc(100vw - 32px));padding:0;overflow:hidden;border:1px solid rgba(17,17,17,.15);border-radius:16px;color:var(--ink);background:#fff;box-shadow:0 20px 24px -4px rgba(16,24,40,.12),0 8px 8px -4px rgba(16,24,40,.06);transform-origin:50% 50%}
+    dialog::backdrop{background:rgba(17,17,17,.34);backdrop-filter:blur(3px)}
+    dialog[open]{animation:dialog-enter 260ms cubic-bezier(.2,.8,.2,1) both}dialog[open]::backdrop{animation:backdrop-enter 200ms ease-out both}
+    dialog.is-closing{animation:dialog-exit 180ms cubic-bezier(.4,0,1,1) both}dialog.is-closing::backdrop{animation:backdrop-exit 180ms ease-in both}
+    .main{position:relative;padding:24px}.header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.heading{display:grid;gap:4px}.heading h2{margin:0;font-size:20px;font-weight:500;line-height:30px}.heading p{margin:0;color:var(--muted);font-size:12px;line-height:18px}.close{display:grid;width:30px;height:30px;flex:0 0 auto;padding:0;border:0;border-radius:8px;background:transparent;cursor:pointer;place-items:center}.close:hover{background:rgba(17,17,17,.05)}.close:before,.close:after{position:absolute;width:12px;height:1.5px;background:var(--ink);content:""}.close:before{transform:rotate(45deg)}.close:after{transform:rotate(-45deg)}
+    .content{display:grid;gap:6px;margin-top:16px}.content label{font-size:13px;font-weight:500}.field{height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}.field:hover,.field:focus{border-color:var(--ink);outline:0;box-shadow:0 0 0 2px var(--lime)}.footer{display:flex;justify-content:flex-end;gap:12px;margin:20px -24px -24px;padding:20px 24px;border-top:1px solid rgba(17,17,17,.06)}.button{height:40px;padding:0 16px;border:0;border-radius:8px;background:rgba(17,17,17,.03);cursor:pointer}.button.primary{background:var(--lime);font-weight:500}
+    dialog[open] .motion-part{animation:content-enter 220ms ease-out both}.header{animation-delay:35ms!important}.content{animation-delay:50ms!important}.footer{animation-delay:65ms!important}.is-closing .motion-part{animation:none}
+    @keyframes dialog-enter{0%{opacity:0;transform:translateY(8px) scale(.975)}100%{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes content-enter{0%{opacity:0;transform:translateY(3px)}100%{opacity:1;transform:translateY(0)}}
+    @keyframes backdrop-enter{from{background:rgba(17,17,17,0);backdrop-filter:blur(0)}to{background:rgba(17,17,17,.34);backdrop-filter:blur(3px)}}
+    @keyframes dialog-exit{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(8px) scale(.975)}}
+    @keyframes backdrop-exit{from{background:rgba(17,17,17,.34);backdrop-filter:blur(3px)}to{background:rgba(17,17,17,0);backdrop-filter:blur(0)}}
+    @media(prefers-reduced-motion:reduce){dialog[open],dialog[open]::backdrop,dialog.is-closing,dialog.is-closing::backdrop,dialog[open] .motion-part{animation:none}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <p class="eyebrow">Motion preview · 尚未同步到组件</p>
+    <h1 class="title">Dialog open motion</h1>
+    <p class="intro">弹窗使用克制的淡入、8px 上移与轻微缩放，内容仅做很短的错峰进入。入场总时长 260ms，关闭使用更短的 180ms。</p>
+    <section class="stage"><button class="open" id="openDialog" type="button">打开弹窗预览</button></section>
+    <p class="motion-note">点击遮罩、右上角关闭、Cancel 或按 Esc 都可关闭，然后重复预览。</p>
+  </main>
+  <dialog id="previewDialog" aria-labelledby="dialogTitle" aria-describedby="dialogDescription">
+    <div class="main">
+      <header class="header motion-part"><div class="heading"><h2 id="dialogTitle">Add a product URL</h2><p id="dialogDescription">We’ll analyze the public website and create a new report.</p></div><button class="close" id="closeDialog" type="button" aria-label="Close dialog"></button></header>
+      <div class="content motion-part"><label for="productUrl">Product URL</label><input class="field" id="productUrl" type="url" placeholder="https://example.com"></div>
+      <footer class="footer motion-part"><button class="button" id="cancelDialog" type="button">Cancel</button><button class="button primary" type="button">Start analysis</button></footer>
+    </div>
+  </dialog>
+  <script>
+    const dialog=document.querySelector('#previewDialog');
+    const opener=document.querySelector('#openDialog');
+    const closeButtons=[document.querySelector('#closeDialog'),document.querySelector('#cancelDialog')];
+    const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
+    const closeDialog=()=>{
+      if(!dialog.open||dialog.classList.contains('is-closing'))return;
+      if(reduceMotion.matches){dialog.close();return}
+      dialog.classList.add('is-closing');
+      window.setTimeout(()=>{dialog.close();dialog.classList.remove('is-closing');opener.focus()},180);
+    };
+    opener.addEventListener('click',()=>dialog.showModal());
+    closeButtons.forEach(button=>button.addEventListener('click',closeDialog));
+    dialog.addEventListener('cancel',event=>{event.preventDefault();closeDialog()});
+    dialog.addEventListener('click',event=>{if(event.target===dialog)closeDialog()});
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 3,
+  "name": "PlanCard",
+  "page": "components/PlanCardCurrent/PlanCardCurrent.html",
+  "version": "a3f2ebc3ce156e00",
+  "delivery": "./releases/a3f2ebc3ce156e00/ready.md",
+  "installer": "./releases/a3f2ebc3ce156e00/install.cjs",
+  "installerSha256": "f14994d7f2d9f3feac62ceed24b8b415537c052cc46e61495ac5b3fad8d20e1a",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "button",
+      "sourceFiles": [
+        "src/components/Button.tsx"
+      ],
+      "requiredCapabilities": [
+        "native button semantics, disabled/type and keyboard activation",
+        "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "dialog",
+      "sourceFiles": [
+        "src/components/Dialog.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled open/onClose, modal isolation, focus management and focus return",
+        "Escape/backdrop dismissal, accessible title/description and native dialog ref API",
+        "AISEE backdrop, entry/exit timing, layout variants and reduced-motion behavior"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+  ],
+  "files": [
+    "PlanCard.tsx",
+    "SubscriptionPlanCard.tsx",
+    "Badge.tsx",
+    "Button.tsx",
+    "Dialog.tsx",
+    "styles.css",
+    "assets/badge/draft.svg",
+    "assets/badge/failed.svg",
+    "assets/badge/from-plan.svg",
+    "assets/badge/manual.svg",
+    "assets/badge/published.svg",
+    "assets/badge/rewritten.svg",
+    "assets/badge/scheduled.svg",
+    "assets/dialog-close.svg",
+    "assets/empty-state/library/unlock.svg",
+    "assets/plan-card/subscription/access.svg",
+    "assets/plan-card/subscription/credits.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/badge/draft.svg.d.ts",
+    "assets/badge/failed.svg.d.ts",
+    "assets/badge/from-plan.svg.d.ts",
+    "assets/badge/manual.svg.d.ts",
+    "assets/badge/published.svg.d.ts",
+    "assets/badge/rewritten.svg.d.ts",
+    "assets/badge/scheduled.svg.d.ts",
+    "assets/dialog-close.svg.d.ts",
+    "assets/empty-state/library/unlock.svg.d.ts",
+    "assets/plan-card/subscription/access.svg.d.ts",
+    "assets/plan-card/subscription/credits.svg.d.ts"
+  ]
+}

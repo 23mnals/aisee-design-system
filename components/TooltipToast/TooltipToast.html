@@ -39,10 +39,18 @@
     .controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
     .action{min-height:36px;padding:0 14px;border:1px solid #111;border-radius:8px;background:#cfff29;color:#111;cursor:pointer}
     .action:hover{background:#bfee19}
-    .tooltip-demo{display:flex;min-height:112px;align-items:flex-end;justify-content:center}
+    .tooltip-demo{display:flex;min-height:180px;align-items:center;justify-content:center}
     .trigger{position:relative;padding:8px 16px;border:1px solid rgba(17,17,17,.08);border-radius:8px;background:#fff;cursor:pointer}
-    .tip{position:absolute;bottom:calc(100% + 8px);left:50%;width:max-content;max-width:320px;padding:8px 12px;border-radius:8px;color:#fff;background:#111;box-shadow:0 10px 12px rgba(0,0,0,.12);opacity:0;transform:translate(-50%,4px);transition:opacity .12s ease-out,transform .12s ease-out;pointer-events:none}
-    .trigger:hover .tip,.trigger:focus .tip{opacity:1;transform:translate(-50%,0)}
+    .placement-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+    .placement-example{display:flex;min-height:150px;align-items:center;justify-content:center;background:#fff;border:1px solid rgba(17,17,17,.05);border-radius:12px}
+    .tooltip-controls{display:flex;justify-content:flex-end;margin-bottom:12px;position:relative;z-index:2}
+    .tooltip-controls .aisee-dropdown{width:220px}
+    .avatar-tooltip-demo{gap:12px}
+    .avatar-trigger{display:grid;width:48px;height:48px;place-items:center;border:0;border-radius:50%;background:transparent;padding:0;cursor:pointer}
+    .avatar-trigger img{width:44px;height:44px;user-select:none}
+    .avatar-trigger:focus-visible{outline:2px solid #111;outline-offset:3px}
+    .member-role{display:block;font-size:12px;line-height:18px;opacity:.7}
+    @media(max-width:480px){.placement-gallery{grid-template-columns:1fr}}
     .spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
     .spec-grid div{padding:12px;border-radius:8px;background:rgba(17,17,17,.04)}
     .spec-grid strong{display:block}
@@ -51,6 +59,8 @@
     @media(max-width:680px){body{padding:24px}.spec-grid{grid-template-columns:1fr 1fr}}
     @media(prefers-reduced-motion:reduce){.tip{transition:none}.toast.is-counting .toast-track span{animation:none}}
   /* shared component content typography */ main > .muted:first-child,main > .meta:first-child,main > .eyebrow:first-child,.page .intro .eyebrow{display:none}main > h1,.page .intro h1{margin:0;font-size:16px;font-weight:500;line-height:24px}main > h1 + p,.page .intro h1 + p{margin-top:8px;font-size:14px;font-weight:400;line-height:20px;color:rgba(17,17,17,.6)!important}main h2{margin-top:32px;margin-bottom:8px;font-size:16px;font-weight:500;line-height:24px}main h2 + *{margin-top:8px!important}main .card > h2,main .panel > h2,main .surface > h2{margin:0 0 8px}main .name-row h2{margin:0;font-size:18px;font-weight:400;line-height:24px}/* shared component page frame */ body{width:100%;padding:24px!important;box-sizing:border-box}main,.page,#root{width:960px!important;max-width:100%!important;box-sizing:border-box;margin:0 auto!important;padding:0!important}main .card,main .panel,main .state-card,main figure,main .wrap,main .demo,main .gauge{border-color:rgba(17,17,17,.05)!important}</style>
+<link rel="stylesheet" href="../../src/tokens/tokens.css">
+<link rel="stylesheet" href="tooltip-toast-demo.css">
 <link rel="stylesheet" href="../../fonts/karla.css" data-aisee-typography="karla">
 </head>
 <style>main h2 + p,main .usage-copy,main .spec,main .specs,main .state-note{margin-top:8px!important;font-size:14px!important;font-weight:400!important;line-height:20px!important;color:rgba(17,17,17,.6)!important}</style>
@@ -59,7 +69,7 @@
   <main>
     <p class="eyebrow">Components · Feedback &amp; Overlays · Current</p>
     <h1>Tooltip / Toast</h1>
-    <p class="intro">Toast follows the verified Figma notification pattern. Tooltip remains the compact black hover or focus label.</p>
+    <p class="intro">Toast displays brief status notifications. Tooltip provides compact black labels on hover or keyboard focus.</p>
 
     <h2>Toast variants</h2>
     <section class="demo">
@@ -90,8 +100,8 @@
       </div>
     </section>
 
-    <h2>Tooltip</h2>
-    <section class="demo tooltip-demo"><button class="trigger" type="button">Hover or focus<span class="tip" role="tooltip">Set as baseline</span></button></section>
+    <h2 class="aisee-content-heading">Tooltip <span class="aisee-content-new" aria-label="New or updated content">NEW</span></h2>
+    <div id="tooltip-live"></div>
 
     <h2>Toast specs</h2>
     <section class="spec-grid">
@@ -115,5 +125,7 @@
     document.querySelectorAll('[data-show]').forEach(button=>button.addEventListener('click',()=>showToast(document.querySelector(`[data-toast="${button.dataset.show}"]`))));
     document.querySelectorAll('[data-toast]').forEach(showToast);
   </script>
+<script src="tooltip-toast-demo.js"></script>
+<script src="../../assets/update-badges.js"></script>
 </body>
 </html>

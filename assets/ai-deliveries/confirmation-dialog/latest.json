@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 3,
+  "name": "ConfirmationDialog",
+  "page": "components/ConfirmationDialog/ConfirmationDialog.html",
+  "version": "ba6520530f7761d6",
+  "delivery": "./releases/ba6520530f7761d6/ready.md",
+  "installer": "./releases/ba6520530f7761d6/install.cjs",
+  "installerSha256": "d84206e6ddd07e2fa6b55025ea85dfe04c46c92b7ff112030b1c4623eb2ab69e",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "dialog",
+      "sourceFiles": [
+        "src/components/ConfirmationDialog.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled open, cancel-first focus, focus return and modal isolation",
+        "Escape/cancel handling, accessible title/description and native dialog ref API",
+        "AISEE impact notices, confirm-disabled behavior and host-owned callbacks"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "button",
+      "sourceFiles": [
+        "src/components/Button.tsx"
+      ],
+      "requiredCapabilities": [
+        "native button semantics, disabled/type and keyboard activation",
+        "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the controlled native modal, safe-action initial focus, focus containment and return, Escape/close/cancel callbacks, responsive actions and scrollable long content.",
+    "Preserve optional positive/warning impact notices and host icon/content slots. Labels, notices, counts and confirm callbacks come from the host; never install the automation/discard examples or their illustration assets.",
+    "The host decides when confirmation succeeds and closes the dialog; do not automatically run a business operation or add demo Toast behavior."
+  ],
+  "files": [
+    "ConfirmationDialog.tsx",
+    "Button.tsx",
+    "styles.css",
+    "assets/dialog-close.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/dialog-close.svg.d.ts"
+  ]
+}

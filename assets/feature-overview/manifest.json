@@ -1,0 +1,114 @@
+{
+  "fileKey": "LLvI9vd66VLNuAltAWJFJw",
+  "nodeId": "51:213896",
+  "assets": [
+    {
+      "file": "check-growth.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/11564.svg"
+    },
+    {
+      "file": "perplexity.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/12658.svg"
+    },
+    {
+      "file": "medium.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/99201.svg"
+    },
+    {
+      "file": "analysis.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/ecbc6.svg"
+    },
+    {
+      "file": "growth.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/dbd5b.svg"
+    },
+    {
+      "file": "engage.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/7ac62.svg"
+    },
+    {
+      "file": "publish.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/65a63.svg"
+    },
+    {
+      "file": "credits.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/756ac.svg"
+    },
+    {
+      "file": "check-analysis.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/686ca.svg"
+    },
+    {
+      "file": "check-engage.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/a6a9a.svg"
+    },
+    {
+      "file": "check-publish.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/42a01.svg"
+    },
+    {
+      "file": "info.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/282bd.svg"
+    },
+    {
+      "file": "auto-publish.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/b53bb.svg"
+    },
+    {
+      "file": "schedule.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/96c62.svg"
+    },
+    {
+      "file": "manual-publish.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/b55f2.svg"
+    },
+    {
+      "file": "x.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/4ca77.svg"
+    },
+    {
+      "file": "reddit.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/49ee3.svg"
+    },
+    {
+      "file": "linkedin.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/286ae.svg"
+    },
+    {
+      "file": "dev.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/777b9.svg"
+    },
+    {
+      "file": "hackernews.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/96cd6.svg"
+    },
+    {
+      "file": "quora.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/03d8e.svg"
+    },
+    {
+      "file": "openai.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/a7443.svg"
+    },
+    {
+      "file": "claude.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/4f1c8.svg"
+    },
+    {
+      "file": "grok.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/66e8f.svg"
+    },
+    {
+      "file": "frequency.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/273be.svg"
+    },
+    {
+      "file": "gemini-mask.svg",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/152f4.svg"
+    },
+    {
+      "file": "gemini-gradient.png",
+      "source": "https://www.figma.com/api/mcp/asset/6dad168e-e5a1-4ef1-acb9-c7ac6423f117/d2138.png"
+    }
+  ]
+}

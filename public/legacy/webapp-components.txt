@@ -14,10 +14,15 @@ const stemuiAssets = {
   Engage: 'nav-engage', 'Signal Feed': 'nav-signal-feed',
   'Keywords & Accounts': 'nav-keywords', Replies: 'nav-replies', Post: 'nav-post',
   Calendar: 'nav-calendar', Channels: 'nav-channels', Media: 'nav-media',
-  Verify: 'nav-verify', Connection: 'nav-connection'
+  Verify: 'nav-verify', Compare: 'sidebar-v6:compare',
+  'Google Search Data': 'sidebar-v6:google', 'Bing Webmaster Data': 'sidebar-v6:bing',
+  Connection: 'nav-connection'
 };
 function StemUIAsset({ name, size = 16, alt = '' }) {
-  return <img src={`../../assets/stemui/${name}.svg`} alt={alt} width={size} height={size} style={{ display: 'block', objectFit: 'contain', flexShrink: 0 }} />;
+  const src = name?.startsWith('sidebar-v6:')
+    ? `../../assets/sidebar-v6/${name.slice('sidebar-v6:'.length)}.svg`
+    : `../../assets/stemui/${name}.svg`;
+  return <img src={src} alt={alt} width={size} height={size} style={{ display: 'block', objectFit: 'contain', flexShrink: 0 }} />;
 }
 
 // ─── App Header ──────────────────────────────────────────────────
@@ -54,11 +59,14 @@ function Sidebar({ activeItem = 'Overview', credits = 6840 }) {
     { label: 'Channels', child: true },
     { label: 'Media', child: true },
     { label: 'Verify' },
+    { label: 'Compare', child: true },
+    { label: 'Google Search Data', child: true },
+    { label: 'Bing Webmaster Data', child: true },
     { label: 'Connection' },
   ];
   return (
     <div style={{ width: 224, height: '100%', background: '#fff', borderRight: '1px solid rgba(17,17,17,0.05)', display: 'flex', flexDirection: 'column', padding: '16px 8px 10px', flexShrink: 0 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', border: '1px solid rgba(17,17,17,.06)', borderRadius: 12 }}><LogoMark size={32} /><div><strong style={{ display: 'block', fontSize: 13 }}>aisee</strong><small style={{ color: 'rgba(17,17,17,.5)' }}>Last Updated: Aug 12, 2026</small></div></div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', border: '1px solid rgba(17,17,17,.06)', borderRadius: 12 }}><LogoMark size={32} /><div><strong style={{ display: 'block', fontSize: 13 }}>aisee</strong><small style={{ color: 'rgba(17,17,17,.5)' }}>Last Updated: Sep 15, 2026</small></div></div>
       <div style={{ height: 1, margin: '16px 0', background: 'rgba(17,17,17,.06)' }} />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 1, overflow: 'auto' }}>
         {navItems.map(({ label, group, child }) => <React.Fragment key={label}>
@@ -71,7 +79,7 @@ function Sidebar({ activeItem = 'Overview', credits = 6840 }) {
           <StemUIAsset name="avatar-user" size={32} alt="User avatar" />
           <div>
             <div style={{ fontSize: 12, fontWeight: 500 }}>projects5@gmail.com</div>
-            <div style={{ fontSize: 11, color: 'rgba(17,17,17,0.6)' }}>Growth-Loop Plan</div>
+            <div style={{ fontSize: 11, color: 'rgba(17,17,17,0.6)' }}>Growth Loop Plan</div>
           </div>
         </div>
         <strong style={{ fontSize: 13 }}>✦ {credits} Credits</strong><div style={{ height: 6, marginTop: 7, borderRadius: 999, background: '#f0f0f0' }}><div style={{ width: '92%', height: '100%', borderRadius: 999, background: '#CFFF29' }} /></div>

@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import { Children, type CSSProperties, type HTMLAttributes, type ReactNode } from 'react';
 
 export interface StatCardProps extends HTMLAttributes<HTMLElement> {
   label: ReactNode;
@@ -9,11 +9,14 @@ export interface StatCardProps extends HTMLAttributes<HTMLElement> {
   delta?: ReactNode;
   deltaTone?: 'positive' | 'negative' | 'neutral';
   helper?: ReactNode;
+  /** Compact information strip cell. It remains read-only. */
+  variant?: 'default' | 'compact';
 }
 
 export interface StatCardGroupProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
   title?: ReactNode;
   children: ReactNode;
+  variant?: 'default' | 'compact';
 }
 
 export function StatCard({
@@ -24,10 +27,11 @@ export function StatCard({
   delta,
   deltaTone = 'neutral',
   helper,
+  variant = 'default',
   className = '',
   ...props
 }: StatCardProps) {
-  return <article {...props} className={`aisee-stat-card ${className}`.trim()}>
+  return <article {...props} className={`aisee-stat-card${variant === 'compact' ? ' aisee-stat-card--compact' : ''} ${className}`.trim()}>
     <div className="aisee-stat-card__metric">
       <strong>{value}</strong>
       {unit && <span className="aisee-stat-card__unit">{unit}</span>}
@@ -41,9 +45,9 @@ export function StatCard({
   </article>;
 }
 
-export function StatCardGroup({ title, children, className = '', ...props }: StatCardGroupProps) {
-  return <section {...props} className={`aisee-stat-card-group ${className}`.trim()}>
+export function StatCardGroup({ title, children, variant = 'default', className = '', ...props }: StatCardGroupProps) {
+  return <section {...props} className={`aisee-stat-card-group${variant === 'compact' ? ' aisee-stat-card-group--compact' : ''} ${className}`.trim()}>
     {title && <h2 className="aisee-stat-card-group__title">{title}</h2>}
-    <div className="aisee-stat-card-group__grid">{children}</div>
+    <div className="aisee-stat-card-group__grid" style={variant === 'compact' ? { '--aisee-stat-columns': Math.max(1, Children.toArray(children).length) } as CSSProperties : undefined}>{children}</div>
   </section>;
 }

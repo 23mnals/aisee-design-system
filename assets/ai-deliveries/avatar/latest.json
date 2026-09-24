@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 3,
+  "name": "Avatar",
+  "page": "preview/avatar.html",
+  "version": "45529a9f979ba142",
+  "delivery": "./releases/45529a9f979ba142/ready.md",
+  "installer": "./releases/45529a9f979ba142/install.cjs",
+  "installerSha256": "ea600a112807edc4fcea5869a553d45e018c62e462a940ec19b8c92371bbb749",
+  "configuration": {
+    "props": {
+      "Avatar": [
+        "kind",
+        "index",
+        "animated"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+  ],
+  "files": [
+    "Avatar.tsx",
+    "styles.css",
+    "assets/avatar/dapp-avatar-set.svg",
+    "assets/avatar/platform-x-mark.svg",
+    "assets/avatar/social-avatar-set.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/avatar/dapp-avatar-set.svg.d.ts",
+    "assets/avatar/platform-x-mark.svg.d.ts",
+    "assets/avatar/social-avatar-set.svg.d.ts"
+  ]
+}

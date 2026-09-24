@@ -1,0 +1,127 @@
+@import url('../fonts/karla.css');
+
+:root {
+  --aisee-common-page: #fafafa;
+  --aisee-common-text: #111111;
+  --aisee-common-line: rgba(17, 17, 17, 0.05);
+}
+
+html {
+  background: var(--aisee-common-page);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+  padding: 24px !important;
+  overflow-x: hidden;
+  background: var(--aisee-common-page);
+  color: var(--aisee-common-text);
+  font-family: Karla, Arial, sans-serif;
+  display: block !important;
+}
+
+.aisee-common-document {
+  width: 640px !important;
+  max-width: 100% !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.aisee-common-intro {
+  margin-bottom: 32px;
+}
+
+.aisee-common-intro h1,
+.aisee-common-section-title {
+  margin: 0;
+  color: var(--aisee-common-text);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.aisee-common-intro p {
+  margin: 8px 0 0;
+  color: rgba(17, 17, 17, 0.6);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.aisee-common-section-title {
+  margin-bottom: 8px;
+}
+
+.aisee-common-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--aisee-common-line);
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 24px;
+}
+
+.aisee-common-card > main,
+.aisee-common-card > #root,
+.aisee-common-card > #preview-fallback,
+.aisee-common-card > .shell,
+.aisee-common-card > .page,
+.aisee-common-card > .wrap,
+.aisee-common-card > .row,
+.aisee-common-card > .hero,
+.aisee-common-card > .section {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.aisee-common-card .palette {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.aisee-common-card .theme-grid,
+.aisee-common-card .rule-grid,
+.aisee-common-card .type-card {
+  grid-template-columns: 1fr !important;
+}
+
+.aisee-common-card .type-card > div {
+  border-right: 0 !important;
+  border-bottom: 1px solid var(--aisee-common-line);
+}
+
+.aisee-common-card .type-card > div:last-child {
+  border-bottom: 0 !important;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+p,
+li,
+td,
+th {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  body {
+    padding: 16px !important;
+  }
+
+  .aisee-common-card {
+    padding: 16px;
+  }
+}

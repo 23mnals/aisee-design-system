@@ -1,0 +1,53 @@
+body{margin:0;background:var(--aisee-color-page);color:var(--aisee-color-black);font:400 14px/20px Karla,Arial,sans-serif}
+.sidebar-demo h1,.sidebar-demo h2{margin:0;font:500 16px/24px Karla,sans-serif}
+.sidebar-demo>.intro{margin:8px 0 32px;color:var(--aisee-color-text-muted)}
+.sidebar-demo-heading{position:relative;z-index:40;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:32px 0 12px}
+.sidebar-demo-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-left:auto}
+.sidebar-demo-controls .aisee-dropdown{width:150px}
+.sidebar-demo-controls .aisee-dropdown:first-child{width:180px}
+.sidebar-demo-viewport{position:relative;isolation:isolate;border:1px solid var(--aisee-color-border);border-radius:12px;overflow-x:auto}
+.sidebar-demo-viewport:focus-visible{outline:2px solid var(--aisee-color-black);outline-offset:2px}
+.sidebar-demo .aisee-sidebar-layout{min-width:560px;min-height:920px}
+.sidebar-demo .aisee-sidebar-layout__content{display:flex;flex-direction:column}
+.sidebar-demo .aisee-sidebar__header{padding-bottom:8px;border-bottom:1px solid var(--aisee-color-border)}
+.sidebar-demo .aisee-sidebar--collapsed.aisee-sidebar--toggle-inside .aisee-sidebar__header{min-height:41px}
+.sidebar-demo .aisee-sidebar__nav{padding-top:0}
+.sidebar-demo-header{display:grid;gap:8px}
+.sidebar-demo-project{display:flex;min-width:0;height:32px;align-items:center;gap:8px;border:1px solid var(--aisee-color-border);border-radius:8px;padding:4px 8px;background:var(--aisee-color-white)}
+.sidebar-demo-project img{width:18px;height:18px;object-fit:contain}
+.sidebar-demo-project span{font-size:14px;font-weight:500}
+.sidebar-demo-header small{color:var(--aisee-color-text-muted);font-size:10px;line-height:14px;white-space:nowrap}
+.sidebar-demo-account{display:flex;gap:8px;align-items:center;padding:8px;border-radius:8px;background:var(--aisee-color-page)}
+.sidebar-demo-account-copy{display:grid;min-width:0;font-size:12px;line-height:16px}
+.sidebar-demo-account-copy strong{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sidebar-demo-account-copy span{color:var(--aisee-color-text-muted)}
+.sidebar-demo .aisee-sidebar--collapsed .sidebar-demo-account{padding:0;background:transparent}
+.sidebar-demo .aisee-sidebar--collapsed .sidebar-demo-account-copy{display:none}
+.sidebar-demo-new{display:inline-grid;min-width:31px;height:16px;padding:0 6px;border-radius:999px;background:#fbd1ef;color:#82006c;font-size:10px;font-weight:500;line-height:16px;place-items:center}
+.sidebar-demo-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--aisee-color-analysis)}
+.sidebar-demo .aisee-tree-nav__icon-mask[style*="nav-engage"],.sidebar-demo .aisee-sidebar__icon-mask[style*="nav-engage"]{width:15px;height:15px}
+.sidebar-demo-workspace{flex:1;min-width:0}
+.sidebar-demo .aisee-sidebar-layout__header{display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 16px;border-bottom:1px solid var(--aisee-color-border);background:var(--aisee-color-white);border-radius:0}
+.sidebar-demo .aisee-sidebar-layout__header strong{font-weight:500;font-size:13px}
+.sidebar-demo .aisee-sidebar-layout__header>span{margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--aisee-color-text-muted);font-size:11px;white-space:nowrap}
+.sidebar-demo .aisee-sidebar-layout--inset .sidebar-demo-workspace{border-radius:16px}
+.sidebar-demo-body{padding:16px}
+.sidebar-demo-body article{padding:16px;border:1px solid var(--aisee-color-border);border-radius:12px;background:var(--aisee-color-white)}
+.sidebar-demo-body h3{margin:0 0 8px;font-size:14px;font-weight:500}
+.sidebar-demo-body p{margin:0;color:var(--aisee-color-text-muted);font-size:12px;line-height:18px}
+.sidebar-demo-caption{margin:12px 0 0;color:var(--aisee-color-text-muted);font-size:12px;line-height:18px}
+.sidebar-demo>h2{margin:32px 0 8px}
+.sidebar-demo-notes{padding:24px;border:1px solid var(--aisee-color-border);border-radius:12px;background:var(--aisee-color-white);color:var(--aisee-color-text-muted)}
+.sidebar-demo-notes ul{display:grid;gap:8px;margin:0;padding-left:18px}
+.sidebar-demo-notes p{margin:0 0 12px}
+.sidebar-demo-notes pre{overflow:auto;padding:12px;border-radius:8px;background:var(--aisee-color-page);font:400 12px/20px Karla,sans-serif}
+
+/* The floating shell already owns the 16px outer and inter-column gutters. */
+.sidebar-demo .aisee-sidebar-layout--floating .aisee-sidebar-layout__header{background:transparent}
+.sidebar-demo .aisee-sidebar-layout--floating .sidebar-demo-body{padding-inline:0}
+
+.sidebar-demo .aisee-sidebar-layout--inset .aisee-sidebar-layout__header{border:0;border-bottom:1px solid var(--aisee-color-border);border-radius:0;background:transparent}
+
+.sidebar-demo .aisee-sidebar-layout--topbar{height:920px}
+.sidebar-demo-controls:has([aria-label="Sidebar reveal"]) .aisee-dropdown{width:180px}
+.sidebar-demo .aisee-sidebar-layout--topbar>.aisee-sidebar-layout__content{display:contents}

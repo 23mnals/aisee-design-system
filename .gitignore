@@ -7,3 +7,15 @@ site/
 !.env.example
 design-sources/figma/*.fig
 design-sources/figma/*.figma
+artifacts/copy-ai-audit/
+
+artifacts/packages/
+
+artifacts/production-delivery-audit/
+artifacts/production-delivery-runtime/
+
+# Local verification and unpublished intermediate delivery builds
+artifacts/thinking-runtime/
+artifacts/thinking-runtime-source/
+artifacts/unpublished-deliveries/
+artifacts/notification-short-prompt.txt

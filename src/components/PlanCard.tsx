@@ -1,4 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
+import { SubscriptionPlanCard, type SubscriptionPlanCardProps } from './SubscriptionPlanCard';
+export type { SubscriptionPlanCardProps } from './SubscriptionPlanCard';
 
 export type PlanCardAction = 'current' | 'upgrade' | 'primary';
 
@@ -14,7 +16,8 @@ export interface PlanCardSection {
   items: PlanCardFeature[];
 }
 
-export interface PlanCardProps {
+export interface PlanComparisonCardProps {
+  variant?: 'comparison';
   name: string;
   audience: string;
   description: string;
@@ -31,11 +34,18 @@ export interface PlanCardProps {
   style?: CSSProperties;
 }
 
-/** Current Figma v5.4 Upgrade Plan card. The former legacy PlanCard remains in components/PlanCard. */
-export function PlanCard({
+export type PlanCardProps = PlanComparisonCardProps | SubscriptionPlanCardProps;
+
+/** Subscription confirmation is current; comparison remains compatible. */
+export function PlanCard(props: PlanCardProps) {
+  if (props.variant === 'subscription') return <SubscriptionPlanCard {...props}/>;
+  return <PlanComparisonCard {...props}/>;
+}
+
+function PlanComparisonCard({
   name, audience, description, price, priceUnit = '/ Month', credits, icon,
   badge, actionLabel, action = 'upgrade', sections, onAction, className = '', style,
-}: PlanCardProps) {
+}: PlanComparisonCardProps) {
   return (
     <article className={`aisee-plan-card ${className}`.trim()} style={style}>
       {badge ? <span className="aisee-plan-card__badge">{badge}</span> : null}

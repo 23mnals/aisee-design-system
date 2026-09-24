@@ -6,10 +6,18 @@ aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System
 
 | Part | 内容 | 入口 |
 |---|---|---|
-| **README** | 使用方法、版本、协作与资源状态 | 本文件、[`CONTRIBUTING.md`](CONTRIBUTING.md)、[`CHANGELOG.md`](CHANGELOG.md) |
-| **Brand** | 官网设计语言、颜色、Karla + Gotu 字体、Logo、插画与资产 | [`brand/`](brand/) |
-| **Components** | 旧系统组件、动画图标、Engage 业务组件与 v6 React 基础组件 | [`components/`](components/) |
-| **UI Kits — Webapp** | 仅 Karla 的 dApp foundations、layouts、patterns、screens 与交互 UI Kit | [`ui_kits/webapp/`](ui_kits/webapp/) |
+| **README** | 三条使用路径、版本边界、协作规则与资源状态 | 本文件、[`CONTRIBUTING.md`](CONTRIBUTING.md)、[`CHANGELOG.md`](CHANGELOG.md) |
+| **Brand** | Foundations 保存 AISEE 基础规范；Explorations 保存 AI 参考与探索稿 | [`brand/`](brand/) |
+| **Components** | 可独立复用的组件及其状态、动画、API 和 Copy for AI | [`components/`](components/) |
+| **UI Kits — Webapp** | 多个组件组成的模式、页面示例和交互 Demo | [`ui_kits/webapp/`](ui_kits/webapp/) |
+
+### 三条使用路径
+
+1. **让 AI 按规则出图**：必须同时提供真实 brief、目标页面说明或参考图。当前缺少这些输入时标记为待补，不提供一个看似可用的空入口。
+2. **让设计师探索方向**：从 Brand 的 **Explorations** 查看 AI 生成的参考稿。这些内容仅供灵感参考，不代表 AISEE 已确认的实际产品页面，也不是实施规范。
+3. **让开发人员接入组件**：从 Components 选择 `Current` 组件，通过 Copy for AI 接入生产源码、必要样式、状态与动画。
+
+UI Kits 中的 `Current` 只表示该组件组合 Demo 正在维护，不表示它已经成为确认的实际产品页面。真实产品设计始终以对应功能的最新 Figma 为准；未核对 Figma 的示例不得作为产品实施依据。
 
 原有历史页面与资源均保留，包括 Brand previews、animated icons、Engage、Analysis、Post Agent、Billing、Pricing、My Account、教程、screenshots 和 uploads。为缩短仓库根目录，旧版 HTML / 文档已集中到 [`legacy/`](legacy/)；没有重复项的旧资源没有删除。
 
@@ -35,19 +43,64 @@ npm run preview:local
 - v6 Foundations 与 Components 当前规范页
 - 所有保留的旧版 HTML 预览，并以 `Legacy` 标识（页面文件位于 `legacy/pages/`）
 - 目录搜索、内嵌预览、独立打开和页面链接复制
+- README 全页 English / 中文切换
+- 每个 Current 组件详情页的 `Copy for AI`，用于复制明确的生产组件接入指令与最新交付入口
 - 桌面端与移动端响应式浏览
+
+## 首次接入：开发者与第三方必读
+
+**当前所有已登记的 Current 组件统一使用生产源码交付。** Copy for AI 默认 Apply AISEE design，更新目标组件视觉与动效；Add motion only 保留现有静态外观，只加缺失动效。两模式复用现有 UI 库、保护业务状态与交互，只允许修改目标组件及专属局部样式。页面、文案、业务 hook、API、请求层和配置等范围外改动，必须先列具体文件、原因、最小 diff 和影响，等待用户确认。默认不携带预览参数，只有明确选择目标变体才附加。先检查真实目标（shadcn 同时检查 components.json、alias 与 components/ui），不建平行组件、不导入完整交付 CSS；参考源码仅在项目外临时目录检查，安装器不会自动适配宿主。详见 [生产交付契约](docs/PRODUCTION_DELIVERY.md) 和 [两种完整提示词](docs/TOGGLE_COPY_AI.md)。
+
+完整步骤见 [第三方接入指南](docs/GETTING_STARTED.md)：获取与授权、环境准备、已安装 / 未安装 / 源码 / 非 React 四类接入、完整 Tooltip 用例、字体和资源、SSR、常见错误、版本更新及交付验收。当前仓库标记 private / UNLICENSED，不提供已验证的公共 npm 安装入口。
+
+提供方在本仓库运行 `npm ci`、`npm run pack:local`；接收方把生成的包放入产品 `vendor/`，执行 `npm install ./vendor/aisee-design-system-1.0.0.tgz`（文件名随实际版本调整），再在应用入口导入 `@aisee/design-system/styles.css`。这是整库接入的备选方式，单组件 Copy for AI 不需要这一步。
+
+## 非开发人员如何使用组件
+
+不需要把整套 Design System Demo 交给 AI，也不需要自己从 HTML 中寻找 CSS。单组件任务按以下方式使用：
+
+1. 在门户的 **Components** 中打开需要的 `Current` 组件，先查看页面里的状态、动画和使用说明。
+2. 选择 **Apply AISEE design** 或 **Add motion only**，再点击右上角双星图标的 **Copy for AI**。默认无特定变体；需要指定时，先调整预览，再在复制菜单的 Target variant 区明确选择一项。仅附加该项允许交付的参数，修改预览会清除旧选择。
+3. 把复制内容连同目标页面、真实文案、真实数据和预期行为一起发给 AI。所有组件均无需额外附件或原仓库权限；必要组件资源由生产清单交付，演示文案、业务数据和展示用资源不会迁入产品。
+4. 生成后对照 Current Demo 验收适用的 default、hover、focus、disabled、loading、empty、响应式与无障碍状态。
+
+`Open HTML` 适合需要查看完整渲染实现或源码结构的开发者和 AI。`Overview` 与 `Legacy` 页面不会显示 `Copy for AI`，避免把汇总页或历史样式误当成单个 Current 组件规范。
 
 ## 交给其他 AI 平台
 
 单独上传一个 HTML 时，其他 AI 通常可以读取其中直接内嵌的文字、结构、CSS 和脚本，但不一定会执行 JavaScript，也不一定能访问相对链接的字体、图片、组件子页或 React 源码。因此，**能读到 HTML 不代表会自动按 demo 精确实现**。
 
-推荐交付公开预览 URL 或完整仓库/ZIP，并同时提供 [`docs/AI_HANDOFF.md`](docs/AI_HANDOFF.md)、[`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 与 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md)。主门户 HTML 已内嵌 `#aisee-ai-contract` JSON，供支持源码解析的平台读取来源优先级和关键规则。
+只使用一个组件时，优先复制该 Current 组件页的 `Copy for AI`，再补充目标页面需求。需要实现完整页面或跨多个组件时，推荐交付公开预览 URL 或完整仓库/ZIP，并同时提供 [`docs/AI_HANDOFF.md`](docs/AI_HANDOFF.md)、[`docs/TEAM_DECISIONS.md`](docs/TEAM_DECISIONS.md) 与 [`docs/aisee-dapp-design.v6.md`](docs/aisee-dapp-design.v6.md)。主门户 HTML 已内嵌 `#aisee-ai-contract` JSON，供支持源码解析的平台读取来源优先级和关键规则。
 
-GitHub 仓库启用 Pages 后，每次合并到 `main` 都会自动发布同一个入口页，团队成员只需要保存 Pages URL。也可以本地生成发布目录：
+GitHub Pages 由共享开发分支 `ai/desktop/design-system-current` 自动发布；每次推送先运行完整检查，通过后更新同一个公开入口。`main` 保留为经过 PR 确认的正式稳定代码，团队成员只需要保存 Pages URL。也可以本地生成发布目录：
 
 ```bash
 npm run site
 ```
+
+## 批量验证 Copy for AI
+
+运行 `npm run audit:copy-ai`，打开 [批量检查报告](artifacts/copy-ai-audit/report.html)。报告覆盖所有已登记的复制入口和受控配置案例（实际数量见每次生成的报告），检查配置导出、真实组件参数类型、复制处理与切页保护；附各案例提示词和待验收清单。新增组件 / 变量时同步扩展案例。每次推送的 CI 也会运行并保存 `copy-ai-audit` 报告。
+
+**自动检查通过不代表 AI 生成页面已经通过验收。** 浏览器交互、截图对照及实际生成结果另行验证；报告明确标为未执行。批量验收方法和可直接交给 AI 的验收指令见 [Copy for AI 验收指南](docs/COPY_AI_VALIDATION.md)。
+
+## AI 选择变量与复用组件
+
+- **默认无变体；明确选择才复制配置**适用于所有 Current 组件。调整预览后需在 Target variant 菜单明确选定一项，修改预览会清除旧选择；普通搜索词、表单内容和演示数据不属于设计配置。纯展示页不声称选择了某个示例。
+- 给 AI 目标截图或可访问的页面 / Figma 链接后，先按用途、结构和交互匹配 Current 组件；有合适组件就直接复用，再选择对应变量。截图可判断可见布局，不能确定 hover、收起方式、加载状态等隐藏行为；链接不可访问时说明缺失，不自行猜测。
+- 选择顺序：用户明确指定（包括复制的配置）→ 目标设计 → 产品已确定的统一配置 → 组件文档默认值。存在冲突时指出差异，不能随机挑选。
+- **这也是直接把整个设计系统交给 AI 时的规则**，不依赖 Copy for AI 入口。同一产品沿用已有配置；单次预览选择不会自动成为全产品默认值。生成时记录所用组件和变量供后续页面沿用。
+- 规则与代码默认值可以减少结果差异，但无法保证未读取规范的外部 AI 自动遵守；交付时应包含 README 和 AI_HANDOFF。详细范围与接入方式见 [组件配置契约](docs/COMPONENT_CONFIGURATION.md)。
+
+## 分区卡片规则
+
+复杂描边卡片只用于外层，任何场景下的内层卡片均简化为浅灰填充或白底浅描边，不重复白色内框和阴影。已有白色 Card 保留；表单、总览和创建流程使用 section 变体：16px 圆角 / 内距、5px 白色内边框、浅色内容底，标题 Karla 16px / 500。内部复用 Input、Textarea、Dropdown、Checkbox、Toggle 和 StatCard，支持 1–4 列自适应布局；卡片不接管业务表单或发布逻辑。详见 [分区卡片交付说明](docs/SECTION_CARDS.md)。
+
+功能权益展示可使用 FeatureOverview，底层复用 Card divided、FeatureList 与 StatCardGroup compact。外框统一为 24px 白色卡片，内部共享分隔线；平台图标条暂为组合示例，不独立导出。详见 [功能总览交付说明](docs/FEATURE_OVERVIEW.md)。
+
+## Button 图标规则
+
+Button 支持显示 / 隐藏图标。一般操作图标在左，前进箭头与 AI 生成标识在右；统一使用 16px 图标容器、6px 文字间距，关闭后不占位。单色图标随按钮 hover / focus 变色，多色原图保留颜色。
 
 ## 字体边界
 
@@ -56,18 +109,45 @@ npm run site
 
 旧历史文件如果仍内嵌其他字体定义，可继续用于追溯；进入现行组件或 UI Kit 时必须按以上边界升级。
 
+## 最近更新
+
+### 2026-09-24 · Copy for AI 工具栏精简
+
+- 复制入口收为单行按钮，当前模式直接显示在按钮内，与 Open HTML 对齐。
+- 模式与目标变体统一放入弹出菜单，去掉外露的原生下拉和重复说明。
+- 支持方向键、Esc 和点击外部关闭，复制成功继续清楚显示当前模式。
+
+### 2026-09-24 · 全组件 Copy for AI 规则同步
+
+- Toggle 验证后的规则统一用于全部已登记组件；提供 Apply AISEE design 与 Add motion only 两种模式，复制前后显示当前模式。
+- 默认不复制预览参数，只有明确选择目标变体后才附加；修改预览会清除旧选择。
+- 两种模式共享组件文件范围与业务保护，页面、hook、API、请求层和配置的必要改动仍需先确认。
+
+### 2026-09-24 · Toggle 接入范围保护
+
+- Toggle 的 Copy for AI 明确只修改目标组件与专属局部样式，读取页面不再意味着可以改页面。
+- 页面布局、文案、业务逻辑、hook、API、请求层和项目配置均需保留；范围外改动先展示最小方案并等待确认。
+- 动画不再成为提前切换业务状态或修复网络、缓存问题的理由，提供完整提示词供跨项目复测。
+
+
 ## v6 主要更新
 
 - Analysis = lime `#CFFF29`；Post Agent / Engage = yellow `#FFE253`
-- Sidebar 采用纵向功能分组：Growth Loop 包含 Analysis / Growth / Engage / Post / Verify；Engage 子项为 Signal Feed / Keywords & Accounts / Replies
+- Sidebar 采用纵向功能分组：Growth Loop 包含 Analysis / Growth / Engage / Post / Verify；Engage 子项为 Signal Feed / Keywords & Accounts / Replies；Verify 子项为 Compare / Google Search Data / Bing Webmaster Data
 - Header 70px；Sidebar 展开 224px、可收起至 58px（收起态仅显示 icon）；主内容 padding 16px
 - 页面背景 `#FAFAFA`，卡片 `#FFFFFF`，静态描边统一 5% 黑
 - 所有弹窗标题统一 Karla 20px / 500（包括二次确认）
-- Automation 属于 WORKFLOWS 分组，不归入 INTEGRATIONS
-- PlanCard 新增 v5.4 Upgrade Plan 当前版本，旧套餐卡继续作为 Legacy 保留
+- Automation 属于 WORKFLOWS 分组；Google Search Data 与 Bing Webmaster Data 归入 Verify，不再单列 INTEGRATIONS
+- PlanCard 当前展示单套餐订阅确认；此前 v5.4 三档比较与 Legacy 套餐卡保留供追溯
 - Figma 对齐 Toggle、Modal footer 和 Engage v5 页面规则
 - 44 个元数据颜色与 46 个语义颜色由 JSON 自动生成 CSS；旧变量通过兼容 alias 保留
-- Current 组件新增 Checkbox、Tooltip、Toast、Table、Stat Card、Chart、Score Gauge；Dropdown 覆盖单选、多选、过滤和输入建议
+- Current 组件补齐 Avatar、Badge、Checkbox、Empty State、Steps、Tooltip / Toast、Notification、Table、Stat Card、Chart、Score Gauge、Credit Bar、Dropdown、Tag Input、Toggle Selection Group 与 Tree Nav；组件目录按分类内 A–Z 排列
+- Avatar 统一进入 Components：网站注册账号使用方形头像库，社媒头像缺失时使用圆形灰描边兜底库；Sidebar 等账号入口从组件库随机取值并保持稳定；Plan-generated Post 的平台 logo 只用虚线描边，Manual-create Post 只用实线描边
+- Credit Bar 覆盖 Subscription、Top-up、任一来源为 0 及两者都为 0；Empty State 的 `No report data` 表示暂无报告记录，主操作为添加产品 URL 并开始分析
+- Dropdown 覆盖单选、多选、过滤、输入建议、分组账号与带图标操作菜单等组合形态；Fluid Hover 使用缓存几何信息平滑跟随，行操作默认隐藏、在 hover / focus 时按需出现；Grouped account 提供 `Show icons` 开关；所有菜单作为浮层打开，不改变外围内容高度
+- Tree Nav 作为独立层级导航组件默认直接展示本地相关选项、子级引导线与叶子选中；只有需要自行命名分组时才使用父级展开。Sidebar Navigation 展开态组合 Tree Nav，并单独维护多分组、侧栏收起与浮层职责；SidebarLayout 支持 sidebar / muted / floating / inset / topbar，收起按钮 inside / outside 可独立组合
+- Checkbox 新选中时使用短促 bubble 扩散反馈，保留原有选中语义、键盘路径并遵循 reduced motion
+- README、组件页面、Overview、`Copy for AI` 与 `NEW` 标识随 Current 组件更新同步维护，方便用户识别新增内容并把同一套规则交给 AI；`NEW` 按台北时区计算，更新当天为第 1 天，第 8 天零点隐藏；有真实内容更新后重新显示 7 天，修改规则、刷新或重新构建不会续期
 
 完整迁移表见 [`docs/MIGRATION.md`](docs/MIGRATION.md)，资源状态见 [`docs/RESOURCE_INVENTORY.md`](docs/RESOURCE_INVENTORY.md)。
 

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 3,
+  "name": "FeatureOverview",
+  "page": "components/FeatureOverview/FeatureOverview.html",
+  "version": "94d848085f0bf3a9",
+  "delivery": "./releases/94d848085f0bf3a9/ready.md",
+  "installer": "./releases/94d848085f0bf3a9/install.cjs",
+  "installerSha256": "d1ccf6c6d2c8dd5b64d9339e75c25624499833ce3ca43f0344e67a70349b9f3f",
+  "configuration": {
+    "props": {
+      "CardGrid": [
+        "columns",
+        "divided"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+  ],
+  "files": [
+    "FeatureOverview.tsx",
+    "Card.tsx",
+    "FeatureList.tsx",
+    "styles.css",
+    "assets/feature-overview/check-analysis.svg",
+    "assets/feature-overview/check-engage.svg",
+    "assets/feature-overview/check-growth.svg",
+    "assets/feature-overview/check-publish.svg",
+    "assets/stemui/line_chevron-up.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/feature-overview/check-analysis.svg.d.ts",
+    "assets/feature-overview/check-engage.svg.d.ts",
+    "assets/feature-overview/check-growth.svg.d.ts",
+    "assets/feature-overview/check-publish.svg.d.ts",
+    "assets/stemui/line_chevron-up.svg.d.ts"
+  ]
+}

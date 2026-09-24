@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 3,
+  "name": "Input",
+  "page": "components/Input/Input.html",
+  "version": "21c7ccf5c9840736",
+  "delivery": "./releases/21c7ccf5c9840736/ready.md",
+  "installer": "./releases/21c7ccf5c9840736/install.cjs",
+  "installerSha256": "8cc072c2139d35310d6c996a953376d1be49c843eb8859214711f08b37f8a0ac",
+  "configuration": {
+    "props": {
+      "Input": [
+        "type"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "input",
+      "sourceFiles": [
+        "src/components/Input.tsx"
+      ],
+      "requiredCapabilities": [
+        "native input ref, value/defaultValue/onChange and form semantics",
+        "disabled, invalid, focus and accessible labeling"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+  ],
+  "files": [
+    "Input.tsx",
+    "styles.css",
+    "index.ts",
+    "styles.css.d.ts"
+  ]
+}

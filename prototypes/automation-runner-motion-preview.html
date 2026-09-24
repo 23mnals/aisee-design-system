@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Automation Runner · Motion directions</title>
+  <style>
+    @font-face{font-family:Karla;src:url('../assets/fonts/Karla-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
+    *{box-sizing:border-box}
+    body{margin:0;background:#fafafa;color:#111;font-family:Karla,Arial,sans-serif}
+    main{width:min(1040px,calc(100% - 32px));margin:0 auto;padding:48px 0 80px}
+    h1{margin:0;font-size:24px;font-weight:600;line-height:32px}
+    .intro{max-width:680px;margin:10px 0 32px;color:rgba(17,17,17,.58);font-size:14px;line-height:22px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .option{min-width:0;padding:20px;border:1px solid rgba(17,17,17,.06);border-radius:20px;background:#fff}
+    .option__head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:28px}
+    .option h2{margin:0;font-size:16px;font-weight:600;line-height:22px}
+    .option p{margin:4px 0 0;color:rgba(17,17,17,.52);font-size:13px;line-height:19px}
+    .tag{flex:0 0 auto;padding:4px 8px;border-radius:999px;background:#efffc0;font-size:11px;font-weight:600;line-height:16px}
+    .stage{display:grid;min-height:180px;place-items:center;border-radius:16px;background:#fafafa;overflow:hidden;cursor:default}
+    .runner{--eye-x:0px;--eye-y:0px;--lean:0deg;display:flex;width:min(332px,calc(100% - 24px));height:64px;align-items:center;gap:11px;padding:16px 12px;border-radius:16px;background:#111;color:#fff;box-shadow:0 10px 24px rgba(17,17,17,.14);transform-origin:78% 100%;will-change:transform}
+    .drag{display:grid;width:12px;height:32px;flex:0 0 12px;place-items:center;opacity:.45;font-size:13px}
+    .mascot{position:relative;width:27px;height:28px;flex:0 0 27px;overflow:hidden;border-radius:14px 14px 0 0;background:#c9fe12;transform-origin:50% 100%;will-change:transform}
+    .eye{position:absolute;top:5.6px;left:6px;width:15.323px;height:6.805px;overflow:hidden;background:#fff;-webkit-mask:url('../assets/automation-runner/eye-mask.svg') center/100% 100% no-repeat;mask:url('../assets/automation-runner/eye-mask.svg') center/100% 100% no-repeat;animation:blink 5.2s ease-in-out infinite;transform-origin:center}
+    .iris{position:absolute;top:1px;left:2.5px;width:6.9px;height:6.9px;border-radius:50%;background:#111;transform:translate(var(--eye-x),var(--eye-y));transition:transform 90ms linear}
+    .copy{display:flex;min-width:0;flex:1;flex-direction:column}
+    .copy strong{overflow:hidden;font-size:16px;font-weight:500;line-height:19px;white-space:nowrap;text-overflow:ellipsis}
+    .copy span{overflow:hidden;color:rgba(255,255,255,.75);font-size:12px;line-height:15px;white-space:nowrap;text-overflow:ellipsis}
+    .actions{display:flex;gap:8px;color:rgba(255,255,255,.5);font-size:16px}
+
+    /* A: movement is driven by the pointer, so there is no repeated shaking. */
+    [data-motion='lean'] .runner{transition:transform 260ms cubic-bezier(.2,.8,.2,1),box-shadow 260ms ease}
+    [data-motion='lean'].is-active .runner{transform:translateY(-3px) rotate(calc(var(--lean) * .22));box-shadow:0 15px 30px rgba(17,17,17,.17)}
+    [data-motion='lean'] .mascot{transition:transform 180ms cubic-bezier(.2,.9,.3,1.25)}
+    [data-motion='lean'].is-active .mascot{transform:translateX(calc(var(--eye-number) * 2px)) rotate(var(--lean))}
+    [data-motion='lean'].is-mascot-jelly .mascot{animation:curious-jelly 620ms cubic-bezier(.2,1.3,.3,1) both}
+
+    /* B: a slow lift and settle rather than a shake. */
+    [data-motion='breathe'] .runner,[data-motion='breathe'] .mascot{transition:transform 280ms ease}
+    [data-motion='breathe'].is-active .runner{animation:soft-breathe 1800ms ease-in-out infinite}
+    [data-motion='breathe'].is-active .mascot{animation:soft-look 1800ms ease-in-out infinite}
+
+    /* C: one spring nod on every pointer entrance. */
+    [data-motion='nod'].is-active .runner{animation:card-lift 540ms cubic-bezier(.2,1.15,.3,1) both}
+    [data-motion='nod'].is-active .mascot{animation:spring-nod 680ms cubic-bezier(.2,1.25,.3,1) both}
+
+    /* D: one compact squash-and-stretch response. */
+    [data-motion='jelly'].is-active .runner{animation:card-pop 520ms cubic-bezier(.2,1.2,.3,1) both}
+    [data-motion='jelly'].is-active .mascot{animation:jelly-pop 600ms cubic-bezier(.2,1.3,.3,1) both}
+
+    @keyframes blink{0%,43%,47%,100%{transform:scaleY(1)}45%{transform:scaleY(.06)}}
+    @keyframes curious-jelly{0%{transform:translateX(0) rotate(0) scale(1)}24%{transform:translateX(calc(var(--eye-number) * 1px)) translateY(2px) rotate(calc(var(--lean) * .35)) scale(1.1,.82)}50%{transform:translateX(calc(var(--eye-number) * 2.5px)) translateY(-3px) rotate(calc(var(--lean) * 1.2)) scale(.94,1.1)}74%{transform:translateX(calc(var(--eye-number) * 1.8px)) translateY(0) rotate(calc(var(--lean) * .82)) scale(1.025,.98)}100%{transform:translateX(calc(var(--eye-number) * 2px)) rotate(var(--lean)) scale(1)}}
+    @keyframes soft-breathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-3px) scale(1.008)}}
+    @keyframes soft-look{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-2px) rotate(2deg)}}
+    @keyframes card-lift{0%{transform:translateY(0)}42%{transform:translateY(-5px)}72%{transform:translateY(1px)}100%{transform:translateY(0)}}
+    @keyframes spring-nod{0%{transform:rotate(0) scaleY(1)}28%{transform:rotate(-9deg) scaleY(.94)}52%{transform:rotate(5deg) scaleY(1.04)}74%{transform:rotate(-2deg) scaleY(.985)}100%{transform:rotate(0) scaleY(1)}}
+    @keyframes card-pop{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-4px) scale(1.012,.985)}68%{transform:translateY(1px) scale(.997,1.008)}100%{transform:translateY(0) scale(1)}}
+    @keyframes jelly-pop{0%{transform:scale(1)}25%{transform:translateY(2px) scale(1.12,.78)}52%{transform:translateY(-4px) scale(.92,1.14)}74%{transform:translateY(1px) scale(1.04,.96)}100%{transform:scale(1)}}
+
+    .note{margin:28px 0 0;padding:16px;border-radius:12px;background:#fff;color:rgba(17,17,17,.62);font-size:13px;line-height:20px}
+    @media(max-width:760px){main{padding-top:28px}.grid{grid-template-columns:1fr}.option{padding:16px}}
+    @media(prefers-reduced-motion:reduce){.eye,.stage.is-active .runner,.stage.is-active .mascot{animation:none!important}.runner,.mascot,.iris{transition:none!important}}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Automation Runner · 小怪兽动效方向</h1>
+    <p class="intro">把鼠标移到每张卡片上体验。四个方案都保留眨眼和眼珠跟随；当前 Demo 不会被修改，选定后再同步。</p>
+    <section class="grid">
+      <article class="option">
+        <div class="option__head"><div><h2>A+D · 分区响应</h2><p>悬停卡片时方向探头；只有进入绿色小怪兽时软胶回弹。</p></div><span class="tag">融合方案</span></div>
+        <div class="stage" data-motion="lean"><div class="runner"><span class="drag">⠿</span><span class="mascot"><span class="eye"><span class="iris"></span></span></span><span class="copy"><strong>Automation running</strong><span>Keep one AISEE tab open</span></span><span class="actions">⌄　−　×</span></div></div>
+      </article>
+      <article class="option">
+        <div class="option__head"><div><h2>B · 轻微呼吸</h2><p>缓慢上下呼吸，节奏安静，不左右摇晃。</p></div></div>
+        <div class="stage" data-motion="breathe"><div class="runner"><span class="drag">⠿</span><span class="mascot"><span class="eye"><span class="iris"></span></span></span><span class="copy"><strong>Automation running</strong><span>Keep one AISEE tab open</span></span><span class="actions">⌄　−　×</span></div></div>
+      </article>
+      <article class="option">
+        <div class="option__head"><div><h2>C · 弹性点头</h2><p>每次进入只回应一次，点头后立即稳定。</p></div></div>
+        <div class="stage" data-motion="nod"><div class="runner"><span class="drag">⠿</span><span class="mascot"><span class="eye"><span class="iris"></span></span></span><span class="copy"><strong>Automation running</strong><span>Keep one AISEE tab open</span></span><span class="actions">⌄　−　×</span></div></div>
+      </article>
+      <article class="option">
+        <div class="option__head"><div><h2>D · 软胶回弹</h2><p>短促压扁再弹起，活泼但不会持续发抖。</p></div></div>
+        <div class="stage" data-motion="jelly"><div class="runner"><span class="drag">⠿</span><span class="mascot"><span class="eye"><span class="iris"></span></span></span><span class="copy"><strong>Automation running</strong><span>Keep one AISEE tab open</span></span><span class="actions">⌄　−　×</span></div></div>
+      </article>
+    </section>
+    <p class="note">A+D 把触发区域分开：卡片只使用 A，小怪兽本身才使用 D。回弹每次进入小怪兽时播放一次，不会循环。当前仍是独立预览，尚未同步正式 Demo。</p>
+  </main>
+  <script>
+    document.querySelectorAll('.stage').forEach(stage => {
+      const runner = stage.querySelector('.runner');
+      const mascot = stage.querySelector('.mascot');
+      const oneShot = ['nod','jelly'].includes(stage.dataset.motion);
+      stage.addEventListener('pointerenter', () => {
+        if (oneShot) { stage.classList.remove('is-active'); void stage.offsetWidth; }
+        stage.classList.add('is-active');
+      });
+      stage.addEventListener('pointermove', event => {
+        const box = runner.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, (event.clientX - (box.left + box.width / 2)) / (box.width / 2)));
+        const y = Math.max(-1, Math.min(1, (event.clientY - (box.top + box.height / 2)) / 70));
+        runner.style.setProperty('--eye-x', `${x * 2.3}px`);
+        runner.style.setProperty('--eye-y', `${y * 1.15}px`);
+        runner.style.setProperty('--eye-number', x.toFixed(3));
+        runner.style.setProperty('--lean', `${x * 6}deg`);
+      });
+      stage.addEventListener('pointerleave', () => {
+        stage.classList.remove('is-active');
+        stage.classList.remove('is-mascot-jelly');
+        runner.style.setProperty('--eye-x', '0px');
+        runner.style.setProperty('--eye-y', '0px');
+        runner.style.setProperty('--eye-number', '0');
+        runner.style.setProperty('--lean', '0deg');
+      });
+      if (stage.dataset.motion === 'lean') {
+        mascot.addEventListener('pointerenter', () => {
+          stage.classList.remove('is-mascot-jelly');
+          void mascot.offsetWidth;
+          stage.classList.add('is-mascot-jelly');
+        });
+        mascot.addEventListener('animationend', () => stage.classList.remove('is-mascot-jelly'));
+      }
+    });
+  </script>
+</body>
+</html>

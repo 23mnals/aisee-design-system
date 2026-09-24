@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 3,
+  "name": "TooltipToast",
+  "page": "components/TooltipToast/TooltipToast.html",
+  "version": "0f8b6436f11929ea",
+  "delivery": "./releases/0f8b6436f11929ea/ready.md",
+  "installer": "./releases/0f8b6436f11929ea/install.cjs",
+  "installerSha256": "e625b15ba75c8824d7fab94f039f1f69c31f21c2eae2a04a19dee02669c1eba8",
+  "configuration": {
+    "props": {
+      "Tooltip": [
+        "placement",
+        "animation"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    },
+    {
+      "name": "react-dom",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "tooltip",
+      "sourceFiles": [
+        "src/components/Tooltip.tsx"
+      ],
+      "requiredCapabilities": [
+        "hover/focus open, Escape dismiss and trigger ref",
+        "portal and collision-aware automatic placement with scroll/resize tracking",
+        "AISEE spring pointer tracking, directional entrance and separate positioning/motion transforms"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "live-region",
+      "sourceFiles": [
+        "src/components/Toast.tsx"
+      ],
+      "requiredCapabilities": [
+        "status/alert semantics, accessible dismissal and lifecycle cleanup",
+        "AISEE timer/progress and entry/exit motion hooks"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve Tooltip auto placement, viewport collision handling, hover/focus/Escape, subtle/playful spring motion and reduced motion.",
+    "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page."
+  ],
+  "files": [
+    "Tooltip.tsx",
+    "useTooltipSpring.ts",
+    "spring.ts",
+    "tooltip-position.ts",
+    "Toast.tsx",
+    "styles.css",
+    "assets/stemui/action-check.svg",
+    "assets/stemui/action-close.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/stemui/action-check.svg.d.ts",
+    "assets/stemui/action-close.svg.d.ts"
+  ]
+}

@@ -1,0 +1,69 @@
+import { useEffect, useRef, useState, type ButtonHTMLAttributes } from 'react';
+
+export interface NotificationBellProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
+  /** Current unread count. Values above 99 are displayed as 99+. */
+  count?: number;
+  /** Show a red dot instead of the numeric unread badge. */
+  dot?: boolean;
+}
+
+export function NotificationBell({ count = 0, dot = false, className = '', 'aria-label': ariaLabel, ...props }: NotificationBellProps) {
+  const normalizedCount = Math.max(0, Math.floor(count));
+  const previousCount = useRef(normalizedCount);
+  const [ringing, setRinging] = useState(false);
+  const [badgeRolling, setBadgeRolling] = useState(false);
+  const ringTimer = useRef<number | undefined>(undefined);
+
+  const playRing = (rollBadge = false) => {
+    window.clearTimeout(ringTimer.current);
+    setRinging(false);
+    setBadgeRolling(false);
+    requestAnimationFrame(() => {
+      setRinging(true);
+      setBadgeRolling(rollBadge);
+      ringTimer.current = window.setTimeout(() => {
+        setRinging(false);
+        setBadgeRolling(false);
+      }, 650);
+    });
+  };
+
+  useEffect(() => {
+    if (normalizedCount <= previousCount.current) {
+      previousCount.current = normalizedCount;
+      return;
+    }
+
+    previousCount.current = normalizedCount;
+    playRing(true);
+  }, [normalizedCount]);
+
+  useEffect(() => () => window.clearTimeout(ringTimer.current), []);
+
+  const hasUnread = normalizedCount > 0;
+  const label = ariaLabel ?? (hasUnread
+    ? `${normalizedCount} unread notification${normalizedCount === 1 ? '' : 's'}`
+    : 'No unread notifications');
+
+  return (
+    <button
+      {...props}
+      className={`aisee-notification-bell${ringing ? ' is-ringing' : ''}${badgeRolling ? ' is-badge-rolling' : ''}${className ? ` ${className}` : ''}`}
+      type={props.type ?? 'button'}
+      aria-label={label}
+      onPointerEnter={(event) => { props.onPointerEnter?.(event); playRing(false); }}
+      onFocus={(event) => { props.onFocus?.(event); playRing(false); }}
+    >
+      <svg className="aisee-notification-bell__icon" viewBox="0 0 16 16" aria-hidden="true">
+        <circle cx="8" cy="8" r="8" fill="#111111" />
+        <g className="aisee-notification-bell__glyph" fill="#fff">
+          <path d="M8.0001 12.8246C7.2123 12.8246 6.58586 12.4906 6.50183 11.785C6.49956 11.764 6.50183 11.7426 6.5084 11.7225C6.51496 11.7023 6.52573 11.6837 6.53993 11.668C6.5542 11.6523 6.57156 11.6398 6.591 11.6312C6.61036 11.6226 6.63136 11.6183 6.65253 11.6184H9.34566C9.36706 11.6182 9.3883 11.6227 9.40786 11.6314C9.42746 11.64 9.44493 11.6528 9.45926 11.6688C9.4735 11.6847 9.4842 11.7036 9.49063 11.724C9.497 11.7445 9.49903 11.766 9.49646 11.7873C9.40033 12.4797 8.77956 12.8246 8.0001 12.8246Z" />
+          <path d="M11.6937 11.0153H4.30608C3.85978 11.0153 3.62761 10.4499 3.88428 10.1484C4.49985 9.41939 4.93478 9.11296 4.93478 7.10283C4.93478 5.26083 5.90498 4.60723 6.70631 4.28836C6.76148 4.26536 6.81118 4.23109 6.85225 4.18773C6.89338 4.14439 6.92495 4.09289 6.94488 4.03659C7.08401 3.57483 7.47751 3.17529 7.99995 3.17529C8.52231 3.17529 8.91508 3.57483 9.05528 4.03696C9.07538 4.09323 9.10705 4.14469 9.14821 4.18806C9.18935 4.23143 9.23908 4.26573 9.29428 4.28873C10.0937 4.60686 11.0658 5.26159 11.0658 7.10323C11.0658 9.11336 11.5004 9.41979 12.1159 10.1488C12.3699 10.4499 12.1374 11.0153 11.6937 11.0153Z" />
+        </g>
+      </svg>
+      {hasUnread && (dot
+        ? <span className="aisee-notification-bell__dot" aria-hidden="true" />
+        : <span className="aisee-notification-bell__badge" aria-hidden="true">{normalizedCount > 99 ? '99+' : normalizedCount}</span>)}
+    </button>
+  );
+}

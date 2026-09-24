@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 3,
+  "name": "ToggleSelectionGroup",
+  "page": "components/ToggleSelectionGroup/ToggleSelectionGroup.html",
+  "version": "bf5f4acbb445a3a1",
+  "delivery": "./releases/bf5f4acbb445a3a1/ready.md",
+  "installer": "./releases/bf5f4acbb445a3a1/install.cjs",
+  "installerSha256": "5aeb4ce8e4da9ba70b1211b3d1c28de924c030333c137c137a5c570ec4c16f22",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "selection-group",
+      "sourceFiles": [
+        "src/components/ToggleSelectionGroup.tsx"
+      ],
+      "requiredCapabilities": [
+        "independent group enablement and preserved item selections",
+        "accessible labels, disabled handling and keyboard activation"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "checkbox",
+      "sourceFiles": [
+        "src/components/Checkbox.tsx"
+      ],
+      "requiredCapabilities": [
+        "checked, indeterminate and disabled state, form semantics",
+        "keyboard activation, focus and AISEE celebration state hooks"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "switch",
+      "sourceFiles": [
+        "src/components/Toggle.tsx"
+      ],
+      "requiredCapabilities": [
+        "checked/defaultChecked, disabled and change callback",
+        "keyboard activation and state hooks for AISEE motion"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+  ],
+  "files": [
+    "ToggleSelectionGroup.tsx",
+    "Checkbox.tsx",
+    "Toggle.tsx",
+    "styles.css",
+    "assets/toggle-selection-group/check.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/toggle-selection-group/check.svg.d.ts"
+  ]
+}

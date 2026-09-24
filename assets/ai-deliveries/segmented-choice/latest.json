@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 3,
+  "name": "SegmentedChoice",
+  "page": "components/SegmentedChoice/SegmentedChoice.html",
+  "version": "b675172f6159b615",
+  "delivery": "./releases/b675172f6159b615/ready.md",
+  "installer": "./releases/b675172f6159b615/install.cjs",
+  "installerSha256": "d0ed29fdd05475be04ea5011f1e03bc0e74c4fb707be0b6b9a45602fd0f11816",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    },
+    {
+      "name": "react-dom",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "single-choice",
+      "sourceFiles": [
+        "src/components/SegmentedChoice.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled selection, disabled choices and keyboard activation",
+        "AISEE option layout and selected/focus hooks"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "tooltip",
+      "sourceFiles": [
+        "src/components/Tooltip.tsx"
+      ],
+      "requiredCapabilities": [
+        "hover/focus open, Escape dismiss and trigger ref",
+        "portal and collision-aware automatic placement with scroll/resize tracking",
+        "AISEE spring pointer tracking, directional entrance and separate positioning/motion transforms"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+  ],
+  "files": [
+    "SegmentedChoice.tsx",
+    "Tooltip.tsx",
+    "useTooltipSpring.ts",
+    "spring.ts",
+    "tooltip-position.ts",
+    "styles.css",
+    "assets/segmented-choice/info.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/segmented-choice/info.svg.d.ts"
+  ]
+}

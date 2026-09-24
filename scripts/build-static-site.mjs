@@ -69,6 +69,13 @@ const logoAnimationSource = join(outputRoot, 'src/components/AiseeLogoAnimation.
 await mkdir(dirname(logoAnimationSource), { recursive: true });
 await copyFile(join(projectRoot, 'src/components/AiseeLogoAnimation.tsx'), logoAnimationSource);
 
+const sharedTokenStyles = join(outputRoot, 'src/tokens/tokens.css');
+await mkdir(dirname(sharedTokenStyles), { recursive: true });
+await copyFile(join(projectRoot, 'src/tokens/tokens.css'), sharedTokenStyles);
+const sharedTooltipStyles = join(outputRoot, 'src/styles/tooltip.css');
+await mkdir(dirname(sharedTooltipStyles), { recursive: true });
+await copyFile(join(projectRoot, 'src/styles/tooltip.css'), sharedTooltipStyles);
+
 const artifactCleanup = await cleanArtifactTree(outputRoot);
 if (artifactCleanup.danglingSymlinks.length) {
   console.log(`Removed ${artifactCleanup.danglingSymlinks.length} dangling symlink(s) from the Pages artifact:`);

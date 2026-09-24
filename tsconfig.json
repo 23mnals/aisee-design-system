@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "ES2022",
     "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,5 +20,22 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "docs", "components/Steps/Steps.demo.tsx", "components/Badge/Badge.demo.tsx", "components/EmptyState/EmptyState.demo.tsx", "components/ToggleSelectionGroup/ToggleSelectionGroup.demo.tsx"]
+  "include": [
+    "components/ThinkingIndicator/ThinkingIndicator.demo.tsx",
+    "components/ConfirmationDialog/ConfirmationDialog.demo.tsx",
+    "components/TooltipToast/TooltipToast.demo.tsx",
+    "components/SidebarNavigation/SidebarNavigation.demo.tsx",
+    "components/PlanCardCurrent/PlanCardCurrent.demo.tsx",
+    "components/FeatureOverview/FeatureOverview.demo.tsx",
+    "components/SegmentedChoice/SegmentedChoice.demo.tsx",
+    "components/Card/Card.demo.tsx",
+    "components/Button/Button.demo.tsx",
+    "components/Toggle/Toggle.demo.tsx",
+    "src",
+    "docs",
+    "components/Steps/Steps.demo.tsx",
+    "components/Badge/Badge.demo.tsx",
+    "components/EmptyState/EmptyState.demo.tsx",
+    "components/ToggleSelectionGroup/ToggleSelectionGroup.demo.tsx"
+  ]
 }

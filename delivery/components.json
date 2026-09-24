@@ -1,0 +1,2169 @@
+{
+  "schemaVersion": 1,
+  "publicBaseUrl": "https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/",
+  "components": [
+    {
+      "name": "Button",
+      "slug": "button",
+      "page": "components/Button/Button.html",
+      "entries": [
+        "src/components/Button.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Button.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-button"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Button/Button.html",
+        "components/Button/Button.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve two-sided hover/focus fill motion, icon slots and disabled behavior."
+      ],
+      "configuration": {
+        "props": {
+          "Button": [
+            "variant",
+            "size",
+            "showIcon",
+            "iconPosition"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/Button.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button semantics, disabled/type and keyboard activation",
+            "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "Input",
+      "slug": "input",
+      "page": "components/Input/Input.html",
+      "entries": [
+        "src/components/Input.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Input.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-field",
+            "aisee-input",
+            "aisee-textarea"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Input/Input.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "Input": [
+            "type"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "input",
+          "sourceFiles": [
+            "src/components/Input.tsx"
+          ],
+          "requiredCapabilities": [
+            "native input ref, value/defaultValue/onChange and form semantics",
+            "disabled, invalid, focus and accessible labeling"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "QuantityStepper",
+      "slug": "quantity-stepper",
+      "page": "components/QuantityStepper/QuantityStepper.html",
+      "entries": [
+        "src/components/QuantityStepper.tsx"
+      ],
+      "productionFiles": [
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-visually-hidden"
+          ]
+        },
+        "src/components/QuantityStepper.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-quantity-stepper"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/stemui/action-minus.svg",
+        "assets/stemui/action-plus.svg"
+      ],
+      "demoFiles": [
+        "components/QuantityStepper/QuantityStepper.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve keyboard editing, hold acceleration, min/max boundaries and numeric roll motion."
+      ],
+      "configuration": {
+        "props": {
+          "QuantityStepper": [
+            "inputMode"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "number-input",
+          "sourceFiles": [
+            "src/components/QuantityStepper.tsx"
+          ],
+          "requiredCapabilities": [
+            "editable and buttons-only modes, bounds and step",
+            "press-and-hold repeat and keyboard input without duplicate handlers"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "Checkbox",
+      "slug": "checkbox",
+      "page": "components/Checkbox/Checkbox.html",
+      "entries": [
+        "src/components/Checkbox.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Checkbox.tsx",
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-sr-only"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-checkbox",
+            "aisee-checkbox-row"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Checkbox/Checkbox.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve checked/indeterminate states, focus behavior and check celebration animation."
+      ],
+      "configuration": {
+        "props": {
+          "Checkbox": []
+        },
+        "themes": [
+          "analysis",
+          "post",
+          "engage"
+        ]
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "checkbox",
+          "sourceFiles": [
+            "src/components/Checkbox.tsx"
+          ],
+          "requiredCapabilities": [
+            "checked, indeterminate and disabled state, form semantics",
+            "keyboard activation, focus and AISEE celebration state hooks"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "Dropdown",
+      "slug": "dropdown",
+      "page": "components/Select/Select.html",
+      "entries": [
+        "src/components/Dropdown.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Dropdown.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-dropdown",
+            "aisee-field__label"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/dropdown/search.svg",
+        "assets/stemui/action-check.svg",
+        "assets/stemui/line_chevron-up.svg"
+      ],
+      "demoFiles": [
+        "components/Select/Select.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "Dropdown": []
+        },
+        "slots": {
+          "Dropdown": [
+            "leadingIcon"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "popover",
+          "sourceFiles": [
+            "src/components/Dropdown.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled visibility, outside dismissal and focus return",
+            "anchored collision-aware positioning, scroll/resize handling and portal className"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "selection",
+          "sourceFiles": [
+            "src/components/Dropdown.tsx"
+          ],
+          "requiredCapabilities": [
+            "single/multiple selection, editable/filterable input and keyboard navigation",
+            "disabled/grouped items and nested row actions without selection conflicts"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "Toggle",
+      "slug": "toggle",
+      "page": "components/Toggle/Toggle.html",
+      "entries": [
+        "src/components/Toggle.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Toggle.tsx",
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-sr-only"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-toggle"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Toggle/Toggle.html",
+        "components/Toggle/Toggle.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "Toggle": [
+            "color",
+            "surface",
+            "size"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "switch",
+          "sourceFiles": [
+            "src/components/Toggle.tsx"
+          ],
+          "requiredCapabilities": [
+            "checked/defaultChecked, disabled and change callback",
+            "keyboard activation and state hooks for AISEE motion"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "TagInput",
+      "slug": "tag-input",
+      "page": "components/TagInput/TagInput.html",
+      "entries": [
+        "src/components/TagInput.tsx"
+      ],
+      "productionFiles": [
+        "src/components/TagInput.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-tag-input-field",
+            "aisee-tag-input"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/tag-input/close.svg"
+      ],
+      "demoFiles": [
+        "components/TagInput/TagInput.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "input",
+          "sourceFiles": [
+            "src/components/TagInput.tsx"
+          ],
+          "requiredCapabilities": [
+            "keyboard token entry/removal and composition input",
+            "controlled text, focus and labeling"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "SegmentedChoice",
+      "slug": "segmented-choice",
+      "page": "components/SegmentedChoice/SegmentedChoice.html",
+      "entries": [
+        "src/components/SegmentedChoice.tsx"
+      ],
+      "productionFiles": [
+        "src/components/SegmentedChoice.tsx",
+        "src/components/Tooltip.tsx",
+        "src/hooks/useTooltipSpring.ts",
+        "src/utils/spring.ts",
+        "src/utils/tooltip-position.ts",
+        {
+          "path": "src/styles/tooltip.css",
+          "classes": [
+            "aisee-segmented-choice",
+            "aisee-tooltip",
+            "aisee-tooltip-trigger",
+            "aisee-tooltip-motion",
+            "aisee-tooltip-surface"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-segmented-choice",
+            "aisee-tooltip",
+            "aisee-tooltip-trigger",
+            "aisee-tooltip-motion",
+            "aisee-tooltip-surface"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        },
+        {
+          "name": "react-dom",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/segmented-choice/info.svg"
+      ],
+      "demoFiles": [
+        "components/SegmentedChoice/SegmentedChoice.html",
+        "components/SegmentedChoice/SegmentedChoice.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "single-choice",
+          "sourceFiles": [
+            "src/components/SegmentedChoice.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled selection, disabled choices and keyboard activation",
+            "AISEE option layout and selected/focus hooks"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "tooltip",
+          "sourceFiles": [
+            "src/components/Tooltip.tsx"
+          ],
+          "requiredCapabilities": [
+            "hover/focus open, Escape dismiss and trigger ref",
+            "portal and collision-aware automatic placement with scroll/resize tracking",
+            "AISEE spring pointer tracking, directional entrance and separate positioning/motion transforms"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "ToggleSelectionGroup",
+      "slug": "toggle-selection-group",
+      "page": "components/ToggleSelectionGroup/ToggleSelectionGroup.html",
+      "entries": [
+        "src/components/ToggleSelectionGroup.tsx"
+      ],
+      "productionFiles": [
+        "src/components/ToggleSelectionGroup.tsx",
+        "src/components/Checkbox.tsx",
+        "src/components/Toggle.tsx",
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-sr-only"
+          ]
+        },
+        {
+          "path": "src/styles/toggle-selection-group.css",
+          "classes": [
+            "aisee-selection-group",
+            "aisee-checkbox",
+            "aisee-checkbox-row",
+            "aisee-toggle"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-selection-group",
+            "aisee-checkbox",
+            "aisee-checkbox-row",
+            "aisee-toggle"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/toggle-selection-group/check.svg"
+      ],
+      "demoFiles": [
+        "components/ToggleSelectionGroup/ToggleSelectionGroup.html",
+        "components/ToggleSelectionGroup/ToggleSelectionGroup.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "selection-group",
+          "sourceFiles": [
+            "src/components/ToggleSelectionGroup.tsx"
+          ],
+          "requiredCapabilities": [
+            "independent group enablement and preserved item selections",
+            "accessible labels, disabled handling and keyboard activation"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "checkbox",
+          "sourceFiles": [
+            "src/components/Checkbox.tsx"
+          ],
+          "requiredCapabilities": [
+            "checked, indeterminate and disabled state, form semantics",
+            "keyboard activation, focus and AISEE celebration state hooks"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "switch",
+          "sourceFiles": [
+            "src/components/Toggle.tsx"
+          ],
+          "requiredCapabilities": [
+            "checked/defaultChecked, disabled and change callback",
+            "keyboard activation and state hooks for AISEE motion"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "Tabs",
+      "slug": "tabs",
+      "page": "components/Tabs/Tabs.html",
+      "entries": [
+        "src/components/Tabs.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Tabs.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-tabs",
+            "aisee-tab"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Tabs/Tabs.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve controlled selection, keyboard navigation, icon/text variants and responsive platform labels."
+      ],
+      "configuration": {
+        "props": {
+          "Tabs": [
+            "variant",
+            "layout",
+            "platformLabelDisplay"
+          ]
+        },
+        "slots": {
+          "Tabs": [
+            "icon",
+            "count"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "tabs",
+          "sourceFiles": [
+            "src/components/Tabs.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled value and change callback, disabled tabs and keyboard navigation",
+            "AISEE state classes, measurement refs and label visibility"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "SidebarNavigation",
+      "slug": "sidebar-navigation",
+      "page": "components/SidebarNavigation/SidebarNavigation.html",
+      "entries": [
+        "src/components/SidebarNavigation.tsx"
+      ],
+      "productionFiles": [
+        "src/components/SidebarNavigation.tsx",
+        "src/components/TreeNav.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-sidebar",
+            "aisee-sidebar-layout",
+            "aisee-tree-nav"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        },
+        {
+          "name": "react-dom",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/SidebarNavigation/SidebarNavigation.html",
+        "components/SidebarNavigation/SidebarNavigation.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve collapse/reveal, nested navigation, layout variants and keyboard behavior."
+      ],
+      "configuration": {
+        "props": {
+          "SidebarLayout": [
+            "variant",
+            "togglePosition",
+            "reveal"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "portal",
+          "sourceFiles": [
+            "src/components/SidebarNavigation.tsx"
+          ],
+          "requiredCapabilities": [
+            "explicit portal target and host stacking context",
+            "toggle ownership, focus, Escape and hover reveal coordination"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "tree-navigation",
+          "sourceFiles": [
+            "src/components/TreeNav.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled selection and expansion, disabled nodes",
+            "nested keyboard behavior and AISEE hierarchy/state hooks"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "TreeNav",
+      "slug": "tree-nav",
+      "page": "components/TreeNav/TreeNav.html",
+      "entries": [
+        "src/components/TreeNav.tsx"
+      ],
+      "productionFiles": [
+        "src/components/TreeNav.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-tree-nav"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/TreeNav/TreeNav.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "tree-navigation",
+          "sourceFiles": [
+            "src/components/TreeNav.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled selection and expansion, disabled nodes",
+            "nested keyboard behavior and AISEE hierarchy/state hooks"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "FeatureOverview",
+      "slug": "feature-overview",
+      "page": "components/FeatureOverview/FeatureOverview.html",
+      "entries": [
+        "src/components/FeatureOverview.tsx",
+        "src/components/Card.tsx",
+        "src/components/FeatureList.tsx"
+      ],
+      "productionFiles": [
+        "src/components/FeatureOverview.tsx",
+        "src/components/Card.tsx",
+        "src/components/FeatureList.tsx",
+        {
+          "path": "src/styles/feature-overview.css",
+          "classes": [
+            "aisee-feature-overview",
+            "aisee-card",
+            "aisee-card-grid",
+            "aisee-feature-list"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-feature-overview",
+            "aisee-card",
+            "aisee-card-grid",
+            "aisee-feature-list"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/feature-overview/check-analysis.svg",
+        "assets/feature-overview/check-engage.svg",
+        "assets/feature-overview/check-growth.svg",
+        "assets/feature-overview/check-publish.svg",
+        "assets/stemui/line_chevron-up.svg"
+      ],
+      "demoFiles": [
+        "components/FeatureOverview/FeatureOverview.html",
+        "components/FeatureOverview/FeatureOverview.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "CardGrid": [
+            "columns",
+            "divided"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "PlanCard",
+      "slug": "plan-card",
+      "page": "components/PlanCardCurrent/PlanCardCurrent.html",
+      "entries": [
+        "src/components/PlanCard.tsx"
+      ],
+      "productionFiles": [
+        "src/components/PlanCard.tsx",
+        "src/components/SubscriptionPlanCard.tsx",
+        "src/components/Badge.tsx",
+        "src/components/Button.tsx",
+        "src/components/Dialog.tsx",
+        {
+          "path": "src/styles/subscription-plan.css",
+          "classes": [
+            "aisee-plan-card",
+            "aisee-subscription-plan",
+            "aisee-plan-subscription-dialog",
+            "aisee-badge",
+            "aisee-button",
+            "aisee-dialog",
+            "aisee-dialog-notice",
+            "aisee-dialog-details",
+            "aisee-dialog-summary"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-plan-card",
+            "aisee-subscription-plan",
+            "aisee-plan-subscription-dialog",
+            "aisee-badge",
+            "aisee-button",
+            "aisee-dialog",
+            "aisee-dialog-notice",
+            "aisee-dialog-details",
+            "aisee-dialog-summary"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/badge/draft.svg",
+        "assets/badge/failed.svg",
+        "assets/badge/from-plan.svg",
+        "assets/badge/manual.svg",
+        "assets/badge/published.svg",
+        "assets/badge/rewritten.svg",
+        "assets/badge/scheduled.svg",
+        "assets/dialog-close.svg",
+        "assets/empty-state/library/unlock.svg",
+        "assets/plan-card/subscription/access.svg",
+        "assets/plan-card/subscription/credits.svg"
+      ],
+      "demoFiles": [
+        "components/PlanCardCurrent/PlanCardCurrent.html",
+        "components/PlanCardCurrent/PlanCardCurrent.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/Button.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button semantics, disabled/type and keyboard activation",
+            "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "dialog",
+          "sourceFiles": [
+            "src/components/Dialog.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled open/onClose, modal isolation, focus management and focus return",
+            "Escape/backdrop dismissal, accessible title/description and native dialog ref API",
+            "AISEE backdrop, entry/exit timing, layout variants and reduced-motion behavior"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "Avatar",
+      "slug": "avatar",
+      "page": "preview/avatar.html",
+      "entries": [
+        "src/components/Avatar.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Avatar.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-avatar",
+            "aisee-social-account-avatar"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/avatar/dapp-avatar-set.svg",
+        "assets/avatar/platform-x-mark.svg",
+        "assets/avatar/social-avatar-set.svg"
+      ],
+      "demoFiles": [
+        "preview/avatar.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "Avatar": [
+            "kind",
+            "index",
+            "animated"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "Badge",
+      "slug": "badge",
+      "page": "components/Badge/Badge.html",
+      "entries": [
+        "src/components/Badge.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Badge.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-badge"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/badge/draft.svg",
+        "assets/badge/failed.svg",
+        "assets/badge/from-plan.svg",
+        "assets/badge/manual.svg",
+        "assets/badge/published.svg",
+        "assets/badge/rewritten.svg",
+        "assets/badge/scheduled.svg"
+      ],
+      "demoFiles": [
+        "components/Badge/Badge.html",
+        "components/Badge/Badge.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "Steps",
+      "slug": "steps",
+      "page": "components/Steps/Steps.html",
+      "entries": [
+        "src/components/Steps.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Steps.tsx",
+        {
+          "path": "src/styles/steps.css",
+          "classes": [
+            "aisee-steps"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-steps"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/steps/check.svg",
+        "assets/steps/connector.svg",
+        "assets/steps/error.svg",
+        "assets/steps/loading.svg",
+        "assets/steps/success.svg"
+      ],
+      "demoFiles": [
+        "components/Steps/Steps.html",
+        "components/Steps/Steps.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve production step progress and loading animations; workflow state comes from the host."
+      ],
+      "configuration": {
+        "props": {
+          "Steps": [
+            "animated"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "EmptyState",
+      "slug": "empty-state",
+      "page": "components/EmptyState/EmptyState.html",
+      "entries": [
+        "src/components/EmptyState.tsx"
+      ],
+      "productionFiles": [
+        "src/components/EmptyState.tsx",
+        "src/components/EmptyStateIllustration.tsx",
+        {
+          "path": "src/styles/empty-state.css",
+          "classes": [
+            "aisee-empty-state",
+            "aisee-empty-state-illustration"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-empty-state",
+            "aisee-empty-state-illustration"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/empty-state/library/bound.svg",
+        "assets/empty-state/library/free-use.svg",
+        "assets/empty-state/library/link.svg",
+        "assets/empty-state/library/no-account.svg",
+        "assets/empty-state/library/no-credit.svg",
+        "assets/empty-state/library/no-event.svg",
+        "assets/empty-state/library/no-media.svg",
+        "assets/empty-state/library/no-report-data.svg",
+        "assets/empty-state/library/no-report.svg",
+        "assets/empty-state/library/no-time-slot.svg",
+        "assets/empty-state/library/nobody.svg",
+        "assets/empty-state/library/nothing.svg",
+        "assets/empty-state/library/plugin.svg",
+        "assets/empty-state/library/unlock.svg"
+      ],
+      "demoFiles": [
+        "components/EmptyState/EmptyState.html",
+        "components/EmptyState/EmptyState.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {
+          "EmptyState": [
+            "size",
+            "variant",
+            "illustrationName"
+          ]
+        },
+        "slots": {
+          "EmptyState": [
+            "illustration",
+            "title",
+            "description",
+            "action"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "Card",
+      "slug": "card",
+      "page": "components/Card/Card.html",
+      "entries": [
+        "src/components/Card.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Card.tsx",
+        {
+          "path": "src/styles/feature-overview.css",
+          "classes": [
+            "aisee-card",
+            "aisee-card-grid"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-card",
+            "aisee-card-grid"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/stemui/line_chevron-up.svg"
+      ],
+      "demoFiles": [
+        "components/Card/Card.html",
+        "components/Card/Card.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "StatCard",
+      "slug": "stat-card",
+      "page": "components/StatCardCurrent/StatCardCurrent.html",
+      "entries": [
+        "src/components/StatCard.tsx"
+      ],
+      "productionFiles": [
+        "src/components/StatCard.tsx",
+        {
+          "path": "src/styles/stat-card.css",
+          "classes": [
+            "aisee-stat-card",
+            "aisee-stat-card-group"
+          ]
+        },
+        {
+          "path": "src/styles/feature-overview.css",
+          "classes": [
+            "aisee-stat-card",
+            "aisee-stat-card-group"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-stat-card",
+            "aisee-stat-card-group"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/StatCardCurrent/StatCardCurrent.html",
+        "components/StatCardCurrent/StatCardCurrent.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "Table",
+      "slug": "table",
+      "page": "components/Table/Table.html",
+      "entries": [
+        "src/components/Table.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Table.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-table-wrap",
+            "aisee-table"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Table/Table.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "Chart",
+      "slug": "chart",
+      "page": "components/Chart/Chart.html",
+      "entries": [
+        "src/components/Chart.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Chart.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-chart"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/Chart/Chart.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "ScoreGauge",
+      "slug": "score-gauge",
+      "page": "components/ScoreGauge/ScoreGauge.html",
+      "entries": [
+        "src/components/ScoreGauge.tsx"
+      ],
+      "productionFiles": [
+        "src/components/ScoreGauge.tsx",
+        {
+          "path": "src/styles/base.css",
+          "classes": [
+            "aisee-sr-only"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-score-gauge"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "src/assets/score-gauge/score-gauge-texture.png"
+      ],
+      "demoFiles": [
+        "components/ScoreGauge/ScoreGauge.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "CreditBar",
+      "slug": "credit-bar",
+      "page": "components/CreditBar/CreditBar.html",
+      "entries": [
+        "src/components/CreditBar.tsx"
+      ],
+      "productionFiles": [
+        "src/components/CreditBar.tsx",
+        {
+          "path": "src/styles/credit-bar.css",
+          "classes": [
+            "aisee-credit-bar"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-credit-bar"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/credit-bar/sparkles.svg"
+      ],
+      "demoFiles": [
+        "components/CreditBar/CreditBar.html",
+        "components/CreditBar/CreditBar.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    },
+    {
+      "name": "Dialog",
+      "slug": "dialog",
+      "page": "components/Dialog/Dialog.html",
+      "entries": [
+        "src/components/Dialog.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Dialog.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-dialog",
+            "aisee-dialog-notice",
+            "aisee-dialog-details",
+            "aisee-dialog-summary"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/dialog-close.svg"
+      ],
+      "demoFiles": [
+        "components/Dialog/Dialog.html",
+        "components/Dialog/Dialog.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "dialog",
+          "sourceFiles": [
+            "src/components/Dialog.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled open/onClose, modal isolation, focus management and focus return",
+            "Escape/backdrop dismissal, accessible title/description and native dialog ref API",
+            "AISEE backdrop, entry/exit timing, layout variants and reduced-motion behavior"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "ConfirmationDialog",
+      "slug": "confirmation-dialog",
+      "page": "components/ConfirmationDialog/ConfirmationDialog.html",
+      "entries": [
+        "src/components/ConfirmationDialog.tsx"
+      ],
+      "productionFiles": [
+        "src/components/ConfirmationDialog.tsx",
+        "src/components/Button.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-confirmation-dialog",
+            "aisee-button"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/dialog-close.svg"
+      ],
+      "demoFiles": [
+        "components/ConfirmationDialog/ConfirmationDialog.html",
+        "components/ConfirmationDialog/ConfirmationDialog.demo.tsx",
+        "components/ConfirmationDialog/ConfirmationDialog.demo.css",
+        "assets/confirmation-dialog/queued-posts.svg",
+        "assets/confirmation-dialog/managed-replies.svg"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the controlled native modal, safe-action initial focus, focus containment and return, Escape/close/cancel callbacks, responsive actions and scrollable long content.",
+        "Preserve optional positive/warning impact notices and host icon/content slots. Labels, notices, counts and confirm callbacks come from the host; never install the automation/discard examples or their illustration assets.",
+        "The host decides when confirmation succeeds and closes the dialog; do not automatically run a business operation or add demo Toast behavior."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": "<ConfirmationDialog\n  open={open}\n  title={confirmationTitle}\n  description={confirmationDescription}\n  notices={impactNotices}\n  cancelLabel=\"Cancel\"\n  confirmLabel=\"Confirm\"\n  onClose={() => setOpen(false)}\n  onConfirm={handleConfirm}\n/>",
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "dialog",
+          "sourceFiles": [
+            "src/components/ConfirmationDialog.tsx"
+          ],
+          "requiredCapabilities": [
+            "controlled open, cancel-first focus, focus return and modal isolation",
+            "Escape/cancel handling, accessible title/description and native dialog ref API",
+            "AISEE impact notices, confirm-disabled behavior and host-owned callbacks"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/Button.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button semantics, disabled/type and keyboard activation",
+            "forwarded button ref and AISEE className, icon slots and hover/focus hooks"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "TooltipToast",
+      "slug": "tooltip-toast",
+      "page": "components/TooltipToast/TooltipToast.html",
+      "entries": [
+        "src/components/Tooltip.tsx",
+        "src/components/Toast.tsx"
+      ],
+      "productionFiles": [
+        "src/components/Tooltip.tsx",
+        "src/hooks/useTooltipSpring.ts",
+        "src/utils/spring.ts",
+        "src/utils/tooltip-position.ts",
+        "src/components/Toast.tsx",
+        {
+          "path": "src/styles/tooltip.css",
+          "classes": [
+            "aisee-tooltip",
+            "aisee-tooltip-trigger",
+            "aisee-tooltip-motion",
+            "aisee-tooltip-surface",
+            "aisee-toast",
+            "aisee-toast-viewport"
+          ]
+        },
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-tooltip",
+            "aisee-tooltip-trigger",
+            "aisee-tooltip-motion",
+            "aisee-tooltip-surface",
+            "aisee-toast",
+            "aisee-toast-viewport"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        },
+        {
+          "name": "react-dom",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/stemui/action-check.svg",
+        "assets/stemui/action-close.svg"
+      ],
+      "demoFiles": [
+        "components/TooltipToast/TooltipToast.html",
+        "components/TooltipToast/TooltipToast.demo.tsx"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve Tooltip auto placement, viewport collision handling, hover/focus/Escape, subtle/playful spring motion and reduced motion.",
+        "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page."
+      ],
+      "configuration": {
+        "props": {
+          "Tooltip": [
+            "placement",
+            "animation"
+          ]
+        }
+      },
+      "usage": null,
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "tooltip",
+          "sourceFiles": [
+            "src/components/Tooltip.tsx"
+          ],
+          "requiredCapabilities": [
+            "hover/focus open, Escape dismiss and trigger ref",
+            "portal and collision-aware automatic placement with scroll/resize tracking",
+            "AISEE spring pointer tracking, directional entrance and separate positioning/motion transforms"
+          ],
+          "fallback": "standalone"
+        },
+        {
+          "role": "live-region",
+          "sourceFiles": [
+            "src/components/Toast.tsx"
+          ],
+          "requiredCapabilities": [
+            "status/alert semantics, accessible dismissal and lifecycle cleanup",
+            "AISEE timer/progress and entry/exit motion hooks"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "NotificationBell",
+      "slug": "notification-bell",
+      "page": "components/NotificationBell/NotificationBell.html",
+      "entries": [
+        "src/components/NotificationBell.tsx"
+      ],
+      "productionFiles": [
+        "src/components/NotificationBell.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-notification-bell"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/NotificationBell/NotificationBell.html"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Keep the inline bell icon, hover/focus, numeric badge and optional unread dot.",
+        "Real count increases ring the white bell and animate the badge number. Rerenders, unchanged/decreased/cleared counts must not replay incoming animation.",
+        "The outer button and black icon circle remain fixed; respect prefers-reduced-motion. Connect count and onClick to existing product data and navigation."
+      ],
+      "configuration": {
+        "props": {}
+      },
+      "usage": "<NotificationBell count={unreadCount} onClick={openNotifications} />",
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/NotificationBell.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button props, accessible label, pointer/focus and click callbacks",
+            "AISEE inner glyph motion and badge state driven by real count; outer button stays fixed"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "AutomationRunner",
+      "slug": "automation-runner",
+      "page": "components/AutomationRunner/AutomationRunner.html",
+      "entries": [
+        "src/components/AutomationRunner.tsx"
+      ],
+      "productionFiles": [
+        "src/components/AutomationRunner.tsx",
+        {
+          "path": "src/styles/components.css",
+          "classes": [
+            "aisee-automation-runner"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [
+        "assets/automation-runner/drag-handle.svg",
+        "assets/automation-runner/eye-mask.svg",
+        "assets/automation-runner/chevron-down.svg",
+        "assets/automation-runner/minimize.svg",
+        "assets/automation-runner/close.svg"
+      ],
+      "demoFiles": [
+        "components/AutomationRunner/AutomationRunner.html",
+        "components/AutomationRunner/AutomationRunner.demo.tsx",
+        "components/AutomationRunner/AutomationRunner.demo.css"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Mount the runner once in the host app shell outside route content so it persists across navigation. Closing hides only the window and must never stop, cancel or mutate the automation task.",
+        "Preserve default, expanded and minimized views, controlled open/view callbacks, real detail rows and the Back to Automation host callback. The card title and arrow toggle details only when real details or an action exist; without either, an externally requested expanded view must fall back to default and must not render an empty detail divider or expand affordance. The line control minimizes it, and clicking anywhere on the minimized card restores the default view; the visible green eye remains the keyboard-accessible restore control.",
+        "Before integration, inspect the host for an existing Automation Runner or equivalent persistent status card. Update a compatible existing implementation in place instead of mounting a second runner. Preserve all existing styles and interactions, including blink and pointer-following eye; add only requested missing motion; do not duplicate their DOM, state, keyframes or window pointermove listener.",
+        "For an absent target, the standalone reference provides the following capabilities; for an existing target use only the requested missing subset without replacing host styles or interactions: bottom entrance and exit bounce, default/expanded/minimized views, pointer-directed card lean, a wide-eyed two-pass panic scan when entering the whole card, one jelly rebound only when entering the green mascot, whole-card pointer dragging, keyboard drag-handle movement, viewport clamping, nearest-edge anchoring while dimensions animate between views, and complete prefers-reduced-motion fallback. A runner near the right edge expands left and minimizes toward the right edge; the left, top and bottom edges behave symmetrically. A drag must not activate expand, minimize, close or action controls.",
+        "Use the exact exported Figma icons and eye mask. Detail values and automation state come from the host; do not ship Demo routes, controls or mock task management."
+      ],
+      "configuration": {
+        "props": {
+          "AutomationRunner": [
+            "defaultView",
+            "placement"
+          ]
+        }
+      },
+      "usage": "// Mount once in the root app shell, outside route content.\n<AutomationRunner open={runnerVisible} view={runnerView} details={automationStatusRows} onOpenChange={setRunnerVisible} onViewChange={setRunnerView} onAction={() => navigate('/automation')} />",
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": [
+        {
+          "role": "button",
+          "sourceFiles": [
+            "src/components/AutomationRunner.tsx"
+          ],
+          "requiredCapabilities": [
+            "native button semantics, refs, accessible labels and keyboard activation while retaining host visuals",
+            "AISEE controlled visibility/view state, drag handle pointer capture, focus rings and playful motion"
+          ],
+          "fallback": "standalone"
+        }
+      ]
+    },
+    {
+      "name": "ThinkingIndicator",
+      "slug": "thinking-indicator",
+      "page": "components/ThinkingIndicator/ThinkingIndicator.html",
+      "entries": [
+        "src/components/ThinkingIndicator.tsx"
+      ],
+      "productionFiles": [
+        "src/components/ThinkingIndicator.tsx",
+        {
+          "path": "src/styles/thinking-indicator.css",
+          "classes": [
+            "aisee-thinking-indicator"
+          ]
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "react",
+          "range": ">=18",
+          "host": true
+        }
+      ],
+      "assets": [],
+      "demoFiles": [
+        "components/ThinkingIndicator/ThinkingIndicator.html",
+        "components/ThinkingIndicator/ThinkingIndicator.demo.tsx",
+        "components/ThinkingIndicator/ThinkingIndicator.demo.css"
+      ],
+      "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the native six-second circle/infinity SVG morph, four-second decorative text cycle and shimmer. Do not restart the cycle on ordinary rerenders.",
+        "Respect live prefers-reduced-motion changes: static infinity and first phrase, no shimmer or cycling. Keep one stable accessible status; decorative phrases must remain aria-hidden.",
+        "Support showIcon and default/compact size. Host controls when to mount/unmount during real work. Labels are neutral decorative phrases, never actual progress or reasoning logs."
+      ],
+      "configuration": {
+        "props": {
+          "ThinkingIndicator": [
+            "showIcon",
+            "size"
+          ]
+        }
+      },
+      "usage": "{isThinking && <ThinkingIndicator showIcon={true} size=\"default\" />}\n// isThinking comes from the host request state. Use labels and aria-label for localization.",
+      "compatibility": {
+        "react": ">=18",
+        "node": ">=18"
+      },
+      "styleDependencies": [
+        {
+          "path": "src/tokens/tokens.css",
+          "mode": "custom-properties"
+        }
+      ],
+      "integrationMode": "host-first",
+      "primitives": []
+    }
+  ]
+}

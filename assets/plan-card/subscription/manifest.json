@@ -1,0 +1,14 @@
+{
+  "fileKey": "LLvI9vd66VLNuAltAWJFJw",
+  "nodeId": "51:329855",
+  "assets": {
+    "analysis-lock.svg": "https://www.figma.com/api/mcp/asset/52ea4baa-2c5a-4617-a506-21edd584d13c/5df79.svg",
+    "access.svg": "https://www.figma.com/api/mcp/asset/52ea4baa-2c5a-4617-a506-21edd584d13c/8b435.svg",
+    "credits.svg": "https://www.figma.com/api/mcp/asset/52ea4baa-2c5a-4617-a506-21edd584d13c/7be8b.svg"
+  },
+  "companyIcon": {
+    "nodeId": "51:329928",
+    "path": "company.png"
+  },
+  "reusedIllustration": "assets/empty-state/library/unlock.svg"
+}

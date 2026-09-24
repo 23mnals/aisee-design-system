@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 3,
+  "name": "Dropdown",
+  "page": "components/Select/Select.html",
+  "version": "95dd5d279be04929",
+  "delivery": "./releases/95dd5d279be04929/ready.md",
+  "installer": "./releases/95dd5d279be04929/install.cjs",
+  "installerSha256": "9167abf98a5627ecb022d7a19160b76b40354c52bb3d594b65b43531cf2abb0d",
+  "configuration": {
+    "props": {
+      "Dropdown": []
+    },
+    "slots": {
+      "Dropdown": [
+        "leadingIcon"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "popover",
+      "sourceFiles": [
+        "src/components/Dropdown.tsx"
+      ],
+      "requiredCapabilities": [
+        "controlled visibility, outside dismissal and focus return",
+        "anchored collision-aware positioning, scroll/resize handling and portal className"
+      ],
+      "fallback": "standalone"
+    },
+    {
+      "role": "selection",
+      "sourceFiles": [
+        "src/components/Dropdown.tsx"
+      ],
+      "requiredCapabilities": [
+        "single/multiple selection, editable/filterable input and keyboard navigation",
+        "disabled/grouped items and nested row actions without selection conflicts"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+  ],
+  "files": [
+    "Dropdown.tsx",
+    "styles.css",
+    "assets/dropdown/search.svg",
+    "assets/stemui/action-check.svg",
+    "assets/stemui/line_chevron-up.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/dropdown/search.svg.d.ts",
+    "assets/stemui/action-check.svg.d.ts",
+    "assets/stemui/line_chevron-up.svg.d.ts"
+  ]
+}

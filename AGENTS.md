@@ -115,16 +115,18 @@ PNG 不是同步、注册或 Demo 展示的必要条件。如果没有与当前 
 
 ### Brand 注册规则
 
-- 每个 Web 产物必须注册到 Brand 对应的 AISEE 功能分类。
+- AISEE 基础规范保留在 Brand / Foundations。
+- Web / AI 生成的参考与探索稿默认注册到 Brand / Explorations；功能上下文写入名称、subtitle 或 metadata，不按页面名称自动迁入 UI Kits，也不把探索稿标为已确认产品设计。
 - 例如 `brand/pages/managed-automation/` 在 UI 中显示为：
 
   ```text
   Brand
-  └── Automation
+  └── Explorations
       └── Managed Automation
   ```
 
-- 文件来源通过 metadata 区分 Web / ChatGPT，但不得增加 Web 或 ChatGPT 一级或二级导航。
+- 文件来源通过 metadata 区分 Web / ChatGPT，使用状态通过 `designStatus` 区分 Draft / Selected；两者不得混为一个字段，也不得增加 Web 或 ChatGPT 一级或二级导航。
+- 探索稿必须明确标注“仅供灵感参考，非实际产品设计、非实施规范”；实际产品设计以对应功能的最新 Figma 为准。
 
 ### Web 产物 push 提醒
 
@@ -162,3 +164,24 @@ Git 历史本身作为历史记录，不需要继续在 Design System 导航中�
 > 更新本轮交接：新增一个 `handoff/sessions/` session 记录本轮完整工作，并刷新 `handoff-context.md` 的当前状态。不要向 `handoff-context.md` 末尾继续追加历史总结；已经完成或过期的过程内容从当前状态中移除。同步记录当前 branch、最新 commit、未完成事项和下一步。
 
 核心原则：`AGENTS.md` = 工作纪律；`handoff-context.md` = 当前仪表盘；`docs/TEAM_DECISIONS.md` = 长期决策；`handoff/sessions/` = 历史档案。Git + 当前交接才是项目记忆，聊天上下文不是唯一记忆来源。
+
+## 6. 更新记录规则
+
+每次完成一批用户可见的功能、组件、交互、文案、资源或导航更新后，必须更新根 `README.md` 的“最近更新”。
+
+- 按日期记录每一批更新；每批使用 3–8 条简洁内容说明更新了什么以及用户能看到什么。
+- 不记录具体文件名、代码实现、测试数量等开发细节。
+- README 只保留最近 3 批更新；更早记录归档到 `CHANGELOG.md`。如果项目暂时没有 `CHANGELOG.md`，可先全部保留，内容过长后再建立归档。
+- “v6 主要更新”只记录版本级、长期有效的核心变化；日常更新不得继续追加到该区域，失效规则直接修正。
+- 如果本批更新影响当前规范，必须同步修改 README 当前规范、组件页面与 Overview、`Copy for AI`、`NEW` 标识、相关设计资源和交付文档。
+- 纯重构、格式化、内部测试或其他不影响使用的代码调整，不写入 README。
+
+## 7. Copy for AI 组件范围与模式
+
+复制入口默认 Apply AISEE design：只更新目标组件的视觉与动效；Add motion only 保留静态外观、只加缺失动效。两模式只在 Goal 描述不同，共用组件范围与业务行为保护。不能用旧的“始终保留已有样式”条款否定用户选定的设计模式，也不能用设计模式授权调整业务页面。
+
+- 安装前检查实际目标、UI 库、样式与调用处；shadcn 读取 components.json、alias 和既有 primitive。修改前列精确路径，默认可写仅目标组件实现及专属局部样式；读取文件不等于获准修改。
+- 页面布局、文案、业务逻辑、API、独立 hook 文件、请求层及项目/依赖配置默认不改；确实需要时先列文件、原因、最小 diff 和影响，等待明确确认后仅改获批部分。调试失败或“继续修好”不扩大范围。
+- 复用已有组件/API/状态/事件和业务流程，不建平行 primitive、不导入完整交付 CSS；动画内部 effects/refs 可加 cleanup/reduced-motion，但不能提前改变 checked、增加乐观状态或绕过确认。
+- 默认无变体参数；仅用户在 Target variant 菜单明确选中的配置可作为目标。预览初始值和 Variant playground 名称不是接入要求。变更预览清除旧选择。
+- 交付源码仅作为宿主外的临时参考；所选 Goal 和范围优先于参考中的通用安装/默认/保留条款。验收分别检查组件视觉目标、业务不变、范围外确认和既有工作保护。

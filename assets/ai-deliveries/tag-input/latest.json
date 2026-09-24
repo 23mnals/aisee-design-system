@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 3,
+  "name": "TagInput",
+  "page": "components/TagInput/TagInput.html",
+  "version": "f8df4795a816d126",
+  "delivery": "./releases/f8df4795a816d126/ready.md",
+  "installer": "./releases/f8df4795a816d126/install.cjs",
+  "installerSha256": "4084e87ae8a2664aa225c5caf0a200e087c8f6cc7a504d8064fdf0c8e2c09a08",
+  "configuration": {
+    "props": {}
+  },
+  "dependencies": [
+    {
+      "name": "react",
+      "range": ">=18",
+      "host": true
+    }
+  ],
+  "compatibility": {
+    "react": ">=18",
+    "node": ">=18"
+  },
+  "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
+  "primitives": [
+    {
+      "role": "input",
+      "sourceFiles": [
+        "src/components/TagInput.tsx"
+      ],
+      "requiredCapabilities": [
+        "keyboard token entry/removal and composition input",
+        "controlled text, focus and labeling"
+      ],
+      "fallback": "standalone"
+    }
+  ],
+  "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
+  ],
+  "files": [
+    "TagInput.tsx",
+    "styles.css",
+    "assets/tag-input/close.svg",
+    "index.ts",
+    "styles.css.d.ts",
+    "assets/tag-input/close.svg.d.ts"
+  ]
+}
