@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Card",
   "page": "components/Card/Card.html",
-  "version": "bada5896786dfd50",
-  "delivery": "./releases/bada5896786dfd50/ready.md",
-  "installer": "./releases/bada5896786dfd50/install.cjs",
+  "version": "fd55eaa3f4e537bb",
+  "delivery": "./releases/fd55eaa3f4e537bb/ready.md",
+  "installer": "./releases/fd55eaa3f4e537bb/install.cjs",
   "installerSha256": "7aa6135293d4589e411c7031f58c7e0b590e7f18ebfe7ad1e7b76b0d9b5d9ea2",
   "configuration": {
     "props": {}
@@ -21,10 +21,18 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [],
   "preserve": [
-    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
   ],
   "files": [
     "Card.tsx",

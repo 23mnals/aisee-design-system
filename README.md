@@ -7,14 +7,14 @@ aisee 官网与 Web App 的共享设计系统。本仓库由旧版 Design System
 | Part | 内容 | 入口 |
 |---|---|---|
 | **README** | 三条使用路径、版本边界、协作规则与资源状态 | 本文件、[`CONTRIBUTING.md`](CONTRIBUTING.md)、[`CHANGELOG.md`](CHANGELOG.md) |
-| **Brand** | Common 保存 AISEE 基础规范；AI Explorations / Inspiration 保存 AI 参考与探索稿 | [`brand/`](brand/) |
+| **Brand** | Foundations 保存 AISEE 基础规范；Explorations 保存 AI 参考与探索稿 | [`brand/`](brand/) |
 | **Components** | 可独立复用的组件及其状态、动画、API 和 Copy for AI | [`components/`](components/) |
 | **UI Kits — Webapp** | 多个组件组成的模式、页面示例和交互 Demo | [`ui_kits/webapp/`](ui_kits/webapp/) |
 
 ### 三条使用路径
 
 1. **让 AI 按规则出图**：必须同时提供真实 brief、目标页面说明或参考图。当前缺少这些输入时标记为待补，不提供一个看似可用的空入口。
-2. **让设计师探索方向**：从 Brand 的 **AI Explorations / Inspiration** 查看 AI 生成的参考稿。这些内容仅供灵感参考，不代表 AISEE 已确认的实际产品页面，也不是实施规范。
+2. **让设计师探索方向**：从 Brand 的 **Explorations** 查看 AI 生成的参考稿。这些内容仅供灵感参考，不代表 AISEE 已确认的实际产品页面，也不是实施规范。
 3. **让开发人员接入组件**：从 Components 选择 `Current` 组件，通过 Copy for AI 接入生产源码、必要样式、状态与动画。
 
 UI Kits 中的 `Current` 只表示该组件组合 Demo 正在维护，不表示它已经成为确认的实际产品页面。真实产品设计始终以对应功能的最新 Figma 为准；未核对 Figma 的示例不得作为产品实施依据。
@@ -49,7 +49,7 @@ npm run preview:local
 
 ## 首次接入：开发者与第三方必读
 
-**当前所有已登记的 Current 组件统一使用生产源码交付。** Copy for AI 复制明确组件名称、稳定最新版本入口及真实选项；编码 AI 自动取得清单内的必要源码、样式、资产与类型。Demo、mock 数据、演示控制、字体及全局 Design System 环境不进入交付。NotificationBell 保留图标与数字动画，真实数量和点击行为由产品传入。详见 [生产交付契约](docs/PRODUCTION_DELIVERY.md)。安装前由编码 AI 识别宿主 UI 库和自定义 primitives，按 integrationMode / primitives / preserve 复用兼容底层能力，保留 AISEE 外观与行为；不覆盖宿主主题或引入整套框架，不兼容时回退独立实现。若宿主已有兼容的 shadcn/ui 或自定义基础组件，应直接在现有路径上合并 AISEE 视觉、状态与动画，不得再创建一套平行的 AISEE primitive。
+**当前所有已登记的 Current 组件统一使用生产源码交付。** Copy for AI 复制明确组件名称、稳定最新版本入口及真实选项；编码 AI 自动取得清单内的必要源码、样式、资产与类型。Demo、mock 数据、演示控制、字体及全局 Design System 环境不进入交付。NotificationBell 保留图标与数字动画，真实数量和点击行为由产品传入。详见 [生产交付契约](docs/PRODUCTION_DELIVERY.md)。安装前检查实际目标组件、样式、UI 库与现有交互；shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`。保留宿主已有样式、布局、图标、API、状态和事件，只添加本次要求且缺失的能力。动画需求只添加缺失动画、必要 hook 与 reduced-motion，不改变静态外观或交互，不导入整份交付 CSS，不创建平行组件。不兼容不能作为重建理由；只有目标组件不存在时才新增，并复用宿主 UI 库和样式约定。交付源码只作为必要的临时参考；安装器仅校验解包，不会自动适配宿主。
 
 完整步骤见 [第三方接入指南](docs/GETTING_STARTED.md)：获取与授权、环境准备、已安装 / 未安装 / 源码 / 非 React 四类接入、完整 Tooltip 用例、字体和资源、SSR、常见错误、版本更新及交付验收。当前仓库标记 private / UNLICENSED，不提供已验证的公共 npm 安装入口。
 
@@ -111,6 +111,18 @@ Button 支持显示 / 隐藏图标。一般操作图标在左，前进箭头与 
 
 ## 最近更新
 
+### 2026-09-24 · Copy for AI 保留现有设计
+
+- 接入前先检查项目已有组件、样式、UI 库和交互，只补充缺失能力。
+- 添加动画时保留现有外观、点击与状态行为，只接入缺失动效和减少动态效果支持。
+- 预览选项不再作为覆盖已有设计的依据；只有目标组件不存在时才新增。
+
+### 2026-09-24 · Brand 导航命名
+
+- Brand 基础规范分类更名为 Foundations，更清晰地表达内容用途。
+- 探索稿分类精简为 Explorations，侧边栏名称更短、更易浏览。
+- 导航与分类说明统一新名称，保留原有页面入口、来源和使用状态。
+
 ### 2026-09-23 · Automation Runner、NEW 与门户归属
 
 - Brand 将 AISEE 基础规范与 AI 探索稿分开；UI Kits 明确为组件组合 Demo，README 增加三条使用路径和 Figma 权威边界。
@@ -121,20 +133,6 @@ Button 支持显示 / 隐藏图标。一般操作图标在左，前进箭头与 
 - 拖拽到视口边缘后切换展开、默认和最小化，会固定最近边缘向内展开、向边缘收起，避免卡片被截断。
 - `NEW` 恢复为 7 天：更新当天算第 1 天，第 1–7 天显示，第 8 天台北零点自动消失。
 - 已有内容继续沿用最初登记的更新日期；修改规则、刷新或重新构建不会统一续期，只有真实内容更新才重新计时。
-
-### 2026-09-22 · Dropdown 类型梳理
-
-- Select / Dropdown 按可复用组件能力展示，不再使用周期、渠道、平台和网址等业务功能命名。
-- 核心类型补齐为单选、多选、可搜索多选、Combobox、操作菜单和分组选择。
-- 每张类型卡只显示一个类型标题，控件保留与标题一致的无障碍名称，不再重复显示近义字段。
-- Filter panel、Search + action 等保留为组合示例，与基础类型分层展示。
-
-### 2026-09-22 · 预览控制区与分享入口
-
-- Automation Runner 的标题与 `NEW` 固定在同一行，显示、状态和位置控制紧凑排列。
-- 位置选项显示为 Left、Center、Right，实际底部定位能力保持不变。
-- Overview、Schedule、Replies 明确标注为 Demo 页面切换，用于验证浮层跨路由持续显示，不作为组件功能交付。
-- 顶部 Share 改用简洁链环图标，更准确表达复制当前页面链接。
 
 ## v6 主要更新
 

@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Badge",
   "page": "components/Badge/Badge.html",
-  "version": "c2d66e516a39deda",
-  "delivery": "./releases/c2d66e516a39deda/ready.md",
-  "installer": "./releases/c2d66e516a39deda/install.cjs",
+  "version": "b203d03c95aa8e16",
+  "delivery": "./releases/b203d03c95aa8e16/ready.md",
+  "installer": "./releases/b203d03c95aa8e16/install.cjs",
   "installerSha256": "b516a61d828ee5c6e3c213bbc6ceb769dc4d3e60f2c97126c3863ae56020c53c",
   "configuration": {
     "props": {}
@@ -21,10 +21,18 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [],
   "preserve": [
-    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
   ],
   "files": [
     "Badge.tsx",

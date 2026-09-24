@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "SegmentedChoice",
   "page": "components/SegmentedChoice/SegmentedChoice.html",
-  "version": "afadd8247927950c",
-  "delivery": "./releases/afadd8247927950c/ready.md",
-  "installer": "./releases/afadd8247927950c/install.cjs",
+  "version": "b675172f6159b615",
+  "delivery": "./releases/b675172f6159b615/ready.md",
+  "installer": "./releases/b675172f6159b615/install.cjs",
   "installerSha256": "d0ed29fdd05475be04ea5011f1e03bc0e74c4fb707be0b6b9a45602fd0f11816",
   "configuration": {
     "props": {}
@@ -26,6 +26,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "single-choice",
@@ -52,8 +60,8 @@
     }
   ],
   "preserve": [
-    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
   ],
   "files": [
     "SegmentedChoice.tsx",

@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "SidebarNavigation",
   "page": "components/SidebarNavigation/SidebarNavigation.html",
-  "version": "0b91c38f8fbe3c28",
-  "delivery": "./releases/0b91c38f8fbe3c28/ready.md",
-  "installer": "./releases/0b91c38f8fbe3c28/install.cjs",
+  "version": "dba6b45d4384dc73",
+  "delivery": "./releases/dba6b45d4384dc73/ready.md",
+  "installer": "./releases/dba6b45d4384dc73/install.cjs",
   "installerSha256": "8d302f2bee70397e8fdd1e666d338218a245b3a444f2c0bff6068c37d5dcc5e6",
   "configuration": {
     "props": {
@@ -32,6 +32,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "portal",
@@ -57,8 +65,8 @@
     }
   ],
   "preserve": [
-    "Preserve collapse/reveal, nested navigation, layout variants and keyboard behavior.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve collapse/reveal, nested navigation, layout variants and keyboard behavior."
   ],
   "files": [
     "SidebarNavigation.tsx",

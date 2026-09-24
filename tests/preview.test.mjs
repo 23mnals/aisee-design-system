@@ -20,7 +20,7 @@ test('top bar uses the compact copy-link icon', () => {
 });
 
 test('Brand catalog separates AISEE foundations from AI exploration references', () => {
-  const expectedOrder = ['Common', 'AI Explorations / Inspiration'];
+  const expectedOrder = ['Foundations', 'Explorations'];
   assert.match(portal, new RegExp(`const brandCategoryOrder = \\[${expectedOrder.map(category => `"${category}"`).join(', ')}\\];`));
 
   const brandEntries = [...portal.matchAll(/\{ group: "Brand",([^}]+)\}/g)].map(match => match[1]);
@@ -29,11 +29,11 @@ test('Brand catalog separates AISEE foundations from AI exploration references',
 
   const categories = new Set(brandEntries.map(entry => entry.match(/category: "([^"]+)"/)?.[1]));
   assert.deepEqual([...categories].sort(), [...expectedOrder].sort());
-  assert.match(portal, /category: "AI Explorations \/ Inspiration", name: "About Us — Design Faithful"/);
-  assert.match(portal, /category: "AI Explorations \/ Inspiration", name: "Update Tutorial Preview"/);
-  assert.match(portal, /category: "AI Explorations \/ Inspiration", name: "Install Tutorial Preview"/);
+  assert.match(portal, /category: "Explorations", name: "About Us — Design Faithful"/);
+  assert.match(portal, /category: "Explorations", name: "Update Tutorial Preview"/);
+  assert.match(portal, /category: "Explorations", name: "Install Tutorial Preview"/);
   assert.match(portal, /group: "Components", category: "Content & Status", name: "Avatar"/);
-  assert.doesNotMatch(portal, /group: "Brand", category: "Common", name: "Avatar"/);
+  assert.doesNotMatch(portal, /group: "Brand", category: "Foundations", name: "Avatar"/);
   assert.doesNotMatch(portal, /preview\/brand-visual-style\.html/);
   assert.doesNotMatch(portal, /group: "Brand", category: "(?:Analyze|Automation|Engage|Growth|Homepage|Overview|Post|Verify)"/);
   assert.match(portal, /Inspiration only/);
@@ -163,7 +163,8 @@ test('every Current component detail page offers a scoped Copy for AI prompt', (
   assert.match(portal, /#openStandalone,\s*#copyAiHeader\s*\{\s*min-height: 40px;\s*height: 40px;/);
   assert.match(portal, /Treat the Design System Demo as a structural and interaction reference/);
   assert.match(portal, /Original Demo path .*\$\{path\}/);
-  assert.match(portal, /Do not approximate it from memory or replace it with visually unstyled browser UI/);
+  assert.match(portal, /Existing host appearance and behavior take precedence over all reference rules below/);
+  assert.match(portal, /non-motion rules are out of scope for motion-only requests/);
   assert.match(portal, /Match the Demo's geometry, spacing, radii, typography, icon weight, colours, states and motion/);
   assert.match(portal, /compare the rendered result against the reference/);
   assert.match(portal, /Demo icon is a placeholder|Demo icons are placeholders/);
@@ -361,7 +362,7 @@ test('dropdown follows the Figma trigger, menu and selection pattern', async () 
   assert.match(portal, /One shared 5% black Fluid Hover highlight follows the nearest enabled option without blinking/);
 });
 
-test('Brand Common documents share the Current component content frame', async () => {
+test('Brand Foundations documents share the Current component content frame', async () => {
   const shared = await readFile(new URL('../brand/common-doc-layout.css', import.meta.url), 'utf8');
   const layout = await readFile(new URL('../brand/common-doc-layout.js', import.meta.url), 'utf8');
   assert.match(shared, /width: 640px !important/);

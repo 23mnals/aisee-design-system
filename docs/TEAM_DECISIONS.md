@@ -225,14 +225,14 @@
 
 ## Host Project Compatibility · 2026-09-21
 
-安装前先识别宿主已有 UI 库与自定义 primitives，按组件清单的 `integrationMode / primitives / preserve` 优先复用兼容底层能力；不为单个组件安装整套 UI framework。保留 AISEE 视觉、状态、动画与行为；样式局部作用域，不覆盖宿主 theme/provider/global styles。不兼容时退回交付的 standalone 实现。识别和适配由编码 AI 在目标项目执行，解包安装器不会自动改造框架。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
+安装前检查实际目标组件、样式、UI 库与现有交互；shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`。保留宿主已有样式、布局、图标、API、状态和事件，只添加本次要求且缺失的能力。动画需求只添加缺失动画、必要 hook 与 reduced-motion，不改变静态外观或交互，不导入整份交付 CSS，不创建平行组件。不兼容不能作为重建理由；只有目标组件不存在时才新增，并复用宿主 UI 库和样式约定。交付源码只作为必要的临时参考；安装器仅校验解包，不会自动适配宿主。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
 
-对于已有 shadcn/ui 的项目，接入 AISEE 组件时先读取 `components.json`、路径 alias 与 `components/ui` 中的现有 primitive；兼容时直接在宿主现有组件路径上增加 AISEE 的视觉、状态、动画和行为，不创建平行的 `src/components/aisee` 或第二套 `components/ui`。交付源码在这种模式下只作为临时参考，合并完成后删除临时目录；只有宿主 primitive 无法满足必要行为时才使用 standalone 实现。
+2026-09-24 更正：既有宿主外观与交互优先于交付 `preserve`，原先“合并 AISEE 视觉、状态、动画”的措辞作废。复制动画只授权补缺失动画；不能更换样式或 UI 库，也不能借 standalone 回退重建已有组件。
 
 ## 2026-09-23 · 门户归属与权威边界
 
 - README 保留为三条使用路径的入口：让 AI 在真实 brief / 参考图基础上按规则出图、让设计师探索方向、让开发接入 Current 组件。缺少实际 brief 或参考图的出图入口标记为待补，不提供看似可用的空入口。
-- Brand / Common 只承载 AISEE Logo、资产、颜色、字体、dApp 基础视觉和跨组件动效等基础规范。AI 生成的 Engage、Growth、Post、Automation 等参考稿归入 Brand / AI Explorations / Inspiration，并明确仅供灵感参考，不是实际产品设计或实施规范。
+- Brand / Foundations 只承载 AISEE Logo、资产、颜色、字体、dApp 基础视觉和跨组件动效等基础规范。AI 生成的 Engage、Growth、Post、Automation 等参考稿归入 Brand / Explorations，并明确仅供灵感参考，不是实际产品设计或实施规范。
 - Components 只承载可独立复用的生产组件及其状态、动画、API 和 Copy for AI。UI Kits 承载多个组件组成的模式、页面示例和交互 Demo；Current 只表示该 Demo 正在维护，不自动表示它是已确认产品页面。
 - 实际产品设计以对应功能的最新 Figma 为准。来源 `source / surface` 与使用状态 `designStatus` 分开记录；旧稿保持 Legacy，Draft 不自动升级为 Selected / Current。
 - 本次归属调整只改导航与元数据，不移动或删除物理文件，并保留旧直达路径、搜索、状态标签和现有深链。
@@ -244,4 +244,15 @@
 - 使用 Figma 72:55666、72:56017、72:55315 的几何与原始图标；默认 332×64、展开约 332×252、最小 74×64。
 - 底部弹性出退场、眨眼和眼珠跟随鼠标是该浮层的确认交互。悬停卡片时眼睛瞪大并左右慌张扫视两次，同时按指针方向轻探；只有进入绿色小怪兽时播放一次软胶回弹，不循环抖动。减少动态效果时停止扫视和位移，只保留静态放大的眼神反馈，状态和控制保持可用。
 - 整张卡片任意位置均可拖拽并限制在视口内；切换 default、expanded、minimized 时保持最近视口边缘或中心锚点，右侧向左展开、向右收起，左侧和上下边缘对称处理，尺寸动画期间也不能越出视口。超过移动阈值后不触发展开、最小化、关闭或操作按钮。拖拽手柄另支持键盘方向键；关闭后的重新唤起入口由宿主应用提供。
-- Copy for AI 接入已有同类浮层时必须原位增量合并，不能创建第二个 Runner。只有现有眨眼和眼珠跟随行为已正确兼容时才保留；除此之外，卡片出退场、三种视图、A+D、拖拽、视口限制和 reduced-motion 均以当前交付为准，同时禁止重复 DOM、keyframes、状态和全局 pointermove 监听。
+- Copy for AI 接入已有同类浮层时保留所有既有样式和交互，只补本次要求的缺失能力；动画需求只补缺失动效，不新增或替换拖拽、状态切换、图标、布局或点击行为。禁止重复 DOM、keyframes、状态和全局 pointermove 监听。参考组件的完整行为仅适用于新组件或明确要求的缺口。
+
+## 2026-09-24 · Brand 分类简化命名
+
+- Brand 的两个分类固定为 Foundations 与 Explorations：前者承载基础规范，后者承载 AI 方向探索与灵感参考。
+- 此命名取代 Common 与 AI Explorations / Inspiration；只调整分类名称，页面路径、来源、Draft / Legacy 状态和 Figma 权威边界保持不变。
+
+## 2026-09-24 · Copy for AI 保留宿主并只补缺失能力
+
+安装前检查实际目标组件、样式、UI 库与现有交互；shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`。保留宿主已有样式、布局、图标、API、状态和事件，只添加本次要求且缺失的能力。动画需求只添加缺失动画、必要 hook 与 reduced-motion，不改变静态外观或交互，不导入整份交付 CSS，不创建平行组件。不兼容不能作为重建理由；只有目标组件不存在时才新增，并复用宿主 UI 库和样式约定。交付源码只作为必要的临时参考；安装器仅校验解包，不会自动适配宿主。
+
+- 该规则取代此前优先还原 AISEE 外观或交互的接入要求。预览参数和组件 preserve 不得覆盖宿主；不安全的动效组合须报告冲突并保留原实现。

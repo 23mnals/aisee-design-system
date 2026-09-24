@@ -4,26 +4,26 @@
 
 ## 使用路径
 
-用户点击 Copy for AI，复制一句明确组件名称的指令和稳定 `latest.json` 地址；只有清单允许的真实样式/交互选项会附加到指令。编码 AI 读取 latest，按其中的相对 `delivery` 地址取得版本说明，再下载并校验安装器，将生产源码接入已有 React 项目。
+用户点击 Copy for AI，复制包含宿主保护约束、明确组件名称的指令和稳定 `latest.json` 地址；只有清单允许的真实样式/交互选项会附加到指令。编码 AI 读取 latest，按其中的相对 `delivery` 地址取得版本说明，再下载并校验安装器，将生产源码接入已有 React 项目。
 
-例如：`Integrate AISEE NotificationBell into this React project. Reuse compatible host/shadcn primitives in place (inspect components.json and components/ui); do not create parallel AISEE primitives. Use standalone only when no compatible primitive exists: https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/notification-bell/latest.json`
+例如：`Integrate AISEE NotificationBell into this React project. Inspect the existing target, styles, UI library and interactions first (shadcn: components.json/components/ui). Preserve them; add only requested missing capabilities. For animation requests, add only missing motion; do not restyle or change interactions. Reuse existing components; do not create parallel AISEE primitives or import full delivery CSS. Only create a component when the target is absent; incompatibility is not permission to replace it. Host preservation overrides delivery defaults/preserve rules and preview options. Reference: https://23mnals.github.io/aisee-design-system/assets/ai-deliveries/notification-bell/latest.json`
 
 接收方需要兼容的 React 项目及组件清单声明的运行环境。具体 React、Node 和第三方依赖要求由每个组件的 `dependencies / compatibility` 配置声明，Copy for AI 不额外强制统一技术栈版本。Node 声明用于执行源码安装器，不是浏览器组件的运行依赖；宿主构建工具自身的版本要求由宿主负责。还需 TSX/CSS 及该组件必要资源的导入支持，以及可联网读取交付、执行项目命令的编码 AI。无需手动下载附件或安装整个 AISEE 库；缺少基础依赖时按清单和宿主包管理方式补充。
 
 ## Host Project Compatibility
 
-Copy for AI 不假设目标项目使用 AISEE 基础组件。安装前，编码 AI 必须检查目标项目的 package.json、lockfile、现有组件导入、自定义 primitives、theme/provider 和全局样式，识别 shadcn/ui、Radix、MUI、Ant Design、Chakra、Headless UI 或宿主自定义实现。网站无法在复制时读取外部项目；识别与适配由接收方编码 AI 在执行接入时完成，源码安装器只负责校验并解包。
+Copy for AI 默认保留目标项目已有样式、UI 库和交互，只添加本次要求且尚未存在的能力。宿主现状优先于交付稿的外观、默认参数、示例与 `preserve` 列表。复制整组件或预览选项不等于授权换肤、重建组件或更换 UI 库。
 
-1. 已有兼容 primitive 优先复用，按清单 requiredCapabilities 核实当前版本 API、refs、DOM/状态钩子、受控状态和无障碍能力，不能只凭库名判断兼容。shadcn/ui 项目必须先读取 `components.json`、alias 配置与现有 `components/ui` 文件。
-2. 不为一个 AISEE 组件安装另一套完整 UI framework。第三方 primitive 只负责 focus、portal、定位、dialog 无障碍、button/input 等底层能力。
-3. AISEE 的视觉、尺寸、图标、状态、动画、交互及 reduced-motion 必须保留。若宿主带默认外观，须能局部中和；不得直接换成 MUI/Ant 等默认样式。组件公共 props 和 ref 行为也必须保持，尤其 native dialog API 不能静默换成不兼容 ref。
-4. 仅在清单声明的边界建立本地 adapter；不得覆盖宿主原组件、theme、provider 或 global styles。AISEE CSS 及 portal 内容均须局部作用域，禁止全局 button/input/svg/body/reset。兼容字体/token 可复用，差异用组件局部默认值补足，不以换肤破坏 AISEE 规范。
-5. 宿主已有兼容的 shadcn/ui 或自定义 primitive 时，直接在它的既有路径与公开 API 上合并 AISEE 视觉、状态和动画；不得创建平行的 `src/components/aisee` primitive，也不得复制第二套 `components/ui`。交付源码只解包到临时参考目录，合并完成后删除。只有宿主 primitive 无法满足必要行为时，该边界才退回 standalone implementation，并说明具体缺失能力。primitives 为空表示无需替换库级基础能力，不制造 adapter。
-6. 适配后检查视觉/状态/动画一致性、键盘与焦点返回、浮层位置/层级及宿主类型检查/构建；避免重复 focus trap、Escape/外部点击监听或定位与动效争用 transform。简短记录实际识别的宿主栈、复用点与回退理由。
+1. **先检查再添加**：读取实际目标组件及调用处、局部 CSS / CSS Modules / Tailwind、图标、token、事件与状态、package.json、lockfile、theme/provider 和全局样式。shadcn/ui 同时读取 `components.json`、alias、现有 `components/ui`；识别 Radix、MUI、Ant、Chakra、Headless UI 或自定义实现，列明已有能力和本次缺口。
+2. **已有实现优先**：沿用既有路径、公开 API、样式、布局、尺寸、颜色、字体、间距、图标、类名、状态、回调、键盘和焦点行为、业务逻辑。只补缺失内容，不重建、不导入整份交付 CSS、不用局部覆盖规则强行换肤，不创建平行 AISEE primitive 或第二套 `components/ui`。
+3. **动画需求只加动画**：已有样式时，只增加缺失的 keyframes、transition 或动效 hook，接入现有状态与事件，包含 cleanup 与 reduced-motion。保留静态外观、点击行为、状态流转、导航和拖拽逻辑；已有动画不重复安装，不覆盖定位或拖拽已有的 transform / transition。不能安全组合时报告具体冲突，保持原实现。
+4. **不兼容不能作为重建理由**：以最小增量补缺失能力；无法安全接入时说明缺口。只有目标组件确实不存在时才新增，并复用宿主 UI 库、样式约定和 token；其中没有可用 primitive 的边界才使用 standalone。`primitives: []` 同样要检查现有组件，不能跳过保护规则。
+5. **源码作为参考**：已有目标只在需要时解包到临时参考目录，提取必要动画或能力及其依赖，不接入完整组件入口或样式文件。添加的样式限定作用域，包含 portal；禁止全局 reset、替换主题/provider/样式或为单组件引入整套框架。安装器仅校验和解包，不会自动判断或适配宿主。
+6. **按宿主前后对比验收**：静态外观、已有交互、API、状态和回调必须保持；新增能力按本次要求验收，检查焦点、键盘、浮层、reduced-motion、清理和项目构建。报告复用位置、新增内容及未解决冲突。用户明确要求修改已有设计或行为时，另按该明确范围执行；交付文档本身不提供此授权。
 
-每个组件声明 `integrationMode: "host-first"`、`primitives` 与 `preserve`；primitive 使用 `role / sourceFiles / requiredCapabilities / fallback: "standalone"`。sourceFiles 必须属于自身 productionFiles，不能指向 Demo 或外部假想文件。preserve 对宿主适配与 standalone 同样有效。这些字段同步到 latest、交付元数据和版本接入说明；短复制指令无需展开规则。
+每个组件声明 `integrationMode: "host-first"`、`primitives` 与 `preserve`；生成的 latest、交付元数据和接入说明统一包含 `integrationPolicy`。其中 `preserve` 描述独立参考组件及本次缺失能力，不要求用 AISEE 外观或交互覆盖已有组件；动画需求中非动画的布局、图标、状态与行为不在接入范围。短复制指令直接包含保留宿主和仅加动画的约束，避免只读取短指令时误判。
 
-这是一套明确的接入契约，不是已完成所有第三方库的适配器。具体宿主兼容性由实际项目验证；本仓库验证清单、规则传递、CSS 边界及 standalone 交付，不把这些检查冒充 MUI/Ant/Chakra 等真实宿主的全面验收。
+这是一套接入契约，不是自动样式合并器。本仓库验证规则传递、交付完整性和覆盖保护；真实外部 AI 是否正确遵循仍需在实际项目验收。
 
 ## 显式清单
 
@@ -38,7 +38,8 @@ Copy for AI 不假设目标项目使用 AISEE 基础组件。安装前，编码 
 - `assets`：代码或选定 CSS 实际引用的生产资产，逐项列出。未使用或未声明引用都会使构建失败。
 - `demoFiles`：明确不参与交付的预览/演示文件；另外拒绝 demo/mock/playground/showcase/story/examples/fonts 路径和字体扩展名。
 - `integrationMode / primitives`：宿主优先策略与逐项可适配底层边界，含生产来源、必需能力和独立回退。
-- `preserve`：必须保留的视觉、状态、动画、行为与无障碍规范。
+- `preserve`：新组件与本次缺失能力的参考规范，服从已有宿主样式和交互保护。
+- `integrationPolicy`：生成器统一注入的增量接入、动画范围、既有实现优先级及冲突处理规则。
 - `configuration`：可复制的真实 props / slots / theme 白名单，纯演示状态不在其中。
 
 不限制文件数量。必要的类型声明、入口和局部样式属于生产文件；Dialog、Tooltip 等可带多个实现或动效文件。构建验证所有生产源码引用都在清单内，所有源码都由入口可达。Production 不能依赖 Demo；Demo 继续使用生产组件或既有展示实现，不随交付清单改变。
@@ -49,7 +50,7 @@ CSS 闭包从生产选择器进入，保留复合/嵌套 selector、pseudo state
 
 ## 配置与 Demo 边界
 
-布局、方向、动画模式等真实参数可以复制；模拟业务数据、当前演示计数、reset/simulate、错误场景和 showcase composition 不复制。多个 scope 是独立例子，不要求目标项目创建多份示例页面。slot 布尔值描述内容组合，不能直接当作 props。
+布局、方向、动画模式等真实参数可以复制，但仅作为本次缺失能力或新组件的参考，不能覆盖现有配置；动画需求忽略布局、尺寸、图标、主题等非动画参数。模拟业务数据、当前演示计数、reset/simulate、错误场景和 showcase composition 不复制。多个 scope 是独立例子，不要求目标项目创建多份示例页面。slot 布尔值描述内容组合，不能直接当作 props。
 
 NotificationBell 默认交付动画铃铛本身，数值/圆点是生产 API；展示页的圆点、面板选项和模拟数量不是选定业务配置。调用 `count={unreadCount}` 和 `onClick={openNotifications}` 接入真实数据和现有通知入口。不会交付 NotificationPanel、消息数组、面板插图或全部已读演示按钮。详情见 [铃铛验收](NOTIFICATION_COPY_AI.md)。
 

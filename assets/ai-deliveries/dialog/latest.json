@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Dialog",
   "page": "components/Dialog/Dialog.html",
-  "version": "6f5336ec46608c5d",
-  "delivery": "./releases/6f5336ec46608c5d/ready.md",
-  "installer": "./releases/6f5336ec46608c5d/install.cjs",
+  "version": "34df56fe1933e494",
+  "delivery": "./releases/34df56fe1933e494/ready.md",
+  "installer": "./releases/34df56fe1933e494/install.cjs",
   "installerSha256": "ac14e7b39c7c5ffb66cd279dfd39bfdf29d8ac64472974c0fe206691e34d91a0",
   "configuration": {
     "props": {}
@@ -21,6 +21,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "dialog",
@@ -36,8 +44,8 @@
     }
   ],
   "preserve": [
-    "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion."
   ],
   "files": [
     "Dialog.tsx",

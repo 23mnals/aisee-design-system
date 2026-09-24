@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "PlanCard",
   "page": "components/PlanCardCurrent/PlanCardCurrent.html",
-  "version": "06a95bf93fc90548",
-  "delivery": "./releases/06a95bf93fc90548/ready.md",
-  "installer": "./releases/06a95bf93fc90548/install.cjs",
+  "version": "a3f2ebc3ce156e00",
+  "delivery": "./releases/a3f2ebc3ce156e00/ready.md",
+  "installer": "./releases/a3f2ebc3ce156e00/install.cjs",
   "installerSha256": "f14994d7f2d9f3feac62ceed24b8b415537c052cc46e61495ac5b3fad8d20e1a",
   "configuration": {
     "props": {}
@@ -21,6 +21,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "button",
@@ -47,8 +55,8 @@
     }
   ],
   "preserve": [
-    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
   ],
   "files": [
     "PlanCard.tsx",

@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "TreeNav",
   "page": "components/TreeNav/TreeNav.html",
-  "version": "97e6b5fd2d6d8ade",
-  "delivery": "./releases/97e6b5fd2d6d8ade/ready.md",
-  "installer": "./releases/97e6b5fd2d6d8ade/install.cjs",
+  "version": "0f2dd00dd2541f49",
+  "delivery": "./releases/0f2dd00dd2541f49/ready.md",
+  "installer": "./releases/0f2dd00dd2541f49/install.cjs",
   "installerSha256": "c1c39f963f1e3c48d257af6322651c8c01f19a235ac6bb12b76abf563b38671e",
   "configuration": {
     "props": {}
@@ -21,6 +21,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "tree-navigation",
@@ -35,8 +43,8 @@
     }
   ],
   "preserve": [
-    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
   ],
   "files": [
     "TreeNav.tsx",

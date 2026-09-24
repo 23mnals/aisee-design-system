@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "TooltipToast",
   "page": "components/TooltipToast/TooltipToast.html",
-  "version": "b9401259d027a6cd",
-  "delivery": "./releases/b9401259d027a6cd/ready.md",
-  "installer": "./releases/b9401259d027a6cd/install.cjs",
+  "version": "0f8b6436f11929ea",
+  "delivery": "./releases/0f8b6436f11929ea/ready.md",
+  "installer": "./releases/0f8b6436f11929ea/install.cjs",
   "installerSha256": "e625b15ba75c8824d7fab94f039f1f69c31f21c2eae2a04a19dee02669c1eba8",
   "configuration": {
     "props": {
@@ -31,6 +31,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "tooltip",
@@ -57,9 +65,9 @@
     }
   ],
   "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
     "Preserve Tooltip auto placement, viewport collision handling, hover/focus/Escape, subtle/playful spring motion and reduced motion.",
-    "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page."
   ],
   "files": [
     "Tooltip.tsx",

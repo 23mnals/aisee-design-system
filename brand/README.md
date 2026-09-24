@@ -6,12 +6,12 @@ Brand 是 Design System 的官网与品牌入口，字体允许 **Karla + Gotu**
 
 Brand 只区分两类内容：
 
-1. **Common**：AISEE 基础规范，包括 Logo 与资产、颜色、字体、间距、圆角、阴影、dApp 基础视觉和跨组件动效原则。
-2. **AI Explorations / Inspiration**：由 ChatGPT、Codex 或其他 AI 平台生成的方向探索与参考稿。它们仅供灵感参考，不是实际产品设计，也不是开发实施规范；真实产品设计以对应功能的最新 Figma 为准。
+1. **Foundations**：AISEE 基础规范，包括 Logo 与资产、颜色、字体、间距、圆角、阴影、dApp 基础视觉和跨组件动效原则。
+2. **Explorations**：由 ChatGPT、Codex 或其他 AI 平台生成的方向探索与参考稿。它们仅供灵感参考，不是实际产品设计，也不是开发实施规范；真实产品设计以对应功能的最新 Figma 为准。
 
 来源与使用状态分开记录：`source / surface` 说明内容从哪里产生，`designStatus` 或门户 `status` 说明 Draft、Current、Legacy 等使用状态。来源为 AI 不等于 Draft，Draft 也不会自动升级为 Selected 或 Current。
 
-分类只改变预览导航的信息架构，不移动或删除历史文件；原路径、直达链接和 Legacy/Draft 状态保持不变。新增 AI 参考稿进入 AI Explorations / Inspiration，并在说明中保留原功能语境；跨模块基础规范归入 Common。
+分类只改变预览导航的信息架构，不移动或删除历史文件；原路径、直达链接和 Legacy/Draft 状态保持不变。新增 AI 参考稿进入 Explorations，并在说明中保留原功能语境；跨模块基础规范归入 Foundations。
 
 ## 页面产出约定
 

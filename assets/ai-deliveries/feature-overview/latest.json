@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "FeatureOverview",
   "page": "components/FeatureOverview/FeatureOverview.html",
-  "version": "136e4b592559387f",
-  "delivery": "./releases/136e4b592559387f/ready.md",
-  "installer": "./releases/136e4b592559387f/install.cjs",
+  "version": "94d848085f0bf3a9",
+  "delivery": "./releases/94d848085f0bf3a9/ready.md",
+  "installer": "./releases/94d848085f0bf3a9/install.cjs",
   "installerSha256": "d1ccf6c6d2c8dd5b64d9339e75c25624499833ce3ca43f0344e67a70349b9f3f",
   "configuration": {
     "props": {
@@ -26,10 +26,18 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [],
   "preserve": [
-    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
   ],
   "files": [
     "FeatureOverview.tsx",

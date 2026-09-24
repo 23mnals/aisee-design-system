@@ -30,7 +30,7 @@
 
 ## 接入前检查
 
-安装前先识别宿主已有 UI 库与自定义 primitives，按组件清单的 `integrationMode / primitives / preserve` 优先复用兼容底层能力；不为单个组件安装整套 UI framework。shadcn/ui 项目必须先读取 `components.json`、alias 和现有 `components/ui`，兼容时直接在宿主既有组件路径上合并 AISEE 视觉、状态、动画与行为，不创建平行的 `src/components/aisee` 或第二套 `components/ui`。交付源码只作为临时参考，合并完成后删除；仅在宿主 primitive 无法满足必要行为时退回 standalone。样式局部作用域，不覆盖宿主 theme/provider/global styles。识别和适配由编码 AI 在目标项目执行，解包安装器不会自动改造框架。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
+安装前检查实际目标组件、样式、UI 库与现有交互；shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`。保留宿主已有样式、布局、图标、API、状态和事件，只添加本次要求且缺失的能力。动画需求只添加缺失动画、必要 hook 与 reduced-motion，不改变静态外观或交互，不导入整份交付 CSS，不创建平行组件。不兼容不能作为重建理由；只有目标组件不存在时才新增，并复用宿主 UI 库和样式约定。交付源码只作为必要的临时参考；安装器仅校验解包，不会自动适配宿主。完整规则见 [Host Project Compatibility](PRODUCTION_DELIVERY.md#host-project-compatibility)。
 
 先读 [第三方接入指南](GETTING_STARTED.md) 和 [生产交付契约](PRODUCTION_DELIVERY.md)。当前所有已登记的 Current 组件通过公开 latest 指针提供必要生产源码，无需整库或私有仓库权限；真实配置白名单与 Demo 状态分开。
 

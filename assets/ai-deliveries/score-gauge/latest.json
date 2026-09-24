@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "ScoreGauge",
   "page": "components/ScoreGauge/ScoreGauge.html",
-  "version": "5dfc781572ff213d",
-  "delivery": "./releases/5dfc781572ff213d/ready.md",
-  "installer": "./releases/5dfc781572ff213d/install.cjs",
+  "version": "154bd5ab2a4ef541",
+  "delivery": "./releases/154bd5ab2a4ef541/ready.md",
+  "installer": "./releases/154bd5ab2a4ef541/install.cjs",
   "installerSha256": "25c5e9bcf53714c73945631756602db31ea67faa9e765b88725c8610f3450228",
   "configuration": {
     "props": {}
@@ -21,10 +21,18 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [],
   "preserve": [
-    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
   ],
   "files": [
     "ScoreGauge.tsx",

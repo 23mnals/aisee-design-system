@@ -1,5 +1,7 @@
 # NotificationBell Copy for AI
 
+已有铃铛或样式时，保留图标、颜色、按钮/圆点/数字外观、点击回调和计数来源，只增加缺失的铃铛/数字动画及 reduced-motion；不导入整个 NotificationBell 或完整样式表。下文完整参考 API 仅适用于新增组件；动画接入复用宿主 API。
+
 NotificationBell 使用全组件统一的 [生产交付机制](PRODUCTION_DELIVERY.md)，没有专属打包或复制特判。清单只把 NotificationBell 作为入口；输出铃铛实现、局部样式、入口及必要 CSS 类型声明。无 NotificationPanel、mock 消息、演示页面、字体、面板资产或全局样式。
 
 复制内容明确写 `Integrate AISEE NotificationBell into the current React project`，链接稳定的 `notification-bell/latest.json`。公开指针随组件构建/发布自动更新。旧 ready-30.md 仍为旧版历史交付，当前复制入口不再使用它。

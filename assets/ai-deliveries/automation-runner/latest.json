@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "AutomationRunner",
   "page": "components/AutomationRunner/AutomationRunner.html",
-  "version": "200678363f0b540a",
-  "delivery": "./releases/200678363f0b540a/ready.md",
-  "installer": "./releases/200678363f0b540a/install.cjs",
+  "version": "49db4e9b4383c154",
+  "delivery": "./releases/49db4e9b4383c154/ready.md",
+  "installer": "./releases/49db4e9b4383c154/install.cjs",
   "installerSha256": "f3af2e5f355fb6c9dc2f81d9256a73c26f3b91e9f1852f8d9a09f6abf53ae5a1",
   "configuration": {
     "props": {
@@ -26,6 +26,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "button",
@@ -33,19 +41,19 @@
         "src/components/AutomationRunner.tsx"
       ],
       "requiredCapabilities": [
-        "native button semantics, refs, accessible labels and keyboard activation without host default visuals",
+        "native button semantics, refs, accessible labels and keyboard activation while retaining host visuals",
         "AISEE controlled visibility/view state, drag handle pointer capture, focus rings and playful motion"
       ],
       "fallback": "standalone"
     }
   ],
   "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
     "Mount the runner once in the host app shell outside route content so it persists across navigation. Closing hides only the window and must never stop, cancel or mutate the automation task.",
     "Preserve default, expanded and minimized views, controlled open/view callbacks, real detail rows and the Back to Automation host callback. The card title and arrow toggle details only when real details or an action exist; without either, an externally requested expanded view must fall back to default and must not render an empty detail divider or expand affordance. The line control minimizes it, and clicking anywhere on the minimized card restores the default view; the visible green eye remains the keyboard-accessible restore control.",
-    "Before integration, inspect the host for an existing Automation Runner or equivalent persistent status card. Update a compatible existing implementation in place instead of mounting a second runner. Retain an existing blink and pointer-following eye only when they already behave correctly; do not duplicate their DOM, state, keyframes or window pointermove listener.",
-    "Except for a compatible existing blink and pointer-following eye, this delivery is authoritative for all component behavior: bottom entrance and exit bounce, default/expanded/minimized views, pointer-directed card lean, a wide-eyed two-pass panic scan when entering the whole card, one jelly rebound only when entering the green mascot, whole-card pointer dragging, keyboard drag-handle movement, viewport clamping, nearest-edge anchoring while dimensions animate between views, and complete prefers-reduced-motion fallback. A runner near the right edge expands left and minimizes toward the right edge; the left, top and bottom edges behave symmetrically. A drag must not activate expand, minimize, close or action controls.",
-    "Use the exact exported Figma icons and eye mask. Detail values and automation state come from the host; do not ship Demo routes, controls or mock task management.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Before integration, inspect the host for an existing Automation Runner or equivalent persistent status card. Update a compatible existing implementation in place instead of mounting a second runner. Preserve all existing styles and interactions, including blink and pointer-following eye; add only requested missing motion; do not duplicate their DOM, state, keyframes or window pointermove listener.",
+    "For an absent target, the standalone reference provides the following capabilities; for an existing target use only the requested missing subset without replacing host styles or interactions: bottom entrance and exit bounce, default/expanded/minimized views, pointer-directed card lean, a wide-eyed two-pass panic scan when entering the whole card, one jelly rebound only when entering the green mascot, whole-card pointer dragging, keyboard drag-handle movement, viewport clamping, nearest-edge anchoring while dimensions animate between views, and complete prefers-reduced-motion fallback. A runner near the right edge expands left and minimizes toward the right edge; the left, top and bottom edges behave symmetrically. A drag must not activate expand, minimize, close or action controls.",
+    "Use the exact exported Figma icons and eye mask. Detail values and automation state come from the host; do not ship Demo routes, controls or mock task management."
   ],
   "files": [
     "AutomationRunner.tsx",

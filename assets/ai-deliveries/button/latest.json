@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Button",
   "page": "components/Button/Button.html",
-  "version": "6583b71bdf6f1708",
-  "delivery": "./releases/6583b71bdf6f1708/ready.md",
-  "installer": "./releases/6583b71bdf6f1708/install.cjs",
+  "version": "a0ae1f2827b8662a",
+  "delivery": "./releases/a0ae1f2827b8662a/ready.md",
+  "installer": "./releases/a0ae1f2827b8662a/install.cjs",
   "installerSha256": "9a0770f14f4fb82fccbbc01f86710085b9cb4f8ce401a47aea622eea5aa14856",
   "configuration": {
     "props": {
@@ -28,6 +28,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "button",
@@ -42,8 +50,8 @@
     }
   ],
   "preserve": [
-    "Preserve two-sided hover/focus fill motion, icon slots and disabled behavior.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve two-sided hover/focus fill motion, icon slots and disabled behavior."
   ],
   "files": [
     "Button.tsx",

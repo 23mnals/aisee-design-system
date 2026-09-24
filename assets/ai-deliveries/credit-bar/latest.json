@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "CreditBar",
   "page": "components/CreditBar/CreditBar.html",
-  "version": "c52b8cfa8d47e1ea",
-  "delivery": "./releases/c52b8cfa8d47e1ea/ready.md",
-  "installer": "./releases/c52b8cfa8d47e1ea/install.cjs",
+  "version": "df361c2c42fc5d5b",
+  "delivery": "./releases/df361c2c42fc5d5b/ready.md",
+  "installer": "./releases/df361c2c42fc5d5b/install.cjs",
   "installerSha256": "88bbe714edada53232388f981ab5d73674488f7f9b502eee9038db793389079c",
   "configuration": {
     "props": {}
@@ -21,10 +21,18 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [],
   "preserve": [
-    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
   ],
   "files": [
     "CreditBar.tsx",

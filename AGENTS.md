@@ -115,13 +115,13 @@ PNG 不是同步、注册或 Demo 展示的必要条件。如果没有与当前 
 
 ### Brand 注册规则
 
-- AISEE 基础规范保留在 Brand / Common。
-- Web / AI 生成的参考与探索稿默认注册到 Brand / AI Explorations / Inspiration；功能上下文写入名称、subtitle 或 metadata，不按页面名称自动迁入 UI Kits，也不把探索稿标为已确认产品设计。
+- AISEE 基础规范保留在 Brand / Foundations。
+- Web / AI 生成的参考与探索稿默认注册到 Brand / Explorations；功能上下文写入名称、subtitle 或 metadata，不按页面名称自动迁入 UI Kits，也不把探索稿标为已确认产品设计。
 - 例如 `brand/pages/managed-automation/` 在 UI 中显示为：
 
   ```text
   Brand
-  └── AI Explorations / Inspiration
+  └── Explorations
       └── Managed Automation
   ```
 
@@ -175,3 +175,11 @@ Git 历史本身作为历史记录，不需要继续在 Design System 导航中�
 - “v6 主要更新”只记录版本级、长期有效的核心变化；日常更新不得继续追加到该区域，失效规则直接修正。
 - 如果本批更新影响当前规范，必须同步修改 README 当前规范、组件页面与 Overview、`Copy for AI`、`NEW` 标识、相关设计资源和交付文档。
 - 纯重构、格式化、内部测试或其他不影响使用的代码调整，不写入 README。
+
+## 7. Copy for AI 宿主保护
+
+安装前检查实际目标组件、样式、UI 库与现有交互；shadcn/ui 同时读取 `components.json`、alias 和既有 `components/ui`。保留宿主已有样式、布局、图标、API、状态和事件，只添加本次要求且缺失的能力。动画需求只添加缺失动画、必要 hook 与 reduced-motion，不改变静态外观或交互，不导入整份交付 CSS，不创建平行组件。不兼容不能作为重建理由；只有目标组件不存在时才新增，并复用宿主 UI 库和样式约定。交付源码只作为必要的临时参考；安装器仅校验解包，不会自动适配宿主。
+
+- 既有实现优先于交付默认值、预览选项和 preserve；新增样式必须局部作用域，不能以覆盖 CSS 的方式换肤。
+- 动画必须复用已有事件与状态，组合已有 transform / transition，保留交互并提供 cleanup / reduced-motion；无法安全添加时报告具体冲突。
+- 接入验收必须对比静态外观和已有交互，不能只验证 AISEE 动画是否出现。

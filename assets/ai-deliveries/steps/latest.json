@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Steps",
   "page": "components/Steps/Steps.html",
-  "version": "88137e062fc03867",
-  "delivery": "./releases/88137e062fc03867/ready.md",
-  "installer": "./releases/88137e062fc03867/install.cjs",
+  "version": "510850d1b007519e",
+  "delivery": "./releases/510850d1b007519e/ready.md",
+  "installer": "./releases/510850d1b007519e/install.cjs",
   "installerSha256": "d31b22006cd8820f3603d91645fb64c15b97b183f9b8b163a451ee79f7a30447",
   "configuration": {
     "props": {
@@ -25,10 +25,18 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [],
   "preserve": [
-    "Preserve production step progress and loading animations; workflow state comes from the host.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve production step progress and loading animations; workflow state comes from the host."
   ],
   "files": [
     "Steps.tsx",

@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "Dropdown",
   "page": "components/Select/Select.html",
-  "version": "1540c33f6b92f350",
-  "delivery": "./releases/1540c33f6b92f350/ready.md",
-  "installer": "./releases/1540c33f6b92f350/install.cjs",
+  "version": "95dd5d279be04929",
+  "delivery": "./releases/95dd5d279be04929/ready.md",
+  "installer": "./releases/95dd5d279be04929/install.cjs",
   "installerSha256": "9167abf98a5627ecb022d7a19160b76b40354c52bb3d594b65b43531cf2abb0d",
   "configuration": {
     "props": {
@@ -28,6 +28,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "popover",
@@ -53,8 +61,8 @@
     }
   ],
   "preserve": [
-    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+    "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
   ],
   "files": [
     "Dropdown.tsx",

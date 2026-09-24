@@ -31,8 +31,8 @@
         "components/Button/Button.demo.tsx"
       ],
       "preserve": [
-        "Preserve two-sided hover/focus fill motion, icon slots and disabled behavior.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve two-sided hover/focus fill motion, icon slots and disabled behavior."
       ],
       "configuration": {
         "props": {
@@ -100,8 +100,8 @@
         "components/Input/Input.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {
@@ -173,8 +173,8 @@
         "components/QuantityStepper/QuantityStepper.html"
       ],
       "preserve": [
-        "Preserve keyboard editing, hold acceleration, min/max boundaries and numeric roll motion.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve keyboard editing, hold acceleration, min/max boundaries and numeric roll motion."
       ],
       "configuration": {
         "props": {
@@ -244,8 +244,8 @@
         "components/Checkbox/Checkbox.html"
       ],
       "preserve": [
-        "Preserve checked/indeterminate states, focus behavior and check celebration animation.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve checked/indeterminate states, focus behavior and check celebration animation."
       ],
       "configuration": {
         "props": {
@@ -316,8 +316,8 @@
         "components/Select/Select.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {
@@ -401,8 +401,8 @@
         "components/Toggle/Toggle.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {
@@ -470,8 +470,8 @@
         "components/TagInput/TagInput.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -556,8 +556,8 @@
         "components/SegmentedChoice/SegmentedChoice.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -651,8 +651,8 @@
         "components/ToggleSelectionGroup/ToggleSelectionGroup.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -734,8 +734,8 @@
         "components/Tabs/Tabs.html"
       ],
       "preserve": [
-        "Preserve controlled selection, keyboard navigation, icon/text variants and responsive platform labels.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve controlled selection, keyboard navigation, icon/text variants and responsive platform labels."
       ],
       "configuration": {
         "props": {
@@ -815,8 +815,8 @@
         "components/SidebarNavigation/SidebarNavigation.demo.tsx"
       ],
       "preserve": [
-        "Preserve collapse/reveal, nested navigation, layout variants and keyboard behavior.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve collapse/reveal, nested navigation, layout variants and keyboard behavior."
       ],
       "configuration": {
         "props": {
@@ -892,8 +892,8 @@
         "components/TreeNav/TreeNav.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -975,8 +975,8 @@
         "components/FeatureOverview/FeatureOverview.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {
@@ -1067,8 +1067,8 @@
         "components/PlanCardCurrent/PlanCardCurrent.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -1144,8 +1144,8 @@
         "preview/avatar.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {
@@ -1207,8 +1207,8 @@
         "components/Badge/Badge.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -1268,8 +1268,8 @@
         "components/Steps/Steps.demo.tsx"
       ],
       "preserve": [
-        "Preserve production step progress and loading animations; workflow state comes from the host.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve production step progress and loading animations; workflow state comes from the host."
       ],
       "configuration": {
         "props": {
@@ -1345,8 +1345,8 @@
         "components/EmptyState/EmptyState.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {
@@ -1418,8 +1418,8 @@
         "components/Card/Card.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -1482,8 +1482,8 @@
         "components/StatCardCurrent/StatCardCurrent.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -1531,8 +1531,8 @@
         "components/Table/Table.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -1579,8 +1579,8 @@
         "components/Chart/Chart.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -1635,8 +1635,8 @@
         "components/ScoreGauge/ScoreGauge.html"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -1692,8 +1692,8 @@
         "components/CreditBar/CreditBar.demo.tsx"
       ],
       "preserve": [
-        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve the production component props, visual variants, interactions, animations and accessibility. Supply content and state from the real product."
       ],
       "configuration": {
         "props": {}
@@ -1746,8 +1746,8 @@
         "components/Dialog/Dialog.demo.tsx"
       ],
       "preserve": [
-        "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
+        "Preserve native modal focus handling, Escape/close callbacks, responsive layouts and entry/exit/backdrop motion."
       ],
       "configuration": {
         "props": {}
@@ -1815,10 +1815,10 @@
         "assets/confirmation-dialog/managed-replies.svg"
       ],
       "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
         "Preserve the controlled native modal, safe-action initial focus, focus containment and return, Escape/close/cancel callbacks, responsive actions and scrollable long content.",
         "Preserve optional positive/warning impact notices and host icon/content slots. Labels, notices, counts and confirm callbacks come from the host; never install the automation/discard examples or their illustration assets.",
-        "The host decides when confirmation succeeds and closes the dialog; do not automatically run a business operation or add demo Toast behavior.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "The host decides when confirmation succeeds and closes the dialog; do not automatically run a business operation or add demo Toast behavior."
       ],
       "configuration": {
         "props": {}
@@ -1919,9 +1919,9 @@
         "components/TooltipToast/TooltipToast.demo.tsx"
       ],
       "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
         "Preserve Tooltip auto placement, viewport collision handling, hover/focus/Escape, subtle/playful spring motion and reduced motion.",
-        "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Preserve Toast dismissal and timed progress behavior; do not create a toast demonstration page."
       ],
       "configuration": {
         "props": {
@@ -1997,10 +1997,10 @@
         "components/NotificationBell/NotificationBell.html"
       ],
       "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
         "Keep the inline bell icon, hover/focus, numeric badge and optional unread dot.",
         "Real count increases ring the white bell and animate the badge number. Rerenders, unchanged/decreased/cleared counts must not replay incoming animation.",
-        "The outer button and black icon circle remain fixed; respect prefers-reduced-motion. Connect count and onClick to existing product data and navigation.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "The outer button and black icon circle remain fixed; respect prefers-reduced-motion. Connect count and onClick to existing product data and navigation."
       ],
       "configuration": {
         "props": {}
@@ -2067,12 +2067,12 @@
         "components/AutomationRunner/AutomationRunner.demo.css"
       ],
       "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
         "Mount the runner once in the host app shell outside route content so it persists across navigation. Closing hides only the window and must never stop, cancel or mutate the automation task.",
         "Preserve default, expanded and minimized views, controlled open/view callbacks, real detail rows and the Back to Automation host callback. The card title and arrow toggle details only when real details or an action exist; without either, an externally requested expanded view must fall back to default and must not render an empty detail divider or expand affordance. The line control minimizes it, and clicking anywhere on the minimized card restores the default view; the visible green eye remains the keyboard-accessible restore control.",
-        "Before integration, inspect the host for an existing Automation Runner or equivalent persistent status card. Update a compatible existing implementation in place instead of mounting a second runner. Retain an existing blink and pointer-following eye only when they already behave correctly; do not duplicate their DOM, state, keyframes or window pointermove listener.",
-        "Except for a compatible existing blink and pointer-following eye, this delivery is authoritative for all component behavior: bottom entrance and exit bounce, default/expanded/minimized views, pointer-directed card lean, a wide-eyed two-pass panic scan when entering the whole card, one jelly rebound only when entering the green mascot, whole-card pointer dragging, keyboard drag-handle movement, viewport clamping, nearest-edge anchoring while dimensions animate between views, and complete prefers-reduced-motion fallback. A runner near the right edge expands left and minimizes toward the right edge; the left, top and bottom edges behave symmetrically. A drag must not activate expand, minimize, close or action controls.",
-        "Use the exact exported Figma icons and eye mask. Detail values and automation state come from the host; do not ship Demo routes, controls or mock task management.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Before integration, inspect the host for an existing Automation Runner or equivalent persistent status card. Update a compatible existing implementation in place instead of mounting a second runner. Preserve all existing styles and interactions, including blink and pointer-following eye; add only requested missing motion; do not duplicate their DOM, state, keyframes or window pointermove listener.",
+        "For an absent target, the standalone reference provides the following capabilities; for an existing target use only the requested missing subset without replacing host styles or interactions: bottom entrance and exit bounce, default/expanded/minimized views, pointer-directed card lean, a wide-eyed two-pass panic scan when entering the whole card, one jelly rebound only when entering the green mascot, whole-card pointer dragging, keyboard drag-handle movement, viewport clamping, nearest-edge anchoring while dimensions animate between views, and complete prefers-reduced-motion fallback. A runner near the right edge expands left and minimizes toward the right edge; the left, top and bottom edges behave symmetrically. A drag must not activate expand, minimize, close or action controls.",
+        "Use the exact exported Figma icons and eye mask. Detail values and automation state come from the host; do not ship Demo routes, controls or mock task management."
       ],
       "configuration": {
         "props": {
@@ -2101,7 +2101,7 @@
             "src/components/AutomationRunner.tsx"
           ],
           "requiredCapabilities": [
-            "native button semantics, refs, accessible labels and keyboard activation without host default visuals",
+            "native button semantics, refs, accessible labels and keyboard activation while retaining host visuals",
             "AISEE controlled visibility/view state, drag handle pointer capture, focus rings and playful motion"
           ],
           "fallback": "standalone"
@@ -2138,10 +2138,10 @@
         "components/ThinkingIndicator/ThinkingIndicator.demo.css"
       ],
       "preserve": [
+        "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
         "Preserve the native six-second circle/infinity SVG morph, four-second decorative text cycle and shimmer. Do not restart the cycle on ordinary rerenders.",
         "Respect live prefers-reduced-motion changes: static infinity and first phrase, no shimmer or cycling. Keep one stable accessible status; decorative phrases must remain aria-hidden.",
-        "Support showIcon and default/compact size. Host controls when to mount/unmount during real work. Labels are neutral decorative phrases, never actual progress or reasoning logs.",
-        "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+        "Support showIcon and default/compact size. Host controls when to mount/unmount during real work. Labels are neutral decorative phrases, never actual progress or reasoning logs."
       ],
       "configuration": {
         "props": {

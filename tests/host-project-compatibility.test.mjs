@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {gunzipSync} from 'node:zlib';
 import {validateManifest} from '../scripts/production-delivery.mjs';
-import {hostIntegrationGuide} from '../scripts/host-project-compatibility.mjs';
+import {hostIntegrationGuide, integrationPolicy} from '../scripts/host-project-compatibility.mjs';
 import {cssDependencyClosure} from '../scripts/css-delivery.mjs';
 
 const read = path => readFile(new URL('../'+path, import.meta.url), 'utf8');
@@ -36,6 +36,7 @@ test('every current delivery carries the contract in latest, archive metadata an
     const guide=await read(`assets/ai-deliveries/${m.slug}/${latest.delivery}`);
     for (const delivery of [latest,archive]) {
       assert.equal(delivery.integrationMode,m.integrationMode);
+      assert.deepEqual(delivery.integrationPolicy,integrationPolicy);
       assert.deepEqual(delivery.primitives,m.primitives);
       assert.deepEqual(delivery.preserve,m.preserve);
     }
@@ -46,11 +47,28 @@ test('every current delivery carries the contract in latest, archive metadata an
     assert.match(guide,/Never emit unscoped button\/input\/svg\/body\/reset rules/);
     assert.match(guide,/never add or replace a global provider/);
     assert.match(guide,/does not detect or modify the host framework automatically/);
-    assert.match(guide,/If no existing primitive satisfies all requirements/);
+    assert.match(guide,/Only when the target component is absent/);
     for (const requirement of m.preserve) assert.ok(guide.includes(requirement));
     const files=JSON.parse(gunzipSync(Buffer.from(archive.payload,'base64')));
     assert.deepEqual(Object.keys(files),latest.files); // Contract metadata must not add a runtime framework or demo.
     assert.doesNotMatch(Buffer.from(files['styles.css'],'base64').toString(), /@font-face|:root\s*\{/);
+  }
+});
+
+test('all delivery paths preserve an existing host, including motion-only and incompatible targets', async () => {
+  for (const m of registry.components) {
+    const latest=JSON.parse(await read(`assets/ai-deliveries/${m.slug}/latest.json`));
+    const guide=await read(`assets/ai-deliveries/${m.slug}/${latest.delivery}`);
+    assert.match(guide,/Existing host styles, UI library and interactions take precedence/);
+    assert.match(guide,/For motion-only requests, add only missing animation/);
+    assert.match(guide,/Incompatibility is not permission to replace/);
+    assert.match(guide,/do not import these entries or the full stylesheet into an existing styled component/);
+    assert.match(guide,/They never override existing host styles, interactions or settings/);
+    assert.match(guide,/If nothing is missing, make no changes/);
+    assert.match(guide,/existing static appearance, interactions, public API, state and event behavior must remain unchanged/);
+    assert.doesNotMatch(guide,/this delivery is authoritative for all component behavior|host default styling must not replace them|preserve list below is mandatory for both|Only when no compatible host primitive exists/);
+    assert.match(latest.preserve[0],/Existing host styles, UI library and interactions take precedence/);
+    if (!m.primitives.length) assert.match(guide,/Still inspect and reuse an existing target/);
   }
 });
 

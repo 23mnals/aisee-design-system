@@ -55,7 +55,7 @@ console.log('Installed ' + writes.length + ' source/style/asset files into ' + r
   function guideUrl(delivery) {return publicUrl(delivery.latestUrl);}
   function format(delivery, snapshot) {
     const options=configuration(delivery,snapshot);
-    return `Integrate AISEE ${delivery.name} into this React project. Reuse compatible host/shadcn primitives in place (inspect components.json and components/ui); do not create parallel AISEE primitives. Use standalone only when no compatible primitive exists: ${guideUrl(delivery)}${options.length ? ` Selected options: ${JSON.stringify(options)}` : ''}`;
+    return `Integrate AISEE ${delivery.name} into this React project. Inspect the existing target, styles, UI library and interactions first (shadcn: components.json/components/ui). Preserve them; add only requested missing capabilities. For animation requests, add only missing motion; do not restyle or change interactions. Reuse existing components; do not create parallel AISEE primitives or import full delivery CSS. Only create a component when the target is absent; incompatibility is not permission to replace it. Host preservation overrides delivery defaults/preserve rules and preview options. Reference: ${guideUrl(delivery)}${options.length ? ` Reference options (only for requested missing capabilities, never overwrite existing settings): ${JSON.stringify(options)}` : ''}`;
   }
   async function checkPublished(expected) {
     const latestUrl=guideUrl(expected);

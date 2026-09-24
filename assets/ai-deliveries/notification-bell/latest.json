@@ -2,9 +2,9 @@
   "schemaVersion": 3,
   "name": "NotificationBell",
   "page": "components/NotificationBell/NotificationBell.html",
-  "version": "347ecf1cf4040ad3",
-  "delivery": "./releases/347ecf1cf4040ad3/ready.md",
-  "installer": "./releases/347ecf1cf4040ad3/install.cjs",
+  "version": "b9054a32dfa37f1d",
+  "delivery": "./releases/b9054a32dfa37f1d/ready.md",
+  "installer": "./releases/b9054a32dfa37f1d/install.cjs",
   "installerSha256": "06f048932240442be782fab5f12f4cbac3b35a9ae30294da89131137a3d4ff93",
   "configuration": {
     "props": {}
@@ -21,6 +21,14 @@
     "node": ">=18"
   },
   "integrationMode": "host-first",
+  "integrationPolicy": {
+    "existingImplementation": "preserve-styles-ui-library-and-interactions",
+    "changes": "requested-missing-capabilities-only",
+    "motionOnly": "add-motion-without-restyling-or-changing-interactions",
+    "standalone": "only-when-target-component-is-absent",
+    "preserveScope": "new-components-and-requested-missing-capabilities-only",
+    "conflicts": "report-without-replacing-existing-implementation"
+  },
   "primitives": [
     {
       "role": "button",
@@ -35,10 +43,10 @@
     }
   ],
   "preserve": [
+    "Existing host styles, UI library and interactions take precedence. Add only requested missing capabilities; for motion-only requests add only missing animation without restyling or changing interactions. The other preserve entries describe the standalone reference and apply only to an absent target or the requested missing capability; they never authorize replacing existing host behavior or appearance.",
     "Keep the inline bell icon, hover/focus, numeric badge and optional unread dot.",
     "Real count increases ring the white bell and animate the badge number. Rerenders, unchanged/decreased/cleared counts must not replay incoming animation.",
-    "The outer button and black icon circle remain fixed; respect prefers-reduced-motion. Connect count and onClick to existing product data and navigation.",
-    "Preserve AISEE visual layout, scoped styles, states, icons, animation timing, interactions and accessibility when adapting host primitives; host default styling must not replace them."
+    "The outer button and black icon circle remain fixed; respect prefers-reduced-motion. Connect count and onClick to existing product data and navigation."
   ],
   "files": [
     "NotificationBell.tsx",
