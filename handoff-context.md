@@ -4,87 +4,59 @@
 
 ## 当前 Git 与发布
 
-- 开发分支 `ai/desktop/design-system-current`；本轮发布包含 Automation Runner 修复提交 `ee04263` 与门户 / shadcn 接入规则提交 `3c2feeb`，main 未操作。
-- Automation Runner 空详情、边缘锚定、Demo、生产交付和测试已随 `ee04263` 进入本轮发布。
-- 门户信息架构与 shadcn/ui 原位复用规则已随 `3c2feeb` 进入本轮发布；新版 Copy 明确禁止在兼容宿主中创建平行 AISEE primitive。
-- `7cd6dc0` 已完成 CI 与 Pages 部署，公开站点已恢复为 63 pages 并包含 Automation Runner。
-- 既存 10 个无关通知备用资源/原型继续保留，不重置、不删除；旧公开 release 全部保留。
+- 开发分支：`ai/desktop/design-system-current`；最新功能提交 `739477f`（fix: preserve host design in AI component integration）已推送 origin，包含 Brand 改名与 Copy for AI 宿主保护修正。
+- [本次 CI / Pages](https://github.com/23mnals/aisee-design-system/actions/runs/35949568676) 的 verify 与 pages 均成功。
+- 已有 [PR #10](https://github.com/23mnals/aisee-design-system/pull/10) 已关联当前任务；未合并 PR，main 未操作。
+- 功能文件已提交且与远端一致；本轮发布交接记录随独立文档提交同步，除此之外没有未提交功能改动。
+- 所有旧 release 保留。此前 Brand 改名时的无关构建备份仍位于 `/tmp/aisee-build-only-cds7_4p2`。
 
 ## 正在做
 
-- 门户 Brand 导航已收敛为 Common 与 AI Explorations / Inspiration；AI 参考稿保留 Legacy / Draft 和原路径，动态来源与状态分开显示。README、UI Kits 边界和 Figma 权威说明已同步。
-- Copy for AI 已明确：shadcn/ui 项目先读 `components.json`、alias 和现有 `components/ui`，在兼容 primitive 的原路径增量合并 AISEE 视觉、状态和动画，不创建平行 `src/components/aisee`、第二套 `components/ui` 或第二个同类组件；standalone 仅作能力不兼容时的回退。
-- Automation Runner 外部接入没有真实详情或操作时，expanded 自动回落为 default，不再出现空白详情区、展开箭头或残留横线。
-- Automation Runner 拖到视口边缘后切换 default、expanded、minimized 会保持最近边缘或中心锚点；右侧向左展开、向右收起，左侧及上下边缘对称处理。
-- Copy for AI 的 preserve 契约已同步上述规则；最新生产交付版本为 `200678363f0b540a`，等待 Pages 完成部署后进入公开站点。
+- Brand 名称简化与 Copy for AI 宿主保护修正已发布，等待用户在真实业务项目验证。
+- Copy for AI 改为先检查目标组件、样式、UI 库与交互；保留既有外观和行为，只补本次缺失能力。动画需求只补缺失动效，不导入完整交付 CSS，不改事件、布局、图标、状态或拖拽。
+- 宿主保护优先于 preserve / 默认值 / 预览选项；不兼容不能作为替换理由，只有目标不存在时才新建。短提示词、integrationPolicy、30 组件 preserve、ready.md、README/Overview/交付文档均已同步。
+- 侧边栏固定为 `Brand → Foundations / Explorations`。Foundations 承载基础规范，Explorations 承载 AI 灵感参考；门户中英说明、注册默认值、Managed Automation 元数据、README 与长期规则已同步。
+- 页面路径、数量（63 pages，Brand 29）、来源、Draft / Legacy 状态保持不变；原有历史页面和资源保留。
 
-- NEW 显示期限已恢复为 7 天：更新当天算第 1 天，第 8 天台北零点消失。现有显式日期表保持不变，从最初添加 NEW 或最近一次真实内容更新的日期计算；本轮规则调整不批量续期。日期边界测试通过并已推送。
-- Select / Dropdown 核心类型已按能力重新梳理为 Single-select、Multi-select、Searchable multi-select、Combobox、Action menu、Grouped select；每张卡只显示一个类型标题，控件通过该标题获得无障碍名称。已完成本地验收并随 `f6603cc` 推送。
-- Automation Runner Demo 控制区、门户 Share 图标、眼睛清晰度与生产交付已完成验收并推送。
-- 用户已确认 A+D 分区动效并授权同步：悬停卡片按指针方向轻探，只有进入绿色小怪兽时播放一次软胶回弹；已同步 Demo、生产组件和 Copy for AI，取消循环抖动。
-- 用户从三种眼神预览中选择 B「慌张扫视」，并最终要求恢复最开始确认的眼睛比例：进入整张卡片时眼睛瞪大、黑色眼珠保持原始相对比例，随后左右寻找两次并继续跟随鼠标；实现使用等效真实尺寸重绘，避免持续拉伸 mask 纹理导致模糊。已同步生产样式、Demo 与 Copy for AI。
-- Automation Runner Demo 的标题与 `NEW` 固定单行；位置选择显示精简为 Left、Center、Right，真实 bottom placement 值不变。
-- Automation Runner 的 Overview、Schedule、Replies 已明确标注为 Demo 页面切换，只验证浮层挂在 app shell 后跨路由持续存在，不属于生产组件功能。
-- Automation Runner Copy for AI 已明确增量合并：宿主已有的兼容眨眼/眼珠跟随可保留，其余出退场、状态、A+D、拖拽和 reduced-motion 以当前交付为准，不创建第二个 Runner 或重复监听。
-- Automation Runner 的卡片交互已补齐：标题/箭头展开、横线最小化，点击最小化卡片任意位置恢复 default；Demo view 下拉框仅用于直接预览状态。
-- 门户 Share 已换为链环图标，复制当前页链接的行为不变。
+## 最近完成与当前有效实现
 
-## 最近完成 · Automation Runner
+- 门户保留 README、Brand、Components、UI Kits — Webapp 四个入口；探索稿不是已确认产品设计或实施规范，实际产品设计以对应功能最新 Figma 为准。
+- Copy for AI 的 shadcn/ui 接入先读 `components.json`、alias 与既有 primitive，保留宿主样式/UI 库/交互，只在原路径补所需缺失能力；禁止平行组件。不兼容时报告缺口，不能自动重建。
+- Automation Runner 已具备 app shell 常驻、default / expanded / minimized、关闭与唤起、拖拽和键盘移动、最近视口边缘锚定；没有真实详情或操作时回落 default，不显示空白详情或展开箭头。
+- Runner 已确认 A+D 动效：整卡方向轻探、进入绿色小怪兽单次软胶回弹；整卡 hover 瞪眼并左右寻找两次，保持原始眼睛比例、清晰绘制、眨眼和鼠标跟随；reduced-motion 停止装饰动画并保留操作。
+- Runner 原尺寸与 Figma 来源：default 332×64、expanded 约 332×252、minimized 74×64；节点 `72:55666`、`72:56017`、`72:55315`。当前已发布交付版本为 `49db4e9b4383c154`，本次只更新宿主保护说明，运行时代码和样式未变。
+- Select / Dropdown 六类核心类型：Single-select、Multi-select、Searchable multi-select、Combobox、Action menu、Grouped select；每张卡一个类型标题并提供无障碍名称。
+- NEW 更新当天算第 1 天，第 1–7 天显示，第 8 天台北零点消失；改名、构建和期限调整不批量续期。
+- 门户 Share 使用链环图标；目录隐藏滚动条；顶部描述和操作按钮保持精简布局。
 
-- 新增根布局常驻浮层，支持 default、expanded、minimized、关闭/重新唤起、底部三种位置、整卡任意位置拖拽及键盘方向键移动；拖动不会误触内部按钮。
-- 采用 Figma `72:55666`、`72:56017`、`72:55315` 的尺寸和 5 个原始 SVG；默认 332×64、展开约 332×252、最小 74×64。
-- 底部弹性出入场、绿色眼睛眨眼和跟随鼠标、卡片方向探头及小怪兽单次软胶回弹均完成；reduced motion 保留状态与操作并停止装饰动画。
-- Demo 的 Show runner、视图和位置控制在桌面宽度下保持同一行，720px 以下才切换为窄屏纵向布局。
-- 标题、说明、详情和返回操作由宿主传入；关闭只隐藏窗口，组件不启动、轮询、停止或取消自动化任务。
-- 门户、Overview、NEW、公共导出、生产 manifest 与 Copy for AI 已登记。生产交付仅含组件、局部样式、入口/类型和 5 个必要 SVG，不含 Demo、mock、字体或全局样式。
+## 验收
 
-## 同批本地完成 · Host Project Compatibility 与界面修复
-
-- 所有已登记生产清单声明 `integrationMode / primitives / preserve`，接收方优先复用宿主兼容 primitive；不为单组件引入整套 UI framework，不覆盖宿主 theme/provider/global styles，不兼容时 standalone。
-- CSS 交付继续使用 AST 完整依赖闭包，保留 selector、伪状态、变量默认值、keyframes、media/supports/reduced-motion，缺失依赖阻止构建。
-- 门户目录隐藏滚动条；页面顶部描述去冗余来源字段；操作按钮保持单行；Sidebar 收起按钮与分隔线留白修正；Tooltip/Avatar NEW 标签按原日期显示。
-- 新 latest 和版本已进入远端提交 `cd502b5`；在本次 Pages 重新部署完成前，公开 Copy 仍使用上一发布版。
-
-## 本轮验收
-
-- 门户浏览器实测四个一级栏目、Brand 两个分类、Managed Automation Draft 与 ChatGPT · Web 来源分离显示、来源搜索及刷新 hash 深链均通过。
-- Copy for AI 新短指令为单句稳定 latest 地址，明确 shadcn 原位复用与 standalone 回退；`npm run audit:copy-ai` 仍为 30 组件、205 个受控配置案例、0 失败。
-- 浏览器实测右侧卡片 332px → 74px → 332px 时右边缘始终为 1264px；左侧同流程左边缘始终为 8px；顶部展开固定 8px 顶边，底部从 257px 收回 64px 时固定 712px 底边。空详情的默认回落和不渲染详情容器已有组件测试覆盖。
-- Select / Dropdown 本地浏览器确认六类核心类型正常显示；业务功能文案已从核心类型示例移除，组合示例保留。
-- 浏览器实测 Automation Runner：标题展开、箭头收起、横线最小化、点击最小卡片空白区域恢复及整卡拖拽均通过；拖动最小卡片不会误触恢复。Show runner 开关关闭再开启后标题与三项控制保持同一行；B「慌张扫视」在整卡 hover 时正常瞪大并完成两次寻找，放大后眼睛与绿色外壳保持清晰；展开 332×257、最小 74×64、底部间距 24。
-- `npm run typecheck` 通过；`npm test` 139 项通过。
-- `npm run verify:ai-deliveries`：Registered components 30 / Verified deliveries 30。
-- `npm run audit:copy-ai`：30 组件、205 个受控配置案例、0 失败；不等同于外部 AI 产出验收。
-- `npm run site`、`git diff --check` 通过。
+- 发布后 HTTP 实测：线上 Brand 新分类、短提示词脚本和 manifest 与本地一致；30/30 latest、ready.md 与 installer SHA-256 验证通过。NotificationBell 当前版本 `b9054a32dfa37f1d`，AutomationRunner `49db4e9b4383c154`。
+- Copy for AI 修正：140 项测试通过；typecheck、site、git diff --check 通过。
+- 30 个交付验证通过（准确文件范围、校验、重装/冲突拒绝、隔离 React 类型检查与构建）；205 个受控 Copy for AI 配置案例 0 失败。
+- 对比发布前 `a866165`：30/30 生产源码 payload 和文件清单完全相同，仅接入说明/元数据/版本指针变化。
+- 浏览器展开报告中的 NotificationBell 提示词，确认包含保留宿主、只补动画、禁止完整 CSS/平行组件和现有设计优先的规则。真实外部 AI 的生成结果仍需业务项目验收。线上浏览器工具连接两次超时，未声称已完成线上按钮点击。
+- Brand 本地浏览器确认 Foundations / Explorations 单行完整显示、展开收起正常；63 pages / Brand 29，Managed Automation Draft 与 ChatGPT · Web 来源不变。
 
 ## 持续有效的交付约定
 
-- Production 不依赖 Demo；生产清单不限制文件数，只包含真实运行需要的源码、局部样式、资产、依赖和类型。
-- Copy 使用具体组件名 + 稳定 `latest.json` + 真实选项；稳定地址在执行时解析最新已发布版，已安装源码不会自动更新。
-- 兼容性按组件声明，不统一强制 React/Node 版本；安装前识别宿主 UI 库并保留 AISEE 外观、状态、动效、行为和无障碍。
-- NEW 更新当天算第 1 天，第 1–7 天显示，第 8 天台北零点消失；已有内容沿用最初登记日期，只有真实内容更新才重新计时，期限调整、构建和刷新不续期。
-- Automation Runner 应挂载在 app shell、位于路由内容外；重新唤起入口和真实任务状态归宿主业务所有。
+- Production 不依赖 Demo；清单只包含真实运行所需源码、局部样式、资产、依赖和类型。CSS 保留完整依赖闭包及 reduced-motion 等规则。
+- Copy 使用组件名、稳定 `latest.json` 与真实选项；执行时解析最新已发布版本，已安装源码不会自动更新。
+- 宿主接入保留已有 theme / provider / global styles，保留现有组件级样式和交互，按实际缺口复用 primitive；不为单个组件引入整套 UI framework。
+- Runner 挂在 app shell 路由内容外；真实任务状态和重新唤起入口归宿主，关闭浮层不得停止或取消业务任务。
 
 ## 未完成与下一步
 
-1. 等待并核对本轮 GitHub Pages 部署结果。
-2. 从在线门户复制新版提示到真实 shadcn/ui 项目，确认只修改宿主既有 primitive 路径，不产生平行 AISEE 组件目录。
-3. 在外部 React 项目验证 Automation Runner 最新交付，重点复测空详情和视口四边。
-4. 实际业务项目验证其他宿主 primitive 复用；本仓库尚未验证真实 MUI/Ant/Chakra 等项目。
-5. FeatureOverview 第二批平台图标条组件化尚未实施；连接弹窗暂缓，支付和自动化任务执行始终由业务接口负责。
+1. 从在线门户复制提示到真实 shadcn/ui 项目，确认修改既有 primitive 路径且没有平行组件目录。
+2. 在外部 React 项目验收 Automation Runner，重点复测空详情和视口四边。
+3. 在实际 MUI / Ant / Chakra 等宿主验证 primitive 复用；仓库尚未覆盖真实项目。
+4. FeatureOverview 第二批平台图标条组件化尚未实施；连接弹窗继续暂缓，支付和自动化执行由业务接口负责。
+5. 用户刷新在线 Demo 并重新 Copy，在业务测试分支验证已有静态外观、交互、状态和回调不变，只增加要求的缺失动画；原业务代码如已被覆盖，需在目标项目另行恢复。
 
 ## 最近 session
 
+- [Copy for AI 修正发布与线上验证](handoff/sessions/2026-09-24-copy-ai-release.md)
+- [Copy for AI 保留宿主样式与动画增量接入](handoff/sessions/2026-09-24-copy-ai-preserve-host.md)
+- [Brand 导航简化与遗留任务核对](handoff/sessions/2026-09-24-brand-navigation-names.md)
 - [门户归属与宿主 primitive 接入修正](handoff/sessions/2026-09-23-portal-ia-host-primitive.md)
 - [Automation Runner 空详情与边缘锚定修复](handoff/sessions/2026-09-23-automation-runner-edge-anchoring.md)
-- [NEW 标签恢复七天](handoff/sessions/2026-09-23-new-label-seven-day.md)
-- [Automation Runner 眼睛放大清晰度](handoff/sessions/2026-09-23-automation-runner-eye-clarity.md)
-- [Select / Dropdown 类型梳理](handoff/sessions/2026-09-22-select-dropdown-type-taxonomy.md)
-- [Automation Runner 通用常驻浮层](handoff/sessions/2026-09-21-automation-runner.md)
-- [Automation Runner 发布准备](handoff/sessions/2026-09-22-automation-runner-release.md)
-- [Automation Runner 控制区与分享入口](handoff/sessions/2026-09-22-automation-runner-demo-polish.md)
-- [Host Project Compatibility](handoff/sessions/2026-09-21-host-project-compatibility.md)
-- [预览间距与按钮布局](handoff/sessions/2026-09-21-preview-layout.md)
-- [精简页面描述](handoff/sessions/2026-09-21-page-descriptions.md)
-- [Tooltip NEW 标签修复](handoff/sessions/2026-09-21-tooltip-new-labels.md)
-- [隐藏导航滚动条](handoff/sessions/2026-09-21-sidebar-scrollbar.md)
